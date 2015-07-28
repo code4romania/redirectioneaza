@@ -25,7 +25,8 @@ app = webapp2.WSGIApplication([
     
         r('/<ngo_url>', handler=NgoHandler),
 
-        r('/<ngo_url>/2%',          handler=TwoPercentHandler),
+        # not a good idea
+        # r('/<ngo_url>/2%',          handler=TwoPercentHandler),
         r('/<ngo_url>/doilasuta',   handler=TwoPercentHandler),
     ],
     debug=True,

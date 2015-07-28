@@ -1,0 +1,20 @@
+{
+  "name": "donezsieu-gae",
+  "version": "0.0.0",
+  "analytics": false,
+  "authors": [
+    "Andrei Onel"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.5",
+    "jquery": "~2.1.4"
+  }
+}
