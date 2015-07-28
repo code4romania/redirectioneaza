@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block header %}
+    <div class="home-container">
+        {% include "navbar.html" %}
+        <div class="container home-banner">
+            <div class="row">
+                <div class="col-xs-10 col-md-8">
+                    <h2>{{ header.title }}</h2>
+                    <h4>{{ header.description }}</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <div class="row course-list">
+        <div class="col-md-12">
+            <ul class="list">
+                {% for course in courses %}
+                    <div class="col-xs-6 col-md-4">
+                        {{ course_panel(course) }}
+                    </div>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    
+    <div class="app-description">
+<!--         <h2>{{ _("Ce poți face pe site?") }}</h2>
+ -->        <div class="row">
+            <div class="col-md-6">
+                <h3>Poți urmării filmulețe care explică <b>orice</b>.</h3>
+                <p>
+                    Filmuleṭele sunt scurte, uşor de înṭeles şi poṭi să te uiṭi la ele ori de câte ori ai nevoie. Platforma nu se supără dacă îṭi mai explică o dată.
+                </p>
+            </div>
+            <div class="col-md-4 col-md-offset-1 text-center">
+                <img src="http://www.edumo.org/staticfiles/img/picture1.png" alt="" />
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-md-4 col-md-offset-1 text-center">
+                <img src="http://www.edumo.org/staticfiles/img/picture1.png" alt="" />
+            </div>
+            <div class="col-md-4">
+                <h3>Poți să urmărești filmulețe care explică orice.</h3>
+                <p>
+                    Filmuleṭele sunt scurte, uşor de înṭeles şi poṭi să te uiṭi la ele ori de câte ori ai nevoie. Platforma nu se supără dacă îṭi mai explică o dată.
+                </p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

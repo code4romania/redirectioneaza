@@ -1,0 +1,47 @@
+application: donezsieu
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: false
+
+libraries:
+- name: webapp2
+  version: "2.5.2"
+- name: jinja2
+  version: latest
+
+builtins:
+- appstats: on
+
+handlers:
+- url: /stats.*
+  script: google.appengine.ext.appstats.ui.app
+
+- url: /favicon\.ico
+  static_files: favicon.ico
+  upload: favicon\.ico
+
+- url: /css
+  mime_type: "text/css"
+  static_dir: static/css
+
+- url: /img
+  mime_type: "text/css"
+  static_dir: static/img
+
+# bower components url
+- url: /bower_components
+  static_dir: bower_components
+
+- url: /fonts
+  static_dir: bower_components/uikit/fonts
+
+
+- url: /.*
+  script: main.app
+  # expiration: "10m"
+  #   http_headers:
+  #     X-UA-Compatible: "IE=edge"
+  #     Content-Security-Policy: "script-src 'self'; object-src 'self'"
+
+  # http://cspisawesome.com/
