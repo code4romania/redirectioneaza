@@ -26,7 +26,7 @@ handlers:
   static_dir: static/css
 
 - url: /img
-  mime_type: "text/css"
+  # mime_type: "text/css"
   static_dir: static/img
 
 # bower components url

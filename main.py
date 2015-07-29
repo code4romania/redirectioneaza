@@ -9,7 +9,7 @@ from webapp2 import Route as r
 # the public part of the app
 from controllers.site import *
 
-from controllers.ngo import NgoHandler
+from controllers.ngo import NgoHandler, TwoPercentHandler
 
 
 
