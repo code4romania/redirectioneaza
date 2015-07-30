@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 
 from google.appengine.api import urlfetch
+from google.appengine.ext import ndb
 
 from appengine_config import SECRET_KEY, AWS_PDF_URL, GEOIP_URL
 
 from models.handlers import BaseHandler
 from models.models import NgoEntity
+
 
 
 """
@@ -28,7 +30,22 @@ class TwoPercentHandler(BaseHandler):
 
         # set the index template
         self.set_template('twopercent.html')
+        
+        # render a response
+        self.render()
 
+
+class TwoPercent2Handler(BaseHandler):
+    def get(self, ngo_url):
+
+        ngo = NgoEntity.get_by_id(ngo_url)
+        
+        if ngo is None:
+            self.error(404)
+            return
+
+        # set the index template
+        self.set_template('twopercent-2.html')
         
         # render a response
         self.render()
@@ -65,43 +82,44 @@ class TwoPercentHandler(BaseHandler):
         #   headers:        dictionary of headers returned by the server
         result = aws_rpc.get_result()
         if result.status_code == 200:
-            text = result.content
-
-class TwoPercent2Handler(BaseHandler):
-    def get(self, ngo_url):
-
-        ngo = NgoEntity.get_by_id(ngo_url)
-        
-        if ngo is None:
-            self.error(404)
-            return
+            content = json.loads(result.content)
+            person.pdf_url = content.url
+            person.pdf_ready = True
 
 
 
-        # set the index template
-        self.set_template('twopercent.html')
-
-        
-        # render a response
-        self.render()
-
-    def post(self):
-
-        post = self.request
+        self.response.set_cookie("donor_id", str(person.key.id()), max_age=2592000, path='/')
 
 
 class DonationSucces(BaseHandler):
-    def get(self, ngo_url, donor_id):
-        ngo = NgoEntity.get_by_id(ngo_url)
+    def get(self, ngo_url):
 
+        # list_of_entities = ndb.get_multi([ngo_url, donor_id])
+        donor_id = int( self.request.cookie.get("donor_id") )
+
+        ngo = NgoEntity.get_by_id(ngo_url)
         if ngo is None:
             self.error(404)
             return
-
-        donor = Donor.get_by_id(int(donor_id))
         
+        donor = Donor.get_by_id(donor_id)
         if donor_id is None:
             self.error(404)
             return
 
+    def post(self, ngo_url):
+        post = self.request
+        donor_id = int( self.request.cookie.get("donor_id") )
+
+        list_of_entities = ndb.get_multi([ngo_url, donor_id])
+
+        ngo = list_of_entities[0]
+        if ngo is None:
+            self.error(404)
+            return
+
+        donor = list_of_entities[1]
         
+        if donor_id is None:
+            self.error(404)
+            return

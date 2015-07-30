@@ -1,112 +1,93 @@
 {% extends "base.html" %}
 
-{% block assets %}
-
-{% endblock %}
-
 
 {% block header %}
-        <div class="container">
-                <div class="row">
-                        {# ngo details #}
-                        <div class="col-xs-10 col-md-8">
-                                <img src="{{ ngo.logo }}">
-                                <h1>{{ ngo.name }}</h1>
-                                <p>
-                                        {{ ngo.description }}
-                                </p>
-                        </div>
-                </div>
+    <div class="container">
+        <div class="row">
+            {# ngo details #}
+            <div class="col-xs-10 col-md-8">
+                <img src="{{ ngo.logo }}">
+                <h1>{{ ngo.name }}</h1>
+                <p>
+                    {{ ngo.description }}
+                </p>
+            </div>
         </div>
+    </div>
 {% endblock %}
 
 {% block content %}
 <div class="container">
-        <div class="row">
-            <form class="form-horizontal">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3 col-xs-8 col-xs-offset-2">
+            <form class="form-horizontal" action="{{ ngo.key.id() }}/doilasuta/pas-2">
                 <fieldset>
-                    <legend>Legend</legend>
+                    <legend>Date personale</legend>
                     <div class="form-group">
-                        <label for="inputEmail" class="col-lg-2 control-label">Email</label>
-                        <div class="col-lg-10">
-                            <input type="text" class="form-control" id="inputEmail" placeholder="Email">
+                        <div class="col-xs-5">
+                            <input type="text" class="form-control" id="first-name" placeholder="Nume">
+                        </div>
+                        <div class="col-xs-5">
+                            <input type="text" class="form-control" id="last-name" placeholder="Prenume">
+                        </div>
+                        <div class="col-xs-2">
+                            <input type="text" class="form-control" id="father" maxlength="1">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputPassword" class="col-lg-2 control-label">Password</label>
-                        <div class="col-lg-10">
-                            <input type="password" class="form-control" id="inputPassword" placeholder="Password">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"> Checkbox
-                                </label>
-                            </div>
+                        <div class="col-xs-12">
+                            <input type="text" class="form-control text-center" id="cnp" style="letter-spacing:10px;" maxlength="13">
                         </div>
                     </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Adresa</legend>
                     <div class="form-group">
-                        <label for="textArea" class="col-lg-2 control-label">Textarea</label>
-                        <div class="col-lg-10">
-                            <textarea class="form-control" rows="3" id="textArea" style="margin: 0px -2.84375px 0px 0px; height: 84px; width: 424px;"></textarea>
-                            <span class="help-block">A longer block of help text that breaks onto a new line and may extend beyond one line.</span>
+                        <div class="col-xs-8">
+                            <input type="text" class="form-control" id="first-name" placeholder="Strada">
+                        </div>
+                        <div class="col-xs-4">
+                            <input type="text" class="form-control" id="first-name" placeholder="Numar">
                         </div>
                     </div>
+
                     <div class="form-group">
-                        <label class="col-lg-2 control-label">Radios</label>
-                        <div class="col-lg-10">
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
-                                    Option one is this
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-                                    Option two can be something else
-                                </label>
-                            </div>
+                        <div class="col-xs-3">
+                            <input type="text" class="form-control" id="first-name" placeholder="Bloc">
+                        </div>
+                        <div class="col-xs-3">
+                            <input type="text" class="form-control" id="first-name" placeholder="Scara">
+                        </div>
+                        <div class="col-xs-3">
+                            <input type="text" class="form-control" id="first-name" placeholder="Etaj">
+                        </div>
+                        <div class="col-xs-3">
+                            <input type="text" class="form-control" id="first-name" placeholder="Ap.">
                         </div>
                     </div>
+
                     <div class="form-group">
-                        <label for="select" class="col-lg-2 control-label">Selects</label>
-                        <div class="col-lg-10">
-                            <select class="form-control" id="select">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select>
-                            <br>
-                            <select multiple="" class="form-control">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select>
+                        <div class="col-xs-6">
+                            <input type="text" class="form-control" id="first-name" placeholder="Localitate">
+                        </div>
+                        <div class="col-xs-6">
+                            <input type="text" class="form-control" id="first-name" placeholder="Judet/Sector">
                         </div>
                     </div>
+                </fieldset>
+                <fieldset>
                     <div class="form-group">
-                        <div class="col-lg-10 col-lg-offset-2">
-                            <button type="reset" class="btn btn-default">Cancel</button>
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                        <div class="col-lg-12">
+                            <button type="submit" class="btn btn-primary pull-right">Trimite</button>
                         </div>
                     </div>
                 </fieldset>
             </form>
         </div>
-        <div class="row">
-                <form class="form-inline">
-                    <p></p>
-                    <fieldset>
-                        <input class="form-control" type="text" />
-                        <span>sau</span>
-                        <input class="form-control" type="text" />
-                        <button class="btn">Salveaza</button>
-                    </fieldset>
-                </form>
-        </div>
+    </div>
+    <div class="row hidden">
+        {% include "second-step.html" %}
+    </div>
 </div>
 
 {% endblock %}
