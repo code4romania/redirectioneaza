@@ -31,6 +31,8 @@ class NgoEntity(BaseEntity):
     # meta data
     date_created = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
 
+    # bool telling if the ngp wants to allow the donor to upload the signed document
+    allow_upload = ndb.BooleanProperty(indexed=True)
 
 
 class NgoAdmin(BaseEntity):
@@ -55,9 +57,28 @@ class Donor(BaseEntity):
     county = ndb.StringProperty(indexed=True)
     
     email = ndb.StringProperty(indexed=True)
-    tel = ndb.StringProperty(indexed=True)
+    tel = ndb.StringProperty()
 
     geoip = ndb.TextProperty()
 
+    ngo = ndb.KeyProperty(kind="NgoEntity")
+
+    # the pdf to be downloaded by the donor
+    pdf_url = ndb.StringProperty()
+    # the url of the pdf/image after it was signed and scanned
+    # only if the ngo allows it
+    pdf_signed_url = ndb.StringProperty()
+
+
     # meta data
     date_created = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
+    pdf_ready = ndb.BooleanProperty(default=False)
+
+
+events = ["log-in", "form-submitted"]
+class Event(BaseEntity):
+    what = ndb.StringProperty(indexed=True, choices=events)
+
+    who = ndb.KeyProperty()
+
+    when = ndb.DateTimeProperty(indexed=True, auto_now_add=True)

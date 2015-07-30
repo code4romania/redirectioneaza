@@ -15,7 +15,6 @@ from appengine_config import *
 from google.appengine.api import users, urlfetch
 from webapp2_extras import sessions
 
-from users import geoip_services
 
 
 def get_jinja_enviroment(account_view_folder=''):
@@ -80,32 +79,29 @@ class BaseHandler(Handler):
 
     # USER METHODS
     def get_geoip_data(self, ip_address):
+        if ip_address:
+            ip_address = self.request.remote_addr
         
-        country = ""
-        resp = urlfetch.fetch(url=geoip_services[0].format(ip_address))
+        # set the default value to 10 seconds
+        deadline = 10
+        resp = urlfetch.fetch(url=GEOIP_SERVICES[0].format(ip_address), deadline=deadline)
 
         geoip_response = json.loads(resp.content)
 
         # check to see if it was a success
         if geoip_response["status"] == "success":
 
-            country = geoip_response["countryCode"]
-            geoip_response = json.dumps(resp.content)
+            return resp.content
+        
+        # if we surpassed the quota, try the other service
         else:
-
-            # if we surpassed the quota, try the other service
             # call the second service
-            resp = urlfetch.fetch(url=geoip_services[1].format(ip_address))
+            resp = urlfetch.fetch(url=GEOIP_SERVICES[1].format(ip_address), deadline=deadline)
 
             # just to make sure we don't get an over quota, or IP not found
             if str(resp.status_code) not in ["403", "404"]:
                 
-                # load the json just to read the country code
-                geoip_response = json.loads(resp.content)
-                country = geoip_response["country_code"]
-                geoip_response = json.dumps(resp.content)
-
+                return resp.content)
             else:
-                geoip_response = json.dumps({})
-
-        return geoip_response, country
+                # if this one fails alos return empty dict
+                return json.dumps({"ip_address": ip_address})

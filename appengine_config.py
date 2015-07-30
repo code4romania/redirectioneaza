@@ -12,6 +12,10 @@ PRODUCTION = os.environ.get('SERVER_SOFTWARE', 'Development').startswith('Develo
 # use this to simulate production
 # PRODUCTION = True
 
+# used to communicate with aws
+SECRET_KEY = "jjj"
+AWS_PDF_URL = "" 
+GEOIP_SERVICES = ["http://ip-api.com/json/{0}", "freegeoip.net/json/{0}"]
 
 # where all the jinja2 templates should be located
 VIEWS_FOLDER = "/views"
