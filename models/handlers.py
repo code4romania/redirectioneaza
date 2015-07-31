@@ -105,3 +105,35 @@ class BaseHandler(Handler):
             else:
                 # if this one fails alos return empty dict
                 return json.dumps({"ip_address": ip_address})
+
+    def get_ngo_and_donor(self):
+
+        ngo_id = self.request.route_kwargs.get("ngo_url")
+        donor_id = int( self.request.cookie.get("donor_id") )
+
+        list_of_entities = ndb.get_multi([
+            ndb.key(NgoEntity, ngo_id), 
+            ndb.key(Donor, donor_id)
+        ])
+
+        ngo = list_of_entities[0]
+        donor = list_of_entities[1]
+
+        # if we didn't find the ngo or donor, raise
+        if ngo is None:
+            webapp2.abort(404)
+
+        # if it doesn't have a cookie, he must not be on the right page
+        # redirect to the ngo's main page
+        if donor_id is None:
+            self.redirect(ngo_id)
+
+        # if we didn't find the donor than the cookie must be wrong, unset it
+        # and redirect to the ngo page
+        if donor is None:
+            self.response.delete_cookie("donor_id", path='/')
+            self.redirect(ngo_id)
+
+
+        self.ngo = ngo
+        self.donor = donor

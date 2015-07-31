@@ -2,25 +2,15 @@
 
 
 {% block header %}
-    <div class="container">
-        <div class="row">
-            {# ngo details #}
-            <div class="col-xs-10 col-md-8">
-                <img src="{{ ngo.logo }}">
-                <h1>{{ ngo.name }}</h1>
-                <p>
-                    {{ ngo.description }}
-                </p>
-            </div>
-        </div>
-    </div>
+    {% include "components/ngo-header.html" %}
 {% endblock %}
+
 
 {% block content %}
 <div class="container">
     <div class="row">
-        <div class="col-md-6 col-md-offset-3 col-xs-8 col-xs-offset-2">
-            <img src="/img/sunny.jpg" alt="Felicitari">
+        <div class="col-xs-12">
+            <img class="center-block" src="/img/sunny.jpg" alt="Felicitari">
         </div>
     </div>
     <div class="row">

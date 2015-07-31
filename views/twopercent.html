@@ -2,49 +2,30 @@
 
 
 {% block header %}
-    <div class="container">
-        <div class="row">
-            {# ngo details #}
-            <div class="col-xs-12 col-md-6 col-md-offset-3">
-                <div class="media ngo-details">
-                    <div class="media-left">
-                        <a>
-                            <img class="media-object img-rounded" src="{{ ngo.logo }}" />
-                        </a>
-                    </div>
-                    <div class="media-body">
-                        <h1>{{ ngo.name }}</h1>
-                        <p>
-                            {{ ngo.description }}
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    {% include "components/ngo-header.html" %}
 {% endblock %}
 
 {% block content %}
 <div class="container">
     <div class="row">
         <div class="col-xs-12 col-md-6 col-md-offset-3">
-            <form class="form-horizontal donation-form" action="/doilasuta/pas-2">
+            <form class="form-horizontal donation-form" action="{{ ngo.key.id() }}/doilasuta/pas-2" role="form">
                 <fieldset>
                     <legend>Date personale</legend>
                     <div class="form-group">
                         <div class="col-xs-5">
-                            <input type="text" class="form-control text-capitalize" id="first-name" placeholder="Nume" autofocus tabindex="0">
+                            <input type="text" class="form-control text-capitalize" id="first-name" name="first-name" placeholder="Nume" autofocus required title="Numele este obligatoriu" />
                         </div>
                         <div class="col-xs-5">
-                            <input type="text" class="form-control text-capitalize" id="last-name" placeholder="Prenume">
+                            <input type="text" class="form-control text-capitalize" id="last-name" name="last-name" placeholder="Prenume" required title="Prenumele este obligatoriu" />
                         </div>
                         <div class="col-xs-2">
-                            <input type="text" class="form-control" id="father" maxlength="1" data-toggle="tooltip" data-placement="right" title="" data-original-title="Initiala tatalui">
+                            <input type="text" class="form-control text-uppercase text-center" id="father" name="father" maxlength="1" data-toggle="tooltip" data-placement="right" title="" data-original-title="Initiala tatalui" required />
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-xs-12">
-                            <input type="number" class="form-control text-center" id="cnp" placeholder="CNP">
+                            <input type="number" class="form-control text-center" id="cnp" name="cnp" placeholder="CNP" title="CNP-ul este obligatoriu" >
                         </div>
                     </div>
                 </fieldset>
@@ -52,10 +33,10 @@
                     <legend>Adresa</legend>
                     <div class="form-group">
                         <div class="col-xs-8">
-                            <input type="text" class="form-control text-capitalize" id="first-name" placeholder="Strada">
+                            <input type="text" class="form-control text-capitalize" id="street" placeholder="Strada" required title="Strada este obligatorie" />
                         </div>
                         <div class="col-xs-4">
-                            <input type="text" class="form-control" id="first-name" placeholder="Numar">
+                            <input type="text" class="form-control" id="first-name" placeholder="Numar" required title="Numarul este obligatoriu"/>
                         </div>
                     </div>
 
@@ -76,10 +57,10 @@
 
                     <div class="form-group">
                         <div class="col-xs-6">
-                            <input type="text" class="form-control text-capitalize" id="first-name" placeholder="Localitate">
+                            <input type="text" class="form-control text-capitalize" id="first-name" placeholder="Localitate" required title="Orasul este obligatoriu" />
                         </div>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" id="first-name" placeholder="Judet/Sector">
+                            <input type="text" class="form-control" id="first-name" placeholder="Judet/Sector" required title="Judetul este obligatoriu" />
                         </div>
                     </div>
                 </fieldset>
@@ -93,8 +74,14 @@
             </form>
         </div>
     </div>
+
     <div class="row hidden">
-        {% include "second-step.html" %}
+        <div class="col-xs-8 col-xs-offset-2 col-md-6 col-md-offset-3">
+            <h4 class="text-center">Pdf-ul se creaza.</h4>
+            <p>Pentru ca sa iti putem multumi lasa-ne o adresa de email sau un numar de telefon:</p>
+        </div>
+
+        {% include "components/second-step.html" %}
     </div>
 </div>
 

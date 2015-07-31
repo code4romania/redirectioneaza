@@ -2,5 +2,5 @@
 
 bower_components/
 
-donezsieu-gae.sublime-project
-donezsieu-gae.sublime-workspace
+*.sublime-project
+*.sublime-workspace

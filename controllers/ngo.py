@@ -9,6 +9,7 @@ from models.handlers import BaseHandler
 from models.models import NgoEntity
 
 
+from logging import info
 
 """
 Handlers used for ngo 
@@ -30,7 +31,11 @@ class TwoPercentHandler(BaseHandler):
             ngo = {
                 "logo": "http://images.clipartpanda.com/spinner-clipart-9cz75npcE.jpeg",
                 "name": "Nume asoc",
-                "description": "o descriere lunga"
+                "description": "o descriere lunga",
+                "ngo": {}
+            }
+            ngo["key"] = {
+                "id": lambda: ""
             }
 
 
@@ -44,12 +49,9 @@ class TwoPercentHandler(BaseHandler):
 
 class TwoPercent2Handler(BaseHandler):
     def get(self, ngo_url):
+        post = self.request
 
-        ngo = NgoEntity.get_by_id(ngo_url)
-        
-        if ngo is None:
-            self.error(404)
-            return
+        self.get_ngo_and_donor()
 
         # set the index template
         self.set_template('twopercent-2.html')
@@ -94,39 +96,22 @@ class TwoPercent2Handler(BaseHandler):
             person.pdf_ready = True
 
 
-
+        # set the donor id in cookie
         self.response.set_cookie("donor_id", str(person.key.id()), max_age=2592000, path='/')
 
 
 class DonationSucces(BaseHandler):
     def get(self, ngo_url):
 
-        # list_of_entities = ndb.get_multi([ngo_url, donor_id])
-        donor_id = int( self.request.cookie.get("donor_id") )
+        self.get_ngo_and_donor()
 
-        ngo = NgoEntity.get_by_id(ngo_url)
-        if ngo is None:
-            self.error(404)
-            return
-        
-        donor = Donor.get_by_id(donor_id)
-        if donor_id is None:
-            self.error(404)
-            return
+        # unset the cookie if the ngo does not allow file upload
+        # otherwise we still need it
+        if self.ngo.allow_upload:
+            self.response.delete_cookie("donor_id", path='/')
 
     def post(self, ngo_url):
         post = self.request
-        donor_id = int( self.request.cookie.get("donor_id") )
 
-        list_of_entities = ndb.get_multi([ngo_url, donor_id])
+        self.get_ngo_and_donor()
 
-        ngo = list_of_entities[0]
-        if ngo is None:
-            self.error(404)
-            return
-
-        donor = list_of_entities[1]
-        
-        if donor_id is None:
-            self.error(404)
-            return
