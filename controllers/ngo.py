@@ -3,7 +3,7 @@
 from google.appengine.api import urlfetch
 from google.appengine.ext import ndb
 
-from appengine_config import SECRET_KEY, AWS_PDF_URL, GEOIP_URL
+from appengine_config import SECRET_KEY, AWS_PDF_URL
 
 from models.handlers import BaseHandler
 from models.models import NgoEntity
@@ -22,16 +22,23 @@ class NgoHandler(BaseHandler):
 class TwoPercentHandler(BaseHandler):
     def get(self, ngo_url):
 
-        ngo = NgoEntity.get_by_id(ngo_url)
+        # ngo = NgoEntity.get_by_id(ngo_url)
         
-        if ngo is None:
-            self.error(404)
-            return
+        # if ngo is None:
+        #     self.error(404)
+        #     return
 
-        # set the index template
+        ngo = {
+            "logo": "http://images.clipartpanda.com/spinner-clipart-9cz75npcE.jpeg",
+            "name": "Nume asoc",
+            "description": "o descriere lunga"
+        }
+
         self.set_template('twopercent.html')
         
-        # render a response
+        self.template_values["title"] = "Donatie 2%"
+        self.template_values["ngo"] = ngo
+        
         self.render()
 
 

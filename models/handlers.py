@@ -28,12 +28,12 @@ def get_jinja_enviroment(account_view_folder=''):
     
 # default values for every template
 template_settings = {
-            "bower_components": DEV_DEPENDECIES_LOCATION,
-            "DEV": PRODUCTION,
-            "title": TITLE,
-            "language": "ro",
-            "base_url": "/"
-        }
+    "bower_components": DEV_DEPENDECIES_LOCATION,
+    "DEV": PRODUCTION,
+    "title": TITLE,
+    "language": "ro",
+    "base_url": "/"
+}
 
 class Handler(webapp2.RequestHandler):
     """this is just a wrapper over webapp2.RequestHandler"""
@@ -101,7 +101,7 @@ class BaseHandler(Handler):
             # just to make sure we don't get an over quota, or IP not found
             if str(resp.status_code) not in ["403", "404"]:
                 
-                return resp.content)
+                return resp.content
             else:
                 # if this one fails alos return empty dict
                 return json.dumps({"ip_address": ip_address})
