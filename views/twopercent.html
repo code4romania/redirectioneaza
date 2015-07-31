@@ -13,7 +13,7 @@
                         </a>
                     </div>
                     <div class="media-body">
-                        <h2>{{ ngo.name }}</h2>
+                        <h1>{{ ngo.name }}</h1>
                         <p>
                             {{ ngo.description }}
                         </p>
@@ -39,7 +39,7 @@
                             <input type="text" class="form-control text-capitalize" id="last-name" placeholder="Prenume">
                         </div>
                         <div class="col-xs-2">
-                            <input type="text" class="form-control" id="father" maxlength="1">
+                            <input type="text" class="form-control" id="father" maxlength="1" data-toggle="tooltip" data-placement="right" title="" data-original-title="Initiala tatalui">
                         </div>
                     </div>
                     <div class="form-group">
@@ -98,4 +98,12 @@
     </div>
 </div>
 
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript">
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
 {% endblock %}

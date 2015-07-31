@@ -22,17 +22,17 @@ class NgoHandler(BaseHandler):
 class TwoPercentHandler(BaseHandler):
     def get(self, ngo_url):
 
-        # ngo = NgoEntity.get_by_id(ngo_url)
+        ngo = NgoEntity.get_by_id(ngo_url)
         
-        # if ngo is None:
-        #     self.error(404)
-        #     return
+        if ngo is None:
+            # self.error(404)
+            # return
+            ngo = {
+                "logo": "http://images.clipartpanda.com/spinner-clipart-9cz75npcE.jpeg",
+                "name": "Nume asoc",
+                "description": "o descriere lunga"
+            }
 
-        ngo = {
-            "logo": "http://images.clipartpanda.com/spinner-clipart-9cz75npcE.jpeg",
-            "name": "Nume asoc",
-            "description": "o descriere lunga"
-        }
 
         self.set_template('twopercent.html')
         

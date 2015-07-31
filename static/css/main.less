@@ -5,32 +5,45 @@
 @import "../bower_components/bootswatch/readable/variables.less";
 @import "../bower_components/bootswatch/readable/bootswatch.less";
 
+@font-family-base:        @font-family-sans-serif;
 
 .ngo-details {
-	.media-object {
-		max-width: 100px;
-		max-height: 100px;
-	}
+
+    // this is to override media:first-child margin top
+    &:first-child {
+        margin-top: 70px;
+    }
+    
+    .media-object {
+        max-width: 100px;
+        max-height: 100px;
+    }
+
+    h1 {
+        font-size: 25px;
+    }
 }
 
 .donation-form {
-	#cnp {
-		letter-spacing: 10px;
 
-		-moz-appearance:textfield;
-	}
+    margin-top: 50px;
+    
+    #cnp {
+        letter-spacing: 10px;
 
-	input::-webkit-outer-spin-button,
-	input::-webkit-inner-spin-button {
-	    -webkit-appearance: none;
-	}
+        -moz-appearance:textfield;
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
 }
 
 // FORM
 .form-control {
-
-	font-family: Arial, sans-serif;
-	&:focus {
-		box-shadow: none;
-	}
+    // remove bootstrap's box shadow
+    &:focus {
+        box-shadow: none;
+    }
 }
