@@ -1,0 +1,14 @@
+
+
+
+<select class="form-control" id="judet" name="judet" required x-moz-errormessage="Judetul este obligatoriu" title="Judetul este obligatoriu">
+	<option value="">Judetul</option>
+	<optgroup label="Bucuresti">
+		{% for number in range(6) %}
+			<option value="{{ number }}" {{ "selected" if number == judet }}>Sector {{ number }}</option>
+		{% endfor %}
+	</optgroup>
+	{% for county in counties %}
+		<option value="{{ county }}" {{ "selected" if county == judet }} >{{ county }}</option>
+	{% endfor %}
+</select>

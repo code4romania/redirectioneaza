@@ -13,8 +13,11 @@ from appengine_config import *
 
 # user object
 from google.appengine.api import users, urlfetch
+from google.appengine.ext import ndb
+
 from webapp2_extras import sessions
 
+from models import NgoEntity, Donor
 
 
 def get_jinja_enviroment(account_view_folder=''):
@@ -78,8 +81,8 @@ class BaseHandler(Handler):
         self.response.write(self.template.render(self.template_values))
 
     # USER METHODS
-    def get_geoip_data(self, ip_address):
-        if ip_address:
+    def get_geoip_data(self, ip_address=None):
+        if not ip_address:
             ip_address = self.request.remote_addr
         
         # set the default value to 10 seconds
@@ -108,12 +111,12 @@ class BaseHandler(Handler):
 
     def get_ngo_and_donor(self):
 
-        ngo_id = self.request.route_kwargs.get("ngo_url")
-        donor_id = int( self.request.cookie.get("donor_id") )
+        ngo_id = str( self.request.route_kwargs.get("ngo_url") )
+        donor_id = int( self.request.cookies.get("donor_id", 1) )
 
         list_of_entities = ndb.get_multi([
-            ndb.key(NgoEntity, ngo_id), 
-            ndb.key(Donor, donor_id)
+            ndb.Key("NgoEntity", ngo_id), 
+            ndb.Key("Donor", donor_id)
         ])
 
         ngo = list_of_entities[0]

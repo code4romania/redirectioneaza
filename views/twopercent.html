@@ -6,26 +6,56 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container donation-form-container">
+
+    <div class="row">
+        {% if errors %}
+            <div class="col-xs-12 col-md-6 col-md-offset-3">
+                <div class="alert alert-dismissible alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>Oops!</strong> 
+                    {% if errors["fields"] %}
+                        se pare ca urmatoarele date sunt invalide: 
+                        <span>
+                        {% for error in errors["fields"] %}
+                            {{ error + ", " if not loop.last else error }}
+                        {% endfor %}
+                        </span>
+                    {% elif errors["server"] %}
+                        Se pare ca am intampinat o eroare pe server. Va rugam incercati din nou.
+                    {% endif %}
+                </div>
+            </div>
+        {% else %}
+            {# info about saved data #}
+            <div class="col-xs-12 col-md-6 col-md-offset-3">
+                <div class="alert alert-dismissible alert-info">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>Nota!</strong> Toate datele de pe aceasta pagina sunt trimise folosind o conexiune sigura. Singurele data salvate sunt numele, prenumele, orasul si judetul.
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
     <div class="row">
         <div class="col-xs-12 col-md-6 col-md-offset-3">
-            <form class="form-horizontal donation-form" action="{{ ngo.key.id() }}/doilasuta/pas-2" role="form">
+            <form class="form-horizontal" action="{{ ngo.key.id() }}/doilasuta" role="form" method="post">
                 <fieldset>
                     <legend>Date personale</legend>
                     <div class="form-group">
                         <div class="col-xs-5">
-                            <input type="text" class="form-control text-capitalize" id="first-name" name="first-name" placeholder="Nume" autofocus required title="Numele este obligatoriu" />
+                            <input type="text" class="form-control text-capitalize" id="nume" value="{{ nume }}" name="nume" placeholder="Nume" maxlength="50" autofocus x-moz-errormessage="Numele este obligatoriu" title="Numele este obligatoriu" />
                         </div>
                         <div class="col-xs-5">
-                            <input type="text" class="form-control text-capitalize" id="last-name" name="last-name" placeholder="Prenume" required title="Prenumele este obligatoriu" />
+                            <input type="text" class="form-control text-capitalize" id="prenume" value="{{ prenume }}" name="prenume" placeholder="Prenume" maxlength="50" x-moz-errormessage="Prenumele este obligatoriu" title="Prenumele este obligatoriu" />
                         </div>
                         <div class="col-xs-2">
-                            <input type="text" class="form-control text-uppercase text-center" id="father" name="father" maxlength="1" data-toggle="tooltip" data-placement="right" title="" data-original-title="Initiala tatalui" required />
+                            <input type="text" class="form-control text-uppercase text-center" id="tatal" value="{{ tatal }}" name="tatal" maxlength="1" data-toggle="tooltip" data-placement="right" x-moz-errormessage="" title="" x-moz-errormessage="" data-original-title="Initiala tatalui" />
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-xs-12">
-                            <input type="number" class="form-control text-center" id="cnp" name="cnp" placeholder="CNP" title="CNP-ul este obligatoriu" >
+                            <input type="number" class="form-control text-center" id="cnp" value="{{ cnp }}" name="cnp" placeholder="CNP" x-moz-errormessage="CNP-ul este obligatoriu" title="CNP-ul este obligatoriu" />
                         </div>
                     </div>
                 </fieldset>
@@ -33,34 +63,34 @@
                     <legend>Adresa</legend>
                     <div class="form-group">
                         <div class="col-xs-8">
-                            <input type="text" class="form-control text-capitalize" id="street" placeholder="Strada" required title="Strada este obligatorie" />
+                            <input type="text" class="form-control text-capitalize" id="strada" value="{{ strada }}" name="strada" placeholder="Strada" x-moz-errormessage="Strada este obligatorie" title="Strada este obligatorie" maxlength="70" />
                         </div>
                         <div class="col-xs-4">
-                            <input type="text" class="form-control" id="first-name" placeholder="Numar" required title="Numarul este obligatoriu"/>
+                            <input type="text" class="form-control" id="numar" value="{{ numar }}" name="numar" placeholder="Numar" x-moz-errormessage="Numarul este obligatoriu" title="Numarul este obligatoriu" maxlength="5" />
                         </div>
                     </div>
 
                     <div class="form-group">
                         <div class="col-xs-3">
-                            <input type="text" class="form-control" id="first-name" placeholder="Bloc">
+                            <input type="text" class="form-control" id="bloc" value="{{ bloc }}" name="bloc" placeholder="Bloc" maxlength="5">
                         </div>
                         <div class="col-xs-3">
-                            <input type="text" class="form-control" id="first-name" placeholder="Scara">
+                            <input type="text" class="form-control" id="scara" value="{{ scara }}" name="scara" placeholder="Scara" maxlength="5">
                         </div>
                         <div class="col-xs-3">
-                            <input type="text" class="form-control" id="first-name" placeholder="Etaj">
+                            <input type="text" class="form-control" id="etaj" value="{{ etaj }}" name="etaj" placeholder="Etaj" maxlength="5">
                         </div>
                         <div class="col-xs-3">
-                            <input type="text" class="form-control" id="first-name" placeholder="Ap.">
+                            <input type="text" class="form-control" id="ap" value="{{ ap }}" name="ap" placeholder="Ap." maxlength="5">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <div class="col-xs-6">
-                            <input type="text" class="form-control text-capitalize" id="first-name" placeholder="Localitate" required title="Orasul este obligatoriu" />
+                            <input type="text" class="form-control text-capitalize" id="localitate" value="{{ localitate }}" name="localitate" placeholder="Localitate" x-moz-errormessage="Orasul este obligatoriu" title="Orasul este obligatoriu" maxlength="40" />
                         </div>
                         <div class="col-xs-6">
-                            <input type="text" class="form-control" id="first-name" placeholder="Judet/Sector" required title="Judetul este obligatoriu" />
+                            {% include "components/county.html" %}
                         </div>
                     </div>
                 </fieldset>
@@ -75,12 +105,7 @@
         </div>
     </div>
 
-    <div class="row hidden">
-        <div class="col-xs-8 col-xs-offset-2 col-md-6 col-md-offset-3">
-            <h4 class="text-center">Pdf-ul se creaza.</h4>
-            <p>Pentru ca sa iti putem multumi lasa-ne o adresa de email sau un numar de telefon:</p>
-        </div>
-
+    <div id="second-step" class="hidden">
         {% include "components/second-step.html" %}
     </div>
 </div>

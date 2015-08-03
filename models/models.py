@@ -72,7 +72,6 @@ class Donor(BaseEntity):
 
     # meta data
     date_created = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
-    pdf_ready = ndb.BooleanProperty(default=False)
 
 
 events = ["log-in", "form-submitted"]
