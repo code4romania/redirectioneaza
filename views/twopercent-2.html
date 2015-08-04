@@ -8,27 +8,25 @@
 
 {% block content %}
 <div class="container">
-{% if errors %}
-    <div class="row">
-        <div class="col-xs-12 col-md-6 col-md-offset-3">        
-            <div class="alert alert-dismissible alert-danger">
-                <button type="button" class="close" data-dismiss="alert">×</button>
-                <strong>Oops!</strong> 
-                {% if errors["missing_values"] %}
-                    Va rugam completati o adresa de email sau un numar de telefon.
-                {% elif errors["invalid_email"] %}
-                    Va rugam sa introduceti o adresa de email valida
-                {% elif errors["invalid_tel"] %}
-                    Va rugam sa introduceti un numar de telefon valid.
-                {% endif %}
+    {% if errors %}
+        <div class="row">
+            <div class="col-xs-12 col-md-6 col-md-offset-3">
+                <div class="alert alert-dismissible alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>Oops!</strong> 
+                    {% if errors["missing_values"] %}
+                        Va rugam completati o adresa de email sau un numar de telefon.
+                    {% elif errors["invalid_email"] %}
+                        Va rugam sa introduceti o adresa de email valida
+                    {% elif errors["invalid_tel"] %}
+                        Va rugam sa introduceti un numar de telefon valid.
+                    {% endif %}
+                </div>
             </div>
         </div>
-    </div>
-{% endif %}
+    {% endif %}
 
-    <div class="row">
-        {% include "components/second-step.html" %}
-    </div>
+    {% include "components/second-step.html" %}
 </div>
 
 {% endblock %}

@@ -169,10 +169,6 @@ class TwoPercent2Handler(BaseHandler):
     def get(self, ngo_url):
         post = self.request
 
-        # bool that tells us if its a ajax request
-        # we don't need to set any template if this is the case
-        is_ajax = post.get("ajax", False)
-
         self.get_ngo_and_donor()
 
         # set the index template
@@ -184,13 +180,15 @@ class TwoPercent2Handler(BaseHandler):
 
     def post(self, ngo_url):
         post = self.request
+        # bool that tells us if its a ajax request
+        # we don't need to set any template if this is the case
+        is_ajax = post.get("ajax", False)
         errors = {}
 
         self.get_ngo_and_donor()
 
-
-        email = post.get("email")        
-        tel = post.get("tel")
+        email = post.get("email").strip() if post.get("email") else None
+        tel = post.get("tel").strip() if post.get("tel") else None
 
         # if we have no email or tel
         if not email and not tel:
@@ -205,30 +203,34 @@ class TwoPercent2Handler(BaseHandler):
             if tel and len(tel) != 10
                 errors["invalid_tel"] = True
         
-        if is_ajax:
-            if len(errors) != 0: 
-                self.set_status(400)
-
-            # return the errors if we have any
-            self.request.write(json.dumps(errors))
-            return
 
         # if it's not an ajax request
         # and we have some errors
         if len(errors) != 0:
 
-            self.set_template(self.template_name)
-            
-            self.template_values["errors"] = errors
-            self.template_values["email"] = email
-            self.template_values["tel"] = tel
-            
-            self.render()
-            return
-        else:
-            # if not, redirect to succes
-            self.redirect( "/" + ngo_url + "/succes" )
+            if is_ajax:
+                self.set_status(400)
+                self.request.write(json.dumps(errors))
+            else:
+                self.set_template(self.template_name)
+                
+                self.template_values["errors"] = errors
+                self.template_values["email"] = email
+                self.template_values["tel"] = tel
+                
+                self.render()
 
+        else:
+            self.person.email = email
+            self.person.tel = tel
+
+            self.person.put()
+
+            if is_ajax:
+                self.set_status(200)
+            else:
+                # if not, redirect to succes
+                self.redirect( "/" + ngo_url + "/succes" )
 
 
 
@@ -239,11 +241,25 @@ class DonationSucces(BaseHandler):
 
         self.get_ngo_and_donor()
 
+        self.set_template(self.template_name)
+        self.template_values["ngo"] = self.ngo
+        self.template_values["person"] = self.person
+
+
         # unset the cookie if the ngo does not allow file upload
         # otherwise we still need it
-        if self.ngo.allow_upload:
+        if not self.ngo.allow_upload:
             self.session.pop("donor_id")
             # also we can use self.session.clear()
 
+        self.render()
 
+    def post(self, ngo_url):
+        post = self.request
 
+        self.get_ngo_and_donor()
+
+        self.session.pop("donor_id")
+
+        signed_pdf = post.get("signed-pdf")
+        

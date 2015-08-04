@@ -32,7 +32,7 @@ class NgoEntity(BaseEntity):
     date_created = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
 
     # bool telling if the ngp wants to allow the donor to upload the signed document
-    allow_upload = ndb.BooleanProperty(indexed=True)
+    allow_upload = ndb.BooleanProperty(indexed=True, default=False)
 
 
 class NgoAdmin(BaseEntity):
@@ -68,7 +68,6 @@ class Donor(BaseEntity):
     # the url of the pdf/image after it was signed and scanned
     # only if the ngo allows it
     pdf_signed_url = ndb.StringProperty()
-
 
     # meta data
     date_created = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
