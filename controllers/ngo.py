@@ -169,6 +169,10 @@ class TwoPercent2Handler(BaseHandler):
     def get(self, ngo_url):
         post = self.request
 
+        # bool that tells us if its a ajax request
+        # we don't need to set any template if this is the case
+        is_ajax = post.get("ajax", False)
+
         self.get_ngo_and_donor()
 
         # set the index template
@@ -180,21 +184,51 @@ class TwoPercent2Handler(BaseHandler):
 
     def post(self, ngo_url):
         post = self.request
-        errors = {
-            "second-step": {}
-        }
+        errors = {}
 
         self.get_ngo_and_donor()
 
-        self.set_template(self.template_name)
 
         email = post.get("email")        
         tel = post.get("tel")
 
+        # if we have no email or tel
         if not email and not tel:
-            errors["second-step"] = "missing_values"
-            self.template_values["errors"] = errors
+            errors["missing_values"] = True
+        else:
+            # else validate email
+            email_re = re.compile('[\w.-]+@[\w.-]+.\w+')
+            if email and email_re.match(email):
+                errors["invalid_email"] = True
+
+            # or validate tel
+            if tel and len(tel) != 10
+                errors["invalid_tel"] = True
+        
+        if is_ajax:
+            if len(errors) != 0: 
+                self.set_status(400)
+
+            # return the errors if we have any
+            self.request.write(json.dumps(errors))
             return
+
+        # if it's not an ajax request
+        # and we have some errors
+        if len(errors) != 0:
+
+            self.set_template(self.template_name)
+            
+            self.template_values["errors"] = errors
+            self.template_values["email"] = email
+            self.template_values["tel"] = tel
+            
+            self.render()
+            return
+        else:
+            # if not, redirect to succes
+            self.redirect( "/" + ngo_url + "/succes" )
+
 
 
 
