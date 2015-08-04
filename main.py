@@ -15,6 +15,9 @@ from controllers.ngo import NgoHandler, TwoPercentHandler, TwoPercent2Handler, D
 
 
 config = {}
+# by default the session backend is the cookie
+# cookie_name: session
+# session_max_age: None => until the client is closed
 config['webapp2_extras.sessions'] = dict(secret_key= SESSION_SECRET_KEY)
 
 app = webapp2.WSGIApplication([

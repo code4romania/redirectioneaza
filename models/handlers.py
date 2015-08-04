@@ -32,7 +32,7 @@ def get_jinja_enviroment(account_view_folder=''):
 # default values for every template
 template_settings = {
     "bower_components": DEV_DEPENDECIES_LOCATION,
-    "DEV": PRODUCTION,
+    "DEV": DEV,
     "title": TITLE,
     "language": "ro",
     "base_url": "/"
@@ -85,6 +85,9 @@ class BaseHandler(Handler):
         if not ip_address:
             ip_address = self.request.remote_addr
         
+        if DEV:
+            return json.dumps({"ip_address": ip_address})    
+
         # set the default value to 10 seconds
         deadline = 10
         resp = urlfetch.fetch(url=GEOIP_SERVICES[0].format(ip_address), deadline=deadline)
@@ -112,7 +115,7 @@ class BaseHandler(Handler):
     def get_ngo_and_donor(self):
 
         ngo_id = str( self.request.route_kwargs.get("ngo_url") )
-        donor_id = int( self.request.cookies.get("donor_id", 1) )
+        donor_id = int( self.session.get("donor_id", 1) )
 
         list_of_entities = ndb.get_multi([
             ndb.Key("NgoEntity", ngo_id), 
@@ -134,7 +137,7 @@ class BaseHandler(Handler):
         # if we didn't find the donor than the cookie must be wrong, unset it
         # and redirect to the ngo page
         if donor is None:
-            self.response.delete_cookie("donor_id", path='/')
+            self.session.pop("donor_id")
             self.redirect(ngo_id)
 
 

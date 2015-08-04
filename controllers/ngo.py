@@ -11,6 +11,9 @@ from models.models import NgoEntity, Donor
 
 from logging import info
 import re
+import json
+
+
 ngo = {
     "logo": "http://images.clipartpanda.com/spinner-clipart-9cz75npcE.jpeg",
     "name": "Nume asoc",
@@ -36,12 +39,10 @@ class TwoPercentHandler(BaseHandler):
 
     def get(self, ngo_url):
 
-        
-        # ngo = NgoEntity.get_by_id(ngo_url)
-        # if ngo is None:
-            # self.error(404)
-            # return
-
+        ngo = NgoEntity.get_by_id(ngo_url)
+        if ngo is None:
+            self.error(404)
+            return
 
         self.set_template( self.template_name )
         
@@ -59,16 +60,15 @@ class TwoPercentHandler(BaseHandler):
             "server": False
         }
 
-        # ngo = NgoEntity.get_by_id(ngo_url)
-        # if ngo is None:
-            # self.error(404)
-            # return
-        self.ngo = ngo
+        self.ngo = NgoEntity.get_by_id(ngo_url)
+        if self.ngo is None:
+            self.error(404)
+            return
 
         def get_post_value(arg, add_to_error_list=True):
             # if we received an value and it only contains alpha numeric, spaces and dash
             if post.get(arg):
-                if re.match('^[\w\s-]+$', post.get(arg)) is not None:
+                if re.match('^[\w\s.-]+$', post.get(arg)) is not None:
                     return post.get(arg)
                 else:
                     errors["fields"].append(arg)
@@ -99,9 +99,9 @@ class TwoPercentHandler(BaseHandler):
         payload["county"] = get_post_value("judet")
 
         # the ngo data
-        # payload["name"] = self.ngo.name
-        # payload["account"] = self.ngo.account
-        # payload["cif"] = self.ngo.cif
+        payload["name"] = self.ngo.name
+        payload["account"] = self.ngo.account
+        payload["cif"] = self.ngo.cif
 
         payload["secret_key"] = SECRET_KEY
         
@@ -112,18 +112,19 @@ class TwoPercentHandler(BaseHandler):
 
         # send to aws and get the pdf url
         aws_rpc = urlfetch.create_rpc()
-        info(AWS_PDF_URL)
-        urlfetch.make_fetch_call(aws_rpc, AWS_PDF_URL, payload=payload, method="POST")
 
-        # save to DB while we wait for aws
+        headers = { "Content-Type": "application/json" }
+        urlfetch.make_fetch_call(aws_rpc, AWS_PDF_URL, payload=json.dumps(payload), method="POST", headers=headers)
+
+        # prepare the donor entity while we wait for aws
         person = Donor(
-            first_name = post.get("first_name"),
-            last_name = post.get("last_name"),
-            city = post.get("city"),
-            county = post.get("county"),
+            first_name = payload["first_name"],
+            last_name = payload["last_name"],
+            city = payload["city"],
+            county = payload["county"],
             # make a request to get geo ip data for this user
             geoip = self.get_geoip_data(),
-            # ngo = self.ngo.key
+            ngo = self.ngo.key
         )
 
         # The returned data structure has the following fields:
@@ -133,8 +134,9 @@ class TwoPercentHandler(BaseHandler):
         result = aws_rpc.get_result()
         if result.status_code == 200:
             content = json.loads(result.content)
-            person.pdf_url = content.url
+            person.pdf_url = content["url"]
 
+            # only save if the pdf was created
             person.put()
         else:
             errors["server"] = True
@@ -143,9 +145,9 @@ class TwoPercentHandler(BaseHandler):
             return
 
         # set the donor id in cookie
-        self.response.set_cookie("donor_id", str(person.key.id()), max_age=2592000, path='/')
+        self.session["donor_id"] = str(person.key.id())
 
-        self.redirect( ngo_url + "/doilasuta/pas-2" )
+        self.redirect( "/" + ngo_url + "/doilasuta/pas-2" )
 
     def return_error(self, errors):
         self.set_template( self.template_name )
@@ -163,22 +165,42 @@ class TwoPercentHandler(BaseHandler):
         self.render()
 
 class TwoPercent2Handler(BaseHandler):
+    template_name = 'twopercent-2.html'
     def get(self, ngo_url):
         post = self.request
 
         self.get_ngo_and_donor()
 
         # set the index template
-        self.set_template('twopercent-2.html')
-        self.template_values["ngo"] = ngo
+        self.set_template(self.template_name)
+        self.template_values["ngo"] = self.ngo
         
         # render a response
         self.render()
+
+    def post(self, ngo_url):
+        post = self.request
+        errors = {
+            "second-step": {}
+        }
+
+        self.get_ngo_and_donor()
+
+        self.set_template(self.template_name)
+
+        email = post.get("email")        
+        tel = post.get("tel")
+
+        if not email and not tel:
+            errors["second-step"] = "missing_values"
+            self.template_values["errors"] = errors
+            return
 
 
 
 
 class DonationSucces(BaseHandler):
+    template_name = 'succes.html'
     def get(self, ngo_url):
 
         self.get_ngo_and_donor()
@@ -186,10 +208,8 @@ class DonationSucces(BaseHandler):
         # unset the cookie if the ngo does not allow file upload
         # otherwise we still need it
         if self.ngo.allow_upload:
-            self.response.delete_cookie("donor_id", path='/')
+            self.session.pop("donor_id")
+            # also we can use self.session.clear()
 
-    def post(self, ngo_url):
-        post = self.request
 
-        self.get_ngo_and_donor()
 
