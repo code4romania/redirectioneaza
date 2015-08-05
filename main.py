@@ -12,13 +12,18 @@ from controllers.site import *
 from controllers.ngo import NgoHandler, TwoPercentHandler, TwoPercent2Handler, DonationSucces
 
 
-
-
-config = {}
-# by default the session backend is the cookie
-# cookie_name: session
-# session_max_age: None => until the client is closed
-config['webapp2_extras.sessions'] = dict(secret_key= SESSION_SECRET_KEY)
+config = {
+    'webapp2_extras.auth': {
+        'user_model': 'models.user.User',
+        'user_attributes': ['name']
+    },
+    # by default the session backend is the cookie
+    # cookie_name: session
+    # session_max_age: None => until the client is closed
+    'webapp2_extras.sessions': {
+        'secret_key': SESSION_SECRET_KEY
+    }
+}
 
 app = webapp2.WSGIApplication([
         r('/',          handler=HomePage),

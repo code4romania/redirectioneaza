@@ -35,16 +35,6 @@ class NgoEntity(BaseEntity):
     allow_upload = ndb.BooleanProperty(indexed=True, default=False)
 
 
-class NgoAdmin(BaseEntity):
-    """the admin who controls an ngo"""
-
-    name = ndb.StringProperty(indexed=True)
-    email = ndb.StringProperty(indexed=True)
-
-    password = ndb.StringProperty(indexed=True)
-
-
-
 class Fundraiser(BaseEntity):
     pass
 

@@ -41,7 +41,6 @@ class NewAccountHandler(BaseHandler):
 
         header = {}
         header["title"] = "Titlul paginii"
-        header["color"] = colors["palette_Light_Blue_500"]
         header["image"] = ""
 
         self.template_values["header"] = header
