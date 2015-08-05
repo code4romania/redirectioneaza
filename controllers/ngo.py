@@ -71,27 +71,34 @@ class TwoPercentHandler(BaseHandler):
             return
 
         def get_post_value(arg, add_to_error_list=True):
+            value = post.get(arg)
+
             # if we received an value and it only contains alpha numeric, spaces and dash
-            if post.get(arg):
-                if re.match('^[\w\s.-]+$', post.get(arg)) is not None:
-                    return post.get(arg)
+            if value:
+                if re.match('^[\w\s.-]+$', value) is not None:
+                    # additional validation
+                    if arg == "cnp" and len(value) != 13:
+                        errors["fields"].append(arg)
+                        return ""
+
+                    return value
                 else:
                     errors["fields"].append(arg)
             
             elif add_to_error_list:
                 errors["fields"].append(arg)
 
-            return None
+            return ""
 
         payload = {}
 
         # the donor's data
-        payload["first_name"] = get_post_value("nume")
-        payload["last_name"] = get_post_value("prenume")
-        payload["father"] = get_post_value("tatal")
+        payload["first_name"] = get_post_value("nume").title()
+        payload["last_name"] = get_post_value("prenume").title()
+        payload["father"] = get_post_value("tatal").title()
         payload["cnp"] = get_post_value("cnp")
 
-        payload["street"] = get_post_value("strada")
+        payload["street"] = get_post_value("strada").title()
         payload["number"] = get_post_value("numar")
 
         # optional data
@@ -100,7 +107,7 @@ class TwoPercentHandler(BaseHandler):
         payload["et"] = get_post_value("etaj", False)
         payload["ap"] = get_post_value("ap", False)
 
-        payload["city"] = get_post_value("localitate")
+        payload["city"] = get_post_value("localitate").title()
         payload["county"] = get_post_value("judet")
 
         # the ngo data
@@ -197,8 +204,10 @@ class TwoPercent2Handler(BaseHandler):
 
         self.get_ngo_and_donor()
 
+        # strip any white space
         email = post.get("email").strip() if post.get("email") else ""
-        tel = post.get("tel").strip() if post.get("tel") else ""
+        # also remove nay dots that mught be in the phone number
+        tel = post.get("tel").strip().replace(".", "") if post.get("tel") else ""
 
         # if we have no email or tel
         if not email and not tel:
@@ -206,11 +215,11 @@ class TwoPercent2Handler(BaseHandler):
         else:
             # else validate email
             email_re = re.compile('[\w.-]+@[\w.-]+.\w+')
-            if email and email_re.match(email):
+            if email and not email_re.match(email):
                 errors["invalid_email"] = True
 
             # or validate tel
-            if tel and len(tel) != 10:
+            if tel and len(tel) != 10 and tel[:2] != "07":
                 errors["invalid_tel"] = True
         
         info(errors)
@@ -267,4 +276,6 @@ class DonationSucces(BaseHandler):
         self.session.pop("donor_id")
 
         signed_pdf = post.get("signed-pdf")
+
+        # TODO file upload
         
