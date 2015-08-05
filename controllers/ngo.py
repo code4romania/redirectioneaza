@@ -44,6 +44,11 @@ class TwoPercentHandler(BaseHandler):
             self.error(404)
             return
 
+        # if we still have a cookie from an old session, remove it
+        if "donor_id" in self.session:
+            self.session.pop("donor_id")
+            # also we can use self.session.clear()
+
         self.set_template( self.template_name )
         
         self.template_values["title"] = "Donatie 2%"
@@ -80,7 +85,7 @@ class TwoPercentHandler(BaseHandler):
 
         payload = {}
 
-        # the person's data
+        # the donor's data
         payload["first_name"] = get_post_value("nume")
         payload["last_name"] = get_post_value("prenume")
         payload["father"] = get_post_value("tatal")
@@ -117,7 +122,7 @@ class TwoPercentHandler(BaseHandler):
         urlfetch.make_fetch_call(aws_rpc, AWS_PDF_URL, payload=json.dumps(payload), method="POST", headers=headers)
 
         # prepare the donor entity while we wait for aws
-        person = Donor(
+        donor = Donor(
             first_name = payload["first_name"],
             last_name = payload["last_name"],
             city = payload["city"],
@@ -131,21 +136,26 @@ class TwoPercentHandler(BaseHandler):
         #   status_code:    HTTP status code returned by the server 
         #   content:        string containing the response from the server 
         #   headers:        dictionary of headers returned by the server
-        result = aws_rpc.get_result()
+        try:
+            result = aws_rpc.get_result()
+        except Exception, e:
+            errors["server"] = True
+            self.return_error(errors)
+            return
+
         if result.status_code == 200:
             content = json.loads(result.content)
-            person.pdf_url = content["url"]
+            donor.pdf_url = content["url"]
 
             # only save if the pdf was created
-            person.put()
+            donor.put()
         else:
             errors["server"] = True
-
             self.return_error(errors)
             return
 
         # set the donor id in cookie
-        self.session["donor_id"] = str(person.key.id())
+        self.session["donor_id"] = str(donor.key.id())
 
         self.redirect( "/" + ngo_url + "/doilasuta/pas-2" )
 
@@ -187,8 +197,8 @@ class TwoPercent2Handler(BaseHandler):
 
         self.get_ngo_and_donor()
 
-        email = post.get("email").strip() if post.get("email") else None
-        tel = post.get("tel").strip() if post.get("tel") else None
+        email = post.get("email").strip() if post.get("email") else ""
+        tel = post.get("tel").strip() if post.get("tel") else ""
 
         # if we have no email or tel
         if not email and not tel:
@@ -200,10 +210,10 @@ class TwoPercent2Handler(BaseHandler):
                 errors["invalid_email"] = True
 
             # or validate tel
-            if tel and len(tel) != 10
+            if tel and len(tel) != 10:
                 errors["invalid_tel"] = True
         
-
+        info(errors)
         # if it's not an ajax request
         # and we have some errors
         if len(errors) != 0:
@@ -214,6 +224,7 @@ class TwoPercent2Handler(BaseHandler):
             else:
                 self.set_template(self.template_name)
                 
+                self.template_values["ngo"] = self.ngo
                 self.template_values["errors"] = errors
                 self.template_values["email"] = email
                 self.template_values["tel"] = tel
@@ -221,16 +232,17 @@ class TwoPercent2Handler(BaseHandler):
                 self.render()
 
         else:
-            self.person.email = email
-            self.person.tel = tel
+            self.donor.email = email
+            self.donor.tel = tel
 
-            self.person.put()
+            self.donor.put()
 
             if is_ajax:
                 self.set_status(200)
+                self.request.write("")
             else:
                 # if not, redirect to succes
-                self.redirect( "/" + ngo_url + "/succes" )
+                self.redirect( "/" + ngo_url + "/doilasuta/succes" )
 
 
 
@@ -243,14 +255,7 @@ class DonationSucces(BaseHandler):
 
         self.set_template(self.template_name)
         self.template_values["ngo"] = self.ngo
-        self.template_values["person"] = self.person
-
-
-        # unset the cookie if the ngo does not allow file upload
-        # otherwise we still need it
-        if not self.ngo.allow_upload:
-            self.session.pop("donor_id")
-            # also we can use self.session.clear()
+        self.template_values["donor"] = self.donor
 
         self.render()
 

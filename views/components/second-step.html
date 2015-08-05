@@ -9,11 +9,11 @@
 
 <div class="row">
     <div class="col-xs-12 col-md-8 col-md-offset-2">
-        <form class="form-inline text-center" action="{{ ngo.key.id() }}/doilasuta/pas-2" role="form">
+        <form class="form-inline text-center" action="{{ ngo.key.id() }}/doilasuta/pas-2" method="post" role="form">
             <fieldset class="form-group">
-                <input class="form-control" value="{{ email }}" type="text" placeholder="email" />
+                <input class="form-control" name="email" value="{{ email }}" type="text" placeholder="email" />
                 <span>sau</span>
-                <input class="form-control" type="tel" value="{{ tel }}" placeholder="telefon" />
+                <input class="form-control" name="tel" type="tel" value="{{ tel }}" placeholder="telefon" />
                 <button type="submit" class="btn btn-primary margin-top">Salveaza</button>
             </fieldset>
         </form>

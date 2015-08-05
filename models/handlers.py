@@ -132,13 +132,15 @@ class BaseHandler(Handler):
         # if it doesn't have a cookie, he must not be on the right page
         # redirect to the ngo's main page
         if donor_id is None:
-            self.redirect(ngo_id)
+            self.redirect("/" + ngo_id)
 
         # if we didn't find the donor than the cookie must be wrong, unset it
         # and redirect to the ngo page
         if donor is None:
-            self.session.pop("donor_id")
-            self.redirect(ngo_id)
+            if "donor_id" in self.session:
+                self.session.pop("donor_id") 
+            
+            self.redirect("/" + ngo_id)
 
 
         self.ngo = ngo
