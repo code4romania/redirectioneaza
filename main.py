@@ -42,3 +42,9 @@ app = webapp2.WSGIApplication([
     debug=True,
     config=config
 )
+
+# http://blog.abahgat.com/2013/01/07/user-authentication-with-webapp2-on-google-app-engine/
+# https://github.com/abahgat/webapp2-user-accounts
+# https://github.com/abahgat/webapp2-user-accounts/blob/master/main.py
+# https://github.com/abahgat/webapp2-user-accounts/blob/master/models.py
+# http://gosurob.com/post/20024043690/gaewebapp2accounts

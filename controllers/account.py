@@ -3,71 +3,71 @@
 from models.handlers import LoginHandler
 
 class LoginHandler(LoginHandler):
-        def get(self):
-                self._serve_page()
- 
-        def post(self):
-                username = self.request.get('username')
-                password = self.request.get('password')
+    def get(self):
+        self._serve_page()
 
-                try:
-                        u = self.auth.get_user_by_password(username, password, remember=True)
-                        self.redirect(self.uri_for('home'))
-                except (InvalidAuthIdError, InvalidPasswordError) as e:
-                        logging.info('Login failed for user %s because of %s', username, type(e))
-                        self._serve_page(True)
- 
-        def _serve_page(self, failed=False):
-                username = self.request.get('username')
-                params = {
-                        'username': username,
-                        'failed': failed
-                }
-                self.render_template('login.html', params)
+    def post(self):
+        username = self.request.get('username')
+        password = self.request.get('password')
+
+        try:
+            user = self.auth.get_user_by_password(username, password, remember=True)
+
+            self.redirect(self.uri_for('home'))
+        
+        except (InvalidAuthIdError, InvalidPasswordError) as e:
+            logging.info('Login failed for user %s because of %s', username, type(e))
+            self._serve_page(True)
+
+    def _serve_page(self, failed=False):
+        username = self.request.get('username')
+        params = {
+            'username': username,
+            'failed': failed
+        }
+        self.render_template('login.html', params)
 
 class LogoutHandler(LoginHandler):
-        def get(self):
-                self.auth.unset_session()
-                self.redirect(self.uri_for('home'))
+    def get(self):
+        self.auth.unset_session()
+        self.redirect("/")
 
 class SignupHandler(LoginHandler):
-        def get(self):
+    def get(self):
 
-                self.set_template("login.html")
-                self.render()
+        self.set_template("login.html")
+        self.render()
 
-        def post(self):
-                # user_name = self.request.get('username')
-                email = self.request.get('email')
-                first_name = self.request.get('name')
-                last_name = self.request.get('lastname')
-                
-                password = self.request.get('password')
+    def post(self):
+        # user_name = self.request.get('username')
+        email = self.request.get('email')
+        first_name = self.request.get('name')
+        last_name = self.request.get('lastname')
+        
+        password = self.request.get('password')
 
-                unique_properties = ['email']
-                user_data = self.user_model.create_user(email,
-                                unique_properties,
-                                first_name=first_name, last_name=last_name,
-                                email=email, password_raw=password, verified=False
-                )
+        success, user = self.user_model.create_user(email,
+            unique_properties=['email'],
+            first_name=first_name, last_name=last_name,
+            email=email, password_raw=password, verified=False
+        )
 
-                if not user_data[0]: #user_data is a tuple
-                        self.display_message('Unable to create user for email %s because of \
-                                duplicate keys %s' % (user_name, user_data[1]))
-                        return
+        if not success: #user_data is a tuple
+            self.display_message('Unable to create user for email %s because of \
+                duplicate keys %s' % (email, user))
+            return
 
-                user = user_data[1]
-                user_id = user.get_id()
+        user_id = user.get_id()
 
-                token = self.user_model.create_signup_token(user_id)
+        token = self.user_model.create_signup_token(user_id)
 
-                verification_url = self.uri_for('verification', type='v', user_id=user_id,
-                        signup_token=token, _full=True)
+        verification_url = self.uri_for('verification', type='v', user_id=user_id,
+                signup_token=token, _full=True)
 
-                msg = 'Send an email to user in order to verify their address. \
-                                They will be able to do so by visiting  <a href="{url}">{url}</a>'
+        msg = 'Send an email to user in order to verify their address. \
+                They will be able to do so by visiting  <a href="{url}">{url}</a>'
 
-                self.display_message(msg.format(url=verification_url))
+        self.display_message(msg.format(url=verification_url))
 
 
 class VerificationHandler(LoginHandler):
@@ -82,12 +82,10 @@ class VerificationHandler(LoginHandler):
         # self.auth.get_user_by_token(user_id, signup_token
         # unfortunately the auth interface does not (yet) allow to manipulate
         # signup tokens concisely
-        user, ts = self.user_model.get_by_auth_token(int(user_id), signup_token,
-            'signup')
+        user, ts = self.user_model.get_by_auth_token(int(user_id), signup_token, 'signup')
 
         if not user:
-            logging.info('Could not find any user with id "%s" signup token "%s"',
-                user_id, signup_token)
+            logging.info('Could not find any user with id "%s" signup token "%s"', user_id, signup_token)
             self.abort(404)
 
         # store user data in the session

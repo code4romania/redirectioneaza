@@ -153,7 +153,7 @@ class LoginHandler(BaseHandler):
     @webapp2.cached_property
     def auth(self):
     """Shortcut to access the auth instance as a property."""
-        return auth.get_auth()
+        return auth.get_auth() # request=self.request
 
     @webapp2.cached_property
     def user_info(self):
