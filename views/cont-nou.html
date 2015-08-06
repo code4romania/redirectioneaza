@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+
+{% block header %}
+    {% include "components/ngo-header.html" %}
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-md-8 col-md-offset-2 text-center">
+            <ul class="nav nav-tabs">
+                <li class=""><a href="#cont-nou" data-toggle="tab" aria-expanded="false">Cont nou</a></li>
+                <li class=""><a href="#login" data-toggle="tab" aria-expanded="false">Login</a></li>
+            </ul>
+            <div id="myTabContent" class="tab-content">
+                <div class="tab-pane fade" id="cont-nou">
+                    <form class="form-horizontal" action="/signup" role="form" method="post">
+                        <fieldset>
+                            <legend>Cont nou</legend>
+                            <div class="form-group">
+                                <div class="col-xs-6">
+                                    <input type="text" name="nume" placeholder="Nume" required />
+                                </div>
+                                <div class="col-xs-6">
+                                    <input type="text" name="prenume" placeholder="Prenume" required />
+                                </div>  
+                            </div>
+                            <div class="form-group">
+                                <input type="email" name="email" placeholder="Email" required />
+                            </div>
+                            <div class="form-group">
+                                <input type="password" name="parola" placeholder="Parola" required />
+                            </div>
+                            <button type="submit" class="btn btn-primary pull-right">Trimite</button>
+                        </fieldset>
+                    </form>
+                </div>
+                <div class="tab-pane fade" id="login">
+                    <form class="form-horizontal" action="/login" role="form" method="post">
+                        <fieldset>
+                            <legend>Login</legend>
+                            <div class="form-group">
+                                <input type="email" name="email" placeholder="Email" required />
+                            </div>
+                            <div class="form-group">
+                                <input type="password" name="parola" placeholder="Parola" required />
+                            </div>
+                            <button type="submit" class="btn btn-primary pull-right">Trimite</button>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -13,6 +13,7 @@ from appengine_config import *
 
 # user object
 from google.appengine.api import users, urlfetch
+from google.appengine.api import mail
 from google.appengine.ext import ndb
 
 from webapp2_extras import sessions
@@ -77,7 +78,11 @@ class BaseHandler(Handler):
     def set_template(self, template):
         self.template = self.jinja_enviroment.get_template(template)
 
-    def render(self):
+    def render(self, template_name=None):
+        template = template_name if template_name is not None else self.template_name
+        
+        self.set_template( template )
+
         self.response.write(self.template.render(self.template_values))
 
     # USER METHODS
@@ -147,7 +152,7 @@ class BaseHandler(Handler):
         self.donor = donor
 
 
-class LoginHandler(BaseHandler):
+class AccountHandler(BaseHandler):
     """class used for logged in users"""
 
     @webapp2.cached_property
@@ -192,3 +197,35 @@ class LoginHandler(BaseHandler):
     def session(self):
     """override BaseHandler session method in order to use the datastore as the backend."""
         return self.session_store.get_session(backend="datastore")
+
+
+    def send_email(self, email_type, user):
+        user_id = user.get_id()
+
+        token = self.user_model.create_signup_token(user_id)
+
+        sender_address = "donez si eu <contact@donezsi.eu>"
+        user_address = user.email
+
+        if email_type == "signup":
+            subject = "Confirmare cont donezsi.eu"
+            verification_url = self.uri_for('verification', type='v', user_id=user_id, signup_token=token, _full=True)
+
+            template = self.jinja_enviroment.get_template("email/signup.html")
+
+        elif email_type == "reset-password":
+            subject = "Resetare parola pentru contul donezsi.eu"
+            verification_url = self.uri_for('verification', type='p', user_id=user_id, signup_token=token, _full=True)
+            
+            template = self.jinja_enviroment.get_template("email/reset-password.html")
+
+        else:
+            return
+        
+        body = template.render({
+            "name": user.name,
+            "email": user_address,
+            "url", verification_url
+        })
+
+        mail.send_mail(sender_address, user_address, subject, body)

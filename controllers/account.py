@@ -1,77 +1,111 @@
 
 
-from models.handlers import LoginHandler
+from models.handlers import AccountHandler
 
-class LoginHandler(LoginHandler):
+def user_required(handler):
+    """
+    Decorator that checks if there's a user associated with the current session.
+    Will also fail if there's no session present.
+    """
+    def check_login(self, *args, **kwargs):
+    auth = self.auth
+    if not auth.get_user_by_session():
+        self.redirect(self.uri_for('login'), abort=True)
+    else:
+        return handler(self, *args, **kwargs)
+
+    return check_login
+
+class LoginHandler(AccountHandler):
+    template_name = 'cont-nou.html'
     def get(self):
-        self._serve_page()
+
+        self.render()
 
     def post(self):
-        username = self.request.get('username')
-        password = self.request.get('password')
+        email = self.request.get('email')
+        password = self.request.get('parola')
 
         try:
-            user = self.auth.get_user_by_password(username, password, remember=True)
-
-            self.redirect(self.uri_for('home'))
+            user = self.auth.get_user_by_password(email, password, remember=True)
+            # succes
+            self.redirect(self.uri_for('contul-meu'))
         
         except (InvalidAuthIdError, InvalidPasswordError) as e:
-            logging.info('Login failed for user %s because of %s', username, type(e))
-            self._serve_page(True)
 
-    def _serve_page(self, failed=False):
-        username = self.request.get('username')
-        params = {
-            'username': username,
-            'failed': failed
-        }
-        self.render_template('login.html', params)
+            self.template_values["errors"] = "Se pare ca adresa de email sau parola sunt incorecte."
+            self.render()
 
-class LogoutHandler(LoginHandler):
+
+class LogoutHandler(AccountHandler):
     def get(self):
         self.auth.unset_session()
         self.redirect("/")
 
-class SignupHandler(LoginHandler):
+class SignupHandler(AccountHandler):
+    template_name = 'cont-nou.html'
     def get(self):
 
-        self.set_template("login.html")
         self.render()
 
     def post(self):
-        # user_name = self.request.get('username')
-        email = self.request.get('email')
-        first_name = self.request.get('name')
-        last_name = self.request.get('lastname')
-        
-        password = self.request.get('password')
 
-        success, user = self.user_model.create_user(email,
-            unique_properties=['email'],
+        first_name = self.request.get('nume')
+        last_name = self.request.get('prenume')
+        
+        email = self.request.get('email')
+        password = self.request.get('parola')
+
+        unique_properties = ['email']
+        success, user = self.user_model.create_user(email, unique_properties,
             first_name=first_name, last_name=last_name,
             email=email, password_raw=password, verified=False
         )
 
         if not success: #user_data is a tuple
-            self.display_message('Unable to create user for email %s because of \
-                duplicate keys %s' % (email, user))
+            self.template_values["errors"] = "Exista deja un cont cu aceasta adresa."
+            
+            self.template_values.update({
+                "nume": first_name,
+                "prenume": last_name,
+                "email": email
+            })
+
+            self.render()
             return
 
-        user_id = user.get_id()
+        self.send_email("signup", user)
 
-        token = self.user_model.create_signup_token(user_id)
-
-        verification_url = self.uri_for('verification', type='v', user_id=user_id,
-                signup_token=token, _full=True)
-
-        msg = 'Send an email to user in order to verify their address. \
-                They will be able to do so by visiting  <a href="{url}">{url}</a>'
-
-        self.display_message(msg.format(url=verification_url))
+        self.redirect(self.uri_for('contul-meu'))
 
 
-class VerificationHandler(LoginHandler):
+class ForgotPasswordHandler(AccountHandler):
+    """template used to reset a password, it asks for the email address"""
+    template_name = 'resetare-parola.html'
+    def get(self):
+        self.render()
 
+    def post(self):
+        email = self.request.get('email')
+
+        user = self.user_model.get_by_auth_id(email)
+        if not user:            
+            self.template_values.update({
+                "not_found": True
+            })
+
+            self.render()
+            return
+
+        self.send_email("reset-password", user)
+        self.redirect(self.uri_for("login"))
+
+class VerificationHandler(AccountHandler):
+    template_name = 'parola-noua.html'
+    """handler used to:
+            verify new account
+            reset user password
+    """
     def get(self, *args, **kwargs):
         user = None
         user_id = kwargs['user_id']
@@ -99,15 +133,41 @@ class VerificationHandler(LoginHandler):
                 user.verified = True
                 user.put()
 
-            self.display_message('User email address has been verified.')
-            return
+            self.redirect(self.uri_for("contul-meu"))
+
         elif verification_type == 'p':
             # supply user to the page
-            params = {
-                'user': user,
-                'token': signup_token
-            }
-            self.render_template('resetpassword.html', params)
+            self.template_values.update({
+                "token": signup_token
+            })
+            self.render()
         else:
             logging.info('verification type not supported')
             self.abort(404)
+
+class SetPasswordHandler(AccountHandler):
+    """handler used to get the submited data in the reset password form"""
+
+    template_name = 'parola-noua.html'
+    
+    @user_required
+    def post(self):
+        password = self.request.get('parola')
+        confirm_password = self.request.get('confirma-parola')
+        old_token = self.request.get('token')
+
+        if not password or password != confirm_password:
+            self.template_values.update({
+                "passwords_dont_match": True
+            })
+            self.render()
+            return
+
+        user = self.user
+        user.set_password(password)
+        user.put()
+
+        # remove signup token, we don't want users to come back with an old link
+        self.user_model.delete_signup_token(user.get_id(), old_token)
+
+        self.redirect(self.uri_for("login"))

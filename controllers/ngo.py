@@ -48,8 +48,6 @@ class TwoPercentHandler(BaseHandler):
         if "donor_id" in self.session:
             self.session.pop("donor_id")
             # also we can use self.session.clear()
-
-        self.set_template( self.template_name )
         
         self.template_values["title"] = "Donatie 2%"
         self.template_values["ngo"] = ngo
@@ -167,7 +165,6 @@ class TwoPercentHandler(BaseHandler):
         self.redirect( "/" + ngo_url + "/doilasuta/pas-2" )
 
     def return_error(self, errors):
-        self.set_template( self.template_name )
 
         self.template_values["title"] = "Donatie 2%"
         self.template_values["ngo"] = self.ngo
@@ -189,7 +186,6 @@ class TwoPercent2Handler(BaseHandler):
         self.get_ngo_and_donor()
 
         # set the index template
-        self.set_template(self.template_name)
         self.template_values["ngo"] = self.ngo
         
         # render a response
@@ -231,7 +227,6 @@ class TwoPercent2Handler(BaseHandler):
                 self.set_status(400)
                 self.request.write(json.dumps(errors))
             else:
-                self.set_template(self.template_name)
                 
                 self.template_values["ngo"] = self.ngo
                 self.template_values["errors"] = errors
@@ -255,14 +250,12 @@ class TwoPercent2Handler(BaseHandler):
 
 
 
-
 class DonationSucces(BaseHandler):
     template_name = 'succes.html'
     def get(self, ngo_url):
 
         self.get_ngo_and_donor()
 
-        self.set_template(self.template_name)
         self.template_values["ngo"] = self.ngo
         self.template_values["donor"] = self.donor
 
