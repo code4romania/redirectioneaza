@@ -30,14 +30,7 @@ app = webapp2.WSGIApplication([
         r('/',          handler=HomePage),
 
         r('/despre',    handler=AboutHandler),
-        r('/cont-nou',  handler=NewAccountHandler),
-    
-        r('/<ngo_url>', handler=NgoHandler),
-
-        r('/<ngo_url>/doilasuta',           handler=TwoPercentHandler),
-        r('/<ngo_url>/doilasuta/pas-2',     handler=TwoPercent2Handler),
-        r('/<ngo_url>/doilasuta/succes',    handler=DonationSucces),
-
+        # r('/cont-nou',  handler=NewAccountHandler),
         r('/signup',    handler=SignupHandler),
         r('/login',     handler=LoginHandler, name='login'),
         r('/logout',    handler=LogoutHandler, name='logout'),
@@ -46,7 +39,15 @@ app = webapp2.WSGIApplication([
         r('/password',  handler=SetPasswordHandler),
         r('/<type:v|p>/<user_id:\d+>-<signup_token:.+>', handler=VerificationHandler, name='verification'),
 
-        r('/contul-meu', handler=MyAccountHandler, name='contul-meu')
+        r('/<ngo_url>', handler=NgoHandler),
+        r('/catre/<ngo_url>', handler=NgoHandler),
+
+        r('/<ngo_url>/doilasuta',           handler=TwoPercentHandler),
+        r('/<ngo_url>/doilasuta/pas-2',     handler=TwoPercent2Handler),
+        r('/<ngo_url>/doilasuta/succes',    handler=DonationSucces),
+
+
+        # r('/contul-meu', handler=MyAccountHandler, name='contul-meu')
     ],
     debug=True,
     config=config

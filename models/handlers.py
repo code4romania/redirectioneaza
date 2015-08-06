@@ -157,45 +157,45 @@ class AccountHandler(BaseHandler):
 
     @webapp2.cached_property
     def auth(self):
-    """Shortcut to access the auth instance as a property."""
+        """Shortcut to access the auth instance as a property."""
         return auth.get_auth() # request=self.request
 
     @webapp2.cached_property
     def user_info(self):
-    """Shortcut to access a subset of the user attributes that are stored
-        in the session.
+        """Shortcut to access a subset of the user attributes that are stored
+            in the session.
 
-        The list of attributes to store in the session is specified in
-        config['webapp2_extras.auth']['user_attributes'].
-        :returns
-        A dictionary with most user information
-    """
+            The list of attributes to store in the session is specified in
+            config['webapp2_extras.auth']['user_attributes'].
+            :returns
+            A dictionary with most user information
+        """
         return self.auth.get_user_by_session()
 
     @webapp2.cached_property
     def user(self):
-    """Shortcut to access the current logged in user.
+        """Shortcut to access the current logged in user.
 
-        Unlike user_info, it fetches information from the persistence layer and
-        returns an instance of the underlying model.
+            Unlike user_info, it fetches information from the persistence layer and
+            returns an instance of the underlying model.
 
-        :returns
-        The instance of the user model associated to the logged in user.
-    """
+            :returns
+            The instance of the user model associated to the logged in user.
+        """
         u = self.user_info
         return self.user_model.get_by_id(u['user_id']) if u else None
 
     @webapp2.cached_property
     def user_model(self):
-    """Returns the implementation of the user model.
+        """Returns the implementation of the user model.
 
-        It is consistent with config['webapp2_extras.auth']['user_model'], if set.
-    """
+            It is consistent with config['webapp2_extras.auth']['user_model'], if set.
+        """
         return self.auth.store.user_model
 
     @webapp2.cached_property
     def session(self):
-    """override BaseHandler session method in order to use the datastore as the backend."""
+        """override BaseHandler session method in order to use the datastore as the backend."""
         return self.session_store.get_session(backend="datastore")
 
 
@@ -225,7 +225,7 @@ class AccountHandler(BaseHandler):
         body = template.render({
             "name": user.name,
             "email": user_address,
-            "url", verification_url
+            "url": verification_url
         })
 
         mail.send_mail(sender_address, user_address, subject, body)
