@@ -77,6 +77,8 @@ class SignupHandler(AccountHandler):
 
         self.send_email("signup", user)
 
+        self.auth.get_user_by_password(email, password, remember=True)
+
         self.redirect(self.uri_for('contul-meu'))
 
 

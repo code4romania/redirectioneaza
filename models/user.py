@@ -48,4 +48,4 @@ class User(models.User):
     
     ngo = ndb.KeyProperty(kind="NgoEntity", indexed=True)
 
-    verified = ndb.BooleanProperty(indexed=True)
+    verified = ndb.BooleanProperty(indexed=True, default=False)
