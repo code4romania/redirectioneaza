@@ -26,14 +26,6 @@
                     {% endif %}
                 </div>
             </div>
-        {% else %}
-            {# info about saved data #}
-            <div class="col-xs-12 col-md-6 col-md-offset-3">
-                <div class="alert alert-dismissible alert-info">
-                    <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong>Nota!</strong> Toate datele de pe aceasta pagina sunt trimise folosind o conexiune sigura. Singurele data salvate sunt numele, prenumele, orasul si judetul.
-                </div>
-            </div>
         {% endif %}
     </div>
 
@@ -103,6 +95,18 @@
                 </fieldset>
             </form>
         </div>
+    </div>
+
+    <div class="row">
+        {% if not errors %}
+            {# info about saved data #}
+            <div class="col-xs-12 col-md-6 col-md-offset-3">
+                <div class="alert alert-dismissible alert-info">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>Nota!</strong> Toate datele de pe aceasta pagina sunt trimise folosind o conexiune sigura. Singurele data salvate sunt numele, prenumele, orasul si judetul.
+                </div>
+            </div>
+        {% endif %}
     </div>
 
     <div id="second-step" class="hidden">

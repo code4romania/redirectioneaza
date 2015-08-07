@@ -2,12 +2,24 @@
 
 {% block content %}
 <div class="container">
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <div class="row">
+        {% if errors %}
+            <div class="col-xs-12 col-md-6 col-md-offset-3">
+                <div class="alert alert-dismissible alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>Oops!</strong> {{ errors }}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
     <div class="row">
         <div class="col-xs-12 col-md-8 col-md-offset-2">
             <!-- <ul class="nav nav-tabs">
@@ -15,7 +27,7 @@
                 <li class=""><a href="#login" data-toggle="tab" aria-expanded="false">Login</a></li>
             </ul> -->
             <div id="myTabContent" class="row">
-                <div class="col-xs-12  col-md-6" id="cont-nou">
+                <div class="col-xs-12 col-md-6" id="cont-nou">
                     <form class="form-horizontal" action="/signup" role="form" method="post">
                         <fieldset>
                             <legend>Cont nou</legend>
@@ -41,7 +53,7 @@
                         </fieldset>
                     </form>
                 </div>
-                <div class="col-xs-12  col-md-6" id="login">
+                <div class="col-xs-12 col-md-6" id="login">
                     <form class="form-horizontal" action="/login" role="form" method="post">
                         <fieldset>
                             <legend>Login</legend>
@@ -60,4 +72,20 @@
     </div>
 </div>
 
+{% endblock %}
+
+{# use in case of tabs #}
+{% block tab %}
+    <script type="text/javascript">
+        // Javascript to enable link to tab
+        var url = document.location.toString();
+        if (url.match('#')) {
+            $('.nav-tabs a[href=#'+url.split('#')[1]+']').tab('show') ;
+        } 
+
+        // Change hash for page-reload
+        $('.nav-tabs a').on('shown.bs.tab', function (e) {
+            window.location.hash = e.target.hash;
+        });
+    </script>
 {% endblock %}

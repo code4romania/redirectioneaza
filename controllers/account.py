@@ -1,6 +1,7 @@
 
 
 from models.handlers import AccountHandler
+from webapp2_extras.auth import InvalidPasswordError, InvalidAuthIdError
 
 def user_required(handler):
     """

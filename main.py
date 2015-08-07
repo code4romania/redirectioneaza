@@ -9,6 +9,7 @@ from webapp2 import Route as r
 # the public part of the app
 from controllers.site import *
 from controllers.account import *
+from controllers.my_account import MyAccountHandler
 
 from controllers.ngo import NgoHandler, TwoPercentHandler, TwoPercent2Handler, DonationSucces
 
@@ -16,7 +17,7 @@ from controllers.ngo import NgoHandler, TwoPercentHandler, TwoPercent2Handler, D
 config = {
     'webapp2_extras.auth': {
         'user_model': 'models.user.User',
-        'user_attributes': ['name']
+        'user_attributes': ['first_name']
     },
     # by default the session backend is the cookie
     # cookie_name: session
@@ -30,24 +31,24 @@ app = webapp2.WSGIApplication([
         r('/',          handler=HomePage),
 
         r('/despre',    handler=AboutHandler),
-        # r('/cont-nou',  handler=NewAccountHandler),
-        r('/signup',    handler=SignupHandler),
+        
+        r('/cont-nou',  handler=SignupHandler),
         r('/login',     handler=LoginHandler, name='login'),
         r('/logout',    handler=LogoutHandler, name='logout'),
 
         r('/forgot',    handler=ForgotPasswordHandler, name='forgot'),
         r('/password',  handler=SetPasswordHandler),
         r('/<type:v|p>/<user_id:\d+>-<signup_token:.+>', handler=VerificationHandler, name='verification'),
+        
+        r('/contul-meu', handler=MyAccountHandler, name='contul-meu'),
 
-        r('/<ngo_url>', handler=NgoHandler),
-        r('/catre/<ngo_url>', handler=NgoHandler),
+        r('/<ngo_url>',         handler=NgoHandler, name="ngo-url"),
+        r('/catre/<ngo_url>',   handler=NgoHandler),
 
         r('/<ngo_url>/doilasuta',           handler=TwoPercentHandler),
         r('/<ngo_url>/doilasuta/pas-2',     handler=TwoPercent2Handler),
         r('/<ngo_url>/doilasuta/succes',    handler=DonationSucces),
 
-
-        # r('/contul-meu', handler=MyAccountHandler, name='contul-meu')
     ],
     debug=True,
     config=config

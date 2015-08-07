@@ -16,7 +16,7 @@ from google.appengine.api import users, urlfetch
 from google.appengine.api import mail
 from google.appengine.ext import ndb
 
-from webapp2_extras import sessions
+from webapp2_extras import sessions, auth
 
 from models import NgoEntity, Donor
 
@@ -223,7 +223,7 @@ class AccountHandler(BaseHandler):
             return
         
         body = template.render({
-            "name": user.name,
+            "name": user.first_name,
             "email": user_address,
             "url": verification_url
         })

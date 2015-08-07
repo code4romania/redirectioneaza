@@ -40,10 +40,12 @@ class User(models.User):
  
         return None, None
 
-        first_name = ndb.StringProperty(indexed=True)
-        last_name = ndb.StringProperty(indexed=True)
-        
-        email = ndb.StringProperty(indexed=True)
-        password = ndb.StringProperty(indexed=True)
+    first_name = ndb.StringProperty(indexed=True)
+    last_name = ndb.StringProperty(indexed=True)
+    
+    email = ndb.StringProperty(indexed=True)
+    password = ndb.StringProperty(indexed=True)
+    
+    ngo = ndb.KeyProperty(kind="NgoEntity", indexed=True)
 
-        verified = ndb.BooleanProperty(indexed=True)
+    verified = ndb.BooleanProperty(indexed=True)
