@@ -15,71 +15,33 @@
     </div>
 
     <div class="row">
-        <div class="col-xs-12 col-md-8 col-md-offset-2">
-            <!-- <ul class="nav nav-tabs">
-                <li class=""><a href="#cont-nou" data-toggle="tab" aria-expanded="false">Cont nou</a></li>
-                <li class=""><a href="#login" data-toggle="tab" aria-expanded="false">Login</a></li>
-            </ul> -->
-            <div id="myTabContent" class="row">
-                <div class="col-xs-12 col-md-6" id="cont-nou">
-                    <form class="form-horizontal" action="/cont-nou" role="form" method="post">
-                        <fieldset>
-                            <legend>Cont nou</legend>
-                            <div class="form-group">
-                                <div class="col-xs-6">
-                                    <input class="form-control" type="text" name="nume" placeholder="Nume" required />
-                                </div>
-                                <div class="col-xs-6">
-                                    <input class="form-control" type="text" name="prenume" placeholder="Prenume" required />
-                                </div>  
-                            </div>
-                            <div class="form-group">
-                                <div class="col-xs-12">
-                                    <input class="form-control" type="email" name="email" placeholder="Email" required />
-                                </div>  
-                            </div>
-                            <div class="form-group">
-                                <div class="col-xs-12">
-                                    <input class="form-control" type="password" name="parola" placeholder="Parola" required />
-                                </div>  
-                            </div>
-                            <button type="submit" class="btn btn-primary pull-right">Trimite</button>
-                        </fieldset>
-                    </form>
-                </div>
-                <div class="col-xs-12 col-md-6" id="login">
-                    <form class="form-horizontal" action="/login" role="form" method="post">
-                        <fieldset>
-                            <legend>Login</legend>
-                            <div class="form-group">
-                                <input class="form-control" type="email" name="email" placeholder="Email" required />
-                            </div>
-                            <div class="form-group">
-                                <input class="form-control" type="password" name="parola" placeholder="Parola" required />
-                            </div>
-                            <button type="submit" class="btn btn-primary pull-right">Trimite</button>
-                        </fieldset>
-                    </form>
-                </div>
-            </div>
+        <div class="col-xs-8 col-xs-offset-2 col-sm-6 col-sm-offset-3 col-lg-4 col-lg-offset-4">
+            <form class="form-horizontal" action="/cont-nou" role="form" method="post">
+                <fieldset>
+                    <legend>Cont nou</legend>
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <input class="form-control" type="text" name="nume" placeholder="Nume" required />
+                        </div>
+                        <div class="col-xs-6">
+                            <input class="form-control" type="text" name="prenume" placeholder="Prenume" required />
+                        </div>  
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <input class="form-control" type="email" name="email" placeholder="Email" required />
+                        </div>  
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <input class="form-control" type="password" name="parola" placeholder="Parola" required />
+                        </div>  
+                    </div>
+                    <button type="submit" class="btn btn-primary pull-right">Trimite</button>
+                </fieldset>
+            </form>
         </div>
     </div>
 </div>
 
-{% endblock %}
-
-{# use in case of tabs #}
-{% block tab %}
-    <script type="text/javascript">
-        // Javascript to enable link to tab
-        var url = document.location.toString();
-        if (url.match('#')) {
-            $('.nav-tabs a[href=#'+url.split('#')[1]+']').tab('show') ;
-        } 
-
-        // Change hash for page-reload
-        $('.nav-tabs a').on('shown.bs.tab', function (e) {
-            window.location.hash = e.target.hash;
-        });
-    </script>
 {% endblock %}

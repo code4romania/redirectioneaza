@@ -8,7 +8,7 @@ from webapp2 import Route as r
 
 # the public part of the app
 from controllers.site import *
-from controllers.account import *
+from controllers.account_management import *
 from controllers.my_account import MyAccountHandler
 
 from controllers.ngo import NgoHandler, TwoPercentHandler, TwoPercent2Handler, DonationSucces

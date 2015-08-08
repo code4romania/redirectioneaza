@@ -6,7 +6,7 @@
     <div class="row">
         {# if the user has an ngo attached, everything is ok #}
         {% if user.ngo %}
-            {# show message if the user hasn't verified its address #}
+            {# show message if the user hasn't verified its address yet #}
             {% if not user.verified %}
                 <div class="col-xs-12 col-md-6 col-md-offset-3">
                     <div class="alert alert-dismissible alert-info">
@@ -23,56 +23,7 @@
             </div>
             
         {% else %}
-            <div class="col-xs-12 col-md-8 col-md-offset-2">
-                <h3>Salut, {{ user.first_name }}. Bine ai venit pe donezsi.eu</h3>
-                <form id="ong-details-form" class="form-horizontal" action="/contul-meu" role="form" method="post">
-                    <fieldset>
-                        <legend>Mai intai, spune-ne despre asociatie:</legend>
-                        <div class="form-group">
-                            <div class="col-xs-12">
-                                <input class="form-control" type="text" id="ong-nume" name="ong-nume" placeholder="Numele Asociatiei" required maxlength="150" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-xs-4 text-center">
-                                <label for="ong-logo" class="">
-                                    <i class="fa fa-picture-o fa-4x"></i>
-                                    <p>Logo-ul asociatiei</p>
-                                </label>
-                                <input type="file" class="hidden" name="ong-logo" id="ong-logo">
-                            </div>  
-                            <div class="col-xs-8">
-                                <textarea class="form-control" name="ong-descriere" placeholder="Scurta descriere" rows="3" required ></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-xs-12">
-                                <input class="form-control" type="text" name="ong-adresa" placeholder="Adresa Asociatiei" required maxlength="100" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-xs-12">
-                                <p>Poti alege un url personalizat pentru asociatia ta:</p>
-                                <label for="ong-url" class="control-label">donezsi.eu/</label>
-                                <input class="form-control" type="text" id="ong-url" name="ong-url" placeholder="url-ul asociatiei" required maxlength="50" />
-                            </div>  
-                        </div>
-                        <button type="submit" class="btn btn-primary pull-right">Trimite</button>
-                    </fieldset>
-                </form>
-            </div>
-            {# this script is only for setting up the ngo #}
-            <script type="text/javascript">
-                var ongUrl = $("#ong-url");
-                $("#ong-nume").on("input propertychange", function(ev){
-                    var value = ev.target.value;
-                    value = value.trim().toLowerCase();
-                    // replace all spaces with -, more than one - goes to one, replace any non alpha
-                    value = value.replace(/\s+/g, "-").replace(/-+/g, "-").replace(/[^-\w]/g, '');
-
-                    ongUrl.val(value);
-                });
-            </script>
+            {% include "components/ngo-details-form.html" %}
         {% endif %}
     </div>
 </div>

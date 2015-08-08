@@ -151,6 +151,19 @@ class BaseHandler(Handler):
         self.ngo = ngo
         self.donor = donor
 
+def user_required(handler):
+    """
+    Decorator that checks if there's a user associated with the current session.
+    Will also fail if there's no session present.
+    """
+    def check_login(self, *args, **kwargs):
+        auth = self.auth
+        if not auth.get_user_by_session():
+            self.redirect(self.uri_for('login'), abort=True)
+        else:
+            return handler(self, *args, **kwargs)
+
+    return check_login
 
 class AccountHandler(BaseHandler):
     """class used for logged in users"""
@@ -163,7 +176,7 @@ class AccountHandler(BaseHandler):
     @webapp2.cached_property
     def user_info(self):
         """Shortcut to access a subset of the user attributes that are stored
-            in the session.
+            in the session (cookie).
 
             The list of attributes to store in the session is specified in
             config['webapp2_extras.auth']['user_attributes'].
@@ -174,15 +187,15 @@ class AccountHandler(BaseHandler):
 
     @webapp2.cached_property
     def user(self):
-        """Shortcut to access the current logged in user.
-
-            Unlike user_info, it fetches information from the persistence layer and
-            returns an instance of the underlying model.
+        """Shortcut to access the user's ndb entity.
+            It goes to the datastore.
 
             :returns
-            The instance of the user model associated to the logged in user.
+            The user's ndbm entity
         """
+        # it takes the user's info from the session cookie
         u = self.user_info
+        # then using the ndb model queries the datastore
         return self.user_model.get_by_id(u['user_id']) if u else None
 
     @webapp2.cached_property

@@ -1,25 +1,17 @@
 
 
-from models.handlers import AccountHandler
+from models.handlers import AccountHandler, user_required
 from webapp2_extras.auth import InvalidPasswordError, InvalidAuthIdError
 
-def user_required(handler):
-    """
-    Decorator that checks if there's a user associated with the current session.
-    Will also fail if there's no session present.
-    """
-    def check_login(self, *args, **kwargs):
-        auth = self.auth
-        if not auth.get_user_by_session():
-            self.redirect(self.uri_for('login'), abort=True)
-        else:
-            return handler(self, *args, **kwargs)
-
-    return check_login
+from logging import info
 
 class LoginHandler(AccountHandler):
-    template_name = 'cont-nou.html'
+    template_name = 'login.html'
     def get(self):
+
+        # if the user is logged in just redirect
+        if self.user_info:
+            self.redirect(self.uri_for("contul-meu"))
 
         self.render()
 
@@ -77,10 +69,17 @@ class SignupHandler(AccountHandler):
 
         self.send_email("signup", user)
 
-        self.auth.get_user_by_password(email, password, remember=True)
+        try:
+            self.auth.get_user_by_password(email, password, remember=True)
 
-        self.redirect(self.uri_for('contul-meu'))
+            self.redirect(self.uri_for('contul-meu'))
+        except (InvalidAuthIdError, InvalidPasswordError) as e:
+            
+            # TODO: fix bug with login
+            info(self.user)
 
+            self.template_values["errors"] = "Se pare ca adresa de email sau parola sunt incorecte."
+            self.render()
 
 class ForgotPasswordHandler(AccountHandler):
     """template used to reset a password, it asks for the email address"""
@@ -104,11 +103,12 @@ class ForgotPasswordHandler(AccountHandler):
         self.redirect(self.uri_for("login"))
 
 class VerificationHandler(AccountHandler):
-    template_name = 'parola-noua.html'
     """handler used to:
             verify new account
             reset user password
     """
+    
+    template_name = 'parola-noua.html'
     def get(self, *args, **kwargs):
         user = None
         user_id = kwargs['user_id']
