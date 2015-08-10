@@ -9,7 +9,7 @@ from webapp2 import Route as r
 # the public part of the app
 from controllers.site import *
 from controllers.account_management import *
-from controllers.my_account import MyAccountHandler
+from controllers.my_account import MyAccountHandler, NgoDonationsHandler
 
 from controllers.ngo import NgoHandler, TwoPercentHandler, TwoPercent2Handler, DonationSucces
 
@@ -40,7 +40,8 @@ app = webapp2.WSGIApplication([
         r('/password',  handler=SetPasswordHandler),
         r('/<type:v|p>/<user_id:\d+>-<signup_token:.+>', handler=VerificationHandler, name='verification'),
         
-        r('/contul-meu', handler=MyAccountHandler, name='contul-meu'),
+        r('/contul-meu',    handler=MyAccountHandler, name='contul-meu'),
+        r('/donatii',       handler=NgoDonationsHandler, name='doantii'),
 
         r('/<ngo_url>',         handler=NgoHandler, name="ngo-url"),
         r('/catre/<ngo_url>',   handler=NgoHandler),

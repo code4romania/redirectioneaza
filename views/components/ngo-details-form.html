@@ -1,41 +1,45 @@
-<div class="col-xs-12 col-md-8 col-md-offset-2">
-    <h3>Salut, {{ user.first_name }}. Bine ai venit pe donezsi.eu</h3>
-    <form id="ong-details-form" class="form-horizontal" action="/contul-meu" role="form" method="post">
-        <fieldset>
-            <legend>Mai intai, spune-ne despre asociatie:</legend>
-            <div class="form-group">
-                <div class="col-xs-12">
-                    <input class="form-control" type="text" id="ong-nume" name="ong-nume" placeholder="Numele Asociatiei" required maxlength="150" />
-                </div>
+
+<form id="ong-details-form" class="form-horizontal" action="/contul-meu" role="form" method="post">
+    <fieldset>
+        <legend>Mai intai, spune-ne despre asociatie:</legend>
+        <div class="form-group">
+            <div class="col-xs-12">
+                <input class="form-control" type="text" id="ong-nume" name="ong-nume" placeholder="Numele Asociatiei" required maxlength="150" />
             </div>
-            <div class="form-group">
-                <div class="col-xs-4 text-center">
+        </div>
+        <div class="form-group">
+            <div class="col-xs-4 text-center">
+                <div id="upload-logo">
                     <label for="ong-logo" class="">
                         <i class="fa fa-picture-o fa-4x"></i>
                         <p>Logo-ul asociatiei</p>
                     </label>
-                    <input type="file" class="hidden" name="ong-logo" id="ong-logo">
-                </div>  
-                <div class="col-xs-8">
-                    <textarea class="form-control" name="ong-descriere" placeholder="O scurta descriere" rows="3" required ></textarea>
+                    <input type="file" id="ong-logo" class="hidden" accept="image/*" name="ong-logo" />
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="col-xs-12">
-                    <input class="form-control" type="text" name="ong-adresa" placeholder="Adresa Asociatiei" required maxlength="100" />
+                <div id="display-logo" class="hidden">
+                    <img src="" >
+                    <input type="hidden" id="ong-logo-url" name="ong-logo-url" value="" />
                 </div>
+            </div>  
+            <div class="col-xs-8">
+                <textarea class="form-control" name="ong-descriere" placeholder="O scurta descriere" rows="3" required ></textarea>
             </div>
-            <div class="form-group">
-                <div class="col-xs-12">
-                    <p>Poti alege un url personalizat pentru asociatia ta:</p>
-                    <label for="ong-url" class="control-label">donezsi.eu/</label>
-                    <input class="form-control" type="text" id="ong-url" name="ong-url" placeholder="url-ul asociatiei" required maxlength="50" />
-                </div>  
+        </div>
+        <div class="form-group">
+            <div class="col-xs-12">
+                <input class="form-control" type="text" name="ong-adresa" placeholder="Adresa Asociatiei" required maxlength="100" />
             </div>
-            <button type="submit" class="btn btn-primary pull-right">Trimite</button>
-        </fieldset>
-    </form>
-</div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-12">
+                <p>Poti alege un url personalizat pentru asociatia ta:</p>
+                <label for="ong-url" class="control-label">donezsi.eu/</label>
+                <input class="form-control" type="text" id="ong-url" name="ong-url" placeholder="url-ul asociatiei" required maxlength="50" />
+            </div>  
+        </div>
+        <button type="submit" class="btn btn-primary pull-right">Trimite</button>
+    </fieldset>
+</form>
 
 {# this script is only for setting up the ngo #}
 <script type="text/javascript">
@@ -48,4 +52,52 @@
 
         ongUrl.val(value);
     });
+
+    var uploadLogo = $("#upload-logo");
+    var displayLogo = $("#display-logo");
+
+    var aws_api_url = "{{ AWS_SERVER_URL }}";
+    var photoLogoClass = "fa-picture-o";
+    var loadingLogoClass = "fa-spinner fa-pulse";
+
+    var errors = 0;
+    uploadLogo.find("#ong-logo").on("change", function(ev){
+        var file = ev.target.files[0];
+        function errorCallback(){
+            // TODO: remove this in the future
+            return;
+            errors++;
+            if(errors<4) {
+                uploadLogo.find("#ong-logo").change();
+            } else {
+                alert("Se pare ca a aparut o problema. Va rugam reincarcati pagina si incercati din nou!")
+            }
+        }
+
+        if( file ) {
+            uploadLogo.find("."  + photoLogoClass).removeClass(photoLogoClass).addClass(loadingLogoClass);
+
+            // request upload key
+            $.ajax({
+                url: aws_api_url + "?file_name="+file.name + "&file_type="+file.type,
+                dataType: "jsonp",
+                success: function(data) {
+                    // upload the file
+                    // $.ajax({
+                    //     url: data.signed_request,
+                    //     method: "PUT",
+                    //     success: function() {
+                            uploadLogo.hide().find("input").val("");
+                            displayLogo.find("img").attr("src", data.url);
+                            displayLogo.find("#ong-logo-url").val(data.url);
+                            displayLogo.show();
+                    //     },
+                    //     error: errorCallback
+                    // });
+                },
+                error: errorCallback
+            });
+        }
+    });
+
 </script>

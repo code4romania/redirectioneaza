@@ -2,9 +2,19 @@
 
 from google.appengine.ext.ndb import Key, put_multi
 
+from appengine_config import AWS_PDF_URL
 
 from models.handlers import AccountHandler, user_required
 from models.models import NgoEntity
+from models.upload import UploadHandler
+
+from logging import info
+
+def check_ngo_url(ngo_id=None):
+    if not ngo_id: 
+        return False
+
+    return NgoEntity.query(NgoEntity.key == Key("NgoEntity", ngo_id)).count(1) == 0
 
 class MyAccountHandler(AccountHandler):
     template_name = 'ngo/my-account.html'
@@ -15,6 +25,13 @@ class MyAccountHandler(AccountHandler):
         user = self.user
         self.template_values["user"] = user
 
+        if user.ngo:
+            ngo = user.ngo.get()
+            self.template_values["ngo"] = ngo
+            self.template_values["ngo_url"] = self.request.host + '/' + ngo.key.id()
+        else:
+            self.template_values["AWS_SERVER_URL"] = AWS_PDF_URL + "/upload-file"
+        
         self.render()
 
     def post(self):
@@ -23,7 +40,10 @@ class MyAccountHandler(AccountHandler):
         self.template_values["user"] = user
 
         ong_nume = self.request.get('ong-nume')
-        ong_logo = self.request.get('ong-logo')
+        ong_logo_url = self.request.get('ong-logo-url')
+        # this file should be received only if the
+        ong_logo = self.request.get('ong-logo') if ong_logo_url is None else None
+        
         ong_descriere = self.request.get('ong-descriere')
         ong_adresa = self.request.get('ong-adresa')
         
@@ -34,26 +54,36 @@ class MyAccountHandler(AccountHandler):
             self.render()
             return
 
-        ngo_entity_number = NgoEntity.query(NgoEntity.key == Key.("NgoEntity", ong_url)).count(1)
+        is_ngo_url_avaible = check_ngo_url(ong_url)
 
-        if ngo_entity_number > 0:
+        if is_ngo_url_avaible == False:
             self.template_values["errors"] = "Din pacate acest url este luat deja."
             self.render()
             return
 
+        if ong_logo_url is None and ong_logo is not None:
+            # upload file to S3 if received else None
+            ong_logo_url = UploadHandler.upload_file_to_s3(ong_logo, ong_url) if ong_logo else None
+
         new_ngo = NgoEntity(
             id = ong_url,
             name = ong_nume,
-            desciption = ong_descriere,
+            description = ong_descriere,
+            logo = ong_logo_url,
             address = ong_adresa
         )
 
         # link this user with the ngo
         # the ngo has a key even though we haven't saved it, we offered it an unique id
-        user.ngo = ngo.key
+        user.ngo = new_ngo.key
         
         # use put_multi to save rpc calls
-        put_multi(new_ngo, user)
+        put_multi([new_ngo, user])
 
         # do a refresh
         self.redirect(self.uri_for("contul-meu"))
+
+
+
+class NgoDonationsHandler(AccountHandler):
+    pass

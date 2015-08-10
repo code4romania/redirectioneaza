@@ -191,7 +191,7 @@ class AccountHandler(BaseHandler):
             It goes to the datastore.
 
             :returns
-            The user's ndbm entity
+            The user's ndb entity
         """
         # it takes the user's info from the session cookie
         u = self.user_info
@@ -242,3 +242,4 @@ class AccountHandler(BaseHandler):
         })
 
         mail.send_mail(sender_address, user_address, subject, body)
+        info(body)

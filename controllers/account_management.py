@@ -70,15 +70,13 @@ class SignupHandler(AccountHandler):
         self.send_email("signup", user)
 
         try:
-            self.auth.get_user_by_password(email, password, remember=True)
-
+            # login the user after signup
+            self.auth.set_session(self.auth.store.user_to_dict(user), remember=True)
+            # redirect to my account
             self.redirect(self.uri_for('contul-meu'))
-        except (InvalidAuthIdError, InvalidPasswordError) as e:
+        except Exception, e:
             
-            # TODO: fix bug with login
-            info(self.user)
-
-            self.template_values["errors"] = "Se pare ca adresa de email sau parola sunt incorecte."
+            self.template_values["errors"] = "Se pare ca a aparut o problema. Te rugam sa incerci din nou"
             self.render()
 
 class ForgotPasswordHandler(AccountHandler):
