@@ -10,8 +10,6 @@ class BaseEntity(ndb.Model):
 
 
 
-
-
 class NgoEntity(BaseEntity):
 
     name = ndb.StringProperty(indexed=True)

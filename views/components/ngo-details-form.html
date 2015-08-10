@@ -37,7 +37,27 @@
                 <input class="form-control" type="text" id="ong-url" name="ong-url" placeholder="url-ul asociatiei" required maxlength="50" />
             </div>  
         </div>
-        <button type="submit" class="btn btn-primary pull-right">Trimite</button>
+    </fieldset>
+    <fieldset>
+        <legend>Date financiare</legend>
+        <p>Aceste date sunt necesare pentru formularul de 2%:</p>
+        <div class="form-group">
+            <label for="ong-cif" class="col-xs-4 control-label">Codul Cif:</label>
+            <div class="col-xs-8">
+                <input type="text" class="form-control" id="ong-cif" value="{{ ong_cif }}" name="ong-cif" placeholder="Codul Cif" x-moz-errormessage="Codul Cif" title="Codul Cif" maxlength="10" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="ong-cont" class="col-xs-4 control-label">Codul IBAN al contului:</label>
+            <div class="col-xs-8">
+                <input type="text" class="form-control" id="ong-cont" value="{{ ong_cont }}" name="ong-cont" placeholder="Codul IBAN" x-moz-errormessage="Contul IBAN" title="Contul IBAN" maxlength="40" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-12">
+                <button type="submit" class="btn btn-primary margin-top pull-right">Trimite</button>
+            </div>
+        </div>
     </fieldset>
 </form>
 

@@ -34,6 +34,10 @@
                     </div>
                 </div>
             </div>
+
+            <div class="row">
+                {% include "ngo/donations-view.html" %}
+            </div>
             
         {% else %}
             <div class="col-xs-12 col-md-8 col-md-offset-2">
@@ -52,6 +56,8 @@
         $(function () {
             $(".ngo-copy-url").on("click", function(){
                 this.select();
+            }).on("input", function(ev){
+                ev.preventDefault();
             });
             // $('[data-toggle="popover"]').popover({trigger: "focus"});
         });

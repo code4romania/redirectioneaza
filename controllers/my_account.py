@@ -37,6 +37,9 @@ class MyAccountHandler(AccountHandler):
     def post(self):
         
         user = self.user
+        if user is None:
+            self.abort(403)
+
         self.template_values["user"] = user
 
         ong_nume = self.request.get('ong-nume')
@@ -46,10 +49,14 @@ class MyAccountHandler(AccountHandler):
         
         ong_descriere = self.request.get('ong-descriere')
         ong_adresa = self.request.get('ong-adresa')
+
+        ong_cif = self.request.get('ong-cif')
+        ong_account = self.request.get('ong-cont')
+
         
         ong_url = self.request.get('ong-url')
         
-        if not ong_nume and not ong_descriere and not ong_adresa and not ong_url:
+        if not ong_nume or not ong_descriere or not ong_adresa or not ong_url:
             self.template_values["errors"] = "Te rugam sa completezi datele din formular."
             self.render()
             return
@@ -70,7 +77,9 @@ class MyAccountHandler(AccountHandler):
             name = ong_nume,
             description = ong_descriere,
             logo = ong_logo_url,
-            address = ong_adresa
+            address = ong_adresa,
+            cif = ong_cif,
+            account = ong_account
         )
 
         # link this user with the ngo
@@ -86,4 +95,49 @@ class MyAccountHandler(AccountHandler):
 
 
 class NgoDonationsHandler(AccountHandler):
-    pass
+    @user_required
+    def get(self):
+        self.redirect(self.uri_for("donatii-doilasuta"))
+
+class NgoTwoPercentHandler(AccountHandler):
+    template_name = 'ngo/twopercent.html'
+
+    @user_required
+    def get(self):
+        user = self.user
+
+        if user.ngo:
+            ngo = user.ngo.get()
+        else:
+            self.redirect(self.uri_for("contul-meu"))
+            return
+
+        self.template_values["user"] = user
+        self.template_values["ngo"] = ngo
+
+        self.render()
+
+    def post(self):
+        user = self.user
+        if user is None:
+            self.abort(403)
+
+        if user.ngo:
+            ngo = user.ngo.get()
+        else:
+            self.abort(400)
+
+        ngo_cif = self.request.get('ong-cif')
+        ngo_account = self.request.get('ong-cont')
+
+        if not ngo_cif or not ngo_account:
+            self.template_values["errors"] = "Va rugam completati codul CIF si contul bancar al asociatiei."
+            self.render()
+
+        ngo.cif = ngo_cif
+        ngo.account = ngo_account
+
+        ngo.put()
+
+        self.redirect(self.uri_for("donatii-doilasuta"))
+        
