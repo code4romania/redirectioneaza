@@ -107,21 +107,18 @@
                 dataType: "jsonp",
                 success: function(data) {
                     console.log(data);
-                    return
+                    // return
 
-                    // upload the file
-                    var fd = new FormData();    
-                    fd.append( 'file', file );
-                    
                     $.ajax({
                         url: data.signed_request,
                         method: "PUT",
-                        data: fd,
+                        data: file,
                         processData: false,
                         contentType: false,
-                        // headers: {
-                        //     'x-amz-acl': 'public-read'
-                        // },
+                        headers: {
+                            'x-amz-acl': 'public-read',
+                            'Content-Type': file.type
+                        },
                         success: function() {
                             uploadLogo.hide().find("input").val("");
                             displayLogo.find("img").attr("src", data.url);

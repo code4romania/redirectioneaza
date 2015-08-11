@@ -89,6 +89,14 @@
                 </fieldset>
                 <fieldset>
                     <div class="form-group">
+                        <div class="col-lg-12 checkbox">
+                            <label class="agree-label" for="agree">
+                                <input type="checkbox" name="agree" id="agree" required />
+                                Sunt de acord cu <a href="#">Termenii aplicatiei</a> si cu <a href="#">Politica de confidentialitate</a>.
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <div class="col-lg-12">
                             <button type="submit" class="btn btn-primary pull-right">Trimite</button>
                         </div>
@@ -96,7 +104,7 @@
                 </fieldset>
             </form>
             {% else %}
-            <h3>Se pare ca asociatia inca nu si-a activat aceasta forma de donatie.</h3>
+                <h3>Se pare ca asociatia inca nu si-a activat aceasta forma de donatie.</h3>
             {% endif %}
         </div>
     </div>
@@ -107,7 +115,7 @@
             <div class="col-xs-12 col-md-6 col-md-offset-3">
                 <div class="alert alert-dismissible alert-info">
                     <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong>Nota!</strong> Toate datele de pe aceasta pagina sunt trimise folosind o conexiune sigura. Singurele data salvate sunt numele, prenumele, orasul si judetul.
+                    <strong>Nota!</strong> Toate datele de pe aceasta pagina sunt transmise folosind o conexiune sigura. Singurele date salvate separat sunt: numele, prenumele, orasul si judetul.
                 </div>
             </div>
         {% endif %}

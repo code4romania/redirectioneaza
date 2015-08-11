@@ -14,10 +14,51 @@
 @navbar-default-border:   transparent;
 @navbar-border-radius:    0px;
 
+
+//== Alerts
+//
+//## Define alert colors, border radius, and padding.
+
+@alert-padding:               15px;
+@alert-border-radius:         @border-radius-base;
+@alert-link-font-weight:      bold;
+
+@alert-info-bg:               #fff;
+@alert-info-text:             @gray-dark;
+@alert-info-bold-text:        @state-info-border;
+@alert-info-border:           @state-info-border;
+
+
+@alert-success-bg:            #fff;
+@alert-success-text:          @gray-dark;
+@alert-success-bold-text:     @state-success-border;
+@alert-success-border:        @state-success-border;
+
+
+@alert-warning-bg:            #fff;
+@alert-warning-text:          @gray-dark;
+@alert-warning-bold-text:     @state-warning-border;
+@alert-warning-border:        @state-warning-border;
+
+@alert-danger-bg:             #fff;
+@alert-danger-text:           @gray-dark;
+@alert-danger-bold-text:      @state-danger-border;
+@alert-danger-border:         @state-danger-border;
+
+
+@import "alert.less";
+
+@import "my-account.less";
+@import "twopercent.less";
+
+
+// general css
+
 .margin-top { 
     margin-top:20px; 
 }
 
+// css header
 .ngo-details {
 
     // this is to override media:first-child margin top
@@ -35,21 +76,6 @@
     }
 }
 
-.donation-form-container {
-
-    margin-top: 50px;
-    
-    #cnp {
-        letter-spacing: 10px;
-
-        -moz-appearance:textfield;
-    }
-
-    input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-    }
-}
 
 // FORM
 .form-control {
@@ -59,38 +85,6 @@
     }
 }
 
-// my account
-.ngo-copy-url {
-    // border-bottom: 1px dotted @input-border;
-    #ong-details-form #ong-url;
-}
-
-#copy-icon {
-    cursor: pointer;
-}
-
-#ong-details-form {
+input[type="checkbox"] {
     
-    #ong-url {
-        cursor: pointer;
-        display: inline;
-        width: initial;
-        border: none;
-        border-radius: 0;
-        box-shadow: none;
-        border-bottom: 1px dotted @input-border;
-        min-width: 70%;
-
-        &[readonly] {
-            background-color: initial;
-        }
-    }
-
-    textarea {
-        resize: vertical;
-    }
-}
-
-#donation-table {
-    margin-top: 70px;
 }

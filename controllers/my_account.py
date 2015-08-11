@@ -35,6 +35,7 @@ class MyAccountHandler(AccountHandler):
             self.template_values["donors"] = donors
 
         else:
+            self.template_values["ngo"] = {}
             self.template_values["AWS_SERVER_URL"] = AWS_PDF_URL + "/upload-file"
         
         self.render()
@@ -89,6 +90,7 @@ class NgoDetailsHandler(AccountHandler):
             
             self.render()
         else:
+            self.template_values["ngo"] = {}
             self.redirect(self.uri_for("contul-meu"))
             
     def post(self):
