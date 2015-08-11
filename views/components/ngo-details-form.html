@@ -1,16 +1,16 @@
 
-<form id="ong-details-form" class="form-horizontal" action="/contul-meu" role="form" method="post">
+<form id="ong-details-form" class="form-horizontal" action="/asociatia" role="form" method="post">
     <fieldset>
         <legend>Datele asociatiei:</legend>
         <div class="form-group">
             <div class="col-xs-12">
-                <input class="form-control" type="text" id="ong-nume" name="ong-nume" placeholder="Numele Asociatiei" required maxlength="150" />
+                <input class="form-control" type="text" id="ong-nume" name="ong-nume" placeholder="Numele Asociatiei" value="{{ ngo.name }}" required maxlength="150" />
             </div>
         </div>
         <div class="form-group">
             <div class="col-xs-4 text-center">
                 <div id="upload-logo">
-                    <label for="ong-logo" class="">
+                    <label for="ong-logo">
                         <i class="fa fa-picture-o fa-4x"></i>
                         <p>Logo-ul asociatiei</p>
                     </label>
@@ -22,12 +22,12 @@
                 </div>
             </div>  
             <div class="col-xs-8">
-                <textarea class="form-control" name="ong-descriere" placeholder="O scurta descriere" rows="3" required ></textarea>
+                <textarea class="form-control" name="ong-descriere" placeholder="O scurta descriere" rows="3" required >{{ ngo.description }}</textarea>
             </div>
         </div>
         <div class="form-group">
             <div class="col-xs-12">
-                <input class="form-control" type="text" name="ong-adresa" placeholder="Adresa Asociatiei" required maxlength="100" />
+                <input class="form-control" type="text" name="ong-adresa" placeholder="Adresa Asociatiei" value="{{ ngo.address }}" required maxlength="100" />
             </div>
         </div>
         <div class="form-group">
@@ -35,7 +35,7 @@
                 <div>Poti alege un url personalizat pentru asociatia ta:</div>
                 <p class="text-muted">(acesta nu va mai putea fi schimbat ulterior)</p>
                 <label for="ong-url" class="control-label">donezsi.eu/</label>
-                <input class="form-control" type="text" id="ong-url" name="ong-url" placeholder="url-ul asociatiei" required maxlength="50" />
+                <input class="form-control" type="text" id="ong-url" name="ong-url" placeholder="url-ul asociatiei" value="{{ ngo.key.id() if ngo.key }}" required maxlength="50" {{ "readonly" if ngo.key }} />
             </div>  
         </div>
     </fieldset>
@@ -45,13 +45,13 @@
         <div class="form-group">
             <label for="ong-cif" class="col-xs-4 control-label">Codul Cif:</label>
             <div class="col-xs-8">
-                <input type="text" class="form-control" id="ong-cif" value="{{ ong_cif }}" name="ong-cif" placeholder="Codul Cif" x-moz-errormessage="Codul Cif" title="Codul Cif" maxlength="10" />
+                <input type="text" class="form-control" id="ong-cif" value="{{ ngo.cif }}" name="ong-cif" placeholder="Codul Cif" x-moz-errormessage="Codul Cif" title="Codul Cif" required maxlength="10" />
             </div>
         </div>
         <div class="form-group">
             <label for="ong-cont" class="col-xs-4 control-label">Codul IBAN al contului:</label>
             <div class="col-xs-8">
-                <input type="text" class="form-control" id="ong-cont" value="{{ ong_cont }}" name="ong-cont" placeholder="Codul IBAN" x-moz-errormessage="Contul IBAN" title="Contul IBAN" maxlength="40" />
+                <input type="text" class="form-control" id="ong-cont" value="{{ ngo.account }}" name="ong-cont" placeholder="Codul IBAN" x-moz-errormessage="Codul IBAN" title="Codul IBAN" required maxlength="40" />
             </div>
         </div>
         <div class="form-group">
@@ -64,6 +64,8 @@
 
 {# this script is only for setting up the ngo #}
 <script type="text/javascript">
+
+    {% if not ngo.key %}
     var ongUrl = $("#ong-url");
     $("#ong-nume").on("input propertychange", function(ev){
         var value = ev.target.value;
@@ -72,7 +74,8 @@
         value = value.replace(/\s+/g, "-").replace(/-+/g, "-").replace(/[^-\w]/g, '');
 
         ongUrl.val(value);
-    });
+    }); 
+    {% endif %}
 
     var uploadLogo = $("#upload-logo");
     var displayLogo = $("#display-logo");

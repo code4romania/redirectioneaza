@@ -8,10 +8,11 @@ import os
 
 # if we are currently in production
 DEV = os.environ.get('SERVER_SOFTWARE', 'Development').startswith('Development')
+# use this to simulate production
+# DEV = False
+
 PRODUCTION = not DEV
 
-# use this to simulate production
-# PRODUCTION = True
 
 # used to communicate with aws
 SECRET_KEY = "jjj"

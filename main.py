@@ -6,11 +6,6 @@ from appengine_config import SESSION_SECRET_KEY
 from webapp2_extras import routes
 from webapp2 import Route as r
 
-# the public part of the app
-from controllers.site import *
-from controllers.account_management import *
-from controllers.my_account import MyAccountHandler, NgoDetailsHandler, NgoDonationsHandler, NgoTwoPercentHandler
-
 from controllers.ngo import NgoHandler, TwoPercentHandler, TwoPercent2Handler, DonationSucces
 
 
@@ -27,24 +22,25 @@ config = {
     }
 }
 
+# use string in dotted notation to be lazily imported
 app = webapp2.WSGIApplication([
-        r('/',          handler=HomePage),
+        # the public part of the app
+        r('/',          handler="controllers.site.HomePage"),
+        r('/despre',    handler="controllers.site.AboutHandler"),
+        # account management
+        r('/cont-nou',  handler="controllers.account_management.SignupHandler"),
+        r('/login',     handler="controllers.account_management.LoginHandler", name='login'),
+        r('/logout',    handler="controllers.account_management.LogoutHandler", name='logout'),
 
-        r('/despre',    handler=AboutHandler),
+        r('/forgot',    handler="controllers.account_management.ForgotPasswordHandler", name='forgot'),
+        r('/password',  handler="controllers.account_management.SetPasswordHandler"),
+        # verification url: used for signup, and reset password
+        r('/<type:v|p>/<user_id:\d+>-<signup_token:.+>', handler="controllers.account_management.VerificationHandler", name='verification'),
         
-        r('/cont-nou',  handler=SignupHandler),
-        r('/login',     handler=LoginHandler, name='login'),
-        r('/logout',    handler=LogoutHandler, name='logout'),
-
-        r('/forgot',    handler=ForgotPasswordHandler, name='forgot'),
-        r('/password',  handler=SetPasswordHandler),
-        r('/<type:v|p>/<user_id:\d+>-<signup_token:.+>', handler=VerificationHandler, name='verification'),
-        
-        r('/contul-meu',        handler=MyAccountHandler, name='contul-meu'),
-        r('/asociatia',         handler=NgoDetailsHandler, name='asociatia'),
-
-        r('/donatii',           handler=NgoDonationsHandler, name='donatii'),
-        r('/donatii/doilasuta', handler=NgoTwoPercentHandler, name='donatii-doilasuta'),
+        # my account
+        r('/contul-meu',        handler="controllers.my_account.MyAccountHandler", name='contul-meu'),
+        r('/asociatia',         handler="controllers.my_account.NgoDetailsHandler", name='asociatia'),
+        r('/date-cont',         handler="controllers.my_account.MyAccountDetailsHandler", name='date-contul-meu'),
 
         r('/<ngo_url>',         handler=NgoHandler, name="ngo-url"),
         r('/catre/<ngo_url>',   handler=NgoHandler),
