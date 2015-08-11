@@ -7,19 +7,21 @@
 {% block content %}
 <div class="container">
 
-    <div class="row">
-        {# if the user has an ngo attached, everything is ok #}
-        {% if user.ngo %}
-            {# show message if the user hasn't verified its address yet #}
-            {% if not user.verified %}
+    {# if the user has an ngo attached, everything is ok #}
+    {% if user.ngo %}
+        {# show message if the user hasn't verified its address yet #}
+        {% if not user.verified %}
+            <div class="row">
                 <div class="col-xs-12 col-md-6 col-md-offset-3">
                     <div class="alert alert-dismissible alert-info">
                         <button type="button" class="close" data-dismiss="alert">×</button>
                         <strong>Nota!</strong> Te rugam sa accesezi linkul primit pe email pentru a-ti verifica adresa.
                     </div>
                 </div>
-            {% endif %}
+            </div>
+        {% endif %}
 
+        <div class="row">
             {# ngo details #}
             <div class="col-xs-12 col-md-6 col-md-offset-3">
                 <div class="media">
@@ -30,23 +32,28 @@
                     </div>
                     <div class="media-body">
                         <h2>{{ ngo.name }}</h2>
-                        <input class="ngo-copy-url form-control" value="{{ ngo_url }}" data-toggle="popover" data-placement="bottom" data-content="Apasa CTRL+C pentru a copia adresa" />
+                        <div data-toggle="popover" data-placement="bottom" data-content="Apasa CTRL+C pentru a copia adresa">
+                            <label for="url-ngo">URL:</label>
+                            <input id="url-ngo" class="ngo-copy-url form-control" value="{{ ngo_url }}" readonly />
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="row">
-                {% include "ngo/donations-view.html" %}
-            </div>
-            
-        {% else %}
+        <div class="row">
+            {% include "ngo/donations-view.html" %}
+        </div>
+
+    {% else %}
+        <div class="row">
             <div class="col-xs-12 col-md-8 col-md-offset-2">
                 <h3>Salut, {{ user.first_name }}. Bine ai venit pe donezsi.eu</h3>
+                <h4>Mai intai, spune-ne despre asociatie</h4>
                 {% include "components/ngo-details-form.html" %}
             </div>
-        {% endif %}
-
-    </div>
+        </div>
+    {% endif %}
 </div>
 
 {% endblock %}
@@ -59,7 +66,7 @@
             }).on("input", function(ev){
                 ev.preventDefault();
             });
-            // $('[data-toggle="popover"]').popover({trigger: "focus"});
+            $('[data-toggle="popover"]').popover({trigger: "focus"});
         });
     </script>
 {% endblock %}

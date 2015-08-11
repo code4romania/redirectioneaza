@@ -5,7 +5,7 @@ from google.appengine.ext.ndb import Key, put_multi
 from appengine_config import AWS_PDF_URL
 
 from models.handlers import AccountHandler, user_required
-from models.models import NgoEntity
+from models.models import NgoEntity, Donor
 from models.upload import UploadHandler
 
 from logging import info
@@ -28,7 +28,12 @@ class MyAccountHandler(AccountHandler):
         if user.ngo:
             ngo = user.ngo.get()
             self.template_values["ngo"] = ngo
+            # to url to distribute
             self.template_values["ngo_url"] = self.request.host + '/' + ngo.key.id()
+
+            donors = Donor.query(Donor.ngo == ngo.key).fetch()
+            self.template_values["donors"] = donors
+
         else:
             self.template_values["AWS_SERVER_URL"] = AWS_PDF_URL + "/upload-file"
         
@@ -56,7 +61,7 @@ class MyAccountHandler(AccountHandler):
         
         ong_url = self.request.get('ong-url')
         
-        if not ong_nume or not ong_descriere or not ong_adresa or not ong_url:
+        if not ong_nume or not ong_descriere or not ong_adresa or not ong_url or not ong_cif or not ong_account:
             self.template_values["errors"] = "Te rugam sa completezi datele din formular."
             self.render()
             return
@@ -64,7 +69,7 @@ class MyAccountHandler(AccountHandler):
         is_ngo_url_avaible = check_ngo_url(ong_url)
 
         if is_ngo_url_avaible == False:
-            self.template_values["errors"] = "Din pacate acest url este luat deja."
+            self.template_values["errors"] = "Din pacate acest url este folosit deja."
             self.render()
             return
 
@@ -92,6 +97,24 @@ class MyAccountHandler(AccountHandler):
         # do a refresh
         self.redirect(self.uri_for("contul-meu"))
 
+
+
+class NgoDetailsHandler(AccountHandler):
+    template_name = 'ngo/ngo-details.html'
+    @user_required
+    def get(self):
+        user = self.user
+
+        if user.ngo:
+            self.template_values["user"] = user
+            
+            ngo = user.ngo.get()
+            self.template_values["ngo"] = ngo
+            
+            self.render()
+        else:
+            self.redirect(self.uri_for("contul-meu"))
+            
 
 
 class NgoDonationsHandler(AccountHandler):

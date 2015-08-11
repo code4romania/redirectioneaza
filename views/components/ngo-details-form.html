@@ -1,7 +1,7 @@
 
 <form id="ong-details-form" class="form-horizontal" action="/contul-meu" role="form" method="post">
     <fieldset>
-        <legend>Mai intai, spune-ne despre asociatie:</legend>
+        <legend>Datele asociatiei:</legend>
         <div class="form-group">
             <div class="col-xs-12">
                 <input class="form-control" type="text" id="ong-nume" name="ong-nume" placeholder="Numele Asociatiei" required maxlength="150" />
@@ -32,7 +32,8 @@
         </div>
         <div class="form-group">
             <div class="col-xs-12">
-                <p>Poti alege un url personalizat pentru asociatia ta:</p>
+                <div>Poti alege un url personalizat pentru asociatia ta:</div>
+                <p class="text-muted">(acesta nu va mai putea fi schimbat ulterior)</p>
                 <label for="ong-url" class="control-label">donezsi.eu/</label>
                 <input class="form-control" type="text" id="ong-url" name="ong-url" placeholder="url-ul asociatiei" required maxlength="50" />
             </div>  
@@ -102,18 +103,30 @@
                 url: aws_api_url + "?file_name="+file.name + "&file_type="+file.type,
                 dataType: "jsonp",
                 success: function(data) {
+                    console.log(data);
+                    return
+
                     // upload the file
-                    // $.ajax({
-                    //     url: data.signed_request,
-                    //     method: "PUT",
-                    //     success: function() {
+                    var fd = new FormData();    
+                    fd.append( 'file', file );
+                    
+                    $.ajax({
+                        url: data.signed_request,
+                        method: "PUT",
+                        data: fd,
+                        processData: false,
+                        contentType: false,
+                        // headers: {
+                        //     'x-amz-acl': 'public-read'
+                        // },
+                        success: function() {
                             uploadLogo.hide().find("input").val("");
                             displayLogo.find("img").attr("src", data.url);
                             displayLogo.find("#ong-logo-url").val(data.url);
                             displayLogo.show();
-                    //     },
-                    //     error: errorCallback
-                    // });
+                        },
+                        error: errorCallback
+                    });
                 },
                 error: errorCallback
             });

@@ -14,6 +14,9 @@
 @navbar-default-border:   transparent;
 @navbar-border-radius:    0px;
 
+.margin-top { 
+    margin-top:20px; 
+}
 
 .ngo-details {
 
@@ -69,6 +72,7 @@
 #ong-details-form {
     
     #ong-url {
+        cursor: pointer;
         display: inline;
         width: initial;
         border: none;
@@ -76,9 +80,17 @@
         box-shadow: none;
         border-bottom: 1px dotted @input-border;
         min-width: 70%;
+
+        &[readonly] {
+            background-color: initial;
+        }
     }
 
     textarea {
         resize: vertical;
     }
+}
+
+#donation-table {
+    margin-top: 70px;
 }
