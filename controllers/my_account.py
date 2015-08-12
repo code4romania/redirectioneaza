@@ -8,13 +8,9 @@ from models.handlers import AccountHandler, user_required
 from models.models import NgoEntity, Donor
 from models.upload import UploadHandler
 
+from api import check_ngo_url
+
 from logging import info
-
-def check_ngo_url(ngo_id=None):
-    if not ngo_id: 
-        return False
-
-    return NgoEntity.query(NgoEntity.key == Key("NgoEntity", ngo_id)).count(1) == 0
 
 class MyAccountHandler(AccountHandler):
     template_name = 'ngo/my-account.html'
@@ -37,6 +33,8 @@ class MyAccountHandler(AccountHandler):
         else:
             self.template_values["ngo"] = {}
             self.template_values["AWS_SERVER_URL"] = AWS_PDF_URL + "/upload-file"
+            self.template_values["check_ngo_url"] = "/api/check-ngo-api/"
+
         
         self.render()
 

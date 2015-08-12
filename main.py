@@ -42,6 +42,8 @@ app = webapp2.WSGIApplication([
         r('/asociatia',         handler="controllers.my_account.NgoDetailsHandler", name='asociatia'),
         r('/date-cont',         handler="controllers.my_account.MyAccountDetailsHandler", name='date-contul-meu'),
 
+        r('/api/check-ngo-api/<ngo_url>', handler="controllers.api.CheckNgoUrl", name='api-check-ngo-url'),
+
         r('/<ngo_url>',         handler=NgoHandler, name="ngo-url"),
         r('/catre/<ngo_url>',   handler=NgoHandler),
 

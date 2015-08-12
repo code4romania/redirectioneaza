@@ -16,8 +16,9 @@
                     </label>
                     <input type="file" id="ong-logo" class="hidden" accept="image/*" name="ong-logo" />
                 </div>
-                <div id="display-logo" class="hidden">
-                    <img src="" >
+                <div id="display-logo" class="hidden text-center">
+                    <img id="ngo-logo" src="" class="img-responsive center-block" />
+                    <span id="delete-ngo-logo" class="text-danger">Sterge</span>
                     <input type="hidden" id="ong-logo-url" name="ong-logo-url" value="" />
                 </div>
             </div>  
@@ -35,7 +36,7 @@
                 <div>Poti alege un url personalizat pentru asociatia ta:</div>
                 <p class="text-muted">(acesta nu va mai putea fi schimbat ulterior)</p>
                 <label for="ong-url" class="control-label">donezsi.eu/</label>
-                <input class="form-control" type="text" id="ong-url" name="ong-url" placeholder="url-ul asociatiei" value="{{ ngo.key.id() if ngo.key }}" required maxlength="50" {{ "readonly" if ngo.key }} />
+                <input id="ong-url" class="form-control" type="text" name="ong-url" placeholder="url-ul asociatiei" value="{{ ngo.key.id() if ngo.key }}" required maxlength="50" {{ "readonly" if ngo.key }} />
             </div>  
         </div>
     </fieldset>
@@ -66,15 +67,29 @@
 <script type="text/javascript">
 
     {% if not ngo.key %}
-    var ongUrl = $("#ong-url");
-    $("#ong-nume").on("input propertychange", function(ev){
-        var value = ev.target.value;
-        value = value.trim().toLowerCase();
-        // replace all spaces with -, more than one - goes to one, replace any non alpha
-        value = value.replace(/\s+/g, "-").replace(/-+/g, "-").replace(/[^-\w]/g, '');
+        function checkNgoUrl(){
+            $.ajax({
+                url: "{{ check_ngo_url }}" + ongUrl.val(),
+                success: function(data) {
+                    // if we find it it's no good
+                    ongUrl.addClass("text-danger");
+                },
+                error: function(data) {
+                    ongUrl.removeClass("text-danger");
+                }
+            });
+        };
 
-        ongUrl.val(value);
-    }); 
+        var ongUrl = $("#ong-url");
+        $("#ong-nume").on("input propertychange", function(ev){
+            var value = ev.target.value;
+            value = value.trim().toLowerCase();
+            // replace all spaces with -, more than one - goes to one, replace any non alpha
+            value = value.replace(/\s+/g, "-").replace(/-+/g, "-").replace(/[^-\w]/g, '');
+
+            ongUrl.val(value);
+        }).on("blur", checkNgoUrl);
+
     {% endif %}
 
     var uploadLogo = $("#upload-logo");
@@ -123,7 +138,7 @@
                             uploadLogo.hide().find("input").val("");
                             displayLogo.find("img").attr("src", data.url);
                             displayLogo.find("#ong-logo-url").val(data.url);
-                            displayLogo.show();
+                            displayLogo.removeClass("hidden");
                         },
                         error: errorCallback
                     });
@@ -131,6 +146,10 @@
                 error: errorCallback
             });
         }
+    });
+    
+    ongUrl.on("input propertychange", function(ev){
+        checkNgoUrl();
     });
 
 </script>

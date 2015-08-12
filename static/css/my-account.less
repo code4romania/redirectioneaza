@@ -24,13 +24,20 @@
         border-radius: 0;
         box-shadow: none;
         border-bottom: 1px dotted @input-border;
+        border-top: 1px dotted @body-bg;
         min-width: 70%;
 
         &[readonly] {
             background-color: initial;
         }
     }
-
+    
+    #ngo-logo {
+        max-height: 150px;
+    }
+    #delete-ngo-logo, #upload-logo > label {
+        cursor: pointer;
+    }
     textarea {
         resize: vertical;
     }
