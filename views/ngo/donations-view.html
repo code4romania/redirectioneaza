@@ -16,10 +16,10 @@
             {% if donors %}
                 {% for donation in donors %}
                     <tr>
-                        <td>{{ loop.index }}</td>
-                        <td>{{ donation.first_name + donation.last_name }}</td>
+                        <td>{{ loop.length - loop.index + 1 }}</td>
+                        <td>{{ donation.first_name + " " + donation.last_name }}</td>
                         <td>{{ donation.city }}, <span class="text-muted">{{  donation.county }}</span></td>
-                        <td>{{ donation.email }} {{ "/" + donation.tel if donation.tel }}</td>
+                        <td>{{ donation.email if donation.email }} {{ "/" + donation.tel if donation.tel }}</td>
                     </tr>
                 {% endfor %}
             {% else %}

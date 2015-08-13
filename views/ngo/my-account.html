@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="my-account-container">
 
     {# if the user has an ngo attached, everything is ok #}
     {% if user.ngo %}
@@ -21,22 +21,13 @@
             </div>
         {% endif %}
 
+        {% include "components/ngo-header.html" %}
+    
         <div class="row">
-            {# ngo details #}
             <div class="col-xs-12 col-md-6 col-md-offset-3">
-                <div class="media">
-                    <div class="media-left">
-                        {% if ngo.logo %}
-                            <img class="media-object img-rounded" src="{{ ngo.logo }}" />
-                        {% endif %}
-                    </div>
-                    <div class="media-body">
-                        <h2>{{ ngo.name }}</h2>
-                        <div data-toggle="popover" data-placement="bottom" data-content="Apasa CTRL+C pentru a copia adresa">
-                            <label for="url-ngo">URL:</label>
-                            <input id="url-ngo" class="ngo-copy-url form-control" value="{{ ngo_url }}" readonly />
-                        </div>
-                    </div>
+                <div data-toggle="popover" data-placement="bottom" data-content="Apasa CTRL+C pentru a copia adresa">
+                    <label for="url-ngo">URL:</label>
+                    <input id="url-ngo" class="ngo-copy-url form-control" value="{{ ngo_url }}" readonly />
                 </div>
             </div>
         </div>

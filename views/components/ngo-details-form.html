@@ -9,15 +9,15 @@
         </div>
         <div class="form-group">
             <div class="col-xs-4 text-center">
-                <div id="upload-logo">
+                <div id="upload-logo" class="{{ 'hidden' if ngo.logo }}">
                     <label for="ong-logo">
                         <i class="fa fa-picture-o fa-4x"></i>
                         <p>Logo-ul asociatiei</p>
                     </label>
                     <input type="file" id="ong-logo" class="hidden" accept="image/*" name="ong-logo" />
                 </div>
-                <div id="display-logo" class="hidden text-center">
-                    <img id="ngo-logo" src="" class="img-responsive center-block" />
+                <div id="display-logo" class="text-center {{ 'hidden' if not ngo.logo }}">
+                    <img id="ngo-logo" src="{{ ngo.logo }}" class="img-responsive center-block" />
                     <span id="delete-ngo-logo" class="text-danger">Sterge</span>
                     <input type="hidden" id="ong-logo-url" name="ong-logo-url" value="" />
                 </div>
@@ -35,8 +35,11 @@
             <div class="col-xs-12">
                 <div>Poti alege un url personalizat pentru asociatia ta:</div>
                 <p class="text-muted">(acesta nu va mai putea fi schimbat ulterior)</p>
-                <label for="ong-url" class="control-label">donezsi.eu/</label>
-                <input id="ong-url" class="form-control" type="text" name="ong-url" placeholder="url-ul asociatiei" value="{{ ngo.key.id() if ngo.key }}" required maxlength="50" {{ "readonly" if ngo.key }} />
+                {# this div is only used to contain the two and to add the has-warning class #}
+                <div>
+                    <label for="ong-url" class="control-label">donezsi.eu/</label>
+                    <input id="ong-url" class="form-control" type="text" name="ong-url" placeholder="url-ul asociatiei" value="{{ ngo.key.id() if ngo.key }}" required maxlength="50" {{ "readonly" if ngo.key }} />
+                </div>
             </div>  
         </div>
     </fieldset>
@@ -46,7 +49,7 @@
         <div class="form-group">
             <label for="ong-cif" class="col-xs-4 control-label">Codul Cif:</label>
             <div class="col-xs-8">
-                <input type="text" class="form-control" id="ong-cif" value="{{ ngo.cif }}" name="ong-cif" placeholder="Codul Cif" x-moz-errormessage="Codul Cif" title="Codul Cif" required maxlength="10" />
+                <input type="text" class="form-control" id="ong-cif" value="{{ ngo.cif }}" name="ong-cif" placeholder="Codul Cif" x-moz-errormessage="Codul Cif" title="Codul Cif" required maxlength="12" />
             </div>
         </div>
         <div class="form-group">
@@ -68,14 +71,18 @@
 
     {% if not ngo.key %}
         function checkNgoUrl(){
+            if(!ongUrl.val()) {
+                return;
+            }
+
             $.ajax({
                 url: "{{ check_ngo_url }}" + ongUrl.val(),
                 success: function(data) {
-                    // if we find it it's no good
-                    ongUrl.addClass("text-danger");
+                    ongUrl.parent().removeClass("has-error");
                 },
                 error: function(data) {
-                    ongUrl.removeClass("text-danger");
+                    // if we find it it's no good
+                    ongUrl.parent().addClass("has-error");
                 }
             });
         };
@@ -89,7 +96,10 @@
 
             ongUrl.val(value);
         }).on("blur", checkNgoUrl);
-
+        
+        ongUrl.on("input propertychange", function(ev){
+            checkNgoUrl();
+        });
     {% endif %}
 
     var uploadLogo = $("#upload-logo");
@@ -135,7 +145,7 @@
                             'Content-Type': file.type
                         },
                         success: function() {
-                            uploadLogo.hide().find("input").val("");
+                            uploadLogo.addClass("hidden").find("input").val("");
                             displayLogo.find("img").attr("src", data.url);
                             displayLogo.find("#ong-logo-url").val(data.url);
                             displayLogo.removeClass("hidden");
@@ -147,9 +157,44 @@
             });
         }
     });
-    
-    ongUrl.on("input propertychange", function(ev){
-        checkNgoUrl();
+
+    $("#delete-ngo-logo").on("click", function(){
+        uploadLogo.find(".fa").removeClass(loadingLogoClass).addClass(photoLogoClass);
+        uploadLogo.removeClass("hidden");
+        // hide the disaply logo and reset the logo url
+        displayLogo.addClass("hidden").find("#ong-logo-url").val("");
+
     });
 
+    var ongCif = $("#ong-cif");
+    ongCif.on("blur", function(){
+        if(!ongCif.val()) return;
+        $.ajax({
+            url: "http://openapi.ro/api/validate/cif/" + ongCif.val() + ".json",
+            dataType: "jsonp",
+            success: function(data) {
+                if(data.valid) {
+                    ongCif.parent().removeClass("has-error");
+                } else {
+                    ongCif.parent().addClass("has-error");
+                }
+            }
+        });
+    });
+
+    var ongCont = $("#ong-cont");
+    ongCont.on("blur", function(){
+        if(!ongCont.val()) return;
+        $.ajax({
+            url: "http://openapi.ro/api/validate/iban/" + ongCont.val() + ".json",
+            dataType: "jsonp",
+            success: function(data) {
+                if(data.valid) {
+                    ongCont.parent().removeClass("has-error");
+                } else {
+                    ongCont.parent().addClass("has-error");
+                }
+            }
+        });
+    });
 </script>

@@ -23,7 +23,7 @@ class CheckNgoUrl(AccountHandler):
             self.abort(403)
 
         if check_ngo_url(ngo_url):
-            self.response.set_status(404)
-        else:
             self.response.set_status(200)
+        else:
+            self.response.set_status(404)
 

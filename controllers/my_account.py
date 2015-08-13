@@ -85,6 +85,7 @@ class NgoDetailsHandler(AccountHandler):
             
             ngo = user.ngo.get()
             self.template_values["ngo"] = ngo
+            self.template_values["AWS_SERVER_URL"] = AWS_PDF_URL + "/upload-file"
             
             self.render()
         else:
