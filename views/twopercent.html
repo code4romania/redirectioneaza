@@ -221,23 +221,26 @@
                 }
             });
 
+            // TODO
+            return;
+            
             var invalidFormAlert = $("#invalid-form-alert");
             var submitFormButton = $("#submit-twopercent-form");
-            submitFormButton.on("click", function(ev){
+            $("#twopercent").on("submit", function(ev){
+                // ev.preventDefault();
+                
+                var len = 0;
+                for (var o in invalidFields) {
+                    len++;
+                }
 
-                if(invalidFields.length === 0) {
+                if( len == 0 ) {
                     // all ok
                     invalidFormAlert.addClass("hidden");
                 } else {
                     invalidFormAlert.removeClass("hidden");
+                    return
                 }
-            });
-
-            $("#twopercent").on("submit", function(ev){
-                ev.preventDefault();
-                
-                // if we have errors, exit
-                if(invalidFields.length !== 0) return;
 
                 // add ajax field
                 $('<input />').attr('type', 'hidden')
@@ -247,7 +250,8 @@
 
                 $.ajax({
                     url: "{{ ngo.key.id() }}/doilasuta",
-                    data: $(this).serialize();
+                    type: "POST",
+                    data: $(this).serialize(),
                     success: function(data) {
                         submitFormButton.removeClass("btn-primary").addClass("btn-success").attr("disabled", true);
                         $("#second-step").removeClass("hidden");
