@@ -34,23 +34,23 @@
     <div class="row">
         <div class="col-xs-12 col-md-6 col-md-offset-3">
             {% if ngo.account and ngo.cif %}
-            <form class="form-horizontal" action="{{ ngo.key.id() }}/doilasuta" role="form" method="post">
+            <form id="twopercent" class="form-horizontal" action="{{ ngo.key.id() }}/doilasuta" role="form" method="post">
                 <fieldset>
                     <legend>Date personale</legend>
                     <div class="form-group">
                         <div class="col-xs-5">
-                            <input type="text" class="form-control text-capitalize" id="nume" value="{{ nume }}" name="nume" placeholder="Nume" maxlength="50" autofocus x-moz-errormessage="Numele este obligatoriu" title="Numele este obligatoriu" />
+                            <input type="text" class="form-control text-capitalize" id="nume" value="{{ nume }}" name="nume" placeholder="Nume" maxlength="50" autofocus x-moz-errormessage="Numele este obligatoriu" required />
                         </div>
                         <div class="col-xs-5">
-                            <input type="text" class="form-control text-capitalize" id="prenume" value="{{ prenume }}" name="prenume" placeholder="Prenume" maxlength="50" x-moz-errormessage="Prenumele este obligatoriu" title="Prenumele este obligatoriu" />
+                            <input type="text" class="form-control text-capitalize" id="prenume" value="{{ prenume }}" name="prenume" placeholder="Prenume" maxlength="50" x-moz-errormessage="Prenumele este obligatoriu" required />
                         </div>
                         <div class="col-xs-2">
-                            <input type="text" class="form-control text-uppercase text-center" id="tatal" value="{{ tatal }}" name="tatal" maxlength="1" data-toggle="popover" data-placement="right" x-moz-errormessage="" title="" x-moz-errormessage="" data-content="Initiala tatalui" />
+                            <input type="text" class="form-control text-uppercase text-center" id="tatal" value="{{ tatal }}" name="tatal" maxlength="1" data-toggle="popover" data-placement="right" x-moz-errormessage="" data-content="Initiala tatalui" required />
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-xs-12">
-                            <input type="number" class="form-control text-center" id="cnp" value="{{ cnp }}" name="cnp" placeholder="CNP" x-moz-errormessage="CNP-ul este obligatoriu" title="CNP-ul este obligatoriu" />
+                            <input type="number" class="form-control text-center" id="cnp" value="{{ cnp }}" name="cnp" placeholder="CNP" x-moz-errormessage="CNP-ul este obligatoriu" required />
                         </div>
                     </div>
                 </fieldset>
@@ -58,10 +58,10 @@
                     <legend>Adresa</legend>
                     <div class="form-group">
                         <div class="col-xs-8">
-                            <input type="text" class="form-control text-capitalize" id="strada" value="{{ strada }}" name="strada" placeholder="Strada" x-moz-errormessage="Strada este obligatorie" title="Strada este obligatorie" maxlength="70" />
+                            <input type="text" class="form-control text-capitalize" id="strada" value="{{ strada }}" name="strada" placeholder="Strada" x-moz-errormessage="Strada este obligatorie" maxlength="70" required />
                         </div>
                         <div class="col-xs-4">
-                            <input type="text" class="form-control" id="numar" value="{{ numar }}" name="numar" placeholder="Numar" x-moz-errormessage="Numarul este obligatoriu" title="Numarul este obligatoriu" maxlength="5" />
+                            <input type="text" class="form-control" id="numar" value="{{ numar }}" name="numar" placeholder="Numar" x-moz-errormessage="Numarul este obligatoriu" maxlength="5" required />
                         </div>
                     </div>
 
@@ -82,7 +82,7 @@
 
                     <div class="form-group">
                         <div class="col-xs-6">
-                            <input type="text" class="form-control text-capitalize" id="localitate" value="{{ localitate }}" name="localitate" placeholder="Localitate" x-moz-errormessage="Orasul este obligatoriu" title="Orasul este obligatoriu" maxlength="40" />
+                            <input type="text" class="form-control text-capitalize" id="localitate" value="{{ localitate }}" name="localitate" placeholder="Localitate" x-moz-errormessage="Orasul este obligatoriu" maxlength="40" required />
                         </div>
                         <div class="col-xs-6">
                             {% include "components/county.html" %}
@@ -100,7 +100,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-lg-12">
-                            <button type="submit" class="btn btn-primary pull-right">Trimite</button>
+                            <button id="submit-twopercent-form" type="submit" class="btn btn-primary pull-right">Trimite</button>
                         </div>
                     </div>
                 </fieldset>
@@ -108,6 +108,14 @@
             {% else %}
                 <h3>Se pare ca asociatia inca nu si-a activat aceasta forma de donatie.</h3>
             {% endif %}
+        </div>
+    </div>
+
+    <div id="invalid-form-alert" class="row hidden">
+        <div class="col-xs-12 col-md-6 col-md-offset-3">
+            <div class="alert alert-danger">
+                <strong>Oops!</strong> Se pare ca formularul contine campuri invalide.
+            </div>
         </div>
     </div>
 
@@ -134,6 +142,124 @@
     <script type="text/javascript">
         $(function () {
             $('[data-toggle="popover"]').popover({trigger: "focus"});
+
+            var errorClass = "has-error";
+            var invalidFields = {};
+            function showError (context) {
+                invalidFields[context.id] = true;
+
+                var el = $(context);
+                el.parent().addClass(errorClass);
+                el.popover({
+                    content: "Valoarea acestui camp este invalida.",
+                    title: "",
+                    placement: "right",
+                    trigger: "focus"
+                });
+            }
+            function hideError (context) {
+                delete invalidFields[context.id];
+                
+                var el = $(context);
+                el.parent().removeClass(errorClass);
+                el.popover('destroy');
+            }
+
+            $("#nume, #prenume, #strada, #bloc, #scara, #etaj, #ap, #localitate").on("blur", function(){
+                var val = this.value;
+                if(!val) return;
+
+                var regex = /^[\w\s.-]+$/gi;
+                // if we have no match
+                if(!val.match(regex)) {
+                    showError(this);
+                } else {
+                    hideError(this);
+                }
+            });
+
+            /******************************************************************************/
+            /****                            Validare CNP                              ****/
+            /******************************************************************************/
+            /**
+             * Validate CNP ( valid for 1800-2099 )
+             *
+             * @param string $p_cnp
+             * @return boolean
+             */
+            // copyright https://github.com/cristian-datu/CNP
+            function validCNP( p_cnp ) {
+                var i=0 , year=0 , hashResult=0 , cnp=[] , hashTable=[2,7,9,1,4,6,3,5,8,2,7,9];
+                if( p_cnp.length !== 13 ) { return false; }
+                for( i=0 ; i<13 ; i++ ) {
+                    cnp[i] = parseInt( p_cnp.charAt(i) , 10 );
+                    if( isNaN( cnp[i] ) ) { return false; }
+                    if( i < 12 ) { hashResult = hashResult + ( cnp[i] * hashTable[i] ); }
+                }
+                hashResult = hashResult % 11;
+                if( hashResult === 10 ) { hashResult = 1; }
+                year = (cnp[1]*10)+cnp[2];
+                switch( cnp[0] ) {
+                    case 1  : case 2 : { year += 1900; } break;
+                    case 3  : case 4 : { year += 1800; } break;
+                    case 5  : case 6 : { year += 2000; } break;
+                    case 7  : case 8 : case 9 : { year += 2000; if( year > ( parseInt( new Date().getYear() , 10 ) - 14 ) ) { year -= 100; } } break;
+                    default : { return false; }
+                }
+                if( year < 1800 || year > 2099 ) { return false; }
+                return ( cnp[12] === hashResult );
+            }
+
+            $("#cnp").on("blur", function(){
+                var val = this.value;
+                if(!val) return;
+
+                if(!validCNP(val)) {
+                    showError(this);
+                } else {
+                    hideError(this);
+                }
+            });
+
+            var invalidFormAlert = $("#invalid-form-alert");
+            var submitFormButton = $("#submit-twopercent-form");
+            submitFormButton.on("click", function(ev){
+
+                if(invalidFields.length === 0) {
+                    // all ok
+                    invalidFormAlert.addClass("hidden");
+                } else {
+                    invalidFormAlert.removeClass("hidden");
+                }
+            });
+
+            $("#twopercent").on("submit", function(ev){
+                ev.preventDefault();
+                
+                // if we have errors, exit
+                if(invalidFields.length !== 0) return;
+
+                // add ajax field
+                $('<input />').attr('type', 'hidden')
+                    .attr('name', "ajax")
+                    .attr('value', "true")
+                    .appendTo(this);
+
+                $.ajax({
+                    url: "{{ ngo.key.id() }}/doilasuta",
+                    data: $(this).serialize();
+                    success: function(data) {
+                        submitFormButton.removeClass("btn-primary").addClass("btn-success").attr("disabled", true);
+                        $("#second-step").removeClass("hidden");
+                    },
+                    error: function(data) {
+
+                        var message = "Se pare ca urmatoarele date sunt invalide: "
+                        submitFormButton.addClass("btn-primary").removeClass("btn-success").attr("disabled", false);
+                        invalidFormAlert.removeClass("hidden").find("span").text(message)
+                    }
+                });
+            });
         });
     </script>
 {% endblock %}

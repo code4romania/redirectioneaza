@@ -112,8 +112,6 @@ class TwoPercentHandler(BaseHandler):
         payload["name"] = self.ngo.name
         payload["account"] = self.ngo.account
         payload["cif"] = self.ngo.cif
-
-        payload["secret_key"] = SECRET_KEY
         
         if len(errors["fields"]):
             self.return_error(errors)
