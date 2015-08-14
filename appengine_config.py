@@ -15,8 +15,8 @@ PRODUCTION = not DEV
 
 
 # used to communicate with aws
-SECRET_KEY = "jjj"
-AWS_PDF_URL = "" if PRODUCTION else "http://127.0.0.1:8090"
+SECRET_KEY = "B1={kpE_4To5ZSJW=hNx(EYDj0-f|YT8uz5*SU6iA~.A+]aWSC#lmu;<Hc|T^V@-:#|+g0b<[+toRMtyqdtEDJ$%o4$>_yRTxbsh}%a|k)BS}u;dU~%Da;;SDhmZFl[_Wpr#U?A8"
+AWS_PDF_URL = "ec2-52-10-187-83.us-west-2.compute.amazonaws.com" if PRODUCTION else "http://127.0.0.1:8090"
 
 
 GEOIP_SERVICES = ["http://ip-api.com/json/{0}", "http://freegeoip.net/json/{0}"]
@@ -25,15 +25,20 @@ GEOIP_SERVICES = ["http://ip-api.com/json/{0}", "http://freegeoip.net/json/{0}"]
 VIEWS_FOLDER = "/views"
 
 DEV_DEPENDECIES_LOCATION = "/bower_components"
-TITLE = "donez si eu"
+TITLE = "donezsi.eu"
 
-SESSION_SECRET_KEY = ""
+SESSION_SECRET_KEY = "JgW`l2hZa*WV+z >}{T~Snq`DD1s@S#[Z7L>~.-;]t.7y2%gU)A^?ZTDyn/~kDh}RZA:/B{Vo7cI@TeA2Dll+0M#z|{,V*8`90VaV^`Cj&"
 
 
 # ADMIN
 BASE_ADMIN_LINK = "/admin"
 
 LIST_OF_COUNTIES = ['Alba', 'Arad', 'Arges', 'Bacau', 'Bihor', 'Bistrita-Nasaud', 'Botosani', 'Braila', 'Brasov', 'Buzau', 'Calarasi', 'Caras-Severin', 'Cluj', 'Constanta', 'Covasna', 'Dambovita', 'Dolj', 'Galati', 'Giurgiu', 'Gorj', 'Harghita', 'Hunedoara', 'Ialomita', 'Iasi', 'Ilfov', 'Maramures', 'Mehedinti', 'Mures', 'Neamt', 'Olt', 'Prahova', 'Salaj', 'Satu Mare', 'Sibiu', 'Suceava', 'Teleorman', 'Timis', 'Tulcea', 'Valcea', 'Vaslui', 'Vrancea']
+
+CONTACT_FORM_URL = "https://docs.google.com/forms/d/1PdigxpzW1omlTtexfu-gXEPEJmkiEltGLBaTQ8n-nk8/viewform"
+CONTACT_EMAIL_ADDRESS = "donez si eu <contact@donezsi.eu>"
+
+
 
 
 

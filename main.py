@@ -27,6 +27,10 @@ app = webapp2.WSGIApplication([
         # the public part of the app
         r('/',          handler="controllers.site.HomePage"),
         r('/despre',    handler="controllers.site.AboutHandler"),
+
+        r('/termeni',    handler="controllers.site.TermsHandler"),
+        r('/politica',   handler="controllers.site.PolicyHandler"),
+
         # account management
         r('/cont-nou',  handler="controllers.account_management.SignupHandler"),
         r('/login',     handler="controllers.account_management.LoginHandler", name='login'),

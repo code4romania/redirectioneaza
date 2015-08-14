@@ -35,6 +35,7 @@ template_settings = {
     "bower_components": DEV_DEPENDECIES_LOCATION,
     "DEV": DEV,
     "title": TITLE,
+    "contact_url": CONTACT_FORM_URL,
     "language": "ro",
     "base_url": "/"
 }
@@ -217,14 +218,14 @@ class AccountHandler(BaseHandler):
 
         token = self.user_model.create_signup_token(user_id)
 
-        sender_address = "donez si eu <contact@donezsi.eu>"
+        sender_address = CONTACT_EMAIL_ADDRESS
         user_address = user.email
 
         if email_type == "signup":
             subject = "Confirmare cont donezsi.eu"
             verification_url = self.uri_for('verification', type='v', user_id=user_id, signup_token=token, _full=True)
 
-            template = self.jinja_enviroment.get_template("email/signup.html")
+            template = self.jinja_enviroment.get_template("email/signup/signup_inline.html")
 
         elif email_type == "reset-password":
             subject = "Resetare parola pentru contul donezsi.eu"
@@ -238,6 +239,7 @@ class AccountHandler(BaseHandler):
         body = template.render({
             "name": user.first_name,
             "email": user_address,
+            "contact_url": CONTACT_FORM_URL,
             "url": verification_url
         })
 
