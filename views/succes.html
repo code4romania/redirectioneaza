@@ -9,19 +9,19 @@
 {% block content %}
 <div class="container">
     <div class="row">
-        <div class="col-xs-12 col-md-8 col-md-offset-2 text-center">
-            <img class="" src="/img/succes.jpg" alt="">
-            
-            <h1>Multumim mult, {{ donor.first_name }}</h1>
-            <h2>Gasesti mai jos pdf-ul pentru download:</h2>
-            <p>
-                <a href="{{ donor.pdf_url }}" class="btn btn-primary" target="_blank">Descarca</a>
-            </p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-12 col-md-8 col-md-offset-2 text-center margin-top">
-            <p>Nu uita sa printezi, sa semnezi si sa expediezi formularul catre unitatea ANAF de care apartii.</p>
+        <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 text-center">
+            <div class="col-xs-4 col-xs-offset-4">
+                <img class="img-responsive center-block" src="/images/success.png" alt="">
+            </div>
+            <div class="col-xs-12">
+                <h1>Multumim mult, {{ donor.first_name }}</h1>
+                <h2>Gasesti mai jos pdf-ul pentru download:</h2>
+                <p>
+                    <a href="{{ donor.pdf_url }}" class="btn btn-success btn-lg" target="_blank">
+                        Descarca &nbsp; <i class="fa fa-download"></i>
+                    </a>
+                </p>
+            </div>
         </div>
     </div>
     
@@ -41,6 +41,12 @@
                         <button type="submit" class="btn btn-primary margin-top pull-right">Incarca</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    {% else %}
+        <div class="row">
+            <div class="col-xs-12 col-md-8 col-md-offset-2 text-center margin-top">
+                <p>Nu uita sa printezi, sa semnezi si sa expediezi formularul catre unitatea ANAF de care apartii.</p>
             </div>
         </div>
     {% endif %}

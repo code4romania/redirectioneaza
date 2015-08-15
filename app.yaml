@@ -1,5 +1,5 @@
 # application: donezsieu-server
-version: 1
+version: 2
 runtime: python27
 api_version: 1
 threadsafe: false
@@ -25,9 +25,9 @@ handlers:
   mime_type: "text/css"
   static_dir: static/css
 
-- url: /img
+- url: /images
   # mime_type: "text/css"
-  static_dir: static/img
+  static_dir: static/images
 
 # bower components url
 - url: /bower_components

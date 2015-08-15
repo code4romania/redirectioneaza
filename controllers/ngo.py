@@ -112,6 +112,8 @@ class TwoPercentHandler(BaseHandler):
         payload["name"] = self.ngo.name
         payload["account"] = self.ngo.account
         payload["cif"] = self.ngo.cif
+
+        payload["secret_key"] = SECRET_KEY
         
         if len(errors["fields"]):
             self.return_error(errors)
@@ -142,6 +144,9 @@ class TwoPercentHandler(BaseHandler):
         try:
             result = aws_rpc.get_result()
         except Exception, e:
+            info(e)
+            info(result)
+
             errors["server"] = True
             self.return_error(errors)
             return
@@ -153,6 +158,8 @@ class TwoPercentHandler(BaseHandler):
             # only save if the pdf was created
             donor.put()
         else:
+            info(result.status_code)
+            info(result.content)
             errors["server"] = True
             self.return_error(errors)
             return
