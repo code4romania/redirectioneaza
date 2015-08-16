@@ -7,20 +7,14 @@
 
 
 {% block content %}
-<div class="container">
-    {% if errors %}
+<div id="twopercent-2-container" class="container">
+    {% if error_message %}
         <div class="row">
-            <div class="col-xs-12 col-md-6 col-md-offset-3">
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
                 <div class="alert alert-dismissible alert-danger">
                     <button type="button" class="close" data-dismiss="alert">×</button>
                     <strong>Oops!</strong> 
-                    {% if errors["missing_values"] %}
-                        Te rugam sa completezi cu o adresa de email sau un numar de telefon.
-                    {% elif errors["invalid_email"] %}
-                        Te rugam sa introduci o adresa de email valida.
-                    {% elif errors["invalid_tel"] %}
-                        Te rugam sa introduci un numar de telefon mobil valid.
-                    {% endif %}
+                    {{ error_message }}
                 </div>
             </div>
         </div>

@@ -34,6 +34,7 @@ def get_jinja_enviroment(account_view_folder=''):
 template_settings = {
     "bower_components": DEV_DEPENDECIES_LOCATION,
     "DEV": DEV,
+    "PRODUCTION": PRODUCTION,
     "title": TITLE,
     "contact_url": CONTACT_FORM_URL,
     "language": "ro",
@@ -133,24 +134,28 @@ class BaseHandler(Handler):
 
         # if we didn't find the ngo or donor, raise
         if ngo is None:
-            webapp2.abort(404)
+            self.abort(404)
 
         # if it doesn't have a cookie, he must not be on the right page
         # redirect to the ngo's main page
         if donor_id is None:
             self.redirect("/" + ngo_id)
+            return False
 
         # if we didn't find the donor than the cookie must be wrong, unset it
         # and redirect to the ngo page
         if donor is None:
             if "donor_id" in self.session:
                 self.session.pop("donor_id") 
-            
+
             self.redirect("/" + ngo_id)
+            return False
 
 
         self.ngo = ngo
         self.donor = donor
+
+        return True
 
 def user_required(handler):
     """

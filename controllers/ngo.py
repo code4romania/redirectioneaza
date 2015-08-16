@@ -47,7 +47,7 @@ class TwoPercentHandler(BaseHandler):
         # if we still have a cookie from an old session, remove it
         if "donor_id" in self.session:
             self.session.pop("donor_id")
-            # also we can use self.session.clear()
+            # also we can use self.session.clear(), but it might delete the logged in user's session
         
         self.template_values["title"] = "Donatie 2%"
         self.template_values["ngo"] = ngo
@@ -67,6 +67,9 @@ class TwoPercentHandler(BaseHandler):
         if self.ngo is None:
             self.error(404)
             return
+
+        # if we have an ajax request, just return an answer
+        self.is_ajax = self.request.get("ajax", False)
 
         def get_post_value(arg, add_to_error_list=True):
             value = post.get(arg)
@@ -118,7 +121,7 @@ class TwoPercentHandler(BaseHandler):
         if len(errors["fields"]):
             self.return_error(errors)
             return
-
+ 
 
         # send to aws and get the pdf url
         aws_rpc = urlfetch.create_rpc()
@@ -167,9 +170,21 @@ class TwoPercentHandler(BaseHandler):
         # set the donor id in cookie
         self.session["donor_id"] = str(donor.key.id())
 
-        self.redirect( "/" + ngo_url + "/doilasuta/pas-2" )
+        # if not an ajax request, redirect
+        if self.is_ajax:
+            self.response.set_status(200)
+            self.response.write(json.dumps({}))
+        else:
+            self.redirect( "/" + ngo_url + "/doilasuta/pas-2" )
 
     def return_error(self, errors):
+        
+        if self.is_ajax:
+
+            self.response.set_status(400)
+            self.response.write(json.dumps(errors))
+
+            return
 
         self.template_values["title"] = "Donatie 2%"
         self.template_values["ngo"] = self.ngo
@@ -185,10 +200,17 @@ class TwoPercentHandler(BaseHandler):
 
 class TwoPercent2Handler(BaseHandler):
     template_name = 'twopercent-2.html'
-    def get(self, ngo_url):
-        post = self.request
 
-        self.get_ngo_and_donor()
+    errors = {
+        "missing_values": "Te rugam sa completezi cu o adresa de email sau un numar de telefon.",
+        "invalid_email": "Te rugam sa introduci o adresa de email valida.",
+        "invalid_tel": "Te rugam sa introduci un numar de telefon mobil valid."
+    }
+
+    def get(self, ngo_url):
+
+        if self.get_ngo_and_donor() is False:
+            return
 
         # set the index template
         self.template_values["ngo"] = self.ngo
@@ -201,9 +223,10 @@ class TwoPercent2Handler(BaseHandler):
         # bool that tells us if its a ajax request
         # we don't need to set any template if this is the case
         is_ajax = post.get("ajax", False)
-        errors = {}
+        error_message = ""
 
-        self.get_ngo_and_donor()
+        if self.get_ngo_and_donor() is False:
+            return
 
         # strip any white space
         email = post.get("email").strip() if post.get("email") else ""
@@ -212,29 +235,33 @@ class TwoPercent2Handler(BaseHandler):
 
         # if we have no email or tel
         if not email and not tel:
-            errors["missing_values"] = True
+            error_message = self.errors["missing_values"]
         else:
             # else validate email
             email_re = re.compile('[\w.-]+@[\w.-]+.\w+')
             if email and not email_re.match(email):
-                errors["invalid_email"] = True
+                error_message = self.errors["invalid_email"]
 
             # or validate tel
             if tel and len(tel) != 10 and tel[:2] != "07":
-                errors["invalid_tel"] = True
+                error_message = self.errors["invalid_tel"]
         
-        info(errors)
+        info(error_message)
+
         # if it's not an ajax request
-        # and we have some errors
-        if len(errors) != 0:
+        # and we have some error_message
+        if len(error_message) != 0:
 
             if is_ajax:
-                self.set_status(400)
-                self.request.write(json.dumps(errors))
+                self.response.set_status(400)
+                error = {
+                    "message": error_message
+                }
+                self.response.write(json.dumps(error))
             else:
                 
                 self.template_values["ngo"] = self.ngo
-                self.template_values["errors"] = errors
+                self.template_values["error_message"] = error_message
                 self.template_values["email"] = email
                 self.template_values["tel"] = tel
                 
@@ -246,12 +273,16 @@ class TwoPercent2Handler(BaseHandler):
 
             self.donor.put()
 
+            # if ajax return 200 and the url
             if is_ajax:
-                self.set_status(200)
-                self.request.write("")
+                self.response.set_status(200)
+                response = {
+                    "url": self.uri_for("ngo-twopercent-success", ngo_url=ngo_url)
+                }
+                self.response.write(json.dumps(response))
             else:
                 # if not, redirect to succes
-                self.redirect( "/" + ngo_url + "/doilasuta/succes" )
+                self.redirect( self.uri_for("ngo-twopercent-success", ngo_url=ngo_url) )
 
 
 
@@ -259,7 +290,8 @@ class DonationSucces(BaseHandler):
     template_name = 'succes.html'
     def get(self, ngo_url):
 
-        self.get_ngo_and_donor()
+        if self.get_ngo_and_donor() is False:
+            return
 
         self.template_values["ngo"] = self.ngo
         self.template_values["donor"] = self.donor
@@ -269,7 +301,8 @@ class DonationSucces(BaseHandler):
     def post(self, ngo_url):
         post = self.request
 
-        self.get_ngo_and_donor()
+        if self.get_ngo_and_donor() is False:
+            return
 
         self.session.pop("donor_id")
 

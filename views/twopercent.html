@@ -2,12 +2,17 @@
 
 
 {% block header %}
-<div class="container">
-    {% include "components/ngo-header.html" %}
-</div>
+    <div class="container">
+        {% include "components/ngo-header.html" %}
+    </div>
 {% endblock %}
 
+{# error messages #}
+{% set server_error = "Se pare ca am intampinat o eroare pe server. Va rugam incercati din nou." %}
+{% set fields_error = "Se pare ca urmatoarele date sunt invalide: " %}
+
 {% block content %}
+
 <div class="container donation-form-container">
 
     {% if errors %}
@@ -15,16 +20,16 @@
             <div class="col-xs-12 col-md-6 col-md-offset-3">
                 <div class="alert alert-dismissible alert-danger">
                     <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong>Oops!</strong> 
+                    <strong>Oops! </strong> 
                     {% if errors["fields"] %}
-                        se pare ca urmatoarele date sunt invalide: 
+                        {{ fields_error }}
                         <span>
                         {% for error in errors["fields"] %}
                             {{ error + ", " if not loop.last else error }}
                         {% endfor %}
                         </span>
                     {% elif errors["server"] %}
-                        Se pare ca am intampinat o eroare pe server. Va rugam incercati din nou.
+                        {{ server_error }}
                     {% endif %}
                 </div>
             </div>
@@ -114,13 +119,13 @@
     <div id="invalid-form-alert" class="row hidden">
         <div class="col-xs-12 col-md-6 col-md-offset-3">
             <div class="alert alert-danger">
-                <strong>Oops!</strong> Se pare ca formularul contine campuri invalide.
+                <strong>Oops! </strong><span>Se pare ca formularul contine campuri invalide.</span>
             </div>
         </div>
     </div>
 
-    <div class="row">
-        {% if not errors and ngo.account and ngo.cif %}
+    {% if not errors and ngo.account and ngo.cif %}
+        <div class="row">
             {# info about saved data #}
             <div class="col-xs-12 col-md-6 col-md-offset-3">
                 <div class="alert alert-dismissible alert-info">
@@ -128,10 +133,10 @@
                     <strong>Nota!</strong> Toate datele de pe aceasta pagina sunt transmise folosind o conexiune sigura. Singurele date salvate separat sunt: numele, prenumele, orasul si judetul.
                 </div>
             </div>
-        {% endif %}
-    </div>
+        </div>
+    {% endif %}
 
-    <div id="second-step" class="hidden">
+    <div id="second-step-container" class="hidden">
         {% include "components/second-step.html" %}
     </div>
 </div>
@@ -220,15 +225,15 @@
                     hideError(this);
                 }
             });
-
-            // TODO
-            return;
             
             var invalidFormAlert = $("#invalid-form-alert");
             var submitFormButton = $("#submit-twopercent-form");
+            var secondStep = $("#second-step-container");
             $("#twopercent").on("submit", function(ev){
-                // ev.preventDefault();
+                ev.preventDefault();
                 
+                $(this).find("input").blur();
+
                 var len = 0;
                 for (var o in invalidFields) {
                     len++;
@@ -239,31 +244,107 @@
                     invalidFormAlert.addClass("hidden");
                 } else {
                     invalidFormAlert.removeClass("hidden");
-                    return
+                    return;
                 }
 
                 // add ajax field
                 $('<input />').attr('type', 'hidden')
-                    .attr('name', "ajax")
-                    .attr('value', "true")
+                    .attr('name', "ajax").attr('value', "true")
                     .appendTo(this);
+
+                submitFormButton.removeClass("btn-primary").addClass("btn-success").attr("disabled", true);
+                activateSecondStepForm();
+                secondStep.removeClass("hidden");
 
                 $.ajax({
                     url: "{{ ngo.key.id() }}/doilasuta",
                     type: "POST",
+                    dataType: "json",
                     data: $(this).serialize(),
                     success: function(data) {
-                        submitFormButton.removeClass("btn-primary").addClass("btn-success").attr("disabled", true);
-                        $("#second-step").removeClass("hidden");
+
                     },
                     error: function(data) {
+                        var response = data.responseJSON;
+                        var message = "";
+                        if(data.status == 500 || response.server) {
+                            message = "{{ server_error }}";
+                        } else if(response.fields.length) {
+                            message = "{{ fields_error }}";
 
-                        var message = "Se pare ca urmatoarele date sunt invalide: "
+                            for( var field in response.fields ) {
+                                message += response.fields + ", ";
+                            }
+                            message = message.slice(0, -2);
+                        }
+
                         submitFormButton.addClass("btn-primary").removeClass("btn-success").attr("disabled", false);
-                        invalidFormAlert.removeClass("hidden").find("span").text(message)
+                        invalidFormAlert.removeClass("hidden").find("span").text(message);
+                        secondStep.addClass("hidden");
                     }
                 });
             });
+
+
+            function activateSecondStepForm() {
+                
+                var submitButton = $("#second-step-submit-button");
+                $("#second-step-form").on("submit", function(ev){
+                    ev.preventDefault();
+
+                    var email = $(this).find("#email").val().trim();
+                    var telefon = $(this).find("#telefon").val().trim();
+
+                    // if both email and tel are empty, return
+                    if(!email && !telefon) {
+                        invalidFormAlert.removeClass("hidden").find("span").text("Te rugam sa completezi cu o adresa de email sau un numar de telefon.");
+                        return;
+                    }
+
+                    // validation
+                    var regex = /[\w.-]+@[\w.-]+.\w+/
+                    if( email && !regex.test(email) ) {
+                        invalidFormAlert.removeClass("hidden").find("span").text("Te rugam sa introduci o adresa de email valida.");
+                        return;
+                    }
+
+                    if( telefon && (telefon.length != 10 || telefon.slice(0, 2) !== "07") ) {
+                        invalidFormAlert.removeClass("hidden").find("span").text("Te rugam sa introduci un numar de telefon mobil valid.");
+                        return;
+                    }
+
+                    invalidFormAlert.addClass("hidden");
+                    submitButton.attr("disabled", true);
+    
+                    // add ajax field
+                    $('<input />').attr('type', 'hidden')
+                        .attr('name', "ajax").attr('value', "true")
+                        .appendTo(this);
+
+                    $.ajax({
+                        url: "{{ ngo.key.id() }}/doilasuta/pas-2",
+                        type: "POST",
+                        dataType: "json",
+                        data: $(this).serialize(),
+                        success: function(data) {
+                            // redirect to
+                            window.location = data.url;
+                        },
+                        error: function(data) {
+                            if(data.response == 500) {
+                                var message = "{{ server_error }}";
+
+                            } else {
+
+                                var message = data.responseJSON.message;
+                            }
+
+                            submitButton.attr("disabled", false);
+                            invalidFormAlert.removeClass("hidden").find("span").text(message);
+                        }
+                    });
+                });
+            }
         });
     </script>
 {% endblock %}
