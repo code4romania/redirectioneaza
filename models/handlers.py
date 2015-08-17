@@ -230,23 +230,29 @@ class AccountHandler(BaseHandler):
             subject = "Confirmare cont donezsi.eu"
             verification_url = self.uri_for('verification', type='v', user_id=user_id, signup_token=token, _full=True)
 
-            template = self.jinja_enviroment.get_template("email/signup/signup_inline.html")
+            html_template = self.jinja_enviroment.get_template("email/signup/signup_inline.html")
+            txt_template = self.jinja_enviroment.get_template("email/signup/signup_text.txt")
 
         elif email_type == "reset-password":
             subject = "Resetare parola pentru contul donezsi.eu"
             verification_url = self.uri_for('verification', type='p', user_id=user_id, signup_token=token, _full=True)
             
-            template = self.jinja_enviroment.get_template("email/reset-password.html")
+            html_template = self.jinja_enviroment.get_template("email/reset-password.html")
 
         else:
             return
-        
-        body = template.render({
+
+        template_values = {
             "name": user.first_name,
             "email": user_address,
             "contact_url": CONTACT_FORM_URL,
-            "url": verification_url
-        })
+            "url": verification_url,
+            "host": self.request.host
+        }
 
-        mail.send_mail(sender_address, user_address, subject, body)
-        info(body)
+        body = txt_template.render(template_values)
+        html_body = html_template.render(template_values)
+
+
+        mail.send_mail(sender=sender_address, to=user_address, subject=subject, html=html_body, body=body)
+        info(html_body)

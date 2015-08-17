@@ -1,0 +1,12 @@
+Salut {{ name }},
+
+Bine ai venit pe platforma donezsi.eu.
+
+Pentru a-ti activa contul te rugam sa confirmi adresa de email accesand link-ul de mai jos:
+{{ url }}
+
+Multumim,
+echipa donezsi.eu
+
+Ai primit din greseala acest email? Contacteaza-ne!
+{{ contact_url }}
