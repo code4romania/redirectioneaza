@@ -20,6 +20,7 @@ class MyAccountHandler(AccountHandler):
 
         user = self.user
         self.template_values["user"] = user
+        self.template_values["title"] = "Contul meu"
 
         if user.ngo:
             ngo = user.ngo.get()
@@ -46,6 +47,7 @@ class MyAccountDetailsHandler(AccountHandler):
 
         user = self.user
         self.template_values["user"] = user
+        self.template_values["title"] = "Date cont"
         
         self.render()
     def post(self):
@@ -79,6 +81,7 @@ class NgoDetailsHandler(AccountHandler):
     @user_required
     def get(self):
         user = self.user
+        self.template_values["title"] = "Date asociatie"
 
         if user.ngo:
             self.template_values["user"] = user

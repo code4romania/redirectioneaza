@@ -213,6 +213,7 @@ class TwoPercent2Handler(BaseHandler):
             return
 
         # set the index template
+        self.template_values["title"] = "Donatie 2%"
         self.template_values["ngo"] = self.ngo
         
         # render a response
@@ -285,7 +286,6 @@ class TwoPercent2Handler(BaseHandler):
                 self.redirect( self.uri_for("ngo-twopercent-success", ngo_url=ngo_url) )
 
 
-
 class DonationSucces(BaseHandler):
     template_name = 'succes.html'
     def get(self, ngo_url):
@@ -295,6 +295,7 @@ class DonationSucces(BaseHandler):
 
         self.template_values["ngo"] = self.ngo
         self.template_values["donor"] = self.donor
+        self.template_values["title"] = "Donatie 2% - succes"
 
         self.render()
 
