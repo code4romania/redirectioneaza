@@ -12,11 +12,8 @@ class HomePage(BaseHandler):
     template_name = 'index.html'
     def get(self):
 
-        header = {}
-        header["title"] = u"Învață după cele mai bune cursuri"
-        header["description"] = "Cursuri gratuite"
-        
-        
+        self.template_values["title"] = "donez si eu"
+                
         # render a response
         self.render()
 

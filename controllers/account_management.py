@@ -9,6 +9,8 @@ class LoginHandler(AccountHandler):
     template_name = 'login.html'
     def get(self):
 
+        self.template_values["title"] = "Contul meu"
+
         # if the user is logged in just redirect
         if self.user_info:
             self.redirect(self.uri_for("contul-meu"))
@@ -39,6 +41,7 @@ class SignupHandler(AccountHandler):
     template_name = 'cont-nou.html'
     def get(self):
 
+        self.template_values["title"] = "Cont nou"
         self.render()
 
     def post(self):

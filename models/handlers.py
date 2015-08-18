@@ -38,7 +38,8 @@ template_settings = {
     "title": TITLE,
     "contact_url": CONTACT_FORM_URL,
     "language": "ro",
-    "base_url": "/"
+    "base_url": "/",
+    "errors": None
 }
 
 class Handler(webapp2.RequestHandler):

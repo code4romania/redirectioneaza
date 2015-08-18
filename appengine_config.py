@@ -15,7 +15,7 @@ import os
 # cd ./static/ && lessc css/main.less > css/main.css && cd ..
 # 
 # gcloud config set project donezsieu-server
-# gcloud preview app deploy ./app.yaml --version 2 --set-default
+# gcloud preview app deploy ./app.yaml --version 3 --set-default
 
 
 # AWS CONNECT
