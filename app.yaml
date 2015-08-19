@@ -1,5 +1,5 @@
 # application: donezsieu-server
-version: 3
+# version: 3
 runtime: python27
 api_version: 1
 threadsafe: false
@@ -39,6 +39,7 @@ handlers:
 
 - url: /.*
   script: main.app
+  secure: always
   # expiration: "10m"
   #   http_headers:
   #     X-UA-Compatible: "IE=edge"
