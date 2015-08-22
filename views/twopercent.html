@@ -1,5 +1,12 @@
 {% extends "base.html" %}
 
+{% block additional_headers %}
+    <meta property="og:title" content="{{ ngo.name }}" />
+    <meta property="og:description" content="{{ ngo.description }}" />
+    <meta property="og:image" content="{{ ngo.logo if ngo.logo }}" />
+
+    <meta property="og:type" content="website" />
+{% endblock %}
 
 {% block header %}
     <div class="container">

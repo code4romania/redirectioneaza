@@ -7,9 +7,18 @@
 
         <title>{{ title }}</title>
 
-        <meta name="description" content="">
+        <meta name="description" content="donezsi.eu este o platforma ce ajuta ONG-urile sa se dezvolte in primul rand prin colectarea formularelor de 2%" />
+        <meta name="keywords" content="platforma, ong, formular doi la suta, formular 2%, directionare 2%, donatie 2%, doneaza doi la suta" />
+
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="google" content="notranslate">
+
+        <meta property="og:locale" content="ro" />
+        <meta property="og:site_name" content="donezsi.eu" />
+
+        {# block used to add additional haders to a page, eg: ok:title #}
+        {% block additional_headers %}
+        {% endblock %}
 
         {# if we are on dev load with less, if not load the css #}
         {% if DEV %}
