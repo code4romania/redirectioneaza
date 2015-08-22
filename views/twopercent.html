@@ -143,6 +143,32 @@
     <div id="second-step-container" class="hidden">
         {% include "components/second-step.html" %}
     </div>
+    <div class="row">
+        <div class="col-xs-12 col-md-6 col-md-offset-3 text-center">
+            <a class="btn btn-link" role="button" data-toggle="collapse" href="#donation-form-explanation" aria-expanded="false" aria-controls="donation-form-explanation">
+              Citeste mai multe despre pagina <i class="fa fa-caret-down"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-md-6 col-md-offset-3">
+            <ul id="donation-form-explanation" class="list-unstyled collapse">
+                <li>
+                    <h3>Ce reprezinta formularul de 2%?</h3>
+                    <p class="text-muted">Formularul este o metoda prin care oricine isi poate dona 2% din impozitul anual catre un ONG. Acest lucru inseamna ca acea suma nu va mai ajunge in bugetul statul ci va fi directionata catre contul ONG-ului.</p>
+                </li>
+                <li>
+                    <h3>Ce se intampla cu datele de pe aceasta pagina?</h3>
+                    <p class="text-muted">Datele de pe aceasta pagina sunt folosite doar pentru a crea fisierul PDF. Doar numele, prenumele, orasul, judetul si ulterior email-ul/telefonul sunt salvate in baza noastra de date pentru a-i oferi ocazia ONG-ului sa intre in legatura cu tine.</p>
+                </li>
+                <li>
+                    <h3>Care sunt urmatorii pasi?</h3>
+                    <p class="text-muted">Dupa ce vei completa toate datele din acest formular, vei fi directionat catre o pagina de unde poti descarca fisierul PDF. Acela va contine datele tale si datele ONG-ului care va primi cei 2%. Mai departe va trebui sa il printezi, semnezi si sa il expediezi catre unitatea ANAF de care apartii.</p>
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>
 
 {% endblock %}
