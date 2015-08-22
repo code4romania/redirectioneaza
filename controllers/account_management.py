@@ -28,7 +28,7 @@ class LoginHandler(AccountHandler):
         
         except (InvalidAuthIdError, InvalidPasswordError) as e:
 
-            self.template_values["errors"] = "Se pare ca adresa de email sau parola sunt incorecte."
+            self.template_values["errors"] = "Se pare ca aceasta combinatie de email si parola este incorecta."
             self.render()
 
 

@@ -1,6 +1,6 @@
 
 
-from google.appengine.ext.ndb import Key, put_multi
+from google.appengine.ext.ndb import put_multi
 
 from appengine_config import AWS_PDF_URL
 
@@ -11,6 +11,9 @@ from models.upload import UploadHandler
 from api import check_ngo_url
 
 from logging import info
+
+incomplete_form_data = "Te rugam sa completezi datele din formular."
+url_taken = "Din pacate acest url este folosit deja."
 
 class MyAccountHandler(AccountHandler):
     template_name = 'ngo/my-account.html'
@@ -64,7 +67,7 @@ class MyAccountDetailsHandler(AccountHandler):
         email = self.request.get('email')
 
         if not first_name or not last_name or not email:
-            self.template_values["errors"] = "Te rugam sa completezi datele din formular."
+            self.template_values["errors"] = incomplete_form_data
             self.render()
             return
 
@@ -120,7 +123,7 @@ class NgoDetailsHandler(AccountHandler):
         
         # validation
         if not ong_nume or not ong_descriere or not ong_adresa or not ong_url or not ong_cif or not ong_account:
-            self.template_values["errors"] = "Te rugam sa completezi datele din formular."
+            self.template_values["errors"] = incomplete_form_data
             self.render()
             return
 
@@ -142,7 +145,7 @@ class NgoDetailsHandler(AccountHandler):
             # check for unique url
             is_ngo_url_avaible = check_ngo_url(ong_url)
             if is_ngo_url_avaible == False:
-                self.template_values["errors"] = "Din pacate acest url este folosit deja."
+                self.template_values["errors"] = url_taken
                 self.render()
                 return
 
