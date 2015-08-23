@@ -48,6 +48,12 @@ app = webapp2.WSGIApplication([
 
         r('/api/check-ngo-api/<ngo_url>', handler="controllers.api.CheckNgoUrl", name='api-check-ngo-url'),
 
+        # ADMIN HANDLERS
+        r('/admin',             handler="controllers.admin.AdminHandler",       name='admin'),
+        r('/admin/ong-nou',     handler="controllers.admin.AdminNewNgoHandler", name='admin-ong-nou'),
+        r('/admin/<ngo_url>',   handler="controllers.admin.AdminNgoHandler",    name='admin-ong'),
+
+
         r('/<ngo_url>',         handler=NgoHandler, name="ngo-url"),
         r('/catre/<ngo_url>',   handler=NgoHandler),
 

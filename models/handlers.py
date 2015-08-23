@@ -32,6 +32,7 @@ def get_jinja_enviroment(account_view_folder=''):
     
 # default values for every template
 template_settings = {
+    "is_admin": users.is_current_user_admin(),
     "bower_components": DEV_DEPENDECIES_LOCATION,
     "DEV": DEV,
     "PRODUCTION": PRODUCTION,
@@ -120,7 +121,7 @@ class BaseHandler(Handler):
                 # if this one fails alos return empty dict
                 return json.dumps({"ip_address": ip_address})
 
-    def get_ngo_and_donor(self):
+    def get_ngo_and_donor(self, projection=True):
 
         ngo_id = str( self.request.route_kwargs.get("ngo_url") )
         donor_id = int( self.session.get("donor_id", 1) )

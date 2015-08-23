@@ -2,6 +2,9 @@
 
 from google.appengine.ext import ndb
 
+from appengine_config import LIST_OF_COUNTIES
+
+
 class BaseEntity(ndb.Model):
     """basic type of model that all other inherit from
         mainly just a wrapper for ndb.Model
@@ -10,9 +13,13 @@ class BaseEntity(ndb.Model):
 
 
 
+# to the list of counties add the whole country
+county_choices = LIST_OF_COUNTIES + ["RO", ""]
 class NgoEntity(BaseEntity):
 
     name = ndb.StringProperty(indexed=True)
+    short_description = ndb.StringProperty(indexed=True)
+
     description = ndb.TextProperty()
 
     logo = ndb.StringProperty(indexed=True)
@@ -22,6 +29,23 @@ class NgoEntity(BaseEntity):
     account = ndb.StringProperty(indexed=True)
     cif = ndb.StringProperty(indexed=True)
     address = ndb.TextProperty()
+    county = ndb.StringProperty(indexed=True, choices=county_choices)
+
+    # the ngo's phone number
+    tel = ndb.StringProperty(indexed=True)
+    # the main email address used as contact
+    email = ndb.StringProperty(indexed=True)
+    # a list of email addresses
+    other_emails = ndb.StringProperty(indexed=True, repeated=True)
+
+    # if the ngo verified its existance
+    verified = ndb.BooleanProperty(indexed=True, default=False)
+    # bool telling if the ngo should be shown to the public
+    # the ngo might be banned
+    active = ndb.BooleanProperty(indexed=True, default=True)
+
+    document_urls = ndb.StringProperty(indexed=True, repeated=True)
+
 
     # tags for the 
     tags = ndb.StringProperty(indexed=True, repeated=True)
