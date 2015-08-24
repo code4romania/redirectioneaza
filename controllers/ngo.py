@@ -40,7 +40,8 @@ class TwoPercentHandler(BaseHandler):
     def get(self, ngo_url):
 
         ngo = NgoEntity.get_by_id(ngo_url)
-        if ngo is None:
+        # if we didn't find it or the ngo doesn't have an active page
+        if ngo is None or ngo.active == False:
             self.error(404)
             return
 

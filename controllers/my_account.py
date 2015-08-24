@@ -125,6 +125,7 @@ class NgoDetailsHandler(AccountHandler):
         
         ong_tel = self.request.get('ong-adresa', "")
         ong_email = self.request.get('ong-email', "")
+        ong_website = self.request.get('ong-website', "")
 
         ong_adresa = self.request.get('ong-adresa')
 
@@ -165,6 +166,7 @@ class NgoDetailsHandler(AccountHandler):
                 ngo.address = ong_adresa
 
                 ngo.email = ong_email
+                ngo.website = ong_website
                 ngo.tel = ong_tel
                 
                 # if no one uses this CIF
@@ -178,6 +180,10 @@ class NgoDetailsHandler(AccountHandler):
                     unique = NgoEntity.query(NgoEntity.account == ong_account).count(limit=1) == 0
                     if unique:
                         ngo.account = ong_account
+
+                if users.is_current_user_admin():
+                    ngo.verified = self.request.get('ong-verificat') == "on"
+                    ngo.active = self.request.get('ong-activ') == "on"
 
                 # save the changes
                 ngo.put()
@@ -220,6 +226,7 @@ class NgoDetailsHandler(AccountHandler):
             logo = ong_logo_url,
             address = ong_adresa,
             email = ong_email,
+            website = ong_website,
             tel = ong_tel,
             cif = ong_cif,
             account = ong_account
@@ -228,6 +235,7 @@ class NgoDetailsHandler(AccountHandler):
         if users.is_current_user_admin():
             new_ngo.verified = self.request.get('ong-verificat') == "on"
             new_ngo.active = self.request.get('ong-activ') == "on"
+
             # a list of email addresses
             new_ngo.other_emails = [s.strip() for s in self.request.get('alte-adrese-email', "").split(",")]
 

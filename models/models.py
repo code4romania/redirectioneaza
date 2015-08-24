@@ -35,6 +35,7 @@ class NgoEntity(BaseEntity):
     tel = ndb.StringProperty(indexed=True)
     # the main email address used as contact
     email = ndb.StringProperty(indexed=True)
+    website = ndb.StringProperty(indexed=True)
     # a list of email addresses
     other_emails = ndb.StringProperty(indexed=True, repeated=True)
 

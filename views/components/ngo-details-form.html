@@ -28,13 +28,21 @@
         </div>
         <div class="form-group">
             <div class="col-xs-4">
-                <input class="form-control" type="text" name="ong-tel" placeholder="telefon (optional)" value="{{ ngo.tel if ngo.tel }}" maxlength="100" />
+                <input class="form-control" type="text" name="ong-tel" placeholder="telefon (optional)" value="{{ ngo.tel if ngo.tel }}" maxlength="20" />
             </div>
             <div class="col-xs-4">
                 <input class="form-control" type="text" name="ong-tel" placeholder="email (optional)" value="{{ ngo.email if ngo.email }}"  maxlength="100" />
             </div>
             <div class="col-xs-4">
-                <select class="form-control" id="judet" name="judet" x-moz-errormessage="Judetul este obligatoriu" title="Judetul este obligatoriu">
+                <input class="form-control" type="text" name="ong-website" placeholder="website (optional)" value="{{ ngo.website if ngo.website }}"  maxlength="100" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-8">
+                <input class="form-control" type="text" name="ong-adresa" placeholder="Adresa Asociatiei" value="{{ ngo.address }}" required maxlength="100" />
+            </div>
+            <div class="col-xs-4">
+                <select class="form-control" id="judet" name="judet" required x-moz-errormessage="Judetul este obligatoriu" title="Judetul este obligatoriu">
                     <option value="">Judetul</option>
                     <option value="RO" {{ "selected" if county == ngo.county }}>Toata tara</option>
                     <optgroup label="Bucuresti">
@@ -46,11 +54,6 @@
                         <option value="{{ county }}" {{ "selected" if county == ngo.county }} >{{ county }}</option>
                     {% endfor %}
                 </select>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-xs-12">
-                <input class="form-control" type="text" name="ong-adresa" placeholder="Adresa Asociatiei" value="{{ ngo.address }}" required maxlength="100" />
             </div>
         </div>
         <div class="form-group">
