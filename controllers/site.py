@@ -2,7 +2,7 @@
 
 
 from models.handlers import BaseHandler
-
+from models.models import NgoEntity
 
 
 """
@@ -13,6 +13,9 @@ class HomePage(BaseHandler):
     def get(self):
 
         self.template_values["title"] = "donez si eu"
+
+        ngos = NgoEntity.query(NgoEntity.active == True).fetch(4)
+        self.template_values["ngos"] = ngos
                 
         # render a response
         self.render()

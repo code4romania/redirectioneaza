@@ -193,8 +193,8 @@ class NgoDetailsHandler(AccountHandler):
                         return
 
                 if users.is_current_user_admin():
-                    ngo.verified = self.request.get('ong-verificat') == "on"
-                    ngo.active = self.request.get('ong-activ') == "on"
+                    ngo.verified = self.request.get('ong-verificat', "off") == "on"
+                    ngo.active = self.request.get('ong-activ', "on") == "on"
 
                 # save the changes
                 ngo.put()
@@ -249,8 +249,6 @@ class NgoDetailsHandler(AccountHandler):
         )
 
         if users.is_current_user_admin():
-            new_ngo.verified = self.request.get('ong-verificat') == "on"
-            new_ngo.active = self.request.get('ong-activ') == "on"
 
             # a list of email addresses
             new_ngo.other_emails = [s.strip() for s in self.request.get('alte-adrese-email', "").split(",")]

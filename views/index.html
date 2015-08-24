@@ -10,15 +10,27 @@
 <div class="container">
 
     <div id="homepage-container" class="jumbotron">
-        <h1>Cea mai noua platforma</h1>
-        <h1>pentru ONG-uri</h1>
-        <p>
-            <a href="/cont-nou" class="btn btn-primary btn-lg">Cont nou</a>
-        </p>
+        <h1>Cea mai simpla metoda</h1>
+        <h1>de a dona 2%</h1>
+    </div>
+
+    <div id="" class="row text-center">
+        {% for ngo in ngos %}
+            <div class="col-xs-6 col-sm-4 col-md-3">
+                <div class="ong-panel panel panel-default">
+                    <a href="{{ ngo.key.id() }}">
+                        <div class="panel-heading">{{ ngo.name }}</div>
+                    </a>
+                  <div class="panel-body">
+                    {{ " ".join(ngo.description.split()[:19]) + "..." }}
+                  </div>
+                </div>
+            </div>
+        {% endfor %}
     </div>
 
     <div id="homepage-first-paragraph" class="row text-center">
-        <h3>Cauti o metoda usoara de a-ti creste organizatia?</h3>
+        <h3>Reprezinti un ONG si doresti sa-ti cresti organizatia?</h3>
         <p>donezsi.eu este cea mai noua metoda prin care te poti conecta direct cu donatorii tai</p>
     </div>
     <hr>

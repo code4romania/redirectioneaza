@@ -7043,6 +7043,13 @@ legend {
 #homepage-first-paragraph h3 {
   font-weight: normal;
 }
+.ong-panel {
+  min-height: 300px;
+}
+.ong-panel .panel-heading {
+  background-color: transparent;
+  border-color: white;
+}
 .ngo-details:first-child {
   margin-top: 70px;
 }
