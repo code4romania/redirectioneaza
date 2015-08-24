@@ -6,6 +6,7 @@ from models.handlers import BaseHandler
 from my_account import NgoDetailsHandler
 
 from models.models import NgoEntity, Donor
+from models.user import User
 
 from appengine_config import AWS_PDF_URL, LIST_OF_COUNTIES
 
@@ -31,6 +32,7 @@ class AdminHandler(BaseHandler):
 
         for ngo in ngos:
             ngo.number_of_donations = Donor.query(Donor.ngo == ngo.key).count()
+            ngo.account_attached = User.query(User.ngo == ngo.key).count(1) == 1
 
         # sort them by no. of donations
         self.template_values["ngos"] = ngos # sorted(ngos, key=itemgetter('number_of_donations'), reverse=True)

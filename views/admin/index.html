@@ -14,6 +14,7 @@
                 <th>Nume ONG</th>
                 <th>Judet</th>
                 <th>Verificat</th>
+                <th>Cont asociat</th>
                 <th>Nr. donatii</th>
             </tr>
         </thead>
@@ -27,12 +28,13 @@
                         </td>
                         <td>{{ ngo.county }}</td>
                         <td>{{ ngo.verified }}</td>
+                        <td>{{ ngo.account_attached }}</td>
                         <td>{{ ngo.number_of_donations }}</td>
                     </tr>
                 {% endfor %}
             {% else %}
                 <tr>
-                    <td colspan="4">
+                    <td colspan="6">
                         <p class="well well-lg text-center">
                             Din pacate nu exita nici un ONG inregistrat.
                         </p>
