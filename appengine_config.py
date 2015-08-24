@@ -16,6 +16,7 @@ import os
 # 
 # gcloud config set project donezsieu-server
 # gcloud preview app deploy ./app.yaml --version 5 --set-default
+# gcloud preview app deploy ./app.yaml --version 6
 
 
 # AWS CONNECT

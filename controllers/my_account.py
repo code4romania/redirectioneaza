@@ -39,6 +39,7 @@ class MyAccountHandler(AccountHandler):
             self.template_values["ngo"] = {}
             self.template_values["AWS_SERVER_URL"] = AWS_PDF_URL + "/upload-file"
             self.template_values["check_ngo_url"] = "/api/check-ngo-api/"
+            self.template_values["counties"] = LIST_OF_COUNTIES
 
         
         self.render()
@@ -123,7 +124,7 @@ class NgoDetailsHandler(AccountHandler):
         
         ong_descriere = self.request.get('ong-descriere')
         
-        ong_tel = self.request.get('ong-adresa', "")
+        ong_tel = self.request.get('ong-tel', "")
         ong_email = self.request.get('ong-email', "")
         ong_website = self.request.get('ong-website', "")
 

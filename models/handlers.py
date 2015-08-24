@@ -52,7 +52,9 @@ class BaseHandler(Handler):
     def __init__(self, *args, **kwargs):
         super(BaseHandler, self).__init__(*args, **kwargs)
 
-        self.template_values = template_settings
+        self.template_values = {}
+        self.template_values.update(template_settings)
+        
         self.jinja_enviroment = get_jinja_enviroment()
 
     def dispatch(self):

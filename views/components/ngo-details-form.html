@@ -31,7 +31,7 @@
                 <input class="form-control" type="text" name="ong-tel" placeholder="telefon (optional)" value="{{ ngo.tel if ngo.tel }}" maxlength="20" />
             </div>
             <div class="col-xs-4">
-                <input class="form-control" type="text" name="ong-tel" placeholder="email (optional)" value="{{ ngo.email if ngo.email }}"  maxlength="100" />
+                <input class="form-control" type="text" name="ong-email" placeholder="email (optional)" value="{{ ngo.email if ngo.email }}"  maxlength="100" />
             </div>
             <div class="col-xs-4">
                 <input class="form-control" type="text" name="ong-website" placeholder="website (optional)" value="{{ ngo.website if ngo.website }}"  maxlength="100" />
@@ -205,35 +205,35 @@
 
     });
 
-    var ongCif = $("#ong-cif");
-    ongCif.on("blur", function(){
-        if(!ongCif.val()) return;
-        $.ajax({
-            url: "http://openapi.ro/api/validate/cif/" + ongCif.val() + ".json",
-            dataType: "jsonp",
-            success: function(data) {
-                if(data.valid) {
-                    ongCif.parent().removeClass("has-error");
-                } else {
-                    ongCif.parent().addClass("has-error");
-                }
-            }
-        });
-    });
+    // var ongCif = $("#ong-cif");
+    // ongCif.on("blur", function(){
+    //     if(!ongCif.val()) return;
+    //     $.ajax({
+    //         url: "http://openapi.ro/api/validate/cif/" + ongCif.val() + ".json",
+    //         dataType: "jsonp",
+    //         success: function(data) {
+    //             if(data.valid) {
+    //                 ongCif.parent().removeClass("has-error");
+    //             } else {
+    //                 ongCif.parent().addClass("has-error");
+    //             }
+    //         }
+    //     });
+    // });
 
-    var ongCont = $("#ong-cont");
-    ongCont.on("blur", function(){
-        if(!ongCont.val()) return;
-        $.ajax({
-            url: "http://openapi.ro/api/validate/iban/" + ongCont.val() + ".json",
-            dataType: "jsonp",
-            success: function(data) {
-                if(data.valid) {
-                    ongCont.parent().removeClass("has-error");
-                } else {
-                    ongCont.parent().addClass("has-error");
-                }
-            }
-        });
-    });
+    // var ongCont = $("#ong-cont");
+    // ongCont.on("blur", function(){
+    //     if(!ongCont.val()) return;
+    //     $.ajax({
+    //         url: "http://openapi.ro/api/validate/iban/" + ongCont.val() + ".json",
+    //         dataType: "jsonp",
+    //         success: function(data) {
+    //             if(data.valid) {
+    //                 ongCont.parent().removeClass("has-error");
+    //             } else {
+    //                 ongCont.parent().addClass("has-error");
+    //             }
+    //         }
+    //     });
+    // });
 </script>
