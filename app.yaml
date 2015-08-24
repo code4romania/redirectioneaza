@@ -13,9 +13,9 @@ libraries:
 builtins:
 - appstats: on
 
-handlers:
-- url: /stats.*
-  script: google.appengine.ext.appstats.ui.app
+# handlers:
+# - url: /stats.*
+#   script: google.appengine.ext.appstats.ui.app
 
 - url: /favicon\.ico
   static_files: favicon.ico
