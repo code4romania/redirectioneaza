@@ -13,7 +13,7 @@ libraries:
 builtins:
 - appstats: on
 
-# handlers:
+handlers:
 # - url: /stats.*
 #   script: google.appengine.ext.appstats.ui.app
 
