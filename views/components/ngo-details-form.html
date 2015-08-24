@@ -42,12 +42,12 @@
                 <input class="form-control" type="text" name="ong-adresa" placeholder="Adresa Asociatiei" value="{{ ngo.address }}" required maxlength="100" />
             </div>
             <div class="col-xs-4">
-                <select class="form-control" id="judet" name="judet" required x-moz-errormessage="Judetul este obligatoriu" title="Judetul este obligatoriu">
+                <select class="form-control" id="ong-judet" name="ong-judet" required x-moz-errormessage="Judetul este obligatoriu" title="Judetul este obligatoriu">
                     <option value="">Judetul</option>
                     <option value="RO" {{ "selected" if county == ngo.county }}>Toata tara</option>
                     <optgroup label="Bucuresti">
                         {% for number in range(1, 7) %}
-                            <option value="{{ number }}" {{ "selected" if number == ngo.county }}>Sector {{ number }}</option>
+                            <option value="{{ number }}" {{ "selected" if number|string == ngo.county }}>Sector {{ number }}</option>
                         {% endfor %}
                     </optgroup>
                     {% for county in counties %}
@@ -83,8 +83,10 @@
                 <input type="text" class="form-control" id="ong-cont" value="{{ ngo.account }}" name="ong-cont" placeholder="Codul IBAN" x-moz-errormessage="Codul IBAN" title="Codul IBAN" required maxlength="40" />
             </div>
         </div>
-
-        {% if is_admin %}
+    </fieldset>
+    {% if is_admin %}
+        <fieldset>
+            <legend>Admin</legend>
             <div class="form-group">
                 <div class="col-xs-12">
                     <label for="ong-activ" class="col-xs-3">Activ:</label>
@@ -95,14 +97,19 @@
                     <input type="checkbox" id="ong-verificat" name="ong-verificat" {{ "checked" if ngo.verified }} />
                 </div>
             </div>
-        {% endif %}
-
-        <div class="form-group">
-            <div class="col-xs-12">
-                <button type="submit" class="btn btn-primary margin-top pull-right">Trimite</button>
+            <div class="form-group">
+                <div class="col-xs-12">
+                    <textarea class="form-control" name="alte-adrese-email" placeholder="Adrese de email" rows="3" >{{ other_emails }}</textarea>
+                </div>
             </div>
+        </fieldset>
+    {% endif %}
+
+    <div class="form-group">
+        <div class="col-xs-12">
+            <button type="submit" class="btn btn-primary margin-top pull-right">Trimite</button>
         </div>
-    </fieldset>
+    </div>
 </form>
 
 {# this script is only for setting up the ngo #}

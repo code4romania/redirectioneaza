@@ -14,7 +14,6 @@ class BaseEntity(ndb.Model):
 
 
 # to the list of counties add the whole country
-county_choices = LIST_OF_COUNTIES + ["RO", ""]
 class NgoEntity(BaseEntity):
 
     name = ndb.StringProperty(indexed=True)
@@ -29,7 +28,7 @@ class NgoEntity(BaseEntity):
     account = ndb.StringProperty(indexed=True)
     cif = ndb.StringProperty(indexed=True)
     address = ndb.TextProperty()
-    county = ndb.StringProperty(indexed=True, choices=county_choices)
+    county = ndb.StringProperty(indexed=True)
 
     # the ngo's phone number
     tel = ndb.StringProperty(indexed=True)

@@ -117,8 +117,8 @@ class NgoDetailsHandler(AccountHandler):
 
 
         ong_nume = self.request.get('ong-nume')
-        ong_logo_url = self.request.get('ong-logo-url')
 
+        ong_logo_url = self.request.get('ong-logo-url')
         # this file should be received only if js is disabled
         ong_logo = self.request.get('ong-logo') if ong_logo_url is None else None
         
@@ -129,6 +129,7 @@ class NgoDetailsHandler(AccountHandler):
         ong_website = self.request.get('ong-website', "")
 
         ong_adresa = self.request.get('ong-adresa')
+        ong_judet = self.request.get('ong-judet', "")
 
         ong_cif = self.request.get('ong-cif')
         ong_account = self.request.get('ong-cont')
@@ -160,11 +161,12 @@ class NgoDetailsHandler(AccountHandler):
             if ngo is not None:
 
                 ngo.name = ong_nume
-                ngo.short_description = short_description
                 ngo.description = ong_descriere
-
+                ngo.short_description = short_description
                 ngo.logo = ong_logo_url
+
                 ngo.address = ong_adresa
+                ngo.county = ong_judet
 
                 ngo.email = ong_email
                 ngo.website = ong_website
@@ -172,15 +174,23 @@ class NgoDetailsHandler(AccountHandler):
                 
                 # if no one uses this CIF
                 if ong_cif != ngo.cif:
-                    unique = NgoEntity.query(NgoEntity.cif == ong_cif).count(limit=1) == 0
-                    if unique:
+                    cif_unique = NgoEntity.query(NgoEntity.cif == ong_cif).count(limit=1) == 0
+                    if cif_unique:
                         ngo.cif = ong_cif
+                    else:
+                        self.template_values["unique"] = False
+                        self.render()
+                        return
 
                 # and no one uses this bank account
                 if ong_account != ngo.account:
-                    unique = NgoEntity.query(NgoEntity.account == ong_account).count(limit=1) == 0
-                    if unique:
+                    acc_unique = NgoEntity.query(NgoEntity.account == ong_account).count(limit=1) == 0
+                    if acc_unique:
                         ngo.account = ong_account
+                    else:
+                        self.template_values["unique"] = False
+                        self.render()
+                        return
 
                 if users.is_current_user_admin():
                     ngo.verified = self.request.get('ong-verificat') == "on"
@@ -190,7 +200,7 @@ class NgoDetailsHandler(AccountHandler):
                 ngo.put()
                 
                 if users.is_current_user_admin():
-                    self.redirect(self.uri_for("admin-ngo", ngo_url=ong_url))
+                    self.redirect(self.uri_for("admin-ong", ngo_url=ong_url))
                 else:
                     self.redirect(self.uri_for("asociatia"))
     
@@ -221,14 +231,19 @@ class NgoDetailsHandler(AccountHandler):
         # create a new ngo entity
         new_ngo = NgoEntity(
             id = ong_url,
+
             name = ong_nume,
             description = ong_descriere,
             short_description = short_description,
             logo = ong_logo_url,
-            address = ong_adresa,
+            
             email = ong_email,
             website = ong_website,
             tel = ong_tel,
+            
+            address = ong_adresa,
+            county = ong_judet,
+            
             cif = ong_cif,
             account = ong_account
         )
