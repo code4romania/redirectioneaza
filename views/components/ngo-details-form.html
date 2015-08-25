@@ -31,10 +31,10 @@
                 <input class="form-control" type="text" name="ong-tel" placeholder="telefon (optional)" value="{{ ngo.tel if ngo.tel }}" maxlength="20" />
             </div>
             <div class="col-xs-4">
-                <input class="form-control" type="text" name="ong-email" placeholder="email (optional)" value="{{ ngo.email if ngo.email }}"  maxlength="100" />
+                <input class="form-control" type="email" name="ong-email" placeholder="email (optional)" value="{{ ngo.email if ngo.email }}" maxlength="100" />
             </div>
             <div class="col-xs-4">
-                <input class="form-control" type="text" name="ong-website" placeholder="website (optional)" value="{{ ngo.website if ngo.website }}"  maxlength="100" />
+                <input class="form-control" type="text" name="ong-website" placeholder="website (optional)" value="{{ ngo.website if ngo.website }}" maxlength="100" />
             </div>
         </div>
         <div class="form-group">
@@ -151,7 +151,7 @@
     var uploadLogo = $("#upload-logo");
     var displayLogo = $("#display-logo");
 
-    var aws_api_url = "{{ AWS_SERVER_URL }}";
+    var aws_api_url = "{{ ngo_upload_url }}";
     var photoLogoClass = "fa-picture-o";
     var loadingLogoClass = "fa-spinner fa-pulse";
 
@@ -175,11 +175,12 @@
             // request upload key
             $.ajax({
                 url: aws_api_url + "?file_name="+file.name + "&file_type="+file.type,
-                dataType: "jsonp",
+                dataType: "json",
                 success: function(data) {
                     console.log(data);
                     // return
 
+                    // upload to s3
                     $.ajax({
                         url: data.signed_request,
                         method: "PUT",
@@ -198,6 +199,7 @@
                         },
                         error: errorCallback
                     });
+
                 },
                 error: errorCallback
             });

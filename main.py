@@ -46,7 +46,8 @@ app = webapp2.WSGIApplication([
         r('/asociatia',         handler="controllers.my_account.NgoDetailsHandler", name='asociatia'),
         r('/date-cont',         handler="controllers.my_account.MyAccountDetailsHandler", name='date-contul-meu'),
 
-        r('/api/check-ngo-api/<ngo_url>', handler="controllers.api.CheckNgoUrl", name='api-check-ngo-url'),
+        r('/api/ngo/check-url/<ngo_url>', handler="controllers.api.CheckNgoUrl", name='api-ngo-check-url'),
+        r('/api/ngo/upload-url',          handler="controllers.api.GetUploadUrl", name='api-ngo-upload-url'),
 
         # ADMIN HANDLERS
         r('/admin',             handler="controllers.admin.AdminHandler",       name='admin'),

@@ -50,8 +50,8 @@ class AdminNewNgoHandler(BaseHandler):
             self.redirect(users.create_login_url("/admin"))
 
 
-        self.template_values["AWS_SERVER_URL"] = AWS_PDF_URL + "/upload-file"
-        self.template_values["check_ngo_url"] = "/api/check-ngo-api/"
+        self.template_values["ngo_upload_url"] = self.uri_for("api-ngo-upload-url")
+        self.template_values["check_ngo_url"] = self.uri_for("api-ngo-check-url")
         self.template_values["counties"] = LIST_OF_COUNTIES
         
         self.template_values["ngo"] = {}
@@ -74,7 +74,7 @@ class AdminNgoHandler(NgoDetailsHandler):
             self.error(404)
             return
 
-        self.template_values["AWS_SERVER_URL"] = AWS_PDF_URL + "/upload-file"
+        self.template_values["ngo_upload_url"] = self.uri_for("api-ngo-upload-url")
         self.template_values["counties"] = LIST_OF_COUNTIES
         self.template_values["ngo"] = ngo
         

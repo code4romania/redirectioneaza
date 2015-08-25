@@ -11,8 +11,6 @@ from models.upload import UploadHandler
 
 from api import check_ngo_url
 
-from logging import info
-
 incomplete_form_data = "Te rugam sa completezi datele din formular."
 url_taken = "Din pacate acest url este folosit deja."
 
@@ -30,16 +28,22 @@ class MyAccountHandler(AccountHandler):
             ngo = user.ngo.get()
             self.template_values["ngo"] = ngo
             # to url to distribute
-            self.template_values["ngo_url"] = self.request.host + '/' + ngo.key.id()
+            self.template_values["ngo_url"] = self.request.host + '/' + ngo.key.id() 
+            # self.uri_for("ngo-url", ngo_url=ngo.key.id(), _full=True)
 
             donors = Donor.query(Donor.ngo == ngo.key).fetch()
             self.template_values["donors"] = donors
 
         else:
             self.template_values["ngo"] = {}
-            self.template_values["AWS_SERVER_URL"] = AWS_PDF_URL + "/upload-file"
-            self.template_values["check_ngo_url"] = "/api/check-ngo-api/"
+    
             self.template_values["counties"] = LIST_OF_COUNTIES
+
+            # self.uri_for("api-ngo-check-url", ngo_url="")
+            # TODO: use uri_for
+            self.template_values["check_ngo_url"] = "/api/ngo/check-url/"
+            
+            self.template_values["ngo_upload_url"] = self.uri_for("api-ngo-upload-url")
 
         
         self.render()
@@ -62,20 +66,19 @@ class MyAccountDetailsHandler(AccountHandler):
             self.abort(403)
 
         self.template_values["user"] = user
+        self.template_values["title"] = "Date cont"
 
         first_name = self.request.get('nume')
         last_name = self.request.get('prenume')
 
-        email = self.request.get('email')
-
-        if not first_name or not last_name or not email:
+        if not first_name or not last_name:
             self.template_values["errors"] = incomplete_form_data
             self.render()
             return
 
         user.first_name = first_name
         user.last_name = last_name
-        user.email = email
+        # user.email = email
 
         user.put()
 
@@ -94,7 +97,7 @@ class NgoDetailsHandler(AccountHandler):
             
             ngo = user.ngo.get()
             self.template_values["ngo"] = ngo
-            self.template_values["AWS_SERVER_URL"] = AWS_PDF_URL + "/upload-file"
+            self.template_values["ngo_upload_url"] = self.uri_for("api-ngo-upload-url")
             self.template_values["counties"] = LIST_OF_COUNTIES
             
             self.render()
