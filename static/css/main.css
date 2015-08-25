@@ -7031,9 +7031,6 @@ legend {
 #login-container {
   margin: 5em 0;
 }
-.margin-top {
-  margin-top: 20px;
-}
 #homepage-container {
   background: transparent;
 }
@@ -7046,9 +7043,23 @@ legend {
 .ong-panel {
   min-height: 300px;
 }
-.ong-panel .panel-heading {
-  background-color: transparent;
-  border-color: white;
+.ong-panel .ong-logo {
+  max-height: 150px;
+}
+.form-explanation h3 {
+  font-weight: normal;
+  font-size: 25px;
+}
+.form-explanation .form-icon {
+  color: #4caf50;
+  font-size: 4em;
+}
+a.form-explanation .form-icon:hover,
+a.form-explanation .form-icon:focus {
+  color: #3d8b40;
+}
+.margin-top {
+  margin-top: 20px;
 }
 .ngo-details:first-child {
   margin-top: 70px;
