@@ -25,8 +25,9 @@ config = {
 # use string in dotted notation to be lazily imported
 app = webapp2.WSGIApplication([
         # the public part of the app
-        r('/',          handler="controllers.site.HomePage"),
-        r('/despre',    handler="controllers.site.AboutHandler"),
+        r('/',                  handler="controllers.site.HomePage"),
+        r('/pentru-ong-uri',    handler="controllers.site.ForNgoHandler"),
+        r('/asociatii',         handler="controllers.site.NgoListHandler"),
 
         r('/termeni',    handler="controllers.site.TermsHandler"),
         r('/politica',   handler="controllers.site.PolicyHandler"),

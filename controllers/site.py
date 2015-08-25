@@ -20,15 +20,27 @@ class HomePage(BaseHandler):
         # render a response
         self.render()
 
-class AboutHandler(BaseHandler):
-    template_name = 'teacher.html'
+class ForNgoHandler(BaseHandler):
+    template_name = 'for-ngos.html'
     def get(self):
-        self.abort(404)
-        self.template_values["title"] = "Teacher"
+        # self.abort(404)
+        self.template_values["title"] = "Pentru ONG-uri"
 
         # render a response
         self.render()
 
+
+class NgoListHandler(BaseHandler):
+    template_name = 'all-ngos.html'
+    def get(self):
+        # self.abort(404)
+        self.template_values["title"] = "Asociatii"
+
+        ngos = NgoEntity.query(NgoEntity.active == True).fetch()
+        self.template_values["ngos"] = ngos
+
+        # render a response
+        self.render()
 
 class TermsHandler(BaseHandler):
     template_name = 'terms.html'
