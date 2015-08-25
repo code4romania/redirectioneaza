@@ -21,6 +21,11 @@ import os
 
 # AWS CONNECT
 # ssh -i main-server-key.pem ec2-user@52.10.187.83
+# commands:
+# ps aux | grep python
+# kill -9 
+# nohup python main.py &
+# 
 
 
 # if we are currently in production
