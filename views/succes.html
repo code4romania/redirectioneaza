@@ -10,24 +10,26 @@
 <div class="container">
     <div class="row">
         <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 text-center">
-            <div class="col-xs-4 col-xs-offset-4">
-                <img class="img-responsive center-block" src="/images/success.png" alt="">
-            </div>
-            <div class="col-xs-12">
-                <h1>Multumim mult, {{ donor.last_name }}</h1>
-                <h2>Gasesti mai jos pdf-ul pentru download:</h2>
-                <p>
-                    <a href="{{ donor.pdf_url }}" class="btn btn-success btn-lg" target="_blank">
-                        Descarca &nbsp; <i class="fa fa-download"></i>
-                    </a>
-                </p>
+            <div class="row">
+                <div class="col-xs-4 col-xs-offset-4">
+                    <img class="img-responsive center-block" src="/images/success.png" alt="">
+                </div>
+                <div class="col-xs-12">
+                    <h1>Multumim {{ donor.last_name }}</h1>
+                    <h2>Gasesti mai jos pdf-ul pentru download:</h2>
+                    <p>
+                        <a href="{{ donor.pdf_url }}" class="btn btn-success btn-lg" target="_blank">
+                            Descarca &nbsp; <i class="fa fa-download"></i>
+                        </a>
+                    </p>
+                </div>
             </div>
         </div>
     </div>
     
-    {# if the ngo allows the donor to upload the signed and scaned pdf  #}
-    {% if ngo.allow_upload %}
-        <div class="row">
+    <div class="row">
+        {# if the ngo allows the donor to upload the signed and scaned pdf  #}
+        {% if ngo.allow_upload %}
             <div class="col-xs-12 col-md-6 col-md-offset-3">
                 <h3>Daca doresti, poti printa, semna, scana si incarca formularul pentru a fi expediat de ONG catre ANAF in numele tau:</h3>
                 <form action="{{ ngo.key.id()/succes }}" class="form" enctype="multipart/form-data">
@@ -42,14 +44,12 @@
                     </div>
                 </form>
             </div>
-        </div>
-    {% else %}
-        <div class="row">
-            <div class="col-xs-12 col-md-8 col-md-offset-2 text-center margin-top">
-                <p>Nu uita sa printezi, sa semnezi si sa expediezi formularul catre unitatea ANAF de care apartii.</p>
+        {% else %}
+            <div class="col-xs-12 col-md-6 col-md-offset-3 text-center margin-top">
+                <p>Nu uita sa printezi, sa semnezi si sa expediezi formularul (pana pe 25 mai) catre unitatea ANAF de care apartii.</p>
             </div>
-        </div>
-    {% endif %}
+        {% endif %}
+    </div>
 
 </div>
 

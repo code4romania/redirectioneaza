@@ -101,27 +101,33 @@ class BaseHandler(Handler):
 
         # set the default value to 10 seconds
         deadline = 10
-        resp = urlfetch.fetch(url=GEOIP_SERVICES[0].format(ip_address), deadline=deadline)
+        try:
+            resp = urlfetch.fetch(url=GEOIP_SERVICES[0].format(ip_address), deadline=deadline)
+            # we need to load the json to see the status
+            geoip_response = json.loads(resp.content)
 
-        geoip_response = json.loads(resp.content)
+            # check to see if it was a success
+            if geoip_response["status"] == "success":
+                return resp.content
 
-        # check to see if it was a success
-        if geoip_response["status"] == "success":
+        except Exception, e:
+            info(e)
 
-            return resp.content
-        
         # if we surpassed the quota, try the other service
-        else:
+        try:                
             # call the second service
             resp = urlfetch.fetch(url=GEOIP_SERVICES[1].format(ip_address), deadline=deadline)
-
+            
             # just to make sure we don't get an over quota, or IP not found
             if str(resp.status_code) not in ["403", "404"]:
-                
                 return resp.content
-            else:
-                # if this one fails alos return empty dict
-                return json.dumps({"ip_address": ip_address})
+                
+        except Exception, e:
+            info(e)
+
+        # if this one fails alos return empty dict
+        return json.dumps({"ip_address": ip_address})
+        
 
     def get_ngo_and_donor(self, projection=True):
 

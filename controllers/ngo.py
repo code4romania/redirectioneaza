@@ -125,7 +125,7 @@ class TwoPercentHandler(BaseHandler):
  
 
         # send to aws and get the pdf url
-        aws_rpc = urlfetch.create_rpc()
+        aws_rpc = urlfetch.create_rpc(deadline=20)
 
         headers = { "Content-Type": "application/json" }
         urlfetch.make_fetch_call(aws_rpc, AWS_PDF_URL, payload=json.dumps(payload), method="POST", headers=headers)
@@ -149,7 +149,6 @@ class TwoPercentHandler(BaseHandler):
             result = aws_rpc.get_result()
         except Exception, e:
             info(e)
-            info(result)
 
             errors["server"] = True
             self.return_error(errors)

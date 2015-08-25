@@ -266,6 +266,8 @@
             var invalidFormAlert = $("#invalid-form-alert");
             var submitFormButton = $("#submit-twopercent-form");
             var secondStep = $("#second-step-container");
+            var secondStepSubmitButton = $("#second-step-submit-button");
+
             $("#twopercent").on("submit", function(ev){
                 ev.preventDefault();
                 
@@ -299,7 +301,8 @@
                     dataType: "json",
                     data: $(this).serialize(),
                     success: function(data) {
-
+                        // enable the button
+                        secondStepSubmitButton.attr("disabled", false);
                     },
                     error: function(data) {
                         var response = data.responseJSON;
@@ -325,7 +328,7 @@
 
             function activateSecondStepForm() {
                 
-                var submitButton = $("#second-step-submit-button");
+                secondStepSubmitButton.attr("disabled", true);
                 $("#second-step-form").on("submit", function(ev){
                     ev.preventDefault();
 
@@ -351,7 +354,7 @@
                     }
 
                     invalidFormAlert.addClass("hidden");
-                    submitButton.attr("disabled", true);
+                    secondStepSubmitButton.attr("disabled", true);
     
                     // add ajax field
                     $('<input />').attr('type', 'hidden')
@@ -376,7 +379,7 @@
                                 var message = data.responseJSON.message;
                             }
 
-                            submitButton.attr("disabled", false);
+                            secondStepSubmitButton.attr("disabled", false);
                             invalidFormAlert.removeClass("hidden").find("span").text(message);
                         }
                     });
