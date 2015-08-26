@@ -51,7 +51,7 @@ class AdminNewNgoHandler(BaseHandler):
 
 
         self.template_values["ngo_upload_url"] = self.uri_for("api-ngo-upload-url")
-        self.template_values["check_ngo_url"] = self.uri_for("api-ngo-check-url")
+        self.template_values["check_ngo_url"] = "/api/ngo/check-url/"
         self.template_values["counties"] = LIST_OF_COUNTIES
         
         self.template_values["ngo"] = {}
