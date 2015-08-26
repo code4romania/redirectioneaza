@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 
+from google.appengine.ext.ndb import get_multi
 
 from models.handlers import BaseHandler
 from models.models import NgoEntity
 
+from random import sample
+from logging import info
 
 """
 Handlers used for site routing
@@ -14,7 +17,14 @@ class HomePage(BaseHandler):
 
         self.template_values["title"] = "donez si eu"
 
-        ngos = NgoEntity.query(NgoEntity.active == True).fetch(4)
+        try:
+            list_keys = NgoEntity.query(NgoEntity.active == True).fetch(keys_only=True)
+            list_keys = sample(list_keys, 4)
+            
+            ngos = get_multi(list_keys)
+        except Exception, e:
+            ngos = NgoEntity.query(NgoEntity.active == True).fetch(4)
+
         self.template_values["ngos"] = ngos
                 
         # render a response
