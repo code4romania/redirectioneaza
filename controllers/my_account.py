@@ -196,8 +196,8 @@ class NgoDetailsHandler(AccountHandler):
                         return
 
                 if users.is_current_user_admin():
-                    ngo.verified = self.request.get('ong-verificat', "off") == "on"
-                    ngo.active = self.request.get('ong-activ', "on") == "on"
+                    ngo.verified = self.request.get('ong-verificat') == "on"
+                    ngo.active = self.request.get('ong-activ') == "on"
 
                 # save the changes
                 ngo.put()

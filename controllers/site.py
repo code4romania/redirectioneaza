@@ -23,6 +23,7 @@ class HomePage(BaseHandler):
             
             ngos = get_multi(list_keys)
         except Exception, e:
+            info(e)
             ngos = NgoEntity.query(NgoEntity.active == True).fetch(4)
 
         self.template_values["ngos"] = ngos
