@@ -12,14 +12,14 @@
         {% for ngo in ngos %}
             <div class="col-xs-6 col-sm-4 col-md-3">
                 <div class="ong-panel panel panel-default">
-                        <a href="{{ ngo.key.id() }}">
-                            {% if ngo.logo %}
-                                <div class="ong-logo">
-                                    <img src="{{ ngo.logo }}" class="img-responsive center-block" alt="{{ ngo.name }} logo" />
-                                </div>
-                            {% endif %}
-                            <div class="panel-heading">{{ ngo.name }}</div>
-                        </a>
+                    <a href="{{ ngo.key.id() }}">
+                        {% if ngo.logo %}
+                            <div class="ong-logo">
+                                <img src="{{ ngo.logo }}" class="img-responsive center-block" alt="{{ ngo.name }} logo" />
+                            </div>
+                        {% endif %}
+                        <div class="panel-heading">{{ ngo.name }}</div>
+                    </a>
                   <div class="panel-body">
                     {{ " ".join(ngo.description.split()[:11]) + " ..." }}
                   </div>
