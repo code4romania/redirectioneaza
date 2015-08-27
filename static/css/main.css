@@ -7041,10 +7041,22 @@ legend {
   font-weight: normal;
 }
 .ong-panel {
-  min-height: 300px;
+  height: 400px;
 }
 .ong-panel .ong-logo {
-  max-height: 150px;
+  height: 150px;
+  position: relative;
+}
+.ong-panel .ong-logo img {
+  position: absolute;
+  max-height: 90%;
+  max-width: 90%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 .form-explanation h3 {
   font-weight: normal;
