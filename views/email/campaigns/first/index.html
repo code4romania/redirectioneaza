@@ -1,0 +1,267 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+ 
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>A Simple Responsive HTML Email</title>
+    <style type="text/css">
+        * {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        body {
+            -webkit-font-smoothing: antialiased;
+            -webkit-text-size-adjust: none;
+            width: 100% !important;
+            height: 100%;
+            line-height: 1.6em;
+            
+            margin: 0;
+            padding: 0;
+            min-width: 100%!important;
+        }
+        img {
+            height: auto;
+        }
+        .content {
+            width: 100%;
+            max-width: 600px;
+        }
+        .content-block {
+            padding: 0 0 30px 0;
+        }
+        .header {
+            padding: 40px 30px 20px 30px;
+        }
+        .innerpadding {
+            padding: 30px 30px 30px 30px;
+        }
+        .borderbottom {
+            border-bottom: 1px solid #E5E5E5;
+        }
+        .subhead {
+            font-size: 15px;
+            color: #ffffff;
+            letter-spacing: 10px;
+        }
+        .h1,
+        .h2,
+        .bodycopy {
+            color: #222;
+        }
+        .h1 {
+            font-size: 33px;
+            line-height: 38px;
+            font-weight: bold;
+        }
+        .h2 {
+            padding: 0 0 15px 0;
+            font-size: 24px;
+            line-height: 28px;
+            font-weight: bold;
+        }
+        .bodycopy {
+            font-size: 16px;
+            line-height: 22px;
+        }
+        .btn-primary {
+            text-decoration: none;
+            color: #FFF;
+            background-color: #348eda;
+            border: solid #348eda;
+            border-width: 10px 20px;
+            line-height: 2em;
+            /* 2em * 14px = 28px, use px to get airier line-height also in Thunderbird, and Yahoo!, Outlook.com, AOL webmail clients */
+            /*line-height: 28px;*/
+            font-weight: bold;
+            text-align: center;
+            cursor: pointer;
+            display: inline-block;
+            /*border-radius: 5px;*/
+            /*text-transform: capitalize;*/
+        }
+        a {
+            color: #348eda;
+            text-decoration: none;
+            line-height: 2em;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .footer {
+            padding: 20px 30px 15px 30px;
+        }
+        .footercopy {
+            font-family: sans-serif;
+            font-size: 14px;
+            color: #ffffff;
+        }
+        .footercopy a {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+
+        @media only screen and (max-width: 550px), screen and (max-device-width: 550px) {
+            body[yahoo] .hide {display: none!important;}
+            body[yahoo] .buttonwrapper {background-color: transparent!important;}
+            body[yahoo] .button {padding: 0px!important;}
+            body[yahoo] .button a {background-color: #e05443; padding: 15px 15px 13px!important;}
+            body[yahoo] .unsubscribe {display: block; margin-top: 20px; padding: 10px 50px; background: #2f3942; border-radius: 5px; text-decoration: none!important; font-weight: bold;}
+        }
+
+        /*@media only screen and (min-device-width: 601px) {
+            .content {width: 600px !important;}
+            .col425 {width: 425px!important;}
+            .col380 {width: 380px!important;}
+            }*/
+    </style>
+</head>
+
+<body yahoo>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+    <td>
+        <!--[if (gte mso 9)|(IE)]>
+            <table width="600" align="center" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                    <td>
+        <![endif]-->     
+        <table bgcolor="#ffffff" class="content" align="center" cellpadding="0" cellspacing="0" border="0">
+            <tr>
+                <td bgcolor="#ffffff" class="header">
+                </td>
+            </tr>
+
+            <tr>
+                <td class="innerpadding">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td class="h2" align="center">
+                                Cea mai simpla metoda de a colecta formularele de 2%
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bodycopy content-block">
+                                Buna ziua,
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bodycopy">
+                                Va scriu din partea proiectului donezsi.eu ce tocmai ofera o noua cale prin care orice ONG din tara poate colecta formularul de 2%.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bodycopy">
+                                
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td class="borderbottom content-block" align="center">
+                    <a class="btn-primary" href="https://www.donezsi.eu">Citeste mai multe</a>
+                </td>
+            </tr>
+            <tr>
+                <td class="innerpadding borderbottom bodycopy">
+                    Pentru donatori oferim cea mai sigura metoda de a completa formularul. Datele trimise sunt folosite doar pentru a construi fisierul PDF si nu sunt salvate nicaieri.
+                </td>
+            </tr>
+            <tr>
+                <td class="innerpadding">
+                    <table width="115" align="left" border="0" cellpadding="0" cellspacing="0">  
+                        <tr>
+                            <td height="115" style="padding: 0 20px 20px 0;">
+                                <a href="https://www.donezsi.eu/merci-charity-boutique">
+                                   <img class="fix" src="https://donezsieu-static.s3.amazonaws.com/30bf6d56cee33605c97e624a9edbe8212e7e5fa0-MCB%20Logo.jpg" width="115" height="115" border="0" alt="Merci Charity Boutique" />
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                    <!--[if (gte mso 9)|(IE)]>
+                        <table width="380" align="left" cellpadding="0" cellspacing="0" border="0">
+                            <tr>
+                                <td>
+                    <![endif]-->
+                    <table class="col380" align="left" border="0" cellpadding="0" cellspacing="0" style="width: 100%; max-width: 380px;">  
+                        <tr>
+                            <td>
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td class="h2">
+                                            Merci Charity Boutique
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bodycopy">
+                                            Poti vedea aici cum Merci Charity Boutique foloseste donezsi.eu pentru a strange formularele de 2%.
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 20px 0 0 0;">
+                                            <table class="buttonwrapper" border="0" cellspacing="0" cellpadding="0">
+                                                <tr>
+                                                    <td height="45">
+                                                        <a href="https://www.donezsi.eu/merci-charity-boutique">
+                                                            Vezi pagina asociatiei
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                    <!--[if (gte mso 9)|(IE)]>
+                                </td>
+                            </tr>
+                    </table>
+                    <![endif]-->
+                </td>
+            </tr>
+            <tr>
+                <td class="footer" bgcolor="#44525f">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td align="center" class="footercopy">
+                                &reg; Someone, somewhere 2013<br/>
+                                <a href="#" class="unsubscribe"><font color="#ffffff">Unsubscribe</font></a> 
+                                <span class="hide">from this newsletter instantly</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <!-- <td align="center" style="padding: 20px 0 0 0;">
+                                <table border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td width="37" style="text-align: center; padding: 0 10px 0 10px;">
+                                            <a href="http://www.facebook.com/">
+                                                <img src="images/facebook.png" width="37" height="37" alt="Facebook" border="0" />
+                                            </a>
+                                        </td>
+                                        <td width="37" style="text-align: center; padding: 0 10px 0 10px;">
+                                            <a href="http://www.twitter.com/">
+                                                <img src="images/twitter.png" width="37" height="37" alt="Twitter" border="0" />
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td> -->
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <!--[if (gte mso 9)|(IE)]>
+                    </td>
+                </tr>
+        </table>
+        <![endif]-->
+        </td>
+    </tr>
+</table>
+</body>
+</html>
