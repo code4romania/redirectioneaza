@@ -10,8 +10,8 @@ libraries:
 - name: jinja2
   version: latest
 
-builtins:
-- appstats: on
+skip_files:
+- ^views/email/campaigns$
 
 handlers:
 # - url: /stats.*

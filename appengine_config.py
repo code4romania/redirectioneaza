@@ -12,11 +12,13 @@ import os
 # 
 # DEPLOY
 # LESS
-# cd ./static/ && lessc css/main.less > css/main.css && cd ..
+# cd ./static/ && lessc css/main.less > css/main.css --clean-css="--s1 --advanced --compatibility=ie8" && cd ..
 # 
 # gcloud config set project donezsieu-server
 # gcloud preview app deploy ./app.yaml --version 6 --set-default
 # gcloud preview app deploy ./app.yaml --version 10
+
+# minify-css && gcloud preview app deploy ./app.yaml --version 11
 
 
 # AWS CONNECT

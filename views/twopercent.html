@@ -54,14 +54,18 @@
                 <fieldset>
                     <legend class="text-muted">Date personale</legend>
                     <div class="form-group">
-                        <div class="col-xs-5">
+                        <div class="col-xs-12 col-sm-5">
                             <input type="text" class="form-control text-capitalize" id="nume" value="{{ nume }}" name="nume" placeholder="Nume" maxlength="50" autofocus x-moz-errormessage="Numele este obligatoriu" required />
                         </div>
-                        <div class="col-xs-5">
-                            <input type="text" class="form-control text-capitalize" id="prenume" value="{{ prenume }}" name="prenume" placeholder="Prenume" maxlength="50" x-moz-errormessage="Prenumele este obligatoriu" required />
-                        </div>
-                        <div class="col-xs-2">
-                            <input type="text" class="form-control text-uppercase text-center" id="tatal" value="{{ tatal }}" name="tatal" maxlength="1" data-toggle="popover" data-placement="right" x-moz-errormessage="" data-content="Initiala tatalui" required />
+                        <div class="col-xs-12 col-sm-7">
+                            <div class="row second-form-row">
+                                <div class="col-xs-9">
+                                    <input type="text" class="form-control text-capitalize" id="prenume" value="{{ prenume }}" name="prenume" placeholder="Prenume" maxlength="50" x-moz-errormessage="Prenumele este obligatoriu" required />
+                                </div>
+                                <div class="col-xs-3">
+                                    <input type="text" class="form-control text-uppercase text-center" id="tatal" value="{{ tatal }}" name="tatal" maxlength="1" data-toggle="popover" data-placement="right" x-moz-errormessage="" data-content="Initiala tatalui" required />
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -183,7 +187,11 @@
 {% block scripts %}
     <script type="text/javascript">
         $(function () {
-            $('[data-toggle="popover"]').popover({trigger: "focus"});
+
+            $('[data-toggle="popover"]').popover({
+                trigger: "focus",
+                placement: ( $(window).width() > 790 ) ? "right" : "bottom"
+            });
 
             var errorClass = "has-error";
             var invalidFields = {};
@@ -195,7 +203,7 @@
                 el.popover({
                     content: "Valoarea acestui camp este invalida.",
                     title: "",
-                    placement: "right",
+                    placement: ( $(window).width() > 790 ) ? "right" : "bottom",
                     trigger: "focus"
                 });
             }

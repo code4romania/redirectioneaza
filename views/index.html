@@ -31,25 +31,38 @@
     <div class="row">
         <div class="col-xs-12 col-md-6 col-md-offset-3">
             <div class="media form-explanation ">
-              <div class="media-left media-middle">
-                <i class="fa fa-file-text-o form-icon"></i>
-              </div>
-              <div id="donation-form-explanation"  class="media-body">
-                <h3>Ce reprezinta formularul de 2%?</h3>
-                <p class="">Formularul este o metoda prin care oricine isi poate dona 2% din impozitul anual catre un ONG. Acest lucru inseamna ca acea suma nu va mai ajunge in bugetul statul ci va fi directionata catre contul ONG-ului.</p>
+                <div class="media-left media-middle">
+                    <i class="fa fa-file-text-o form-icon"></i>
+                </div>
+                <div id="donation-form-explanation"  class="media-body">
+                    <h3>Ce reprezinta formularul de 2%?</h3>
+                    <p class="">Formularul este o metoda prin care oricine isi poate dona 2% din impozitul anual catre un ONG. Acest lucru inseamna ca acea suma nu va mai ajunge in bugetul statul ci va fi directionata catre contul ONG-ului.</p>
               </div>
             </div>
         </div>
     </div>
 
-    <hr>
-    <div id="homepage-first-paragraph" class="row">
-        <div class="col-xs-6 col-xs-offset-3">
-            <h3>Reprezinti un ONG?</h3>
-            <p>Afla cum <strong>donezsi.eu</strong> te poate ajuta</p>
-            <a class="btn btn-link pull-right" href="/pentru-ong-uri">Pentru ONG-uri</a>
+    <hr/>
+    <div class="homepage-paragraph row">
+        <div class="col-xs-12 col-md-6 col-md-offset-3">
+        <h3>Cum funcioneaza?</h3>
+        <ol>
+            <li>
+                Completeazaa formularul de pe pagina unei <a href="/asociatii">asociatii</a>.
+            </li>
+            <li>
+                Descarca fisierul PDF
+            </li>
+            <li>
+                Printeaza-l, semneaza-l si expediaza-l catre unitatea ANAF de care apartii
+            </li>
+        </ol>            
         </div>
     </div>
+
+    <hr/>
+    {% include "components/for-ngos.html" %}
+
 
 </div>
 
