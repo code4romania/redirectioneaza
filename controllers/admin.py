@@ -1,5 +1,5 @@
 
-from google.appengine.api import users
+from google.appengine.api import users, mail
 from google.appengine.ext import ndb
 
 from models.handlers import BaseHandler
@@ -82,3 +82,38 @@ class AdminNgoHandler(NgoDetailsHandler):
 
         # render a response
         self.render()
+
+class SendCampaign(NgoDetailsHandler):
+    template_name = 'admin/campaign.html'
+    def get(self):
+        if users.is_current_user_admin():
+            user = users.get_current_user()
+        else:
+            self.redirect(users.create_login_url("/admin"))
+
+        self.render()
+
+
+    def post(self):
+        
+        subject = self.request.get('subiect')
+        emails = [s.strip() for s in self.request.get('emails', "").split(",")]
+
+        if not subject or not emails:
+            self.abort(400)
+
+        sender_address = "Andrei Onel <contact@donezsi.eu>"
+
+        html_template = self.jinja_enviroment.get_template("email/campaigns/first/index-inline.html")
+        txt_template = self.jinja_enviroment.get_template("email/campaigns/first/index-text.txt")
+
+        template_values = {}
+
+        html_body = html_template.render(template_values)
+        body = txt_template.render(template_values)
+
+        for email in emails:
+            user_address = email
+            mail.send_mail(sender=sender_address, to=user_address, subject=subject, html=html_body, body=body)
+        
+        self.redirect(self.uri_for("admin-campanii"))
