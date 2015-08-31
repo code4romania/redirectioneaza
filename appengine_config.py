@@ -18,7 +18,7 @@ import os
 # gcloud preview app deploy ./app.yaml --version 6 --set-default
 # gcloud preview app deploy ./app.yaml --version 11
 
-# minify-css && gcloud preview app deploy ./app.yaml --version 11
+# minify-css && gcloud preview app deploy ./app.yaml --version 13
 
 
 # AWS CONNECT

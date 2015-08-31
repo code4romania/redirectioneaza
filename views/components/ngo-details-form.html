@@ -160,7 +160,9 @@
         var file = ev.target.files[0];
         function errorCallback(){
             // TODO: remove this in the future
+            alert("Se pare ca a aparut o problema. Va rugam reincarcati pagina si incercati din nou!")
             return;
+            
             errors++;
             if(errors<4) {
                 uploadLogo.find("#ong-logo").change();

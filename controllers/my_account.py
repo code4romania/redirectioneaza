@@ -3,7 +3,7 @@
 from google.appengine.ext.ndb import put_multi, OR, Key
 from google.appengine.api import users
 
-from appengine_config import AWS_PDF_URL, LIST_OF_COUNTIES
+from appengine_config import AWS_PDF_URL, LIST_OF_COUNTIES, CONTACT_FORM_URL
 
 from models.handlers import AccountHandler, user_required
 from models.models import NgoEntity, Donor
@@ -13,6 +13,8 @@ from api import check_ngo_url
 
 incomplete_form_data = "Te rugam sa completezi datele din formular."
 url_taken = "Din pacate acest url este folosit deja."
+not_unique = 'Se pare ca acest cod CIF sau cont bancar este deja inscris. ' \
+             'Daca reprezinti ONG-ul cu aceste date, te rugam sa ne <a href="' + CONTACT_FORM_URL + '" target="_blank">contactezi</a>.'
 
 class MyAccountHandler(AccountHandler):
     template_name = 'ngo/my-account.html'
@@ -117,6 +119,10 @@ class NgoDetailsHandler(AccountHandler):
                 self.abort(403)
 
         self.template_values["user"] = user
+        self.template_values["ngo"] = {}
+        self.template_values["counties"] = LIST_OF_COUNTIES
+        self.template_values["check_ngo_url"] = "/api/ngo/check-url/"
+        self.template_values["ngo_upload_url"] = self.uri_for("api-ngo-upload-url")
 
 
         ong_nume = self.request.get('ong-nume')
@@ -138,7 +144,7 @@ class NgoDetailsHandler(AccountHandler):
         ong_account = self.request.get('ong-cont')
 
         ong_url = self.request.get('ong-url')
-        
+
         # validation
         if not ong_nume or not ong_descriere or not ong_adresa or not ong_url or not ong_cif or not ong_account:
             self.template_values["errors"] = incomplete_form_data
@@ -220,11 +226,11 @@ class NgoDetailsHandler(AccountHandler):
         if not unique:
             # asks if he represents the ngo
 
-            self.template_values["unique"] = False
+            self.template_values["errors"] = not_unique
             self.render()
             return
         else:
-            self.template_values["unique"] = True
+            self.template_values["errors"] = True
 
         if ong_logo_url is None and ong_logo is not None:
             # upload file to S3 if received else None

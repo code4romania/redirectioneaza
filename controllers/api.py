@@ -39,12 +39,12 @@ class GetUploadUrl(AccountHandler):
         file_type = self.request.get("file_type")
 
         if not file_type or not file_type:
-            self.set_status(400)
+            self.response.set_status(400)
 
         response = UploadHandler.get_signed_url(file_name, file_type)
 
         if response is not False:
             self.response.write(json.dumps(response))
         else:
-            self.set_status(400)
+            self.response.set_status(400)
 

@@ -21,12 +21,17 @@ class UploadHandler(object):
             return False
 
         full_url = AWS_PDF_URL + "/upload-file?" + urlencode({"file_name":file_name, "file_type":file_type})
-        response = urlfetch.fetch(url=full_url, method="GET")
+
+        try:
+            # try and fetch a response
+            response = urlfetch.fetch(url=full_url, method="GET")
+            if response.status_code == 200:
+                return json.loads(response.content)
+        
+        except Exception, e:
+            info(e)
     
-        if response.status_code == 200:
-            return json.loads(response.content)
-        else:
-            False
+        return False
                 
 
     def upload_file_to_s3(file_to_upload):

@@ -43,6 +43,19 @@
             
         {% endif %}
 
+        {% block main_scripts %}
+            {# if we are on dev load with less, if not load the css #}
+            {% if DEV %}
+            
+                <script src="{{bower_components}}/jquery/dist/jquery.min.js"></script>
+                <script src="{{bower_components}}/bootstrap/dist/js/bootstrap.min.js"></script>
+            {% else %}
+
+                <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+            {% endif %}
+        {% endblock %}
+
         {% block assets %}
         {% endblock %}
 
@@ -68,18 +81,6 @@
         {% include "footer.html" %}
     {% endblock %}
 
-    {% block main_scripts %}
-        {# if we are on dev load with less, if not load the css #}
-        {% if DEV %}
-        
-            <script src="{{bower_components}}/jquery/dist/jquery.min.js"></script>
-            <script src="{{bower_components}}/bootstrap/dist/js/bootstrap.min.js"></script>
-        {% else %}
-
-            <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-        {% endif %}
-    {% endblock %}
 
     {% block scripts %}        
     {% endblock %}
