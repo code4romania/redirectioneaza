@@ -2,14 +2,16 @@
 
 from google.appengine.ext.ndb import put_multi, OR, Key
 from google.appengine.api import users
+from google.appengine.api import mail
 
-from appengine_config import AWS_PDF_URL, LIST_OF_COUNTIES, CONTACT_FORM_URL
+from appengine_config import AWS_PDF_URL, LIST_OF_COUNTIES, CONTACT_FORM_URL, CONTACT_EMAIL_ADDRESS
 
 from models.handlers import AccountHandler, user_required
 from models.models import NgoEntity, Donor
 from models.upload import UploadHandler
 
 from api import check_ngo_url
+from logging import info
 
 incomplete_form_data = "Te rugam sa completezi datele din formular."
 url_taken = "Din pacate acest url este folosit deja."
@@ -272,6 +274,18 @@ class NgoDetailsHandler(AccountHandler):
             
             # use put_multi to save rpc calls
             put_multi([new_ngo, user])
+
+            try:
+                subject = "O noua organizatie s-a inregistrat"
+                values = {
+                    "ngo": ong_nume,
+                    "link": self.request.host + '/' + new_ngo.key.id()
+                }
+                body = self.jinja_enviroment.get_template("email/admin/new-ngo.txt").render(values)
+                info(body)
+                mail.send_mail_to_admins(sender=CONTACT_EMAIL_ADDRESS, subject=subject, body=body)
+            except Exception, e:
+                info(e)
 
             # do a refresh
             self.redirect(self.uri_for("contul-meu"))

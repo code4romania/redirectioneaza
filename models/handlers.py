@@ -263,6 +263,4 @@ class AccountHandler(BaseHandler):
         body = txt_template.render(template_values)
         html_body = html_template.render(template_values)
 
-
         mail.send_mail(sender=sender_address, to=user_address, subject=subject, html=html_body, body=body)
-        info(html_body)

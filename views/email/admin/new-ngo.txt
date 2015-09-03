@@ -1,0 +1,6 @@
+
+
+Avem o organizatie noua:
+
+{{ ngo }}
+{{ link }}
