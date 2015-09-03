@@ -34,6 +34,9 @@ handlers:
 - url: /fonts
   static_dir: bower_components/uikit/fonts
 
+- url: /robots.txt
+  static_files: robots.txt
+  upload: robots.txt
 
 - url: /.*
   script: main.app
