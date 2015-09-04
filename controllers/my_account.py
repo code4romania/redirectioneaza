@@ -8,6 +8,7 @@ from appengine_config import AWS_PDF_URL, LIST_OF_COUNTIES, CONTACT_FORM_URL, CO
 
 from models.handlers import AccountHandler, user_required
 from models.models import NgoEntity, Donor
+from models.user import User
 from models.upload import UploadHandler
 
 from api import check_ngo_url
@@ -116,7 +117,7 @@ class NgoDetailsHandler(AccountHandler):
         if user is None:
             if users.is_current_user_admin():
                 user = users.get_current_user()
-                user.ngo = Key(NgoEntity, self.request.get('ong-url'))
+                user.ngo = Key(NgoEntity, self.request.get('old-ong-url'))
             else:
                 self.abort(403)
 
@@ -164,11 +165,13 @@ class NgoDetailsHandler(AccountHandler):
         # cut the short description at 180
         short_description = ong_descriere[:180]
 
+
         # if the user already has an ngo, update it
         if user.ngo:
 
             ngo = user.ngo.get()
-            # if the user has an ngo attached but it's not found, create a new one
+
+            # if the user has an ngo attached but it's not found, skip this and create a new one
             if ngo is not None:
 
                 ngo.name = ong_nume
@@ -182,7 +185,6 @@ class NgoDetailsHandler(AccountHandler):
                 ngo.email = ong_email
                 ngo.website = ong_website
                 ngo.tel = ong_tel
-                
                 # if no one uses this CIF
                 if ong_cif != ngo.cif:
                     cif_unique = NgoEntity.query(NgoEntity.cif == ong_cif).count(limit=1) == 0
@@ -207,22 +209,58 @@ class NgoDetailsHandler(AccountHandler):
                     ngo.verified = self.request.get('ong-verificat') == "on"
                     ngo.active = self.request.get('ong-activ') == "on"
 
+                    # if we want to change the url
+                    if ong_url != ngo.key.id():
+
+                        is_ngo_url_available = check_ngo_url(ong_url)
+                        if is_ngo_url_available == False:
+                            self.template_values["errors"] = url_taken
+                            self.render()
+                            return
+                        
+                        new_key = Key(NgoEntity, ong_url)
+
+                        # replace all the donors key
+                        donors = Donor.query(Donor.ngo == ngo.key).fetch()
+                        if donors:
+                            for donor in donors:
+                                donor.ngo = new_key 
+                                donor.put()
+
+                        # replace the users key
+                        ngos_user = User.query(Donor.ngo == ngo.key).get()
+                        if ngos_user:
+                            ngos_user.ngo = new_key
+                            ngos_user.put()
+
+                        # copy the old model
+                        new_ngo = ngo
+                        # delete the old model
+                        ngo.key.delete()
+                        # add a new key
+                        new_ngo.key = new_key
+                        
+                        ngo = new_ngo
+
+
                 # save the changes
                 ngo.put()
                 
                 if users.is_current_user_admin():
                     self.redirect(self.uri_for("admin-ong", ngo_url=ong_url))
                 else:
+                    info(2)
                     self.redirect(self.uri_for("asociatia"))
     
                 return
 
         # check for unique url
-        is_ngo_url_avaible = check_ngo_url(ong_url)
-        if is_ngo_url_avaible == False:
+        is_ngo_url_available = check_ngo_url(ong_url)
+        if is_ngo_url_available == False:
             self.template_values["errors"] = url_taken
             self.render()
             return
+
 
         unique = NgoEntity.query(OR(NgoEntity.cif == ong_cif, NgoEntity.account == ong_account)).count(limit=1) == 0
         if not unique:
