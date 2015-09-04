@@ -320,8 +320,8 @@ class NgoDetailsHandler(AccountHandler):
                     "link": self.request.host + '/' + new_ngo.key.id()
                 }
                 body = self.jinja_enviroment.get_template("email/admin/new-ngo.txt").render(values)
-                info(body)
-                mail.send_mail_to_admins(sender=CONTACT_EMAIL_ADDRESS, subject=subject, body=body)
+                # info(body)
+                mail.send_mail(sender=CONTACT_EMAIL_ADDRESS, to="donezsieu@gmail.com", subject=subject, body=body)
             except Exception, e:
                 info(e)
 
