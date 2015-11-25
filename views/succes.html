@@ -45,8 +45,19 @@
                 </form>
             </div>
         {% else %}
-            <div class="col-xs-12 col-md-6 col-md-offset-3 text-center margin-top">
-                <p>Nu uita sa printezi, sa semnezi si sa expediezi formularul (pana pe 25 mai) catre unitatea ANAF de care apartii.</p>
+            <div class="col-xs-12 col-md-8 col-md-offset-2 text-center margin-top">
+                {% if has_cnp %}
+                    <h4>
+                        Nu uita sa completezi campul CNP.
+                    </h4>
+                    <p>
+                        Dupa ce printezi formularul, nu uita sa-l semnezi si sa-l expediezi (pana pe 25 mai) catre unitatea ANAF de care apartii.
+                    </p>
+                {% else %}
+                    <p>
+                        Nu uita sa printezi, sa semnezi si sa expediezi formularul (pana pe 25 mai) catre unitatea ANAF de care apartii.
+                    </p>
+                {% endif %}
             </div>
         {% endif %}
     </div>

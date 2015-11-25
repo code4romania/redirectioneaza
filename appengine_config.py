@@ -15,8 +15,8 @@ import os
 # cd ./static/ && lessc css/main.less > css/main.css --clean-css="--s1 --advanced --compatibility=ie8" && cd ..
 # 
 # gcloud config set project donezsieu-server
-# gcloud preview app deploy ./app.yaml --version 6 --set-default
-# gcloud preview app deploy ./app.yaml --version 16
+# gcloud preview app deploy ./app.yaml --version 6 --promote
+# gcloud preview app deploy ./app.yaml --version 17 --no-promote
 
 # minify-css && gcloud preview app deploy ./app.yaml --version 14
 
@@ -33,7 +33,7 @@ import os
 # if we are currently in production
 DEV = os.environ.get('SERVER_SOFTWARE', 'Development').startswith('Development')
 # use this to simulate production
-DEV = False
+# DEV = False
 
 PRODUCTION = not DEV
 
