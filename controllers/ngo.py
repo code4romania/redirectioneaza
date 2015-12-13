@@ -290,7 +290,7 @@ class TwoPercent2Handler(BaseHandler):
             if is_ajax:
                 self.response.set_status(200)
                 response = {
-                    "url": self.uri_for("ngo-twopercent-success", ngo_url=ngo_url)
+                    "url": self.uri_for("ngo-twopercent-success", ngo_url=ngo_url, cnp=1)
                 }
                 self.response.write(json.dumps(response))
             else:
@@ -308,6 +308,10 @@ class DonationSucces(BaseHandler):
         self.template_values["ngo"] = self.ngo
         self.template_values["donor"] = self.donor
         self.template_values["title"] = "Donatie 2% - succes"
+
+        # if the user didn't provide a CNP show a message
+        self.template_values["has_cnp"] = True if self.request.get("cnp", False) == "1" else False
+
 
         self.render()
 

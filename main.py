@@ -30,6 +30,7 @@ app = webapp2.WSGIApplication([
         r('/asociatii',         handler="controllers.site.NgoListHandler"),
 
         r('/termeni',    handler="controllers.site.TermsHandler"),
+        r('/TERMENI',    handler="controllers.site.TermsHandler"),
         r('/politica',   handler="controllers.site.PolicyHandler"),
 
         # account management
