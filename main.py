@@ -1,7 +1,7 @@
 
 import webapp2
 
-from appengine_config import SESSION_SECRET_KEY
+from appengine_config import SESSION_SECRET_KEY, DEV
 
 from webapp2_extras import routes
 from webapp2 import Route as r
@@ -18,7 +18,14 @@ config = {
     # cookie_name: session
     # session_max_age: None => until the client is closed
     'webapp2_extras.sessions': {
-        'secret_key': SESSION_SECRET_KEY
+        'secret_key': SESSION_SECRET_KEY,
+        # just make it as the default
+        'cookie_name': 'session',
+        'cookie_args': {
+            # make the cookie secure only if we are on production
+            'secure': not DEV,
+            'httponly': True
+        }
     }
 }
 

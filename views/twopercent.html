@@ -112,7 +112,7 @@
                 <fieldset>
                     <legend class="text-muted"></legend>
                     <div class="form-group">
-                        <div class="col-lg-12 checkbox">
+                        <div class="col-sm-6 checkbox">
                             <label class="agree-label" for="agree">
                                 <input type="checkbox" name="agree" id="agree" required />
                                 Sunt de acord cu <a href="/termeni" target="_blank">Termenii aplicatiei</a> si cu <a href="/politica" target="_blank">Politica de confidentialitate</a>.
@@ -268,9 +268,10 @@
 
             $("#cnp").on("blur", function(){
                 var val = this.value;
-                if(!val) return;
 
-                if(!validCNP(val)) {
+                // if(!val) return;
+
+                if( val && !validCNP(val) ) {
                     showError(this);
                 } else {
                     hideError(this);
@@ -308,6 +309,9 @@
                 submitFormButton.removeClass("btn-primary").addClass("btn-success").attr("disabled", true);
                 activateSecondStepForm();
                 secondStep.removeClass("hidden");
+                
+                // scroll to bottom
+                $("html, body").animate({ scrollTop: $(document).height() - 550 }, 3000);
 
                 $.ajax({
                     url: "{{ ngo.key.id() }}/doilasuta",
@@ -317,9 +321,6 @@
                     success: function(data) {
                         // enable the button
                         secondStepSubmitButton.attr("disabled", false);
-
-                        // scroll to bottom
-                        $("html, body").animate({ scrollTop: $(document).height() }, 3000);
                     },
                     error: function(data) {
                         if( grecaptcha && typeof grecaptcha.reset == "function" ) {

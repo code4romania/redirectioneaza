@@ -8,7 +8,7 @@
 
 {% block content %}
 <div class="container">
-    <div class="row">
+    <div class="row margin-top">
         <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 text-center">
             <div class="row">
                 <div class="col-xs-4 col-xs-offset-4">
@@ -16,8 +16,8 @@
                 </div>
                 <div class="col-xs-12">
                     <h1>Multumim {{ donor.last_name }}</h1>
-                    <h2>Gasesti mai jos pdf-ul pentru download:</h2>
-                    <p>
+                    <h3>Gasesti mai jos pdf-ul pentru download:</h3>
+                    <p class="margin-top">
                         <a href="{{ donor.pdf_url }}" class="btn btn-success btn-lg" target="_blank">
                             Descarca &nbsp; <i class="fa fa-download"></i>
                         </a>
@@ -46,7 +46,7 @@
             </div>
         {% else %}
             <div class="col-xs-12 col-md-8 col-md-offset-2 text-center margin-top">
-                {% if has_cnp %}
+                {% if not has_cnp %}
                     <h4>
                         Nu uita sa completezi campul CNP.
                     </h4>

@@ -51,6 +51,9 @@ class TwoPercentHandler(BaseHandler):
         # if we still have a cookie from an old session, remove it
         if "donor_id" in self.session:
             self.session.pop("donor_id")
+
+        if "has_cnp" in self.session:
+            self.session.pop("has_cnp")
             # also we can use self.session.clear(), but it might delete the logged in user's session
         
         self.template_values["title"] = "Donatie 2%"
@@ -181,6 +184,7 @@ class TwoPercentHandler(BaseHandler):
 
         # set the donor id in cookie
         self.session["donor_id"] = str(donor.key.id())
+        self.session["has_cnp"] = bool(payload["cnp"])
 
         # if not an ajax request, redirect
         if self.is_ajax:
@@ -243,7 +247,7 @@ class TwoPercent2Handler(BaseHandler):
 
         # strip any white space
         email = post.get("email").strip() if post.get("email") else ""
-        # also remove nay dots that mught be in the phone number
+        # also remove any dots that might be in the phone number
         tel = post.get("tel").strip().replace(".", "") if post.get("tel") else ""
 
         # if we have no email or tel
@@ -290,7 +294,7 @@ class TwoPercent2Handler(BaseHandler):
             if is_ajax:
                 self.response.set_status(200)
                 response = {
-                    "url": self.uri_for("ngo-twopercent-success", ngo_url=ngo_url, cnp=1)
+                    "url": self.uri_for("ngo-twopercent-success", ngo_url=ngo_url)
                 }
                 self.response.write(json.dumps(response))
             else:
@@ -309,13 +313,16 @@ class DonationSucces(BaseHandler):
         self.template_values["donor"] = self.donor
         self.template_values["title"] = "Donatie 2% - succes"
 
+        info(self.session.get("has_cnp"))
+
         # if the user didn't provide a CNP show a message
-        self.template_values["has_cnp"] = True if self.request.get("cnp", False) == "1" else False
+        self.template_values["has_cnp"] = self.session.get("has_cnp", False)
 
 
         self.render()
 
     def post(self, ngo_url):
+        # TODO: to be implemented
         post = self.request
 
         if self.get_ngo_and_donor() is False:
