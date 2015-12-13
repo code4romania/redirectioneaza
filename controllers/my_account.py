@@ -117,10 +117,16 @@ class NgoDetailsHandler(AccountHandler):
         if user is None:
             if users.is_current_user_admin():
                 user = users.get_current_user()
-                user.ngo = Key(NgoEntity, self.request.get('old-ong-url'))
+
+                old_ngo_key = self.request.get('old-ong-url') if self.request.get('old-ong-url') else 1
+
+                user.ngo = Key(NgoEntity, old_ngo_key)
             else:
                 self.abort(403)
 
+        info(self.request.get('old-ong-url'))
+        info(not self.request.get('old-ong-url'))
+        
         self.template_values["user"] = user
         self.template_values["ngo"] = {}
         self.template_values["counties"] = LIST_OF_COUNTIES
@@ -168,6 +174,7 @@ class NgoDetailsHandler(AccountHandler):
 
         # if the user already has an ngo, update it
         if user.ngo:
+            info(user.ngo)
 
             ngo = user.ngo.get()
 

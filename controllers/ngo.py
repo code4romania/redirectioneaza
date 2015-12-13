@@ -4,10 +4,13 @@ from google.appengine.api import urlfetch
 from google.appengine.ext import ndb
 
 from appengine_config import SECRET_KEY, AWS_PDF_URL, LIST_OF_COUNTIES
+# also import captcha settings
+from appengine_config import CAPTCHA_PRIVATE_KEY, CAPTCHA_POST_PARAM
 
 from models.handlers import BaseHandler
 from models.models import NgoEntity, Donor
 
+from captcha import submit
 
 from logging import info
 import re
@@ -98,7 +101,7 @@ class TwoPercentHandler(BaseHandler):
         payload["first_name"] = get_post_value("nume").title()
         payload["last_name"] = get_post_value("prenume").title()
         payload["father"] = get_post_value("tatal").title()
-        payload["cnp"] = get_post_value("cnp")
+        payload["cnp"] = get_post_value("cnp", False)
 
         payload["street"] = get_post_value("strada").title()
         payload["number"] = get_post_value("numar")
@@ -122,7 +125,16 @@ class TwoPercentHandler(BaseHandler):
         if len(errors["fields"]):
             self.return_error(errors)
             return
- 
+
+        captcha_response = submit(post.get(CAPTCHA_POST_PARAM), CAPTCHA_PRIVATE_KEY, self.request.remote_addr)
+
+        # if the captcha is not valid return
+        if not captcha_response.is_valid:
+            
+            errors["fields"].append("codul captcha")
+            self.return_error(errors)
+            return
+
 
         # send to aws and get the pdf url
         aws_rpc = urlfetch.create_rpc(deadline=20)

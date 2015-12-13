@@ -42,8 +42,3 @@ handlers:
   script: main.app
   secure: always
   # expiration: "10m"
-  #   http_headers:
-  #     X-UA-Compatible: "IE=edge"
-  #     Content-Security-Policy: "script-src 'self'; object-src 'self'"
-
-  # http://cspisawesome.com/

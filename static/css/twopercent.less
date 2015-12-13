@@ -37,6 +37,25 @@
     }
 }
 
+// the submit button
+#submit-twopercent-form {
+
+    @media (max-width: @screen-sm-min) {
+        .btn-block()
+    }
+}
+
+// the recaptcha block
+// we actually need to talk to the div 2 levels down. that one is created with js by recaptcha
+.g-recaptcha {
+
+    div div {
+        @media (max-width: @screen-sm-min) {
+            margin: 30px auto;
+        }
+    }
+}
+
 
 // second step
 #twopercent-2-container {
@@ -50,4 +69,9 @@
         font-weight: normal;
         font-size: 25px;
     }
+}
+
+// a class to add an additional margin top to an element
+.margin-top {
+    margin-top: @form-group-margin-bottom;
 }

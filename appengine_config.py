@@ -63,12 +63,33 @@ CONTACT_FORM_URL = "https://docs.google.com/forms/d/1PdigxpzW1omlTtexfu-gXEPEJmk
 CONTACT_EMAIL_ADDRESS = "donez si eu <contact@donezsi.eu>"
 
 
+# ============================
+# Additional response headers
+# ============================
+# 
+# Tis headers are added for extra security
+HTTP_HEADERS = {
+    # lgarron at chromium dot org 
+    # https://hstspreload.appspot.com/
+    # for https everywhere, and on subdomains, 1 year
+    "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+    # make sure the certificate is valid
+    "Public-Key-Pins-Report-Only": 'pin-sha256="wuvbD/BvVfYoATqByqmg/6/XWyvmA+yeQImG75l2ous=";pin-sha256="6X0iNAQtPIjXKEVcqZBwyMcRwq1yW60549axatu3oDE=";pin-sha256="h6801m+z8v3zbgkRHpq6L29Esgfzhj89C1SyUCOQmqU=";max-age=2592000;report-uri="https://report-uri.io/report/donezsieu/reportOnly";includeSubdomains',
 
+    # don't allow the site to be embeded
+    "X-Frame-Options": "Deny",
+    "X-Content-Type-Options": "nosniff",
+    "X-XSS-Protection": "1; mode=block",
+    "Content-Security-Policy-Report-Only": "default-src 'self' ; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://maxcdn.bootstrapcdn.com https://ajax.googleapis.com https://www.google.com https://www.gstatic.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://maxcdn.bootstrapcdn.com https://fonts.googleapis.com; img-src 'self' https://donezsieu-static.s3.amazonaws.com; font-src 'self' https://fonts.gstatic.com https://maxcdn.bootstrapcdn.com; connect-src 'self' https://donezsieu-static.s3.amazonaws.com; media-src 'none' ; object-src 'none' ; child-src https://www.google.com/recaptcha/; frame-ancestors 'none' ; form-action 'self' ; reflected-xss block; report-uri https://report-uri.io/report/donezsieu/reportOnly;"
+}
 
+# ===================
+# Recaptcha API Keys
+# ===================
+# 
+# The public and private key
+CAPTCHA_PUBLIC_KEY = "6Lc58hITAAAAAEy-owjeigG_x9FuPQqlZJRHEE6O"
+CAPTCHA_PRIVATE_KEY = "6Lc58hITAAAAADeRUDDFHJlzSVXKL6L7f-KukyZs"
+CAPTCHA_VERIFY_URL = "https://www.google.com/recaptcha/api/siteverify"
+CAPTCHA_POST_PARAM = "g-recaptcha-response"
 
-# def webapp_add_wsgi_middleware(app):
-#     from google.appengine.ext.appstats import recording
-#     app = recording.appstats_wsgi_middleware(app)
-#     return app
-
-# appstats_CALC_RPC_COSTS = True

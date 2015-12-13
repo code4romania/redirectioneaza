@@ -40,6 +40,7 @@ template_settings = {
     "contact_url": CONTACT_FORM_URL,
     "language": "ro",
     "base_url": "/",
+    "captcha_public_key": CAPTCHA_PUBLIC_KEY,
     "errors": None
 }
 
@@ -88,6 +89,8 @@ class BaseHandler(Handler):
         template = template_name if template_name is not None else self.template_name
         
         self.set_template( template )
+
+        self.response.headers.update(HTTP_HEADERS)
 
         self.response.write(self.template.render(self.template_values))
 
