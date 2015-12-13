@@ -22,7 +22,7 @@
         <div class="col-md-10 col-md-offset-1">
             <div class="row">
                 <div class="col-xs-12 text-center">
-                    <h4 class="text-primary">In primul rand te ajutam sa colectezi formularele 2%</h4>
+                    <h4 class="text-primary">Vrem sa te ajutam sa colectezi formularele 2%</h4>
                     <p class="text-muted">Credem ca acesta este cel mai simplu pas prin care poti sa obtii fonduri pentru toate proiectele organizatiei.</p>
                 </div>
                 {# <div class="col-xs-5">
@@ -33,11 +33,11 @@
     </div>
     <hr>
     <div class="row">
-        <div class="col-xs-6 col-md-4 col-md-offset-1">
+        <div class="col-sm-6 col-md-4 col-md-offset-1">
             <p>Creaza-ti un cont pentru a vedea despre ce e vorba</p>
             <p>Totul este <strong>gratuit</strong>.</p>
         </div>
-        <div class="col-xs-6">
+        <div class="col-sm-6">
             <form class="form-horizontal" action="/cont-nou" role="form" method="post">
                 <fieldset>
                     <div class="form-group">
@@ -59,6 +59,11 @@
                         </div> 
                     </div>
                     <div class="form-group">
+                        <div class="col-sm-12">
+                            {% include "components/recaptcha.html" %}
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <div class="col-xs-12 checkbox">
                             <label class="" for="agree">
                                 <input type="checkbox" name="agree" id="agree" required />
@@ -66,7 +71,11 @@
                             </label>
                         </div> 
                     </div>
-                    <button type="submit" class="btn btn-primary pull-right">Trimite</button>
+                    <div class="form-group margin-top">
+                        <div class="col-sm-12">
+                            <button type="submit" class="btn btn-primary pull-right">Trimite</button>
+                        </div>
+                    </div>
                 </fieldset>
             </form>
 

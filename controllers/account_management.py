@@ -3,6 +3,10 @@
 from models.handlers import AccountHandler, user_required
 from webapp2_extras.auth import InvalidPasswordError, InvalidAuthIdError
 
+from appengine_config import CAPTCHA_PRIVATE_KEY, CAPTCHA_POST_PARAM
+
+from captcha import submit
+
 from logging import info
 
 class LoginHandler(AccountHandler):
@@ -18,8 +22,19 @@ class LoginHandler(AccountHandler):
         self.render()
 
     def post(self):
-        email = self.request.get('email')
-        password = self.request.get('parola')
+        post = self.request
+
+        email = post.get('email')
+        password = post.get('parola')
+
+        captcha_response = submit(post.get(CAPTCHA_POST_PARAM), CAPTCHA_PRIVATE_KEY, post.remote_addr)
+
+        # if the captcha is not valid return
+        if not captcha_response.is_valid:
+            
+            self.template_values["errors"] = "Se pare ca a fost o problema cu verificarea reCAPTCHA. Te rugam sa incerci din nou."
+            self.render()
+            return
 
         try:
             user = self.auth.get_user_by_password(email, password, remember=True)
@@ -45,12 +60,22 @@ class SignupHandler(AccountHandler):
         self.render()
 
     def post(self):
+        post = self.request
 
-        first_name = self.request.get('nume')
-        last_name = self.request.get('prenume')
+        first_name = post.get('nume')
+        last_name = post.get('prenume')
         
-        email = self.request.get('email')
-        password = self.request.get('parola')
+        email = post.get('email')
+        password = post.get('parola')
+
+        captcha_response = submit(post.get(CAPTCHA_POST_PARAM), CAPTCHA_PRIVATE_KEY, post.remote_addr)
+
+        # if the captcha is not valid return
+        if not captcha_response.is_valid:
+            
+            self.template_values["errors"] = "Se pare ca a fost o problema cu verificarea reCAPTCHA. Te rugam sa incerci din nou."
+            self.render()
+            return
 
         unique_properties = ['email']
         success, user = self.user_model.create_user(email, unique_properties,
@@ -89,6 +114,7 @@ class ForgotPasswordHandler(AccountHandler):
         self.render()
 
     def post(self):
+
         email = self.request.get('email')
 
         user = self.user_model.get_by_auth_id(email)
