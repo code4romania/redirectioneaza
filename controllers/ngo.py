@@ -243,7 +243,7 @@ class TwoPercent2Handler(BaseHandler):
         error_message = ""
 
         if self.get_ngo_and_donor() is False:
-            return
+            self.abort(404)
 
         # strip any white space
         email = post.get("email").strip() if post.get("email") else ""

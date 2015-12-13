@@ -22,12 +22,56 @@
                     </a>
                   <div class="panel-body">
                     {# {{ " ".join(ngo.description.split()[:11]) + " ..." }} #}
-                    {{ ngo.description|truncate(60) }}
+                    {{ ngo.description|truncate(160) }}
                   </div>
                 </div>
             </div>
         {% endfor %}
     </div>
+    <div class="homepage-paragraph row">
+        <div class="col-xs-12 col-md-10 col-md-offset-1">
+        <h3>Cum funcioneaza?</h3>
+        <ul class="list-unstyled">
+            <li>
+                <div class="media">
+                    <div class="media-left media-middle">
+                        <i class="fa fa-keyboard-o fa-3x"></i>
+                    </div>
+                    <div class="media-body">
+                        <h3 class="homepage-media-title">
+                            Completeaza formularul de pe pagina unei <a href="/asociatii">asociatii</a>.
+                        </h3>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="media">
+                    <div class="media-left media-middle">
+                        <i class="fa fa-download fa-3x"></i>
+                    </div>
+                    <div class="media-body">
+                        <h3 class="homepage-media-title">
+                            Descarca fisierul PDF.
+                        </h3>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="media">
+                    <div class="media-left media-middle">
+                        <i class="fa fa-print fa-3x"></i>
+                    </div>
+                    <div class="media-body">
+                        <h3 class="homepage-media-title">
+                            Printeaza-l, semneaza-l si expediaza-l catre unitatea ANAF de care apartii.
+                        </h3>
+                    </div>
+                </div>
+            </li>
+        </ul>            
+        </div>
+    </div>
+    <hr/>
 
     <div class="row">
         <div class="col-xs-12 col-md-6 col-md-offset-3">
@@ -42,25 +86,6 @@
             </div>
         </div>
     </div>
-
-    <hr/>
-    <div class="homepage-paragraph row">
-        <div class="col-xs-12 col-md-6 col-md-offset-3">
-        <h3>Cum funcioneaza?</h3>
-        <ol>
-            <li>
-                Completeazaa formularul de pe pagina unei <a href="/asociatii">asociatii</a>.
-            </li>
-            <li>
-                Descarca fisierul PDF
-            </li>
-            <li>
-                Printeaza-l, semneaza-l si expediaza-l catre unitatea ANAF de care apartii
-            </li>
-        </ol>            
-        </div>
-    </div>
-
     <hr/>
     {% include "components/for-ngos.html" %}
 

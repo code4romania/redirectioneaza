@@ -5,8 +5,10 @@ $(function () {
             return;
         }
 
+        var checkUrlApi = "/api/ngo/check-url/";
+
         $.ajax({
-            url: "{{ check_ngo_url }}" + ongUrl.val(),
+            url: checkUrlApi + ongUrl.val(),
             success: function(data) {
                 ongUrl.parent().removeClass("has-error");
             },

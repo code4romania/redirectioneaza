@@ -46,9 +46,9 @@ class MyAccountHandler(AccountHandler):
 
             # self.uri_for("api-ngo-check-url", ngo_url="")
             # TODO: use uri_for
-            self.template_values["check_ngo_url"] = "/api/ngo/check-url/"
+            # self.template_values["check_ngo_url"] = "/api/ngo/check-url/"
             
-            self.template_values["ngo_upload_url"] = self.uri_for("api-ngo-upload-url")
+            # self.template_values["ngo_upload_url"] = self.uri_for("api-ngo-upload-url")
 
         
         self.render()
@@ -102,7 +102,7 @@ class NgoDetailsHandler(AccountHandler):
             
             ngo = user.ngo.get()
             self.template_values["ngo"] = ngo
-            self.template_values["ngo_upload_url"] = self.uri_for("api-ngo-upload-url")
+            # self.template_values["ngo_upload_url"] = self.uri_for("api-ngo-upload-url")
             self.template_values["counties"] = LIST_OF_COUNTIES
             
             self.render()
@@ -130,8 +130,8 @@ class NgoDetailsHandler(AccountHandler):
         self.template_values["user"] = user
         self.template_values["ngo"] = {}
         self.template_values["counties"] = LIST_OF_COUNTIES
-        self.template_values["check_ngo_url"] = "/api/ngo/check-url/"
-        self.template_values["ngo_upload_url"] = self.uri_for("api-ngo-upload-url")
+        # self.template_values["check_ngo_url"] = "/api/ngo/check-url/"
+        # self.template_values["ngo_upload_url"] = self.uri_for("api-ngo-upload-url")
 
 
         ong_nume = self.request.get('ong-nume')
@@ -256,15 +256,40 @@ class NgoDetailsHandler(AccountHandler):
                 if users.is_current_user_admin():
                     self.redirect(self.uri_for("admin-ong", ngo_url=ong_url))
                 else:
-                    info(2)
-                    self.redirect(self.uri_for("asociatia"))
     
+                    self.redirect(self.uri_for("asociatia"))
                 return
+
+        # create a new ngo entity
+        # do this before validating the url, cif and back account because if we have errors 
+        # to at least prepopulate the form on refresh
+        new_ngo = NgoEntity(
+            id = ong_url,
+
+            name = ong_nume,
+            description = ong_descriere,
+            short_description = short_description,
+            logo = ong_logo_url,
+            
+            email = ong_email,
+            website = ong_website,
+            tel = ong_tel,
+            
+            address = ong_adresa,
+            county = ong_judet,
+            
+            cif = ong_cif,
+            account = ong_account
+        )
 
         # check for unique url
         is_ngo_url_available = check_ngo_url(ong_url)
         if is_ngo_url_available == False:
             self.template_values["errors"] = url_taken
+
+            new_ngo.key = None
+            self.template_values["ngo"] = new_ngo
+            
             self.render()
             return
 
@@ -284,25 +309,6 @@ class NgoDetailsHandler(AccountHandler):
             ong_logo_url = UploadHandler.upload_file_to_s3(ong_logo, ong_url) if ong_logo else None
         
 
-        # create a new ngo entity
-        new_ngo = NgoEntity(
-            id = ong_url,
-
-            name = ong_nume,
-            description = ong_descriere,
-            short_description = short_description,
-            logo = ong_logo_url,
-            
-            email = ong_email,
-            website = ong_website,
-            tel = ong_tel,
-            
-            address = ong_adresa,
-            county = ong_judet,
-            
-            cif = ong_cif,
-            account = ong_account
-        )
 
         if users.is_current_user_admin():
 

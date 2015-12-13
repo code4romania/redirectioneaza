@@ -27,7 +27,7 @@ config = {
             # we can't use the config DEV bool, because if we set that manually to False, in order 
             # to test prod locally, the cookie will not work
             # so make sure the cookie are set to secure only in production
-            'secure': environ.get('SERVER_SOFTWARE', 'Development').startswith('Development'),
+            'secure': not environ.get('SERVER_SOFTWARE', 'Development').startswith('Development'),
             'httponly': True
         }
     }

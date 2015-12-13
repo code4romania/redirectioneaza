@@ -1,4 +1,9 @@
 $(function () {
+    var errors = {
+        server_error: "Se pare ca am intampinat o eroare pe server. Va rugam incercati din nou.",
+        fields_error: "Se pare ca urmatoarele date sunt invalide: "
+    }
+    var ngoUrl = window.location.href;
 
     $('[data-toggle="popover"]').popover({
         trigger: "focus",
@@ -119,7 +124,7 @@ $(function () {
         $("html, body").animate({ scrollTop: $(document).height() - 550 }, 3000);
 
         $.ajax({
-            url: "{{ ngo.key.id() }}/doilasuta",
+            url: ngoUrl,
             type: "POST",
             dataType: "json",
             data: $(this).serialize(),
@@ -135,16 +140,16 @@ $(function () {
                 var response = data.responseJSON;
                 var message = "";
                 if(data.status == 500 || response.server) {
-                    message = "{{ server_error }}";
+                    message = errors["server_error"];
                 } else if( response.fields && response.fields.length) {
-                    message = "{{ fields_error }}";
+                    message = errors["fields_error"];
 
                     for( var field in response.fields ) {
                         message += response.fields + ", ";
                     }
                     message = message.slice(0, -2);
                 } else {
-                    message = "{{ server_error }}";
+                    message = errors["server_error"];
                 }
 
                 submitFormButton.addClass("btn-primary").removeClass("btn-success").attr("disabled", false);
@@ -191,7 +196,7 @@ $(function () {
                 .appendTo(this);
 
             $.ajax({
-                url: "{{ ngo.key.id() }}/doilasuta/pas-2",
+                url: ngoUrl + "/pas-2",
                 type: "POST",
                 dataType: "json",
                 data: $(this).serialize(),
@@ -201,7 +206,7 @@ $(function () {
                 },
                 error: function(data) {
                     if(data.response == 500) {
-                        var message = "{{ server_error }}";
+                        var message = errors["server_error"];
 
                     } else {
 

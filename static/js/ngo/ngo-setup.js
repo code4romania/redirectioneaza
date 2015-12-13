@@ -2,23 +2,27 @@ $(function () {
     var uploadLogo = $("#upload-logo");
     var displayLogo = $("#display-logo");
 
-    var aws_api_url = "{{ ngo_upload_url }}";
+    var aws_api_url = '/api/ngo/upload-url';
     var photoLogoClass = "fa-picture-o";
     var loadingLogoClass = "fa-spinner fa-pulse";
 
-    var errors = 0;
+    var errors = {
+        server: "Se pare ca a aparut o problema. Va rugam reincarcati pagina si incercati din nou!"
+    }
+
+    var requestAttempts = 0;
     uploadLogo.find("#ong-logo").on("change", function(ev){
         var file = ev.target.files[0];
         function errorCallback(){
             // TODO: remove this in the future
-            alert("Se pare ca a aparut o problema. Va rugam reincarcati pagina si incercati din nou!")
+            alert(errors.server);
             return;
             
-            errors++;
-            if(errors<4) {
+            requestAttempts++;
+            if(requestAttempts<4) {
                 uploadLogo.find("#ong-logo").change();
             } else {
-                alert("Se pare ca a aparut o problema. Va rugam reincarcati pagina si incercati din nou!")
+                alert(errors.server);
             }
         }
 
@@ -30,8 +34,7 @@ $(function () {
                 url: aws_api_url + "?file_name="+file.name + "&file_type="+file.type,
                 dataType: "json",
                 success: function(data) {
-                    console.log(data);
-                    // return
+                    // console.log(data);
 
                     // upload to s3
                     $.ajax({
