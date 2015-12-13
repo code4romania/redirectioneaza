@@ -50,14 +50,5 @@
 {% endblock %}
 
 {% block scripts %}
-    <script type="text/javascript">
-        $(function () {
-            $(".ngo-copy-url").on("click", function(){
-                this.select();
-            }).on("input", function(ev){
-                ev.preventDefault();
-            });
-            $('[data-toggle="popover"]').popover({trigger: "focus"});
-        });
-    </script>
+    <script src="/js/account.js"></script>
 {% endblock %}

@@ -24,8 +24,11 @@ handlers:
   static_dir: static/css
 
 - url: /images
-  # mime_type: "text/css"
   static_dir: static/images
+
+- url: /js
+  static_dir: static/js
+
 
 # bower components url
 - url: /bower_components
@@ -41,4 +44,3 @@ handlers:
 - url: /.*
   script: main.app
   secure: always
-  # expiration: "10m"

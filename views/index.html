@@ -21,7 +21,8 @@
                         <div class="panel-heading">{{ ngo.name }}</div>
                     </a>
                   <div class="panel-body">
-                    {{ " ".join(ngo.description.split()[:11]) + " ..." }}
+                    {# {{ " ".join(ngo.description.split()[:11]) + " ..." }} #}
+                    {{ ngo.description|truncate(60) }}
                   </div>
                 </div>
             </div>

@@ -1,5 +1,6 @@
 
 import webapp2
+from os import environ
 
 from appengine_config import SESSION_SECRET_KEY, DEV
 
@@ -23,7 +24,10 @@ config = {
         'cookie_name': 'session',
         'cookie_args': {
             # make the cookie secure only if we are on production
-            'secure': not DEV,
+            # we can't use the config DEV bool, because if we set that manually to False, in order 
+            # to test prod locally, the cookie will not work
+            # so make sure the cookie are set to secure only in production
+            'secure': environ.get('SERVER_SOFTWARE', 'Development').startswith('Development'),
             'httponly': True
         }
     }
