@@ -49,10 +49,15 @@ def submit(recaptcha_response_field, private_key, remoteip):
         }
     )
     
-    httpresp = urllib2.urlopen(request)
+    try:
+        httpresp = urllib2.urlopen(request)
+        
+        response = json.decode( httpresp.read() )
+        httpresp.close()
+    
+    except Exception, e:
+        return RecaptchaResponse(is_valid=False)
 
-    response = json.decode( httpresp.read() )
-    httpresp.close()
 
     if response["success"]:
         return RecaptchaResponse(is_valid=True)

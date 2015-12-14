@@ -81,7 +81,7 @@ class TwoPercentHandler(BaseHandler):
         def get_post_value(arg, add_to_error_list=True):
             value = post.get(arg)
 
-            # if we received an value and it only contains alpha numeric, spaces and dash
+            # if we received a value, it should only contains alpha numeric, spaces and dash
             if value:
                 if re.match('^[\w\s.-]+$', value) is not None:
                     # additional validation
