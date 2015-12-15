@@ -96,6 +96,9 @@ class SendCampaign(NgoDetailsHandler):
 
     def post(self):
         
+        if not users.is_current_user_admin():
+            self.abort(400)
+
         subject = self.request.get('subiect')
         emails = [s.strip() for s in self.request.get('emails', "").split(",")]
 
