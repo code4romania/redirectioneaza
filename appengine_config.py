@@ -80,7 +80,7 @@ HTTP_HEADERS = {
     "X-Frame-Options": "Deny",
     "X-Content-Type-Options": "nosniff",
     "X-XSS-Protection": "1; mode=block",
-    "Content-Security-Policy-Report-Only": "default-src 'self' ; script-src 'self' 'unsafe-eval' 'sha256-wwUprMhWJHcJgH7bVT8BB8TYRW7F8WDk5qBJvaLAsEw=' https://maxcdn.bootstrapcdn.com https://ajax.googleapis.com https://www.google.com https://www.gstatic.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://maxcdn.bootstrapcdn.com https://fonts.googleapis.com; img-src 'self' https://donezsieu-static.s3.amazonaws.com; font-src 'self' https://fonts.gstatic.com https://maxcdn.bootstrapcdn.com; connect-src 'self' https://donezsieu-static.s3.amazonaws.com; media-src 'none' ; object-src 'none' ; child-src https://www.google.com/recaptcha/; frame-ancestors 'none' ; form-action 'self' ; reflected-xss block; report-uri https://report-uri.io/report/donezsieu/reportOnly;"
+    "Content-Security-Policy-Report-Only": "default-src 'self' ; script-src 'self' 'unsafe-eval' 'sha256-wwUprMhWJHcJgH7bVT8BB8TYRW7F8WDk5qBJvaLAsEw=' https://maxcdn.bootstrapcdn.com https://ajax.googleapis.com https://www.google.com https://www.gstatic.com https://www.google-analytics.com; style-src 'self' https://maxcdn.bootstrapcdn.com https://fonts.googleapis.com; img-src 'self' https://donezsieu-static.s3.amazonaws.com; font-src 'self' https://fonts.gstatic.com https://maxcdn.bootstrapcdn.com; connect-src 'self' https://donezsieu-static.s3.amazonaws.com; media-src 'none' ; object-src 'none' ; child-src https://www.google.com/recaptcha/; frame-ancestors 'none' ; form-action 'self' ; reflected-xss block; report-uri https://report-uri.io/report/donezsieu/reportOnly;"
 }
 
 # ===================

@@ -61,9 +61,22 @@
 .g-recaptcha {
 
     div div {
+        width: 304px; 
+        height: 78px;
+        
         @media (max-width: @screen-sm-min) {
             margin: 30px auto;
         }
+    }
+
+    #g-recaptcha-response {
+        width: 250px;
+        height: 40px;
+        border: 1px solid #c1c1c1;
+        margin: 10px 25px;
+        padding: 0px;
+        resize: none;
+        display: none;
     }
 }
 
