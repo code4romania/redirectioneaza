@@ -32,7 +32,6 @@ def get_jinja_enviroment(account_view_folder=''):
     
 # default values for every template
 template_settings = {
-    "is_admin": users.is_current_user_admin(),
     "bower_components": DEV_DEPENDECIES_LOCATION,
     "DEV": DEV,
     "PRODUCTION": PRODUCTION,
@@ -53,8 +52,11 @@ class BaseHandler(Handler):
     def __init__(self, *args, **kwargs):
         super(BaseHandler, self).__init__(*args, **kwargs)
 
+
         self.template_values = {}
         self.template_values.update(template_settings)
+        
+        self.template_values["is_admin"] = users.is_current_user_admin()
         
         self.jinja_enviroment = get_jinja_enviroment()
 

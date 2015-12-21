@@ -16,7 +16,7 @@ import os
 # 
 # gcloud config set project donezsieu-server
 # gcloud preview app deploy ./app.yaml --version 6 --promote
-# gcloud preview app deploy ./app.yaml --version 17 --no-promote
+# gcloud preview app deploy ./app.yaml --version 18 --no-promote
 
 # minify-css && gcloud preview app deploy ./app.yaml --version 14
 
