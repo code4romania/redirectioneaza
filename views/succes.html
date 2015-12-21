@@ -2,7 +2,9 @@
 
 
 {% block header %}
-    {% include "components/ngo-header.html" %}
+    <div class="container">
+        {% include "components/ngo-header.html" %}
+    </div>
 {% endblock %}
 
 
@@ -19,7 +21,7 @@
                     <h3>Gasesti mai jos pdf-ul pentru download:</h3>
                     <p class="margin-top">
                         <a href="{{ donor.pdf_url }}" class="btn btn-success btn-lg" target="_blank">
-                            Descarca &nbsp; <i class="fa fa-download"></i>
+                            Descarca &nbsp; <i class="glyphicon glyphicon-save download-pdf-icon"></i>
                         </a>
                     </p>
                 </div>
