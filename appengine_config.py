@@ -21,15 +21,6 @@ import os
 # minify-css && gcloud preview app deploy ./app.yaml --version 14
 
 
-# AWS CONNECT
-# ssh -i main-server-key.pem ec2-user@52.10.187.83
-# commands:
-# ps aux | grep python
-# kill -9 
-# nohup python main.py &
-# 
-
-
 # if we are currently in production
 DEV = os.environ.get('SERVER_SOFTWARE', 'Development').startswith('Development')
 # use this to simulate production
@@ -40,7 +31,7 @@ PRODUCTION = not DEV
 
 # used to communicate with aws
 SECRET_KEY = "B1={kpE_4To5ZSJW=hNx(EYDj0-f|YT8uz5*SU6iA~.A+]aWSC#lmu;<Hc|T^V@-:#|+g0b<[+toRMtyqdtEDJ$%o4$>_yRTxbsh}%a|k)BS}u;dU~%Da;;SDhmZFl[_Wpr#U?A8"
-AWS_PDF_URL = "http://ec2-52-28-113-53.eu-central-1.compute.amazonaws.com:8090" if PRODUCTION else "http://127.0.0.1:8090"
+AWS_PDF_URL = "http://ec2-52-30-39-219.eu-west-1.compute.amazonaws.com:8090" if PRODUCTION else "http://127.0.0.1:8090"
 
 
 GEOIP_SERVICES = ["http://ip-api.com/json/{0}", "http://freegeoip.net/json/{0}"]
