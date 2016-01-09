@@ -64,6 +64,7 @@ app = webapp2.WSGIApplication([
 
         # ADMIN HANDLERS
         r('/admin',             handler="controllers.admin.AdminHandler",       name='admin'),
+        r('/admin/conturi',     handler="controllers.admin.UserAccounts",       name='admin-users'),
         r('/admin/campanii',    handler="controllers.admin.SendCampaign",       name='admin-campanii'),
         r('/admin/ong-nou',     handler="controllers.admin.AdminNewNgoHandler", name='admin-ong-nou'),
         r('/admin/<ngo_url>',   handler="controllers.admin.AdminNgoHandler",    name='admin-ong'),

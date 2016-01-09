@@ -40,6 +40,20 @@ class AdminHandler(BaseHandler):
         # render a response
         self.render()
 
+
+class UserAccounts(BaseHandler):
+    template_name = 'admin/accounts.html'
+    def get(self):
+        if users.is_current_user_admin():
+            user = users.get_current_user()
+        else:
+            self.redirect(users.create_login_url("/admin"))
+
+        self.template_values["users"] = User.query().fetch()
+
+        self.render()
+
+
 class AdminNewNgoHandler(BaseHandler):
     template_name = 'admin/ngo.html'
     def get(self):

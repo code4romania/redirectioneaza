@@ -13,7 +13,6 @@
                 <th>#</th>
                 <th>Nume ONG</th>
                 <th>Judet</th>
-                <th>Verificat</th>
                 <th>Cont asociat</th>
                 <th>Nr. donatii</th>
             </tr>
@@ -27,8 +26,9 @@
                             <a href="/admin/{{ ngo.key.id() }}">{{ ngo.name }}</a>
                         </td>
                         <td>{{ ngo.county }}</td>
-                        <td>{{ ngo.verified }}</td>
-                        <td>{{ ngo.account_attached }}</td>
+                        <td class="{{ 'success' if ngo.account_attached }}">
+                            {{ ngo.account_attached }}
+                        </td>
                         <td>{{ ngo.number_of_donations }}</td>
                     </tr>
                 {% endfor %}
