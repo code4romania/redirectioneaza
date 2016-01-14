@@ -1,4 +1,7 @@
 
+from operator import itemgetter
+
+
 from google.appengine.api import users, mail
 from google.appengine.ext import ndb
 
@@ -49,7 +52,15 @@ class UserAccounts(BaseHandler):
         else:
             self.redirect(users.create_login_url("/admin"))
 
-        self.template_values["users"] = User.query().fetch()
+        all_users = User.query().fetch()
+
+        # make all the users a dict so we can sort them
+        b = []
+        for a in all_users:
+            b.append(a.to_dict())
+
+        all_users = sorted(b, key=itemgetter("created"), reverse=True)
+        self.template_values["users"] = all_users
 
         self.render()
 

@@ -290,6 +290,9 @@ class TwoPercent2Handler(BaseHandler):
 
             self.donor.put()
 
+            # send and email to the donor with a link to the PDF file
+            self.send_email("twopercent-form", self.donor)
+
             # if ajax return 200 and the url
             if is_ajax:
                 self.response.set_status(200)
