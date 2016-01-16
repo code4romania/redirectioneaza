@@ -204,7 +204,7 @@ class BaseHandler(Handler):
             token = self.user_model.create_signup_token(user_id)
             verification_url = self.uri_for('verification', type='p', user_id=user_id, signup_token=token, _full=True)
             
-            # html_template = self.jinja_enviroment.get_template("email/reset/reset-password.html")
+            html_template = None # self.jinja_enviroment.get_template("email/reset/reset-password.html")
             txt_template = self.jinja_enviroment.get_template("email/reset/reset_password.txt")
             
             template_values = {
@@ -216,13 +216,13 @@ class BaseHandler(Handler):
         elif email_type == "twopercent-form":
             subject = "Formularul tau de donatie"
             
-            # html_template = self.jinja_enviroment.get_template("email/twopercent-form/twopercent-form.html")
+            html_template = None # self.jinja_enviroment.get_template("email/twopercent-form/twopercent-form.html")
             txt_template = self.jinja_enviroment.get_template("email/twopercent-form/twopercent_form.txt")
             
             template_values = {
                 "name": user.first_name,
                 "form_url": user.pdf_url,
-                "url": verification_url,
+                "contact_url": CONTACT_FORM_URL
             }
         else:
             return
@@ -232,8 +232,11 @@ class BaseHandler(Handler):
             body = txt_template.render(template_values) if txt_template else None
             html_body = html_template.render(template_values) if html_template else None
             
-            mail.send_mail(sender=CONTACT_EMAIL_ADDRESS, to=user_address, subject=subject, html=html_body, body=body)
-   
+            if html_body:
+                mail.send_mail(sender=CONTACT_EMAIL_ADDRESS, to=user_address, subject=subject, html=html_body, body=body)
+            else:
+                mail.send_mail(sender=CONTACT_EMAIL_ADDRESS, to=user_address, subject=subject, body=body)
+        
         except Exception, e:
             info(e)
 
