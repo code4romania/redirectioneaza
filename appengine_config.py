@@ -3,7 +3,8 @@
 
 import os
 
-
+# in order to not promote the current version
+# gcloud config set app/promote_by_default false
 
 # gcloud auth login
 # gcloud config set project donezsieu-server
