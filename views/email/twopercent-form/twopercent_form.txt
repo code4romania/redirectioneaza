@@ -1,0 +1,14 @@
+Salut {{ name }},
+
+Iti multumim pentru donatie.
+
+Gasesti mai jos link-ul catre formularul tau:
+{{ form_url }}
+
+Mai departe trebuie sa-l printezi, sa-l semnezi si sa-l expediezi catre unitatea ANAF de care apartii.
+
+Multumim,
+echipa donezsi.eu
+
+Ai primit din greseala acest email? Contacteaza-ne!
+{{ contact_url }}

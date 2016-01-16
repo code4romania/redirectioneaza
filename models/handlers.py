@@ -172,6 +172,73 @@ class BaseHandler(Handler):
 
         return True
 
+    def send_email(self, email_type, user):
+
+        if user.email:
+            user_address = user.email
+        else:
+            return
+
+        if email_type == "signup":
+            subject = "Confirmare cont donezsi.eu"
+
+            user_id = user.get_id()
+            token = self.user_model.create_signup_token(user_id)
+            verification_url = self.uri_for('verification', type='v', user_id=user_id, signup_token=token, _full=True)
+
+            html_template = self.jinja_enviroment.get_template("email/signup/signup_inline.html")
+            txt_template = self.jinja_enviroment.get_template("email/signup/signup_text.txt")
+        
+            template_values = {
+                "name": user.first_name,
+                "email": user_address,
+                "contact_url": CONTACT_FORM_URL,
+                "url": verification_url,
+                "host": self.request.host
+            }
+
+        elif email_type == "reset-password":
+            subject = "Resetare parola pentru contul donezsi.eu"
+
+            user_id = user.get_id()
+            token = self.user_model.create_signup_token(user_id)
+            verification_url = self.uri_for('verification', type='p', user_id=user_id, signup_token=token, _full=True)
+            
+            # html_template = self.jinja_enviroment.get_template("email/reset/reset-password.html")
+            txt_template = self.jinja_enviroment.get_template("email/reset/reset_password.txt")
+            
+            template_values = {
+                "name": user.first_name,
+                "contact_url": CONTACT_FORM_URL,
+                "url": verification_url,
+            }
+
+        elif email_type == "twopercent-form":
+            subject = "Formularul tau de donatie"
+            
+            # html_template = self.jinja_enviroment.get_template("email/twopercent-form/twopercent-form.html")
+            txt_template = self.jinja_enviroment.get_template("email/twopercent-form/twopercent_form.txt")
+            
+            template_values = {
+                "name": user.first_name,
+                "form_url": user.pdf_url,
+                "url": verification_url,
+            }
+        else:
+            return
+
+        try:
+
+            body = txt_template.render(template_values) if txt_template else None
+            html_body = html_template.render(template_values) if html_template else None
+            
+            mail.send_mail(sender=CONTACT_EMAIL_ADDRESS, to=user_address, subject=subject, html=html_body, body=body)
+   
+        except Exception, e:
+            info(e)
+
+
+
 def user_required(handler):
     """
     Decorator that checks if there's a user associated with the current session.
@@ -232,40 +299,3 @@ class AccountHandler(BaseHandler):
         """override BaseHandler session method in order to use the datastore as the backend."""
         return self.session_store.get_session(backend="datastore")
 
-
-    def send_email(self, email_type, user):
-        user_id = user.get_id()
-
-        token = self.user_model.create_signup_token(user_id)
-
-        sender_address = CONTACT_EMAIL_ADDRESS
-        user_address = user.email
-
-        if email_type == "signup":
-            subject = "Confirmare cont donezsi.eu"
-            verification_url = self.uri_for('verification', type='v', user_id=user_id, signup_token=token, _full=True)
-
-            html_template = self.jinja_enviroment.get_template("email/signup/signup_inline.html")
-            txt_template = self.jinja_enviroment.get_template("email/signup/signup_text.txt")
-
-        elif email_type == "reset-password":
-            subject = "Resetare parola pentru contul donezsi.eu"
-            verification_url = self.uri_for('verification', type='p', user_id=user_id, signup_token=token, _full=True)
-            
-            html_template = self.jinja_enviroment.get_template("email/reset-password.html")
-
-        else:
-            return
-
-        template_values = {
-            "name": user.first_name,
-            "email": user_address,
-            "contact_url": CONTACT_FORM_URL,
-            "url": verification_url,
-            "host": self.request.host
-        }
-
-        body = txt_template.render(template_values)
-        html_body = html_template.render(template_values)
-
-        mail.send_mail(sender=sender_address, to=user_address, subject=subject, html=html_body, body=body)
