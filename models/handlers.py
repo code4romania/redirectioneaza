@@ -175,7 +175,12 @@ class BaseHandler(Handler):
     def send_email(self, email_type, user):
 
         if user.email:
-            user_address = user.email
+
+            # if the user has a first and a last name, add that to the email
+            if user.first_name and user.last_name:
+                user_address = "{0} {1} <{2}>".format(user.first_name, user.last_name, user.email)
+            else:
+                user_address = user.email
         else:
             return
 
@@ -191,7 +196,6 @@ class BaseHandler(Handler):
         
             template_values = {
                 "name": user.first_name,
-                "email": user_address,
                 "contact_url": CONTACT_FORM_URL,
                 "url": verification_url,
                 "host": self.request.host
@@ -228,15 +232,19 @@ class BaseHandler(Handler):
             return
 
         try:
+            # create a new email object
+            message = mail.EmailMessage(sender=CONTACT_EMAIL_ADDRESS, to=user_address, subject=subject)
 
+            # add the text body
             body = txt_template.render(template_values) if txt_template else None
+            message.body = body
+
+            # if we have it add the html content also
             html_body = html_template.render(template_values) if html_template else None
-            
             if html_body:
-                mail.send_mail(sender=CONTACT_EMAIL_ADDRESS, to=user_address, subject=subject, html=html_body, body=body)
-            else:
-                mail.send_mail(sender=CONTACT_EMAIL_ADDRESS, to=user_address, subject=subject, body=body)
-        
+                message.html = html_body
+
+            message.send()
         except Exception, e:
             info(e)
 
