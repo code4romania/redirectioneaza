@@ -15,9 +15,9 @@ libraries:
 # - ^.*pyc$
 
 handlers:
-- url: /favicon\.ico
-  static_files: favicon.ico
-  upload: favicon\.ico
+# - url: /favicon\.ico
+#   static_files: favicon.ico
+#   upload: favicon\.ico
 
 - url: /css
   mime_type: "text/css"

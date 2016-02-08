@@ -5,6 +5,9 @@
 <div class="container">
 
     <div id="homepage-container" class="jumbotron text-center">
+        <div class="row">
+            <img class="col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4" src="/images/index.png">
+        </div>
         <h1>Cea mai simpla metoda de a dona 2%</h1>
     </div>
 
@@ -21,7 +24,6 @@
                         <div class="panel-heading">{{ ngo.name }}</div>
                     </a>
                   <div class="panel-body">
-                    {# {{ " ".join(ngo.description.split()[:11]) + " ..." }} #}
                     {{ ngo.description|truncate(125) }}
                   </div>
                 </div>

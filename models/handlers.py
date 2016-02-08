@@ -175,7 +175,12 @@ class BaseHandler(Handler):
     def send_email(self, email_type, user):
 
         if user.email:
-            user_address = user.email
+
+            # if the user has a first and a last name, add that to the email
+            if user.first_name and user.last_name:
+                user_address = "{0} {1} <{2}>".format(user.first_name, user.last_name, user.email)
+            else:
+                user_address = user.email
         else:
             return
 
@@ -191,7 +196,6 @@ class BaseHandler(Handler):
         
             template_values = {
                 "name": user.first_name,
-                "email": user_address,
                 "contact_url": CONTACT_FORM_URL,
                 "url": verification_url,
                 "host": self.request.host
@@ -204,7 +208,7 @@ class BaseHandler(Handler):
             token = self.user_model.create_signup_token(user_id)
             verification_url = self.uri_for('verification', type='p', user_id=user_id, signup_token=token, _full=True)
             
-            # html_template = self.jinja_enviroment.get_template("email/reset/reset-password.html")
+            html_template = None # self.jinja_enviroment.get_template("email/reset/reset-password.html")
             txt_template = self.jinja_enviroment.get_template("email/reset/reset_password.txt")
             
             template_values = {
@@ -216,24 +220,31 @@ class BaseHandler(Handler):
         elif email_type == "twopercent-form":
             subject = "Formularul tau de donatie"
             
-            # html_template = self.jinja_enviroment.get_template("email/twopercent-form/twopercent-form.html")
+            html_template = None # self.jinja_enviroment.get_template("email/twopercent-form/twopercent-form.html")
             txt_template = self.jinja_enviroment.get_template("email/twopercent-form/twopercent_form.txt")
             
             template_values = {
                 "name": user.first_name,
                 "form_url": user.pdf_url,
-                "url": verification_url,
+                "contact_url": CONTACT_FORM_URL
             }
         else:
             return
 
         try:
+            # create a new email object
+            message = mail.EmailMessage(sender=CONTACT_EMAIL_ADDRESS, to=user_address, subject=subject)
 
+            # add the text body
             body = txt_template.render(template_values) if txt_template else None
+            message.body = body
+
+            # if we have it add the html content also
             html_body = html_template.render(template_values) if html_template else None
-            
-            mail.send_mail(sender=CONTACT_EMAIL_ADDRESS, to=user_address, subject=subject, html=html_body, body=body)
-   
+            if html_body:
+                message.html = html_body
+
+            message.send()
         except Exception, e:
             info(e)
 
