@@ -15,8 +15,8 @@ import os
 # cd ./static/ && lessc css/main.less > css/main.css --clean-css="--s1 --advanced --compatibility=ie8" && cd ..
 # 
 # gcloud config set project donezsieu-server
-# gcloud preview app deploy ./app.yaml --version 6 --promote
-# gcloud preview app deploy ./app.yaml --version 19 --no-promote
+# gcloud preview app deploy ./app.yaml --version 24 --promote
+# gcloud preview app deploy ./app.yaml --version 24 --no-promote
 
 # minify-css && gcloud preview app deploy ./app.yaml --version 14
 
@@ -31,7 +31,7 @@ PRODUCTION = not DEV
 
 # used to communicate with aws
 SECRET_KEY = "B1={kpE_4To5ZSJW=hNx(EYDj0-f|YT8uz5*SU6iA~.A+]aWSC#lmu;<Hc|T^V@-:#|+g0b<[+toRMtyqdtEDJ$%o4$>_yRTxbsh}%a|k)BS}u;dU~%Da;;SDhmZFl[_Wpr#U?A8"
-AWS_PDF_URL = "http://ec2-52-30-39-219.eu-west-1.compute.amazonaws.com:8090" if PRODUCTION else "http://127.0.0.1:8090"
+AWS_PDF_URL = "http://main-balancer-1246647494.eu-west-1.elb.amazonaws.com:8090/" if PRODUCTION else "http://127.0.0.1:8090"
 
 
 GEOIP_SERVICES = ["http://ip-api.com/json/{0}", "http://freegeoip.net/json/{0}"]
