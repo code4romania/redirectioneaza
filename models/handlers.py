@@ -202,7 +202,7 @@ class BaseHandler(Handler):
             txt_template = self.jinja_enviroment.get_template("email/signup/signup_text.txt")
         
             template_values = {
-                "name": user.first_name,
+                "name": user.last_name,
                 "contact_url": CONTACT_FORM_URL,
                 "url": verification_url,
                 "host": self.request.host
@@ -219,7 +219,7 @@ class BaseHandler(Handler):
             txt_template = self.jinja_enviroment.get_template("email/reset/reset_password.txt")
             
             template_values = {
-                "name": user.first_name,
+                "name": user.last_name,
                 "contact_url": CONTACT_FORM_URL,
                 "url": verification_url,
             }
@@ -231,7 +231,7 @@ class BaseHandler(Handler):
             txt_template = self.jinja_enviroment.get_template("email/twopercent-form/twopercent_form.txt")
             
             template_values = {
-                "name": user.first_name,
+                "name": user.last_name,
                 "form_url": user.pdf_url,
                 "contact_url": CONTACT_FORM_URL
             }
