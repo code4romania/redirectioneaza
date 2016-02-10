@@ -73,8 +73,8 @@ app = webapp2.WSGIApplication([
         r('/<ngo_url>',         handler=NgoHandler, name="ngo-url"),
         r('/catre/<ngo_url>',   handler=NgoHandler),
 
-        r('/<ngo_url>/doilasuta',           handler=TwoPercentHandler),
-        r('/<ngo_url>/doilasuta/pas-2',     handler=TwoPercent2Handler),
+        r('/<ngo_url>/doilasuta',           handler=TwoPercentHandler,  name="twopercent"),
+        r('/<ngo_url>/doilasuta/pas-2',     handler=TwoPercent2Handler, name="twopercent-step-2"),
         r('/<ngo_url>/doilasuta/succes',    handler=DonationSucces,     name="ngo-twopercent-success"),
 
     ],

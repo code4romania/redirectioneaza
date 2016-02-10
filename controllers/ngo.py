@@ -34,7 +34,7 @@ Handlers used for ngo
 class NgoHandler(BaseHandler):
     def get(self, ngo_url):
 
-        self.redirect( ngo_url + "/doilasuta" )
+        self.redirect( self.uri_for("twopercent", ngo_url=ngo_url) )
 
 
 class TwoPercentHandler(BaseHandler):
@@ -191,7 +191,7 @@ class TwoPercentHandler(BaseHandler):
             self.response.set_status(200)
             self.response.write(json.dumps({}))
         else:
-            self.redirect( "/" + ngo_url + "/doilasuta/pas-2" )
+            self.redirect( self.uri_for("twopercent-step-2", ngo_url=ngo_url) )
 
     def return_error(self, errors):
         

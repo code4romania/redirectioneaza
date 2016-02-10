@@ -137,15 +137,22 @@ class BaseHandler(Handler):
     def get_ngo_and_donor(self, projection=True):
 
         ngo_id = str( self.request.route_kwargs.get("ngo_url") )
-        donor_id = int( self.session.get("donor_id", 1) )
+        donor_id = int( self.session.get("donor_id", 0) )
 
-        list_of_entities = ndb.get_multi([
-            ndb.Key("NgoEntity", ngo_id), 
-            ndb.Key("Donor", donor_id)
-        ])
+        if ngo_id and donor_id:
+            list_of_entities = ndb.get_multi([
+                ndb.Key("NgoEntity", ngo_id), 
+                ndb.Key("Donor", donor_id)
+            ])
 
-        ngo = list_of_entities[0]
-        donor = list_of_entities[1]
+            ngo = list_of_entities[0]
+            donor = list_of_entities[1]
+        
+        else:
+            ngo = ndb.Key("NgoEntity", ngo_id).get() if ngo_id else None
+
+            donor = ndb.Key("Donor", donor_id).get() if donor_id else None
+
 
         # if we didn't find the ngo or donor, raise
         if ngo is None:
@@ -154,7 +161,7 @@ class BaseHandler(Handler):
         # if it doesn't have a cookie, he must not be on the right page
         # redirect to the ngo's main page
         if donor_id is None:
-            self.redirect("/" + ngo_id)
+            self.redirect( self.uri_for("ngo-url", ngo_url=ngo_id) )
             return False
 
         # if we didn't find the donor than the cookie must be wrong, unset it
@@ -163,7 +170,7 @@ class BaseHandler(Handler):
             if "donor_id" in self.session:
                 self.session.pop("donor_id") 
 
-            self.redirect("/" + ngo_id)
+            self.redirect( self.uri_for("ngo-url", ngo_url=ngo_id) )
             return False
 
 

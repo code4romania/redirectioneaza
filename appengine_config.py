@@ -16,8 +16,8 @@ import os
 # cd ./static/ && lessc css/main.less > css/main.css --clean-css="--s1 --advanced --compatibility=ie8" && cd ..
 # 
 # gcloud config set project donezsieu-server
-# gcloud preview app deploy ./app.yaml --version 24 --promote
-# gcloud preview app deploy ./app.yaml --version 24 --no-promote
+# gcloud preview app deploy ./app.yaml --version 25 --promote
+# gcloud preview app deploy ./app.yaml --version 25 --no-promote
 
 # minify-css && gcloud preview app deploy ./app.yaml --version 14
 
