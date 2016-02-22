@@ -239,6 +239,8 @@ class BaseHandler(Handler):
             body = txt_template.render(template_values) if txt_template else None
             message.body = body
 
+            info(message.body)
+
             # if we have it add the html content also
             html_body = html_template.render(template_values) if html_template else None
             if html_body:

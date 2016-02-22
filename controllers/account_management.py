@@ -114,20 +114,35 @@ class ForgotPasswordHandler(AccountHandler):
         self.render()
 
     def post(self):
+        post = self.request
 
-        email = self.request.get('email')
+        email = post.get('email')
+
+        captcha_response = submit(post.get(CAPTCHA_POST_PARAM), CAPTCHA_PRIVATE_KEY, post.remote_addr)
+        # if the captcha is not valid return
+        if not captcha_response.is_valid:
+            
+            self.template_values["errors"] = "Se pare ca a fost o problema cu verificarea reCAPTCHA. Te rugam sa incerci din nou."
+            self.render()
+            return
 
         user = self.user_model.get_by_auth_id(email)
         if not user:            
             self.template_values.update({
-                "not_found": True
+                "errors": "Se pare ca nu exita un cont cu aceasta adresa!"
             })
 
             self.render()
             return
 
         self.send_email("reset-password", user)
-        self.redirect(self.uri_for("login"))
+        
+        self.template_values.update({
+            "errors": False,
+            "found": "Un email a fost trimis catre acea adresa"
+        })
+
+        self.render()
 
 class VerificationHandler(AccountHandler):
     """handler used to:
@@ -149,7 +164,7 @@ class VerificationHandler(AccountHandler):
         user, ts = self.user_model.get_by_auth_token(int(user_id), signup_token, 'signup')
 
         if not user:
-            logging.info('Could not find any user with id "%s" signup token "%s"', user_id, signup_token)
+            info('Could not find any user with id "%s" signup token "%s"', user_id, signup_token)
             self.abort(404)
 
         # store user data in the session
@@ -172,7 +187,7 @@ class VerificationHandler(AccountHandler):
             })
             self.render()
         else:
-            logging.info('verification type not supported')
+            info('verification type not supported')
             self.abort(404)
 
 class SetPasswordHandler(AccountHandler):
@@ -188,7 +203,7 @@ class SetPasswordHandler(AccountHandler):
 
         if not password or password != confirm_password:
             self.template_values.update({
-                "passwords_dont_match": True
+                "errors": "Te rugam sa confirmi parola. A doua parola nu seamana cu prima."
             })
             self.render()
             return
