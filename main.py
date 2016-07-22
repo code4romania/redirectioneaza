@@ -50,9 +50,10 @@ app = webapp2.WSGIApplication([
         r('/logout',    handler="controllers.account_management.LogoutHandler", name='logout'),
 
         r('/forgot',    handler="controllers.account_management.ForgotPasswordHandler", name='forgot'),
-        r('/password',  handler="controllers.account_management.SetPasswordHandler"),
+        
         # verification url: used for signup, and reset password
         r('/<type:v|p>/<user_id:\d+>-<signup_token:.+>', handler="controllers.account_management.VerificationHandler", name='verification'),
+        r('/password',  handler="controllers.account_management.SetPasswordHandler"),
         
         # my account
         r('/contul-meu',        handler="controllers.my_account.MyAccountHandler", name='contul-meu'),
