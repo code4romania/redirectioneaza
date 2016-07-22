@@ -14,6 +14,8 @@ from models.upload import UploadHandler
 from api import check_ngo_url
 from logging import info
 
+import datetime
+
 incomplete_form_data = "Te rugam sa completezi datele din formular."
 url_taken = "Din pacate acest url este folosit deja."
 not_unique = 'Se pare ca acest cod CIF sau cont bancar este deja inscris. ' \
@@ -38,6 +40,13 @@ class MyAccountHandler(AccountHandler):
 
             donors = Donor.query(Donor.ngo == ngo.key).fetch()
             self.template_values["donors"] = donors
+            
+            now = datetime.datetime.now()
+            can_donate = True
+            if now.month > 5 or now.month == 5 and now.day > 25:
+                can_donate = False
+
+            self.template_values["can_donate"] = can_donate
 
         else:
             self.template_values["ngo"] = {}

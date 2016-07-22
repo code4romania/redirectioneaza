@@ -15,7 +15,7 @@ from captcha import submit
 from logging import info
 import re
 import json
-
+import datetime
 
 ngo = NgoEntity(
     logo= "http://images.clipartpanda.com/spinner-clipart-9cz75npcE.jpeg",
@@ -59,6 +59,13 @@ class TwoPercentHandler(BaseHandler):
         self.template_values["title"] = "Donatie 2%"
         self.template_values["ngo"] = ngo
         self.template_values["counties"] = LIST_OF_COUNTIES
+
+        now = datetime.datetime.now()
+        can_donate = True
+        if now.month > 5 or now.month == 5 and now.day > 25:
+            can_donate = False
+
+        self.template_values["can_donate"] = can_donate
         
         self.render()
 
