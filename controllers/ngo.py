@@ -7,7 +7,7 @@ from hashlib import sha1
 
 from webapp2_extras import json, security
 
-from appengine_config import SECRET_KEY, AWS_PDF_URL, LIST_OF_COUNTIES, USER_UPLOADS_FOLDER
+from appengine_config import SECRET_KEY, AWS_PDF_URL, LIST_OF_COUNTIES, USER_UPLOADS_FOLDER, USER_FORMS
 # also import captcha settings
 from appengine_config import CAPTCHA_PRIVATE_KEY, CAPTCHA_POST_PARAM
 
@@ -161,7 +161,7 @@ class TwoPercentHandler(BaseHandler):
         # get the local time in iso format
         # run that through SHA1 hash
         # output a hex string
-        filename = "{0}/{1}/{2}".format(USER_UPLOADS_FOLDER, str(user_folder), sha1( datetime.datetime.now().isoformat() ).hexdigest())
+        filename = "{0}/{1}/{2}".format(USER_FORMS, str(user_folder), sha1( datetime.datetime.now().isoformat() ).hexdigest())
 
         pdf = create_pdf(payload, ngo_data)
 

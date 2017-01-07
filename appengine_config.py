@@ -46,6 +46,7 @@ SECRET_KEY = "B1={kpE_4To5ZSJW=hNx(EYDj0-f|YT8uz5*SU6iA~.A+]aWSC#lmu;<Hc|T^V@-:#
 AWS_PDF_URL = "http://main-balancer-1246647494.eu-west-1.elb.amazonaws.com:8090/" if PRODUCTION else "http://127.0.0.1:8090"
 
 USER_UPLOADS_FOLDER = 'uploads'
+USER_FORMS = 'documents'
 
 GEOIP_SERVICES = ["http://ip-api.com/json/{0}", "http://freegeoip.net/json/{0}"]
 

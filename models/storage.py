@@ -38,10 +38,6 @@ class CloudStorage(object):
         if file_to_save is None or filename is None:
             return
         
-        # when it's user uploaded the file is on the attribute file 
-        if hasattr(file_to_save, 'file'):
-            file_to_save = file_to_save.file
-
         # add the bucket name at the begining of the file
         filename = "/{0}/{1}".format(CloudStorage.get_bucket_name(), filename)
 
@@ -61,8 +57,9 @@ class CloudStorage(object):
                                    # 'x-goog-meta-bar': 'bar'},
                           retry_params=write_retry_params)
 
-
-        if hasattr(file_to_save, 'read'):
+        if hasattr(file_to_save, 'file'):
+            gcs_file.write( file_to_save.file.read() )
+        elif hasattr(file_to_save, 'read'):
             gcs_file.write( file_to_save.read() )
         
         else: 

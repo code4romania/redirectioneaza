@@ -30,35 +30,40 @@ $(function () {
             uploadLogo.find("."  + photoLogoClass).removeClass(photoLogoClass).addClass(loadingLogoClass);
 
             // request upload key
-            $.ajax({
-                url: aws_api_url + "?file_name="+file.name + "&file_type="+file.type,
-                dataType: "json",
-                success: function(data) {
+            // $.ajax({
+            //     url: aws_api_url + "?file_name="+file.name + "&file_type="+file.type,
+            //     dataType: "json",
+            //     success: function(data) {
                     // console.log(data);
+                    var formData = new FormData();
+                    formData.append("files", file);
 
-                    // upload to s3
+                    // upload
                     $.ajax({
-                        url: data.signed_request,
-                        method: "PUT",
-                        data: file,
+                        url: aws_api_url,
+                        method: "post",
+                        data: formData,
                         processData: false,
                         contentType: false,
-                        headers: {
-                            'x-amz-acl': 'public-read',
-                            'Content-Type': file.type
-                        },
-                        success: function() {
-                            uploadLogo.addClass("hidden").find("input").val("");
-                            displayLogo.find("img").attr("src", data.url);
-                            displayLogo.find("#ong-logo-url").val(data.url);
-                            displayLogo.removeClass("hidden");
+                        success: function(data) {
+                            if( data.file_urls && data.file_urls.length == 1 ) {
+                                
+                                var url = data.file_urls[0];
+
+                                uploadLogo.addClass("hidden").find("input").val("");
+                                displayLogo.find("img").attr("src", url);
+                                displayLogo.find("#ong-logo-url").val(url);
+                                displayLogo.removeClass("hidden");
+                            } else {
+                                errorCallback();
+                            }
                         },
                         error: errorCallback
                     });
 
-                },
-                error: errorCallback
-            });
+            //     },
+            //     error: errorCallback
+            // });
         }
     });
 

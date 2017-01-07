@@ -171,7 +171,7 @@ class NgoDetailsHandler(AccountHandler):
 
         # TODO: in the future
         # try:
-        #     # try and cut it ad 1400 bytes, if we have an error
+        #     # try and cut it at 1400 bytes, if we have an error
         #     short_description = utf8_byte_truncate(ong_descriere, 1400)
         # except Exception, e:
         #     # cut it at 80 chars

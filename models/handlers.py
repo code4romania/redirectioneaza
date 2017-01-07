@@ -4,9 +4,8 @@ import webapp2
 import jinja2
 import urlparse
 import logging
-import json
 
-from logging import info
+from logging import info, warn
 
 # globals
 from appengine_config import *
@@ -16,7 +15,7 @@ from google.appengine.api import users, urlfetch
 from google.appengine.api import mail
 from google.appengine.ext import ndb
 
-from webapp2_extras import sessions, auth
+from webapp2_extras import sessions, auth, json
 
 from models import NgoEntity, Donor
 
@@ -102,14 +101,14 @@ class BaseHandler(Handler):
             ip_address = self.request.remote_addr
         
         if DEV:
-            return json.dumps({"ip_address": ip_address})    
+            return json.encode({"ip_address": ip_address})    
 
         # set the default value to 10 seconds
         deadline = 10
         try:
             resp = urlfetch.fetch(url=GEOIP_SERVICES[0].format(ip_address), deadline=deadline)
             # we need to load the json to see the status
-            geoip_response = json.loads(resp.content)
+            geoip_response = json.decode(resp.content)
 
             # check to see if it was a success
             if geoip_response["status"] == "success":
@@ -131,7 +130,7 @@ class BaseHandler(Handler):
             info(e)
 
         # if this one fails alos return empty dict
-        return json.dumps({"ip_address": ip_address})
+        return json.encode({"ip_address": ip_address})
         
 
     def get_ngo_and_donor(self, projection=True):
@@ -265,8 +264,9 @@ def user_required(handler):
     Will also fail if there's no session present.
     """
     def check_login(self, *args, **kwargs):
+        
         auth = self.auth
-        if not auth.get_user_by_session():
+        if not auth.get_user_by_session() and not users.is_current_user_admin():
             self.redirect(self.uri_for('login'), abort=True)
         else:
             return handler(self, *args, **kwargs)
@@ -319,3 +319,26 @@ class AccountHandler(BaseHandler):
         """override BaseHandler session method in order to use the datastore as the backend."""
         return self.session_store.get_session(backend="datastore")
 
+    def return_json(self, obj={}, status_code=200):
+
+        self.response.content_type = 'application/json'
+        self.response.set_status(status_code)
+
+        try:
+            def json_serial(obj):
+                """JSON serializer for objects not serializable by default json code"""
+
+                if isinstance(obj, datetime) or isinstance(obj, date):
+                    serial = obj.isoformat()
+                    return serial
+                else:
+                    raise TypeError("Type not serializable")
+
+            self.response.write( json.encode(obj, default=json_serial) )
+        except Exception, e:
+            warn(e)
+
+            obj = {
+                "error": "Error when trying to json encode the response"
+            }
+            self.response.write( json.encode(obj) )

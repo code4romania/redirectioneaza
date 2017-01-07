@@ -8,7 +8,7 @@
             </div>
         </div>
         <div class="form-group">
-            {# <div class="col-xs-4 text-center">
+            <div class="col-xs-4 text-center">
                 <div id="upload-logo" class="{{ 'hidden' if ngo.logo }}">
                     <label for="ong-logo">
                         <i class="glyphicon glyphicon-picture upload-file-icon"></i>
@@ -21,8 +21,8 @@
                     <span id="delete-ngo-logo" class="text-danger">Sterge</span>
                     <input type="hidden" id="ong-logo-url" name="ong-logo-url" value="{{ ngo.logo }}" />
                 </div>
-            </div> #}  
-            <div class="col-xs-12">
+            </div>
+            <div class="col-xs-8">
                 <textarea class="form-control" name="ong-descriere" placeholder="O scurta descriere" rows="3" required >{{ ngo.description }}</textarea>
             </div>
         </div>
