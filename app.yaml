@@ -25,6 +25,7 @@ handlers:
 
 - url: /images
   static_dir: static/images
+  application_readable: true
 
 - url: /js
   static_dir: static/js
@@ -41,3 +42,6 @@ handlers:
 - url: /.*
   script: main.app
   secure: always
+
+env_variables:
+  BUCKET_NAME: "donezsieu-bucket"

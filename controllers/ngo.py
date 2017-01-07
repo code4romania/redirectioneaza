@@ -3,12 +3,19 @@
 from google.appengine.api import urlfetch
 from google.appengine.ext import ndb
 
-from appengine_config import SECRET_KEY, AWS_PDF_URL, LIST_OF_COUNTIES
+from hashlib import sha1
+
+from webapp2_extras import json, security
+
+from appengine_config import SECRET_KEY, AWS_PDF_URL, LIST_OF_COUNTIES, USER_UPLOADS_FOLDER
 # also import captcha settings
 from appengine_config import CAPTCHA_PRIVATE_KEY, CAPTCHA_POST_PARAM
 
 from models.handlers import BaseHandler
 from models.models import NgoEntity, Donor
+from models.storage import CloudStorage
+from models.create_pdf import create_pdf
+
 
 from captcha import submit
 
@@ -126,11 +133,13 @@ class TwoPercentHandler(BaseHandler):
         payload["county"] = get_post_value("judet")
 
         # the ngo data
-        payload["name"] = self.ngo.name
-        payload["account"] = self.ngo.account
-        payload["cif"] = self.ngo.cif
+        ngo_data = {
+            "name": self.ngo.name,
+            "account": self.ngo.account,
+            "cif": self.ngo.cif
+        }
 
-        payload["secret_key"] = SECRET_KEY
+        # payload["secret_key"] = SECRET_KEY
         
         if len(errors["fields"]):
             self.return_error(errors)
@@ -145,12 +154,21 @@ class TwoPercentHandler(BaseHandler):
             self.return_error(errors)
             return
 
+        # the user's folder name, it's just his md5 hashed db id
+        user_folder = security.hash_password('123', "md5")
 
-        # send to aws and get the pdf url
-        aws_rpc = urlfetch.create_rpc(deadline=20)
+        # a way to create unique file names
+        # get the local time in iso format
+        # run that through SHA1 hash
+        # output a hex string
+        filename = "{0}/{1}/{2}".format(USER_UPLOADS_FOLDER, str(user_folder), sha1( datetime.datetime.now().isoformat() ).hexdigest())
 
-        headers = { "Content-Type": "application/json" }
-        urlfetch.make_fetch_call(aws_rpc, AWS_PDF_URL, payload=json.dumps(payload), method="POST", headers=headers)
+        pdf = create_pdf(payload, ngo_data)
+
+        file_url = CloudStorage.save_file(pdf, filename)
+
+        # close the file after it has been uploaded
+        pdf.close()
 
         # prepare the donor entity while we wait for aws
         donor = Donor(
@@ -160,34 +178,12 @@ class TwoPercentHandler(BaseHandler):
             county = payload["county"],
             # make a request to get geo ip data for this user
             geoip = self.get_geoip_data(),
-            ngo = self.ngo.key
+            ngo = self.ngo.key,
+            pdf_url = file_url
         )
 
-        # The returned data structure has the following fields:
-        #   status_code:    HTTP status code returned by the server 
-        #   content:        string containing the response from the server 
-        #   headers:        dictionary of headers returned by the server
-        try:
-            result = aws_rpc.get_result()
-        except Exception, e:
-            info(e)
-
-            errors["server"] = True
-            self.return_error(errors)
-            return
-
-        if result.status_code == 200:
-            content = json.loads(result.content)
-            donor.pdf_url = content["url"]
-
-            # only save if the pdf was created
-            donor.put()
-        else:
-            info(result.status_code)
-            info(result.content)
-            errors["server"] = True
-            self.return_error(errors)
-            return
+        # only save if the pdf was created
+        donor.put()
 
         # set the donor id in cookie
         self.session["donor_id"] = str(donor.key.id())

@@ -29,11 +29,11 @@
         </div>
     </div>
     
-    <div class="row">
+    <div class="row instructions-row">
         {# if the ngo allows the donor to upload the signed and scaned pdf  #}
         {% if ngo.allow_upload %}
             <div class="col-xs-12 col-md-6 col-md-offset-3">
-                <h3>Daca doresti, poti printa, semna, scana si incarca formularul pentru a fi expediat de ONG catre ANAF in numele tau:</h3>
+                <h3>Daca doresti, incarca formularul pentru a fi expediat de ONG catre ANAF in numele tau:</h3>
                 <form action="{{ ngo.key.id()/succes }}" class="form" enctype="multipart/form-data">
                     <div class="form-group text-center">
                         <label for="signed-pdf" class="btn btn-default btn-lg">
