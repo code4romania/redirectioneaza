@@ -10,6 +10,18 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
+- kind: Donor
+  properties:
+  - name: ngo
+  - name: date_created
+    direction: desc
+  - name: city
+  - name: county
+  - name: email
+  - name: first_name
+  - name: last_name
+  - name: tel
+
 - kind: NgoEntity
   properties:
   - name: county

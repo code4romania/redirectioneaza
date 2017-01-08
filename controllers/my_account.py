@@ -1,10 +1,11 @@
 
+from collections import OrderedDict
 
 from google.appengine.ext.ndb import put_multi, OR, Key
 from google.appengine.api import users
 from google.appengine.api import mail
 
-from appengine_config import AWS_PDF_URL, LIST_OF_COUNTIES, CONTACT_FORM_URL, CONTACT_EMAIL_ADDRESS
+from appengine_config import AWS_PDF_URL, LIST_OF_COUNTIES, CONTACT_FORM_URL, CONTACT_EMAIL_ADDRESS, START_YEAR
 
 from models.handlers import AccountHandler, user_required
 from models.models import NgoEntity, Donor
@@ -31,6 +32,8 @@ class MyAccountHandler(AccountHandler):
         self.template_values["user"] = user
         self.template_values["title"] = "Contul meu"
 
+        now = datetime.datetime.now()
+
         if user.ngo:
             ngo = user.ngo.get()
             self.template_values["ngo"] = ngo
@@ -38,10 +41,26 @@ class MyAccountHandler(AccountHandler):
             self.template_values["ngo_url"] = self.request.host + '/' + ngo.key.id() 
             # self.uri_for("ngo-url", ngo_url=ngo.key.id(), _full=True)
 
-            donors = Donor.query(Donor.ngo == ngo.key).fetch()
-            self.template_values["donors"] = donors
+            donor_projection = ['first_name', 'last_name', 'city', 'county', 'email', 'tel', 'date_created']
+            donors = Donor.query(Donor.ngo == ngo.key).order(-Donor.date_created).fetch(projection=donor_projection)
             
-            now = datetime.datetime.now()
+            years = xrange(now.year, START_YEAR-1, -1)
+            grouped_donors = OrderedDict()
+            for year in years:
+                grouped_donors[year] = []
+            
+
+            # group the donors by year
+            for donor in donors:
+
+                index = donor.date_created.year
+                
+                if index in years:
+                    grouped_donors[ index ].append(donor)
+
+            self.template_values["donors"] = grouped_donors
+            # self.template_values["years"] = years
+            
             can_donate = True
             if now.month > 5 or now.month == 5 and now.day > 25:
                 can_donate = False

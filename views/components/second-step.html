@@ -11,9 +11,10 @@
     <div class="col-xs-12 col-md-8 col-md-offset-2">
         <form id="second-step-form" class="form-inline text-center" action="{{ ngo.key.id() }}/doilasuta/pas-2" method="post" role="form">
             <fieldset class="form-group">
-                <input id="email" class="form-control" name="email" value="{{ email }}" type="text" placeholder="email" />
+                <input id="email" class="form-control" name="email" type="email" value="{{ email }}" placeholder="email" autocomplete="email" x-moz-errormessage="Te rugam sa introduci o adresa de email valida" />
                 <span>sau</span>
-                <input id="telefon" class="form-control" name="tel" type="tel" value="{{ tel }}" placeholder="telefon mobil" />
+                <input id="telefon" class="form-control" name="tel" type="tel" value="{{ tel }}" placeholder="telefon mobil" autocomplete="tel" x-moz-errormessage="Te rugam sa introduci un numar de telefon valid" />
+                
                 <button id="second-step-submit-button" type="submit" class="btn btn-primary">Salveaza</button>
             </fieldset>
         </form>

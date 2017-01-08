@@ -40,6 +40,9 @@ DEV = os.environ.get('SERVER_SOFTWARE', 'Development').startswith('Development')
 
 PRODUCTION = not DEV
 
+# the year when the site started
+# used to create an array up to the current year
+START_YEAR = 2016
 
 # used to communicate with aws
 SECRET_KEY = "B1={kpE_4To5ZSJW=hNx(EYDj0-f|YT8uz5*SU6iA~.A+]aWSC#lmu;<Hc|T^V@-:#|+g0b<[+toRMtyqdtEDJ$%o4$>_yRTxbsh}%a|k)BS}u;dU~%Da;;SDhmZFl[_Wpr#U?A8"
@@ -85,7 +88,7 @@ HTTP_HEADERS = {
     "X-Frame-Options": "Deny",
     "X-Content-Type-Options": "nosniff",
     "X-XSS-Protection": "1; mode=block",
-    "Content-Security-Policy-Report-Only": "default-src 'self' ; script-src 'self' 'unsafe-eval' 'sha256-wwUprMhWJHcJgH7bVT8BB8TYRW7F8WDk5qBJvaLAsEw=' https://maxcdn.bootstrapcdn.com https://ajax.googleapis.com https://www.google.com https://www.gstatic.com https://www.google-analytics.com; style-src 'self' https://maxcdn.bootstrapcdn.com https://fonts.googleapis.com; img-src 'self' https://donezsieu-static.s3.amazonaws.com; font-src 'self' https://fonts.gstatic.com https://maxcdn.bootstrapcdn.com; connect-src 'self' https://donezsieu-static.s3.amazonaws.com; media-src 'none' ; object-src 'none' ; child-src https://www.google.com/recaptcha/; frame-ancestors 'none' ; form-action 'self' ; reflected-xss block; report-uri https://report-uri.io/report/donezsieu/reportOnly;"
+    "Content-Security-Policy-Report-Only": "default-src 'self'; script-src 'self' 'unsafe-eval' 'sha256-wwUprMhWJHcJgH7bVT8BB8TYRW7F8WDk5qBJvaLAsEw=' https://maxcdn.bootstrapcdn.com https://ajax.googleapis.com https://www.google.com https://www.gstatic.com https://www.google-analytics.com; style-src 'self' https://maxcdn.bootstrapcdn.com https://fonts.googleapis.com; img-src 'self' https://storage.googleapis.com/donezsieu-bucket/; font-src 'self' https://fonts.gstatic.com https://maxcdn.bootstrapcdn.com; connect-src 'self' https://donezsieu-static.s3.amazonaws.com; media-src 'none'; object-src 'none'; child-src https://www.google.com/recaptcha/; frame-ancestors 'none'; form-action 'self'; reflected-xss block; report-uri https://donezsieu.report-uri.io/r/default/csp/reportOnly;"
 }
 
 # ===================

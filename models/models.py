@@ -69,11 +69,11 @@ class Donor(BaseEntity):
     county = ndb.StringProperty(indexed=True)
     
     email = ndb.StringProperty(indexed=True)
-    tel = ndb.StringProperty()
+    tel = ndb.StringProperty(indexed=True)
 
     geoip = ndb.TextProperty()
 
-    ngo = ndb.KeyProperty(kind="NgoEntity")
+    ngo = ndb.KeyProperty(indexed=True, kind="NgoEntity")
 
     # the pdf to be downloaded by the donor
     pdf_url = ndb.StringProperty()

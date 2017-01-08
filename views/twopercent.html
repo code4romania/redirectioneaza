@@ -57,12 +57,12 @@
                         <legend class="text-muted">Date personale</legend>
                         <div class="form-group">
                             <div class="col-xs-12 col-sm-5">
-                                <input type="text" class="form-control text-capitalize" id="nume" value="{{ nume }}" name="nume" placeholder="Nume" maxlength="50" autofocus x-moz-errormessage="Numele este obligatoriu" required />
+                                <input type="text" class="form-control text-capitalize" id="nume" value="{{ nume }}" name="nume" placeholder="Nume" maxlength="50" autofocus x-moz-errormessage="Numele este obligatoriu" autocomplete="family-name" required />
                             </div>
                             <div class="col-xs-12 col-sm-7">
                                 <div class="row second-form-row">
                                     <div class="col-xs-9">
-                                        <input type="text" class="form-control text-capitalize" id="prenume" value="{{ prenume }}" name="prenume" placeholder="Prenume" maxlength="50" x-moz-errormessage="Prenumele este obligatoriu" required />
+                                        <input type="text" class="form-control text-capitalize" id="prenume" value="{{ prenume }}" name="prenume" placeholder="Prenume" maxlength="50" x-moz-errormessage="Prenumele este obligatoriu" autocomplete="given-name" required />
                                     </div>
                                     <div class="col-xs-3">
                                         <input type="text" class="form-control text-uppercase text-center" id="tatal" value="{{ tatal }}" name="tatal" maxlength="1" data-toggle="popover" data-placement="right" x-moz-errormessage="" data-content="Initiala tatalui" required />
