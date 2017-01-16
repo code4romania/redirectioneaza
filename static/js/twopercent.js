@@ -1,4 +1,11 @@
 $(function () {
+
+    $('.description').shorten({
+        moreText: 'Arata mai mult',
+        lessText: 'Arata mai putin',
+        showChars: 200
+    });
+    
     var errors = {
         server_error: "Se pare ca am intampinat o eroare pe server. Va rugam incercati din nou.",
         fields_error: "Se pare ca urmatoarele date sunt invalide: "

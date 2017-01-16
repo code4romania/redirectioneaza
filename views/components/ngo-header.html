@@ -16,9 +16,16 @@
                         <span itemprop="name" >{{ ngo.name }}</span>
                     </a>
                 </h1>
-                <p itemprop="description" >
+                {% if ngo.description|length > 250 %}
+                    <div class="description" itemprop="description">
+                        {% for line in ngo.description.splitlines() %}
+                            {{ line }}<br>
+                        {% endfor %}
+                    </div>
+                {% else %}
                     {{ ngo.description }}
-                </p>
+                {% endif %}
+
                 {% if ngo_website %}
                     <p>
                         <strong>Website:</strong> <br />
