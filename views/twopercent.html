@@ -52,85 +52,85 @@
         <div class="row">
             <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
                 {% if ngo.account and ngo.cif %}
-                <form id="twopercent" class="form form-horizontal" action="{{ ngo.key.id() }}/doilasuta" role="form" method="post">
-                    <fieldset>
-                        <legend class="text-muted">Date personale</legend>
-                        <div class="form-group">
-                            <div class="col-xs-12 col-sm-5">
-                                <input type="text" class="form-control text-capitalize" id="nume" value="{{ nume }}" name="nume" placeholder="Nume" maxlength="50" autofocus x-moz-errormessage="Numele este obligatoriu" autocomplete="family-name" required />
-                            </div>
-                            <div class="col-xs-12 col-sm-7">
-                                <div class="row second-form-row">
-                                    <div class="col-xs-9">
-                                        <input type="text" class="form-control text-capitalize" id="prenume" value="{{ prenume }}" name="prenume" placeholder="Prenume" maxlength="50" x-moz-errormessage="Prenumele este obligatoriu" autocomplete="given-name" required />
-                                    </div>
-                                    <div class="col-xs-3">
-                                        <input type="text" class="form-control text-uppercase text-center" id="tatal" value="{{ tatal }}" name="tatal" maxlength="1" data-toggle="popover" data-placement="right" x-moz-errormessage="" data-content="Initiala tatalui" required />
+                    <form id="twopercent" class="form form-horizontal" action="{{ ngo.key.id() }}/doilasuta" role="form" method="post">
+                        <fieldset>
+                            <legend class="text-muted">Date personale</legend>
+                            <div class="form-group">
+                                <div class="col-xs-12 col-sm-5">
+                                    <input type="text" class="form-control text-capitalize" id="nume" value="{{ nume }}" name="nume" placeholder="Nume" maxlength="50" autofocus x-moz-errormessage="Numele este obligatoriu" autocomplete="family-name" required />
+                                </div>
+                                <div class="col-xs-12 col-sm-7">
+                                    <div class="row second-form-row">
+                                        <div class="col-xs-9">
+                                            <input type="text" class="form-control text-capitalize" id="prenume" value="{{ prenume }}" name="prenume" placeholder="Prenume" maxlength="50" x-moz-errormessage="Prenumele este obligatoriu" autocomplete="given-name" required />
+                                        </div>
+                                        <div class="col-xs-3">
+                                            <input type="text" class="form-control text-uppercase text-center" id="tatal" value="{{ tatal }}" name="tatal" maxlength="1" data-toggle="popover" data-placement="right" x-moz-errormessage="" data-content="Initiala tatalui" required />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-xs-12">
-                                <input type="number" class="form-control text-center" id="cnp" value="{{ cnp }}" name="cnp" placeholder="CNP (optional)" x-moz-errormessage="Introdu un CNP valid" />
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <input type="number" class="form-control text-center" id="cnp" value="{{ cnp }}" name="cnp" placeholder="CNP (optional)" x-moz-errormessage="Introdu un CNP valid" />
+                                </div>
                             </div>
-                        </div>
-                    </fieldset>
-                    <fieldset>
-                        <legend class="text-muted">Adresa de domiciliu</legend>
-                        <div class="form-group">
-                            <div class="col-xs-8">
-                                <input type="text" class="form-control text-capitalize" id="strada" value="{{ strada }}" name="strada" placeholder="Strada" x-moz-errormessage="Strada este obligatorie" maxlength="70" required />
+                        </fieldset>
+                        <fieldset>
+                            <legend class="text-muted">Adresa de domiciliu</legend>
+                            <div class="form-group">
+                                <div class="col-xs-8">
+                                    <input type="text" class="form-control text-capitalize" id="strada" value="{{ strada }}" name="strada" placeholder="Strada" x-moz-errormessage="Strada este obligatorie" maxlength="70" required />
+                                </div>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" id="numar" value="{{ numar }}" name="numar" placeholder="Numar" x-moz-errormessage="Numarul este obligatoriu" maxlength="5" required />
+                                </div>
                             </div>
-                            <div class="col-xs-4">
-                                <input type="text" class="form-control" id="numar" value="{{ numar }}" name="numar" placeholder="Numar" x-moz-errormessage="Numarul este obligatoriu" maxlength="5" required />
-                            </div>
-                        </div>
 
-                        <div class="form-group">
-                            <div class="col-xs-3">
-                                <input type="text" class="form-control" id="bloc" value="{{ bloc }}" name="bloc" placeholder="Bloc" maxlength="5">
+                            <div class="form-group">
+                                <div class="col-xs-3">
+                                    <input type="text" class="form-control" id="bloc" value="{{ bloc }}" name="bloc" placeholder="Bloc" maxlength="5">
+                                </div>
+                                <div class="col-xs-3">
+                                    <input type="text" class="form-control" id="scara" value="{{ scara }}" name="scara" placeholder="Scara" maxlength="5">
+                                </div>
+                                <div class="col-xs-3">
+                                    <input type="text" class="form-control" id="etaj" value="{{ etaj }}" name="etaj" placeholder="Etaj" maxlength="5">
+                                </div>
+                                <div class="col-xs-3">
+                                    <input type="text" class="form-control" id="ap" value="{{ ap }}" name="ap" placeholder="Ap." maxlength="5">
+                                </div>
                             </div>
-                            <div class="col-xs-3">
-                                <input type="text" class="form-control" id="scara" value="{{ scara }}" name="scara" placeholder="Scara" maxlength="5">
-                            </div>
-                            <div class="col-xs-3">
-                                <input type="text" class="form-control" id="etaj" value="{{ etaj }}" name="etaj" placeholder="Etaj" maxlength="5">
-                            </div>
-                            <div class="col-xs-3">
-                                <input type="text" class="form-control" id="ap" value="{{ ap }}" name="ap" placeholder="Ap." maxlength="5">
-                            </div>
-                        </div>
 
-                        <div class="form-group">
-                            <div class="col-xs-6">
-                                <input type="text" class="form-control text-capitalize" id="localitate" value="{{ localitate }}" name="localitate" placeholder="Localitate" x-moz-errormessage="Orasul este obligatoriu" maxlength="40" required />
+                            <div class="form-group">
+                                <div class="col-xs-6">
+                                    <input type="text" class="form-control text-capitalize" id="localitate" value="{{ localitate }}" name="localitate" placeholder="Localitate" x-moz-errormessage="Orasul este obligatoriu" maxlength="40" required />
+                                </div>
+                                <div class="col-xs-6">
+                                    {% include "components/county.html" %}
+                                </div>
                             </div>
-                            <div class="col-xs-6">
-                                {% include "components/county.html" %}
+                        </fieldset>
+                        <fieldset>
+                            <legend class="text-muted"></legend>
+                            <div class="form-group">
+                                <div class="col-sm-6 checkbox">
+                                    <label class="agree-label" for="agree">
+                                        <input type="checkbox" name="agree" id="agree" required />
+                                        Sunt de acord cu <a href="/termeni" target="_blank">Termenii aplicatiei</a> si cu <a href="/politica" target="_blank">Politica de confidentialitate</a>.
+                                    </label>
+                                </div>
+                                <div class="col-sm-6">
+                                    {% include "components/recaptcha.html" %}
+                                </div>
                             </div>
-                        </div>
-                    </fieldset>
-                    <fieldset>
-                        <legend class="text-muted"></legend>
-                        <div class="form-group">
-                            <div class="col-sm-6 checkbox">
-                                <label class="agree-label" for="agree">
-                                    <input type="checkbox" name="agree" id="agree" required />
-                                    Sunt de acord cu <a href="/termeni" target="_blank">Termenii aplicatiei</a> si cu <a href="/politica" target="_blank">Politica de confidentialitate</a>.
-                                </label>
+                            <div class="form-group margin-top">
+                                <div class="col-lg-12">
+                                    <button id="submit-twopercent-form" type="submit" class="btn btn-lg btn-primary pull-right">Trimite</button>
+                                </div>
                             </div>
-                            <div class="col-sm-6">
-                                {% include "components/recaptcha.html" %}
-                            </div>
-                        </div>
-                        <div class="form-group margin-top">
-                            <div class="col-lg-12">
-                                <button id="submit-twopercent-form" type="submit" class="btn btn-lg btn-primary pull-right">Trimite</button>
-                            </div>
-                        </div>
-                    </fieldset>
-                </form>
+                        </fieldset>
+                    </form>
                 {% else %}
                     <h3>Se pare ca asociatia inca nu si-a activat aceasta forma de donatie.</h3>
                 {% endif %}

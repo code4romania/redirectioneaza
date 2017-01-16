@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 
+from urlparse import urlparse
+
 from google.appengine.api import urlfetch
 from google.appengine.ext import ndb
 
 from hashlib import sha1
-
 from webapp2_extras import json, security
 
 from appengine_config import SECRET_KEY, AWS_PDF_URL, LIST_OF_COUNTIES, USER_UPLOADS_FOLDER, USER_FORMS
@@ -66,6 +67,47 @@ class TwoPercentHandler(BaseHandler):
         self.template_values["title"] = "Donatie 2%"
         self.template_values["ngo"] = ngo
         self.template_values["counties"] = LIST_OF_COUNTIES
+        
+        # the ngo website
+        ngo_website = ngo.website if ngo.website else None
+        if ngo_website:
+            # try and parse the the url to see if it's valid
+            try:
+                url_dict = urlparse(ngo_website)
+
+
+                if not url_dict.scheme:
+                    url_dict = url_dict._replace(scheme='http')
+
+
+                # if we have a netloc, than the url is valid
+                # use the netloc as the website name
+                if url_dict.netloc:
+                
+                    self.template_values["ngo_website_description"] = url_dict.netloc
+                    self.template_values["ngo_website"] = url_dict.geturl()
+                
+                # of we don't have the netloc, when parsing the url
+                # urlparse might send it to path
+                # move that to netloc and remove the path
+                elif url_dict.path:
+                    
+                    url_dict = url_dict._replace(netloc=url_dict.path)
+                    self.template_values["ngo_website_description"] = url_dict.path
+                    
+                    url_dict = url_dict._replace(path='')
+                
+                    self.template_values["ngo_website"] = url_dict.geturl()
+                else:
+                    raise
+
+            except Exception, e:
+
+                self.template_values["ngo_website"] = None
+        else:
+
+            self.template_values["ngo_website"] = None    
+
 
         now = datetime.datetime.now()
         can_donate = True

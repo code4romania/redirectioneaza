@@ -19,6 +19,12 @@
                 <p itemprop="description" >
                     {{ ngo.description }}
                 </p>
+                {% if ngo_website %}
+                    <p>
+                        <strong>Website:</strong> <br />
+                        <a href="{{ ngo_website }}" target="_blank">{{ ngo_website_description }}</a>
+                    </p>
+                {% endif %}
             </div>
         </div>
     </div>
