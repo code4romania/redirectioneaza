@@ -9,6 +9,7 @@ from webapp2 import Route as r
 
 from controllers.ngo import NgoHandler, TwoPercentHandler, TwoPercent2Handler, DonationSucces
 
+from controllers.site import NotFoundPage, InternalErrorPage
 
 config = {
     'webapp2_extras.auth': {
@@ -82,3 +83,8 @@ app = webapp2.WSGIApplication([
     debug=True,
     config=config
 )
+
+# error handling for 404 and 500
+# imported from controllers.site
+app.error_handlers[404] = NotFoundPage
+app.error_handlers[500] = InternalErrorPage

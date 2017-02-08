@@ -18,6 +18,7 @@ from google.appengine.ext import ndb
 from webapp2_extras import sessions, auth, json
 
 from models import NgoEntity, Donor
+from email import EmailManager
 
 
 def get_jinja_enviroment(account_view_folder=''):
@@ -238,24 +239,24 @@ class BaseHandler(Handler):
             return
 
         try:
-            # create a new email object
-            message = mail.EmailMessage(sender=CONTACT_EMAIL_ADDRESS, to=user_address, subject=subject)
 
-            # add the text body
-            body = txt_template.render(template_values) if txt_template else None
-            message.body = body
-
-            info(message.body)
-
-            # if we have it add the html content also
+            text_body = txt_template.render(template_values) if txt_template else None
             html_body = html_template.render(template_values) if html_template else None
-            if html_body:
-                message.html = html_body
 
-            message.send()
+            sender = {
+                "name": "donezsi.eu",
+                "email": CONTACT_EMAIL_ADDRESS
+            }
+            receiver = {
+                "name": "{0} {1}".format(user.first_name, user.last_name),
+                "email": user.email
+            }
+
+            EmailManager().send_email(subject=subject, sender=sender, receiver=receiver, text_template=text_body, html_template=html_body, developement=False)
+
         except Exception, e:
-            info(e)
 
+            warn(e)
 
 
 def user_required(handler):
@@ -266,7 +267,7 @@ def user_required(handler):
     def check_login(self, *args, **kwargs):
         
         auth = self.auth
-        if not auth.get_user_by_session() and not users.is_current_user_admin():
+        if not auth.get_user_by_session() or not users.is_current_user_admin():
             self.redirect(self.uri_for('login'), abort=True)
         else:
             return handler(self, *args, **kwargs)
