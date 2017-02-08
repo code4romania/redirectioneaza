@@ -267,7 +267,7 @@ def user_required(handler):
     def check_login(self, *args, **kwargs):
         
         auth = self.auth
-        if not auth.get_user_by_session() or not users.is_current_user_admin():
+        if not auth.get_user_by_session() and not users.is_current_user_admin():
             self.redirect(self.uri_for('login'), abort=True)
         else:
             return handler(self, *args, **kwargs)
