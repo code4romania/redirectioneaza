@@ -86,5 +86,5 @@ app = webapp2.WSGIApplication([
 
 # error handling for 404 and 500
 # imported from controllers.site
-app.error_handlers[404] = NotFoundPage
-app.error_handlers[500] = InternalErrorPage
+# app.error_handlers[404] = NotFoundPage
+# app.error_handlers[500] = InternalErrorPage
