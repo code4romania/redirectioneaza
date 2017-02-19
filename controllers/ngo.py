@@ -234,7 +234,7 @@ class TwoPercentHandler(BaseHandler):
         # if not an ajax request, redirect
         if self.is_ajax:
             self.response.set_status(200)
-            self.response.write(json.dumps({}))
+            self.response.write(json.dumps({"url": file_url}))
         else:
             self.redirect( self.uri_for("twopercent-step-2", ngo_url=ngo_url) )
 

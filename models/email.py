@@ -144,6 +144,6 @@ class EmailManager(object):
             return True
 
         except Exception, e:
-            info(e)
+            warn(e)
 
             return False

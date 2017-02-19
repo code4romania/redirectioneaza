@@ -1,3 +1,4 @@
+import os
 
 import tempfile
 
@@ -7,13 +8,22 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.utils import ImageReader
 from reportlab.lib.pagesizes import A4
 
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+
 from datetime import datetime
 
-# from config import temp_folder_name
+from logging import info
+
+abs_path = os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir))
+font_path = abs_path + "/static/font/opensans.ttf"
+pdfmetrics.registerFont(TTFont('OpenSans', font_path))
+
 
 #keep for later
 default_font_size = 15
-image_name = "/images/1.jpg"
+# image_name = "/images/2.jpg"
+image_path = "/static/images/2.jpg"
 
 def create_pdf(person, ong):
     """method used to create the pdf
@@ -47,11 +57,15 @@ def create_pdf(person, ong):
     width, height = A4 
     
     # add the image as background
-    background = ImageReader( "http://{0}{1}".format(app_identity.get_default_version_hostname(), image_name) )
+    background = ImageReader( abs_path + image_path )
     c.drawImage(background, 0, 0, width=width, height=height)
 
     # the default font size
+    # info(c.getAvailableFonts())
+    c.setFont('OpenSans', default_font_size)
     c.setFontSize(default_font_size)
+
+    info( os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir)) + "/static/font/opensans.ttf" )
 
     # the year
     # this is the previous year, starting from 1 Jan until - 25 May ??
@@ -65,7 +79,7 @@ def create_pdf(person, ong):
     if len(person["first_name"]) > 18:
         c.setFontSize(12)
 
-    donor_block_x = 640
+    donor_block_x = 668
 
     c.drawString(66, donor_block_x, person["first_name"])
     c.setFontSize(default_font_size)
@@ -78,13 +92,13 @@ def create_pdf(person, ong):
     if len(last_name) > 34:
         c.setFontSize(10)
 
-    c.drawString(66, donor_block_x-27, last_name)
+    c.drawString(66, donor_block_x-25, last_name)
 
 
     # =======================================
     # THIRD ROW
     # 
-    third_row_x = donor_block_x - 58
+    third_row_x = donor_block_x - 49
 
     # the street
     street = person["street"]
@@ -105,7 +119,7 @@ def create_pdf(person, ong):
 
     # =======================================
     # FOURTH ROW
-    fourth_row_x = donor_block_x - 87
+    fourth_row_x = donor_block_x - 73
 
     c.setFontSize(14)
     # bloc
@@ -128,7 +142,7 @@ def create_pdf(person, ong):
 
 
     # oras
-    c.drawString(68, donor_block_x - 115, person["city"])
+    c.drawString(68, donor_block_x - 98, person["city"])
 
     c.setFontSize(16)
 
@@ -137,6 +151,11 @@ def create_pdf(person, ong):
     for letter in person["cnp"]:
         c.drawString(start_x, donor_block_x - 10, letter)
         start_x += 18.4
+
+
+    # first x mark
+    # Venituri din salarii si asimilate salariilor
+    c.drawString(171, donor_block_x - 145, "x")
         
 
     # DRAW ONG DATA
@@ -153,7 +172,7 @@ def create_pdf(person, ong):
     elif len(org_name) > 65:
         c.setFontSize(13)
 
-    c.drawString(118, start_ong_x - 28, org_name)
+    c.drawString(118, start_ong_x - 24, org_name.encode('utf-8'))
 
     c.setFontSize(11)
 
@@ -162,7 +181,7 @@ def create_pdf(person, ong):
         if i%5 == 0:
             account = account[:i] + " " + account[i:]
 
-    c.drawString(118, start_ong_x - 55, account)
+    c.drawString(118, start_ong_x - 48, account)
 
 
     c.save()

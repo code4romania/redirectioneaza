@@ -30,6 +30,9 @@ handlers:
 - url: /js
   static_dir: static/js
 
+- url: /font
+  application_readable: true
+  static_dir: static/font
 
 # bower components url
 - url: /bower_components
