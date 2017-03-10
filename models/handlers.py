@@ -252,7 +252,7 @@ class BaseHandler(Handler):
                 "email": user.email
             }
 
-            # EmailManager().send_email(subject=subject, sender=sender, receiver=receiver, text_template=text_body, html_template=html_body, developement=False)
+            EmailManager.send_email(subject=subject, sender=sender, receiver=receiver, text_template=text_body, html_template=html_body, developement=False)
 
         except Exception, e:
 

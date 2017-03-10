@@ -20,7 +20,8 @@ class EmailManager(object):
         "email": CONTACT_EMAIL_ADDRESS
     }
 
-    def send_email(self, **kwargs):
+    @staticmethod
+    def send_email(**kwargs):
         """
         kwargs:
             receiver        dict
@@ -33,13 +34,13 @@ class EmailManager(object):
 
         try:
 
-            response = self.send_sendgrid_email(**kwargs)
+            response = EmailManager.send_sendgrid_email(**kwargs)
 
             # if False then the send failed
             if response is False:
                 
                 # try appengine's mail API
-                response = self.send_appengine_email(**kwargs)
+                response = EmailManager.send_appengine_email(**kwargs)
                 
                 # if this doesn't work either, give up
                 if response is False:
@@ -54,7 +55,8 @@ class EmailManager(object):
             warn(e)
             return False
 
-    def send_sendgrid_email(self, **kwargs):
+    @staticmethod
+    def send_sendgrid_email(**kwargs):
         """method used to send an email using the sendgrid API
         kwargs:
             receiver
@@ -66,7 +68,7 @@ class EmailManager(object):
         """
 
         receiver = kwargs.get("receiver")
-        sender = kwargs.get("sender", self.default_sender)
+        sender = kwargs.get("sender", EmailManager.default_sender)
         subject = kwargs.get("subject")
 
         # email content
@@ -110,10 +112,11 @@ class EmailManager(object):
             
             return True
  
-    def send_appengine_email(self, **kwargs):
+    @staticmethod
+    def send_appengine_email(**kwargs):
 
         receiver = kwargs.get("receiver")
-        sender = kwargs.get("sender", self.default_sender)
+        sender = kwargs.get("sender", EmailManager.default_sender)
         subject = kwargs.get("subject")
 
         # email content
