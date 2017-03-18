@@ -1,4 +1,6 @@
 
+import datetime
+
 from collections import OrderedDict
 
 from google.appengine.ext.ndb import put_multi, OR, Key
@@ -15,7 +17,6 @@ from models.upload import UploadHandler
 from api import check_ngo_url
 from logging import info
 
-import datetime
 
 incomplete_form_data = "Te rugam sa completezi datele din formular."
 url_taken = "Din pacate acest url este folosit deja."
@@ -37,11 +38,12 @@ class MyAccountHandler(AccountHandler):
         if user.ngo:
             ngo = user.ngo.get()
             self.template_values["ngo"] = ngo
-            # to url to distribute
-            self.template_values["ngo_url"] = self.request.host + '/' + ngo.key.id() 
-            # self.uri_for("ngo-url", ngo_url=ngo.key.id(), _full=True)
 
-            donor_projection = ['first_name', 'last_name', 'city', 'county', 'email', 'tel', 'date_created']
+            # the url to distribute, use this instead of:
+            # self.uri_for("ngo-url", ngo_url=ngo.key.id(), _full=True)
+            self.template_values["ngo_url"] = self.request.host + '/' + ngo.key.id() 
+
+            donor_projection = ['first_name', 'last_name', 'city', 'county', 'email', 'tel', 'anonymous', 'date_created']
             donors = Donor.query(Donor.ngo == ngo.key).order(-Donor.date_created).fetch(projection=donor_projection)
             
             years = xrange(now.year, START_YEAR-1, -1)
@@ -58,6 +60,7 @@ class MyAccountHandler(AccountHandler):
                 if index in years:
                     grouped_donors[ index ].append(donor)
 
+            self.template_values["current_year"] = now.year
             self.template_values["donors"] = grouped_donors
             # self.template_values["years"] = years
             
@@ -286,7 +289,6 @@ class NgoDetailsHandler(AccountHandler):
 
             name = ong_nume,
             description = ong_descriere,
-            short_description = short_description,
             logo = ong_logo_url,
             
             email = ong_email,

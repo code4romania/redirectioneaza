@@ -181,14 +181,7 @@ class BaseHandler(Handler):
 
     def send_email(self, email_type, user):
 
-        if user.email:
-
-            # if the user has a first and a last name, add that to the email
-            if user.first_name and user.last_name:
-                user_address = "{0} {1} <{2}>".format(user.first_name, user.last_name, user.email)
-            else:
-                user_address = user.email
-        else:
+        if not user.email:
             return
 
         if email_type == "signup":
@@ -252,7 +245,7 @@ class BaseHandler(Handler):
                 "email": user.email
             }
 
-            EmailManager.send_email(subject=subject, sender=sender, receiver=receiver, text_template=text_body, html_template=html_body)
+            EmailManager.send_email(sender=sender, receiver=receiver, subject=subject, text_template=text_body, html_template=html_body)
 
         except Exception, e:
 

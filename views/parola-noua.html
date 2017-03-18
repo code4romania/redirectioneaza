@@ -1,4 +1,11 @@
+
 {% extends "base.html" %}
+
+
+{% block additional_headers %}
+    <script src='https://www.google.com/recaptcha/api.js?hl=ro' async defer></script>
+{% endblock %}
+
 
 {% block content %}
 <div class="container">
@@ -29,17 +36,19 @@
                     </div>
                     <div class="form-group">
                         <div class="col-sm-12">
-                            {% include "components/recaptcha.html" %}
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-12">
-                            <button type="submit" class="btn btn-primary pull-right">Trimite</button>
+                            <button type="submit" class="btn btn-primary">Trimite</button>
                         </div>
                     </div>
                 </fieldset>
             </form>
         </div>
 	</div>
+
+    <div class="g-recaptcha" data-sitekey="{{ captcha_public_key }}" data-size="invisible" data-callback="onSubmit"></div>
+
 </div>
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript" src="/js/login.js"></script>
 {% endblock %}

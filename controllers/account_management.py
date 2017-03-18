@@ -7,7 +7,7 @@ from appengine_config import CAPTCHA_PRIVATE_KEY, CAPTCHA_POST_PARAM
 
 from captcha import submit
 
-from logging import info
+from logging import info, warn
 
 class LoginHandler(AccountHandler):
     template_name = 'login.html'
@@ -27,6 +27,16 @@ class LoginHandler(AccountHandler):
         email = post.get('email')
         password = post.get('parola')
 
+        if not email:
+            self.template_values["errors"] = "Campul email nu poate fi gol."
+            self.render()
+            return
+
+        if not password:
+            self.template_values["errors"] = "Campul parola nu poate fi gol."
+            self.render()
+            return
+
         captcha_response = submit(post.get(CAPTCHA_POST_PARAM), CAPTCHA_PRIVATE_KEY, post.remote_addr)
 
         # if the captcha is not valid return
@@ -43,6 +53,9 @@ class LoginHandler(AccountHandler):
         
         except (InvalidAuthIdError, InvalidPasswordError) as e:
 
+            warn('Invalid email or password: {0}'.format(email))
+
+            self.template_values['email'] = email
             self.template_values["errors"] = "Se pare ca aceasta combinatie de email si parola este incorecta."
             self.render()
 
@@ -67,6 +80,26 @@ class SignupHandler(AccountHandler):
         
         email = post.get('email')
         password = post.get('parola')
+
+        if not first_name:
+            self.template_values["errors"] = "Campul nume nu poate fi gol."
+            self.render()
+            return
+
+        if not last_name:
+            self.template_values["errors"] = "Campul prenume nu poate fi gol."
+            self.render()
+            return
+
+        if not email:
+            self.template_values["errors"] = "Campul email nu poate fi gol."
+            self.render()
+            return
+
+        if not password:
+            self.template_values["errors"] = "Campul parola nu poate fi gol."
+            self.render()
+            return
 
         captcha_response = submit(post.get(CAPTCHA_POST_PARAM), CAPTCHA_PRIVATE_KEY, post.remote_addr)
 
@@ -117,6 +150,11 @@ class ForgotPasswordHandler(AccountHandler):
         post = self.request
 
         email = post.get('email')
+
+        if not email:
+            self.template_values["errors"] = "Campul email nu poate fi gol."
+            self.render()
+            return
 
         captcha_response = submit(post.get(CAPTCHA_POST_PARAM), CAPTCHA_PRIVATE_KEY, post.remote_addr)
         # if the captcha is not valid return
@@ -201,7 +239,14 @@ class SetPasswordHandler(AccountHandler):
         confirm_password = self.request.get('confirma-parola')
         old_token = self.request.get('token')
 
-        if not password or password != confirm_password:
+        if not password:
+            self.template_values.update({
+                "errors": "Nu uita sa scrii o parola noua."
+            })
+            self.render()
+            return
+
+        if password != confirm_password:
             self.template_values.update({
                 "errors": "Te rugam sa confirmi parola. A doua parola nu seamana cu prima."
             })

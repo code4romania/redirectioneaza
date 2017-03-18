@@ -1,4 +1,9 @@
+
 {% extends "base.html" %}
+
+{% block additional_headers %}
+    <script src='https://www.google.com/recaptcha/api.js?hl=ro' async defer></script>
+{% endblock %}
 
 {% block content %}
 <div class="container">
@@ -16,30 +21,38 @@
 
     <div id="login-container" class="row">
         <div class="col-xs-12 col-sm-8 col-sm-offset-2" id="login">
-            <form class="form form-horizontal" action="/login" role="form" method="post">
+            <form id='login-form' class="form form-horizontal" action="/login" role="form" method="post">
                 <fieldset>
                     <legend>Login</legend>
                     <div class="form-group">
-                        <input class="form-control" type="email" name="email" placeholder="Email" required />
-                    </div>
-                    <div class="form-group">
-                        <input class="form-control" type="password" name="parola" placeholder="Parola" required />
-                    </div>
-                    <div class="form-group">
-                        <div class="col-xs-12 text-center">
-                            {% include "components/recaptcha.html" %}
+                        <div class="col-sm-12">
+                            <input class="form-control" type="email" name="email" value="{{ email or '' }}" placeholder="Email" autocomplete="email" x-moz-errormessage="Te rugam sa introduci o adresa de email valida" required />
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-12">
-                            <a href="/forgot" class="btn btn-link pull-left">Am uitat parola</a>
-                            <a href="/cont-nou" class="btn btn-link pull-left">Vreau un cont nou</a>
-                            <button type="submit" class="btn btn-primary pull-right">Trimite</button>
+                            <input class="form-control" type="password" name="parola" placeholder="Parola" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <button type="submit" class="btn btn-primary">Trimite</button>
+
+                            <a href="/forgot" class="btn btn-link pull-right">Am uitat parola</a>
+                            <a href="/cont-nou" class="btn btn-link pull-right">Vreau un cont nou</a>
                         </div>
                     </div>
                 </fieldset>
             </form>
         </div>
     </div>
+
+    <div class="g-recaptcha" data-sitekey="{{ captcha_public_key }}" data-size="invisible" data-callback="onSubmit"></div>
+
 </div>
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript" src="/js/login.js"></script>
+    
 {% endblock %}

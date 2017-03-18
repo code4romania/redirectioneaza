@@ -5,37 +5,42 @@
     <p>Mai jos gasesti o lista cu toate persoanele care au completat formularul de 2%:</p>
     
     {% for key, value in donors.iteritems() %}
-        <p>{{ key }}</p>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Nume</th>
-                    <th>Oras</th>
-                    <th>email/telefon</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% if value %}
-                    {% for donation in value %}
-                        <tr>
-                            <td>{{ loop.length - loop.index + 1 }}</td>
-                            <td>{{ donation.first_name + " " + donation.last_name }}</td>
-                            <td>{{ donation.city }}, <span class="text-muted">{{  donation.county }}</span></td>
-                            <td>{{ donation.email if donation.email }} {{  "/" if donation.tel and donation.email }} {{ donation.tel if donation.tel }}</td>
-                        </tr>
-                    {% endfor %}
-                {% else %}
+
+        {% if value or key == current_year %}
+            <p>{{ key }}</p>
+            <table class="table">
+                <thead>
                     <tr>
-                        <td colspan="4">
-                            <p class="well well-lg text-center">
-                                Din pacate nu exita nici un document completat pentru acest an.
-                            </p>
-                        </td>
+                        <th>#</th>
+                        <th>Nume</th>
+                        <th>Oras, <span class="text-muted">Judet</span></th>
+                        <th>Email</th>
+                        <th>Telefon</th>
                     </tr>
-                {% endif %}
-            </tbody>
-        </table>    
+                </thead>
+                <tbody>
+                    {% if value %}
+                        {% for donation in value %}
+                            <tr>
+                                <td>{{ loop.length - loop.index + 1 }}</td>
+                                <td>{{ donation.first_name + " " + donation.last_name }}</td>
+                                <td>{{ donation.city }}, <span class="text-muted">{{ donation.county }}</span></td>
+                                <td>{{ donation.email if donation.email and donation.anonymous != True }}</td>
+                                <td>{{ donation.tel if donation.tel and donation.anonymous != True }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="4">
+                                <p class="well well-lg text-center">
+                                    Din pacate nu exita nici un document completat pentru acest an.
+                                </p>
+                            </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        {% endif %}
     {% endfor %}
 
 </div>
