@@ -1,6 +1,5 @@
 
 
-from appengine_config import AWS_PDF_URL
 from google.appengine.api import urlfetch
 
 import json
@@ -20,7 +19,8 @@ class UploadHandler(object):
         if not file_type or not file_type:
             return False
 
-        full_url = AWS_PDF_URL + "/upload-file?" + urlencode({"file_name":file_name, "file_type":file_type})
+        # full_url = AWS_PDF_URL + "/upload-file?" + urlencode({"file_name":file_name, "file_type":file_type})
+        full_url = "/upload-file?" + urlencode({"file_name":file_name, "file_type":file_type})
 
         try:
             # try and fetch a response
@@ -37,6 +37,9 @@ class UploadHandler(object):
     def upload_file_to_s3(file_to_upload):
         """ TODO: implement this. it doesn't work right now
         returns s3 file url """
+
+        return ""
+
         file_name = file_to_upload.name
         file_type = file_to_upload.type
         

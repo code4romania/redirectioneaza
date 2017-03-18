@@ -44,10 +44,6 @@ PRODUCTION = not DEV
 # used to create an array up to the current year
 START_YEAR = 2016
 
-# used to communicate with aws
-SECRET_KEY = "B1={kpE_4To5ZSJW=hNx(EYDj0-f|YT8uz5*SU6iA~.A+]aWSC#lmu;<Hc|T^V@-:#|+g0b<[+toRMtyqdtEDJ$%o4$>_yRTxbsh}%a|k)BS}u;dU~%Da;;SDhmZFl[_Wpr#U?A8"
-AWS_PDF_URL = "http://main-balancer-1246647494.eu-west-1.elb.amazonaws.com:8090/" if PRODUCTION else "http://127.0.0.1:8090"
-
 USER_UPLOADS_FOLDER = 'uploads'
 USER_FORMS = 'documents'
 
@@ -88,16 +84,24 @@ HTTP_HEADERS = {
     "X-Frame-Options": "Deny",
     "X-Content-Type-Options": "nosniff",
     "X-XSS-Protection": "1; mode=block",
-    "Content-Security-Policy-Report-Only": "default-src 'self'; script-src 'self' 'unsafe-eval' 'sha256-wwUprMhWJHcJgH7bVT8BB8TYRW7F8WDk5qBJvaLAsEw=' https://maxcdn.bootstrapcdn.com https://ajax.googleapis.com https://www.google.com https://www.gstatic.com https://www.google-analytics.com; style-src 'self' https://maxcdn.bootstrapcdn.com https://fonts.googleapis.com; img-src 'self' https://storage.googleapis.com/donezsieu-bucket/; font-src 'self' https://fonts.gstatic.com https://maxcdn.bootstrapcdn.com; connect-src 'self' https://donezsieu-static.s3.amazonaws.com; media-src 'none'; object-src 'none'; child-src https://www.google.com/recaptcha/; frame-ancestors 'none'; form-action 'self'; reflected-xss block; report-uri https://donezsieu.report-uri.io/r/default/csp/reportOnly;"
+    "Content-Security-Policy": "default-src 'self'; script-src 'self' 'unsafe-eval' 'sha256-wwUprMhWJHcJgH7bVT8BB8TYRW7F8WDk5qBJvaLAsEw=' https://maxcdn.bootstrapcdn.com https://ajax.googleapis.com https://www.google.com https://www.gstatic.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://maxcdn.bootstrapcdn.com https://fonts.googleapis.com; img-src 'self' https://storage.googleapis.com/donezsieu-bucket/; font-src 'self' https://fonts.gstatic.com https://maxcdn.bootstrapcdn.com; connect-src 'self' https://donezsieu-static.s3.amazonaws.com; media-src 'none'; object-src 'none'; child-src https://www.google.com/recaptcha/; frame-ancestors 'none'; form-action 'self'; reflected-xss block; report-uri https://donezsieu.report-uri.io/r/default/csp/reportOnly;"
 }
+
+
 
 # ===================
 # Recaptcha API Keys
 # ===================
 # 
 # The public and private key
-CAPTCHA_PUBLIC_KEY = "6Lc58hITAAAAAEy-owjeigG_x9FuPQqlZJRHEE6O" if PRODUCTION else "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
-CAPTCHA_PRIVATE_KEY = "6Lc58hITAAAAADeRUDDFHJlzSVXKL6L7f-KukyZs" if PRODUCTION else "6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe"
+# CAPTCHA_PUBLIC_KEY = "6Lc58hITAAAAAEy-owjeigG_x9FuPQqlZJRHEE6O" if PRODUCTION else "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+# CAPTCHA_PRIVATE_KEY = "6Lc58hITAAAAADeRUDDFHJlzSVXKL6L7f-KukyZs" if PRODUCTION else "6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe"
+# CAPTCHA_VERIFY_URL = "https://www.google.com/recaptcha/api/siteverify"
+# CAPTCHA_POST_PARAM = "g-recaptcha-response"
+
+
+CAPTCHA_PUBLIC_KEY = "6LfQeBkUAAAAAPUxei7PQYfwrDnB8kq6l4xiHTJm" if PRODUCTION else "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+CAPTCHA_PRIVATE_KEY = "6LfQeBkUAAAAAKwV-nlANe-ylQa7wO_5nGhj6sBH" if PRODUCTION else "6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe"
 CAPTCHA_VERIFY_URL = "https://www.google.com/recaptcha/api/siteverify"
 CAPTCHA_POST_PARAM = "g-recaptcha-response"
 

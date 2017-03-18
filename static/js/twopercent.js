@@ -11,6 +11,7 @@ $(function () {
         fields_error: "Se pare ca urmatoarele date sunt invalide: "
     }
     var ngoUrl = window.location.href;
+    var form = $("#twopercent");
 
     $('[data-toggle="popover"]').popover({
         trigger: "focus",
@@ -94,13 +95,32 @@ $(function () {
             hideError(this);
         }
     });
-    
+
+    $('#email').on('blur', function() {
+        var email = $(this).val().trim();
+
+        var regex = /[\w.-]+@[\w.-]+.\w+/
+        if( !email || !regex.test(email) ) {
+            showError(this);
+        } else {
+            hideError(this);
+        }
+    });
+
+    $('#telefon').on('blur', function() {
+        var telefon = $(this).val().trim();
+
+        if( telefon && (telefon.length != 10 || telefon.slice(0, 2) !== "07") ) {
+            showError(this);
+        } else {
+            hideError(this);
+        }
+    });
+
     var invalidFormAlert = $("#invalid-form-alert");
     var submitFormButton = $("#submit-twopercent-form");
-    var secondStep = $("#second-step-container");
-    var secondStepSubmitButton = $("#second-step-submit-button");
 
-    $("#twopercent").on("submit", function(ev){
+    form.on("submit", function(ev){
         ev.preventDefault();
         
         $(this).find("input").blur();
@@ -123,21 +143,37 @@ $(function () {
             .attr('name', "ajax").attr('value', "true")
             .appendTo(this);
 
+
+        if( grecaptcha && typeof grecaptcha.execute == "function" ) {
+            grecaptcha.execute();
+        }
+
+    });
+
+    window.onSubmit = function(token) {
+
         submitFormButton.removeClass("btn-primary").addClass("btn-success").attr("disabled", true);
-        activateSecondStepForm();
-        secondStep.removeClass("hidden");
-        
-        // scroll to bottom
-        $("html, body").animate({ scrollTop: $(document).height() - 550 }, 3000);
+
+        console.log(token);
+        $('<input />').attr('type', 'hidden')
+            .attr('name', "g-recaptcha-response").attr('value', token)
+            .appendTo(form);
+
 
         $.ajax({
             url: ngoUrl,
             type: "POST",
             dataType: "json",
-            data: $(this).serialize(),
+            data: form.serialize(),
             success: function(data) {
-                // enable the button
-                secondStepSubmitButton.attr("disabled", false);
+
+                if( data.url ) {
+                    window.location = data.url;
+                } else {
+                    message = errors["server_error"];
+                    submitFormButton.addClass("btn-primary").removeClass("btn-success").attr("disabled", false);
+                    invalidFormAlert.removeClass("hidden").find("span").text(message);
+                }
             },
             error: function(data) {
                 if( grecaptcha && typeof grecaptcha.reset == "function" ) {
@@ -161,69 +197,7 @@ $(function () {
 
                 submitFormButton.addClass("btn-primary").removeClass("btn-success").attr("disabled", false);
                 invalidFormAlert.removeClass("hidden").find("span").text(message);
-                secondStep.addClass("hidden");
             }
         });
-    });
-
-
-    function activateSecondStepForm() {
-        
-        secondStepSubmitButton.attr("disabled", true);
-        $("#second-step-form").on("submit", function(ev){
-            ev.preventDefault();
-
-            var email = $(this).find("#email").val().trim();
-            var telefon = $(this).find("#telefon").val().trim();
-
-            // if both email and tel are empty, return
-            if(!email && !telefon) {
-                invalidFormAlert.removeClass("hidden").find("span").text("Te rugam sa completezi cu o adresa de email sau un numar de telefon.");
-                return;
-            }
-
-            // validation
-            var regex = /[\w.-]+@[\w.-]+.\w+/
-            if( email && !regex.test(email) ) {
-                invalidFormAlert.removeClass("hidden").find("span").text("Te rugam sa introduci o adresa de email valida.");
-                return;
-            }
-
-            if( telefon && (telefon.length != 10 || telefon.slice(0, 2) !== "07") ) {
-                invalidFormAlert.removeClass("hidden").find("span").text("Te rugam sa introduci un numar de telefon mobil valid.");
-                return;
-            }
-
-            invalidFormAlert.addClass("hidden");
-            secondStepSubmitButton.attr("disabled", true);
-
-            // add ajax field
-            $('<input />').attr('type', 'hidden')
-                .attr('name', "ajax").attr('value', "true")
-                .appendTo(this);
-
-            $.ajax({
-                url: ngoUrl + "/pas-2",
-                type: "POST",
-                dataType: "json",
-                data: $(this).serialize(),
-                success: function(data) {
-                    // redirect to
-                    window.location = data.url;
-                },
-                error: function(data) {
-                    if(data.response == 500) {
-                        var message = errors["server_error"];
-
-                    } else {
-
-                        var message = data.responseJSON.message;
-                    }
-
-                    secondStepSubmitButton.attr("disabled", false);
-                    invalidFormAlert.removeClass("hidden").find("span").text(message);
-                }
-            });
-        });
-    }
+    };
 });

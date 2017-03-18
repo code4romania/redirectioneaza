@@ -8,7 +8,8 @@ from google.appengine.ext import ndb
 from hashlib import sha1
 from webapp2_extras import json, security
 
-from appengine_config import SECRET_KEY, AWS_PDF_URL, LIST_OF_COUNTIES, USER_UPLOADS_FOLDER, USER_FORMS
+from appengine_config import LIST_OF_COUNTIES, USER_UPLOADS_FOLDER, USER_FORMS
+
 # also import captcha settings
 from appengine_config import CAPTCHA_PRIVATE_KEY, CAPTCHA_POST_PARAM
 
@@ -137,16 +138,31 @@ class TwoPercentHandler(BaseHandler):
         def get_post_value(arg, add_to_error_list=True):
             value = post.get(arg)
 
-            # if we received a value, it should only contains alpha numeric, spaces and dash
+            # if we received a value
             if value:
+
+                # it should only contains alpha numeric, spaces and dash
                 if re.match('^[\w\s.-]+$', value) is not None:
+                    
                     # additional validation
                     if arg == "cnp" and len(value) != 13:
                         errors["fields"].append(arg)
                         return ""
 
                     return value
+                
+                # the email has the @ so the first regex will fail
+                elif arg == 'email':
+
+                    # if we found a match
+                    if re.match(r'[^@]+@[^@]+\.[^@]+', value) is not None:
+                        return value
+            
+                    errors["fields"].append(arg)
+                    return ''
+
                 else:
+
                     errors["fields"].append(arg)
             
             elif add_to_error_list:
@@ -154,34 +170,38 @@ class TwoPercentHandler(BaseHandler):
 
             return ""
 
-        payload = {}
+        donor_dict = {}
 
         # the donor's data
-        payload["first_name"] = get_post_value("nume").title()
-        payload["last_name"] = get_post_value("prenume").title()
-        payload["father"] = get_post_value("tatal").title()
-        payload["cnp"] = get_post_value("cnp", False)
+        donor_dict["first_name"] = get_post_value("nume").title()
+        donor_dict["last_name"] = get_post_value("prenume").title()
+        donor_dict["father"] = get_post_value("tatal").title()
+        donor_dict["cnp"] = get_post_value("cnp", False)
 
-        payload["street"] = get_post_value("strada").title()
-        payload["number"] = get_post_value("numar")
+        donor_dict["email"] = get_post_value("email").lower()
+        donor_dict["tel"] = get_post_value("tel", False)
+
+        donor_dict["street"] = get_post_value("strada").title()
+        donor_dict["number"] = get_post_value("numar", False)
 
         # optional data
-        payload["bl"] = get_post_value("bloc", False)
-        payload["sc"] = get_post_value("scara", False)
-        payload["et"] = get_post_value("etaj", False)
-        payload["ap"] = get_post_value("ap", False)
+        donor_dict["bl"] = get_post_value("bloc", False)
+        donor_dict["sc"] = get_post_value("scara", False)
+        donor_dict["et"] = get_post_value("etaj", False)
+        donor_dict["ap"] = get_post_value("ap", False)
 
-        payload["city"] = get_post_value("localitate").title()
-        payload["county"] = get_post_value("judet")
+        donor_dict["city"] = get_post_value("localitate").title()
+        donor_dict["county"] = get_post_value("judet")
+
+        # if he would like the ngo to see the donation
+        donor_dict['anonymous'] = post.get('anonim') != 'on'
 
         # the ngo data
         ngo_data = {
             "name": self.ngo.name,
-            "account": self.ngo.account,
+            "account": self.ngo.account.upper(),
             "cif": self.ngo.cif
         }
-
-        # payload["secret_key"] = SECRET_KEY
         
         if len(errors["fields"]):
             self.return_error(errors)
@@ -205,38 +225,48 @@ class TwoPercentHandler(BaseHandler):
         # output a hex string
         filename = "{0}/{1}/{2}".format(USER_FORMS, str(user_folder), sha1( datetime.datetime.now().isoformat() ).hexdigest())
 
-        pdf = create_pdf(payload, ngo_data)
+        pdf = create_pdf(donor_dict, ngo_data)
 
         file_url = CloudStorage.save_file(pdf, filename)
 
         # close the file after it has been uploaded
         pdf.close()
 
-        # prepare the donor entity while we wait for aws
+        # create the donor and save it
         donor = Donor(
-            first_name = payload["first_name"],
-            last_name = payload["last_name"],
-            city = payload["city"],
-            county = payload["county"],
+            first_name = donor_dict["first_name"],
+            last_name = donor_dict["last_name"],
+            city = donor_dict["city"],
+            county = donor_dict["county"],
+            email = donor_dict['email'],
+            tel = donor_dict['tel'],
+            anonymous = donor_dict['anonymous'],
             # make a request to get geo ip data for this user
             geoip = self.get_geoip_data(),
             ngo = self.ngo.key,
             pdf_url = file_url
         )
 
-        # only save if the pdf was created
         donor.put()
 
         # set the donor id in cookie
         self.session["donor_id"] = str(donor.key.id())
-        self.session["has_cnp"] = bool(payload["cnp"])
+        self.session["has_cnp"] = bool(donor_dict["cnp"])
+
+        # send and email to the donor with a link to the PDF file
+        self.send_email("twopercent-form", donor)
 
         # if not an ajax request, redirect
         if self.is_ajax:
+            
             self.response.set_status(200)
-            self.response.write(json.dumps({"url": file_url}))
+            
+            response = {
+                "url": self.uri_for("ngo-twopercent-success", ngo_url=ngo_url)
+            }
+            self.response.write(json.dumps(response))
         else:
-            self.redirect( self.uri_for("twopercent-step-2", ngo_url=ngo_url) )
+            self.redirect( self.uri_for("ngo-twopercent-success", ngo_url=ngo_url) )
 
     def return_error(self, errors):
         

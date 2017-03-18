@@ -5,7 +5,7 @@ from google.appengine.ext.ndb import put_multi, OR, Key
 from google.appengine.api import users
 from google.appengine.api import mail
 
-from appengine_config import AWS_PDF_URL, LIST_OF_COUNTIES, CONTACT_FORM_URL, CONTACT_EMAIL_ADDRESS, START_YEAR
+from appengine_config import LIST_OF_COUNTIES, CONTACT_FORM_URL, CONTACT_EMAIL_ADDRESS, START_YEAR
 
 from models.handlers import AccountHandler, user_required
 from models.models import NgoEntity, Donor
@@ -92,6 +92,8 @@ class MyAccountDetailsHandler(AccountHandler):
         self.template_values["title"] = "Date cont"
         
         self.render()
+    
+    @user_required
     def post(self):
         
         user = self.user
@@ -139,6 +141,7 @@ class NgoDetailsHandler(AccountHandler):
             self.template_values["ngo"] = {}
             self.redirect(self.uri_for("contul-meu"))
             
+    @user_required
     def post(self):
         
         user = self.user
@@ -188,18 +191,6 @@ class NgoDetailsHandler(AccountHandler):
             self.render()
             return
 
-        # TODO: in the future
-        # try:
-        #     # try and cut it at 1400 bytes, if we have an error
-        #     short_description = utf8_byte_truncate(ong_descriere, 1400)
-        # except Exception, e:
-        #     # cut it at 80 chars
-        #     short_description = ong_descriere[:180]
-        
-        # cut the short description at 180
-        short_description = ong_descriere[:180]
-
-
         # if the user already has an ngo, update it
         if user.ngo:
             info(user.ngo)
@@ -211,7 +202,6 @@ class NgoDetailsHandler(AccountHandler):
 
                 ngo.name = ong_nume
                 ngo.description = ong_descriere
-                ngo.short_description = short_description
                 ngo.logo = ong_logo_url
 
                 ngo.address = ong_adresa
@@ -332,9 +322,9 @@ class NgoDetailsHandler(AccountHandler):
         else:
             self.template_values["errors"] = True
 
-        if ong_logo_url is None and ong_logo is not None:
+        # if ong_logo_url is None and ong_logo is not None:
             # upload file to S3 if received else None
-            ong_logo_url = UploadHandler.upload_file_to_s3(ong_logo, ong_url) if ong_logo else None
+            # ong_logo_url = UploadHandler.upload_file_to_s3(ong_logo, ong_url) if ong_logo else None
         
 
 

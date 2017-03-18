@@ -11,7 +11,7 @@ from my_account import NgoDetailsHandler
 from models.models import NgoEntity, Donor
 from models.user import User
 
-from appengine_config import AWS_PDF_URL, LIST_OF_COUNTIES
+from appengine_config import LIST_OF_COUNTIES
 
 """
 Handlers  for admin routing
