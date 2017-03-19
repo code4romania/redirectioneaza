@@ -154,7 +154,6 @@ $(function () {
 
         submitFormButton.removeClass("btn-primary").addClass("btn-success").attr("disabled", true);
 
-        console.log(token);
         $('<input />').attr('type', 'hidden')
             .attr('name', "g-recaptcha-response").attr('value', token)
             .appendTo(form);

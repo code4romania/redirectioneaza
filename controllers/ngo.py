@@ -8,7 +8,7 @@ from google.appengine.ext import ndb
 from hashlib import sha1
 from webapp2_extras import json, security
 
-from appengine_config import LIST_OF_COUNTIES, USER_UPLOADS_FOLDER, USER_FORMS
+from appengine_config import LIST_OF_COUNTIES, USER_UPLOADS_FOLDER, USER_FORMS, ANAF_OFFICES
 
 # also import captcha settings
 from appengine_config import CAPTCHA_PRIVATE_KEY, CAPTCHA_POST_PARAM
@@ -391,7 +391,8 @@ class DonationSucces(BaseHandler):
         self.template_values["donor"] = self.donor
         self.template_values["title"] = "Donatie 2% - succes"
 
-        info(self.session.get("has_cnp"))
+        county = self.donor.county.lower()
+        self.template_values["anaf"] = ANAF_OFFICES.get(county, None)
 
         # if the user didn't provide a CNP show a message
         self.template_values["has_cnp"] = self.session.get("has_cnp", False)
