@@ -32,6 +32,8 @@ def create_pdf(person, ong):
         first_name
         father
         last_name
+        email
+        tel
         street
         number
         bl
@@ -134,7 +136,11 @@ def create_pdf(person, ong):
     c.drawString(185, fourth_row_x, person["ap"])
 
     # judet
-    c.setFontSize(12)
+    if len(person["county"]) <= 12:
+        c.setFontSize(12)
+    else:
+        c.setFontSize(8)
+    
     c.drawString(255, fourth_row_x, person["county"])
     c.setFontSize(default_font_size)
     # 
@@ -152,6 +158,26 @@ def create_pdf(person, ong):
         c.drawString(start_x, donor_block_x - 10, letter)
         start_x += 18.4
 
+
+    # email
+    start_email_x = 368
+    if person['email']:
+        if len(person['email']) < 32:
+            c.setFontSize(12)
+        elif len(person['email']) < 40:
+            c.setFontSize(10)
+        else:
+            c.setFontSize(8)
+
+        c.drawString(start_email_x, third_row_x + 12, person['email'])
+
+    #telephone
+    if person['tel']:
+        c.setFontSize(12)
+        c.drawString(start_email_x, third_row_x - 15, person['tel'])
+    
+
+    c.setFontSize(default_font_size)
 
     # first x mark
     # Venituri din salarii si asimilate salariilor

@@ -173,9 +173,11 @@ $(function () {
                     message = errors["server_error"];
                     submitFormButton.addClass("btn-primary").removeClass("btn-success").attr("disabled", false);
                     invalidFormAlert.removeClass("hidden").find("span").text(message);
+                    grecaptcha.reset();
                 }
             },
             error: function(data) {
+
                 if( grecaptcha && typeof grecaptcha.reset == "function" ) {
                     grecaptcha.reset()
                 }

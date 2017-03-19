@@ -25,8 +25,16 @@
                                 <td>{{ loop.length - loop.index + 1 }}</td>
                                 <td>{{ donation.first_name + " " + donation.last_name }}</td>
                                 <td>{{ donation.city }}, <span class="text-muted">{{ donation.county }}</span></td>
-                                <td>{{ donation.email if donation.email and donation.anonymous != True }}</td>
-                                <td>{{ donation.tel if donation.tel and donation.anonymous != True }}</td>
+                                
+                                {% if donation.anonymous != True %}
+                                    <td>{{ donation.email if donation.email }}</td>
+                                    <td>{{ donation.tel if donation.tel }}</td>    
+                                {% else %}
+                                    <td colspan="2" class="text-center text-muted">
+                                        Aceasta persoana a ales <br>
+                                        sa nu-si arate datele de contact.
+                                    </td>
+                                {% endif %}
                             </tr>
                         {% endfor %}
                     {% else %}
