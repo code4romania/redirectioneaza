@@ -3,7 +3,10 @@
 {% block additional_headers %}
     <meta property="og:title" content="{{ ngo.name }}" />
     <meta property="og:description" content="{{ ngo.description }}" />
-    <meta property="og:image" content="{{ ngo.logo if ngo.logo }}" />
+    {% if ngo.logo %}
+        <meta property="og:image" content="{{ ngo.logo }}" />
+        <meta property="og:image:secure_url" content="{{ ngo.logo }}" />
+    {% endif %}
 
     <meta property="og:type" content="website" />
 

@@ -38,7 +38,11 @@ config = {
 app = webapp2.WSGIApplication([
         # the public part of the app
         r('/',                  handler="controllers.site.HomePage"),
+        r('/ong',               handler="controllers.site.ForNgoHandler"),
+        
+        # backup in case of old urls. to be removed
         r('/pentru-ong-uri',    handler="controllers.site.ForNgoHandler"),
+        
         r('/asociatii',         handler="controllers.site.NgoListHandler"),
 
         r('/termeni',    handler="controllers.site.TermsHandler"),
