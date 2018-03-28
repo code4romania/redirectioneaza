@@ -26,16 +26,6 @@ import re
 import json
 import datetime
 
-ngo = NgoEntity(
-    logo= "http://images.clipartpanda.com/spinner-clipart-9cz75npcE.jpeg",
-    name= "Nume asoc",
-    description= "o descriere lunga",
-    id= "ssda",
-    account = "RO33BTRL3342234vvf2234234234XX",
-    cif = "3333223",
-    address = "Str. Ion Ionescu, nr 33"
-)
-# ngo.put()
 
 """
 Handlers used for ngo 

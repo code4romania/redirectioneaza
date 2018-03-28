@@ -54,7 +54,7 @@ VIEWS_FOLDER = "/views"
 DEV_DEPENDECIES_LOCATION = "/bower_components"
 TITLE = "donezsi.eu"
 
-SESSION_SECRET_KEY = "JgW`l2hZa*WV+z >}{T~Snq`DD1s@S#[Z7L>~.-;]t.7y2%gU)A^?ZTDyn/~kDh}RZA:/B{Vo7cI@TeA2Dll+0M#z|{,V*8`90VaV^`Cj&"
+SESSION_SECRET_KEY = "JgW`l2hZa*WV+z >}{T~Snq`DD1s@S#[Z7L>~.-;]t.7y2%gU)A^?ZTDyn/~kDh}RZA:/BVo7cI@TeA2Dll+0M#z|{,V*8`90VaV^`Cj&"
 
 
 # ADMIN
@@ -77,7 +77,7 @@ HTTP_HEADERS = {
     # for https everywhere, and on subdomains, 1 year
     "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
     # make sure the certificate is valid
-    "Public-Key-Pins-Report-Only": 'pin-sha256="wuvbD/BvVfYoATqByqmg/6/XWyvmA+yeQImG75l2ous=";pin-sha256="6X0iNAQtPIjXKEVcqZBwyMcRwq1yW60549axatu3oDE=";pin-sha256="h6801m+z8v3zbgkRHpq6L29Esgfzhj89C1SyUCOQmqU=";max-age=2592000;report-uri="https://report-uri.io/report/donezsieu/reportOnly";includeSubdomains',
+    # "Public-Key-Pins-Report-Only": 'pin-sha256="wuvbD/BvVfYoATqByqmg/6/XWyvmA+yeQImG75l2ous=";pin-sha256="6X0iNAQtPIjXKEVcqZBwyMcRwq1yW60549axatu3oDE=";pin-sha256="h6801m+z8v3zbgkRHpq6L29Esgfzhj89C1SyUCOQmqU=";max-age=2592000;report-uri="https://report-uri.io/report/donezsieu/reportOnly";includeSubdomains',
 
     # don't allow the site to be embeded
     "X-Frame-Options": "Deny",
