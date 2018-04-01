@@ -185,7 +185,7 @@ class BaseHandler(Handler):
             return
 
         if email_type == "signup":
-            subject = "Confirmare cont donezsi.eu"
+            subject = "Confirmare cont redirectioneaza.ro"
 
             user_id = user.get_id()
             token = self.user_model.create_signup_token(user_id)
@@ -202,7 +202,7 @@ class BaseHandler(Handler):
             }
 
         elif email_type == "reset-password":
-            subject = "Resetare parola pentru contul donezsi.eu"
+            subject = "Resetare parola pentru contul redirectioneaza.ro"
 
             user_id = user.get_id()
             token = self.user_model.create_signup_token(user_id)
@@ -218,7 +218,7 @@ class BaseHandler(Handler):
             }
 
         elif email_type == "twopercent-form":
-            subject = "Formularul tau de donatie"
+            subject = "Formularul tau de redirectionare 2%"
             
             html_template = None # self.jinja_enviroment.get_template("email/twopercent-form/twopercent-form.html")
             txt_template = self.jinja_enviroment.get_template("email/twopercent-form/twopercent_form.txt")

@@ -8,7 +8,7 @@ Gasesti mai jos link-ul catre formularul tau:
 Mai departe trebuie sa-l printezi, sa-l semnezi si sa-l expediezi catre unitatea ANAF de care apartii.
 
 Multumim,
-echipa donezsi.eu
+echipa redirectioneaza.ro
 
 Ai primit din greseala acest email? Contacteaza-ne!
 {{ contact_url }}

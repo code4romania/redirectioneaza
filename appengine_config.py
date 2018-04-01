@@ -52,7 +52,7 @@ GEOIP_SERVICES = ["http://ip-api.com/json/{0}", "http://freegeoip.net/json/{0}"]
 VIEWS_FOLDER = "/views"
 
 DEV_DEPENDECIES_LOCATION = "/bower_components"
-TITLE = "donezsi.eu"
+TITLE = "redirectioneaza.ro"
 
 SESSION_SECRET_KEY = "JgW`l2hZa*WV+z >}{T~Snq`DD1s@S#[Z7L>~.-;]t.7y2%gU)A^?ZTDyn/~kDh}RZA:/BVo7cI@TeA2Dll+0M#z|{,V*8`90VaV^`Cj&"
 
