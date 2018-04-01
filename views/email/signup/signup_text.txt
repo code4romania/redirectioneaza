@@ -1,12 +1,12 @@
 Salut {{ name }},
 
-Bine ai venit pe platforma donezsi.eu.
+Bine ai venit pe platforma redirectioneaza.ro.
 
 Pentru a-ti activa contul te rugam sa confirmi adresa de email accesand link-ul de mai jos:
 {{ url }}
 
 Multumim,
-echipa donezsi.eu
+echipa redirectioneaza.ro
 
 Ai primit din greseala acest email? Contacteaza-ne!
 {{ contact_url }}

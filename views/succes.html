@@ -1,79 +1,98 @@
 
-{% extends "base.html" %}
+{% extends "base.html" %} 
 
 
-{% block content %}
-    <div class="container">
-        <div class="row margin-top">
-            <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 text-center">
-                <div class="row">
-                    <div class="col-xs-4 col-xs-offset-4">
-                        <img class="img-responsive center-block" src="/images/success.png" alt="">
-                    </div>
-                    <div class="col-xs-12">
-                        <h1>Multumim {{ donor.last_name }}</h1>
-                        <h3>Gasesti mai jos PDF-ul pentru download:</h3>
-                        <p class="margin-top">
-                            <a href="{{ donor.pdf_url }}" class="btn btn-success btn-lg" target="_blank">
-                                Descarca &nbsp; <i class="glyphicon glyphicon-save download-pdf-icon"></i>
-                            </a>
-                        </p>
-                    </div>
+ {% block content %}
+<div class="container">
+    <div class="row margin-top">
+        <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 text-center">
+            <div class="row">
+                <div class="col-xs-4 col-xs-offset-4">
+                    <img class="img-responsive center-block" src="/images/success.png" alt="">
+                </div>
+                <div class="col-xs-12">
+                    <h1>Multumim {{ donor.last_name }}</h1>
+                    <h3>Gasesti mai jos PDF-ul pentru download:</h3>
+                    <p class="margin-top">
+                        <a href="{{ donor.pdf_url }}" class="btn btn-success btn-lg" target="_blank">
+                            Descarca &nbsp; <i class="glyphicon glyphicon-save download-pdf-icon"></i>
+                        </a>
+                    </p>
                 </div>
             </div>
         </div>
-        
-        <div class="row">
-            {# if the ngo allows the donor to upload the signed and scaned pdf  #}
-            {% if ngo.allow_upload %}
-                <div class="col-xs-12 col-md-6 col-md-offset-3">
-                    <h3>Daca doresti, incarca formularul pentru a fi expediat de ONG catre ANAF in numele tau:</h3>
-                    <form action="{{ ngo.key.id()/succes }}" class="form" enctype="multipart/form-data">
-                        <div class="form-group text-center">
-                            <label for="signed-pdf" class="btn btn-default btn-lg">
-                                Alege un fisier
-                            </label>
-                            <input id="signed-pdf" name="signed-pdf" type="file" accept="image/*, application/pdf" class="hidden" required title="Va rugam alegeti un fisier" x-moz-errormessage="Va rugam alegeti un fisier" />
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary margin-top pull-right">Incarca</button>
-                        </div>
-                    </form>
+    </div>
+
+    <div class="row">
+        {# if the ngo allows the donor to upload the signed and scaned pdf  #} 
+        {% if ngo.allow_upload %}
+        <div class="col-xs-12 col-md-6 col-md-offset-3">
+            <h3>Daca doresti, incarca formularul pentru a fi expediat de ONG catre ANAF in numele tau:</h3>
+            <form action="{{ ngo.key.id()/succes }}" class="form" enctype="multipart/form-data">
+                <div class="form-group text-center">
+                    <label for="signed-pdf" class="btn btn-default btn-lg">
+                        Alege un fisier
+                    </label>
+                    <input id="signed-pdf" name="signed-pdf" type="file" accept="image/*, application/pdf" class="hidden" required title="Va rugam alegeti un fisier" x-moz-errormessage="Va rugam alegeti un fisier" />
                 </div>
-            {% endif %}
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary margin-top pull-right">Incarca</button>
+                </div>
+            </form>
         </div>
+        {% endif %}
+    </div>
 
-        <div class="row instructions-row">
-            <div class="col-xs-12 col-md-8 col-md-offset-2 margin-top">
-                <h2>Urmatorii pasi:</h2>
+    <div class="row instructions-row">
+        <div class="col-xs-12 col-md-8 col-md-offset-2 margin-top">
+            <h2>Urmatorii pasi:</h2>
 
-                <ol class="list">
-                    <li>Printeaza formularul</li>
-                    {% if not has_cnp %}
+            <ol class="list">
+                <li>Printeaza formularul</li>
+                {% if not has_cnp %}
+                <li>
+                    <strong>Completeaza campul CNP</strong>
+                </li>
+                {% endif %}
+                <li>
+                    Semneaza documentul
+                    <img class="signature img-responsive" alt="Locul unde ar trebui sa semnezi" src="/images/semnatura.png">
+
+                </li>
+                <li>
+                    Ai urmatoarele optiuni:
+                    <ol type="A">
                         <li>
-                            <strong>Completeaza campul CNP</strong>
-                        </li>
-                    {% endif %}
-                    <li>
-                        Semneaza documentul
-                        <img class="signature img-responsive" alt="Locul unde ar trebui sa semnezi" src="/images/semnatura.png">        
-
-                    </li>
-                    <li>
-                        Expediaza-l prin Posta Romana cu <strong>scrisoare recomandata</strong> catre unitatea ANAF de care apartii.
-                        {% if anaf %}
+                            Fie il trimiti prin posta cu <strong>scrisoare recomandata</strong> catre unitatea ANAF de care apartii
+                            {% if anaf %}
                             <strong>In cazul tau, aceasta este:</strong>
                             <div class="alert alert-info margin-top">
-                                <strong>{{ anaf['name'] }}</strong> <br>
+                                <strong>{{ anaf['name'] }}</strong>
+                                <br>
                                 <span class="text-muted">Adresa:</span> {{ anaf['address'] }}
                             </div>
-                        {% endif %}
-                    </li>
+                            {% endif %}
+                        </li>
+                        <li>
+                            Fie il trimiti prin posta sau curier la adresa ONG-ului si se ocupa ei de depunerea lui. Daca sunteti in acelasi oras, le
+                            poti face o vizita, suntem siguri ca sunt bucurosi de oaspeti 
+                            {% if ngo.address %}
+                            <div class="alert alert-info margin-top">
+                                <strong>{{ ngo.name }}</strong>
+                                <br>
+                                <span class="text-muted">Adresa:</span> {{ ngo.address }}
+                            </div>
+                            {% endif %}
+                        </li>
+                    </ol>
+                </li>
 
-                </ol>
-            </div>
+
+
+            </ol>
         </div>
-
     </div>
+
+</div>
 
 {% endblock %}

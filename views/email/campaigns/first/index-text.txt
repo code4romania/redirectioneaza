@@ -1,8 +1,8 @@
 
 Cea mai simpla metoda de a colecta formularele de 2%
 
-Proiectul donezsi.eu tocmai a lansat o noua cale prin care orice ONG poate colecta formularul de 2%.
-Citeste mai multe - https://www.donezsi.eu
+Proiectul redirectioneaza.ro tocmai a lansat o noua cale prin care orice ONG poate colecta formularul de 2%.
+Citeste mai multe - https://www.redirectioneaza.ro
 
 Cum functioneaza
 1. Un donator completeaza un formular simplu
@@ -13,4 +13,4 @@ Cum functioneaza
 Pentru donatori oferim cea mai sigura metoda de a completa formularul.
 Datele sunt trimise folosind o conexiune sigura si sunt folosite doar pentru a crea fisierul PDF.
 
-donezsi.eu
+redirectioneaza.ro
