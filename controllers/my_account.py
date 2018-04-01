@@ -12,7 +12,6 @@ from appengine_config import LIST_OF_COUNTIES, CONTACT_FORM_URL, CONTACT_EMAIL_A
 from models.handlers import AccountHandler, user_required
 from models.models import NgoEntity, Donor
 from models.user import User
-from models.upload import UploadHandler
 
 from api import check_ngo_url
 from logging import info
@@ -323,12 +322,6 @@ class NgoDetailsHandler(AccountHandler):
             return
         else:
             self.template_values["errors"] = True
-
-        # if ong_logo_url is None and ong_logo is not None:
-            # upload file to S3 if received else None
-            # ong_logo_url = UploadHandler.upload_file_to_s3(ong_logo, ong_url) if ong_logo else None
-        
-
 
         if users.is_current_user_admin():
 

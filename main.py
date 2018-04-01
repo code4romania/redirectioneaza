@@ -12,7 +12,7 @@ from controllers.account_management import *
 from controllers.my_account import *
 from controllers.api import *
 from controllers.admin import *
-from controllers.ngo import NgoHandler, TwoPercentHandler, TwoPercent2Handler, DonationSucces
+from controllers.ngo import NgoHandler, TwoPercentHandler, DonationSucces
 
 
 config = {
@@ -84,7 +84,6 @@ app = webapp2.WSGIApplication([
         r('/catre/<ngo_url>',   handler=NgoHandler),
 
         r('/<ngo_url>/doilasuta',           handler=TwoPercentHandler,  name="twopercent"),
-        r('/<ngo_url>/doilasuta/pas-2',     handler=TwoPercent2Handler, name="twopercent-step-2"),
         r('/<ngo_url>/doilasuta/succes',    handler=DonationSucces,     name="ngo-twopercent-success"),
 
     ],
