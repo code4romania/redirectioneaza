@@ -6,3 +6,5 @@ bower_components/
 *.sublime-workspace
 
 *.db
+
+.vs/
