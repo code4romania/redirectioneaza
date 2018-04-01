@@ -15,22 +15,15 @@ vendor.add('lib')
 # gcloud auth login
 # gcloud config set project donezsieu-server
 
-# gcloud preview app run ./app.yaml
-# 
 # DEPLOY
 # LESS
-# cd ./static/ && lessc css/main.less > css/main.css --clean-css="--s1 --advanced --compatibility=ie8" && cd ..
+# minify-css
 # 
 # gcloud config set project donezsieu-server
 # gcloud app deploy ./app.yaml --version 26 --promote
 # gcloud app deploy ./app.yaml --version 26 --no-promote
 
 # minify-css && gcloud app deploy ./app.yaml --version 14
-
-# create pdf
-# curl 'http://localhost:8080/asoc/doilasuta' -H 'Cookie: auth="e30\075|1452959992|64942700a0ed7400d63342ee6c806290cfa05e"; session="e30\075|1452960748|f2a8976fefe8063a66a4b7d4aed8129fdf95fa19"' -H 'Origin: http://localhost:8080' -H 'Accept-Encoding: gzip, deflate' -H 'Accept-Language: en-US,en;q=0.8,ro;q=0.6,es;q=0.4' -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36' -H 'Content-Type: application/x-www-form-urlencoded; charset=UTF-8' -H 'Accept: application/json, text/javascript, */*; q=0.01' -H 'Referer: http://localhost:8080/asoc/doilasuta' -H 'X-Requested-With: XMLHttpRequest' -H 'Connection: keep-alive' --data 'nume=dsadada&prenume=dsadasd&tatal=L&cnp=1231231231231&strada=srt+sadadd&numar=333&bloc=A&scara=2&etaj=2&ap=22&localitate=Braila&judet=Brasov&agree=on&g-recaptcha-response=03AHJ_VuvCHxzhjqGzhJ6F0NdkSPy-BNVWATnVnvWuodInIzj_BvdFRF9WcuCti4UlDRg97s1sGE_7O4PYq2HGcORo0bS_W0txctdSfxLlrA0Co_7kYtLEUGYIYJW8JZbTVFgISJy_1UO-QPl6GXe5fmZMAusO6TQP6M1IVy0Q_bB20Mj2dgnw5qOQq5Tg7cDS_pCswLuWNt0PvDIXsPA4UGPN7yhq7MnvNJaXqFibyzox-81hMBLyeZYYld46TFJqNNbZh2JRbuvj0ZA00PGmD8uTVvFAVADW4vv-W5luRayfLvtmpgYrPFUhEQRfAzIkIhwE_GrjguRZxf0iAkaQ2HoZcq1xEKt8BuZLaZ10PUUmkFp1OHUSZpsDePFRRBen_fYf4Q89TMwSOsqZ54TIooraqobPFeHxIF7l4yby2dM5kBEQ6zk25_eRpAIvtiWrYW-UOkvh8zdAN8YHFbD09BA0RcKEGiv4N29_P4GKJbUHjpn_wDhVHEh-QKp5Awlg9PkKJUAT-9wiYCuzeK6o8FH6JW3t4Nt8eiTcpwutVPZX-DS-PieC9vW59fLPM77NutwbjL5wddlC58nw7D2Gg7s8-8Hv-wXKZ65WPJgFUlVndtGqRDBNq4AYl1pFa1Dzs8YFo6hDkWu2PIJwRIehmw-aC_1Cj3Ew65Ob9bkwN1EjGN8Q7DjI9F9VQy2LJvGCqDdZkbXMkOylULb6PUuqCbzc9st7ZNMqdcHoXlXmNn2qfVbCirQ0RFq1Jz1TEJHUsy00NAXNbEFenYFn5_LAO0uttiX2GizaloyOxhMZD4KlGdsrM-tL97JioSckvOspLjAsEgxruZTM22f0W93V60OiottRMFfW4vpJVRdQ2vUNMeFkXR-ZfCfF4RKwZwERKcvA6nvcfxwJ-d-qvXbQcC3FqK58M1jiELbYjR33Ko-BDFmjzU2GctU&ajax=true' --compressed
-# add email
-# curl 'http://localhost:8080/asoc/doilasuta/pas-2' -H 'Cookie: auth="e30\075|1452959992|64942700a0ed7400d6382342ee6c806290cfa05e"; session="eyJkb25vcl9pZCI6IjU5MTA5NzQ1MTA5MjM3NzYiLCJoYXNfY25wIjpmYWxzZX0\075|1452960759|b8a18e221f41e5dc858e3fa8d0534e0176fc8ae0"' -H 'Origin: http://localhost:8080' -H 'Accept-Encoding: gzip, deflate' -H 'Accept-Language: en-US,en;q=0.8,ro;q=0.6,es;q=0.4' -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36' -H 'Content-Type: application/x-www-form-urlencoded; charset=UTF-8' -H 'Accept: application/json, text/javascript, */*; q=0.01' -H 'Referer: http://localhost:8080/asoc/doilasuta' -H 'X-Requested-With: XMLHttpRequest' -H 'Connection: keep-alive' --data 'email=aaaa%40aaaa.com&tel=&ajax=true' --compressed
 
 # if we are currently in production
 DEV = os.environ.get('SERVER_SOFTWARE', 'Development').startswith('Development')
@@ -76,8 +69,6 @@ HTTP_HEADERS = {
     # https://hstspreload.appspot.com/
     # for https everywhere, and on subdomains, 1 year
     "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
-    # make sure the certificate is valid
-    # "Public-Key-Pins-Report-Only": 'pin-sha256="wuvbD/BvVfYoATqByqmg/6/XWyvmA+yeQImG75l2ous=";pin-sha256="6X0iNAQtPIjXKEVcqZBwyMcRwq1yW60549axatu3oDE=";pin-sha256="h6801m+z8v3zbgkRHpq6L29Esgfzhj89C1SyUCOQmqU=";max-age=2592000;report-uri="https://report-uri.io/report/donezsieu/reportOnly";includeSubdomains',
 
     # don't allow the site to be embeded
     "X-Frame-Options": "Deny",

@@ -21,9 +21,10 @@ class NgoEntity(BaseEntity):
     description = ndb.TextProperty()
 
     logo = ndb.StringProperty(indexed=True)
-    # the background image that will go above the description
+    # the background image that will go above the description, if any
     image = ndb.StringProperty(indexed=True)
-    
+
+    # the bank account
     account = ndb.StringProperty(indexed=True)
     cif = ndb.StringProperty(indexed=True)
     address = ndb.TextProperty()
@@ -37,14 +38,14 @@ class NgoEntity(BaseEntity):
     # a list of email addresses
     other_emails = ndb.StringProperty(indexed=True, repeated=True)
 
-    # if the ngo verified its existance
+    # if the ngo verified its existence
     verified = ndb.BooleanProperty(indexed=True, default=False)
-    # bool telling if the ngo should be shown to the public
-    # the ngo might be banned
+
+    # bool telling if the ngo should be shown to the public (the ngo might be banned)
     active = ndb.BooleanProperty(indexed=True, default=True)
 
-    document_urls = ndb.StringProperty(indexed=True, repeated=True)
-
+    # url to the ngo's 2% form, that contains only the ngo's details
+    form_url = ndb.StringProperty(indexed=False)
 
     # tags for the 
     tags = ndb.StringProperty(indexed=True, repeated=True)

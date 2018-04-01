@@ -25,58 +25,8 @@ default_font_size = 15
 # image_name = "/images/2.jpg"
 image_path = "/static/images/2.jpg"
 
-def create_pdf(person, ong):
-    """method used to create the pdf
-
-    person: dict with the person's data 
-        first_name
-        father
-        last_name
-        email
-        tel
-        street
-        number
-        bl
-        sc
-        et
-        ap
-        county
-        city
-        cnp
-
-
-    ong: dict with the ngo's data
-        name
-        cif
-        account
-    """
+def add_donor_data(c, person):
     
-    # packet = StringIO.StringIO()
-    # we could also use StringIO
-    packet = tempfile.TemporaryFile(mode='w+b')
-    
-    c = canvas.Canvas(packet, A4)
-    width, height = A4 
-    
-    # add the image as background
-    background = ImageReader( abs_path + image_path )
-    c.drawImage(background, 0, 0, width=width, height=height)
-
-    # the default font size
-    # info(c.getAvailableFonts())
-    c.setFont('OpenSans', default_font_size)
-    c.setFontSize(default_font_size)
-
-    info( os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir)) + "/static/font/opensans.ttf" )
-
-    # the year
-    # this is the previous year, starting from 1 Jan until - 25 May ??
-    year = str( datetime.now().year - 1 )
-    start_x = 306
-    for letter in year:
-        c.drawString(start_x, 727, letter)
-        start_x += 17
-
     # the first name
     if len(person["first_name"]) > 18:
         c.setFontSize(12)
@@ -181,10 +131,9 @@ def create_pdf(person, ong):
 
     # first x mark
     # Venituri din salarii si asimilate salariilor
-    c.drawString(171, donor_block_x - 145, "x")
-        
+    c.drawString(171, donor_block_x - 145, "x")    
 
-    # DRAW ONG DATA
+def add_ngo_data(c, ong):
     start_ong_x = 373
 
     # the x mark
@@ -209,6 +158,62 @@ def create_pdf(person, ong):
 
     c.drawString(118, start_ong_x - 48, account)
 
+def create_pdf(person, ong):
+    """method used to create the pdf
+
+    person: dict with the person's data 
+        first_name
+        father
+        last_name
+        email
+        tel
+        street
+        number
+        bl
+        sc
+        et
+        ap
+        county
+        city
+        cnp
+
+
+    ong: dict with the ngo's data
+        name
+        cif
+        account
+    """
+    
+    # packet = StringIO.StringIO()
+    # we could also use StringIO
+    packet = tempfile.TemporaryFile(mode='w+b')
+    
+    c = canvas.Canvas(packet, A4)
+    width, height = A4 
+    
+    # add the image as background
+    background = ImageReader( abs_path + image_path )
+    c.drawImage(background, 0, 0, width=width, height=height)
+
+    # the default font size
+    # info(c.getAvailableFonts())
+    c.setFont('OpenSans', default_font_size)
+    c.setFontSize(default_font_size)
+
+    # the year
+    # this is the previous year, starting from 1 Jan until - 25 May ??
+    year = str( datetime.now().year - 1 )
+    start_x = 306
+    for letter in year:
+        c.drawString(start_x, 727, letter)
+        start_x += 17
+
+    # DRAW DONOR DATA
+    if person:
+        add_donor_data(c, person)
+
+    # DRAW ONG DATA
+    add_ngo_data(c, ong)
 
     c.save()
 

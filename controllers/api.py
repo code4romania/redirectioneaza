@@ -6,8 +6,9 @@ from google.appengine.ext.ndb import Key
 from google.appengine.api import users, urlfetch
 
 from models.models import NgoEntity
-from models.handlers import AccountHandler, user_required
+from models.handlers import BaseHandler, AccountHandler, user_required
 from models.storage import CloudStorage
+from models.create_pdf import create_pdf
 
 from appengine_config import USER_UPLOADS_FOLDER
 
@@ -36,6 +37,46 @@ class CheckNgoUrl(AccountHandler):
         else:
             self.response.set_status(400)
 
+class GetNgoForm(BaseHandler):
+
+    def get(self, ngo_url):
+        
+        ngo = NgoEntity.get_by_id(ngo_url)
+
+        if not ngo:
+            self.abort(404)
+
+        # if we have an form created for this ngo, return the url
+        if ngo.form_url:
+            self.return_json({
+                "form_url": ngo.form_url
+            })
+            return
+
+        # else, create a new one and upload to GCS for future use
+        ngo_dict = {
+            "name": ngo.name,
+            "cif": ngo.cif,
+            "account": ngo.account
+        }
+        pdf = create_pdf({}, ngo_dict)
+
+        filename = "Formular 2% - {0}.pdf".format(ngo.name)
+        ong_folder = security.hash_password(ngo.key.id(), "md5")
+        path = "{0}/{1}/{2}".format(USER_UPLOADS_FOLDER, str(ong_folder), filename)
+
+        file_url = CloudStorage.save_file(pdf, path)
+
+        # close the file after it has been uploaded
+        pdf.close()
+
+        ngo.form_url = file_url
+        ngo.put()
+
+        self.return_json({
+            "form_url": ngo.form_url
+        })
+
 class GetUploadUrl(AccountHandler):
 
     @user_required
@@ -43,7 +84,7 @@ class GetUploadUrl(AccountHandler):
 
         post = self.request
 
-        # we must use post.POST so we get a file instante
+        # we must use post.POST so we get the file
         files = post.POST.getall("files")
 
         if len(files) == 0:

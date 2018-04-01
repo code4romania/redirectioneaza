@@ -18,7 +18,6 @@ from models.models import NgoEntity, Donor
 from models.storage import CloudStorage
 from models.create_pdf import create_pdf
 
-
 from captcha import submit
 
 from logging import info

@@ -96,6 +96,30 @@ class BaseHandler(Handler):
 
         self.response.write(self.template.render(self.template_values))
 
+    def return_json(self, obj={}, status_code=200):
+
+        self.response.content_type = 'application/json'
+        self.response.set_status(status_code)
+
+        try:
+            def json_serial(obj):
+                """JSON serializer for objects not serializable by default json code"""
+
+                if isinstance(obj, datetime) or isinstance(obj, date):
+                    serial = obj.isoformat()
+                    return serial
+                else:
+                    raise TypeError("Type not serializable")
+
+            self.response.write( json.encode(obj, default=json_serial) )
+        except Exception, e:
+            warn(e)
+
+            obj = {
+                "error": "Error when trying to json encode the response"
+            }
+            self.response.write( json.encode(obj) )
+
     # USER METHODS
     def get_geoip_data(self, ip_address=None):
         if not ip_address:
@@ -312,27 +336,3 @@ class AccountHandler(BaseHandler):
     def session(self):
         """override BaseHandler session method in order to use the datastore as the backend."""
         return self.session_store.get_session(backend="datastore")
-
-    def return_json(self, obj={}, status_code=200):
-
-        self.response.content_type = 'application/json'
-        self.response.set_status(status_code)
-
-        try:
-            def json_serial(obj):
-                """JSON serializer for objects not serializable by default json code"""
-
-                if isinstance(obj, datetime) or isinstance(obj, date):
-                    serial = obj.isoformat()
-                    return serial
-                else:
-                    raise TypeError("Type not serializable")
-
-            self.response.write( json.encode(obj, default=json_serial) )
-        except Exception, e:
-            warn(e)
-
-            obj = {
-                "error": "Error when trying to json encode the response"
-            }
-            self.response.write( json.encode(obj) )
