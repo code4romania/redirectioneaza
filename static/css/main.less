@@ -117,16 +117,38 @@ footer {
     color: #00f;
 }
 
-.copy {
+.footer-copy {
     color: #8a8a8a;
     font-size: 12px;
-    margin: 50px 0;
-}
-
-.mono {
+    margin: 50px 0 1em;
     font-family: Source Code Pro,Courier New,Courier,monospace;
     font-weight: 400;
     letter-spacing: 2px;
+}
+
+.footer-links {
+    margin-bottom: 30px;
+    & a {
+        font-size: 14px;
+        text-decoration: underline;
+        &:hover {
+            color: #165ccc;
+        }
+    }
+}
+
+.brand {
+    opacity: .5;
+    height: 30px;
+    display: inline-block;
+    width: auto;
+
+    &:hover {
+      opacity: .8;
+    }
+}
+.brand img {
+    height: 100%;
 }
 
 
