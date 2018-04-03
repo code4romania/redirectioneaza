@@ -8,7 +8,10 @@
         <div class="row">
             <img class="col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4" src="/images/index.png">
         </div>
-        <h1>Cea mai simpla metoda de a redirectiona 2%</h1>
+        <h1>
+            Redirecționează 2% din impozit <br>
+            către ONG-urile în care crezi
+        </h1>
     </div>
 
     <div class="row text-center">
@@ -31,23 +34,23 @@
         {% endfor %}
         <div class="col-xs-12">
             <div class="text-center">
-                <a id="for-ngos" class="btn btn-info btn-lg" href="/asociatii">Vezi toate asociatiile</a>
+                <a id="for-ngos" class="btn btn-info btn-lg" href="/asociatii">Vezi toate asociațiile</a>
             </div>
         </div>
     </div>
 
     <div class="row homepage-paragraph about-section">
         <div class="col-xs-12 col-md-8 col-md-offset-2">
-            <h3>Cum functioneaza?</h3>
-            <ul class="list-unstyled">
+            <h3>Cum funcționează?</h3>
+            <ol class="list-unstyled">
                 <li>
                     <div class="media">
                         <div class="media-left media-middle">
-                            <i class="glyphicon glyphicon-list-alt form-icon"></i>
+                            {# <i class="glyphicon glyphicon-list-alt form-icon"></i> #}
                         </div>
                         <div class="media-body">
                             <h3 class="homepage-media-title">
-                                Completeaza formularul de pe pagina unei <a href="/asociatii">asociatii</a>.
+                                Completează formularul de pe pagina unui <a href="/asociatii">ONG</a>.
                             </h3>
                         </div>
                     </div>
@@ -55,11 +58,11 @@
                 <li>
                     <div class="media">
                         <div class="media-left media-middle">
-                            <i class="glyphicon glyphicon-download-alt form-icon"></i>
+                            {# <i class="glyphicon glyphicon-download-alt form-icon"></i> #}
                         </div>
                         <div class="media-body">
                             <h3 class="homepage-media-title">
-                                Descarca fisierul PDF.
+                                Descarcă fișierul PDF și printează-l.
                             </h3>
                         </div>
                     </div>
@@ -67,16 +70,40 @@
                 <li>
                     <div class="media">
                         <div class="media-left media-middle">
-                            <i class="glyphicon glyphicon-print form-icon"></i>
+                            {# <i class="glyphicon glyphicon-print form-icon"></i> #}
                         </div>
                         <div class="media-body">
                             <h3 class="homepage-media-title">
-                                Printeaza-l, semneaza-l si expediaza-l catre unitatea ANAF de care apartii.
+                                Adaugă CNP-ul, semnează formularul și apoi ai următoarele opțiuni:
                             </h3>
+
+                            <ul class="list">
+                                <li>
+                                    Fie îl trimiți prin poștă, cu scrisoare recomandată, către unitatea ANAF de care aparții
+                                </li>
+                                <li>
+                                    Fie îl trimiți prin curier sau poștă la adresa ONG-ului și se ocupă ei de depunerea lui. Adresele le vei găsi în paginile fiecărui ONG pe masură ce completezi.
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </li>
-            </ul>            
+                <li>
+                    <div class="media">
+                        <div class="media-left media-middle">
+                            {# <i class="glyphicon glyphicon-download-alt form-icon"></i> #}
+                        </div>
+                        <div class="media-body">
+                            <h3 class="homepage-media-title">
+                                Opțional
+                            </h3>
+                            <h4>
+                                Fii un supererou civic. Dacă tu nu poți redirecționa impozitul sau vrei să dai o mână de ajutor în plus, descarcă formularul precompletat de pe pagina ONG-ului pe care vrei să îl susții, printează-l în mai multe exemplare și transmite-l colegilor, prietenilor și familiei și încurajează-i să redirecționeze.
+                            </h4>
+                        </div>
+                    </div>
+                </li>
+            </ol>            
         </div>
     </div>
     <hr/>
@@ -88,9 +115,9 @@
                     <i class="glyphicon glyphicon-duplicate form-icon first-icon"></i>
                 </div>
                 <div class="media-body">
-                    <h3>Ce reprezinta formularul de 2%?</h3>
+                    <h3>Ce reprezintă formularul de 2%?</h3>
                     <p>
-                        Formularul este o metoda prin care oricine isi poate redirectiona 2% din impozitul anual catre un ONG. Acest lucru inseamna ca acea suma nu va mai ajunge in bugetul statul ci va fi directionata catre contul ONG-ului.
+                        Formularul este o metodă prin care oricine își poate redirecționa 2% din impozitul anual către un ONG. Acest lucru înseamnă că acea sumă nu va mai ajunge în bugetul statului ci va fi direcționată către contul ONG-ului.
                     </p>
               </div>
             </div>
@@ -103,15 +130,15 @@
                 <div class="media-body">
                     <h3>De ce este important?</h3>
                     <p>
-                        El este important pentru ca iti ofera o metoda simpla de a-ti sustine ONG-ul preferat. Il completezi odata si pentru un an de zile cei 2% se vor redirectiona catre acesta.
+                        Este important pentru că este dreptul tău de a decide în ce mod se pot utiliza acești bani și îți oferă posibilitatea de a susține recurent o cauză în care crezi. ONG-urile se bazează pe ajutorul comunității și au nevoie de tine să iți poată continua activitatea.
                     </p>
               </div>
             </div>
         </div>
     </div>
     <hr/>
-    {% include "components/for-ngos.html" %}
 
+    {% include "components/for-ngos.html" %}
 
 </div>
 
