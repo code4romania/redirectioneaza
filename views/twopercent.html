@@ -115,10 +115,10 @@
 
                             <div class="form-group">
                                 <div class="col-xs-6">
-                                    <input type="text" class="form-control text-capitalize" id="localitate" value="{{ localitate }}" name="localitate" placeholder="Localitate" x-moz-errormessage="Orasul este obligatoriu" maxlength="40" required />
+                                    {% include "components/county.html" %}
                                 </div>
                                 <div class="col-xs-6">
-                                    {% include "components/county.html" %}
+                                    <input type="text" class="form-control text-capitalize" id="localitate" value="{{ localitate }}" name="localitate" placeholder="Localitate" x-moz-errormessage="Orasul este obligatoriu" maxlength="40" required />
                                 </div>
                             </div>
                         </fieldset>
