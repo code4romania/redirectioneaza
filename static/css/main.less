@@ -7,7 +7,7 @@
 @import "../bower_components/fontawesome/less/font-awesome.less";
 
 
-@brand-primary:         #1E88E5; // #4582EC;
+@brand-primary:         #FEF13D; // #4582EC;
 @brand-success:         #4CAF50; // #3FAD46;
 @brand-info:            #03A9F4; // #5bc0de;
 @brand-warning:         #FF9800; // #f0ad4e;
@@ -24,6 +24,7 @@
 @legend-border-color:     #ffffff;
 @input-border-focus:      @link-color;
 @input-border-radius:     0;
+@btn-primary-color:       #000000;
 
 // override font awesome vars
 @fa-font-path: "../bower_components/fontawesome/fonts";
@@ -179,7 +180,7 @@ a {
             -webkit-box-shadow: none;
             box-shadow: none;
         }
-        .placeholderStyles(#d9534f, #d9534f);
+        .placeholderStyles(@brand-danger, @brand-danger);
     }
 }
 
