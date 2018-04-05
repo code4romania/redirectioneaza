@@ -47,17 +47,16 @@
 
     {# if we are in the correct timerame: 1 Jan to 25 May, allow the donation, else display a message #}
     {% if can_donate %}
-        <div class="row text-center">
-            <h2 id="donation-page-title">Formular donatie 2%</h2>
-        </div>
 
         <div class="row">
             <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
+                <h2 id="donation-page-title">Redirecționează în 3 pași simpli</h2>
+                <h4 class="donation-page-subtitle">1. Completează și descarcă formularul</h4>
                 {% if ngo.account and ngo.cif %}
                     <form id="twopercent" class="form form-horizontal" action="{{ ngo.key.id() }}/doilasuta" role="form" method="post">
                         
-                        <fieldset>
-                            <legend class="text-muted">Date personale</legend>
+                        <fieldset class="margin-bottom">
+                            <legend>Date personale</legend>
                             <div class="form-group">
                                 <div class="col-xs-12 col-sm-5">
                                     <input type="text" class="form-control text-capitalize" id="nume" value="{{ nume }}" name="nume" placeholder="Nume" maxlength="50" x-moz-errormessage="Numele este obligatoriu" autocomplete="family-name" required />
@@ -68,7 +67,7 @@
                                             <input type="text" class="form-control text-capitalize" id="prenume" value="{{ prenume }}" name="prenume" placeholder="Prenume" maxlength="50" x-moz-errormessage="Prenumele este obligatoriu" autocomplete="given-name" required />
                                         </div>
                                         <div class="col-xs-3">
-                                            <input type="text" class="form-control text-uppercase text-center" id="tatal" value="{{ tatal }}" name="tatal" maxlength="1" data-toggle="popover" data-placement="right" x-moz-errormessage="" data-content="Initiala tatalui" required />
+                                            <input type="text" class="form-control text-capitalize text-center" id="tatal" value="{{ tatal }}" name="tatal" placeholder="Iniț. T." maxlength="1" data-toggle="popover" data-placement="right" x-moz-errormessage="" data-content="Inițiala tatălui" required />
                                         </div>
                                     </div>
                                 </div>
@@ -89,7 +88,7 @@
                         </fieldset>
                         
                         <fieldset>
-                            <legend class="text-muted">Adresa de domiciliu</legend>
+                            <legend>Adresa de domiciliu</legend>
                             <div class="form-group">
                                 <div class="col-xs-8">
                                     <input type="text" class="form-control text-capitalize" id="strada" value="{{ strada }}" name="strada" placeholder="Strada" x-moz-errormessage="Strada este obligatorie" maxlength="70" required />

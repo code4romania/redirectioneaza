@@ -20,6 +20,10 @@
 @navbar-border-radius:    0px;
 @icon-font-path:          "/bower_components/bootstrap/fonts/";
 @navbar-height:           115px;
+@legend-color:            #000000;
+@legend-border-color:     #ffffff;
+@input-border-focus:      @link-color;
+@input-border-radius:     0;
 
 // override font awesome vars
 @fa-font-path: "../bower_components/fontawesome/fonts";
@@ -67,12 +71,21 @@
 
 //main variables
 @navbar-brand-font-size: 37px;
-@link-color: #165ccc;
+@link-color:             #165ccc;
+@secondary-color:        #000;
+@ngo-header-size:        25px;
+@form-font-size:         16px;
+@form-margin-bottom:     40px;
+@input-normal-color:     @gray-light;
 
 // general css
 
-.margin-top { 
+.margin-top {
     margin-top:20px; 
+}
+
+.margin-bottom {
+    margin-bottom: @form-margin-bottom;
 }
 
 a {
@@ -110,10 +123,69 @@ a {
     }
 
     h1 {
-        font-size: 25px;
+        font-size: @ngo-header-size;
         font-weight: normal;
         margin: 0;
+        & a {
+            color: @secondary-color;
+        }
     }
+
+}
+
+.placeholderStyles(@colorNormal, @colorFocus) {
+    &::-webkit-input-placeholder {
+        color: @colorNormal;
+    }
+    &:-moz-placeholder {
+        color: @colorNormal;
+    }
+    &::-moz-placeholder {
+        color: @colorNormal;
+    }
+    &:-ms-input-placeholder {
+        color: @colorNormal;
+    }
+
+    &:focus::-webkit-input-placeholder {
+        color: @colorFocus;
+    }
+    &:focus:-moz-placeholder {
+        color: @colorFocus;
+    }
+    &:focus::-moz-placeholder {
+        color: @colorFocus;
+    }
+    &:focus:-ms-input-placeholder {
+        color: @colorFocus;
+    }
+}
+
+.form-control {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid @input-normal-color;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    padding: 0;
+
+    .placeholderStyles(@input-normal-color, @link-color);
+
+    .has-error & {
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        &:focus {
+            -webkit-box-shadow: none;
+            box-shadow: none;
+        }
+        .placeholderStyles(#d9534f, #d9534f);
+    }
+}
+
+legend {
+    font-size: @form-font-size;
+    text-decoration: underline;
 }
 
 footer {
