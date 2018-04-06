@@ -48,10 +48,7 @@ class GetNgoForm(BaseHandler):
 
         # if we have an form created for this ngo, return the url
         if ngo.form_url:
-            self.return_json({
-                "form_url": ngo.form_url
-            })
-            return
+            self.redirect( str(ngo.form_url), abort=True )
 
         # else, create a new one and upload to GCS for future use
         ngo_dict = {
@@ -73,9 +70,7 @@ class GetNgoForm(BaseHandler):
         ngo.form_url = file_url
         ngo.put()
 
-        self.return_json({
-            "form_url": ngo.form_url
-        })
+        self.redirect(str(ngo.form_url))
 
 class GetUploadUrl(AccountHandler):
 

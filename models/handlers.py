@@ -55,10 +55,17 @@ class BaseHandler(Handler):
 
         self.template_values = {}
         self.template_values.update(template_settings)
-        
+
         self.template_values["is_admin"] = users.is_current_user_admin()
-        
+
         self.jinja_enviroment = get_jinja_enviroment()
+
+        # Set webapp2.uri_for as global to be used in jinja2 templates
+        self.jinja_enviroment.globals.update({
+            'uri_for': webapp2.uri_for,
+            # we need the DEV var everywhere in the site
+            "DEV": DEV
+        })
 
     def dispatch(self):
         """
