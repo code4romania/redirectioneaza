@@ -71,7 +71,7 @@ app = webapp2.WSGIApplication([
 
         r('/api/ngo/check-url/<ngo_url>',   handler=CheckNgoUrl,  name='api-ngo-check-url'),
         r('/api/ngo/upload-url',            handler=GetUploadUrl, name='api-ngo-upload-url'),
-        r('/api/ngo/form/<ngo_url>',        handler=GetNgoForm,   name='api-ngo-upload-url'),
+        r('/api/ngo/form/<ngo_url>',        handler=GetNgoForm,   name='api-ngo-form-url'),
 
         # ADMIN HANDLERS
         r('/admin',             handler=AdminHandler,       name='admin'),
