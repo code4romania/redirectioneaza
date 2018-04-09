@@ -175,14 +175,14 @@ $(function () {
             success: function(data) {
 
                 // download the pdf file
-                forceDownload(data.form_url)
+                // forceDownload(data.form_url)
 
                 if( data.url ) {
                     // we need a delay between the file download and the redirect
-                    setTimeout(function () {
+                    // setTimeout(function () {
                         // redirect to the success page
                         window.location = data.url;
-                    }, 1000)
+                    // }, 1000)
                 } else {
                     message = errors["server_error"];
                     submitFormButton.addClass("btn-primary").removeClass("btn-success").attr("disabled", false);
