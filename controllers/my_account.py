@@ -7,7 +7,7 @@ from google.appengine.ext.ndb import put_multi, OR, Key
 from google.appengine.api import users
 from google.appengine.api import mail
 
-from appengine_config import LIST_OF_COUNTIES, CONTACT_FORM_URL, CONTACT_EMAIL_ADDRESS, START_YEAR
+from appengine_config import LIST_OF_COUNTIES, CONTACT_EMAIL_ADDRESS, START_YEAR
 
 from models.handlers import AccountHandler, user_required
 from models.models import NgoEntity, Donor
@@ -20,7 +20,7 @@ from logging import info
 incomplete_form_data = "Te rugam sa completezi datele din formular."
 url_taken = "Din pacate acest url este folosit deja."
 not_unique = 'Se pare ca acest cod CIF sau cont bancar este deja inscris. ' \
-             'Daca reprezinti ONG-ul cu aceste date, te rugam sa ne <a href="' + CONTACT_FORM_URL + '" target="_blank">contactezi</a>.'
+             'Daca reprezinti ONG-ul cu aceste date, te rugam sa ne contactezi.'
 
 class MyAccountHandler(AccountHandler):
     template_name = 'ngo/my-account.html'
@@ -339,17 +339,17 @@ class NgoDetailsHandler(AccountHandler):
             # use put_multi to save rpc calls
             put_multi([new_ngo, user])
 
-            try:
-                subject = "O noua organizatie s-a inregistrat"
-                values = {
-                    "ngo": ong_nume,
-                    "link": self.request.host + '/' + new_ngo.key.id()
-                }
-                body = self.jinja_enviroment.get_template("email/admin/new-ngo.txt").render(values)
-                # info(body)
-                mail.send_mail(sender=CONTACT_EMAIL_ADDRESS, to="donezsieu@gmail.com", subject=subject, body=body)
-            except Exception, e:
-                info(e)
+            # try:
+            #     subject = "O noua organizatie s-a inregistrat"
+            #     values = {
+            #         "ngo": ong_nume,
+            #         "link": self.request.host + '/' + new_ngo.key.id()
+            #     }
+            #     body = self.jinja_enviroment.get_template("email/admin/new-ngo.txt").render(values)
+            #     # info(body)
+            #     mail.send_mail(sender=CONTACT_EMAIL_ADDRESS, to="donezsieu@gmail.com", subject=subject, body=body)
+            # except Exception, e:
+            #     info(e)
 
             # do a refresh
             self.redirect(self.uri_for("contul-meu"))

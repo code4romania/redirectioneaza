@@ -268,7 +268,7 @@ class BaseHandler(Handler):
             html_body = html_template.render(template_values) if html_template else None
 
             sender = {
-                "name": "donezsi.eu",
+                "name": "redirectioneaza",
                 "email": CONTACT_EMAIL_ADDRESS
             }
             receiver = {

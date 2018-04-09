@@ -1,5 +1,4 @@
-# application: donezsieu-server
-# version: 3
+# application: redirectioneaza
 runtime: python27
 api_version: 1
 threadsafe: false
@@ -47,5 +46,5 @@ handlers:
   secure: always
 
 env_variables:
-  BUCKET_NAME: "donezsieu-bucket"
+  BUCKET_NAME: "redirectioneaza"
   SENDGRID_API_KEY: "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"
