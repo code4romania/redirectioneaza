@@ -1,14 +1,11 @@
-Salut {{ name }},
+Salut!
 
-Iti multumim pentru donatie.
-
-Gasesti mai jos link-ul catre formularul tau:
+Iți mulțumim!
+Găsești mai jos link-ul catre formularul tău: 
 {{ form_url }}
 
-Mai departe trebuie sa-l printezi, sa-l semnezi si sa-l expediezi catre unitatea ANAF de care apartii.
+Mai departe trebuie să-l printezi, să-l semnezi și să-l expediezi fie către unitatea ANAF de care aparții, fie către ONG-ul pentru care ai redirecționat.
 
-Multumim,
-echipa redirectioneaza.ro
+Să ai o zi minunată!
 
-Ai primit din greseala acest email? Contacteaza-ne!
-{{ contact_url }}
+Ai primit din greșeală acest email? Contactează-ne la redirectioneaza@code4.ro

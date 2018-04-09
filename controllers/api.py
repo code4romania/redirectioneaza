@@ -58,7 +58,8 @@ class GetNgoForm(BaseHandler):
         }
         pdf = create_pdf({}, ngo_dict)
 
-        filename = "Formular 2% - {0}.pdf".format(ngo.name)
+        # filename = "Formular 2% - {0}.pdf".format(ngo.name)
+        filename = "Formular_2%25.pdf".format(ngo.name)
         ong_folder = security.hash_password(ngo.key.id(), "md5")
         path = "{0}/{1}/{2}".format(USER_UPLOADS_FOLDER, str(ong_folder), filename)
 
