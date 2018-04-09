@@ -251,7 +251,8 @@ class TwoPercentHandler(BaseHandler):
             self.response.set_status(200)
             
             response = {
-                "url": self.uri_for("ngo-twopercent-success", ngo_url=ngo_url)
+                "url": self.uri_for("ngo-twopercent-success", ngo_url=ngo_url),
+                "form_url": file_url
             }
             self.response.write(json.dumps(response))
         else:

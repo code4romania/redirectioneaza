@@ -100,7 +100,7 @@ $(function () {
         var email = $(this).val().trim();
 
         var regex = /[\w.-]+@[\w.-]+.\w+/
-        if( !email || !regex.test(email) ) {
+        if( email && !regex.test(email) ) {
             showError(this);
         } else {
             hideError(this);
@@ -150,6 +150,14 @@ $(function () {
 
     });
 
+    function forceDownload(href) {
+        var anchor = document.createElement('a');
+        anchor.href = href;
+        anchor.download = 'Formular 2%.pdf';
+        document.body.appendChild(anchor);
+        anchor.click();
+    }
+
     window.onSubmit = function(token) {
 
         submitFormButton.removeClass("btn-primary").addClass("btn-success").attr("disabled", true);
@@ -166,8 +174,15 @@ $(function () {
             data: form.serialize(),
             success: function(data) {
 
+                // download the pdf file
+                forceDownload(data.form_url)
+
                 if( data.url ) {
-                    window.location = data.url;
+                    // we need a delay between the file download and the redirect
+                    setTimeout(function () {
+                        // redirect to the success page
+                        window.location = data.url;
+                    }, 1000)
                 } else {
                     message = errors["server_error"];
                     submitFormButton.addClass("btn-primary").removeClass("btn-success").attr("disabled", false);
