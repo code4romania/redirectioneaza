@@ -12,7 +12,7 @@ from controllers.account_management import *
 from controllers.my_account import *
 from controllers.api import *
 from controllers.admin import *
-from controllers.ngo import NgoHandler, TwoPercentHandler, TwoPercent2Handler, DonationSucces
+from controllers.ngo import NgoHandler, TwoPercentHandler, DonationSucces
 
 
 config = {
@@ -69,8 +69,9 @@ app = webapp2.WSGIApplication([
         r('/asociatia',         handler=NgoDetailsHandler, name='asociatia'),
         r('/date-cont',         handler=MyAccountDetailsHandler, name='date-contul-meu'),
 
-        r('/api/ngo/check-url/<ngo_url>', handler=CheckNgoUrl, name='api-ngo-check-url'),
-        r('/api/ngo/upload-url',          handler=GetUploadUrl, name='api-ngo-upload-url'),
+        r('/api/ngo/check-url/<ngo_url>',   handler=CheckNgoUrl,  name='api-ngo-check-url'),
+        r('/api/ngo/upload-url',            handler=GetUploadUrl, name='api-ngo-upload-url'),
+        r('/api/ngo/form/<ngo_url>',        handler=GetNgoForm,   name='api-ngo-upload-url'),
 
         # ADMIN HANDLERS
         r('/admin',             handler=AdminHandler,       name='admin'),
@@ -84,7 +85,6 @@ app = webapp2.WSGIApplication([
         r('/catre/<ngo_url>',   handler=NgoHandler),
 
         r('/<ngo_url>/doilasuta',           handler=TwoPercentHandler,  name="twopercent"),
-        r('/<ngo_url>/doilasuta/pas-2',     handler=TwoPercent2Handler, name="twopercent-step-2"),
         r('/<ngo_url>/doilasuta/succes',    handler=DonationSucces,     name="ngo-twopercent-success"),
 
     ],

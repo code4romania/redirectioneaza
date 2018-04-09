@@ -55,10 +55,17 @@ class BaseHandler(Handler):
 
         self.template_values = {}
         self.template_values.update(template_settings)
-        
+
         self.template_values["is_admin"] = users.is_current_user_admin()
-        
+
         self.jinja_enviroment = get_jinja_enviroment()
+
+        # Set webapp2.uri_for as global to be used in jinja2 templates
+        self.jinja_enviroment.globals.update({
+            'uri_for': webapp2.uri_for,
+            # we need the DEV var everywhere in the site
+            "DEV": DEV
+        })
 
     def dispatch(self):
         """
@@ -95,6 +102,30 @@ class BaseHandler(Handler):
         self.response.headers.update(HTTP_HEADERS)
 
         self.response.write(self.template.render(self.template_values))
+
+    def return_json(self, obj={}, status_code=200):
+
+        self.response.content_type = 'application/json'
+        self.response.set_status(status_code)
+
+        try:
+            def json_serial(obj):
+                """JSON serializer for objects not serializable by default json code"""
+
+                if isinstance(obj, datetime) or isinstance(obj, date):
+                    serial = obj.isoformat()
+                    return serial
+                else:
+                    raise TypeError("Type not serializable")
+
+            self.response.write( json.encode(obj, default=json_serial) )
+        except Exception, e:
+            warn(e)
+
+            obj = {
+                "error": "Error when trying to json encode the response"
+            }
+            self.response.write( json.encode(obj) )
 
     # USER METHODS
     def get_geoip_data(self, ip_address=None):
@@ -185,7 +216,7 @@ class BaseHandler(Handler):
             return
 
         if email_type == "signup":
-            subject = "Confirmare cont donezsi.eu"
+            subject = "Confirmare cont redirectioneaza.ro"
 
             user_id = user.get_id()
             token = self.user_model.create_signup_token(user_id)
@@ -202,7 +233,7 @@ class BaseHandler(Handler):
             }
 
         elif email_type == "reset-password":
-            subject = "Resetare parola pentru contul donezsi.eu"
+            subject = "Resetare parola pentru contul redirectioneaza.ro"
 
             user_id = user.get_id()
             token = self.user_model.create_signup_token(user_id)
@@ -218,7 +249,7 @@ class BaseHandler(Handler):
             }
 
         elif email_type == "twopercent-form":
-            subject = "Formularul tau de donatie"
+            subject = "Formularul tau de redirectionare 2%"
             
             html_template = None # self.jinja_enviroment.get_template("email/twopercent-form/twopercent-form.html")
             txt_template = self.jinja_enviroment.get_template("email/twopercent-form/twopercent_form.txt")
@@ -312,27 +343,3 @@ class AccountHandler(BaseHandler):
     def session(self):
         """override BaseHandler session method in order to use the datastore as the backend."""
         return self.session_store.get_session(backend="datastore")
-
-    def return_json(self, obj={}, status_code=200):
-
-        self.response.content_type = 'application/json'
-        self.response.set_status(status_code)
-
-        try:
-            def json_serial(obj):
-                """JSON serializer for objects not serializable by default json code"""
-
-                if isinstance(obj, datetime) or isinstance(obj, date):
-                    serial = obj.isoformat()
-                    return serial
-                else:
-                    raise TypeError("Type not serializable")
-
-            self.response.write( json.encode(obj, default=json_serial) )
-        except Exception, e:
-            warn(e)
-
-            obj = {
-                "error": "Error when trying to json encode the response"
-            }
-            self.response.write( json.encode(obj) )

@@ -15,7 +15,7 @@ class HomePage(BaseHandler):
     template_name = 'index.html'
     def get(self):
 
-        self.template_values["title"] = "donez si eu"
+        self.template_values["title"] = "redirectioneaza 2%"
 
         try:
             list_keys = NgoEntity.query(NgoEntity.active == True).fetch(keys_only=True)
