@@ -28,7 +28,7 @@ class AdminHandler(BaseHandler):
         self.template_values["title"] = "Admin"
 
         try:
-            projection = [NgoEntity.name, NgoEntity.county, NgoEntity.verified]
+            projection = [NgoEntity.name, NgoEntity.county, NgoEntity.verified, NgoEntity.email]
             ngos = NgoEntity.query().fetch(100, projection=projection)
         except Exception, e:
             ngos = NgoEntity.query().fetch(100)

@@ -12,6 +12,7 @@
             <tr>
                 <th>#</th>
                 <th>Nume ONG</th>
+                <th>Email</th>
                 <th>Judet</th>
                 <th>Cont asociat</th>
                 <th>Nr. donatii</th>
@@ -24,6 +25,9 @@
                         <td>{{ loop.index }}</td>
                         <td>
                             <a href="/admin/{{ ngo.key.id() }}">{{ ngo.name }}</a>
+                        </td>
+                        <td>
+                            {{ ngo.email or '' }}
                         </td>
                         <td>{{ ngo.county }}</td>
                         <td class="{{ 'success' if ngo.account_attached }}">

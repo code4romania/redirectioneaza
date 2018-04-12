@@ -38,5 +38,12 @@ indexes:
 - kind: NgoEntity
   properties:
   - name: county
+  - name: email
+  - name: name
+  - name: verified
+
+- kind: NgoEntity
+  properties:
+  - name: county
   - name: name
   - name: verified
