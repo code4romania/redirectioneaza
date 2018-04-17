@@ -63,6 +63,14 @@ class TermsHandler(BaseHandler):
         self.render()
 
 
+class AboutHandler(BaseHandler):
+    template_name = 'despre.html'
+    def get(self):
+
+        self.template_values["title"] = "Despre Redirectioneaza.ro"
+
+        # render a response
+        self.render()
 
 class PolicyHandler(BaseHandler):
     template_name = 'policy.html'

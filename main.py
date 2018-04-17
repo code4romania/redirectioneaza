@@ -52,6 +52,7 @@ app = webapp2.WSGIApplication([
         r('/termeni',    handler=TermsHandler),
         r('/TERMENI',    handler=TermsHandler),
         r('/politica',   handler=PolicyHandler),
+        r('/despre',   handler=AboutHandler),
 
         # account management
         r('/cont-nou',  handler=SignupHandler),
