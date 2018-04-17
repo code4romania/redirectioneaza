@@ -76,30 +76,7 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-xs-12 col-md-8 col-md-offset-2 col-lg-7 col-lg-offset-3 margin-top">
-                <div class="be-a-hero">
-                    <div class="title">
-                        <h3>
-                            <i class="glyphicon glyphicon-heart"></i>
-                            <span>
-                                Fii un Supererou Civic!
-                            </span>
-                        </h3>
-                    </div>
-
-                    <p>
-                        Ne bucuram sa te avem aici, in comunitatea oamenilor cu spirit civic.  Impreuna suntem mai buni, mai puternici si mai curajosi. Impreuna putem aduce o schimbare in bine in societatea noastra, de aceea avem nevoie de cat mai multi oameni ca tine. Descarca formularul precompletat cu datele ONG-ului pe care vrei sa-l ajuţi, printeaza-l si transmite-l colegilor, prietenilor si familiei. <br>
-                        Ce spui? Putem conta pe tine? 
-                    </p>
-
-                    {# if we already have an url for this ngo's url #}
-                    <a href="{{ uri_for('api-ngo-form-url', ngo_url=ngo.key.id()) }}" class="btn btn-primary btn-block ngo-form-url">
-                        Descarca un model de formular
-                    </a>
-                </div>
-            </div>
-        </div>
+        {% include "components/be-a-hero.html" %}
 
     </div>
 

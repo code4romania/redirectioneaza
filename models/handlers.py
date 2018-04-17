@@ -184,6 +184,19 @@ class BaseHandler(Handler):
 
             donor = ndb.Key("Donor", donor_id).get() if donor_id else None
 
+        # if DEV and not donor:
+        #     donor = Donor(
+        #         first_name = 'Prenume',
+        #         last_name = 'Nume',
+        #         city = 'Iasi',
+        #         county = 'Iasi',
+        #         email = 'email@code4.ro',
+        #         tel = '0700000000',
+        #         anonymous = False,
+        #         geoip = '',
+        #         ngo = ngo.key,
+        #         pdf_url = 'https://media.giphy.com/media/Vuw9m5wXviFIQ/giphy.gif'
+        #     )
 
         # if we didn't find the ngo or donor, raise
         if ngo is None:
