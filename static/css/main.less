@@ -84,6 +84,7 @@
 @form-font-size:         16px;
 @form-margin-bottom:     40px;
 @input-normal-color:     @gray-light;
+@gray-text-color:        #8a8a8a;
 
 // general css
 
@@ -118,6 +119,22 @@ a {
 
 #sponsor-container {
     float: right;
+}
+
+#creator-container {
+    & p {
+        color: @gray-text-color;
+    }
+
+    & a {
+        display: inline-block;
+        height: 40px;
+        width: auto;
+
+        & img {
+           height: 100%;
+        }
+    }
 }
 
 // ngo header
@@ -236,7 +253,7 @@ footer {
 }
 
 .footer-copy {
-    color: #8a8a8a;
+    color: @gray-text-color;
     font-size: 12px;
     margin: 50px 0 1em;
     font-family: Source Code Pro,Courier New,Courier,monospace;
