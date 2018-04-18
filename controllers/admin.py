@@ -29,9 +29,9 @@ class AdminHandler(BaseHandler):
 
         try:
             projection = [NgoEntity.name, NgoEntity.county, NgoEntity.verified, NgoEntity.email]
-            ngos = NgoEntity.query().fetch(100, projection=projection)
+            ngos = NgoEntity.query().fetch(projection=projection)
         except Exception, e:
-            ngos = NgoEntity.query().fetch(100)
+            ngos = NgoEntity.query().fetch()
 
         for ngo in ngos:
             ngo.number_of_donations = Donor.query(Donor.ngo == ngo.key).count()
