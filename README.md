@@ -127,7 +127,7 @@ You can read more about the frameworks used by the app:
 
 If you would like to contribute to our repository, first identify the scale of what you would like to contribute. If it is small (grammar/spelling or a bug fix) feel free to start working on a fix. If you are submitting a feature or substantial code contribution, please discuss it with the team and ensure it follows the product roadmap. 
 
-* Fork it (https://github.com/code4romania/theater-hub-api/fork)
+* Fork it (https://github.com/code4romania/redirectioneaza/fork)
 * Create your feature branch (git checkout -b feature/fooBar)
 * Commit your changes (git commit -am 'Add some fooBar')
 * Push to the branch (git push origin feature/fooBar)
