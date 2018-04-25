@@ -39,8 +39,6 @@ START_YEAR = 2016
 USER_UPLOADS_FOLDER = 'uploads'
 USER_FORMS = 'documents'
 
-GEOIP_SERVICES = ["http://ip-api.com/json/{0}", "http://freegeoip.net/json/{0}"]
-
 # where all the jinja2 templates should be located
 VIEWS_FOLDER = "/views"
 

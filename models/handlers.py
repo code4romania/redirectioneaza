@@ -129,41 +129,33 @@ class BaseHandler(Handler):
 
     # USER METHODS
     def get_geoip_data(self, ip_address=None):
+
+        headers = self.request.headers
+
         if not ip_address:
             ip_address = self.request.remote_addr
-        
-        if DEV:
-            return json.encode({"ip_address": ip_address})    
 
-        # set the default value to 10 seconds
-        deadline = 10
-        try:
-            resp = urlfetch.fetch(url=GEOIP_SERVICES[0].format(ip_address), deadline=deadline)
-            # we need to load the json to see the status
-            geoip_response = json.decode(resp.content)
+        # get the country from appengine
+        # https://cloud.google.com/appengine/docs/standard/python/how-requests-are-handled#app-engine-specific-headers
+        country = headers.get('X-AppEngine-Country', '')
 
-            # check to see if it was a success
-            if geoip_response["status"] == "success":
-                return resp.content
+        # if we have the country header, and it's different than ZZ (unknown)
+        if country and country != 'ZZ':
+            region = headers.get('X-AppEngine-Region', '')
+            city = headers.get('X-AppEngine-City', '')
+            lat_long = headers.get('X-AppEngine-CityLatLong', '')
 
-        except Exception, e:
-            info(e)
+            response =  {
+                "country": country,
+                "region": region,
+                "city": city,
+                "lat_long": lat_long,
+                "ip_address": ip_address
+            }
+            return json.encode(response)
 
-        # if we surpassed the quota, try the other service
-        try:                
-            # call the second service
-            resp = urlfetch.fetch(url=GEOIP_SERVICES[1].format(ip_address), deadline=deadline)
-            
-            # just to make sure we don't get an over quota, or IP not found
-            if str(resp.status_code) not in ["403", "404"]:
-                return resp.content
-                
-        except Exception, e:
-            info(e)
-
-        # if this one fails alos return empty dict
+        # if we don't have that info, just return the ip_address
         return json.encode({"ip_address": ip_address})
-        
 
     def get_ngo_and_donor(self, projection=True):
 
