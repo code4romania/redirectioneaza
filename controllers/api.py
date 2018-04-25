@@ -37,6 +37,23 @@ class CheckNgoUrl(AccountHandler):
         else:
             self.response.set_status(400)
 
+class NgosApi(BaseHandler):
+
+    def get(self):
+
+        # get all the visible ngos
+        ngos = NgoEntity.query(NgoEntity.active == True).fetch()
+
+        response = []
+        for ngo in ngos:
+            response.append({
+                "name": ngo.name,
+                "url": self.uri_for('twopercent', ngo_url=ngo.key.id()),
+                "logo": ngo.logo
+            })
+
+        self.return_json(response)
+
 class GetNgoForm(BaseHandler):
 
     def get(self, ngo_url):
