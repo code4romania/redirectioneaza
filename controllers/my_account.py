@@ -157,9 +157,6 @@ class NgoDetailsHandler(AccountHandler):
             else:
                 self.abort(403)
 
-        info(self.request.get('old-ong-url'))
-        info(not self.request.get('old-ong-url'))
-        
         self.template_values["user"] = user
         self.template_values["ngo"] = {}
         self.template_values["counties"] = LIST_OF_COUNTIES
@@ -201,6 +198,12 @@ class NgoDetailsHandler(AccountHandler):
 
             # if the user has an ngo attached but it's not found, skip this and create a new one
             if ngo is not None:
+
+                # if the name, cif or bank account changed, remove the form url so we create it again
+                if ong_nume != ngo.name or ong_cif != ngo.cif or ong_account != ngo.account:
+                    # if we encounter validation errors later, this will not get saved
+                    # so it's safe to do it here
+                    ngo.form_url = None
 
                 ngo.name = ong_nume
                 ngo.description = ong_descriere
