@@ -36,10 +36,10 @@ $(function () {
         setupEasyAutocomplete()
     })
 
-    var doit;
-    window.onresize = function(){
-      clearTimeout(doit);
-      doit = setTimeout(setupEasyAutocomplete, 100);
-    };
+    // var doit;
+    // window.onresize = function(){
+    //   clearTimeout(doit);
+    //   doit = setTimeout(setupEasyAutocomplete, 100);
+    // };
 
 })
