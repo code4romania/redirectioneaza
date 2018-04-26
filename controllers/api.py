@@ -10,7 +10,7 @@ from models.handlers import BaseHandler, AccountHandler, user_required
 from models.storage import CloudStorage
 from models.create_pdf import create_pdf
 
-from appengine_config import USER_UPLOADS_FOLDER
+from appengine_config import USER_UPLOADS_FOLDER, DEFAULT_NGO_LOGO
 
 from webapp2_extras import json, security
 
@@ -49,7 +49,7 @@ class NgosApi(BaseHandler):
             response.append({
                 "name": ngo.name,
                 "url": self.uri_for('twopercent', ngo_url=ngo.key.id()),
-                "logo": ngo.logo
+                "logo": ngo.logo if ngo.logo else DEFAULT_NGO_LOGO
             })
 
         self.return_json(response)
