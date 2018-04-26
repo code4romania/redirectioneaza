@@ -22,6 +22,10 @@ $(function () {
                     var selected = searcEl.getSelectedItemData();
                     window.location.href = selected.url;
                 },
+                onKeyEnterEvent: function () {
+                    var selected = searcEl.getSelectedItemData();
+                    window.location.href = selected.url;
+                },
                 match: {
                     enabled: true
                 }
