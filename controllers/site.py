@@ -2,6 +2,7 @@
 
 from google.appengine.ext.ndb import get_multi
 
+from appengine_config import DEFAULT_NGO_LOGO
 from models.handlers import BaseHandler
 from models.models import NgoEntity
 
@@ -27,6 +28,7 @@ class HomePage(BaseHandler):
             ngos = NgoEntity.query(NgoEntity.active == True).fetch(4)
 
         self.template_values["ngos"] = ngos
+        self.template_values["DEFAULT_NGO_LOGO"] = DEFAULT_NGO_LOGO
                 
         # render a response
         self.render()
@@ -49,6 +51,7 @@ class NgoListHandler(BaseHandler):
 
         ngos = NgoEntity.query(NgoEntity.active == True).fetch()
         self.template_values["ngos"] = ngos
+        self.template_values["DEFAULT_NGO_LOGO"] = DEFAULT_NGO_LOGO
 
         # render a response
         self.render()

@@ -2,7 +2,7 @@
 
 from google.appengine.ext import ndb
 
-from appengine_config import LIST_OF_COUNTIES
+from appengine_config import DEFAULT_NGO_LOGO
 
 
 class BaseEntity(ndb.Model):
@@ -20,7 +20,7 @@ class NgoEntity(BaseEntity):
 
     description = ndb.TextProperty()
 
-    logo = ndb.StringProperty(indexed=True)
+    logo = ndb.StringProperty(indexed=True, default=DEFAULT_NGO_LOGO)
     # the background image that will go above the description, if any
     image = ndb.StringProperty(indexed=True)
 
