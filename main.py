@@ -49,10 +49,11 @@ app = webapp2.WSGIApplication([
         
         r('/asociatii',         handler=NgoListHandler),
 
-        r('/termeni',    handler=TermsHandler),
-        r('/TERMENI',    handler=TermsHandler),
-        r('/politica',   handler=PolicyHandler),
-        r('/despre',   handler=AboutHandler),
+        r('/termeni',           handler=TermsHandler),
+        r('/TERMENI',           handler=TermsHandler),
+        r('/nota-de-informare', handler=NoteHandler,    name='note'),
+        r('/politica',          handler=PolicyHandler),
+        r('/despre',            handler=AboutHandler),
 
         # account management
         r('/cont-nou',  handler=SignupHandler),

@@ -65,6 +65,14 @@ class TermsHandler(BaseHandler):
         # render a response
         self.render()
 
+class NoteHandler(BaseHandler):
+    template_name = 'note.html'
+    def get(self):
+
+        self.template_values["title"] = "Nota de informare"
+
+        # render a response
+        self.render()
 
 class AboutHandler(BaseHandler):
     template_name = 'despre.html'
