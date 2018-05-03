@@ -3,6 +3,11 @@ runtime: python27
 api_version: 1
 threadsafe: false
 
+automatic_scaling:
+  max_concurrent_requests: 60
+  max_pending_latency: 8s
+  min_pending_latency: 6s
+
 libraries:
 - name: webapp2
   version: "2.5.2"
