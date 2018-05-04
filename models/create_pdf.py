@@ -65,7 +65,14 @@ def add_donor_data(c, person):
     c.setFontSize(default_font_size)
 
     # numar
+    if len(person["number"]) > 5:
+        c.setFontSize(8)
+    elif len(person["number"]) > 3:
+        c.setFontSize(10)
+
     c.drawString(289, third_row_x, person["number"])
+    c.setFontSize(default_font_size)
+
     # 
     # =======================================
 
