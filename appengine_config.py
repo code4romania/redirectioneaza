@@ -45,7 +45,7 @@ VIEWS_FOLDER = "/views"
 DEV_DEPENDECIES_LOCATION = "/bower_components"
 TITLE = "redirectioneaza.ro"
 
-SESSION_SECRET_KEY = "JgW`l2hZa*WV+z >}{T~Snq`DD1s@S#[Z7L>~.-;]t.7y2%gU)A^?ZTDyn/~kDh}RZA:/BVo7cI@TeA2Dll+0M#z|{,V*8`90VaV^`Cj&"
+SESSION_SECRET_KEY = os.environ.get('SESSION_SECRET_KEY')
 
 DEFAULT_NGO_LOGO = "https://storage.googleapis.com/redirectioneaza/logo_bw.png"
 
@@ -89,8 +89,8 @@ HTTP_HEADERS = {
 # CAPTCHA_POST_PARAM = "g-recaptcha-response"
 
 
-CAPTCHA_PUBLIC_KEY = "6LfQeBkUAAAAAPUxei7PQYfwrDnB8kq6l4xiHTJm" if PRODUCTION else "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
-CAPTCHA_PRIVATE_KEY = "6LfQeBkUAAAAAKwV-nlANe-ylQa7wO_5nGhj6sBH" if PRODUCTION else "6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe"
+CAPTCHA_PUBLIC_KEY = os.environ.get('CAPTCHA_PUBLIC_KEY') if PRODUCTION else "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+CAPTCHA_PRIVATE_KEY = os.environ.get('CAPTCHA_PRIVATE_KEY') if PRODUCTION else "6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe"
 CAPTCHA_VERIFY_URL = "https://www.google.com/recaptcha/api/siteverify"
 CAPTCHA_POST_PARAM = "g-recaptcha-response"
 

@@ -52,4 +52,7 @@ handlers:
 
 env_variables:
   BUCKET_NAME: "redirectioneaza"
-  SENDGRID_API_KEY: "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"
+  SENDGRID_API_KEY: ""
+  SESSION_SECRET_KEY: ""
+  CAPTCHA_PUBLIC_KEY: ""
+  CAPTCHA_PRIVATE_KEY: ""

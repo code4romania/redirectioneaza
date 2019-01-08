@@ -105,7 +105,7 @@ class EmailManager(object):
 
             content = email.get()['content']
             if content:
-                info( content[0] )
+                info( content[0]['value'] )
             
                 if len(content) == 2:
                     info( content[1] )

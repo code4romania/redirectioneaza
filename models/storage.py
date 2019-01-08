@@ -69,7 +69,6 @@ class CloudStorage(object):
 
         # if we are on dev we will be using the blobstore to simulate cloud storage
         if DEV:
-            # Note: files are stored in the /tmp folder, so not permanent
             file_url = gcs.common.local_api_url() + filename
         else:
             file_url = CloudStorage.STORAGE_DOWNLOAD_URL.format( filename )

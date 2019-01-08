@@ -8,3 +8,6 @@ bower_components/
 *.db
 
 .vs/
+
+app.yaml
+blobs/
