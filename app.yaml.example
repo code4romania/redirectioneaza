@@ -14,9 +14,24 @@ libraries:
 - name: jinja2
   version: latest
 
-# skip_files:
-# - ^views/email/campaigns/.*$
-# - ^.*pyc$
+skip_files:
+# the default rules
+- ^(.*/)?#.*#$
+- ^(.*/)?.*~$
+- ^(.*/)?.*\.py[co]$
+- ^(.*/)?.*/RCS/.*$
+- ^(.*/)?\..*$
+# new files to skip
+- ^.*db$
+- ^(.*/)?.*\.less$
+- ^.*sublime.*$
+- ^blobs\/.*$
+# - ^bower_components\/.*$
+- ^node_modules\/.*$
+- ^lib/lxml\/.*$
+- ^modules\/live-editor\/.*$
+- ^modules\/brackets\/(?!dist).*$
+- app.yaml.example
 
 handlers:
 # - url: /favicon\.ico

@@ -65,7 +65,8 @@ The main folders are:
 2. Clone the repo: `git clone https://github.com/code4romania/redirectioneaza`
 3. Install the requirements in the `lib` folder (not globally): `pip install -r requirements.txt -t ./lib`
 4. `bower install`
-5. To run the dev server you need to know the path to the App Engine SDK and be in the app's folder:
+5. Rename `app.yaml.example` to `app.yaml`
+6. To run the dev server you need to know the path to the App Engine SDK and be in the app's folder:
 ```sh
 [path_to_sdk]/dev_appserver.py ./app.yaml --datastore_path=./datastore.db --enable_console
 ```
