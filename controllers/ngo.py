@@ -103,7 +103,7 @@ class TwoPercentHandler(BaseHandler):
 
         now = datetime.datetime.now()
         can_donate = True
-        if now.month > 5 or now.month == 5 and now.day > 25:
+        if now.month > 3 or now.month == 3 and now.day > 15:
             can_donate = False
 
         self.template_values["can_donate"] = can_donate
