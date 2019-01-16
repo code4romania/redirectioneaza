@@ -1,4 +1,4 @@
-# Redirectioneaza 2% 
+# Redirectioneaza 2%
 
 [![GitHub contributors](https://img.shields.io/github/contributors/code4romania/redirectioneaza.svg?style=for-the-badge)](https://github.com/code4romania/redirectioneaza/graphs/contributors) [![GitHub last commit](https://img.shields.io/github/last-commit/code4romania/redirectioneaza.svg?style=for-the-badge)](https://github.com/code4romania/redirectioneaza/commits/master) [![License: MPL 2.0](https://img.shields.io/badge/license-MPL%202.0-brightgreen.svg?style=for-the-badge)](https://opensource.org/licenses/MPL-2.0)
 
@@ -26,7 +26,17 @@ SUPPORT A WORTHY CAUSE FOR FREE IN 5 EASY STEPS
 4. sign the form
 5. mail the form to your ANAF agency
 
-[Built with](#built-with) | [Repos and projects](#repos-and-projects) | [Deployment](#deployment) | [Contributing](#contributing) | [Feedback](#feedback) | [License](#license) | [About Code4Ro](#about-code4ro)
+[Contributing](#contributing) | [Built with](#built-with) | [Repos and projects](#repos-and-projects) | [Deployment](#deployment) | [Feedback](#feedback) | [License](#license) | [About Code4Ro](#about-code4ro)
+
+## Contributing
+
+This project is built by amazing volunteers and you can be one of them! Here's a list of ways in [which you can contribute to this project](.github/CONTRIBUTING.MD).
+
+### Bulding new handlers
+
+New handlers should extend `BaseHandler` from `models.handlers`. The path to the html file should be set as `template_name`. The app looks in the `views` folder for it.
+To send props to the view, use the dict `self.template_values`.
+On the `get` method, `self.render()` should be called at the end.
 
 ## Built With
 
@@ -123,22 +133,6 @@ You can also add ngos from the admin.
 You can read more about the frameworks used by the app:
 [webapp2](https://webapp2.readthedocs.io/en/latest/)
 [jinja2](http://jinja.pocoo.org/docs/dev/templates/)
-
-## Contributing
-
-If you would like to contribute to our repository, first identify the scale of what you would like to contribute. If it is small (grammar/spelling or a bug fix) feel free to start working on a fix. If you are submitting a feature or substantial code contribution, please discuss it with the team and ensure it follows the product roadmap. 
-
-* Fork it (https://github.com/code4romania/redirectioneaza/fork)
-* Create your feature branch (git checkout -b feature/fooBar)
-* Commit your changes (git commit -am 'Add some fooBar')
-* Push to the branch (git push origin feature/fooBar)
-* Create a new Pull Request
-
-### Bulding new handlers
-
-New handlers should extend `BaseHandler` from `models.handlers`. The path to the html file should be set as `template_name`. The app looks in the `views` folder for it. 
-To send props to the view, use the dict `self.template_values`. 
-On the `get` method, `self.render()` should be called at the end.
 
 ## Feedback
 
