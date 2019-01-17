@@ -32,12 +32,6 @@ SUPPORT A WORTHY CAUSE FOR FREE IN 5 EASY STEPS
 
 This project is built by amazing volunteers and you can be one of them! Here's a list of ways in [which you can contribute to this project](.github/CONTRIBUTING.MD).
 
-### Bulding new handlers
-
-New handlers should extend `BaseHandler` from `models.handlers`. The path to the html file should be set as `template_name`. The app looks in the `views` folder for it.
-To send props to the view, use the dict `self.template_values`.
-On the `get` method, `self.render()` should be called at the end.
-
 ## Built With
 
 ### Programming languages
@@ -68,6 +62,12 @@ The main folders are:
     * `storage` contains `CloudStorage` which helps with uploading the PDFs to google cloud
 * `static` all the static files: css, js, images
 * `views` all the html file + email templates. New html pages should extend `base.html`
+
+### Bulding new handlers
+
+New handlers should extend `BaseHandler` from `models.handlers`. The path to the html file should be set as `template_name`. The app looks in the `views` folder for it.
+To send props to the view, use the dict `self.template_values`.
+On the `get` method, `self.render()` should be called at the end.
 
 ## Deployment
 
