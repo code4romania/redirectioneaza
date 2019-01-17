@@ -47,7 +47,7 @@
                         Ai urmatoarele optiuni:
                         <ol type="A">
                             <li>
-                                Fie il trimiti prin posta cu <strong>scrisoare recomandata</strong> catre unitatea ANAF de care apartii
+                                Fie il trimiti prin posta cu <strong>scrisoare recomandata</strong> catre unitatea ANAF de care apartii.
                                 {% if anaf %}
                                     <strong>In cazul tau, aceasta este:</strong>
                                     <div class="address-box">
@@ -55,6 +55,8 @@
                                         <br>
                                         Adresa: {{ anaf['address'] }}
                                     </div>
+                                {% else %}
+                                    Cauta oficiul de care apartii in <a href="https://static.anaf.ro/static/10/Anaf/AsistentaContribuabili_r/telefoane_judete/Regiuni.htm" target="_blank">aceasta</a> lista.
                                 {% endif %}
                             </li>
                             <li>

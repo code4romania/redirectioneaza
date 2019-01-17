@@ -181,6 +181,7 @@ class NgoDetailsHandler(AccountHandler):
 
         ong_cif = self.request.get('ong-cif')
         ong_account = self.request.get('ong-cont')
+        ong_special_status = self.request.get('special-status') == "on"
 
         ong_url = self.request.get('ong-url')
 
@@ -192,7 +193,6 @@ class NgoDetailsHandler(AccountHandler):
 
         # if the user already has an ngo, update it
         if user.ngo:
-            info(user.ngo)
 
             ngo = user.ngo.get()
 
@@ -215,6 +215,9 @@ class NgoDetailsHandler(AccountHandler):
                 ngo.email = ong_email
                 ngo.website = ong_website
                 ngo.tel = ong_tel
+
+                ngo.special_status = ong_special_status
+
                 # if no one uses this CIF
                 if ong_cif != ngo.cif:
                     cif_unique = NgoEntity.query(NgoEntity.cif == ong_cif).count(limit=1) == 0
@@ -279,8 +282,8 @@ class NgoDetailsHandler(AccountHandler):
                 if users.is_current_user_admin():
                     self.redirect(self.uri_for("admin-ong", ngo_url=ong_url))
                 else:
-    
                     self.redirect(self.uri_for("asociatia"))
+
                 return
 
         # create a new ngo entity
@@ -301,7 +304,8 @@ class NgoDetailsHandler(AccountHandler):
             county = ong_judet,
             
             cif = ong_cif,
-            account = ong_account
+            account = ong_account,
+            special_status = ong_special_status
         )
 
         # check for unique url

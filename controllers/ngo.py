@@ -191,7 +191,8 @@ class TwoPercentHandler(BaseHandler):
         ngo_data = {
             "name": self.ngo.name,
             "account": self.ngo.account.upper(),
-            "cif": self.ngo.cif
+            "cif": self.ngo.cif,
+            "special_status": self.ngo.special_status
         }
         
         if len(errors["fields"]):
@@ -292,8 +293,11 @@ class DonationSucces(BaseHandler):
         self.template_values["donor"] = self.donor
         self.template_values["title"] = "Donatie 2% - succes"
 
-        county = self.donor.county.lower()
-        self.template_values["anaf"] = ANAF_OFFICES.get(county, None)
+        # county = self.donor.county.lower()
+        # self.template_values["anaf"] = ANAF_OFFICES.get(county, None)
+
+        # for now, disable showing the ANAF office
+        self.template_values["anaf"] = None
 
         # if the user didn't provide a CNP show a message
         self.template_values["has_cnp"] = self.session.get("has_cnp", False)

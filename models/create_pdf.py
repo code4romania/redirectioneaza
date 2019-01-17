@@ -165,6 +165,54 @@ def add_ngo_data(c, ong):
 
     c.drawString(106, start_ong_x - 41, account)
 
+def add_special_status_ngo_data(c, ong):
+    """Used to add data for NGOs with a special status: they received 3,5% not 2"""
+
+    start_ong_x = 319
+
+    # the x mark
+    c.drawString(538, start_ong_x, "x")
+    # the cif code
+    c.setFontSize(9)
+    c.drawString(492, start_ong_x - 40, ong["cif"])
+
+    try:
+        org_name = ong["name"].encode('utf-8')
+    except Exception as e:
+        org_name = ong["name"]
+
+    # crop the text at max 60 length
+    org_name = org_name[:60]
+
+    # if the name is too long
+    # split it in two rows
+    if len(org_name) > 27:
+        first_row = ""
+        second_row = ""
+
+        arr = org_name.split(" ")
+        for i in range(0, len(arr) + 1):
+            first_row = " ".join(arr[0: i+1])
+            if len(first_row) > 28:
+                first_row = " ".join(arr[0: i])
+                second_row = " ".join(arr[i: len(arr)])
+                break
+
+        c.setFontSize(8)
+        c.drawString(250, start_ong_x - 35, first_row)
+        c.drawString(250, start_ong_x - 42, second_row)
+    else:
+        c.drawString(250, start_ong_x - 40, org_name)
+
+    c.setFontSize(11)
+
+    account = ong["account"]
+    for i, l in enumerate(account):
+        if i%5 == 0:
+            account = account[:i] + " " + account[i:]
+
+    c.drawString(104, start_ong_x - 63, account)
+
 def create_pdf(person, ong):
     """method used to create the pdf
 
@@ -220,7 +268,11 @@ def create_pdf(person, ong):
         add_donor_data(c, person)
 
     # DRAW ONG DATA
-    add_ngo_data(c, ong)
+    # if the ngo has a special status, the form is completed differently
+    if ong['special_status']:
+        add_special_status_ngo_data(c, ong)
+    else:
+        add_ngo_data(c, ong)
 
     c.save()
 

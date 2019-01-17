@@ -14,6 +14,7 @@ from controllers.api import *
 from controllers.admin import *
 from controllers.ngo import NgoHandler, TwoPercentHandler, DonationSucces
 
+from cron import cron_routes
 
 config = {
     'webapp2_extras.auth': {
@@ -90,6 +91,7 @@ app = webapp2.WSGIApplication([
         r('/<ngo_url>/doilasuta',           handler=TwoPercentHandler,  name="twopercent"),
         r('/<ngo_url>/doilasuta/succes',    handler=DonationSucces,     name="ngo-twopercent-success"),
 
+        routes.PathPrefixRoute("/cron", cron_routes),
     ],
     debug=True,
     config=config
