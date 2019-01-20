@@ -133,7 +133,7 @@ class TwoPercentHandler(BaseHandler):
             if value:
 
                 # it should only contains alpha numeric, spaces and dash
-                if re.match('^[\w\s.-]+$', value) is not None:
+                if re.match(r'^[\w\s.\-ăîâșț]+$', value, flags=re.I | re.UNICODE) is not None:
                     
                     # additional validation
                     if arg == "cnp" and len(value) != 13:
