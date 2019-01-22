@@ -81,18 +81,11 @@ HTTP_HEADERS = {
 # ===================
 # Recaptcha API Keys
 # ===================
-# 
-# The public and private key
-# CAPTCHA_PUBLIC_KEY = "6Lc58hITAAAAAEy-owjeigG_x9FuPQqlZJRHEE6O" if PRODUCTION else "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
-# CAPTCHA_PRIVATE_KEY = "6Lc58hITAAAAADeRUDDFHJlzSVXKL6L7f-KukyZs" if PRODUCTION else "6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe"
-# CAPTCHA_VERIFY_URL = "https://www.google.com/recaptcha/api/siteverify"
-# CAPTCHA_POST_PARAM = "g-recaptcha-response"
-
-
 CAPTCHA_PUBLIC_KEY = os.environ.get('CAPTCHA_PUBLIC_KEY') if PRODUCTION else "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
 CAPTCHA_PRIVATE_KEY = os.environ.get('CAPTCHA_PRIVATE_KEY') if PRODUCTION else "6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe"
 CAPTCHA_VERIFY_URL = "https://www.google.com/recaptcha/api/siteverify"
 CAPTCHA_POST_PARAM = "g-recaptcha-response"
+
 
 
 ANAF_OFFICES = {
