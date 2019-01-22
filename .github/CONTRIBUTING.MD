@@ -12,27 +12,37 @@ Just have a quick question? Please e-mail us at at contact@code4.ro
 
 ## How can I contribute
 
-### Report bugs :bug:
+### Report bugs
 
-Think you found a bug? Please check [the list of open issues](https://github.com/code4romania/redirectioneaza/issues) to see if your bug has already been reported. If it hasn't please [submit a new issue](https://github.com/code4romania/redirectioneaza/issues/new). Please be as specific as possible when describing the issue, include the steps to reproduce it, screenshots or any other relevant info.
+:bug: Think you found a bug? Please check [the list of open issues](https://github.com/code4romania/redirectioneaza/issues) to see if your bug has already been reported. If it hasn't please [submit a new issue](https://github.com/code4romania/redirectioneaza/issues/new). 
 
-**If you find a security vulnerability, do not open an issue. Please email contact@code4.ro instead.**
+:shield: If you find a **security vulnerability**, do not open an issue. Please email contact@code4.ro instead.
 
-### Suggest new features :bulb:
+Please be as specific as possible when describing the issue. Explain the problem and include additional details to help maintainers reproduce the problem:
 
-Feature requests are welcome. We would love to hear your thoughts on how we can improve our project further.
+* **Description**
+* **Steps to Reproduce**
+* Expected behavior
+* Actual behavior
+* Reproduces how often
 
-To send us a suggestion, just [open an issue](https://github.com/code4romania/redirectioneaza/issues/new) which describes the feature you would like to see. Just make sure to provide as much detail and context as possible.
+### Suggest new features 
 
-### Contribute to the codebase :computer:
+:bulb: Feature requests are welcome. We would love to hear your thoughts on how we can improve our project further. 
 
-We'd love for you to get your hands dirty and code for the project.
+To send us a suggestion, just [open an issue](https://github.com/code4romania/redirectioneaza/issues/new) which describes the feature you would like to see. Give as much information as you can about what you would like to see:
 
-For more info on how to set it up and get started, please see the [README](https://github.com/code4romania/redirectioneaza/blob/master/README.md).
+* Description
+* Step by step behaviour 
+* Explain why this enhancement would be useful
+
+### Contribute to the codebase
+
+:computer: We'd love for you to get your hands dirty and code for the project.
 
 If you are unsure where to begin contributing to the project, you can start by looking through these issues:  
-
-[![GitHub issues by-label](https://img.shields.io/github/issues/badges/shields/good-first-issue.svg?style=for-the-badge)](https://github.com/code4romania/redirectioneaza/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) [![GitHub issues by-label](https://img.shields.io/github/issues/badges/shields/help-wanted.svg?style=for-the-badge)](https://github.com/code4romania/redirectioneaza/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22)
+* [Good first issues](https://github.com/code4romania/redirectioneaza/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
+* [Help wanted](https://github.com/code4romania/redirectioneaza/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22)
 
 Please make sure to check out the suggested coding [best practices](#best-practices) and tips with working with git below :wink:
 
@@ -40,8 +50,8 @@ Please make sure to check out the suggested coding [best practices](#best-practi
 
 ### Coding best practices :ok_hand:
 
-* Codebase language is English.
-* Use clean code conventions :heavy_check_mark: *tip: read [The book](https://www.goodreads.com/book/show/3735293-clean-code) if you haven't already. Or at least check out [a summary](https://gist.github.com/wojteklu/73c6914cc446146b8b533c0988cf8d29)*
+* **The language we code in is English.** Please name your variables, methods, classes and other structures using English words.
+* Use clean code conventions :heavy_check_mark: *tip: read [The book](https://www.goodreads.com/book/show/3735293-clean-code) if you haven't already. Or check out [a summary](https://gist.github.com/wojteklu/73c6914cc446146b8b533c0988cf8d29)*
 * Follow the [Python styleguide](https://www.python.org/dev/peps/pep-0008/)
 * Tests are appreciated :relieved:
 * Please use relevant commit messages and reference issues in the commit message if applicable
@@ -49,9 +59,9 @@ Please make sure to check out the suggested coding [best practices](#best-practi
 ### Git workflow
 
 * [Fork the repo](https://github.com/code4romania/redirectioneaza/fork)
-* Add your contributions on the develop branch of your fork
-* Rebase on upstream develop if it changed
-* Create a new Pull Request, clearly mentioning what issues does your pull request fix
+* Add your contributions on the `develop` branch of your fork
+* Rebase on upstream `develop` if it changed
+* Create a new Pull Request, clearly mentioning what issues your pull request fixes
 
 If you need tips on working with Git, Github or contributing to open source projects, we have gathered a list of useful guides and tutorials in our knowledge base. [Have a look](https://code4romania.github.io/knowledge/#contributing-to-open-source). :wink:
 
