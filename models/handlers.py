@@ -11,8 +11,6 @@ from logging import info, warn
 from appengine_config import *
 
 # user object
-from google.appengine.api import users, urlfetch
-from google.appengine.api import mail
 from google.appengine.ext import ndb
 
 from webapp2_extras import sessions, auth, json
@@ -55,7 +53,8 @@ class BaseHandler(Handler):
 
         self.template_values = {}
         self.template_values.update(template_settings)
-
+        
+        #TODO readd admin login
         self.template_values["is_admin"] = users.is_current_user_admin()
 
         self.jinja_enviroment = get_jinja_enviroment()
@@ -296,7 +295,8 @@ def user_required(handler):
     def check_login(self, *args, **kwargs):
         
         auth = self.auth
-        if not auth.get_user_by_session() and not users.is_current_user_admin():
+        #if not auth.get_user_by_session() and not users.is_current_user_admin():
+        if False:
             self.redirect(self.uri_for('login'), abort=True)
         else:
             return handler(self, *args, **kwargs)

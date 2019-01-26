@@ -2,7 +2,7 @@
 
 from urlparse import urlparse
 
-from google.appengine.api import urlfetch
+
 from google.appengine.ext import ndb
 
 from hashlib import sha1

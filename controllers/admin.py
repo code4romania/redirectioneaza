@@ -1,8 +1,6 @@
 
 from operator import itemgetter
 
-
-from google.appengine.api import users, mail
 from google.appengine.ext import ndb
 
 from models.handlers import BaseHandler
@@ -16,14 +14,12 @@ from appengine_config import LIST_OF_COUNTIES
 """
 Handlers  for admin routing
 """
+
 class AdminHandler(BaseHandler):
     template_name = 'admin/index.html'
     def get(self):
 
-        if users.is_current_user_admin():
-            user = users.get_current_user()
-        else:
-            self.redirect(users.create_login_url("/admin"))
+        # TODO: readd admin login
 
         self.template_values["title"] = "Admin"
 
@@ -47,10 +43,7 @@ class AdminHandler(BaseHandler):
 class UserAccounts(BaseHandler):
     template_name = 'admin/accounts.html'
     def get(self):
-        if users.is_current_user_admin():
-            user = users.get_current_user()
-        else:
-            self.redirect(users.create_login_url("/admin"))
+        # TODO: readd admin login
 
         all_users = User.query().fetch()
 
@@ -69,11 +62,7 @@ class AdminNewNgoHandler(BaseHandler):
     template_name = 'admin/ngo.html'
     def get(self):
         
-        if users.is_current_user_admin():
-            user = users.get_current_user()
-        else:
-            self.redirect(users.create_login_url("/admin"))
-
+        # TODO: readd admin login
 
         self.template_values["ngo_upload_url"] = self.uri_for("api-ngo-upload-url")
         self.template_values["check_ngo_url"] = "/api/ngo/check-url/"
@@ -89,10 +78,7 @@ class AdminNgoHandler(NgoDetailsHandler):
     template_name = 'admin/ngo.html'
     def get(self, ngo_url):
         
-        if users.is_current_user_admin():
-            user = users.get_current_user()
-        else:
-            self.redirect(users.create_login_url("/admin"))
+        # TODO: readd admin login
 
         ngo = NgoEntity.get_by_id(ngo_url)
         if ngo is None:
@@ -111,18 +97,15 @@ class AdminNgoHandler(NgoDetailsHandler):
 class SendCampaign(NgoDetailsHandler):
     template_name = 'admin/campaign.html'
     def get(self):
-        if users.is_current_user_admin():
-            user = users.get_current_user()
-        else:
-            self.redirect(users.create_login_url("/admin"))
+        # TODO: readd admin login
 
         self.render()
 
 
     def post(self):
         
-        if not users.is_current_user_admin():
-            self.abort(400)
+        # if not users.is_current_user_admin():
+        #    self.abort(400)
 
         subject = self.request.get('subiect')
         emails = [s.strip() for s in self.request.get('emails', "").split(",")]
@@ -142,6 +125,7 @@ class SendCampaign(NgoDetailsHandler):
 
         for email in emails:
             user_address = email
-            mail.send_mail(sender=sender_address, to=user_address, subject=subject, html=html_body, body=body)
+            #TODO use function created in sendcampaign
+            # mail.send_mail(sender=sender_address, to=user_address, subject=subject, html=html_body, body=body) #bookmark1
         
         self.redirect(self.uri_for("admin-campanii"))

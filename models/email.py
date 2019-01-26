@@ -2,8 +2,6 @@
 
 import os
 
-from google.appengine.api.mail import EmailMessage
-
 from appengine_config import DEV, CONTACT_FORM_URL, CONTACT_EMAIL_ADDRESS
 
 import sendgrid
@@ -33,23 +31,7 @@ class EmailManager(object):
         """
 
         try:
-
-            response = EmailManager.send_sendgrid_email(**kwargs)
-
-            # if False then the send failed
-            if response is False:
-                
-                # try appengine's mail API
-                response = EmailManager.send_appengine_email(**kwargs)
-                
-                # if this doesn't work either, give up
-                if response is False:
-                    error_message = "Failed to send email: {0}{1}".format(kwargs.get("subject"), kwargs.get("receiver")["email"])
-                    warn( error_message )
-                    return False
-
-            return True
-
+            return EmailManager.send_sendgrid_email(**kwargs)
         except Exception, e:
             
             warn(e)
@@ -111,42 +93,4 @@ class EmailManager(object):
                     info( content[1] )
             
             return True
- 
-    @staticmethod
-    def send_appengine_email(**kwargs):
 
-        receiver = kwargs.get("receiver")
-        sender = kwargs.get("sender", EmailManager.default_sender)
-        subject = kwargs.get("subject")
-
-        # email content
-        text_template = kwargs.get("text_template")
-        html_template = kwargs.get("html_template", "")
-
-        # we must format the email address in this way
-        receiver_address = "{0} <{1}>".format(receiver["name"], receiver["email"])
-        sender_address = "{0} <{1}>".format(sender["name"], sender["email"])
-
-        try:
-            # create a new email object
-            message = EmailMessage(sender=sender_address, to=receiver_address, subject=subject)
-
-            # add the text body
-            message.body = text_template
-
-            if html_template:
-                message.html = html_template
-
-            if DEV:
-                info(message.body)
-
-            # send the email
-            # on dev the email is not actually sent just logged in the terminal
-            message.send()
-
-            return True
-
-        except Exception, e:
-            warn(e)
-
-            return False

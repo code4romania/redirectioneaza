@@ -5,8 +5,6 @@ import cloudstorage as gcs
 
 from appengine_config import DEV
 
-from google.appengine.api import app_identity
-
 from logging import info
 
 class CloudStorage(object):
@@ -19,7 +17,7 @@ class CloudStorage(object):
     
     @staticmethod
     def get_bucket_name():
-        bucket_name = os.environ.get('BUCKET_NAME', app_identity.get_default_gcs_bucket_name())
+        bucket_name = os.environ.get('BUCKET_NAME')
 
         return bucket_name
 

@@ -4,8 +4,6 @@ import datetime
 from collections import OrderedDict
 
 from google.appengine.ext.ndb import put_multi, OR, Key
-from google.appengine.api import users
-from google.appengine.api import mail
 
 from appengine_config import LIST_OF_COUNTIES, CONTACT_EMAIL_ADDRESS, START_YEAR
 
@@ -148,8 +146,10 @@ class NgoDetailsHandler(AccountHandler):
         
         user = self.user
         if user is None:
-            if users.is_current_user_admin():
-                user = users.get_current_user()
+            # TODO: readd admin login
+            #if users.is_current_user_admin():
+                #user = users.get_current_user()
+            if True:
 
                 old_ngo_key = self.request.get('old-ong-url') if self.request.get('old-ong-url') else 1
 
@@ -237,8 +237,9 @@ class NgoDetailsHandler(AccountHandler):
                         self.template_values["unique"] = False
                         self.render()
                         return
-
-                if users.is_current_user_admin():
+                # TODO: readd admin login
+                #if users.is_current_user_admin():
+                if False:
                     ngo.verified = self.request.get('ong-verificat') == "on"
                     ngo.active = self.request.get('ong-activ') == "on"
 
@@ -278,11 +279,11 @@ class NgoDetailsHandler(AccountHandler):
 
                 # save the changes
                 ngo.put()
-                
-                if users.is_current_user_admin():
-                    self.redirect(self.uri_for("admin-ong", ngo_url=ong_url))
-                else:
-                    self.redirect(self.uri_for("asociatia"))
+                # TODO: readd admin login
+                #if users.is_current_user_admin():
+                    #self.redirect(self.uri_for("admin-ong", ngo_url=ong_url))
+                #else:
+                    #self.redirect(self.uri_for("asociatia"))
 
                 return
 
@@ -329,8 +330,9 @@ class NgoDetailsHandler(AccountHandler):
             return
         else:
             self.template_values["errors"] = True
-
-        if users.is_current_user_admin():
+        # TODO: readd admin login
+        #if users.is_current_user_admin():
+        if False:
 
             # a list of email addresses
             new_ngo.other_emails = [s.strip() for s in self.request.get('alte-adrese-email', "").split(",")]
@@ -345,18 +347,6 @@ class NgoDetailsHandler(AccountHandler):
             
             # use put_multi to save rpc calls
             put_multi([new_ngo, user])
-
-            # try:
-            #     subject = "O noua organizatie s-a inregistrat"
-            #     values = {
-            #         "ngo": ong_nume,
-            #         "link": self.request.host + '/' + new_ngo.key.id()
-            #     }
-            #     body = self.jinja_enviroment.get_template("email/admin/new-ngo.txt").render(values)
-            #     # info(body)
-            #     mail.send_mail(sender=CONTACT_EMAIL_ADDRESS, to="donezsieu@gmail.com", subject=subject, body=body)
-            # except Exception, e:
-            #     info(e)
 
             # do a refresh
             self.redirect(self.uri_for("contul-meu"))

@@ -2,8 +2,6 @@ import os
 
 import tempfile
 
-from google.appengine.api import app_identity
-
 from reportlab.pdfgen import canvas
 from reportlab.lib.utils import ImageReader
 from reportlab.lib.pagesizes import A4

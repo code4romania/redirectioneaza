@@ -28,7 +28,7 @@ vendor.add('lib')
 # if we are currently in production
 DEV = os.environ.get('SERVER_SOFTWARE', 'Development').startswith('Development')
 # use this to simulate production
-# DEV = False
+DEV = False
 
 PRODUCTION = not DEV
 
