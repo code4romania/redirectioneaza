@@ -81,7 +81,7 @@ class GetNgoForm(BaseHandler):
         ong_folder = security.hash_password(ngo.key.id(), "md5")
         path = "{0}/{1}/{2}".format(USER_UPLOADS_FOLDER, str(ong_folder), filename)
 
-        file_url = CloudStorage.save_file(pdf, path)
+        file_url = CloudStorage.save_file_S3(pdf, path)
 
         # close the file after it has been uploaded
         pdf.close()
@@ -131,7 +131,8 @@ class GetUploadUrl(AccountHandler):
             # output a hex string
             filename = "{0}/{1}/{2}".format(USER_UPLOADS_FOLDER, str(user_folder), sha1( datetime.now().isoformat() ).hexdigest())
         
-            file_url = CloudStorage.save_file(a_file, filename)
+           # file_url = CloudStorage.save_file(a_file, filename)
+            file_url = CloudStorage.save_file_S3(a_file, filename)
             
             if file_url:
                 file_urls.append( file_url )

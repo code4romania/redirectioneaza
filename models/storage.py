@@ -9,6 +9,18 @@ from google.appengine.api import app_identity
 
 from logging import info
 
+
+#for pdf file server S3
+import boto3
+import sys
+import boto3.s3.key
+
+
+aws_access_key_id = "AKIAJSKWPCNXLQR5XP4A"
+aws_secret_access_key = "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"
+region = "eu-west-1"
+bucket_name = "myBucket"
+
 class CloudStorage(object):
     """docstring for CloudStorage"""
 
@@ -75,7 +87,21 @@ class CloudStorage(object):
 
         return file_url
 
-        
+    @staticmethod
+    def  save_file_S3(file_to_save=None, filename=None):
+        # return "s3 file url"
+        file_url = ''
+        session = boto3.session.Session()
+        s3_resource = session.resource('s3')
+        current_region = session.region_name
+        try:
+            data = open(filename, 'rb')
+            saved_file = s3_resource.Bucket(bucket_name).put_object(ACL="public-read", Key=filename, Body=data)
+            data.close()
+            file_url = "https://" + bucket_name + ".s3.amazonaws.com/" + saved_file.key
+        except Exception as e:
+           info("<p>Error: %s</p>" %e)
+        return file_url
 
     def read_file(self, filename):
 
