@@ -55,7 +55,8 @@ class BaseHandler(Handler):
         self.template_values.update(template_settings)
         
         #TODO readd admin login
-        self.template_values["is_admin"] = users.is_current_user_admin()
+        #self.template_values["is_admin"] = users.is_current_user_admin()
+        self.template_values["is_admin"] = False
 
         self.jinja_enviroment = get_jinja_enviroment()
 
