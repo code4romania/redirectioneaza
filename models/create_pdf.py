@@ -137,7 +137,13 @@ def add_donor_data(c, person):
 
     # first x mark
     # Venituri din salarii si asimilate salariilor
-    c.drawString(171, donor_block_x - 145, "x")    
+    # pension
+    if person['income'] == 'pension':
+        c.drawString(172, donor_block_x - 162, "x")
+    # wage
+    else:
+        c.drawString(172, donor_block_x - 145, "x")
+
 
 def add_ngo_data(c, ong):
     start_ong_x = 462
