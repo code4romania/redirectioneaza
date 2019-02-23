@@ -1,10 +1,10 @@
 
 
-
-import urllib2, urllib
+from urllib.request import urlopen, Request
+from urllib.parse import urlencode
 from appengine_config import *
 
-from webapp2_extras import json
+import json
 
 from logging import info
 
@@ -27,20 +27,14 @@ def submit(recaptcha_response_field, private_key, remoteip):
 
     if not ( recaptcha_response_field and len(recaptcha_response_field) ):
         return RecaptchaResponse(is_valid = False, error_code = 'incorrect-captcha-sol')
-    
 
-    def encode_if_necessary(s):
-        if isinstance(s, unicode):
-            return s.encode('utf-8')
-        return s
-
-    params = urllib.urlencode({
-            'secret': encode_if_necessary(private_key),
-            'remoteip':  encode_if_necessary(remoteip),
-            'response':  encode_if_necessary(recaptcha_response_field),
+    params = urlencode({
+            'secret': private_key,
+            'remoteip':  remoteip,
+            'response':  recaptcha_response_field,
             })
 
-    request = urllib2.Request(
+    request = Request(
         url = VERIFY_URL,
         data = params,
         headers = {
@@ -50,12 +44,12 @@ def submit(recaptcha_response_field, private_key, remoteip):
     )
     
     try:
-        httpresp = urllib2.urlopen(request)
+        httpresp = urlopen(request)
         
-        response = json.decode( httpresp.read() )
+        response = json.loads( httpresp.read() )
         httpresp.close()
     
-    except Exception, e:
+    except Exception as e:
         return RecaptchaResponse(is_valid=False)
 
 

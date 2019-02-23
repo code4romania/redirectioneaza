@@ -1,103 +1,78 @@
-
-import webapp2
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
 from os import environ
 
+import sys
+sys.path.insert(1, '/home/dev/assets/google-cloud-sdk/platform/google_appengine')
+sys.path.insert(1, '/home/dev/assets/google-cloud-sdk/platform/google_appengine/lib/yaml/lib')
+sys.path.insert(1, 'lib')
+
+if 'google' in sys.modules:
+    del sys.modules['google']
+
+from core import app, db
 from appengine_config import SESSION_SECRET_KEY, DEV
-
-from webapp2_extras import routes
-from webapp2 import Route as r
-
 from controllers.site import *
 from controllers.account_management import *
-from controllers.my_account import *
-from controllers.api import *
-from controllers.admin import *
-from controllers.ngo import NgoHandler, TwoPercentHandler, DonationSucces
+# from controllers.my_account import *
+# from controllers.api import *
+# from controllers.admin import *
+# from controllers.ngo import NgoHandler, TwoPercentHandler, DonationSucces
+# from cron import cron_routes
 
-from cron import cron_routes
-
-config = {
-    'webapp2_extras.auth': {
-        'user_model': 'models.user.User',
-        'user_attributes': ['first_name']
-    },
-    # by default the session backend is the cookie
-    # cookie_name: session
-    # session_max_age: None => until the client is closed
-    'webapp2_extras.sessions': {
-        'secret_key': SESSION_SECRET_KEY,
-        # just make it as the default
-        'cookie_name': 'session',
-        'cookie_args': {
-            # make the cookie secure only if we are on production
-            # we can't use the config DEV bool, because if we set that manually to False, in order 
-            # to test prod locally, the cookie will not work
-            # so make sure the cookie are set to secure only in production
-            'secure': not environ.get('SERVER_SOFTWARE', 'Development').startswith('Development'),
-            'httponly': True
-        }
-    }
-}
-
-# use string in dotted notation to be lazily imported
-app = webapp2.WSGIApplication([
-        # the public part of the app
-        r('/',                  handler=HomePage),
-        r('/ong',               handler=ForNgoHandler),
-        
-        # backup in case of old urls. to be removed
-        r('/pentru-ong-uri',    handler=ForNgoHandler),
-        
-        r('/asociatii',         handler=NgoListHandler),
-
-        r('/termeni',           handler=TermsHandler),
-        r('/TERMENI',           handler=TermsHandler),
-        r('/nota-de-informare', handler=NoteHandler,    name='note'),
-        r('/politica',          handler=PolicyHandler),
-        r('/despre',            handler=AboutHandler),
-
-        # account management
-        r('/cont-nou',  handler=SignupHandler),
-        r('/login',     handler=LoginHandler, name='login'),
-        r('/logout',    handler=LogoutHandler, name='logout'),
-
-        r('/forgot',    handler=ForgotPasswordHandler, name='forgot'),
-        
-        # verification url: used for signup, and reset password
-        r('/<type:v|p>/<user_id:\d+>-<signup_token:.+>', handler=VerificationHandler, name='verification'),
-        r('/password',  handler=SetPasswordHandler),
-        
-        # my account
-        r('/contul-meu',        handler=MyAccountHandler, name='contul-meu'),
-        r('/asociatia',         handler=NgoDetailsHandler, name='asociatia'),
-        r('/date-cont',         handler=MyAccountDetailsHandler, name='date-contul-meu'),
-
-        r('/api/ngo/check-url/<ngo_url>',   handler=CheckNgoUrl,    name='api-ngo-check-url'),
-        r('/api/ngo/upload-url',            handler=GetUploadUrl,   name='api-ngo-upload-url'),
-        r('/api/ngo/form/<ngo_url>',        handler=GetNgoForm,     name='api-ngo-form-url'),
-        r('/api/ngos',                      handler=NgosApi,        name='api-ngos'),
-
-        # ADMIN HANDLERS
-        r('/admin',             handler=AdminHandler,       name='admin'),
-        r('/admin/conturi',     handler=UserAccounts,       name='admin-users'),
-        r('/admin/campanii',    handler=SendCampaign,       name='admin-campanii'),
-        r('/admin/ong-nou',     handler=AdminNewNgoHandler, name='admin-ong-nou'),
-        r('/admin/<ngo_url>',   handler=AdminNgoHandler,    name='admin-ong'),
+db.create_all()
+def setup_route(route, **kwargs):
+    app.add_url_rule(route, view_func=kwargs['handler'].as_view(kwargs.get('name', route)))
 
 
-        r('/<ngo_url>',         handler=NgoHandler, name="ngo-url"),
-        r('/catre/<ngo_url>',   handler=NgoHandler),
+# the public part of the app
+setup_route('/',                  handler=HomePage)
+setup_route('/ong',               handler=ForNgoHandler)
 
-        r('/<ngo_url>/doilasuta',           handler=TwoPercentHandler,  name="twopercent"),
-        r('/<ngo_url>/doilasuta/succes',    handler=DonationSucces,     name="ngo-twopercent-success"),
+# backup in case of old urls. to be removed
+setup_route('/pentru-ong-uri',    handler=ForNgoHandler)
 
-        routes.PathPrefixRoute("/cron", cron_routes),
-    ],
-    debug=True,
-    config=config
-)
+setup_route('/asociatii',         handler=NgoListHandler)
 
-# error handling for 404 and 500
-# imported from controllers.site
-# app.error_handlers[404] = NotFoundPage
-# app.error_handlers[500] = InternalErrorPage
+setup_route('/termeni',           handler=TermsHandler)
+setup_route('/TERMENI',           handler=TermsHandler)
+setup_route('/nota-de-informare', handler=NoteHandler,    name='note')
+setup_route('/politica',          handler=PolicyHandler)
+setup_route('/despre',            handler=AboutHandler)
+
+#account management
+setup_route('/cont-nou',  handler=SignupHandler)
+setup_route('/login',     handler=LoginHandler, name='login')
+setup_route('/logout',    handler=LogoutHandler, name='logout')
+
+setup_route('/forgot',    handler=ForgotPasswordHandler, name='forgot')
+
+# verification url: used for signup, and reset password
+# setup_route('/<type:v|p>/<user_id:\d+>-<signup_token:.+>', handler=VerificationHandler, name='verification')
+setup_route('/password',  handler=SetPasswordHandler)
+
+# # my account
+# setup_route('/contul-meu',        handler=MyAccountHandler, name='contul-meu')
+# setup_route('/asociatia',         handler=NgoDetailsHandler, name='asociatia')
+# setup_route('/date-cont',         handler=MyAccountDetailsHandler, name='date-contul-meu')
+
+# setup_route('/api/ngo/check-url/<ngo_url>',   handler=CheckNgoUrl,    name='api-ngo-check-url')
+# setup_route('/api/ngo/upload-url',            handler=GetUploadUrl,   name='api-ngo-upload-url')
+# setup_route('/api/ngo/form/<ngo_url>',        handler=GetNgoForm,     name='api-ngo-form-url')
+# setup_route('/api/ngos',                      handler=NgosApi,        name='api-ngos')
+
+# # ADMIN HANDLERS
+# setup_route('/admin',             handler=AdminHandler,       name='admin')
+# setup_route('/admin/conturi',     handler=UserAccounts,       name='admin-users')
+# setup_route('/admin/campanii',    handler=SendCampaign,       name='admin-campanii')
+# setup_route('/admin/ong-nou',     handler=AdminNewNgoHandler, name='admin-ong-nou')
+# setup_route('/admin/<ngo_url>',   handler=AdminNgoHandler,    name='admin-ong')
+
+
+# setup_route('/<ngo_url>',         handler=NgoHandler, name="ngo-url")
+# setup_route('/catre/<ngo_url>',   handler=NgoHandler)
+
+# setup_route('/<ngo_url>/doilasuta',           handler=TwoPercentHandler,  name="twopercent")
+# setup_route('/<ngo_url>/doilasuta/succes',    handler=DonationSucces,     name="ngo-twopercent-success")
+
+    # routes.PathPrefixRoute("/cron", cron_routes),

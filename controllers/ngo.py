@@ -93,7 +93,7 @@ class TwoPercentHandler(BaseHandler):
                 else:
                     raise
 
-            except Exception, e:
+            except Exception as e:
 
                 self.template_values["ngo_website"] = None
         else:

@@ -30,7 +30,7 @@ class AdminHandler(BaseHandler):
         try:
             projection = [NgoEntity.name, NgoEntity.county, NgoEntity.verified, NgoEntity.email]
             ngos = NgoEntity.query().fetch(projection=projection)
-        except Exception, e:
+        except Exception as e:
             ngos = NgoEntity.query().fetch()
 
         for ngo in ngos:

@@ -2,13 +2,6 @@
 
 import os
 
-
-from google.appengine.ext import vendor
-
-# Add any libraries installed in the "lib" folder.
-vendor.add('lib')
-
-
 # in order to not promote the current version
 # gcloud config set app/promote_by_default false
 

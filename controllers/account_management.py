@@ -1,11 +1,10 @@
-
+from flask import url_for, redirect, render_template
 
 from models.handlers import AccountHandler, user_required
-from webapp2_extras.auth import InvalidPasswordError, InvalidAuthIdError
 
 from appengine_config import CAPTCHA_PRIVATE_KEY, CAPTCHA_POST_PARAM
 
-from captcha import submit
+from .captcha import submit
 
 from logging import info, warn
 
@@ -16,10 +15,10 @@ class LoginHandler(AccountHandler):
         self.template_values["title"] = "Contul meu"
 
         # if the user is logged in just redirect
-        if self.user_info:
-            self.redirect(self.uri_for("contul-meu"))
+        # if self.user_info:
+        #     self.redirect(self.uri_for("contul-meu"))
 
-        self.render()
+        return render_template(self.template_name, **self.template_values)
 
     def post(self):
         post = self.request
@@ -29,13 +28,11 @@ class LoginHandler(AccountHandler):
 
         if not email:
             self.template_values["errors"] = "Campul email nu poate fi gol."
-            self.render()
-            return
+            return render_template(self.template_name, **self.template_values)
 
         if not password:
             self.template_values["errors"] = "Campul parola nu poate fi gol."
-            self.render()
-            return
+            return render_template(self.template_name, **self.template_values)
 
         captcha_response = submit(post.get(CAPTCHA_POST_PARAM), CAPTCHA_PRIVATE_KEY, post.remote_addr)
 
@@ -43,8 +40,7 @@ class LoginHandler(AccountHandler):
         if not captcha_response.is_valid:
             
             self.template_values["errors"] = "Se pare ca a fost o problema cu verificarea reCAPTCHA. Te rugam sa incerci din nou."
-            self.render()
-            return
+            return render_template(self.template_name, **self.template_values)
 
         try:
             user = self.auth.get_user_by_password(email, password, remember=True)
@@ -57,7 +53,7 @@ class LoginHandler(AccountHandler):
 
             self.template_values['email'] = email
             self.template_values["errors"] = "Se pare ca aceasta combinatie de email si parola este incorecta."
-            self.render()
+            return render_template(self.template_name, **self.template_values)
 
 
 class LogoutHandler(AccountHandler):
@@ -70,7 +66,7 @@ class SignupHandler(AccountHandler):
     def get(self):
 
         self.template_values["title"] = "Cont nou"
-        self.render()
+        return render_template(self.template_name, **self.template_values)
 
     def post(self):
         post = self.request
@@ -83,23 +79,19 @@ class SignupHandler(AccountHandler):
 
         if not first_name:
             self.template_values["errors"] = "Campul nume nu poate fi gol."
-            self.render()
-            return
+            return render_template(self.template_name, **self.template_values)
 
         if not last_name:
             self.template_values["errors"] = "Campul prenume nu poate fi gol."
-            self.render()
-            return
+            return render_template(self.template_name, **self.template_values)
 
         if not email:
             self.template_values["errors"] = "Campul email nu poate fi gol."
-            self.render()
-            return
+            return render_template(self.template_name, **self.template_values)
 
         if not password:
             self.template_values["errors"] = "Campul parola nu poate fi gol."
-            self.render()
-            return
+            return render_template(self.template_name, **self.template_values)
 
         captcha_response = submit(post.get(CAPTCHA_POST_PARAM), CAPTCHA_PRIVATE_KEY, post.remote_addr)
 
@@ -107,7 +99,7 @@ class SignupHandler(AccountHandler):
         if not captcha_response.is_valid:
             
             self.template_values["errors"] = "Se pare ca a fost o problema cu verificarea reCAPTCHA. Te rugam sa incerci din nou."
-            self.render()
+            return render_template(self.template_name, **self.template_values)
             return
 
         unique_properties = ['email']
@@ -125,8 +117,7 @@ class SignupHandler(AccountHandler):
                 "email": email
             })
 
-            self.render()
-            return
+            return render_template(self.template_name, **self.template_values)
 
         self.send_email("signup", user)
 
@@ -135,16 +126,16 @@ class SignupHandler(AccountHandler):
             self.auth.set_session(self.auth.store.user_to_dict(user), remember=True)
             # redirect to my account
             self.redirect(self.uri_for('contul-meu'))
-        except Exception, e:
+        except Exception as e:
             
             self.template_values["errors"] = "Se pare ca a aparut o problema. Te rugam sa incerci din nou"
-            self.render()
+            return render_template(self.template_name, **self.template_values)
 
 class ForgotPasswordHandler(AccountHandler):
     """template used to reset a password, it asks for the email address"""
     template_name = 'resetare-parola.html'
     def get(self):
-        self.render()
+        return render_template(self.template_name, **self.template_values)
 
     def post(self):
         post = self.request
@@ -153,16 +144,14 @@ class ForgotPasswordHandler(AccountHandler):
 
         if not email:
             self.template_values["errors"] = "Campul email nu poate fi gol."
-            self.render()
-            return
+            return render_template(self.template_name, **self.template_values)
 
         captcha_response = submit(post.get(CAPTCHA_POST_PARAM), CAPTCHA_PRIVATE_KEY, post.remote_addr)
         # if the captcha is not valid return
         if not captcha_response.is_valid:
             
             self.template_values["errors"] = "Se pare ca a fost o problema cu verificarea reCAPTCHA. Te rugam sa incerci din nou."
-            self.render()
-            return
+            return render_template(self.template_name, **self.template_values)
 
         user = self.user_model.get_by_auth_id(email)
         if not user:            
@@ -170,8 +159,7 @@ class ForgotPasswordHandler(AccountHandler):
                 "errors": "Se pare ca nu exita un cont cu aceasta adresa!"
             })
 
-            self.render()
-            return
+            return render_template(self.template_name, **self.template_values)
 
         self.send_email("reset-password", user)
         
@@ -180,7 +168,7 @@ class ForgotPasswordHandler(AccountHandler):
             "found": "Un email a fost trimis catre acea adresa"
         })
 
-        self.render()
+        return render_template(self.template_name, **self.template_values)
 
 class VerificationHandler(AccountHandler):
     """handler used to:
@@ -223,10 +211,10 @@ class VerificationHandler(AccountHandler):
             self.template_values.update({
                 "token": signup_token
             })
-            self.render()
+            return render_template(self.template_name, **self.template_values)
         else:
             info('verification type not supported')
-            self.abort(404)
+            abort(404)
 
 class SetPasswordHandler(AccountHandler):
     """handler used to get the submited data in the reset password form"""
@@ -243,15 +231,13 @@ class SetPasswordHandler(AccountHandler):
             self.template_values.update({
                 "errors": "Nu uita sa scrii o parola noua."
             })
-            self.render()
-            return
+            return render_template(self.template_name, **self.template_values)
 
         if password != confirm_password:
             self.template_values.update({
                 "errors": "Te rugam sa confirmi parola. A doua parola nu seamana cu prima."
             })
-            self.render()
-            return
+            return render_template(self.template_name, **self.template_values)
 
         user = self.user
         user.set_password(password)
@@ -260,4 +246,6 @@ class SetPasswordHandler(AccountHandler):
         # remove signup token, we don't want users to come back with an old link
         self.user_model.delete_signup_token(user.get_id(), old_token)
 
-        self.redirect(self.uri_for("login"))
+        # self.redirect(self.uri_for("login"))
+
+        return redirect(url_for('login'))

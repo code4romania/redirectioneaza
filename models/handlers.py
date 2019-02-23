@@ -1,24 +1,26 @@
 
 import os
-import webapp2
+# import webapp2
 import jinja2
-import urlparse
+from urllib.parse import urlparse
 import logging
 
 from logging import info, warn
+
+from flask.views import MethodView 
 
 # globals
 from appengine_config import *
 
 # user object
-from google.appengine.api import users, urlfetch
-from google.appengine.api import mail
-from google.appengine.ext import ndb
+# from google.appengine.api import users, urlfetch
+# from google.appengine.api import mail
+# from google.appengine.ext import ndb
 
-from webapp2_extras import sessions, auth, json
+#from webapp2_extras import sessions, auth, json
 
-from models import NgoEntity, Donor
-from email import EmailManager
+# from .models import NgoEntity, Donor
+from .email import EmailManager
 
 
 def get_jinja_enviroment(account_view_folder=''):
@@ -43,7 +45,7 @@ template_settings = {
     "errors": None
 }
 
-class Handler(webapp2.RequestHandler):
+class Handler(MethodView):
     """this is just a wrapper over webapp2.RequestHandler"""
     pass
 
@@ -56,39 +58,39 @@ class BaseHandler(Handler):
         self.template_values = {}
         self.template_values.update(template_settings)
 
-        self.template_values["is_admin"] = users.is_current_user_admin()
+        self.template_values["is_admin"] = False #users.is_current_user_admin()
 
         self.jinja_enviroment = get_jinja_enviroment()
 
         # Set webapp2.uri_for as global to be used in jinja2 templates
         self.jinja_enviroment.globals.update({
-            'uri_for': webapp2.uri_for,
+            # 'uri_for': webapp2.uri_for,
             # we need the DEV var everywhere in the site
             "DEV": DEV
         })
 
-    def dispatch(self):
-        """
-        This snippet of code is taken from the webapp2 framework documentation.
-        See more at
-        http://webapp-improved.appspot.com/api/webapp2_extras/sessions.html
+    # def dispatch(self):
+    #     """
+    #     This snippet of code is taken from the webapp2 framework documentation.
+    #     See more at
+    #     http://webapp-improved.appspot.com/api/webapp2_extras/sessions.html
 
-        """
-        self.session_store = sessions.get_store(request=self.request)
-        try:
-            webapp2.RequestHandler.dispatch(self)
-        finally:
-            self.session_store.save_sessions(self.response)
+    #     """
+    #     self.session_store = sessions.get_store(request=self.request)
+    #     try:
+    #         webapp2.RequestHandler.dispatch(self)
+    #     finally:
+    #         self.session_store.save_sessions(self.response)
 
-    @webapp2.cached_property
-    def session(self):
-        """
-        This snippet of code is taken from the webapp2 framework documentation.
-        See more at
-        http://webapp-improved.appspot.com/api/webapp2_extras/sessions.html
+    # @webapp2.cached_property
+    # def session(self):
+    #     """
+    #     This snippet of code is taken from the webapp2 framework documentation.
+    #     See more at
+    #     http://webapp-improved.appspot.com/api/webapp2_extras/sessions.html
 
-        """
-        return self.session_store.get_session()
+    #     """
+    #     return self.session_store.get_session()
 
     # method used to set the
     def set_template(self, template):
@@ -119,7 +121,7 @@ class BaseHandler(Handler):
                     raise TypeError("Type not serializable")
 
             self.response.write( json.encode(obj, default=json_serial) )
-        except Exception, e:
+        except Exception as e:
             warn(e)
 
             obj = {
@@ -163,10 +165,11 @@ class BaseHandler(Handler):
         donor_id = int( self.session.get("donor_id", 0) )
 
         if ngo_id and donor_id:
-            list_of_entities = ndb.get_multi([
-                ndb.Key("NgoEntity", ngo_id), 
-                ndb.Key("Donor", donor_id)
-            ])
+            # list_of_entities = ndb.get_multi([
+            #     ndb.Key("NgoEntity", ngo_id), 
+            #     ndb.Key("Donor", donor_id)
+            # ])
+            list_of_entities = []
 
             ngo = list_of_entities[0]
             donor = list_of_entities[1]
@@ -283,7 +286,7 @@ class BaseHandler(Handler):
 
             EmailManager.send_email(sender=sender, receiver=receiver, subject=subject, text_template=text_body, html_template=html_body)
 
-        except Exception, e:
+        except Exception as e:
 
             warn(e)
 
@@ -305,46 +308,46 @@ def user_required(handler):
 
 class AccountHandler(BaseHandler):
     """class used for logged in users"""
+    pass
+    # @webapp2.cached_property
+    # def auth(self):
+    #     """Shortcut to access the auth instance as a property."""
+    #     return auth.get_auth() # request=self.request
 
-    @webapp2.cached_property
-    def auth(self):
-        """Shortcut to access the auth instance as a property."""
-        return auth.get_auth() # request=self.request
+    # @webapp2.cached_property
+    # def user_info(self):
+    #     """Shortcut to access a subset of the user attributes that are stored
+    #         in the session (cookie).
 
-    @webapp2.cached_property
-    def user_info(self):
-        """Shortcut to access a subset of the user attributes that are stored
-            in the session (cookie).
+    #         The list of attributes to store in the session is specified in
+    #         config['webapp2_extras.auth']['user_attributes'].
+    #         :returns
+    #         A dictionary with most user information
+    #     """
+    #     return self.auth.get_user_by_session()
 
-            The list of attributes to store in the session is specified in
-            config['webapp2_extras.auth']['user_attributes'].
-            :returns
-            A dictionary with most user information
-        """
-        return self.auth.get_user_by_session()
+    # @webapp2.cached_property
+    # def user(self):
+    #     """Shortcut to access the user's ndb entity.
+    #         It goes to the datastore.
 
-    @webapp2.cached_property
-    def user(self):
-        """Shortcut to access the user's ndb entity.
-            It goes to the datastore.
+    #         :returns
+    #         The user's ndb entity
+    #     """
+    #     # it takes the user's info from the session cookie
+    #     u = self.user_info
+    #     # then using the ndb model queries the datastore
+    #     return self.user_model.get_by_id(u['user_id']) if u else None
 
-            :returns
-            The user's ndb entity
-        """
-        # it takes the user's info from the session cookie
-        u = self.user_info
-        # then using the ndb model queries the datastore
-        return self.user_model.get_by_id(u['user_id']) if u else None
+    # @webapp2.cached_property
+    # def user_model(self):
+    #     """Returns the implementation of the user model.
 
-    @webapp2.cached_property
-    def user_model(self):
-        """Returns the implementation of the user model.
+    #         It is consistent with config['webapp2_extras.auth']['user_model'], if set.
+    #     """
+    #     return self.auth.store.user_model
 
-            It is consistent with config['webapp2_extras.auth']['user_model'], if set.
-        """
-        return self.auth.store.user_model
-
-    @webapp2.cached_property
-    def session(self):
-        """override BaseHandler session method in order to use the datastore as the backend."""
-        return self.session_store.get_session(backend="datastore")
+    # @webapp2.cached_property
+    # def session(self):
+    #     """override BaseHandler session method in order to use the datastore as the backend."""
+    #     return self.session_store.get_session(backend="datastore")

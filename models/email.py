@@ -2,7 +2,7 @@
 
 import os
 
-from google.appengine.api.mail import EmailMessage
+# from google.appengine.api.mail import EmailMessage
 
 from appengine_config import DEV, CONTACT_FORM_URL, CONTACT_EMAIL_ADDRESS
 
@@ -50,7 +50,7 @@ class EmailManager(object):
 
             return True
 
-        except Exception, e:
+        except Exception as e:
             
             warn(e)
             return False
@@ -146,7 +146,7 @@ class EmailManager(object):
 
             return True
 
-        except Exception, e:
+        except Exception as e:
             warn(e)
 
             return False

@@ -11,3 +11,5 @@ bower_components/
 
 app.yaml
 blobs/
+
+lib/
