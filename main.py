@@ -14,11 +14,13 @@ from core import app, db
 from appengine_config import SESSION_SECRET_KEY, DEV
 from controllers.site import *
 from controllers.account_management import *
-# from controllers.my_account import *
+from controllers.my_account import *
 # from controllers.api import *
 # from controllers.admin import *
 # from controllers.ngo import NgoHandler, TwoPercentHandler, DonationSucces
 # from cron import cron_routes
+
+db.drop_all()
 
 db.create_all()
 def setup_route(route, **kwargs):
@@ -52,9 +54,9 @@ setup_route('/forgot',    handler=ForgotPasswordHandler, name='forgot')
 setup_route('/password',  handler=SetPasswordHandler)
 
 # # my account
-# setup_route('/contul-meu',        handler=MyAccountHandler, name='contul-meu')
-# setup_route('/asociatia',         handler=NgoDetailsHandler, name='asociatia')
-# setup_route('/date-cont',         handler=MyAccountDetailsHandler, name='date-contul-meu')
+setup_route('/contul-meu',        handler=MyAccountHandler, name='contul-meu')
+setup_route('/asociatia',         handler=NgoDetailsHandler, name='asociatia')
+setup_route('/date-cont',         handler=MyAccountDetailsHandler, name='date-contul-meu')
 
 # setup_route('/api/ngo/check-url/<ngo_url>',   handler=CheckNgoUrl,    name='api-ngo-check-url')
 # setup_route('/api/ngo/upload-url',            handler=GetUploadUrl,   name='api-ngo-upload-url')

@@ -1,6 +1,46 @@
 from appengine_config import DEFAULT_NGO_LOGO
 from datetime import datetime
 from core import db
+from sqlalchemy.orm.exc import NoResultFound
+
+
+ngo_tags = db.Table('ngoentity_tag',\
+    db.Column('tag_id', db.Integer, db.ForeignKey('tag.id')),\
+    db.Column('ngoentity_id', db.Integer, db.ForeignKey('ngo_entity.id')))
+
+
+class Tag(db.Model):
+    """
+    Defines the Tag object.
+    """
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(25), nullable=False, unique=True, index=True)
+
+    @staticmethod
+    def get_or_create(name):
+        """
+        Gets or creates a tag with a given name.
+        :param name: string, name of the tag to be found or created if it doesn't exist.
+        :return:  Tag
+        """
+        try:
+            return Tag.query.filter_by(name=name).one()
+        except NoResultFound:
+            return Tag(name=name)
+
+    @staticmethod
+    def all():
+        """
+        Returns all the tags.
+        :return: Tag(s)
+        """
+        return Tag.query.all()
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return self.name
 
 # to the list of counties add the whole country
 class NgoEntity(db.Model):
@@ -42,7 +82,7 @@ class NgoEntity(db.Model):
     form_url = db.Column(db.String(256), index=True)
 
     # # tags for the 
-    # tags = db.Column(db.String(256), index=True)
+    tags = db.relationship('Tag', secondary=ngo_tags)
 
     # meta data
     date_created = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
@@ -54,34 +94,34 @@ class NgoEntity(db.Model):
 # class Fundraiser(BaseEntity):
 #     pass
 
-# class Donor(BaseEntity):
+class Donor(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    first_name = db.Column(db.String(256), index=True)
+    last_name = db.Column(db.String(256), index=True)
     
-#     first_name = ndb.StringProperty(indexed=True)
-#     last_name = ndb.StringProperty(indexed=True)
+    city = db.Column(db.String(256), index=True)
+    county = db.Column(db.String(256), index=True)
     
-#     city = ndb.StringProperty(indexed=True)
-#     county = ndb.StringProperty(indexed=True)
-    
-#     email = ndb.StringProperty(indexed=True)
-#     tel = ndb.StringProperty(indexed=True)
+    email = db.Column(db.String(120), unique=True, index=True)
+    tel = db.Column(db.String(256), index=True)
 
-#     anonymous = ndb.BooleanProperty(indexed=True, default=True)
+    anonymous = db.Column(db.Boolean, default=True)
 
-#     # type of income: wage or pension
-#     income = ndb.StringProperty(indexed=False, default='wage') # choices=['wage', 'pension']
+    # type of income: wage or pension
+    income = db.Column(db.String(256), index=True, default='wage') # choices=['wage', 'pension']
 
-#     geoip = ndb.TextProperty()
+    geoip = db.Column(db.UnicodeText())
 
-#     ngo = ndb.KeyProperty(indexed=True, kind="NgoEntity")
+    ngo = db.Column(db.Integer, db.ForeignKey('ngo_entity.id'))
 
-#     # the pdf to be downloaded by the donor
-#     pdf_url = ndb.StringProperty()
-#     # the url of the pdf/image after it was signed and scanned
-#     # only if the ngo allows it
-#     pdf_signed_url = ndb.StringProperty()
+    # the pdf to be downloaded by the donor
+    pdf_url = db.Column(db.String(256))
+    # the url of the pdf/image after it was signed and scanned
+    # only if the ngo allows it
+    pdf_signed_url = db.Column(db.String(256), index=True)
 
-#     # meta data
-#     date_created = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
+    # meta data
+    date_created = db.Column(db.DateTime, default=datetime.utcnow, nullable=False, index=True)
 
 
 # events = ["log-in", "form-submitted"]

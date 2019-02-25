@@ -1,6 +1,12 @@
-from flask import url_for, redirect, render_template
+from flask import url_for, redirect, render_template, request
+
+from flask_login import login_user, current_user
+
+from core import app, login_manager
 
 from models.handlers import AccountHandler, user_required
+
+from models.user import User
 
 from appengine_config import CAPTCHA_PRIVATE_KEY, CAPTCHA_POST_PARAM
 
@@ -8,52 +14,66 @@ from .captcha import submit
 
 from logging import info, warn
 
+
+@login_manager.user_loader
+def load_user(user_id):
+    """
+    Gets user given a certain user_id
+    :param user_id:
+    :return: User
+    """
+    return User.query.get(int(user_id))
+
 class LoginHandler(AccountHandler):
     template_name = 'login.html'
     def get(self):
 
         self.template_values["title"] = "Contul meu"
 
-        # if the user is logged in just redirect
-        # if self.user_info:
-        #     self.redirect(self.uri_for("contul-meu"))
+        if current_user.is_authenticated:
+            return redirect(url_for('contul-meu'))
 
         return render_template(self.template_name, **self.template_values)
 
     def post(self):
-        post = self.request
 
-        email = post.get('email')
-        password = post.get('parola')
+        email = request.form.get('email')
+        password = request.form.get('parola')
 
         if not email:
-            self.template_values["errors"] = "Campul email nu poate fi gol."
-            return render_template(self.template_name, **self.template_values)
+             self.template_values["errors"] = "Campul email nu poate fi gol."
+             return render_template(self.template_name, **self.template_values)
 
         if not password:
             self.template_values["errors"] = "Campul parola nu poate fi gol."
             return render_template(self.template_name, **self.template_values)
 
-        captcha_response = submit(post.get(CAPTCHA_POST_PARAM), CAPTCHA_PRIVATE_KEY, post.remote_addr)
-
+        
+        
+        captcha_response = submit(request.form.get('g-recaptcha-response'), CAPTCHA_PRIVATE_KEY, request.remote_addr)
+        
         # if the captcha is not valid return
         if not captcha_response.is_valid:
             
             self.template_values["errors"] = "Se pare ca a fost o problema cu verificarea reCAPTCHA. Te rugam sa incerci din nou."
+
             return render_template(self.template_name, **self.template_values)
 
-        try:
-            user = self.auth.get_user_by_password(email, password, remember=True)
-            # succes
-            self.redirect(self.uri_for('contul-meu'))
-        
-        except (InvalidAuthIdError, InvalidPasswordError) as e:
+        _user = User.get_by_email(email)
 
+        if _user is not None and _user.check_password(password):
+            login_user(_user)
+        
+            return "OK", 200, {'Content-Type': 'text/css; charset=utf-8'}
+        
+        else:
             warn('Invalid email or password: {0}'.format(email))
 
             self.template_values['email'] = email
+
             self.template_values["errors"] = "Se pare ca aceasta combinatie de email si parola este incorecta."
-            return render_template(self.template_name, **self.template_values)
+
+        return render_template(self.template_name, **self.template_values)
 
 
 class LogoutHandler(AccountHandler):

@@ -1,5 +1,3 @@
-
-
 from urllib.request import urlopen, Request
 from urllib.parse import urlencode
 from appengine_config import *
@@ -32,7 +30,7 @@ def submit(recaptcha_response_field, private_key, remoteip):
             'secret': private_key,
             'remoteip':  remoteip,
             'response':  recaptcha_response_field,
-            })
+            }).encode("utf-8")
 
     request = Request(
         url = VERIFY_URL,

@@ -19,7 +19,7 @@ import os
 # minify-css && gcloud app deploy ./app.yaml --version 14
 
 # if we are currently in production
-DEV = os.environ.get('SERVER_SOFTWARE', 'Development').startswith('Development')
+DEV = True#os.environ.get('SERVER_SOFTWARE', 'Development').startswith('Development')
 # use this to simulate production
 # DEV = False
 

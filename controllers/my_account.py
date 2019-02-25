@@ -1,11 +1,12 @@
-
+from flask import render_template
+from flask_login import login_required
 import datetime
 
 from collections import OrderedDict
 
-from google.appengine.ext.ndb import put_multi, OR, Key
-from google.appengine.api import users
-from google.appengine.api import mail
+# from google.appengine.ext.ndb import put_multi, OR, Key
+# from google.appengine.api import users
+# from google.appengine.api import mail
 
 from appengine_config import LIST_OF_COUNTIES, CONTACT_EMAIL_ADDRESS, START_YEAR
 
@@ -13,7 +14,7 @@ from models.handlers import AccountHandler, user_required
 from models.models import NgoEntity, Donor
 from models.user import User
 
-from api import check_ngo_url
+# from api import check_ngo_url
 from logging import info
 
 
@@ -25,63 +26,63 @@ not_unique = 'Se pare ca acest cod CIF sau cont bancar este deja inscris. ' \
 class MyAccountHandler(AccountHandler):
     template_name = 'ngo/my-account.html'
 
-    @user_required
+    @login_required
     def get(self):
 
-        user = self.user
-        self.template_values["user"] = user
-        self.template_values["title"] = "Contul meu"
+        # user = self.user
+        # self.template_values["user"] = user
+        # self.template_values["title"] = "Contul meu"
 
-        now = datetime.datetime.now()
+        # now = datetime.datetime.now()
 
-        if user.ngo:
-            ngo = user.ngo.get()
-            self.template_values["ngo"] = ngo
+        # if user.ngo:
+        #     ngo = user.ngo.get()
+        #     self.template_values["ngo"] = ngo
 
-            # the url to distribute, use this instead of:
-            # self.uri_for("ngo-url", ngo_url=ngo.key.id(), _full=True)
-            self.template_values["ngo_url"] = self.request.host + '/' + ngo.key.id() 
+        #     # the url to distribute, use this instead of:
+        #     # self.uri_for("ngo-url", ngo_url=ngo.key.id(), _full=True)
+        #     self.template_values["ngo_url"] = self.request.host + '/' + ngo.key.id() 
 
-            donor_projection = ['first_name', 'last_name', 'city', 'county', 'email', 'tel', 'anonymous', 'date_created']
-            donors = Donor.query(Donor.ngo == ngo.key).order(-Donor.date_created).fetch(projection=donor_projection)
+        #     donor_projection = ['first_name', 'last_name', 'city', 'county', 'email', 'tel', 'anonymous', 'date_created']
+        #     donors = Donor.query(Donor.ngo == ngo.key).order(-Donor.date_created).fetch(projection=donor_projection)
             
-            years = xrange(now.year, START_YEAR-1, -1)
-            grouped_donors = OrderedDict()
-            for year in years:
-                grouped_donors[year] = []
+        #     years = xrange(now.year, START_YEAR-1, -1)
+        #     grouped_donors = OrderedDict()
+        #     for year in years:
+        #         grouped_donors[year] = []
             
 
-            # group the donors by year
-            for donor in donors:
+        #     # group the donors by year
+        #     for donor in donors:
 
-                index = donor.date_created.year
+        #         index = donor.date_created.year
                 
-                if index in years:
-                    grouped_donors[ index ].append(donor)
+        #         if index in years:
+        #             grouped_donors[ index ].append(donor)
 
-            self.template_values["current_year"] = now.year
-            self.template_values["donors"] = grouped_donors
-            # self.template_values["years"] = years
+        #     self.template_values["current_year"] = now.year
+        #     self.template_values["donors"] = grouped_donors
+        #     # self.template_values["years"] = years
             
-            can_donate = True
-            if now.month > 5 or now.month == 5 and now.day > 25:
-                can_donate = False
+        #     can_donate = True
+        #     if now.month > 5 or now.month == 5 and now.day > 25:
+        #         can_donate = False
 
-            self.template_values["can_donate"] = can_donate
+        #     self.template_values["can_donate"] = can_donate
 
-        else:
-            self.template_values["ngo"] = {}
+        # else:
+        #     self.template_values["ngo"] = {}
     
-            self.template_values["counties"] = LIST_OF_COUNTIES
+        #     self.template_values["counties"] = LIST_OF_COUNTIES
 
-            # self.uri_for("api-ngo-check-url", ngo_url="")
-            # TODO: use uri_for
-            # self.template_values["check_ngo_url"] = "/api/ngo/check-url/"
+        #     # self.uri_for("api-ngo-check-url", ngo_url="")
+        #     # TODO: use uri_for
+        #     # self.template_values["check_ngo_url"] = "/api/ngo/check-url/"
             
-            # self.template_values["ngo_upload_url"] = self.uri_for("api-ngo-upload-url")
+        #     # self.template_values["ngo_upload_url"] = self.uri_for("api-ngo-upload-url")
 
         
-        self.render()
+        return render_template(self.template_name, **self.template_values)
 
 class MyAccountDetailsHandler(AccountHandler):
     template_name = 'ngo/my-account-details.html'

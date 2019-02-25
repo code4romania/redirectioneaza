@@ -8,9 +8,10 @@ import logging
 from logging import info, warn
 
 from flask.views import MethodView 
+from core import app
 
 # globals
-from appengine_config import *
+from appengine_config import *  
 
 # user object
 # from google.appengine.api import users, urlfetch
@@ -23,16 +24,17 @@ from appengine_config import *
 from .email import EmailManager
 
 
-def get_jinja_enviroment(account_view_folder=''):
-    return jinja2.Environment(
-        loader=jinja2.FileSystemLoader(
-            os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir))
-            + VIEWS_FOLDER
-            + account_view_folder ),
-        extensions=['jinja2.ext.autoescape', 'jinja2.ext.i18n'],
-        autoescape=True)
+# def get_jinja_enviroment(account_view_folder=''):
+#     return jinja2.Environment(
+#         loader=jinja2.FileSystemLoader(
+#             os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir))
+#             + VIEWS_FOLDER
+#             + account_view_folder ),
+#         extensions=['jinja2.ext.autoescape', 'jinja2.ext.i18n'],
+#         autoescape=True)
     
 # default values for every template
+
 template_settings = {
     "bower_components": DEV_DEPENDECIES_LOCATION,
     "DEV": DEV,
@@ -45,8 +47,10 @@ template_settings = {
     "errors": None
 }
 
+app.jinja_env.globals = {**app.jinja_env.globals,**template_settings}
+
 class Handler(MethodView):
-    """this is just a wrapper over webapp2.RequestHandler"""
+    """this is just a wrapper over Flask MethodView"""
     pass
 
 class BaseHandler(Handler):
@@ -60,14 +64,14 @@ class BaseHandler(Handler):
 
         self.template_values["is_admin"] = False #users.is_current_user_admin()
 
-        self.jinja_enviroment = get_jinja_enviroment()
+        # self.jinja_enviroment = get_jinja_enviroment()
 
-        # Set webapp2.uri_for as global to be used in jinja2 templates
-        self.jinja_enviroment.globals.update({
-            # 'uri_for': webapp2.uri_for,
-            # we need the DEV var everywhere in the site
-            "DEV": DEV
-        })
+        # # Set webapp2.uri_for as global to be used in jinja2 templates
+        # self.jinja_enviroment.globals.update({
+        #     # 'uri_for': webapp2.uri_for,
+        #     # we need the DEV var everywhere in the site
+        #     "DEV": DEV
+        # })
 
     # def dispatch(self):
     #     """
