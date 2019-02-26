@@ -1,19 +1,13 @@
 from flask import url_for, redirect, render_template, request
-
-from flask_login import login_user, current_user
-
-from core import app, login_manager
-
-from models.handlers import AccountHandler, user_required
-
-from models.user import User
-
-from appengine_config import CAPTCHA_PRIVATE_KEY, CAPTCHA_POST_PARAM
-
-from .captcha import submit
-
+from flask_login import login_user, current_user, logout_user
+from datetime import datetime
 from logging import info, warn
-
+from sqlalchemy.exc import IntegrityError
+from core import app, login_manager,db
+from models.handlers import AccountHandler, user_required, BaseHandler
+from models.user import User
+from appengine_config import CAPTCHA_PRIVATE_KEY, CAPTCHA_POST_PARAM
+from .captcha import submit
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -24,7 +18,7 @@ def load_user(user_id):
     """
     return User.query.get(int(user_id))
 
-class LoginHandler(AccountHandler):
+class LoginHandler(BaseHandler):
     template_name = 'login.html'
     def get(self):
 
@@ -48,8 +42,6 @@ class LoginHandler(AccountHandler):
             self.template_values["errors"] = "Campul parola nu poate fi gol."
             return render_template(self.template_name, **self.template_values)
 
-        
-        
         captcha_response = submit(request.form.get('g-recaptcha-response'), CAPTCHA_PRIVATE_KEY, request.remote_addr)
         
         # if the captcha is not valid return
@@ -64,7 +56,7 @@ class LoginHandler(AccountHandler):
         if _user is not None and _user.check_password(password):
             login_user(_user)
         
-            return "OK", 200, {'Content-Type': 'text/css; charset=utf-8'}
+            return redirect(url_for('contul-meu'))
         
         else:
             warn('Invalid email or password: {0}'.format(email))
@@ -75,13 +67,12 @@ class LoginHandler(AccountHandler):
 
         return render_template(self.template_name, **self.template_values)
 
-
-class LogoutHandler(AccountHandler):
+class LogoutHandler(BaseHandler):
     def get(self):
-        self.auth.unset_session()
-        self.redirect("/")
+        logout_user()
+        return redirect("/")
 
-class SignupHandler(AccountHandler):
+class SignupHandler(BaseHandler):
     template_name = 'cont-nou.html'
     def get(self):
 
@@ -89,13 +80,11 @@ class SignupHandler(AccountHandler):
         return render_template(self.template_name, **self.template_values)
 
     def post(self):
-        post = self.request
-
-        first_name = post.get('nume')
-        last_name = post.get('prenume')
+        first_name = request.form.get('nume')
+        last_name = request.form.get('prenume')
         
-        email = post.get('email')
-        password = post.get('parola')
+        email = request.form.get('email')
+        password = request.form.get('parola')
 
         if not first_name:
             self.template_values["errors"] = "Campul nume nu poate fi gol."
@@ -113,22 +102,36 @@ class SignupHandler(AccountHandler):
             self.template_values["errors"] = "Campul parola nu poate fi gol."
             return render_template(self.template_name, **self.template_values)
 
-        captcha_response = submit(post.get(CAPTCHA_POST_PARAM), CAPTCHA_PRIVATE_KEY, post.remote_addr)
+        captcha_response = submit(request.form.get('g-recaptcha-response'), CAPTCHA_PRIVATE_KEY, request.remote_addr)
 
         # if the captcha is not valid return
         if not captcha_response.is_valid:
             
             self.template_values["errors"] = "Se pare ca a fost o problema cu verificarea reCAPTCHA. Te rugam sa incerci din nou."
             return render_template(self.template_name, **self.template_values)
-            return
 
-        unique_properties = ['email']
-        success, user = self.user_model.create_user(email, unique_properties,
-            first_name=first_name, last_name=last_name,
-            email=email, password_raw=password, verified=False
-        )
+        _user  = User( email = email,\
+                       first_name = first_name,\
+                       last_name = last_name,\
+                       password = password,\
+                       verified = False)
 
-        if not success: #user_data is a tuple
+        db.session.add(_user)
+
+        # unique_properties = ['email']
+        # success, user = self.user_model.create_user(email, unique_properties,
+        #     first_name=first_name, last_name=last_name,
+        #     email=email, password_raw=password, verified=False
+        # )
+
+        try:
+            db.session.commit()
+        except IntegrityError as e:
+
+            print('DEBUG \n'*5)
+            print(e)
+            print('DEBUG \n'*5)
+
             self.template_values["errors"] = "Exista deja un cont cu aceasta adresa."
             
             self.template_values.update({
@@ -139,13 +142,16 @@ class SignupHandler(AccountHandler):
 
             return render_template(self.template_name, **self.template_values)
 
-        self.send_email("signup", user)
+        #self.send_email("signup", user)
 
         try:
             # login the user after signup
-            self.auth.set_session(self.auth.store.user_to_dict(user), remember=True)
+            #self.auth.set_session(self.auth.store.user_to_dict(user), remember=True)
+            
+            login_user(_user)
+            
             # redirect to my account
-            self.redirect(self.uri_for('contul-meu'))
+            return redirect(url_for('contul-meu'))
         except Exception as e:
             
             self.template_values["errors"] = "Se pare ca a aparut o problema. Te rugam sa incerci din nou"

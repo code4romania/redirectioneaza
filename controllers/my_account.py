@@ -1,8 +1,8 @@
-from flask import render_template
-from flask_login import login_required
+from flask import render_template, url_for, request
+from flask_login import login_required, current_user
 import datetime
-
 from collections import OrderedDict
+from logging import info
 
 # from google.appengine.ext.ndb import put_multi, OR, Key
 # from google.appengine.api import users
@@ -10,12 +10,12 @@ from collections import OrderedDict
 
 from appengine_config import LIST_OF_COUNTIES, CONTACT_EMAIL_ADDRESS, START_YEAR
 
-from models.handlers import AccountHandler, user_required
+from models.handlers import AccountHandler, user_required, BaseHandler
 from models.models import NgoEntity, Donor
 from models.user import User
+from core import db
 
 # from api import check_ngo_url
-from logging import info
 
 
 incomplete_form_data = "Te rugam sa completezi datele din formular."
@@ -23,104 +23,107 @@ url_taken = "Din pacate acest url este folosit deja."
 not_unique = 'Se pare ca acest cod CIF sau cont bancar este deja inscris. ' \
              'Daca reprezinti ONG-ul cu aceste date, te rugam sa ne contactezi.'
 
-class MyAccountHandler(AccountHandler):
+class MyAccountHandler(BaseHandler):
     template_name = 'ngo/my-account.html'
 
     @login_required
     def get(self):
 
-        # user = self.user
-        # self.template_values["user"] = user
-        # self.template_values["title"] = "Contul meu"
+        user =  current_user # User.query.get(1)
+        self.template_values["user"] = user
+        self.template_values["title"] = "Contul meu"
 
-        # now = datetime.datetime.now()
+        now = datetime.datetime.now()
 
-        # if user.ngo:
-        #     ngo = user.ngo.get()
-        #     self.template_values["ngo"] = ngo
+        if user.ngo:
+            self.template_values["ngo"] = NgoEntity.query.filter_by(id=user.ngo).first()
 
-        #     # the url to distribute, use this instead of:
-        #     # self.uri_for("ngo-url", ngo_url=ngo.key.id(), _full=True)
-        #     self.template_values["ngo_url"] = self.request.host + '/' + ngo.key.id() 
+            self.template_values["ngo_url"] = url_for('asociatia')+'/'+str(user.ngo)
 
-        #     donor_projection = ['first_name', 'last_name', 'city', 'county', 'email', 'tel', 'anonymous', 'date_created']
-        #     donors = Donor.query(Donor.ngo == ngo.key).order(-Donor.date_created).fetch(projection=donor_projection)
+            donors = Donor.query.with_entities(Donor.first_name,\
+                                               Donor.last_name,\
+                                               Donor.city,\
+                                               Donor.county,\
+                                               Donor.email,\
+                                               Donor.tel,\
+                                               Donor.anonymous,\
+                                               Donor.date_created).filter_by(id=user.ngo)\
+                                .order_by(Donor.date_created.desc())\
+                                .all()
+            years = range(now.year, START_YEAR-1, -1)
+            grouped_donors = OrderedDict()
+            for year in years:
+                grouped_donors[year] = []
             
-        #     years = xrange(now.year, START_YEAR-1, -1)
-        #     grouped_donors = OrderedDict()
-        #     for year in years:
-        #         grouped_donors[year] = []
-            
 
-        #     # group the donors by year
-        #     for donor in donors:
+            # group the donors by year
+            for donor in donors:
 
-        #         index = donor.date_created.year
+                index = donor.date_created.year
                 
-        #         if index in years:
-        #             grouped_donors[ index ].append(donor)
+                if index in years:
+                    grouped_donors[ index ].append(donor)
 
-        #     self.template_values["current_year"] = now.year
-        #     self.template_values["donors"] = grouped_donors
-        #     # self.template_values["years"] = years
+            self.template_values["current_year"] = now.year
+            self.template_values["donors"] = grouped_donors
             
-        #     can_donate = True
-        #     if now.month > 5 or now.month == 5 and now.day > 25:
-        #         can_donate = False
+            can_donate = True
+            if now.month > 5 or now.month == 5 and now.day > 25:
+                can_donate = False
 
-        #     self.template_values["can_donate"] = can_donate
+            self.template_values["can_donate"] = can_donate
 
-        # else:
-        #     self.template_values["ngo"] = {}
+        else:
+            self.template_values["ngo"] = {}
     
-        #     self.template_values["counties"] = LIST_OF_COUNTIES
+            self.template_values["counties"] = LIST_OF_COUNTIES
 
-        #     # self.uri_for("api-ngo-check-url", ngo_url="")
-        #     # TODO: use uri_for
-        #     # self.template_values["check_ngo_url"] = "/api/ngo/check-url/"
+            # self.uri_for("api-ngo-check-url", ngo_url="")
+            # TODO: use uri_for
+            # self.template_values["check_ngo_url"] = "/api/ngo/check-url/"
             
-        #     # self.template_values["ngo_upload_url"] = self.uri_for("api-ngo-upload-url")
+            # self.template_values["ngo_upload_url"] = self.uri_for("api-ngo-upload-url")
 
         
         return render_template(self.template_name, **self.template_values)
 
-class MyAccountDetailsHandler(AccountHandler):
+class MyAccountDetailsHandler(BaseHandler):
     template_name = 'ngo/my-account-details.html'
 
-    @user_required
+    @login_required
     def get(self):
 
-        user = self.user
+        user = current_user
         self.template_values["user"] = user
         self.template_values["title"] = "Date cont"
         
-        self.render()
+        return render_template(self.template_name, **self.template_values)
     
-    @user_required
+    @login_required
     def post(self):
         
-        user = self.user
-        if user is None:
-            self.abort(403)
+        user = current_user
+        # if user is None:
+        #     self.abort(403)
 
         self.template_values["user"] = user
         self.template_values["title"] = "Date cont"
 
-        first_name = self.request.get('nume')
-        last_name = self.request.get('prenume')
+        first_name = request.form.get('nume')
+        last_name = request.form.get('prenume')
 
         if not first_name or not last_name:
             self.template_values["errors"] = incomplete_form_data
-            self.render()
-            return
+            return render_template(self.template_name, **self.template_values)
 
         user.first_name = first_name
         user.last_name = last_name
-        # user.email = email
 
-        user.put()
+        db.session.merge(user)
 
-        self.render()
+        db.session.commit()
+
+        return render_template(self.template_name, **self.template_values)
 
 class NgoDetailsHandler(AccountHandler):
     template_name = 'ngo/ngo-details.html'

@@ -4,7 +4,7 @@
 <div id="donation-table" class="col-xs-12 col-md-8 col-md-offset-2">
     <p>Mai jos gasesti o lista cu toate persoanele care au completat formularul de 2%:</p>
     
-    {% for key, value in donors.iteritems() %}
+    {% for key, value in donors.items() %}
 
         {% if value or key == current_year %}
             <p>{{ key }}</p>

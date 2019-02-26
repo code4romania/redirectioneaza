@@ -2,6 +2,8 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from os import environ
 
+#### TEMPORARY FIX FOR GOOGLE CLOUD SDK 
+
 import sys
 sys.path.insert(1, '/home/dev/assets/google-cloud-sdk/platform/google_appengine')
 sys.path.insert(1, '/home/dev/assets/google-cloud-sdk/platform/google_appengine/lib/yaml/lib')
@@ -9,6 +11,9 @@ sys.path.insert(1, 'lib')
 
 if 'google' in sys.modules:
     del sys.modules['google']
+
+#### 
+
 
 from core import app, db
 from appengine_config import SESSION_SECRET_KEY, DEV
@@ -20,9 +25,20 @@ from controllers.my_account import *
 # from controllers.ngo import NgoHandler, TwoPercentHandler, DonationSucces
 # from cron import cron_routes
 
-db.drop_all()
 
-db.create_all()
+###### TESTING PURPOSES ONLY
+
+#db.drop_all()
+
+#db.create_all()
+
+#from models.dummy_data import load_dummy_data
+
+#load_dummy_data()
+
+###### TESTING PURPOSES ONLY
+
+
 def setup_route(route, **kwargs):
     app.add_url_rule(route, view_func=kwargs['handler'].as_view(kwargs.get('name', route)))
 

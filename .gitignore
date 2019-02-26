@@ -13,3 +13,4 @@ app.yaml
 blobs/
 
 lib/
+.vscode/
