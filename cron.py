@@ -1,17 +1,12 @@
-
-from webapp2 import Route as r
-
-from google.appengine.ext import ndb
-
 from models.handlers import Handler
 from models.models import NgoEntity
-
 from logging import info
 
+
+# TODO Understand why this is needed
 class NgoRemoveForms(Handler):
-    
+
     def get(self):
-    
         # get all the ngos
         ngos = NgoEntity.query().fetch()
 
@@ -27,9 +22,7 @@ class NgoRemoveForms(Handler):
             to_save.append(ngo)
 
         ndb.put_multi(to_save)
-        
 
-
-cron_routes = [
-    r('/ngos/remove-form',    handler=NgoRemoveForms,    name="ngo-remove-form"),
-]
+# cron_routes = [
+#     r('/ngos/remove-form',    handler=NgoRemoveForms,    name="ngo-remove-form"),
+# ]

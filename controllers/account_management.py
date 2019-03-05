@@ -1,10 +1,10 @@
-from flask import url_for, redirect, render_template, request
-from flask_login import login_user, current_user, logout_user
+from flask import url_for, redirect, render_template, request, abort
+from flask_login import login_user, current_user, logout_user, login_required
 from datetime import datetime
 from logging import info, warn
 from sqlalchemy.exc import IntegrityError
 from core import app, login_manager,db
-from models.handlers import AccountHandler, user_required, BaseHandler
+from models.handlers import BaseHandler
 from models.user import User
 from appengine_config import CAPTCHA_PRIVATE_KEY, CAPTCHA_POST_PARAM
 from .captcha import submit
@@ -157,29 +157,32 @@ class SignupHandler(BaseHandler):
             self.template_values["errors"] = "Se pare ca a aparut o problema. Te rugam sa incerci din nou"
             return render_template(self.template_name, **self.template_values)
 
-class ForgotPasswordHandler(AccountHandler):
+class ForgotPasswordHandler(BaseHandler):
     """template used to reset a password, it asks for the email address"""
     template_name = 'resetare-parola.html'
     def get(self):
         return render_template(self.template_name, **self.template_values)
 
     def post(self):
-        post = self.request
 
-        email = post.get('email')
+        
+        email = request.form.get('email')
 
         if not email:
+            #TODO Can this code really be reached? AFAIK JS prevents us from submitting an empty field
             self.template_values["errors"] = "Campul email nu poate fi gol."
             return render_template(self.template_name, **self.template_values)
 
-        captcha_response = submit(post.get(CAPTCHA_POST_PARAM), CAPTCHA_PRIVATE_KEY, post.remote_addr)
+        captcha_response = submit(request.form.get('g-recaptcha-response'), CAPTCHA_PRIVATE_KEY, request.remote_addr)
+        
         # if the captcha is not valid return
         if not captcha_response.is_valid:
             
             self.template_values["errors"] = "Se pare ca a fost o problema cu verificarea reCAPTCHA. Te rugam sa incerci din nou."
+
             return render_template(self.template_name, **self.template_values)
 
-        user = self.user_model.get_by_auth_id(email)
+        user = User.query.filter_by(email=email).first()
         if not user:            
             self.template_values.update({
                 "errors": "Se pare ca nu exita un cont cu aceasta adresa!"
@@ -196,14 +199,17 @@ class ForgotPasswordHandler(AccountHandler):
 
         return render_template(self.template_name, **self.template_values)
 
-class VerificationHandler(AccountHandler):
+class VerificationHandler(BaseHandler):
     """handler used to:
             verify new account
             reset user password
     """
     
     template_name = 'parola-noua.html'
+
     def get(self, *args, **kwargs):
+        # TODO
+
         user = None
         user_id = kwargs['user_id']
         signup_token = kwargs['signup_token']
@@ -213,11 +219,13 @@ class VerificationHandler(AccountHandler):
         # self.auth.get_user_by_token(user_id, signup_token
         # unfortunately the auth interface does not (yet) allow to manipulate
         # signup tokens concisely
-        user, ts = self.user_model.get_by_auth_token(int(user_id), signup_token, 'signup')
+
+        # TODO
+        #user, ts = self.user_model.get_by_auth_token(int(user_id), signup_token, 'signup')
 
         if not user:
             info('Could not find any user with id "%s" signup token "%s"', user_id, signup_token)
-            self.abort(404)
+            return abort(404)
 
         # store user data in the session
         self.auth.set_session(self.auth.store.user_to_dict(user), remember=True)
@@ -230,7 +238,7 @@ class VerificationHandler(AccountHandler):
                 user.verified = True
                 user.put()
 
-            self.redirect(self.uri_for("contul-meu"))
+            return redirect(url_for("contul-meu"))
 
         elif verification_type == 'p':
             # supply user to the page
@@ -240,18 +248,18 @@ class VerificationHandler(AccountHandler):
             return render_template(self.template_name, **self.template_values)
         else:
             info('verification type not supported')
-            abort(404)
+            return abort(404)
 
-class SetPasswordHandler(AccountHandler):
+class SetPasswordHandler(BaseHandler):
     """handler used to get the submited data in the reset password form"""
 
     template_name = 'parola-noua.html'
     
-    @user_required
+    @login_required
     def post(self):
-        password = self.request.get('parola')
-        confirm_password = self.request.get('confirma-parola')
-        old_token = self.request.get('token')
+        password = request.form.get('parola')
+        confirm_password = request.form.get('confirma-parola')
+        old_token = request.form.get('token')
 
         if not password:
             self.template_values.update({
@@ -261,17 +269,19 @@ class SetPasswordHandler(AccountHandler):
 
         if password != confirm_password:
             self.template_values.update({
-                "errors": "Te rugam sa confirmi parola. A doua parola nu seamana cu prima."
+                "errors": "Te rugam sa confirmi parola. A doua parola nu este identica cu prima."
             })
             return render_template(self.template_name, **self.template_values)
 
-        user = self.user
-        user.set_password(password)
-        user.put()
+        user = current_user
+        user.password = password
+        
+        db.session.merge(user)
+        db.session.commit()
 
         # remove signup token, we don't want users to come back with an old link
-        self.user_model.delete_signup_token(user.get_id(), old_token)
-
-        # self.redirect(self.uri_for("login"))
+        
+        # TODO THIS
+        #self.user_model.delete_signup_token(user.get_id(), old_token)
 
         return redirect(url_for('login'))

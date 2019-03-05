@@ -1,96 +1,83 @@
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from os import environ
-
-#### TEMPORARY FIX FOR GOOGLE CLOUD SDK 
-
-import sys
-sys.path.insert(1, '/home/dev/assets/google-cloud-sdk/platform/google_appengine')
-sys.path.insert(1, '/home/dev/assets/google-cloud-sdk/platform/google_appengine/lib/yaml/lib')
-sys.path.insert(1, 'lib')
-
-if 'google' in sys.modules:
-    del sys.modules['google']
-
-#### 
-
-
-from core import app, db
-from appengine_config import SESSION_SECRET_KEY, DEV
 from controllers.site import *
 from controllers.account_management import *
 from controllers.my_account import *
-# from controllers.api import *
-# from controllers.admin import *
-# from controllers.ngo import NgoHandler, TwoPercentHandler, DonationSucces
-# from cron import cron_routes
+from controllers.api import *
+from controllers.admin import *
+from controllers.ngo import NgoHandler, TwoPercentHandler, DonationSucces
+from cron import NgoRemoveForms
 
 
-###### TESTING PURPOSES ONLY
+# TESTING PURPOSES ONLY
+# TODO Remove this, move into a separate manage.py file for management controls
+#
+# db.drop_all()
+#
+# db.create_all()
+#
+# from utils import load_dummy_data
+#
+# load_dummy_data()
 
-#db.drop_all()
-
-#db.create_all()
-
-#from models.dummy_data import load_dummy_data
-
-#load_dummy_data()
-
-###### TESTING PURPOSES ONLY
+# TESTING PURPOSES ONLY
 
 
-def setup_route(route, **kwargs):
+def register_route(route, **kwargs):
     app.add_url_rule(route, view_func=kwargs['handler'].as_view(kwargs.get('name', route)))
 
 
 # the public part of the app
-setup_route('/',                  handler=HomePage)
-setup_route('/ong',               handler=ForNgoHandler)
+register_route('/', handler=HomePage)
+register_route('/ong', handler=ForNgoHandler)
 
+# TODO Find out if this is still the case
 # backup in case of old urls. to be removed
-setup_route('/pentru-ong-uri',    handler=ForNgoHandler)
+register_route('/pentru-ong-uri', handler=ForNgoHandler)
 
-setup_route('/asociatii',         handler=NgoListHandler)
+register_route('/asociatii', handler=NgoListHandler)
 
-setup_route('/termeni',           handler=TermsHandler)
-setup_route('/TERMENI',           handler=TermsHandler)
-setup_route('/nota-de-informare', handler=NoteHandler,    name='note')
-setup_route('/politica',          handler=PolicyHandler)
-setup_route('/despre',            handler=AboutHandler)
+register_route('/termeni', handler=TermsHandler)
+# TODO Find out why did we need a second one here
+# register_route('/TERMENI',           handler=TermsHandler)
+register_route('/nota-de-informare', handler=NoteHandler, name='note')
+register_route('/politica', handler=PolicyHandler)
+register_route('/despre', handler=AboutHandler)
 
-#account management
-setup_route('/cont-nou',  handler=SignupHandler)
-setup_route('/login',     handler=LoginHandler, name='login')
-setup_route('/logout',    handler=LogoutHandler, name='logout')
+# account management
+register_route('/cont-nou', handler=SignupHandler)
+register_route('/login', handler=LoginHandler, name='login')
+register_route('/logout', handler=LogoutHandler, name='logout')
 
-setup_route('/forgot',    handler=ForgotPasswordHandler, name='forgot')
+register_route('/forgot', handler=ForgotPasswordHandler, name='forgot')
 
 # verification url: used for signup, and reset password
-# setup_route('/<type:v|p>/<user_id:\d+>-<signup_token:.+>', handler=VerificationHandler, name='verification')
-setup_route('/password',  handler=SetPasswordHandler)
+
+# TODO Set up regex in routes, for example /[pv]/[a-z]+[-][1-9]+
+register_route('/verification/<type>/<user_id>-<signup_token>', handler=VerificationHandler, name='verification')
+register_route('/password', handler=SetPasswordHandler, name='password')
 
 # # my account
-setup_route('/contul-meu',        handler=MyAccountHandler, name='contul-meu')
-setup_route('/asociatia',         handler=NgoDetailsHandler, name='asociatia')
-setup_route('/date-cont',         handler=MyAccountDetailsHandler, name='date-contul-meu')
+register_route('/contul-meu', handler=MyAccountHandler, name='contul-meu')
+register_route('/asociatia', handler=NgoDetailsHandler, name='asociatia')
+register_route('/date-cont', handler=MyAccountDetailsHandler, name='date-contul-meu')
 
-# setup_route('/api/ngo/check-url/<ngo_url>',   handler=CheckNgoUrl,    name='api-ngo-check-url')
-# setup_route('/api/ngo/upload-url',            handler=GetUploadUrl,   name='api-ngo-upload-url')
-# setup_route('/api/ngo/form/<ngo_url>',        handler=GetNgoForm,     name='api-ngo-form-url')
-# setup_route('/api/ngos',                      handler=NgosApi,        name='api-ngos')
+register_route('/api/ngo/check-url/<ngo_url>', handler=CheckNgoUrl, name='api-ngo-check-url')
+register_route('/api/ngo/upload-url', handler=GetUploadUrl, name='api-ngo-upload-url')
+register_route('/api/ngo/form/<ngo_url>', handler=GetNgoForm, name='api-ngo-form-url')
+register_route('/api/ngos', handler=NgosApi, name='api-ngos')
 
 # # ADMIN HANDLERS
-# setup_route('/admin',             handler=AdminHandler,       name='admin')
-# setup_route('/admin/conturi',     handler=UserAccounts,       name='admin-users')
-# setup_route('/admin/campanii',    handler=SendCampaign,       name='admin-campanii')
-# setup_route('/admin/ong-nou',     handler=AdminNewNgoHandler, name='admin-ong-nou')
-# setup_route('/admin/<ngo_url>',   handler=AdminNgoHandler,    name='admin-ong')
+register_route('/admin', handler=AdminHandler, name='admin')
+register_route('/admin/conturi', handler=UserAccounts, name='admin-users')
+register_route('/admin/campanii', handler=SendCampaign, name='admin-campanii')
+register_route('/admin/ong-nou', handler=AdminNewNgoHandler, name='admin-ong-nou')
+register_route('/admin/<ngo_url>', handler=AdminNgoHandler, name='admin-ong')
 
+register_route('/<ngo_url>', handler=NgoHandler, name="ngo-url")
+register_route('/catre/<ngo_url>', handler=NgoHandler)
 
-# setup_route('/<ngo_url>',         handler=NgoHandler, name="ngo-url")
-# setup_route('/catre/<ngo_url>',   handler=NgoHandler)
+register_route('/<ngo_url>/doilasuta', handler=TwoPercentHandler, name="twopercent")
+register_route('/<ngo_url>/doilasuta/succes', handler=DonationSucces, name="ngo-twopercent-success")
+register_route('/cron', handler=NgoRemoveForms, name="ngo-remove-form")
 
-# setup_route('/<ngo_url>/doilasuta',           handler=TwoPercentHandler,  name="twopercent")
-# setup_route('/<ngo_url>/doilasuta/succes',    handler=DonationSucces,     name="ngo-twopercent-success")
-
-    # routes.PathPrefixRoute("/cron", cron_routes),
+if __name__ == '__main__':
+    app.run(host='localhost', port=5000)

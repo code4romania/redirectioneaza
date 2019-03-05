@@ -25,16 +25,17 @@
                         <td>{{ loop.index }}</td>
                         <td>{{ user.first_name + " " + user.last_name }}</td>
                         <td>{{ user.email }}</td>
-                        <td>{{ "{0}/{1}/{2}".format(user.created.day, user.created.month, user.created.year) }}</td>
+                        <td>{{user.created}}</td>
                         <td class="{{ 'success' if user.ngo }}">
+
                             {% if user.ngo %}
-                                <a href="/{{ user.ngo.id() }}" target="_blank">da</a>
+                                <a href="/{{ user.ngo.url }}" target="_blank">da</a>
                             {% else %}
                                 nu
                             {% endif %}
                         </td>
                         <td class="{{ 'success' if user.verified == True }}">
-                            {{ "da" if user.verified == True else "nu" }}
+                            {{ "da" if user.verified else "nu" }}
                         </td>
                     </tr>
                 {% endfor %}

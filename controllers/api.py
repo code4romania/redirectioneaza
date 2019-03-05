@@ -1,58 +1,58 @@
-
+from logging import info
+from flask import abort, render_template, url_for, jsonify, request
+from flask_login import current_user, login_required
 from datetime import datetime
-from hashlib import sha1
-
-from google.appengine.ext.ndb import Key
-from google.appengine.api import users, urlfetch
-
+from hashlib import sha1, md5
+from sqlalchemy import func
 from models.models import NgoEntity
-from models.handlers import BaseHandler, AccountHandler, user_required
-from models.storage import CloudStorage
-from models.create_pdf import create_pdf
-
+from models.handlers import BaseHandler
 from appengine_config import USER_UPLOADS_FOLDER, DEFAULT_NGO_LOGO
 
-from webapp2_extras import json, security
+# from models.storage import CloudStorage
+# from models.create_pdf import create_pdf
+# from webapp2_extras import json, security
+# from google.appengine.ext.ndb import Key
+# from google.appengine.api import users, urlfetch
 
-from logging import info
 
-
+# TODO RENAME NGO_ID TO NGO_URL
 def check_ngo_url(ngo_id=None):
     if not ngo_id: 
         return False
 
-    return NgoEntity.query(NgoEntity.key == Key("NgoEntity", ngo_id)).count(limit=1) == 0
+    return NgoEntity.query.filter_by(url=ngo_id).first() is None
 
-
-class CheckNgoUrl(AccountHandler):
+class CheckNgoUrl(BaseHandler):
 
     def get(self, ngo_url):
 
         # if we don't receive an ngo url or it's not a logged in user or not and admin
-        if not ngo_url or not self.user_info and not users.is_current_user_admin():
-            self.abort(403)
+        #TODO Find out where we checked for both authenticated user and admin
+        if not ngo_url or not current_user.is_authenticated:
+            return abort(403)
 
         if check_ngo_url(ngo_url):
-            self.response.set_status(200)
+            return "",200
         else:
-            self.response.set_status(400)
+            return "",400
 
 class NgosApi(BaseHandler):
 
     def get(self):
 
         # get all the visible ngos
-        ngos = NgoEntity.query(NgoEntity.active == True).fetch()
+        ngos = NgoEntity.query.filter_by(active=True).all()
 
         response = []
         for ngo in ngos:
             response.append({
                 "name": ngo.name,
-                "url": self.uri_for('twopercent', ngo_url=ngo.key.id()),
+                "url": url_for('twopercent', ngo_url=ngo.url),
                 "logo": ngo.logo if ngo.logo else DEFAULT_NGO_LOGO
             })
 
-        self.return_json(response)
+        #self.return_json(response)
+        return jsonify(response)
 
 class GetNgoForm(BaseHandler):
 
@@ -91,15 +91,12 @@ class GetNgoForm(BaseHandler):
 
         self.redirect(str(ngo.form_url))
 
-class GetUploadUrl(AccountHandler):
+class GetUploadUrl(BaseHandler):
 
-    @user_required
+    @login_required
     def post(self):
 
-        post = self.request
-
-        # we must use post.POST so we get the file
-        files = post.POST.getall("files")
+        files = request.files
 
         if len(files) == 0:
             self.abort(400)
@@ -115,15 +112,13 @@ class GetUploadUrl(AccountHandler):
 
             info(a_file.type)
 
-            # if the image is uploaded by the admin
-            # we don't have an user
-            if self.user:
-                folder = str(self.user.key.id())
+            if not current_user.is_admin:
+                folder = str(self.user.email)
             else:
                 folder = "admin"
 
             # the user's folder name, it's just his md5 hashed db id
-            user_folder = security.hash_password(folder, "md5")
+            user_folder = hashlib.md5(folder) 
 
             # a way to create unique file names
             # get the local time in iso format
@@ -131,12 +126,13 @@ class GetUploadUrl(AccountHandler):
             # output a hex string
             filename = "{0}/{1}/{2}".format(USER_UPLOADS_FOLDER, str(user_folder), sha1( datetime.now().isoformat() ).hexdigest())
         
-            file_url = CloudStorage.save_file(a_file, filename)
+            #TODO Rewrite this with non GAE Logic
+            #file_url = CloudStorage.save_file(a_file, filename)
             
             if file_url:
                 file_urls.append( file_url )
 
 
-        self.return_json({
+        return jsonify({
             "file_urls": file_urls
         })

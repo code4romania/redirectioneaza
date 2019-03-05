@@ -1,8 +1,9 @@
-from flask import render_template, url_for, request
+from flask import render_template, url_for, request, redirect, abort
 from flask_login import login_required, current_user
 import datetime
 from collections import OrderedDict
 from logging import info
+from sqlalchemy import or_
 
 # from google.appengine.ext.ndb import put_multi, OR, Key
 # from google.appengine.api import users
@@ -10,12 +11,12 @@ from logging import info
 
 from appengine_config import LIST_OF_COUNTIES, CONTACT_EMAIL_ADDRESS, START_YEAR
 
-from models.handlers import AccountHandler, user_required, BaseHandler
+from models.handlers import BaseHandler
 from models.models import NgoEntity, Donor
 from models.user import User
 from core import db
 
-# from api import check_ngo_url
+from .api import check_ngo_url
 
 
 incomplete_form_data = "Te rugam sa completezi datele din formular."
@@ -36,9 +37,9 @@ class MyAccountHandler(BaseHandler):
         now = datetime.datetime.now()
 
         if user.ngo:
-            self.template_values["ngo"] = NgoEntity.query.filter_by(id=user.ngo).first()
+            self.template_values["ngo"] = user.ngo
 
-            self.template_values["ngo_url"] = url_for('asociatia')+'/'+str(user.ngo)
+            self.template_values["ngo_url"] = url_for('asociatia')+'/'+str(user.ngo.url)
 
             donors = Donor.query.with_entities(Donor.first_name,\
                                                Donor.last_name,\
@@ -47,7 +48,7 @@ class MyAccountHandler(BaseHandler):
                                                Donor.email,\
                                                Donor.tel,\
                                                Donor.anonymous,\
-                                               Donor.date_created).filter_by(id=user.ngo)\
+                                               Donor.date_created).filter_by(ngo=user.ngo)\
                                 .order_by(Donor.date_created.desc())\
                                 .all()
             years = range(now.year, START_YEAR-1, -1)
@@ -125,41 +126,40 @@ class MyAccountDetailsHandler(BaseHandler):
 
         return render_template(self.template_name, **self.template_values)
 
-class NgoDetailsHandler(AccountHandler):
+class NgoDetailsHandler(BaseHandler):
     template_name = 'ngo/ngo-details.html'
-    @user_required
+    @login_required
     def get(self):
-        user = self.user
+        user = current_user
         self.template_values["title"] = "Date asociatie"
 
         # if the user has an ngo attached, allow him to edit it
         if user.ngo:
             self.template_values["user"] = user
             
-            ngo = user.ngo.get()
-            self.template_values["ngo"] = ngo
+            self.template_values["ngo"] = user.ngo
             # self.template_values["ngo_upload_url"] = self.uri_for("api-ngo-upload-url")
             self.template_values["counties"] = LIST_OF_COUNTIES
             
-            self.render()
+            return render_template(self.template_name, **self.template_values)
         else:
             # if not redirect to home
             self.template_values["ngo"] = {}
-            self.redirect(self.uri_for("contul-meu"))
+            return redirect(url_for("contul-meu"))
             
-    @user_required
+    @login_required
     def post(self):
         
-        user = self.user
-        if user is None:
-            if users.is_current_user_admin():
-                user = users.get_current_user()
+        user = current_user
+        # if user is None:
+        #     if users.is_current_user_admin():
+        #         user = users.get_current_user()
 
-                old_ngo_key = self.request.get('old-ong-url') if self.request.get('old-ong-url') else 1
+        #         old_ngo_key = request.form.get('old-ong-url') if request.form.get('old-ong-url') else 1
 
-                user.ngo = Key(NgoEntity, old_ngo_key)
-            else:
-                self.abort(403)
+        #         user.ngo = Key(NgoEntity, old_ngo_key)
+        #     else:
+        #         abort(403)
 
         self.template_values["user"] = user
         self.template_values["ngo"] = {}
@@ -168,37 +168,36 @@ class NgoDetailsHandler(AccountHandler):
         # self.template_values["ngo_upload_url"] = self.uri_for("api-ngo-upload-url")
 
 
-        ong_nume = self.request.get('ong-nume')
+        ong_nume = request.form.get('ong-nume')
 
-        ong_logo_url = self.request.get('ong-logo-url')
+        ong_logo_url = request.form.get('ong-logo-url')
         # this file should be received only if js is disabled
-        ong_logo = self.request.get('ong-logo') if ong_logo_url is None else None
+        ong_logo = request.form.get('ong-logo') if ong_logo_url is None else None
         
-        ong_descriere = self.request.get('ong-descriere')
+        ong_descriere = request.form.get('ong-descriere')
         
-        ong_tel = self.request.get('ong-tel', "")
-        ong_email = self.request.get('ong-email', "")
-        ong_website = self.request.get('ong-website', "")
+        ong_tel = request.form.get('ong-tel', "")
+        ong_email = request.form.get('ong-email', "")
+        ong_website = request.form.get('ong-website', "")
 
-        ong_adresa = self.request.get('ong-adresa')
-        ong_judet = self.request.get('ong-judet', "")
+        ong_adresa = request.form.get('ong-adresa')
+        ong_judet = request.form.get('ong-judet', "")
 
-        ong_cif = self.request.get('ong-cif')
-        ong_account = self.request.get('ong-cont')
-        ong_special_status = self.request.get('special-status') == "on"
+        ong_cif = request.form.get('ong-cif')
+        ong_account = request.form.get('ong-cont')
+        ong_special_status = request.form.get('special-status') == "on"
 
-        ong_url = self.request.get('ong-url')
+        ong_url = request.form.get('ong-url')
 
         # validation
         if not ong_nume or not ong_descriere or not ong_adresa or not ong_url or not ong_cif or not ong_account:
             self.template_values["errors"] = incomplete_form_data
-            self.render()
-            return
+            return render_template(self.template_name, **self.template_values)
 
         # if the user already has an ngo, update it
         if user.ngo:
 
-            ngo = user.ngo.get()
+            ngo = user.ngo
 
             # if the user has an ngo attached but it's not found, skip this and create a new one
             if ngo is not None:
@@ -224,71 +223,67 @@ class NgoDetailsHandler(AccountHandler):
 
                 # if no one uses this CIF
                 if ong_cif != ngo.cif:
-                    cif_unique = NgoEntity.query(NgoEntity.cif == ong_cif).count(limit=1) == 0
+                    cif_unique = NgoEntity.query.filter_by(cif = ong_cif).first() is None
                     if cif_unique:
                         ngo.cif = ong_cif
                     else:
                         self.template_values["unique"] = False
-                        self.render()
-                        return
+                        return render_template(self.template_name, **self.template_values)
 
                 # and no one uses this bank account
                 if ong_account != ngo.account:
-                    acc_unique = NgoEntity.query(NgoEntity.account == ong_account).count(limit=1) == 0
+                    acc_unique = NgoEntity.query.filter_by(account = ong_account).first() is None
                     if acc_unique:
                         ngo.account = ong_account
                     else:
                         self.template_values["unique"] = False
-                        self.render()
-                        return
+                        return render_template(self.template_name, **self.template_values)
 
-                if users.is_current_user_admin():
-                    ngo.verified = self.request.get('ong-verificat') == "on"
-                    ngo.active = self.request.get('ong-activ') == "on"
+                if user.is_admin:
+                    ngo.verified = request.form.get('ong-verificat') == "on"
+                    ngo.active = request.form.get('ong-activ') == "on"
 
                     # if we want to change the url
-                    if ong_url != ngo.key.id():
+                    if ong_url != ngo.form_url:
 
                         is_ngo_url_available = check_ngo_url(ong_url)
+
                         if is_ngo_url_available == False:
                             self.template_values["errors"] = url_taken
-                            self.render()
-                            return
+                            return render_template(self.template_name, **self.template_values)
                         
-                        new_key = Key(NgoEntity, ong_url)
+                        # new_key = Key(NgoEntity, ong_url)
 
-                        # replace all the donors key
-                        donors = Donor.query(Donor.ngo == ngo.key).fetch()
-                        if donors:
-                            for donor in donors:
-                                donor.ngo = new_key 
-                                donor.put()
+                        # # replace all the donors key
+                        # donors = Donor.query(Donor.ngo == ngo.key).fetch()
+                        # if donors:
+                        #     for donor in donors:
+                        #         donor.ngo = new_key 
+                        #         donor.put()
 
-                        # replace the users key
-                        ngos_user = User.query(Donor.ngo == ngo.key).get()
-                        if ngos_user:
-                            ngos_user.ngo = new_key
-                            ngos_user.put()
+                        # # replace the users key
+                        # ngos_user = User.query(Donor.ngo == ngo.key).get()
+                        # if ngos_user:
+                        #     ngos_user.ngo = new_key
+                        #     ngos_user.put()
 
-                        # copy the old model
-                        new_ngo = ngo
-                        # delete the old model
-                        ngo.key.delete()
-                        # add a new key
-                        new_ngo.key = new_key
+                        # # copy the old model
+                        # new_ngo = ngo
+                        # # delete the old model
+                        # ngo.key.delete()
+                        # # add a new key
+                        # new_ngo.key = new_key
                         
-                        ngo = new_ngo
+                        # ngo = new_ngo
 
 
                 # save the changes
-                ngo.put()
+                # ngo.put()
                 
-                if users.is_current_user_admin():
-                    self.redirect(self.uri_for("admin-ong", ngo_url=ong_url))
+                if user.is_admin:
+                    return redirect(url_for("admin-ong", ngo_url=ong_url))
                 else:
-                    self.redirect(self.uri_for("asociatia"))
-
-                return
+                    return redirect(url_for("asociatia"))
 
         # create a new ngo entity
         # do this before validating the url, cif and back account because if we have errors 
@@ -314,47 +309,48 @@ class NgoDetailsHandler(AccountHandler):
 
         # check for unique url
         is_ngo_url_available = check_ngo_url(ong_url)
-        if is_ngo_url_available == False:
+        if not is_ngo_url_available:
             self.template_values["errors"] = url_taken
 
-            new_ngo.key = None
+            #new_ngo.key = None
             self.template_values["ngo"] = new_ngo
             
-            self.render()
-            return
+            return render_template(self.template_name, **self.template_values)
 
 
-        unique = NgoEntity.query(OR(NgoEntity.cif == ong_cif, NgoEntity.account == ong_account)).count(limit=1) == 0
+        unique = NgoEntity.query(or_(cif = ong_cif, account = ong_account)).first() is None
         if not unique:
             # asks if he represents the ngo
 
             self.template_values["errors"] = not_unique
-            self.render()
-            return
+            return render_template(self.template_name, **self.template_values)
         else:
             self.template_values["errors"] = True
 
-        if users.is_current_user_admin():
+        if user.is_admin:
 
             # a list of email addresses
-            new_ngo.other_emails = [s.strip() for s in self.request.get('alte-adrese-email', "").split(",")]
+            new_ngo.other_emails = [s.strip() for s in request.form.get('alte-adrese-email', "").split(",")]
 
-            new_ngo.put()
+            #new_ngo.put()
+
+            db.session.merge(new_ngo)
+            db.session.commit()
         
-            self.redirect(self.uri_for("admin-ong", ngo_url=ong_url))
+            return redirect(url_for("admin-ong", ngo_url=ong_url))
         else:
             # link this user with the ngo
             # the ngo has a key even though we haven't saved it, we offered it an unique id
-            user.ngo = new_ngo.key
+            # user.ngo = new_ngo.key
             
-            # use put_multi to save rpc calls
-            put_multi([new_ngo, user])
+            # # use put_multi to save rpc calls
+            # put_multi([new_ngo, user])
 
             # try:
             #     subject = "O noua organizatie s-a inregistrat"
             #     values = {
             #         "ngo": ong_nume,
-            #         "link": self.request.host + '/' + new_ngo.key.id()
+            #         "link": request.form.host + '/' + new_ngo.key.id()
             #     }
             #     body = self.jinja_enviroment.get_template("email/admin/new-ngo.txt").render(values)
             #     # info(body)
@@ -363,19 +359,19 @@ class NgoDetailsHandler(AccountHandler):
             #     info(e)
 
             # do a refresh
-            self.redirect(self.uri_for("contul-meu"))
+            return redirect(url_for("contul-meu"))
 
-    def utf8_byte_truncate(text, max_bytes):
-        """ truncate utf-8 text string to no more than max_bytes long """
-        byte_len = 0
-        _incr_encoder.reset()
-        for index,ch in enumerate(text):
-            byte_len += len(_incr_encoder.encode(ch))
-            if byte_len > max_bytes:
-                break
-        else:
-            return text
+    # def utf8_byte_truncate(text, max_bytes):
+    #     """ truncate utf-8 text string to no more than max_bytes long """
+    #     byte_len = 0
+    #     _incr_encoder.reset()
+    #     for index,ch in enumerate(text):
+    #         byte_len += len(_incr_encoder.encode(ch))
+    #         if byte_len > max_bytes:
+    #             break
+    #     else:
+    #         return text
         
-        result = text[:index]
+    #     result = text[:index]
 
-        return result
+    #     return result

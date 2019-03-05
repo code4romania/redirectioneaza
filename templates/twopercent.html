@@ -53,7 +53,7 @@
                 <h2 id="donation-page-title">Redirecționează în 3 pași simpli</h2>
                 <h3 class="donation-page-subtitle">1. Completează și descarcă formularul</h3>
                 {% if ngo.account and ngo.cif %}
-                    <form id="twopercent" class="form form-horizontal" action="{{ ngo.key.id() }}/doilasuta" role="form" method="post">
+                    <form id="twopercent" class="form form-horizontal" action="{{ ngo.url }}/doilasuta" role="form" method="post">
                         
                         <fieldset class="margin-bottom">
                             <legend>Date personale</legend>
@@ -199,7 +199,7 @@
                     <div class="alert alert-dismissible alert-info">
                         <button type="button" class="close" data-dismiss="alert">×</button>
                         <strong>Notă!</strong> Toate datele de pe această pagină sunt transmise folosind o conexiune sigură. Singurele date salvate sunt: numele, prenumele, orasul, judetul, email/telefon. <br /> <br />
-                        Poți citi mai multe despre <a href="{{ uri_for('note') }}" target="_blank">Drepturile tale cu privire la protectia datelor</a>.
+                        Poți citi mai multe despre <a href="{{ url_for('note') }}" target="_blank">Drepturile tale cu privire la protectia datelor</a>.
                     </div>
                 </div>
             </div>

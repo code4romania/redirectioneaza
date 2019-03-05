@@ -2,6 +2,9 @@ from appengine_config import DEFAULT_NGO_LOGO
 from datetime import datetime
 from core import db
 from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy.orm import object_session
+from sqlalchemy import select, func
+from models.user import User
 
 
 ngo_tags = db.Table('ngoentity_tag',\
@@ -46,6 +49,7 @@ class Tag(db.Model):
 class NgoEntity(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
+    url = db.Column(db.String, unique=True)
     
     name = db.Column(db.String(100))
 
@@ -90,6 +94,26 @@ class NgoEntity(db.Model):
     # bool telling if the ngp wants to allow the donor to upload the signed document
     allow_upload = db.Column(db.Boolean, default=False)
 
+    users = db.relationship('User', backref='ngo')
+    donors = db.relationship('Donor', backref='ngo')
+
+
+    @property
+    def account_attached(self):
+        return object_session(self).\
+            scalar(
+                select([func.count(User.id)]).\
+                    where(User.ngo_id==self.id)
+            ) >= 1
+
+    @property
+    def number_of_donations(self):
+        return object_session(self).\
+            scalar(
+                select([func.count(Donor.id)]).\
+                    where(Donor.ngo_id==self.id)
+            )
+
 
 # class Fundraiser(BaseEntity):
 #     pass
@@ -112,8 +136,7 @@ class Donor(db.Model):
 
     geoip = db.Column(db.UnicodeText())
 
-    ngo = db.Column(db.Integer, db.ForeignKey('ngo_entity.id'))
-
+    ngo_id = db.Column(db.Integer, db.ForeignKey('ngo_entity.id'))
     # the pdf to be downloaded by the donor
     pdf_url = db.Column(db.String(256))
     # the url of the pdf/image after it was signed and scanned
