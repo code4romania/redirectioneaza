@@ -39,6 +39,7 @@ template_settings = {
     "contact_url": CONTACT_FORM_URL,
     "language": "ro",
     "base_url": "/",
+    "months": MONTH_NAMES,
     "captcha_public_key": CAPTCHA_PUBLIC_KEY,
     "errors": None
 }

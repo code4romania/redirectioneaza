@@ -11,7 +11,7 @@ from webapp2_extras import json, security
 from appengine_config import LIST_OF_COUNTIES, USER_UPLOADS_FOLDER, USER_FORMS, ANAF_OFFICES
 
 # also import captcha settings
-from appengine_config import CAPTCHA_PRIVATE_KEY, CAPTCHA_POST_PARAM, DEFAULT_NGO_LOGO
+from appengine_config import CAPTCHA_PRIVATE_KEY, CAPTCHA_POST_PARAM, DEFAULT_NGO_LOGO, DONATION_LIMIT
 
 from models.handlers import BaseHandler
 from models.models import NgoEntity, Donor
@@ -59,6 +59,7 @@ class TwoPercentHandler(BaseHandler):
         ngo.logo = ngo.logo if ngo.logo else DEFAULT_NGO_LOGO
         self.template_values["ngo"] = ngo
         self.template_values["counties"] = LIST_OF_COUNTIES
+        self.template_values['limit'] = DONATION_LIMIT
         
         # the ngo website
         ngo_website = ngo.website if ngo.website else None
@@ -102,9 +103,7 @@ class TwoPercentHandler(BaseHandler):
 
 
         now = datetime.datetime.now()
-        can_donate = True
-        if now.month > 3 or now.month == 3 and now.day > 15:
-            can_donate = False
+        can_donate = not now.date() > DONATION_LIMIT
 
         self.template_values["can_donate"] = can_donate
         
@@ -295,6 +294,7 @@ class DonationSucces(BaseHandler):
         self.template_values["ngo"] = self.ngo
         self.template_values["donor"] = self.donor
         self.template_values["title"] = "Donatie 2% - succes"
+        self.template_values['limit'] = DONATION_LIMIT
 
         # county = self.donor.county.lower()
         # self.template_values["anaf"] = ANAF_OFFICES.get(county, None)

@@ -2,6 +2,7 @@
 
 import os
 
+from datetime import datetime, date
 
 from google.appengine.ext import vendor
 
@@ -38,6 +39,11 @@ START_YEAR = 2016
 
 USER_UPLOADS_FOLDER = 'uploads'
 USER_FORMS = 'documents'
+
+now = datetime.now()
+DONATION_LIMIT = date(now.year, 7, 31)
+MONTH_NAMES = ['', 'Ianuarie', 'Februarie', 'Martie', 'Aprilie', 'Mai', 'Iunie', 'Iulie', 'August', 'Septembrie', 'Octombrie', 'Noiembrie', 'Decembrie']
+
 
 # where all the jinja2 templates should be located
 VIEWS_FOLDER = "/views"

@@ -7,7 +7,7 @@ from google.appengine.ext.ndb import put_multi, OR, Key
 from google.appengine.api import users
 from google.appengine.api import mail
 
-from appengine_config import LIST_OF_COUNTIES, CONTACT_EMAIL_ADDRESS, START_YEAR
+from appengine_config import LIST_OF_COUNTIES, CONTACT_EMAIL_ADDRESS, START_YEAR, DONATION_LIMIT
 
 from models.handlers import AccountHandler, user_required
 from models.models import NgoEntity, Donor
@@ -31,6 +31,7 @@ class MyAccountHandler(AccountHandler):
         user = self.user
         self.template_values["user"] = user
         self.template_values["title"] = "Contul meu"
+        self.template_values['limit'] = DONATION_LIMIT
 
         now = datetime.datetime.now()
 
@@ -63,9 +64,7 @@ class MyAccountHandler(AccountHandler):
             self.template_values["donors"] = grouped_donors
             # self.template_values["years"] = years
             
-            can_donate = True
-            if now.month > 5 or now.month == 5 and now.day > 25:
-                can_donate = False
+            can_donate = not now.date() > DONATION_LIMIT
 
             self.template_values["can_donate"] = can_donate
 
