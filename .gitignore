@@ -10,3 +10,7 @@ lib/
 .vscode/
 *.pyc
 venv/
+*.log
+*.sh
+storage/*
+!.gitignore

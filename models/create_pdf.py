@@ -1,30 +1,23 @@
 import os
-
 import tempfile
+from datetime import datetime
+from logging import info
 
-#from google.appengine.api import app_identity
-
-from reportlab.pdfgen import canvas
-from reportlab.lib.utils import ImageReader
 from reportlab.lib.pagesizes import A4
-
+from reportlab.lib.utils import ImageReader
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
-
-from datetime import datetime
-
-from logging import info
+from reportlab.pdfgen import canvas
 
 abs_path = os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir))
 font_path = abs_path + "/static/font/opensans.ttf"
 pdfmetrics.registerFont(TTFont('OpenSans', font_path))
 
-
 default_font_size = 15
 image_path = "/static/images/formular.jpeg"
 
+
 def add_donor_data(c, person):
-    
     # the first name
     if len(person["first_name"]) > 18:
         c.setFontSize(12)
@@ -42,8 +35,7 @@ def add_donor_data(c, person):
     if len(last_name) > 34:
         c.setFontSize(10)
 
-    c.drawString(67, donor_block_x-23, last_name)
-
+    c.drawString(67, donor_block_x - 23, last_name)
 
     # =======================================
     # THIRD ROW
@@ -96,12 +88,11 @@ def add_donor_data(c, person):
         c.setFontSize(12)
     else:
         c.setFontSize(8)
-    
+
     c.drawString(255, fourth_row_x, person["county"])
     c.setFontSize(default_font_size)
     # 
     # =======================================
-
 
     # oras
     c.drawString(69, donor_block_x - 90, person["city"])
@@ -113,7 +104,6 @@ def add_donor_data(c, person):
     for letter in person["cnp"]:
         c.drawString(start_x, donor_block_x - 10, letter)
         start_x += 18.4
-
 
     # email
     start_email_x = 368
@@ -131,7 +121,6 @@ def add_donor_data(c, person):
     if person['tel']:
         c.setFontSize(12)
         c.drawString(start_email_x, third_row_x - 15, person['tel'])
-    
 
     c.setFontSize(default_font_size)
 
@@ -166,10 +155,11 @@ def add_ngo_data(c, ong):
 
     account = ong["account"]
     for i, l in enumerate(account):
-        if i%5 == 0:
+        if i % 5 == 0:
             account = account[:i] + " " + account[i:]
 
     c.drawString(106, start_ong_x - 41, account)
+
 
 def add_special_status_ngo_data(c, ong):
     """Used to add data for NGOs with a special status: they received 3,5% not 2"""
@@ -198,7 +188,7 @@ def add_special_status_ngo_data(c, ong):
 
         arr = org_name.split(" ")
         for i in range(0, len(arr) + 1):
-            first_row = " ".join(arr[0: i+1])
+            first_row = " ".join(arr[0: i + 1])
             if len(first_row) > 28:
                 first_row = " ".join(arr[0: i])
                 second_row = " ".join(arr[i: len(arr)])
@@ -214,10 +204,11 @@ def add_special_status_ngo_data(c, ong):
 
     account = ong["account"]
     for i, l in enumerate(account):
-        if i%5 == 0:
+        if i % 5 == 0:
             account = account[:i] + " " + account[i:]
 
     c.drawString(104, start_ong_x - 63, account)
+
 
 def create_pdf(person, ong):
     """method used to create the pdf
@@ -244,16 +235,16 @@ def create_pdf(person, ong):
         cif
         account
     """
-    
+
     # packet = StringIO.StringIO()
     # we could also use StringIO
-    packet = tempfile.TemporaryFile(mode='w+b')
-    
+    packet = tempfile.NamedTemporaryFile(mode='w+b', delete=False, dir=f'/home/dev/repos/redirectioneaza/storage/')
+
     c = canvas.Canvas(packet, A4)
-    width, height = A4 
-    
+    width, height = A4
+
     # add the image as background
-    background = ImageReader( abs_path + image_path )
+    background = ImageReader(abs_path + image_path)
     c.drawImage(background, 0, 0, width=width, height=height)
 
     # the default font size
@@ -263,7 +254,7 @@ def create_pdf(person, ong):
 
     # the year
     # this is the previous year, starting from 1 Jan until - 25 May ??
-    year = str( datetime.now().year - 1 )
+    year = str(datetime.now().year - 1)
     start_x = 305
     for letter in year:
         c.drawString(start_x, 734, letter)
@@ -286,4 +277,6 @@ def create_pdf(person, ong):
     packet.seek(0)
     # packet.type = "application/pdf"
 
-    return packet
+    packet.close()
+
+    return '/storage/' + packet.name.split('/')[-1]

@@ -19,11 +19,11 @@ import os
 # minify-css && gcloud app deploy ./app.yaml --version 14
 
 # if we are currently in production
-DEV = True#os.environ.get('SERVER_SOFTWARE', 'Development').startswith('Development')
+DEV = os.environ.get('REDIR_ENVIRONMENT') == 'DEV'
 # use this to simulate production
 # DEV = False
 
-PRODUCTION = not DEV
+PRODUCTION = os.environ.get('REDIR_ENVIRONMENT') == 'PROD'
 
 # the year when the site started
 # used to create an array up to the current year

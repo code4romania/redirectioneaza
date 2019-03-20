@@ -1,29 +1,18 @@
 # -*- coding: utf-8 -*-
-from urllib.parse import urlparse
-from flask import redirect, render_template, url_for, abort, request
-from hashlib import sha1, md5
-from logging import info
-import re
-import json
 import datetime
-from appengine_config import LIST_OF_COUNTIES, USER_UPLOADS_FOLDER, USER_FORMS, ANAF_OFFICES
-# also import captcha settings
-from appengine_config import CAPTCHA_PRIVATE_KEY, CAPTCHA_POST_PARAM, DEFAULT_NGO_LOGO
+import json
+import re
+from urllib.parse import urlparse
+
+from flask import redirect, render_template, url_for, abort, request, session, jsonify
+
+from config import CAPTCHA_PRIVATE_KEY, DEFAULT_NGO_LOGO
+from config import LIST_OF_COUNTIES
 from core import db
+from models.create_pdf import create_pdf
 from models.handlers import BaseHandler
 from models.models import NgoEntity, Donor
 from .captcha import submit
-
-# from webapp2_extras import json, security
-# from google.appengine.api import urlfetch
-# from google.appengine.ext import ndb
-# from models.storage import CloudStorage
-from models.create_pdf import create_pdf
-
-
-
-
-
 
 """
 Handlers used for ngo 
@@ -46,14 +35,12 @@ class TwoPercentHandler(BaseHandler):
         if not ngo or not ngo.active:
             return abort(404)
 
-        # TODO Understand what these were doing
-        # # if we still have a cookie from an old session, remove it
-        # if "donor_id" in self.session:
-        #     self.session.pop("donor_id")
+        # if we still have a cookie from an old session, remove it
+        if "donor_id" in session:
+            session.pop("donor_id")
 
-        # if "has_cnp" in self.session:
-        #     self.session.pop("has_cnp")
-        #     # also we can use self.session.clear(), but it might delete the logged in user's session
+        if "has_cnp" in session:
+            session.pop("has_cnp")
 
         self.template_values["title"] = "Donatie 2%"
         # make sure the ngo shows a logo
@@ -98,8 +85,6 @@ class TwoPercentHandler(BaseHandler):
         else:
 
             self.template_values["ngo_website"] = None
-
-
 
         now = datetime.datetime.now()
         can_donate = True
@@ -203,30 +188,11 @@ class TwoPercentHandler(BaseHandler):
 
         # if the captcha is not valid return
         if not captcha_response.is_valid:
-
             errors["fields"].append("codul captcha")
             self.return_error(errors)
             return
 
-        # the user's folder name, it's just his md5 hashed db id
-        # user_folder = security.hash_password('123', "md5")
-
-        user_folder = md5('123') 
-
-        # a way to create unique file names
-        # get the local time in iso format
-        # run that through SHA1 hash
-        # output a hex string
-        filename = "{0}/{1}/{2}".format(USER_FORMS, str(user_folder),
-                                        sha1(datetime.datetime.now().isoformat()).hexdigest())
-
-        pdf = create_pdf(donor_dict, ngo_data)
-
-        #TODO Alter to make this work
-        file_url = 'dummylocation'#CloudStorage.save_file(pdf, filename)
-
-        # close the file after it has been uploaded
-        pdf.close()
+        file_url = create_pdf(donor_dict, ngo_data)
 
         # create the donor and save it
         donor = Donor(
@@ -240,18 +206,17 @@ class TwoPercentHandler(BaseHandler):
             income=donor_dict['income'],
             # make a request to get geo ip data for this user
             geoip=self.get_geoip_data(),
-            ngo=self.ngo.key,
+            ngo=self.ngo,
             pdf_url=file_url
         )
 
         db.session.add(donor)
 
-        db.commit()
-        # donor.put()
+        db.session.commit()
 
         # set the donor id in cookie
-        self.session["donor_id"] = str(donor.key.id())
-        self.session["has_cnp"] = bool(donor_dict["cnp"])
+        session["donor_id"] = str(donor.id)
+        session["has_cnp"] = bool(donor_dict["cnp"])
 
         # send and email to the donor with a link to the PDF file
         self.send_email("twopercent-form", donor)
@@ -262,7 +227,7 @@ class TwoPercentHandler(BaseHandler):
                 "url": url_for("ngo-twopercent-success", ngo_url=ngo_url),
                 "form_url": file_url
             }
-            return jsonify(response),200
+            return jsonify(response), 200
         else:
             return redirect(url_for(
                 "ngo-twopercent-success", ngo_url=ngo_url))
@@ -270,7 +235,6 @@ class TwoPercentHandler(BaseHandler):
     def return_error(self, errors):
 
         if self.is_ajax:
-
             self.response.set_status(400)
             self.response.write(json.dumps(errors))
 
@@ -293,12 +257,11 @@ class DonationSucces(BaseHandler):
     template_name = 'succes.html'
 
     def get(self, ngo_url):
+        # if self.get_ngo_and_donor() is False:
+        #     return
 
-        if self.get_ngo_and_donor() is False:
-            return
-
-        self.template_values["ngo"] = self.ngo
-        self.template_values["donor"] = self.donor
+        self.template_values["ngo"] = NgoEntity.query.filter_by(url=ngo_url).first()
+        self.template_values["donor"] = Donor.query.filter_by(id=session['donor_id']).first()
         self.template_values["title"] = "Donatie 2% - succes"
 
         # county = self.donor.county.lower()
@@ -308,19 +271,19 @@ class DonationSucces(BaseHandler):
         self.template_values["anaf"] = None
 
         # if the user didn't provide a CNP show a message
-        self.template_values["has_cnp"] = self.session.get("has_cnp", False)
+        self.template_values["has_cnp"] = session["has_cnp"] or False
 
         return render_template(self.template_name, **self.template_values)
 
     def post(self, ngo_url):
+        # Find out what what this supposed to be
         # TODO: to be implemented
-        post = self.request
 
         if self.get_ngo_and_donor() is False:
             return
 
-        self.session.pop("donor_id")
+        session.pop("donor_id")
 
-        signed_pdf = post.get("signed-pdf")
+        signed_pdf = request.form.get("signed-pdf")
 
         # TODO file upload

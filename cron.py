@@ -1,28 +1,21 @@
-from models.handlers import Handler
-from models.models import NgoEntity
 from logging import info
 
+from core import db
+from models.handlers import Handler
+from models.models import NgoEntity
 
-# TODO Understand why this is needed
+
+# TODO Incorporate this in manage.py
 class NgoRemoveForms(Handler):
 
     def get(self):
         # get all the ngos
-        ngos = NgoEntity.query().fetch()
+        ngos = NgoEntity.query.all()
 
-        info('Removing form_url from {0} ngos.'.format(len(ngos)))
+        info(f'Removing form_url from {len(ngos)} ngos.')
 
-        # 
-        to_save = []
-
-        # loop through them and remove the form_url
-        # this will force an update on it when downloaded again
         for ngo in ngos:
             ngo.form_url = None
-            to_save.append(ngo)
+            db.session.add(ngo)
 
-        ndb.put_multi(to_save)
-
-# cron_routes = [
-#     r('/ngos/remove-form',    handler=NgoRemoveForms,    name="ngo-remove-form"),
-# ]
+        db.session.commit()

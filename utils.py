@@ -1,7 +1,8 @@
 from datetime import datetime
+
 from core import db
-from models.user import User
 from models.models import Donor, NgoEntity
+from models.user import User
 
 
 def load_dummy_data():
@@ -18,11 +19,11 @@ def load_dummy_data():
     # noinspection PyArgumentList
     _admin = User(first_name='Adminescu',
                  last_name='Adminovici',
-                 ngo=_ngo,
                  email='admin@example.com',
                  password='admin',
                  verified=True,
                  admin=True)
+
     # noinspection PyArgumentList
     _user = User(first_name='Utilizatorescu',
                  last_name='Userovici',
@@ -32,10 +33,13 @@ def load_dummy_data():
                  verified=True,
                  admin=False)
 
-    _donor = Donor(first_name='Donorescu', \
-                   last_name='Donorovici', \
-                   ngo=_ngo, \
-                   date_created=datetime.utcnow())
+    _donor = Donor(first_name='Donorescu',
+                   last_name='Donorovici',
+                   ngo=_ngo,
+                   date_created=datetime.utcnow(),
+                   county="IF",
+                   city="Otopeni"
+                   )
 
     db.session.add(_ngo)
 

@@ -1,18 +1,14 @@
-from flask_login import current_user
+from logging import info
+
 from flask import url_for, redirect, abort, render_template, request
-from sqlalchemy import func
-from models.user import User
-from core import db, app
-from utils import obj2dict
+from flask_login import current_user
+from flask_mail import Message
 
-# from google.appengine.api import users, mail
-# from google.appengine.ext import ndb
-# from operator import itemgetter
-
+from config import LIST_OF_COUNTIES, DEV
+from core import app, mail
 from models.handlers import BaseHandler
-from models.models import NgoEntity, Donor
+from models.models import NgoEntity
 from models.user import User
-from appengine_config import LIST_OF_COUNTIES
 
 """
 Handlers  for admin routing
@@ -24,8 +20,11 @@ class AdminHandler(BaseHandler):
 
     def get(self):
 
+        if not current_user.is_authenticated:
+            return redirect(url_for('login'))
+
         if not current_user.is_admin:
-            return redirect(url_for("/admin"))
+            return redirect(url_for('index'))
 
         self.template_values["title"] = "Admin"
 
@@ -90,8 +89,7 @@ class AdminNgoHandler(BaseHandler):
         if not ngo:
             return abort(404)
 
-        # url_for("api-ngo-upload-url")
-        self.template_values["ngo_upload_url"] = ''
+        self.template_values["ngo_upload_url"] = url_for("api-ngo-upload-url")
         self.template_values["counties"] = LIST_OF_COUNTIES
         self.template_values["ngo"] = ngo
 
@@ -136,7 +134,13 @@ class SendCampaign(BaseHandler):
 
         for email in emails:
             user_address = email
-            # TODO FIX MAIL SENDING
-            #mail.send_mail(sender=sender_address, to=user_address, subject=subject, html=html_body, body=body)
+
+            # TODO MAKE THIS WORK WITH THE GENERAL EMAIL TOOL
+            msg = Message(sender=sender_address, recipients=[user_address], subject=subject, html=html_body, body=body)
+
+            if not DEV:
+                mail.send(msg)
+            else:
+                info(msg)
 
         return redirect(url_for("admin-campanii"))

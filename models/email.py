@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 
 import os
-from appengine_config import DEV, CONTACT_FORM_URL, CONTACT_EMAIL_ADDRESS
-import sendgrid
-from sendgrid.helpers.mail import *
-from flask_mail import Message
 from logging import info, warning
+
+import sendgrid
+from flask_mail import Message
+from sendgrid.helpers.mail import *
+
+from config import DEV, CONTACT_EMAIL_ADDRESS
 from core import mail
 
 
@@ -42,6 +44,7 @@ class EmailManager:
                     error_message = "Failed to send email: {0}{1}".format(kwargs.get("subject"),
                                                                           kwargs.get("receiver")["email"])
                     warning(error_message)
+
                     return False
 
             return True
@@ -76,16 +79,17 @@ class EmailManager:
         sender = Email(sender["email"], sender["name"])
         receiver = Email(receiver["email"], receiver["name"])
 
-        # info(text_template)
+        info(text_template)
 
         text_content = Content("text/plain", text_template)
+
         email = Mail(sender, subject, receiver, text_content)
 
         if html_template:
             html_content = Content("text/html", html_template)
             email.add_content(html_content)
 
-        if not DEV or not kwargs.get("developement", True):
+        if not DEV or not kwargs.get("development", True):
             response = sg.client.mail.send.post(request_body=email.get())
 
             if response.status_code == 202:
@@ -100,6 +104,7 @@ class EmailManager:
             info(email.get()['personalizations'])
 
             content = email.get()['content']
+
             if content:
                 info(content[0]['value'])
 

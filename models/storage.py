@@ -1,13 +1,12 @@
 
 import os
+from logging import info
 
 import cloudstorage as gcs
-
-from appengine_config import DEV
-
 from google.appengine.api import app_identity
 
-from logging import info
+from config import DEV
+
 
 class CloudStorage(object):
     """docstring for CloudStorage"""

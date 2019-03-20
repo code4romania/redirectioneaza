@@ -1,15 +1,16 @@
-from appengine_config import DEFAULT_NGO_LOGO
 from datetime import datetime
-from core import db
-from sqlalchemy.orm.exc import NoResultFound
-from sqlalchemy.orm import object_session
+
 from sqlalchemy import select, func
+from sqlalchemy.orm import object_session
+from sqlalchemy.orm.exc import NoResultFound
+
+from config import DEFAULT_NGO_LOGO
+from core import db
 from models.user import User
 
-
-ngo_tags = db.Table('ngoentity_tag',\
-    db.Column('tag_id', db.Integer, db.ForeignKey('tag.id')),\
-    db.Column('ngoentity_id', db.Integer, db.ForeignKey('ngo_entity.id')))
+ngo_tags = db.Table('ngo_entity_tag', \
+                    db.Column('tag_id', db.Integer, db.ForeignKey('tag.id')), \
+                    db.Column('ngoentity_id', db.Integer, db.ForeignKey('ngo_entity.id')))
 
 
 class Tag(db.Model):
@@ -45,12 +46,12 @@ class Tag(db.Model):
     def __repr__(self):
         return self.name
 
+
 # to the list of counties add the whole country
 class NgoEntity(db.Model):
-
     id = db.Column(db.Integer, primary_key=True)
     url = db.Column(db.String, unique=True)
-    
+
     name = db.Column(db.String(100))
 
     description = db.Column(db.UnicodeText())
@@ -97,22 +98,21 @@ class NgoEntity(db.Model):
     users = db.relationship('User', backref='ngo')
     donors = db.relationship('Donor', backref='ngo')
 
-
     @property
     def account_attached(self):
-        return object_session(self).\
-            scalar(
-                select([func.count(User.id)]).\
-                    where(User.ngo_id==self.id)
-            ) >= 1
+        return object_session(self). \
+                   scalar(
+            select([func.count(User.id)]). \
+                where(User.ngo_id == self.id)
+        ) >= 1
 
     @property
     def number_of_donations(self):
-        return object_session(self).\
+        return object_session(self). \
             scalar(
-                select([func.count(Donor.id)]).\
-                    where(Donor.ngo_id==self.id)
-            )
+            select([func.count(Donor.id)]). \
+                where(Donor.ngo_id == self.id)
+        )
 
 
 # class Fundraiser(BaseEntity):
@@ -122,17 +122,17 @@ class Donor(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(256), index=True)
     last_name = db.Column(db.String(256), index=True)
-    
+
     city = db.Column(db.String(256), index=True)
     county = db.Column(db.String(256), index=True)
-    
+
     email = db.Column(db.String(120), unique=True, index=True)
     tel = db.Column(db.String(256), index=True)
 
     anonymous = db.Column(db.Boolean, default=True)
 
     # type of income: wage or pension
-    income = db.Column(db.String(256), index=True, default='wage') # choices=['wage', 'pension']
+    income = db.Column(db.String(256), index=True, default='wage')  # choices=['wage', 'pension']
 
     geoip = db.Column(db.UnicodeText())
 
@@ -145,7 +145,6 @@ class Donor(db.Model):
 
     # meta data
     date_created = db.Column(db.DateTime, default=datetime.utcnow, nullable=False, index=True)
-
 
 # events = ["log-in", "form-submitted"]
 # class Event(BaseEntity):
