@@ -1,8 +1,12 @@
+"""
+This file contains Recaptcha validation/submission logic
+"""
+
 import json
 from urllib.parse import urlencode
 from urllib.request import urlopen, Request
 
-from config import *
+from redirectioneaza.config import *
 
 VERIFY_URL = CAPTCHA_VERIFY_URL
 

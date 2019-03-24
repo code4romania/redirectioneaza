@@ -1,10 +1,15 @@
 # -*- coding: utf-8 -*-
+"""
+This file contains the unit test for the applications. All of the use the client fixtures so the app doesn't need to be
+up for the tests to be run. Tests are auto-detected by pytest.
+"""
+
 import os
 import tempfile
 
 import pytest
 
-from main import app
+from redirectioneaza import app
 
 
 @pytest.fixture
@@ -73,6 +78,7 @@ def test_signup_get(client):
     assert "Cont nou" in rv.data.decode('utf-8')
 
 
+# TODO Change recaptcha validation to be overridden while on DEV. This will allow us to test all methods as below.
 @pytest.mark.skip("Need to ignore recaptcha for unit testing")
 def test_signup_post(client):
     rv = client.post('/cont-nou', data=dict(nume='Jio', prenume='Gogo', email='jiogogo@example.com', parola='1234'))

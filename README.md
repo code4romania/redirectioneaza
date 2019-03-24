@@ -1,5 +1,5 @@
 # Redirectioneaza 2%
-
+# TODO Rewrite as per the changes we've made
 [![GitHub contributors](https://img.shields.io/github/contributors/code4romania/redirectioneaza.svg?style=for-the-badge)](https://github.com/code4romania/redirectioneaza/graphs/contributors) [![GitHub last commit](https://img.shields.io/github/last-commit/code4romania/redirectioneaza.svg?style=for-the-badge)](https://github.com/code4romania/redirectioneaza/commits/master) [![License: MPL 2.0](https://img.shields.io/badge/license-MPL%202.0-brightgreen.svg?style=for-the-badge)](https://opensource.org/licenses/MPL-2.0)
 
 * tax form #230 made easy
@@ -36,7 +36,7 @@ This project is built by amazing volunteers and you can be one of them! Here's a
 
 ### Programming languages
 
-Python27
+Python37
 
 ### Platforms
 
@@ -48,7 +48,7 @@ Bower
 
 ### Database technology & provider
 
-Google Cloud Datastore
+PostgreSQL
 
 ## App structure
 
@@ -114,13 +114,13 @@ To deploy the new cron jobs you need to uncomment the `application` in app.yaml 
 ### Adding dummy NGOs
 When you start if you might want to add some ngos. Go to the sdk's [Console](http://localhost:8000/console) and run:
 ```python
-from models.models import NgoEntity
+from redirectioneaza.models import NgoEntity
 
 ngo = NgoEntity(
     logo= "https://code4.ro/wp-content/uploads/2016/06/fb.png",
     name= "Nume asociatie",
     description= "O descriere",
-    id= "nume-asociatie", # this needs to be unique. Also used as the ngo's URL
+    url= "nume-asociatie", # this needs to be unique. Also used as the ngo's URL
     account = "RO33BTRL3342234vvf2234234234XX",
     cif = "3333223",
     address = "Str. Ion Ionescu, nr 33"

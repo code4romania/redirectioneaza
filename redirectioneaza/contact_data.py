@@ -1,86 +1,10 @@
-# -*- coding: utf-8 -*-
-
-import os
-
-# in order to not promote the current version
-# gcloud config set app/promote_by_default false
-
-# gcloud auth login
-# gcloud config set project donezsieu-server
-
-# DEPLOY
-# LESS
-# minify-css
-# 
-# gcloud config set project donezsieu-server
-# gcloud app deploy ./app.yaml --version 26 --promote
-# gcloud app deploy ./app.yaml --version 26 --no-promote
-
-# minify-css && gcloud app deploy ./app.yaml --version 14
-
-# if we are currently in production
-DEV = os.environ.get('REDIR_ENVIRONMENT') == 'DEV'
-# use this to simulate production
-# DEV = False
-
-PRODUCTION = os.environ.get('REDIR_ENVIRONMENT') == 'PROD'
-
-# the year when the site started
-# used to create an array up to the current year
-START_YEAR = 2016
-
-USER_UPLOADS_FOLDER = 'uploads'
-USER_FORMS = 'documents'
-
-# where all the jinja2 templates should be located
-VIEWS_FOLDER = "/views"
-
-DEV_DEPENDECIES_LOCATION = "/bower_components"
-TITLE = "redirectioneaza.ro"
-
-SESSION_SECRET_KEY = os.environ.get('SESSION_SECRET_KEY')
-
-DEFAULT_NGO_LOGO = "https://storage.googleapis.com/redirectioneaza/logo_bw.png"
-
-# ADMIN
-BASE_ADMIN_LINK = "/admin"
+"""
+This file contains static data to be used throughout the application
+"""
 
 LIST_OF_COUNTIES = ['Alba', 'Arad', 'Arges', 'Bacau', 'Bihor', 'Bistrita-Nasaud', 'Botosani', 'Braila', 'Brasov', 'Buzau', 'Calarasi', 'Caras-Severin', 'Cluj', 'Constanta', 'Covasna', 'Dambovita', 'Dolj', 'Galati', 'Giurgiu', 'Gorj', 'Harghita', 'Hunedoara', 'Ialomita', 'Iasi', 'Ilfov', 'Maramures', 'Mehedinti', 'Mures', 'Neamt', 'Olt', 'Prahova', 'Salaj', 'Satu Mare', 'Sibiu', 'Suceava', 'Teleorman', 'Timis', 'Tulcea', 'Valcea', 'Vaslui', 'Vrancea']
-
 CONTACT_FORM_URL = "https://docs.google.com/forms/d/1PdigxpzW1omlTtexfu-gXEPEJmkiEltGLBaTQ8n-nk8/viewform"
 CONTACT_EMAIL_ADDRESS = "redirectioneaza@code4.ro"
-
-
-# ============================
-# Additional response headers
-# ============================
-# 
-# Tis headers are added for extra security
-HTTP_HEADERS = {
-    # lgarron at chromium dot org 
-    # https://hstspreload.appspot.com/
-    # for https everywhere, and on subdomains, 1 year
-    "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
-
-    # don't allow the site to be embeded
-    "X-Frame-Options": "Deny",
-    "X-Content-Type-Options": "nosniff",
-    "X-XSS-Protection": "1; mode=block",
-    # "Content-Security-Policy": "default-src 'self'; script-src 'self' 'sha256-wwUprMhWJHcJgH7bVT8BB8TYRW7F8WDk5qBJvaLAsEw=' https://maxcdn.bootstrapcdn.com https://ajax.googleapis.com https://www.google.com https://www.gstatic.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://maxcdn.bootstrapcdn.com https://fonts.googleapis.com; img-src 'self' https://storage.googleapis.com/ https://www.google-analytics.com/; font-src 'self' https://fonts.gstatic.com https://maxcdn.bootstrapcdn.com; media-src 'none'; object-src 'none'; child-src https://www.google.com/recaptcha/; frame-ancestors 'none'; form-action 'self'; report-uri https://donezsieu.report-uri.io/r/default/csp/enforce;"
-}
-
-
-
-# ===================
-# Recaptcha API Keys
-# ===================
-CAPTCHA_PUBLIC_KEY = os.environ.get('CAPTCHA_PUBLIC_KEY') if PRODUCTION else "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
-CAPTCHA_PRIVATE_KEY = os.environ.get('CAPTCHA_PRIVATE_KEY') if PRODUCTION else "6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe"
-CAPTCHA_VERIFY_URL = "https://www.google.com/recaptcha/api/siteverify"
-CAPTCHA_POST_PARAM = "g-recaptcha-response"
-
-
-
 ANAF_OFFICES = {
     'alba': {
         "name": u"Administraţia Judeţeană a Finanţelor Publice ALBA",

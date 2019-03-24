@@ -1,5 +1,3 @@
-# import webapp2
-
 from collections import namedtuple
 from logging import warning
 
@@ -8,25 +6,15 @@ from flask.views import MethodView
 from flask_login import current_user
 from itsdangerous import URLSafeTimedSerializer
 
+from redirectioneaza import app
 # globals
-from config import *
-from core import app
-from .email import EmailManager
-from .models import NgoEntity, Donor
+from redirectioneaza.config import *
+from redirectioneaza.contact_data import CONTACT_FORM_URL, CONTACT_EMAIL_ADDRESS
+from redirectioneaza.handlers.email import EmailManager
+from redirectioneaza.models import NgoEntity, Donor
 
 app.jinja_env.add_extension('jinja2.ext.autoescape')
 app.jinja_env.add_extension('jinja2.ext.i18n')
-
-# def get_jinja_enviroment(account_view_folder=''):
-#     return jinja2.Environment(
-#         loader=jinja2.FileSystemLoader(
-#             os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir))
-#             + VIEWS_FOLDER
-#             + account_view_folder ),
-#         extensions=['jinja2.ext.autoescape', 'jinja2.ext.i18n'],
-#         autoescape=True)
-
-# default values for every template
 
 template_settings = {
     "bower_components": DEV_DEPENDECIES_LOCATION,

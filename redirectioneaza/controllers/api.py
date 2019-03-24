@@ -6,11 +6,11 @@ from logging import info
 from flask import abort, url_for, jsonify, request, redirect
 from flask_login import current_user, login_required
 
-from config import DEFAULT_NGO_LOGO
-from core import db, app
-from models.create_pdf import create_pdf
-from models.handlers import BaseHandler
-from models.models import NgoEntity
+from redirectioneaza import db, app
+from redirectioneaza.config import DEFAULT_NGO_LOGO
+from redirectioneaza.handlers.base import BaseHandler
+from redirectioneaza.handlers.pdf import create_pdf
+from redirectioneaza.models import NgoEntity
 
 
 def check_ngo_url(ngo_url=None):
@@ -63,7 +63,7 @@ class GetNgoForm(BaseHandler):
 
         # if we have an form created for this ngo, return the url
         if _ngo.form_url:
-            return redirect(str(_ngo.form_url), abort=True)
+            return redirect(str(_ngo.form_url))
 
         ngo_dict = {
             "name": _ngo.name,

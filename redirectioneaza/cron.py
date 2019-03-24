@@ -1,8 +1,8 @@
 from logging import info
 
-from core import db
-from models.handlers import Handler
-from models.models import NgoEntity
+from redirectioneaza import db
+from redirectioneaza.handlers.base import Handler
+from redirectioneaza.models import NgoEntity
 
 
 # TODO Incorporate this in manage.py

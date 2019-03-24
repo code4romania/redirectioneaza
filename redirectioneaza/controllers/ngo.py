@@ -6,13 +6,13 @@ from urllib.parse import urlparse
 
 from flask import redirect, render_template, url_for, abort, request, session, jsonify
 
-from config import CAPTCHA_PRIVATE_KEY, DEFAULT_NGO_LOGO
-from config import LIST_OF_COUNTIES
-from core import db
-from models.create_pdf import create_pdf
-from models.handlers import BaseHandler
-from models.models import NgoEntity, Donor
-from .captcha import submit
+from redirectioneaza import db
+from redirectioneaza.config import CAPTCHA_PRIVATE_KEY, DEFAULT_NGO_LOGO
+from redirectioneaza.contact_data import ANAF_OFFICES, LIST_OF_COUNTIES
+from redirectioneaza.handlers.base import BaseHandler
+from redirectioneaza.handlers.captcha import submit
+from redirectioneaza.handlers.pdf import create_pdf
+from redirectioneaza.models import NgoEntity, Donor
 
 """
 Handlers used for ngo 
@@ -144,33 +144,14 @@ class TwoPercentHandler(BaseHandler):
 
             return ""
 
-        donor_dict = {}
-
-        # the donor's data
-        donor_dict["first_name"] = get_post_value("nume").title()
-        donor_dict["last_name"] = get_post_value("prenume").title()
-        donor_dict["father"] = get_post_value("tatal").title()
-        donor_dict["cnp"] = get_post_value("cnp", False)
-
-        donor_dict["email"] = get_post_value("email").lower()
-        donor_dict["tel"] = get_post_value("tel", False)
-
-        donor_dict["street"] = get_post_value("strada").title()
-        donor_dict["number"] = get_post_value("numar", False)
-
-        # optional data
-        donor_dict["bl"] = get_post_value("bloc", False)
-        donor_dict["sc"] = get_post_value("scara", False)
-        donor_dict["et"] = get_post_value("etaj", False)
-        donor_dict["ap"] = get_post_value("ap", False)
-
-        donor_dict["city"] = get_post_value("localitate").title()
-        donor_dict["county"] = get_post_value("judet")
-
-        # if he would like the ngo to see the donation
-        donor_dict['anonymous'] = request.form.get('anonim') != 'on'
-
-        donor_dict['income'] = request.form.get('income', 'wage')
+        donor_dict = {"first_name": get_post_value("nume").title(), "last_name": get_post_value("prenume").title(),
+                      "father": get_post_value("tatal").title(), "cnp": get_post_value("cnp", False),
+                      "email": get_post_value("email").lower(), "tel": get_post_value("tel", False),
+                      "street": get_post_value("strada").title(), "number": get_post_value("numar", False),
+                      "bl": get_post_value("bloc", False), "sc": get_post_value("scara", False),
+                      "et": get_post_value("etaj", False), "ap": get_post_value("ap", False),
+                      "city": get_post_value("localitate").title(), "county": get_post_value("judet"),
+                      'anonymous': request.form.get('anonim') != 'on', 'income': request.form.get('income', 'wage')}
 
         # the ngo data
         ngo_data = {
@@ -257,15 +238,18 @@ class DonationSucces(BaseHandler):
     template_name = 'succes.html'
 
     def get(self, ngo_url):
-        # if self.get_ngo_and_donor() is False:
-        #     return
+
+        if 'donor_id' not in session:
+            return redirect(url_for('twopercent', ngo_url=ngo_url))
+
+        _donor = Donor.query.filter_by(id=session['donor_id']).first()
 
         self.template_values["ngo"] = NgoEntity.query.filter_by(url=ngo_url).first()
-        self.template_values["donor"] = Donor.query.filter_by(id=session['donor_id']).first()
+        self.template_values["donor"] = _donor
         self.template_values["title"] = "Donatie 2% - succes"
 
-        # county = self.donor.county.lower()
-        # self.template_values["anaf"] = ANAF_OFFICES.get(county, None)
+        county = _donor.county.lower()
+        self.template_values["anaf"] = ANAF_OFFICES.get(county, None)
 
         # for now, disable showing the ANAF office
         self.template_values["anaf"] = None
@@ -276,7 +260,7 @@ class DonationSucces(BaseHandler):
         return render_template(self.template_name, **self.template_values)
 
     def post(self, ngo_url):
-        # Find out what what this supposed to be
+        # TODO: Find out what what this supposed to be
         # TODO: to be implemented
 
         if self.get_ngo_and_donor() is False:

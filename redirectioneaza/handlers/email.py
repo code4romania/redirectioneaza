@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+"""
+This file contains the Emailing logic. Emails will be logged as message in the console for DEV-like environments.
+"""
 
 import os
 from logging import info, warning
@@ -7,8 +10,9 @@ import sendgrid
 from flask_mail import Message
 from sendgrid.helpers.mail import *
 
-from config import DEV, CONTACT_EMAIL_ADDRESS
-from core import mail
+from redirectioneaza import mail
+from redirectioneaza.config import DEV
+from redirectioneaza.contact_data import CONTACT_EMAIL_ADDRESS
 
 
 class EmailManager:

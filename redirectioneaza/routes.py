@@ -1,18 +1,28 @@
-import os
+"""
+This file contains the routes defined by the application.
+"""
 
 from flask import send_from_directory
 
-from controllers.account_management import *
-from controllers.admin import *
-from controllers.api import *
-from controllers.my_account import *
-from controllers.ngo import NgoHandler, TwoPercentHandler, DonationSucces
-from controllers.site import *
-from cron import NgoRemoveForms
+from redirectioneaza.controllers.account_management import *
+from redirectioneaza.controllers.admin import *
+from redirectioneaza.controllers.api import *
+from redirectioneaza.controllers.my_account import *
+from redirectioneaza.controllers.ngo import *
+from redirectioneaza.controllers.site import *
+from redirectioneaza.cron import NgoRemoveForms
+from . import app
 
 
 def register_route(route, **kwargs):
+    """
+    This method registers routes and binds them to Method Views
+    :param route:
+    :param kwargs:
+    :return:
+    """
     app.add_url_rule(route, view_func=kwargs['handler'].as_view(kwargs.get('name', route)))
+
 
 # the public part of the app
 register_route('/', handler=HomePage, name='index')
@@ -65,6 +75,24 @@ register_route('/<ngo_url>/doilasuta/succes', handler=DonationSucces, name="ngo-
 register_route('/cron', handler=NgoRemoveForms, name="ngo-remove-form")
 
 
+# TODO: Extend and rethink Error Handlers
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return redirect(url_for('index'))
+
+
+@app.errorhandler(401)
+def page_not_found(e):
+    return redirect(url_for('index'))
+
+
+@app.errorhandler(500)
+def page_not_found(e):
+    return redirect(url_for('index'))
+
+
 @app.route('/storage/<filename>', defaults={'folder': None})
 @app.route('/storage/<folder>/<filename>')
 def storage(folder, filename):
@@ -79,7 +107,3 @@ def storage(folder, filename):
         return send_from_directory(os.path.join(app.config['UPLOAD_FOLDER'], folder), filename)
     else:
         return send_from_directory(os.path.join(app.config['UPLOAD_FOLDER']), filename)
-
-
-if __name__ == '__main__':
-    app.run(host='localhost', port=5000, debug=True)

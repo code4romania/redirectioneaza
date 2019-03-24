@@ -4,10 +4,11 @@ from collections import OrderedDict
 from flask import render_template, url_for, request, redirect
 from flask_login import login_required, current_user
 
-from config import LIST_OF_COUNTIES, START_YEAR
-from core import db
-from models.handlers import BaseHandler
-from models.models import NgoEntity, Donor
+from redirectioneaza import db
+from redirectioneaza.config import START_YEAR
+from redirectioneaza.contact_data import LIST_OF_COUNTIES
+from redirectioneaza.handlers.base import BaseHandler
+from redirectioneaza.models import NgoEntity, Donor
 from .api import check_ngo_url
 
 incomplete_form_data = "Te rugam sa completezi datele din formular."

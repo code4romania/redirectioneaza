@@ -4,15 +4,18 @@ from flask import url_for, redirect, abort, render_template, request
 from flask_login import current_user
 from flask_mail import Message
 
-from config import LIST_OF_COUNTIES, DEV
-from core import app, mail
-from models.handlers import BaseHandler
-from models.models import NgoEntity
-from models.user import User
+from redirectioneaza import app, mail
+from redirectioneaza.config import DEV
+from redirectioneaza.contact_data import LIST_OF_COUNTIES
+from redirectioneaza.handlers.base import BaseHandler
+from redirectioneaza.models import NgoEntity, User
 
 """
 Handlers  for admin routing
 """
+
+
+# TODO Revamp this with a real admin-only interface using Flask-Admin
 
 
 class AdminHandler(BaseHandler):
@@ -61,7 +64,6 @@ class AdminNewNgoHandler(BaseHandler):
     template_name = 'admin/ngo.html'
 
     def get(self):
-
         if not current_user.is_admin:
             return redirect(url_for("admin"))
 
@@ -135,7 +137,7 @@ class SendCampaign(BaseHandler):
         for email in emails:
             user_address = email
 
-            # TODO MAKE THIS WORK WITH THE GENERAL EMAIL TOOL
+            # TODO: This an actual email to be sent
             msg = Message(sender=sender_address, recipients=[user_address], subject=subject, html=html_body, body=body)
 
             if not DEV:

@@ -1,14 +1,14 @@
-from logging import warn
+from logging import warning
 
 from flask import url_for, redirect, render_template, request, abort
 from flask_login import login_user, current_user, logout_user
 from sqlalchemy.exc import IntegrityError
 
-from config import CAPTCHA_PRIVATE_KEY
-from core import login_manager, db
-from models.handlers import BaseHandler
-from models.user import User
-from .captcha import submit
+from redirectioneaza import login_manager, db
+from redirectioneaza.config import CAPTCHA_PRIVATE_KEY
+from redirectioneaza.handlers.base import BaseHandler
+from redirectioneaza.handlers.captcha import submit
+from redirectioneaza.models import User
 
 
 @login_manager.user_loader
@@ -63,7 +63,7 @@ class LoginHandler(BaseHandler):
             return redirect(url_for('contul-meu'))
 
         else:
-            warn('Invalid email or password: {0}'.format(email))
+            warning('Invalid email or password: {0}'.format(email))
 
             self.template_values['email'] = email
 
@@ -87,8 +87,8 @@ class SignupHandler(BaseHandler):
         return render_template(self.template_name, **self.template_values)
 
     def post(self):
-        first_name = request.form.get('nume')
-        last_name = request.form.get('prenume')
+        last_name = request.form.get('nume')
+        first_name = request.form.get('prenume')
 
         email = request.form.get('email')
         password = request.form.get('parola')
@@ -117,10 +117,12 @@ class SignupHandler(BaseHandler):
                 "errors"] = "Se pare ca a fost o problema cu verificarea reCAPTCHA. Te rugam sa incerci din nou."
             return render_template(self.template_name, **self.template_values)
 
-        _user = User(email=email, \
-                     first_name=first_name, \
-                     last_name=last_name, \
-                     password=password, \
+        # noinspection PyArgumentList
+        # See https://stackoverflow.com/questions/49465166/incorrect-call-arguments-for-new-in-pycharm
+        _user = User(email=email,
+                     first_name=first_name,
+                     last_name=last_name,
+                     password=password,
                      verified=False)
 
         db.session.add(_user)
@@ -173,7 +175,8 @@ class ForgotPasswordHandler(BaseHandler):
         email = request.form.get('email')
 
         if not email:
-            # TODO Can this code really be reached? AFAIK JS prevents us from submitting an empty field
+            # TODO: Can this code really be reached? AFAIS our current JS frontend
+            # prevents us from submitting an empty field
             self.template_values["errors"] = "Campul email nu poate fi gol."
             return render_template(self.template_name, **self.template_values)
 

@@ -238,7 +238,7 @@ def create_pdf(person, ong):
 
     # packet = StringIO.StringIO()
     # we could also use StringIO
-    packet = tempfile.NamedTemporaryFile(mode='w+b', delete=False, dir=f'/home/dev/repos/redirectioneaza/storage/')
+    packet = tempfile.NamedTemporaryFile(mode='w+b', delete=False, dir=f'{abs_path}/storage/')
 
     c = canvas.Canvas(packet, A4)
     width, height = A4

@@ -1,12 +1,17 @@
+"""
+This file contains the Models that the application uses.
+"""
+
 from datetime import datetime
 
+from flask_login import UserMixin
 from sqlalchemy import select, func
 from sqlalchemy.orm import object_session
 from sqlalchemy.orm.exc import NoResultFound
+from werkzeug.security import check_password_hash, generate_password_hash
 
-from config import DEFAULT_NGO_LOGO
-from core import db
-from models.user import User
+from redirectioneaza import db
+from redirectioneaza.config import DEFAULT_NGO_LOGO
 
 ngo_tags = db.Table('ngo_entity_tag', \
                     db.Column('tag_id', db.Integer, db.ForeignKey('tag.id')), \
@@ -41,10 +46,10 @@ class Tag(db.Model):
         return Tag.query.all()
 
     def __str__(self):
-        return self.name
+        return "<Tag '{}'>".format(self.name)
 
     def __repr__(self):
-        return self.name
+        return "<Tag '{}'>".format(self.name)
 
 
 # to the list of counties add the whole country
@@ -114,6 +119,12 @@ class NgoEntity(db.Model):
                 where(Donor.ngo_id == self.id)
         )
 
+    def __str__(self):
+        return "<NGO '{}'>".format(self.name)
+
+    def __repr__(self):
+        return "<NGO '{}'>".format(self.name)
+
 
 # class Fundraiser(BaseEntity):
 #     pass
@@ -146,6 +157,14 @@ class Donor(db.Model):
     # meta data
     date_created = db.Column(db.DateTime, default=datetime.utcnow, nullable=False, index=True)
 
+    def __str__(self):
+        return "<Donor '{}'>".format(self.name)
+
+    def __repr__(self):
+        return "<Donor '{}'>".format(self.name)
+
+
+# TODO Investigate where this was used
 # events = ["log-in", "form-submitted"]
 # class Event(BaseEntity):
 #     what = ndb.StringProperty(indexed=True, choices=events)
@@ -153,3 +172,67 @@ class Donor(db.Model):
 #     who = ndb.KeyProperty()
 
 #     when = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
+
+
+class User(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+
+    first_name = db.Column(db.String(128), index=True)
+
+    last_name = db.Column(db.String(128), index=True)
+
+    email = db.Column(db.String(128), index=True, unique=True)
+
+    password_hash = db.Column(db.String(128), index=True)
+
+    ngo_id = db.Column(db.Integer, db.ForeignKey('ngo_entity.id'))
+
+    verified = db.Column(db.Boolean, nullable=False, default=False)
+
+    admin = db.Column(db.Boolean, nullable=False, default=False)
+
+    created = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+
+    @property
+    def is_admin(self):
+        return self.admin
+
+    @property
+    def password(self):
+        """
+        Raises an attribute error if password field is trying to be modified
+        :return:
+        """
+        raise AttributeError('password: write-only field')
+
+    @password.setter
+    def password(self, password):
+        """
+        Sets the password
+        :param password:
+        :return:
+        """
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        """
+        Checks password hash
+        :param password:
+        :return:
+        """
+        return check_password_hash(self.password_hash, password)
+
+    @staticmethod
+    def get_by_email(email):
+        """
+        Returns user by username.
+        :param username: username to be retrieved
+        :return: User
+        """
+        return User.query.filter_by(email=email).first()
+
+    def __str__(self):
+        return "<User '{}'>".format(self.email)
+
+    def __repr__(self):
+        return "<User '{}'>".format(self.email)

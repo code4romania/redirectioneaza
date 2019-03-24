@@ -1,3 +1,7 @@
+"""
+This file contains the core objects of the application: the app object, the db object and login manager.
+"""
+
 import logging
 import os
 import sys
@@ -10,6 +14,9 @@ from flask_sqlalchemy import SQLAlchemy
 # Main app object
 app = Flask(__name__, static_folder='static', static_url_path='')
 
+# Set current working directory to the current one
+os.chdir(os.path.dirname(os.path.realpath(__file__)))
+
 # Set up app configuration
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:docker@localhost:5432/redir'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -18,6 +25,9 @@ app.config['SECURITY_PASSWORD_SALT'] = os.environ.get('SECURITY_PASSWORD_SALT')
 
 # TODO Rethink this once migrated to another object store
 app.config['UPLOAD_FOLDER'] = 'storage'
+
+# TODO: with the Environment-specific configuration, set up logging stream redirection to a database on PROD
+# TODO: Refactor and/or Move logging logic to another file
 
 # Handle all logging streams
 out_hdlr = logging.StreamHandler(sys.stdout)
