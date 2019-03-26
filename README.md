@@ -1,5 +1,5 @@
 # Redirectioneaza 2%
-# TODO Rewrite as per the changes we've made
+
 [![GitHub contributors](https://img.shields.io/github/contributors/code4romania/redirectioneaza.svg?style=for-the-badge)](https://github.com/code4romania/redirectioneaza/graphs/contributors) [![GitHub last commit](https://img.shields.io/github/last-commit/code4romania/redirectioneaza.svg?style=for-the-badge)](https://github.com/code4romania/redirectioneaza/commits/master) [![License: MPL 2.0](https://img.shields.io/badge/license-MPL%202.0-brightgreen.svg?style=for-the-badge)](https://opensource.org/licenses/MPL-2.0)
 
 * tax form #230 made easy
@@ -34,13 +34,7 @@ This project is built by amazing volunteers and you can be one of them! Here's a
 
 ## Built With
 
-### Programming languages
-
-Python37
-
-### Platforms
-
-Google App Engine
+Flask 1.0.2 / Python 3.7
 
 ### Package managers
 
@@ -48,55 +42,63 @@ Bower
 
 ### Database technology & provider
 
-PostgreSQL
+PostgreSQL / SQLAlchemy
 
 ## App structure
 
-The entry point of the app is `main.py`. Here is where all the routes are defined.
-The main folders are:
-* `controllers` contains the handlers for each route
-* `models` has the `ndb` Models and some helpers:
-    * `create_pdf` the logic for creating the pdf
+The entry point of the app is `run.py`. 
+All the routes are defined in `redirectioneaza\routes.py`.
+
+The application itself is located in the folder `redirectioneaza`.
+
+
+Its main components are
+* `controllers`  this module contains the views for each route
+* `handlers` this module contains the following helpers:
+    * `pdf` the logic for creating the pdf
     * `email` a small wrapper over SendGrid
-    * `handlers` wrappers over `webapp2.RequestHandler`, they add some functionality. New handlers should inherit from `BaseHandler` or `AccountHandler`.
-    * `storage` contains `CloudStorage` which helps with uploading the PDFs to google cloud
+    * `base` contains the base view handler from which all views should inherit
+    * `captcha` the logic behind captcha validation on pages with forms
+    * `utils` utilities  
 * `static` all the static files: css, js, images
-* `views` all the html file + email templates. New html pages should extend `base.html`
+* `templates` all the html files + email templates. New html pages should extend `base.html`
+* `config.py` configuration data
+* `core.py` defines the core objects such as app, db and login_manager
+* `routes.py` defines all the routes used by the app
 
 ### Bulding new handlers
 
-New handlers should extend `BaseHandler` from `models.handlers`. The path to the html file should be set as `template_name`. The app looks in the `views` folder for it.
+New handlers should extend `BaseHandler` from `handlers.base`. 
+
+The path to the html file should be set as `template_name`. The app looks in the `views` folder for it.
 To send props to the view, use the dict `self.template_values`.
-On the `get` method, `self.render()` should be called at the end.
 
 ## Deployment
 
-1. Install Google App Engine Python SDK. [Details here aici](https://cloud.google.com/appengine/docs/standard/python/download#python_linux)
-2. Clone the repo: `git clone https://github.com/code4romania/redirectioneaza`
-3. Install the requirements in the `lib` folder (not globally): `pip install -r requirements.txt -t ./lib`
-4. `bower install`
-5. Rename `app.yaml.example` to `app.yaml`
-6. To run the dev server you need to know the path to the App Engine SDK and be in the app's folder:
-```sh
-[path_to_sdk]/dev_appserver.py ./app.yaml --datastore_path=./datastore.db --enable_console
-```
-Read more about the Local Development Server [here](https://cloud.google.com/appengine/docs/standard/python/tools/using-local-server).
-Locally, App Engine has an interface for the DB found [here](http://localhost:8000/datastore) (the server needs to be running).
+1. Clone the repo into a folder: `git clone https://github.com/code4romania/redirectioneaza`
+2. Set up a virtual env `virtualenv venv` and activate it `source venv/bin/activate`
+3. Install the requirements : `pip install -r requirements.txt`
+4. Install front-end development assets `bower install`
+5. Set up a database server (PostgreSQL preferred) to host the application.
+6. Export the following ENVIRONMENT VARIABLES
 
-To deploy the app from the command line, run:
-```sh
-gcloud app deploy --no-promote ./app.yaml --version [version]
-```
-`version` must be the new version of the app
+* `REDIR_USERNAME` username for your database connection
+* `REDIR_PASSWORD` password for your database connection
+* `REDIR_DBSERVER` server for your database connection
+* `REDIR_DBPORT` port for your database connection
+* `REDIR_DBCATALOG` database name for your database connection
+* `APP_SECRET_KEY` a random binary string for session encryption
+* `SECURITY_PASSWORD_SALT` a random binary string for password hashing salting
 
-### Testing remotely
-Google offers some generous free quota for App engine apps so you can create you own app engine app [here](http://console.cloud.google.com/appengine/) and deploy it there. You need a google account (gmail, etc.)
+7. Initialize the database and populate with dummy data:
 
-### Deploying indexes
-When adding new `ndb` Models with indexed properties, they will be automatically added in the local file named `index.yaml`. That file needs to be deployed every time it changes. To do that, run:
-```sh
-gcloud app deploy ./index.yaml
-```
+`python manage.py initdb` then
+`python manage.py load_dummy`
+
+8.  To run the application, run:
+`python run.py`
+
+The app will be ran by default on `localhost:5000`.
 
 ### CSS
 The app uses `LESS`. To compile the CSS, run:
@@ -105,41 +107,30 @@ cd ./static/
 lessc css/main.less > css/main.css --clean-css="--s1 --advanced --compatibility=ie8"
 ```
 
-### Deploying CRON jobs
-To deploy the new cron jobs you need to uncomment the `application` in app.yaml and change it to your app's name (this is used only in this case)
-```sh
-[path_to_sdk]/appcfg.py update_cron ./
-```
+### Migrations
 
-### Adding dummy NGOs
-When you start if you might want to add some ngos. Go to the sdk's [Console](http://localhost:8000/console) and run:
-```python
-from redirectioneaza.models import NgoEntity
+For database migrations, use the commands for [Flask-Migrate](https://flask-migrate.readthedocs.io/en/latest/).
+`python manage.py migrations` - will display a list of available commands, whereas for example `python manage.py migrations init` would set up the initial migration.
 
-ngo = NgoEntity(
-    logo= "https://code4.ro/wp-content/uploads/2016/06/fb.png",
-    name= "Nume asociatie",
-    description= "O descriere",
-    url= "nume-asociatie", # this needs to be unique. Also used as the ngo's URL
-    account = "RO33BTRL3342234vvf2234234234XX",
-    cif = "3333223",
-    address = "Str. Ion Ionescu, nr 33"
-)
-ngo.put()
-```
-You can also add ngos from the admin.
+### Tests
+
+To run tests:
+1. `cd tests`
+2. `pytest`
+
+This will run both unit and selenium/integration testing. To run a particular set of tests or a particular tests run `pytest test_app` and e.g. `pytest test_app.py::test_name` respectively.
 
 ### Read more
 You can read more about the frameworks used by the app:
-[webapp2](https://webapp2.readthedocs.io/en/latest/)
-[jinja2](http://jinja.pocoo.org/docs/dev/templates/)
+* [flask](http://flask.pocoo.org/)
+* [jinja2](http://jinja.pocoo.org/docs/dev/templates/)
 
 ## Feedback
 
 * Request a new feature on GitHub.
 * Vote for popular feature requests.
 * File a bug in GitHub Issues.
-* Email us with other feedback contact@code4.ro
+* Email us with other feedback [contact@code4.ro](mailto:contact@code.ro)
 
 ## License
 

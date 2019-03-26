@@ -7,24 +7,13 @@ This file contains configurations settings for the application
 
 import os
 
-# in order to not promote the current version
-# gcloud config set app/promote_by_default false
-
-# gcloud auth login
-# gcloud config set project donezsieu-server
-
 # DEPLOY
 # LESS
 # minify-css
-# 
-# gcloud config set project donezsieu-server
-# gcloud app deploy ./app.yaml --version 26 --promote
-# gcloud app deploy ./app.yaml --version 26 --no-promote
-
-# minify-css && gcloud app deploy ./app.yaml --version 14
 
 # if we are currently in production
 DEV = os.environ.get('REDIR_ENVIRONMENT') == 'DEV'
+
 # use this to simulate production
 # DEV = False
 
@@ -43,9 +32,8 @@ USER_FORMS = 'documents'
 VIEWS_FOLDER = "/views"
 
 DEV_DEPENDECIES_LOCATION = "/bower_components"
-TITLE = "redirectioneaza.ro"
 
-SESSION_SECRET_KEY = os.environ.get('SESSION_SECRET_KEY')
+TITLE = "redirectioneaza.ro"
 
 DEFAULT_NGO_LOGO = "https://storage.googleapis.com/redirectioneaza/logo_bw.png"
 

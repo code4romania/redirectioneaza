@@ -17,8 +17,15 @@ app = Flask(__name__, static_folder='static', static_url_path='')
 # Set current working directory to the current one
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
+REDIR_USERNAME = os.environ.get('REDIR_USERNAME')
+REDIR_PASSWORD = os.environ.get('REDIR_PASSWORD')
+REDIR_DBSERVER = os.environ.get('REDIR_DBSERVER')
+REDIR_DBPORT = os.environ.get('REDIR_DBPORT')
+REDIR_DBCATALOG = os.environ.get('REDIR_DBCATALOG')
+
 # Set up app configuration
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:docker@localhost:5432/redir'
+app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{REDIR_USERNAME}:{REDIR_PASSWORD}' \
+    f'@{REDIR_DBSERVER}:{REDIR_DBPORT}/{REDIR_DBCATALOG}'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = os.environ.get('APP_SECRET_KEY')
 app.config['SECURITY_PASSWORD_SALT'] = os.environ.get('SECURITY_PASSWORD_SALT')

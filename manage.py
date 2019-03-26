@@ -6,6 +6,7 @@ Available functionality:
 """
 
 from datetime import datetime
+from logging import info
 
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager, prompt_bool
@@ -99,6 +100,21 @@ def drop_db():
         db.drop_all()
 
     print('Dropped the database')
+
+
+@manager.command
+def remove_forms():
+    """
+    WARNING! Remove form_urls from the ngos
+    """
+    ngos = NgoEntity.query.all()
+
+    info(f'Removing form_url from {len(ngos)} ngos.')
+
+    for ngo in ngos:
+        ngo.form_url = None
+        db.session.add(ngo)
+    db.session.commit()
 
 
 if __name__ == '__main__':

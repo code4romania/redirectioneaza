@@ -10,7 +10,6 @@ from redirectioneaza.controllers.api import *
 from redirectioneaza.controllers.my_account import *
 from redirectioneaza.controllers.ngo import *
 from redirectioneaza.controllers.site import *
-from redirectioneaza.cron import NgoRemoveForms
 from . import app
 
 
@@ -72,7 +71,6 @@ register_route('/<ngo_url>', handler=NgoHandler, name="ngo-url")
 register_route('/catre/<ngo_url>', handler=NgoHandler)
 register_route('/<ngo_url>/doilasuta', handler=TwoPercentHandler, name="twopercent")
 register_route('/<ngo_url>/doilasuta/succes', handler=DonationSucces, name="ngo-twopercent-success")
-register_route('/cron', handler=NgoRemoveForms, name="ngo-remove-form")
 
 
 # TODO: Extend and rethink Error Handlers
