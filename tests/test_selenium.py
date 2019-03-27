@@ -2,11 +2,16 @@
 This file contains Selenium tests, using a splinter wrapper.
 """
 
+import os
+import time
+
 import pytest
 from splinter import Browser
 
 from redirectioneaza import db, User
 from redirectioneaza.config import DEV_SERVER_HOST, DEV_SERVER_PORT
+
+ASSETS_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'assets')
 
 APP_ADDRESS = f'http://{DEV_SERVER_HOST}:{DEV_SERVER_PORT}'
 
@@ -47,8 +52,10 @@ def signup_enter_data(browser):
 
 
 def signup_cleanup():
-    _user = User.query.filter_by(email='testulescu@example.com').first()
+    # Warning! Not having the appropriate DB environment variables defined will cause this method (and any test that's
+    # using it) to fail.
 
+    _user = User.query.filter_by(email='testulescu@example.com').first()
     if not _user:
         return
     else:
@@ -95,13 +102,12 @@ def test_signup_fail(browser):
     signup_cleanup()
 
 
-@pytest.mark.skip('Work in Progress')
 def test_update_ngo_data_user_success(browser):
     login_enter_data(browser, email='user1@example.com', password='testuser')
 
-    details_url = ADDRESSES['ngo-details']
+    browser.visit(ADDRESSES['ngo-details'])
 
-    browser.visit(details_url)
+    time.sleep(2)
 
     browser.fill('ong-nume', 'IMPOSSIBLE 111 NEW NAME')
 
@@ -115,4 +121,45 @@ def test_update_ngo_data_user_success(browser):
 
     browser.find_by_id('ong-details-submit').first.click()
 
-    # TODO Alter this method - currently no way tell whether form was submitted or not (except checking db)
+    errors = []
+
+    if not browser.find_by_id('ong-nume').first.value == 'IMPOSSIBLE 111 NEW NAME':
+        errors.append('NGO NAME update failed')
+
+    assert not errors, "errors occurred:\n{}".format("\n".join(errors))
+
+
+def test_upload_image_user(browser):
+    login_enter_data(browser, email='user1@example.com', password='testuser')
+
+    browser.visit(ADDRESSES['ngo-details'])
+
+    time.sleep(2)
+
+    browser.find_by_id('delete-ngo-logo').first.click()
+
+    browser.driver.find_element_by_id('ong-logo').send_keys(os.path.join(ASSETS_PATH, 'testimage.png'))
+
+    browser.fill('ong-url', '123456789')
+
+    browser.find_by_id('ong-details-submit').first.click()
+
+    assert 'storage' in browser.find_by_id('ngo-logo')['src']
+
+
+def test_upload_image_admin(browser):
+    login_enter_data(browser, email='admin@example.com', password='admin')
+
+    browser.find_by_id('delete-ngo-logo').first.click()
+
+    browser.driver.find_element_by_id('ong-logo').send_keys(os.path.join(ASSETS_PATH, 'testimage.png'))
+
+    browser.fill('ong-url', '123456789')
+
+    browser.find_by_id('ong-details-submit').first.click()
+
+    assert 'storage' in browser.find_by_id('ngo-logo')['src']
+
+# TODO Add test for changing the password
+
+# TODO Add test for generating a pdf

@@ -24,8 +24,9 @@ REDIR_DBPORT = os.environ.get('REDIR_DBPORT')
 REDIR_DBCATALOG = os.environ.get('REDIR_DBCATALOG')
 
 # Set up app configuration
-app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{REDIR_USERNAME}:{REDIR_PASSWORD}' \
-    f'@{REDIR_DBSERVER}:{REDIR_DBPORT}/{REDIR_DBCATALOG}'
+app.config['SQLALCHEMY_DATABASE_URI'] = \
+    f'postgresql://{REDIR_USERNAME}:{REDIR_PASSWORD}@{REDIR_DBSERVER}:{REDIR_DBPORT}/{REDIR_DBCATALOG}'
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = os.environ.get('APP_SECRET_KEY')
 app.config['SECURITY_PASSWORD_SALT'] = os.environ.get('SECURITY_PASSWORD_SALT')
