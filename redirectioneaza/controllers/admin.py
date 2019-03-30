@@ -8,7 +8,7 @@ from redirectioneaza import app, mail
 from redirectioneaza.config import DEV
 from redirectioneaza.contact_data import LIST_OF_COUNTIES
 from redirectioneaza.handlers.base import BaseHandler
-from redirectioneaza.models import NgoEntity, User
+from redirectioneaza.models import NgoEntity, User, ActivityDomain
 
 """
 Handlers  for admin routing
@@ -87,6 +87,8 @@ class AdminNgoHandler(BaseHandler):
         self.template_values["ngo_upload_url"] = url_for("api-ngo-upload-url")
         self.template_values["counties"] = LIST_OF_COUNTIES
         self.template_values["ngo"] = ngo
+        self.template_values["activity_domains"] = ActivityDomain.all()
+        self.template_values["selected_activity_domain_ids"] = ngo.get_selected_activity_domain_ids()
 
         self.template_values["other_emails"] = ', '.join(
             str(x) for x in ngo.other_emails) if ngo.other_emails else ""

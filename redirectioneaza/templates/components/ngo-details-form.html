@@ -56,6 +56,21 @@
                 </select>
             </div>
         </div>
+
+        <div class="form-group">
+            <div class="col-xs-4">
+                <label for="ong-activity-domains" class="control-label">Domenii de activitate:</label>
+                <p class="text-muted">(poti alege mai multe)</p>
+            </div>
+            <div class="col-xs-8">
+                <select class="form-control" id="ong-activity-domains" name="ong-activity-domains" multiple>
+                    {% for activity_domain in activity_domains %}
+                        <option value="{{ activity_domain.id }}" {{ "selected" if activity_domain.id in selected_activity_domain_ids }}>{{ activity_domain.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
         <div class="form-group">
             <div class="col-xs-12">
                 <div>Poti alege un url personalizat pentru asociatia ta:</div>

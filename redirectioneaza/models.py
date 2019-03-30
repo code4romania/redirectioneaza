@@ -16,6 +16,21 @@ from redirectioneaza.config import DEFAULT_NGO_LOGO
 ngo_tags = db.Table('ngo_entity_tag', db.Column('tag_id', db.Integer, db.ForeignKey('tag.id')), db.Column('ngoentity_id', db.Integer, db.ForeignKey('ngo_entity.id')))
 
 
+ngo_activity_domains = db.Table(
+    'ngo_activity_domain',
+    db.Column(
+        'ngo_id',
+        db.Integer,
+        db.ForeignKey('ngo_entity.id'),
+        primary_key=True),
+    db.Column(
+        'activitydomain_id',
+        db.Integer,
+        db.ForeignKey('activity_domain.id'),
+        primary_key=True),
+)
+
+
 class Tag(db.Model):
     """
     Defines the Tag object.
@@ -50,6 +65,25 @@ class Tag(db.Model):
         return "<Tag '{}'>".format(self.name)
 
 
+class ActivityDomain(db.Model):
+    """
+    Defines an NGO Activity Domain
+    """
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, unique=True, nullable=False, index=True)
+
+    @staticmethod
+    def all():
+        """
+        Returns all the activity domains.
+        :return: ActivityDomain
+        """
+        return ActivityDomain.query.order_by("name").all()
+
+    def __str__(self):
+        return "<Activity '{}'>".format(self.name)
+
+
 # to the list of counties add the whole country
 class NgoEntity(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -58,6 +92,9 @@ class NgoEntity(db.Model):
     name = db.Column(db.String(100))
 
     description = db.Column(db.UnicodeText())
+
+    activity_domains = db.relationship(
+        'ActivityDomain', secondary=ngo_activity_domains)
 
     logo = db.Column(db.String(256), index=True, default=DEFAULT_NGO_LOGO)
     # the background image that will go above the description, if any
@@ -108,6 +145,9 @@ class NgoEntity(db.Model):
     @property
     def number_of_donations(self):
         return object_session(self).scalar(select([func.count(Donor.id)]).where(Donor.ngo_id == self.id))
+
+    def get_selected_activity_domain_ids(self):
+        return [x.id for x in self.activity_domains]
 
     def __str__(self):
         return "<NGO '{}'>".format(self.name)

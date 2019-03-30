@@ -12,7 +12,7 @@ from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager, prompt_bool
 
 from redirectioneaza import app, db
-from redirectioneaza.models import Donor, NgoEntity, User
+from redirectioneaza.models import Donor, NgoEntity, User, ActivityDomain
 
 manager = Manager(app)
 migrate = Migrate(app, db)
@@ -25,6 +25,10 @@ def load_dummy_data():
     """
     Inserts dummy data entities for development purposes.
     """
+    _first_activity = ActivityDomain(name='Sanatate')
+    _second_activity = ActivityDomain(name='Educatie')
+    _third_activity = ActivityDomain(name='Ecologie')
+
     _ngo = NgoEntity(name='TEST NGO GOOD GUYS',
                      url="test-ngo-good-guys",
                      date_created=datetime.utcnow(),
@@ -59,6 +63,10 @@ def load_dummy_data():
                    county="IF",
                    city="Otopeni"
                    )
+
+    db.session.add(_first_activity)
+    db.session.add(_second_activity)
+    db.session.add(_third_activity)
 
     db.session.add(_ngo)
 

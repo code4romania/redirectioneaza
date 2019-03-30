@@ -8,7 +8,7 @@ from redirectioneaza import db
 from redirectioneaza.config import START_YEAR
 from redirectioneaza.contact_data import LIST_OF_COUNTIES
 from redirectioneaza.handlers.base import BaseHandler
-from redirectioneaza.models import NgoEntity, Donor
+from redirectioneaza.models import NgoEntity, Donor, ActivityDomain
 from .api import check_ngo_url
 
 incomplete_form_data = "Te rugam sa completezi datele din formular."
@@ -33,6 +33,9 @@ class MyAccountHandler(BaseHandler):
             self.template_values["ngo"] = user.ngo
 
             self.template_values["ngo_url"] = url_for('asociatia') + '/' + str(user.ngo.url)
+
+            self.template_values["activity_domains"] = ActivityDomain.all()
+            self.template_values["selected_activity_domain_ids"] = user.ngo.get_selected_activity_domain_ids()
 
             donors = Donor.query.with_entities(Donor.first_name,
                                                Donor.last_name,
@@ -70,6 +73,9 @@ class MyAccountHandler(BaseHandler):
             self.template_values["ngo"] = {}
 
             self.template_values["counties"] = LIST_OF_COUNTIES
+
+            self.template_values["activity_domains"] = ActivityDomain.all()
+            self.template_values["selected_activity_domain_ids"] = []
 
             # self.uri_for("api-ngo-check-url", ngo_url="")
             # self.template_values["check_ngo_url"] = "/api/ngo/check-url/"
