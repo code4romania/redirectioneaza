@@ -187,6 +187,8 @@ class TwoPercentHandler(BaseHandler):
         # if he would like the ngo to see the donation
         donor_dict['anonymous'] = post.get('anonim') != 'on'
 
+        donor_dict['income'] = post.get('income', 'wage')
+
         # the ngo data
         ngo_data = {
             "name": self.ngo.name,
@@ -233,6 +235,7 @@ class TwoPercentHandler(BaseHandler):
             email = donor_dict['email'],
             tel = donor_dict['tel'],
             anonymous = donor_dict['anonymous'],
+            income = donor_dict['income'],
             # make a request to get geo ip data for this user
             geoip = self.get_geoip_data(),
             ngo = self.ngo.key,
