@@ -59,6 +59,7 @@ register_route('/api/ngo/check-url/<ngo_url>', handler=CheckNgoUrl, name='api-ng
 register_route('/api/ngo/upload-url', handler=GetUploadUrl, name='api-ngo-upload-url')
 register_route('/api/ngo/form/<ngo_url>', handler=GetNgoForm, name='api-ngo-form-url')
 register_route('/api/ngos', handler=NgosApi, name='api-ngos')
+register_route('/api/get-donors-list/<year>', handler=GetDonorList, name='get-donors-list')
 
 # # ADMIN HANDLERS
 register_route('/admin', handler=AdminHandler, name='admin')

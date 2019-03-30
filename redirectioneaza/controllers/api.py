@@ -3,13 +3,14 @@ from datetime import datetime
 from hashlib import sha1, md5
 from logging import info
 
-from flask import abort, url_for, jsonify, request, redirect
+from flask import abort, url_for, jsonify, request, redirect, Response
 from flask_login import current_user, login_required
 
 from redirectioneaza import db, app
 from redirectioneaza.config import DEFAULT_NGO_LOGO
 from redirectioneaza.handlers.base import BaseHandler
 from redirectioneaza.handlers.pdf import create_pdf
+from redirectioneaza.handlers import utils
 from redirectioneaza.models import NgoEntity
 
 
@@ -130,3 +131,40 @@ class GetUploadUrl(BaseHandler):
         return jsonify({
             "file_urls": file_urls
         })
+
+
+class GetDonorList(BaseHandler):
+
+    @login_required
+    def get(self, year):
+
+        user = current_user
+        ngo = user.ngo
+        donors = ngo.donors
+
+
+        csv_list = ['first_name,last_name,county,city,email,tel']
+        for donor in donors:
+            donor = utils.obj2dict(donor)
+            csv = []
+
+            csv.append(donor['first_name'])
+            csv.append(donor['last_name'])
+
+            csv.append(donor['county'])
+            csv.append(donor['city'])
+
+            if not donor['anonymous']:
+
+                csv.append(donor['email'])
+                csv.append(donor['tel'])
+
+            else:
+
+                csv.append('')
+                csv.append('')
+
+            csv_list.append(",".join(csv))
+
+        return Response("\n".join(csv_list), mimetype='text/csv',headers={"Content-Disposition":f"attachment;filename={year}.csv"})
+

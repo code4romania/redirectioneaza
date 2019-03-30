@@ -8,6 +8,7 @@
 
         {% if value or key == current_year %}
             <p>{{ key }}</p>
+            <a href="{{url_for('get-donors-list',year=key)}}">Export</a>
             <table class="table">
                 <thead>
                     <tr>
