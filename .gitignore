@@ -14,3 +14,5 @@ venv/
 *.sh
 storage/*
 !.gitignore
+/.idea
+/bower_components
