@@ -1,0 +1,51 @@
+
+{% extends "base.html" %}
+
+{% block assets %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/easy-autocomplete.min.css" />
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+
+    <div id="homepage-container" class="jumbotron text-center">
+        <h1>Asociații pentru care poți redirecționa 2%</h1>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-md-10 col-md-offset-1 search-bar-container">
+            <input id="search-bar" type="text" placeholder="Caută un ONG" />
+        </div>
+    </div>
+
+    <div class="row text-center">
+        {% for ngo in ngos %}
+            <div class="col-xs-6 col-sm-4 col-md-3">
+                <div class="ong-panel panel panel-default">
+                    <a href="{{ ngo.url }}">
+                        {% set logo = ngo.logo if ngo.logo else DEFAULT_NGO_LOGO %}
+                        <div class="ong-logo">
+                            <img src="{{ logo }}" class="img-responsive center-block" alt="{{ ngo.name }} logo" />
+                        </div>
+                        <div class="panel-heading">{{ ngo.name }}</div>
+                    </a>
+                  <div class="panel-body">
+                    {{ " ".join(ngo.description.split()[:11]) + " ..." }}
+                  </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <hr>
+    {% include "components/for-ngos.html" %}
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/jquery.easy-autocomplete.min.js"></script>
+    <script src="/js/search.js"></script>
+{% endblock %}

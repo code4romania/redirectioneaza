@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+
+            <!--TODO ADD ROMANIAN DIACRITICAL MARKS-->
+            <h3>Termeni si conditii de utilizare</h3>
+            
+            <p>
+                Termenii si Conditiile generale de utilizare  stabilesc termenii si conditiile generale de utilizare a site-ului „redirectioneaza.ro”  de catre potentialii vizitatori sau beneficiari.
+            </p>
+            <p>
+                “Redirectioneaza.ro” (in continuare denumit „Site”, „Platforma”, „Redirectioneaza.ro”) este o platforma online dezvoltata de Asociatia Code for Romania (denumita in continuare “Code for Romania”) care vine in sprijinul actiunilor civice de redirectionare a 2% din impozitul anual pe veniturile din salarii si pensii, avand ca obiectiv facilitarea relatiei dintre asociatiile non-guvernamentale sau fundatiile (in continuare denumite „ONG”) infiintate in Romania pe de o parte si potentialele persoane care doresc sa redirectioneze cei 2% catre acestea, pe de alta parte.
+            </p>
+            <p>
+                Asociatia Code for Romania este o persoana juridica, avand sediul in Mun. Bucuresti, Piata Alba Iulia nr. 7, bloc I6, etaj 1, ap. 6, inregistrata in registrul special, Partea A, sectiunea I 67/06.07.2016.
+            </p>
+
+            <h4>
+                Obiectivul Site-ului
+            </h4>
+            <p>
+                Obiectivul Platformei este de a facilita colectarea formularelor de tip 230, formulare ce permit redirectionarea sumei reprezentand pana la 2% din impozitul anual pe venit, precum si incurajarea cetatenilor sa contribuie la colectarea acestora.
+            </p>
+            <ul class="list">
+                <li>
+                    Site-ul permite inregistrarea unui ONG pentru a crea un profil online prin care acesta se poate prezenta.
+                </li>
+                <li>
+                    De asemenea, Redirectioneaza.ro pune la dispozitia utilizatorului Platformei care doreste sa redirectioneze 2% din impozitul pe venitul, un formular care colecteaza datele personale ale acestuia. Pentru a afla conditiile in care datele cu caracter personal ale utilizatorilor platformei  care doresc sa directioneze 2% din impozitul pe venit, sunt utilizate de catre Code for Romania, te rugam sa accesezi Nota de informare de <a href="{{ url_for('note') }}" target="_blank">aici</a>.
+                </li>
+                <li>
+                    Datele din acest formular sunt folosite pentru a completa documentul de tip 230, cu datele ONG-ului, dar si datele persoanei care Redirectioneaza cei 2%.
+                </li>
+                <li>
+                    Astfel, odata completat formularul, platforma genereaza formularul tip 230 cu datele completate de tine, putand fi descarcat de pe Site automat (vezi <a href="https://static.anaf.ro/static/10/Anaf/formulare/D230_OPANAF_3695_2016.pdf" target="_blank">exemplu necompletat</a>).
+                </li>
+            </ul>
+            <p>
+                In cazul in care utilizatorul nu doreste ca formularul tip 230 sa fie precompletat in baza formularului de pe Platforma, sau sa ii fie prelucrate datele cu caracter personal, poate alege sa redirectioneze cei 2% din impozit descarcand si completand formularul tip 230 de pe site (vezi <a href="https://static.anaf.ro/static/10/Anaf/formulare/D230_OPANAF_3695_2016.pdf" target="_blank">exemplu necompletat</a>).
+            </p>
+
+            <h4>
+                Marca si dreptul de autor
+            </h4>
+            <p>
+                Dreptul de autor pentru toate informatiile existente pe acest Site este detinut de Code for Romania. Nici un material de pe acest site nu poate fi reprodus partial, integral sau modificat fara acordul expres exprimat de catre Code for Romania, titularul acestui drept.
+            </p>
+            <ul class="list">
+                <li>
+                    Toate drepturile sunt rezervate.
+                </li>
+                <li>
+                    Este strict interzisa folosirea acestui Site in scopul distrugerii sau alterarii lui, a continutului sau a securitatii acestuia ori pentru discreditarea sau hartuirea Redirectioneaza.ro sau a Code for Romania.
+                </li>
+                <li>
+                    Code for Romania va aplica toate masurile de securitate tehnica si organizatorica pentru protejarea datelor asupra carora detine controlul impotriva oricarei situatii de manipulare accidentala sau intentionata, pierdere, distrugere sau impotriva accesului unei persoane neautorizate.
+                </li>
+            </ul>
+
+            <h4>
+                Modificari Termeni si Conditi generale de utilizare Site
+            </h4>
+            <p>
+                "Termenii si Conditiile generale de utilizare" constituie, in intregime, un acord incheiat intre dumneavoastra si Code for Romania in privinta utilizarii Redirectioneaza.ro.
+            </p>
+            <p>
+                Code for Romania isi rezerva dreptul de a revizui si aduce la zi "Termenii si Conditiile generale de utilizare" in orice moment, fara o anuntare sau o acceptare prealabila a utilizatorilor.
+            </p>
+            <p>
+                Daca aveti intrebari cu privire la informatiile cuprinse in aceasta pagina va rugam sa ne scrieti la adresa <a href="mailto:redirectioneaza@code4.ro">redirectioneaza@code4.ro</a>.
+            </p>
+
+            <h4>
+                Despre Code for Romania
+            </h4>
+            <p>
+                Code for Romania este o organizatie neguvernamentala independenta, neafiliata politic si apolitica, infiintata in anul 2016, al carei scop este de a mobiliza tinerii profesionisti din domeniul IT sa creeze instrumente digitale care ajuta in solutionarea problemelor sociale. Code for Romania este infiintata si functioneaza in conformitate cu legea romana, actul constitutiv si statutul sau si <a href="https://code4.ro/codul-de-conduita/" target="_blank">codul de conduita</a>.
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
