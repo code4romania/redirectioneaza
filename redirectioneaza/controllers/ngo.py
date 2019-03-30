@@ -260,7 +260,6 @@ class DonationSucces(BaseHandler):
         return render_template(self.template_name, **self.template_values)
 
     def post(self, ngo_url):
-        # TODO: Find out what what this supposed to be
         # TODO: to be implemented
 
         if self.get_ngo_and_donor() is False:

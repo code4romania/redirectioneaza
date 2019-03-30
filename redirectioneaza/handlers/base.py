@@ -8,27 +8,9 @@ from itsdangerous import URLSafeTimedSerializer
 
 from redirectioneaza import app
 # globals
-from redirectioneaza.config import *
 from redirectioneaza.contact_data import CONTACT_FORM_URL, CONTACT_EMAIL_ADDRESS
 from redirectioneaza.handlers.email import EmailManager
 from redirectioneaza.models import NgoEntity, Donor
-
-app.jinja_env.add_extension('jinja2.ext.autoescape')
-app.jinja_env.add_extension('jinja2.ext.i18n')
-
-template_settings = {
-    "bower_components": DEV_DEPENDECIES_LOCATION,
-    "DEV": DEV,
-    "PRODUCTION": PRODUCTION,
-    "title": TITLE,
-    "contact_url": CONTACT_FORM_URL,
-    "language": "ro",
-    "base_url": "/",
-    "captcha_public_key": CAPTCHA_PUBLIC_KEY,
-    "errors": None
-}
-
-app.jinja_env.globals = {**app.jinja_env.globals, **template_settings}
 
 
 class Handler(MethodView):

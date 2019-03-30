@@ -3,40 +3,44 @@ This file contains the core objects of the application: the app object, the db o
 """
 
 import logging
-import os
 import sys
+from os import chdir, path
 
 from flask import Flask
 from flask_login import LoginManager
 from flask_mail_sendgrid import MailSendGrid
 from flask_sqlalchemy import SQLAlchemy
 
+from redirectioneaza.config import *
+from redirectioneaza.contact_data import CONTACT_FORM_URL
+
 # Main app object
 app = Flask(__name__, static_folder='static', static_url_path='')
 
+app.jinja_env.add_extension('jinja2.ext.autoescape')
+app.jinja_env.add_extension('jinja2.ext.i18n')
+
+template_settings = {
+    "bower_components": DEV_DEPENDECIES_LOCATION,
+    "DEV": DEV,
+    "PRODUCTION": PRODUCTION,
+    "title": TITLE,
+    "contact_url": CONTACT_FORM_URL,
+    "language": "ro",
+    "base_url": "/",
+    "captcha_public_key": CAPTCHA_PUBLIC_KEY,
+    "errors": None
+}
+
+app.jinja_env.globals = {**app.jinja_env.globals, **template_settings}
+
+app.config.from_object('redirectioneaza.config')
+app.config.from_object(CONFIG_BY_NAME[ENVIRONMENT])
+
 # Set current working directory to the current one
-os.chdir(os.path.dirname(os.path.realpath(__file__)))
+chdir(path.dirname(path.realpath(__file__)))
 
-REDIR_USERNAME = os.environ.get('REDIR_USERNAME')
-REDIR_PASSWORD = os.environ.get('REDIR_PASSWORD')
-REDIR_DBSERVER = os.environ.get('REDIR_DBSERVER')
-REDIR_DBPORT = os.environ.get('REDIR_DBPORT')
-REDIR_DBCATALOG = os.environ.get('REDIR_DBCATALOG')
-
-# Set up app configuration
-app.config['SQLALCHEMY_DATABASE_URI'] = \
-    f'postgresql://{REDIR_USERNAME}:{REDIR_PASSWORD}@{REDIR_DBSERVER}:{REDIR_DBPORT}/{REDIR_DBCATALOG}'
-
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.secret_key = os.environ.get('APP_SECRET_KEY')
-app.config['SECURITY_PASSWORD_SALT'] = os.environ.get('SECURITY_PASSWORD_SALT')
-
-# TODO Rethink this once migrated to another object store
-app.config['UPLOAD_FOLDER'] = 'storage'
-
-# TODO: with the Environment-specific configuration, set up logging stream redirection to a database on PROD
 # TODO: Refactor and/or Move logging logic to another file
-
 # Handle all logging streams
 out_hdlr = logging.StreamHandler(sys.stdout)
 fmt = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
@@ -55,7 +59,6 @@ app.logger.propagate = True
 db = SQLAlchemy(app)
 
 # Set up flask-mail-sendgrid
-app.config['MAIL_SENDGRID_API_KEY'] = os.environ.get('SENDGRID_API_KEY')
 mail = MailSendGrid(app)
 
 # Set up flask-login
