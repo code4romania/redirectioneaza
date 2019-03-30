@@ -2,6 +2,7 @@ import os
 from datetime import datetime
 from hashlib import sha1, md5
 from logging import info
+from sqlalchemy.sql.expression import extract
 
 from flask import abort, url_for, jsonify, request, redirect, Response
 from flask_login import current_user, login_required
@@ -10,8 +11,7 @@ from redirectioneaza import db, app
 from redirectioneaza.config import DEFAULT_NGO_LOGO
 from redirectioneaza.handlers.base import BaseHandler
 from redirectioneaza.handlers.pdf import create_pdf
-from redirectioneaza.handlers import utils
-from redirectioneaza.models import NgoEntity
+from redirectioneaza.models import NgoEntity, Donor
 
 
 def check_ngo_url(ngo_url=None):
@@ -139,24 +139,24 @@ class GetDonorList(BaseHandler):
 
         user = current_user
         ngo = user.ngo
-        donors = ngo.donors
+        donors = Donor.query.filter(extract('year',Donor.date_created)==year, Donor.ngo==ngo)
 
 
         csv_list = ['first_name,last_name,county,city,email,tel']
         for donor in donors:
-            donor = utils.obj2dict(donor)
+
             csv = []
 
-            csv.append(donor['first_name'])
-            csv.append(donor['last_name'])
+            csv.append(donor.first_name)
+            csv.append(donor.last_name)
 
-            csv.append(donor['county'])
-            csv.append(donor['city'])
+            csv.append(donor.county)
+            csv.append(donor.city)
 
-            if not donor['anonymous']:
+            if not donor.anonymous:
 
-                csv.append(donor['email'])
-                csv.append(donor['tel'])
+                csv.append(donor.email)
+                csv.append(donor.tel)
 
             else:
 
