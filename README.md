@@ -46,7 +46,7 @@ PostgreSQL / SQLAlchemy
 
 ## App structure
 
-The entry point of the app is `run.py`. 
+The entry point of the app is `app.py`. 
 All the routes are defined in `redirectioneaza\routes.py`.
 
 The application itself is located in the folder `redirectioneaza`.
@@ -85,7 +85,7 @@ To send props to the view, use the dict `self.template_values`.
 `python manage.py load_dummy`
 
 6.  To run the application, run:
-`python run.py`
+`python app.py`
 
 The app will be ran by default on `localhost:5000`.
 
