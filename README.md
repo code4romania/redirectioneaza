@@ -79,23 +79,12 @@ To send props to the view, use the dict `self.template_values`.
 2. Set up a virtual env `virtualenv venv` and activate it `source venv/bin/activate`
 3. Install the requirements : `pip install -r requirements.txt`
 4. Install front-end development assets `bower install`
-5. Set up a database server (PostgreSQL preferred) to host the application.
-6. Export the following ENVIRONMENT VARIABLES
-
-* `REDIR_USERNAME` username for your database connection
-* `REDIR_PASSWORD` password for your database connection
-* `REDIR_DBSERVER` server for your database connection
-* `REDIR_DBPORT` port for your database connection
-* `REDIR_DBCATALOG` database name for your database connection
-* `APP_SECRET_KEY` a random binary string for session encryption
-* `SECURITY_PASSWORD_SALT` a random binary string for password hashing salting
-
-7. Initialize the database and populate with dummy data:
+5. Initialize the database and populate with dummy data:
 
 `python manage.py initdb` then
 `python manage.py load_dummy`
 
-8.  To run the application, run:
+6.  To run the application, run:
 `python run.py`
 
 The app will be ran by default on `localhost:5000`.

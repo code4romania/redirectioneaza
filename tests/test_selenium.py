@@ -131,6 +131,8 @@ def test_update_ngo_data_user_success(browser):
     assert not errors, "errors occurred:\n{}".format("\n".join(errors))
 
 
+# TODO Fix this
+@pytest.mark.skip('Work in progress')
 def test_upload_image_user(browser):
     login_enter_data(browser, email='user1@example.com', password='testuser')
 
@@ -153,7 +155,6 @@ def test_upload_image_user(browser):
 # TODO Fix this
 @pytest.mark.skip('Work in progress')
 def test_upload_image_admin(browser):
-
     login_enter_data(browser, email='admin@example.com', password='admin')
 
     if browser.find_by_id('delete-ngo-logo').first:

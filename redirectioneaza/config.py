@@ -5,13 +5,14 @@ This file contains configurations settings for the application
 # TODO: Cleanup unused settings
 # TODO: Create Environment-Specific Configuration profiles that inherit from Base Configuration. Use config from object.
 
-from os import environ
+from os import environ, path
 
 # DEPLOY
 # LESS
 # minify-css
 
-ENVIRONMENT = environ['REDIR_ENVIRONMENT']
+ENVIRONMENT = environ.get('REDIR_ENVIRONMENT', 'DEV')
+BASEDIR = path.abspath(path.dirname(__file__))
 
 
 class AppBaseConfig:
@@ -21,18 +22,22 @@ class AppBaseConfig:
 
 
 class AppDevelopmentConfig(AppBaseConfig):
-    REDIR_USERNAME = environ.get('REDIR_USERNAME')
-    REDIR_PASSWORD = environ.get('REDIR_PASSWORD')
-    REDIR_DBSERVER = environ.get('REDIR_DBSERVER')
-    REDIR_DBPORT = environ.get('REDIR_DBPORT')
-    REDIR_DBCATALOG = environ.get('REDIR_DBCATALOG')
+    # TODO Commented for future configurations
+
+    # REDIR_USERNAME = environ.get('REDIR_USERNAME')
+    # REDIR_PASSWORD = environ.get('REDIR_PASSWORD')
+    # REDIR_DBSERVER = environ.get('REDIR_DBSERVER')
+    # REDIR_DBPORT = environ.get('REDIR_DBPORT')
+    # REDIR_DBCATALOG = environ.get('REDIR_DBCATALOG')
 
     # Set up app configuration
-    SQLALCHEMY_DATABASE_URI = \
-        f'postgresql://{REDIR_USERNAME}:{REDIR_PASSWORD}@{REDIR_DBSERVER}:{REDIR_DBPORT}/{REDIR_DBCATALOG}'
+    # SQLALCHEMY_DATABASE_URI = \
+    #    f'postgresql://{REDIR_USERNAME}:{REDIR_PASSWORD}@{REDIR_DBSERVER}:{REDIR_DBPORT}/{REDIR_DBCATALOG}'
 
-    SECRET_KEY = environ.get('APP_SECRET_KEY')
-    SECURITY_PASSWORD_SALT = environ.get('SECURITY_PASSWORD_SALT')
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + path.join(BASEDIR, 'database.db')
+
+    SECRET_KEY = environ.get('APP_SECRET_KEY', b'-~s\xd9\x95\xab\x0b\x85w\xfcDT')
+    SECURITY_PASSWORD_SALT = environ.get('SECURITY_PASSWORD_SALT', b'\x07\xa5\xd2#\xb7\xaf\xca^\x0bH\tN')
     MAIL_SENDGRID_API_KEY = environ.get('SENDGRID_API_KEY')
     DEV_SERVER_HOST, DEV_SERVER_PORT = 'localhost', 5000
 
