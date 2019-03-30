@@ -81,7 +81,7 @@ To send props to the view, use the dict `self.template_values`.
 4. Install front-end development assets `bower install`
 5. Initialize the database and populate with dummy data:
 
-`python manage.py initdb` then
+`python manage.py init_db` then
 `python manage.py load_dummy`
 
 6.  To run the application, run:
