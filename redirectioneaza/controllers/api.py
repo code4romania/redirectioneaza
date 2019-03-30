@@ -8,7 +8,7 @@ from flask import abort, url_for, jsonify, request, redirect, Response
 from flask_login import current_user, login_required
 
 from redirectioneaza import db, app
-from redirectioneaza.config import DEFAULT_NGO_LOGO
+from redirectioneaza.config import DEFAULT_NGO_LOGO, START_YEAR
 from redirectioneaza.handlers.base import BaseHandler
 from redirectioneaza.handlers.pdf import create_pdf
 from redirectioneaza.models import NgoEntity, Donor
@@ -136,34 +136,31 @@ class GetDonorList(BaseHandler):
 
     @login_required
     def get(self, year):
+        if int(year) > START_YEAR:
+            user = current_user
+            ngo = user.ngo
+            donors = Donor.query.filter(extract('year',Donor.date_created)==year, Donor.ngo==ngo)
 
-        user = current_user
-        ngo = user.ngo
-        donors = Donor.query.filter(extract('year',Donor.date_created)==year, Donor.ngo==ngo)
+            donors_data = ['first_name,last_name,county,city,email,tel']
+            for donor in donors:
+                data = []
 
+                data.append(donor.first_name)
+                data.append(donor.last_name)
 
-        csv_list = ['first_name,last_name,county,city,email,tel']
-        for donor in donors:
+                data.append(donor.county)
+                data.append(donor.city)
 
-            csv = []
+                if not donor.anonymous:
+                    data.append(donor.email)
+                    data.append(donor.tel)
 
-            csv.append(donor.first_name)
-            csv.append(donor.last_name)
+                else:
+                    data.append('')
+                    data.append('')
 
-            csv.append(donor.county)
-            csv.append(donor.city)
+                donors_data.append(",".join(data))
 
-            if not donor.anonymous:
-
-                csv.append(donor.email)
-                csv.append(donor.tel)
-
-            else:
-
-                csv.append('')
-                csv.append('')
-
-            csv_list.append(",".join(csv))
-
-        return Response("\n".join(csv_list), mimetype='text/csv',headers={"Content-Disposition":f"attachment;filename={year}.csv"})
-
+            return Response("\n".join(donors_data), mimetype='text/csv', headers={"Content-Disposition":f"attachment;filename={year}.csv"})
+        else:
+            return abort(404)
