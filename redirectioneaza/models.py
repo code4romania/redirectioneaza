@@ -13,9 +13,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from redirectioneaza import db
 from redirectioneaza.config import DEFAULT_NGO_LOGO
 
-ngo_tags = db.Table('ngo_entity_tag', \
-                    db.Column('tag_id', db.Integer, db.ForeignKey('tag.id')), \
-                    db.Column('ngoentity_id', db.Integer, db.ForeignKey('ngo_entity.id')))
+ngo_tags = db.Table('ngo_entity_tag', db.Column('tag_id', db.Integer, db.ForeignKey('tag.id')), db.Column('ngoentity_id', db.Integer, db.ForeignKey('ngo_entity.id')))
 
 
 class Tag(db.Model):
@@ -105,19 +103,11 @@ class NgoEntity(db.Model):
 
     @property
     def account_attached(self):
-        return object_session(self). \
-                   scalar(
-            select([func.count(User.id)]). \
-                where(User.ngo_id == self.id)
-        ) >= 1
+        return object_session(self).scalar(select([func.count(User.id)]).where(User.ngo_id == self.id)) >= 1
 
     @property
     def number_of_donations(self):
-        return object_session(self). \
-            scalar(
-            select([func.count(Donor.id)]). \
-                where(Donor.ngo_id == self.id)
-        )
+        return object_session(self).scalar(select([func.count(Donor.id)]).where(Donor.ngo_id == self.id))
 
     def __str__(self):
         return "<NGO '{}'>".format(self.name)

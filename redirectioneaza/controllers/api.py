@@ -115,8 +115,7 @@ class GetUploadUrl(BaseHandler):
 
             user_folder = os.path.join(app.config['UPLOAD_FOLDER'], str(md5(folder.encode('utf-8')).hexdigest()))
 
-            filename = sha1(datetime.now().isoformat().encode('utf-8')).hexdigest() + '.' \
-                       + uploaded_file.mimetype.split('/')[1]
+            filename = sha1(datetime.now().isoformat().encode('utf-8')).hexdigest() + '.' + uploaded_file.mimetype.split('/')[1]
 
             file_url = os.path.join(user_folder, filename)
 
