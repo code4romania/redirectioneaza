@@ -78,7 +78,8 @@ def test_signup_get(client):
     assert "Cont nou" in rv.data.decode('utf-8')
 
 
-# TODO Change recaptcha validation to be overridden while on DEV. This will allow us to test all methods as below.
+# TODO Change recaptcha validation to be overridden while on DEV. This will allow us to test all methods that require
+#  form submission/captcha verification.
 @pytest.mark.skip("Need to ignore recaptcha for unit testing")
 def test_signup_post(client):
     rv = client.post('/cont-nou', data=dict(nume='Jio', prenume='Gogo', email='jiogogo@example.com', parola='1234'))

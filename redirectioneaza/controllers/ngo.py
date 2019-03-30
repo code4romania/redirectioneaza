@@ -185,8 +185,7 @@ class TwoPercentHandler(BaseHandler):
             tel=donor_dict['tel'],
             anonymous=donor_dict['anonymous'],
             income=donor_dict['income'],
-            # make a request to get geo ip data for this user
-            geoip=self.get_geoip_data(),
+            geoip=request.remote_addr,
             ngo=self.ngo,
             pdf_url=file_url
         )
@@ -258,15 +257,3 @@ class DonationSucces(BaseHandler):
         self.template_values["has_cnp"] = session["has_cnp"] or False
 
         return render_template(self.template_name, **self.template_values)
-
-    def post(self, ngo_url):
-        # TODO: to be implemented
-
-        if self.get_ngo_and_donor() is False:
-            return
-
-        session.pop("donor_id")
-
-        signed_pdf = request.form.get("signed-pdf")
-
-        # TODO file upload

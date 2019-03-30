@@ -90,35 +90,3 @@ class PolicyHandler(BaseHandler):
 
         # render a response
         return render_template(self.template_name, **self.template_values)
-
-# TODO: Turned off, see new ones in routes.py
-# def NotFoundPage(request, response, exception):
-#     """handles the 404 page
-#         we can't use BaseHandler for this page.
-#         webapp2 only accepts a simple function like this one
-#     """
-#
-#     # create a mock handler so we can user templates
-#     handler = BaseHandler(request, response)
-#
-#     response.set_status(404)
-#
-#     # handler.render('404.html')
-#     abort(404)
-#
-#
-# def InternalErrorPage(request, response, exception):
-#     """handles the 500 page. same as the 404 page
-#     """
-#
-#     # create a mock handler so we can user templates
-#     handler = BaseHandler(request, response)
-#
-#     from logging import critical
-#
-#     critical(exception, exc_info=1)
-#
-#     response.set_status(500)
-#
-#     # handler.render('500.html')
-#     abort(500)

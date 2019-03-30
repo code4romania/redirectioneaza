@@ -3,13 +3,8 @@
 This file contains configurations settings for the application
 """
 # TODO: Cleanup unused settings
-# TODO: Create Environment-Specific Configuration profiles that inherit from Base Configuration. Use config from object.
 
 from os import environ, path
-
-# DEPLOY
-# LESS
-# minify-css
 
 ENVIRONMENT = environ.get('REDIR_ENVIRONMENT', 'DEV')
 BASEDIR = path.abspath(path.dirname(__file__))
@@ -19,6 +14,7 @@ class AppBaseConfig:
     # TODO Rethink this once migrated to another object store
     UPLOAD_FOLDER = 'storage'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    TEMPLATES_AUTO_RELOAD = True
 
 
 class AppDevelopmentConfig(AppBaseConfig):

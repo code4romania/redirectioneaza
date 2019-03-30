@@ -28,9 +28,6 @@ class BaseHandler(Handler):
 
         self.template_values = {"is_admin": current_user.is_admin if current_user.is_authenticated else False}
 
-        # TODO check where template_settings was loaded into template values
-        # self.template_values.update(template_settings)
-
     # USER METHODS
 
     def generate_confirmation_token(self, email, token_type):
@@ -59,18 +56,9 @@ class BaseHandler(Handler):
 
         return TokenValidationResponse(token_id=token, result=True, email=result['email'], type=result['type'])
 
-    def get_geoip_data(self, ip_address=None):
-
-        if not ip_address:
-            ip_address = request.remote_addr
-
-        # TODO - Country was GAE-specific header. Find out what else it was used for.
-
-        return ip_address
-
     def get_ngo_and_donor(self, projection=True):
 
-        # TODO - Find out why would one use projection here
+        # TODO optimize this query for speed - use projections if possible
 
         ngo_id = str(request.args.get("ngo_url"))
 
@@ -111,7 +99,6 @@ class BaseHandler(Handler):
             subject = "Confirmare cont redirectioneaza.ro"
 
             token = self.generate_confirmation_token(user.email, 'v')
-            # TODO Fix this
             verification_url = url_for('verification', token=token)
 
             html_template = app.jinja_env.get_template("email/signup/signup_inline.html")
@@ -128,7 +115,6 @@ class BaseHandler(Handler):
             subject = "Resetare parola pentru contul redirectioneaza.ro"
 
             token = self.generate_confirmation_token(user.email, 'p')
-            # TODO Fix this
             verification_url = url_for('verification', token=token)
 
             html_template = None

@@ -24,8 +24,6 @@ class CheckNgoUrl(BaseHandler):
 
     def get(self, ngo_url):
 
-        # if we don't receive an ngo url or it's not a logged in user or not and admin
-        # TODO Find out where we checked for both authenticated user and admin
         if not ngo_url or not current_user.is_authenticated:
             return abort(403)
 
@@ -76,7 +74,6 @@ class GetNgoForm(BaseHandler):
         # filename = "Formular 2% - {0}.pdf".format(ngo.name)
         # filename = "Formular_donatie.pdf".format(_ngo.name)
         #
-        # # TODO Is this really a good idea - hashing an ID that can change?
         # ong_folder = security.hash_password(_ngo.url, "md5")
         #
         # path = "{0}/{1}/{2}".format(USER_UPLOADS_FOLDER, str(ong_folder), filename)
