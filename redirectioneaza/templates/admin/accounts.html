@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block header %}
+    {% include "admin/header.html" %}
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Nume</th>
+                <th>Email</th>
+                <th>Creat pe</th>
+                <th>ONG</th>
+                <th>Verificat</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if users %}
+                {% for user in users %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ user.first_name + " " + user.last_name }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{user.created}}</td>
+                        <td class="{{ 'success' if user.ngo }}">
+
+                            {% if user.ngo %}
+                                <a href="/{{ user.ngo.url }}" target="_blank">da</a>
+                            {% else %}
+                                nu
+                            {% endif %}
+                        </td>
+                        <td class="{{ 'success' if user.verified == True }}">
+                            {{ "da" if user.verified else "nu" }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="6">
+                        <p class="well well-lg text-center">
+                            Din pacate nu avem utilizatori inca.
+                        </p>
+                    </td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
