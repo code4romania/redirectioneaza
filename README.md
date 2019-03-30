@@ -81,7 +81,7 @@ To send props to the view, use the dict `self.template_values`.
 4. Install front-end development assets `bower install`
 5. Initialize the database and populate with dummy data:
 
-`python manage.py initdb` then
+`python manage.py init_db` then
 `python manage.py load_dummy`
 
 6.  To run the application, run:
@@ -107,7 +107,8 @@ To run tests:
 1. `cd tests`
 2. `pytest`
 
-This will run both unit and selenium/integration testing. To run a particular set of tests or a particular tests run `pytest test_app` and e.g. `pytest test_app.py::test_name` respectively.
+This will run both unit and selenium/integration testing. To run a particular set of tests or a particular tests run `pytest test_app` and e.g. `pytest test_app.py::test_name` respectively. 
+Note that Selenium testing will if the app is not running.
 
 ### Read more
 You can read more about the frameworks used by the app:
