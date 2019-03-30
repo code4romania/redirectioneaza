@@ -21,7 +21,6 @@ app.jinja_env.add_extension('jinja2.ext.autoescape')
 app.jinja_env.add_extension('jinja2.ext.i18n')
 
 template_settings = {
-    "bower_components": DEV_DEPENDECIES_LOCATION,
     "DEV": DEV,
     "PRODUCTION": PRODUCTION,
     "title": TITLE,
