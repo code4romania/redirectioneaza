@@ -33,13 +33,6 @@ class AdminHandler(BaseHandler):
 
         ngos = NgoEntity.query.all()
 
-        # TODO LOOK INTO HOW TO COMBINE HYBRID PROPERTIES WITH WITH_ENTITIES (PROJECTIONS)
-        # .with_entities(NgoEntity.name,\
-        #                                      NgoEntity.county,\
-        #                                      NgoEntity.verified,\
-        #                                      NgoEntity.email
-        #                                      ).all()
-
         self.template_values["ngos"] = ngos
 
         # render a response
@@ -137,7 +130,6 @@ class SendCampaign(BaseHandler):
         for email in emails:
             user_address = email
 
-            # TODO: This an actual email to be sent
             msg = Message(sender=sender_address, recipients=[user_address], subject=subject, html=html_body, body=body)
 
             if not DEV:

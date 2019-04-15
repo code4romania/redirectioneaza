@@ -73,13 +73,12 @@ register_route('/<ngo_url>/doilasuta', handler=TwoPercentHandler, name="twoperce
 register_route('/<ngo_url>/doilasuta/succes', handler=DonationSucces, name="ngo-twopercent-success")
 
 
-# TODO: Extend and rethink Error Handlers
+# TODO: Extend and rethink Error Handlers. Add real templates for them
 
 
 @app.errorhandler(404)
 def page_not_found(e):
     return redirect(url_for('index'))
-
 
 @app.errorhandler(401)
 def page_not_found(e):
@@ -94,7 +93,7 @@ def page_not_found(e):
 @app.route('/storage/<filename>', defaults={'folder': None})
 @app.route('/storage/<folder>/<filename>')
 def storage(folder, filename):
-    # TODO To be removed, development purposes only
+    # TODO Storage emulation for Development. To be superseded by S3.
     """
     Fake storage class
     :param folder:

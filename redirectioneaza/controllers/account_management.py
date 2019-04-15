@@ -175,8 +175,6 @@ class ForgotPasswordHandler(BaseHandler):
         email = request.form.get('email')
 
         if not email:
-            # TODO: Can this code really be reached? AFAIS our current JS frontend
-            # prevents us from submitting an empty field
             self.template_values["errors"] = "Campul email nu poate fi gol."
             return render_template(self.template_name, **self.template_values)
 
@@ -261,7 +259,7 @@ class SetPasswordHandler(BaseHandler):
 
     template_name = 'parola-noua.html'
 
-    # TODO Set up token invalidation after successful action
+    # TODO Look into setting up token invalidation after successful action
 
     def post(self):
 
