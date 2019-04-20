@@ -138,6 +138,9 @@ class NgoDetailsHandler(BaseHandler):
             # self.template_values["ngo_upload_url"] = self.uri_for("api-ngo-upload-url")
             self.template_values["counties"] = LIST_OF_COUNTIES
 
+            self.template_values["activity_domains"] = ActivityDomain.all()
+            self.template_values["selected_activity_domain_ids"] = user.ngo.get_selected_activity_domain_ids()
+
             return render_template(self.template_name, **self.template_values)
         else:
             # if not redirect to home
@@ -177,6 +180,13 @@ class NgoDetailsHandler(BaseHandler):
 
         ong_url = request.form.get('ong-url')
 
+        ong_activity_domain_ids = request.form.getlist('ong-activity-domains')
+        ong_activity_domains = db.session.query(
+            ActivityDomain
+        ).filter(
+            ActivityDomain.id.in_(ong_activity_domain_ids)
+        ).all()
+
         # validation
         if not ong_nume or not ong_descriere or not ong_adresa or not ong_url or not ong_cif or not ong_account:
             self.template_values["errors"] = incomplete_form_data
@@ -208,6 +218,8 @@ class NgoDetailsHandler(BaseHandler):
                 ngo.tel = ong_tel
 
                 ngo.special_status = ong_special_status
+
+                ngo.activity_domains = ong_activity_domains
 
                 # if no one uses this CIF
                 if ong_cif != ngo.cif:
