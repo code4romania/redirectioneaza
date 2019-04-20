@@ -81,11 +81,11 @@ To send props to the view, use the dict `self.template_values`.
 4. Install front-end development assets `bower install`
 5. Initialize the database and populate with dummy data:
 
-`python manage.py init_db` then
-`python manage.py load_dummy`
+`python3 manage.py init_db` then
+`python3 manage.py load_dummy`
 
 6.  To run the application, run:
-`python app.py`
+`python3 app.py`
 
 The app will be ran by default on `localhost:5000`.
 
@@ -99,7 +99,7 @@ lessc css/main.less > css/main.css --clean-css="--s1 --advanced --compatibility=
 ### Migrations
 
 For database migrations, use the commands for [Flask-Migrate](https://flask-migrate.readthedocs.io/en/latest/).
-`python manage.py migrations` - will display a list of available commands, whereas for example `python manage.py migrations init` would set up the initial migration.
+`python3 manage.py migrations` - will display a list of available commands, whereas for example `python3 manage.py migrations init` would set up the initial migration.
 
 ### Tests
 
