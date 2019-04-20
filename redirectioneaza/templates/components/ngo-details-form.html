@@ -100,7 +100,7 @@
     {% if is_admin %}
         <fieldset>
             <legend>Admin</legend>
-            <input id="old-ong-url" type="hidden" name="old-ong-url" value="{{ ngo.key.id() if ngo.key }}" />
+            <input id="ong-id" type="hidden" name="ong-id" value="{{ ngo.id }}" />
             <div class="form-group">
                 <div class="col-xs-12">
                     <label for="ong-activ" class="col-xs-3">Activ:</label>

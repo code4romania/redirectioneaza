@@ -170,17 +170,27 @@ class NgoDetailsHandler(BaseHandler):
         ong_special_status = request.form.get('special-status') == "on"
 
         ong_url = request.form.get('ong-url')
+        ong_id = request.form.get('ong-id', 0)
 
         # validation
         if not ong_nume or not ong_descriere or not ong_adresa or not ong_url or not ong_cif or not ong_account:
             self.template_values["errors"] = incomplete_form_data
             return render_template(self.template_name, **self.template_values)
 
-        # if the user already has an ngo, update it
-        if user.ngo:
+        # If the user is Admin, then try to load the NGO specified by id
+        if user.is_admin:
+            ngo = NgoEntity.query.filter_by(id=ong_id).first()
+        else:
+            ngo = None
 
+        # If no NGO was specified by id, then try to load the user's NGO
+        if not ngo:
             ngo = user.ngo
 
+        # update the selected ngo
+        if ngo:
+
+            # TODO: Remove this useless null check
             # if the user has an ngo attached but it's not found, skip this and create a new one
             if ngo is not None:
 
@@ -240,7 +250,7 @@ class NgoDetailsHandler(BaseHandler):
                         # donors = Donor.query(Donor.ngo == ngo.key).fetch()
                         # if donors:
                         #     for donor in donors:
-                        #         donor.ngo = new_key 
+                        #         donor.ngo = new_key
                         #         donor.put()
 
                         # # replace the users key
@@ -263,7 +273,7 @@ class NgoDetailsHandler(BaseHandler):
                 db.session.commit()
 
                 if user.is_admin:
-                    return redirect(url_for("admin-ong", ngo_url=ong_url))
+                    return redirect(url_for("admin-ong", ngo_url=ngo.url))
                 else:
                     return redirect(url_for("asociatia"))
 
