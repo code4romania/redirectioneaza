@@ -3,6 +3,8 @@ This file contains the routes defined by the application.
 """
 
 from flask import send_from_directory
+from flask_admin import Admin
+from flask_admin.menu import MenuLink
 
 from redirectioneaza.controllers.account_management import *
 from redirectioneaza.controllers.admin import *
@@ -10,7 +12,7 @@ from redirectioneaza.controllers.api import *
 from redirectioneaza.controllers.my_account import *
 from redirectioneaza.controllers.ngo import *
 from redirectioneaza.controllers.site import *
-from . import app
+from . import app, db
 
 
 def register_route(route, **kwargs):
@@ -60,34 +62,28 @@ register_route('/api/ngo/upload-url', handler=GetUploadUrl, name='api-ngo-upload
 register_route('/api/ngo/form/<ngo_url>', handler=GetNgoForm, name='api-ngo-form-url')
 register_route('/api/ngos', handler=NgosApi, name='api-ngos')
 
-# # ADMIN HANDLERS
-register_route('/admin', handler=AdminHandler, name='admin')
-register_route('/admin/conturi', handler=UserAccounts, name='admin-users')
-register_route('/admin/campanii', handler=SendCampaign, name='admin-campanii')
-register_route('/admin/ong-nou', handler=AdminNewNgoHandler, name='admin-ong-nou')
-register_route('/admin/<ngo_url>', handler=AdminNgoHandler, name='admin-ong')
+# deprecated
+# register_route('/admin', handler=AdminHandler, name='admin')
+# register_route('/admin/conturi', handler=UserAccounts, name='admin-users')
+# register_route('/admin/campanii', handler=SendCampaign, name='admin-campanii')
+# register_route('/admin/ong-nou', handler=AdminNewNgoHandler, name='admin-ong-nou')
+# register_route('/admin/<ngo_url>', handler=AdminNgoHandler, name='admin-ong')
 
 register_route('/<ngo_url>', handler=NgoHandler, name="ngo-url")
 register_route('/catre/<ngo_url>', handler=NgoHandler)
 register_route('/<ngo_url>/doilasuta', handler=TwoPercentHandler, name="twopercent")
 register_route('/<ngo_url>/doilasuta/succes', handler=DonationSucces, name="ngo-twopercent-success")
 
+admin = Admin(app,
+              index_view=CustomAdminIndexView(name='Home', template='admin/siteadmin.html'),
+              template_mode='bootstrap3', endpoint='siteadmin')
 
-# TODO: Extend and rethink Error Handlers. Add real templates for them
-
-
-@app.errorhandler(404)
-def page_not_found(e):
-    return redirect(url_for('index'))
-
-@app.errorhandler(401)
-def page_not_found(e):
-    return redirect(url_for('index'))
-
-
-@app.errorhandler(500)
-def page_not_found(e):
-    return redirect(url_for('index'))
+admin.add_view(UserAdmin(User, db.session, name='Users'))
+admin.add_view(DonorAdmin(Donor, db.session, name='Donors'))
+admin.add_view(NgoEntityAdmin(NgoEntity, db.session, name='NgoEntities'))
+# TODO:  Find a way to replace hardcoded url with url_for.
+admin.add_link(MenuLink(name='Back to the site', category='', url='/'))
+admin.add_link(MenuLink(name='Logout', category='', url='/logout'))
 
 
 @app.route('/storage/<filename>', defaults={'folder': None})

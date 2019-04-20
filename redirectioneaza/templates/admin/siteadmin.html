@@ -1,0 +1,58 @@
+{% extends 'admin/master.html' %}
+
+{% block body %}
+
+<div class="panel panel-default">
+    <div class="panel-heading">Site stats</div>
+
+
+    <table class="table">
+        <tbody>
+
+
+        <thead>
+        <tr>
+            <td><h3>NGOs and users</h3></td>
+        </tr>
+        </thead>
+
+        {% for k,v in data.items() %}
+
+        {% if not 'donation' in k|lower: %}
+        <tr>
+            <td>{{k}}</td>
+            <td><b>{{v}}</b></td>
+        </tr>
+
+        {% endif %}
+
+        {% endfor %}
+
+
+        <thead>
+        <tr>
+            <td><h3>Donations</h3></td>
+        </tr>
+        </thead>
+
+
+        {% for k,v in data.items() %}
+
+        {% if 'donation' in k|lower: %}
+        <tr>
+            <td>{{k}}</td>
+            <td><b>{{v}}</b></td>
+        </tr>
+
+        {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+</div>
+
+
+{% endblock %}
+
+

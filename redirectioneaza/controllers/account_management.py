@@ -28,14 +28,18 @@ class LoginHandler(BaseHandler):
 
         self.template_values["title"] = "Contul meu"
 
-        if current_user.is_authenticated:
+        if current_user.is_authenticated and not current_user.is_admin:
             return redirect(url_for('contul-meu'))
+
+        elif current_user.is_authenticated and current_user.is_admin:
+            return redirect(url_for('admin.index'))
 
         return render_template(self.template_name, **self.template_values)
 
     def post(self):
 
         email = request.form.get('email')
+
         password = request.form.get('parola')
 
         if not email:
@@ -58,9 +62,14 @@ class LoginHandler(BaseHandler):
         _user = User.get_by_email(email)
 
         if _user is not None and _user.check_password(password):
+
             login_user(_user)
 
-            return redirect(url_for('contul-meu'))
+            if current_user.is_authenticated and not current_user.is_admin:
+                return redirect(url_for('contul-meu'))
+
+            elif current_user.is_authenticated and current_user.is_admin:
+                return redirect(url_for('admin.index'))
 
         else:
             warning('Invalid email or password: {0}'.format(email))
