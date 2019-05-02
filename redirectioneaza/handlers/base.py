@@ -7,7 +7,6 @@ from flask_login import current_user
 from itsdangerous import URLSafeTimedSerializer
 
 from redirectioneaza import app
-# globals
 from redirectioneaza.contact_data import CONTACT_FORM_URL, CONTACT_EMAIL_ADDRESS
 from redirectioneaza.handlers.email import EmailManager
 from redirectioneaza.models import NgoEntity, Donor
