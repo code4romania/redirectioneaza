@@ -58,12 +58,7 @@ Please make sure to check out the suggested coding [best practices](#best-practi
 
 ### Git workflow
 
-* [Fork the repo](https://github.com/code4romania/redirectioneaza/fork)
-* Add your contributions on the `develop` branch of your fork
-* Rebase on upstream `develop` if it changed
-* Create a new Pull Request, clearly mentioning what issues your pull request fixes
-
-If you need tips on working with Git, Github or contributing to open source projects, we have gathered a list of useful guides and tutorials in our knowledge base. [Have a look](https://code4romania.github.io/knowledge/#contributing-to-open-source). :wink:
+Our collaboration model [is described here](WORKFLOW.MD). 
 
 ## About Code4Ro
 
