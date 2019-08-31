@@ -61,7 +61,6 @@ START_YEAR = 2016
 # where all the jinja2 templates should be located
 #VIEWS_FOLDER = "/views"
 
-DEV_DEPENDECIES_LOCATION = "/bower_components"
 
 TITLE = "redirectioneaza.ro"
 
