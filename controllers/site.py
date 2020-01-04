@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from google.appengine.ext.ndb import get_multi
+from google.appengine.ext.ndb import get_multi, Key
 
 from appengine_config import DEFAULT_NGO_LOGO, DONATION_LIMIT
 from models.handlers import BaseHandler
@@ -18,18 +18,49 @@ class HomePage(BaseHandler):
 
         self.template_values["title"] = "redirectioneaza 2%"
 
-        try:
-            list_keys = NgoEntity.query(NgoEntity.active == True).fetch(keys_only=True)
-            list_keys = sample(list_keys, 4)
-            
-            ngos = get_multi(list_keys)
-        except Exception, e:
-            info(e)
-            ngos = NgoEntity.query(NgoEntity.active == True).fetch(4)
-
-        self.template_values["ngos"] = ngos
         self.template_values['limit'] = DONATION_LIMIT
         self.template_values["DEFAULT_NGO_LOGO"] = DEFAULT_NGO_LOGO
+        self.template_values["custom_subdomain"] = False
+
+        route_name = self.request.route.name
+        # if we are on the ikea subdomain, load the special page
+        if route_name == 'ikea-home':
+            ikea_ngos = [
+                'asociatia-aura-ion',
+                'asociatia-caritas-bucuresti',
+                'asociatia-casa-ioana',
+                'code-for-romania',
+                'organizatia-umanitara-concordia',
+                'societatea-nationala-de-cruce-rosie-din-romania-filiala-sector-6-bucuresti',
+                'asociatia-ecoteca',
+                'freemiorita',
+                'asociatia-help-autism',
+                'asociatia-magicamp',
+                'fundatia-motivation-romania',
+                'padureacopiilor',
+                'scoala-de-valori',
+                'teach-for-romania',
+                'filiala-bucureti-a-asociaiei-terra-dacica-aeterna',
+                'asociatia-unu-si-unu',
+                'viitorplus',
+                'world-vision-romania'
+            ]
+            ngos = get_multi([Key(NgoEntity, k) for k in ikea_ngos])
+            # filter out all they keys that we couldn't find
+            ngos = [n for n in ngos if n]
+
+            self.template_values["custom_subdomain"] = True
+        else:
+            try:
+                list_keys = NgoEntity.query(NgoEntity.active == True).fetch(keys_only=True)
+                list_keys = sample(list_keys, 4)
+                
+                ngos = get_multi(list_keys)
+            except Exception, e:
+                info(e)
+                ngos = NgoEntity.query(NgoEntity.active == True).fetch(4)
+
+        self.template_values["ngos"] = ngos
                 
         # render a response
         self.render()

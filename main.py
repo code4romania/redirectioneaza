@@ -41,6 +41,10 @@ config = {
 
 # use string in dotted notation to be lazily imported
 app = webapp2.WSGIApplication([
+        routes.DomainRoute('ikea.redirectioneaza.ro', [
+            webapp2.Route('/', handler=HomePage, name='ikea-home'),
+        ]),
+
         # the public part of the app
         r('/',                  handler=HomePage),
         r('/ong',               handler=ForNgoHandler),

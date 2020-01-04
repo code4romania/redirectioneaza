@@ -4,6 +4,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/easy-autocomplete.min.css" />
 {% endblock %}
 
+{% block header %}
+    {% if not custom_subdomain %}
+        {{ super() }}
+    {% endif %}
+{% endblock %}
+
 {% block content %}
 <div class="container">
 
@@ -16,12 +22,14 @@
             către ONG-urile în care crezi.
         </h1>
         <h4>Mai ai timp până pe <strong class="deadline">{{ limit.day }} {{ months[limit.month] }}</strong>.</h4>
-
-        <div class="row">
-            <div class="col-xs-12 col-md-10 col-md-offset-1 search-bar-container">
-                <input id="search-bar" type="text" placeholder="Caută un ONG" />
+        
+        {% if not custom_subdomain %}
+            <div class="row">
+                <div class="col-xs-12 col-md-10 col-md-offset-1 search-bar-container">
+                    <input id="search-bar" type="text" placeholder="Caută un ONG" />
+                </div>
             </div>
-        </div>
+        {% endif %}
     </div>
 
     <div class="row text-center">
@@ -41,11 +49,13 @@
                 </div>
             </div>
         {% endfor %}
-        <div class="col-xs-12">
-            <div class="text-center">
-                <a id="for-ngos" class="btn btn-info btn-lg" href="/asociatii">Vezi toate asociațiile</a>
+        {% if not custom_subdomain %}
+            <div class="col-xs-12">
+                <div class="text-center">
+                    <a id="for-ngos" class="btn btn-info btn-lg" href="/asociatii">Vezi toate asociațiile</a>
+                </div>
             </div>
-        </div>
+        {% endif %}
     </div>
 
     <div class="row homepage-paragraph about-section">
@@ -146,8 +156,10 @@
         </div>
     </div>
     <hr/>
-
-    {% include "components/for-ngos.html" %}
+    
+    {% if not custom_subdomain %}
+        {% include "components/for-ngos.html" %}
+    {% endif %}
 
 </div>
 

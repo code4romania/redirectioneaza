@@ -8,7 +8,6 @@ from appengine_config import DEV, CONTACT_FORM_URL, CONTACT_EMAIL_ADDRESS
 
 import sendgrid
 from sendgrid.helpers.mail import *
-# from handlers import BaseHandler
 
 from logging import info, warn
 
