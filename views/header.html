@@ -1,27 +1,31 @@
 <nav class="navbar navbar-default">
     <div class="container">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#header-menu">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
+            {% if not custom_subdomain %}
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#header-menu">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            {% endif %}
             <a class="navbar-brand" href="/">
                 <img src="images/logoSmaller.png" alt="Redirectioneaza logo" width="90px;" />
             </a>
         </div>
 
-        <div id="header-menu" class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-                <li><a href="/asociatii">Asociații</a></li>
-                <li><a href="/ong">Înregistrează ONG</a></li>
-                <li><a href="/despre">Despre</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="/login">Log In</a></li>
-            </ul>
-        </div>
+        {% if not custom_subdomain %}
+            <div id="header-menu" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/asociatii">Asociații</a></li>
+                    <li><a href="/ong">Înregistrează ONG</a></li>
+                    <li><a href="/despre">Despre</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/login">Log In</a></li>
+                </ul>
+            </div>
+        {% endif %}
         {# <div id="sponsor-container">
             <a href="http://www.patriabank.ro" target="_blank">
                 <img src="images/logo-patria-bank.png">

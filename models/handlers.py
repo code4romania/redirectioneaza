@@ -75,6 +75,11 @@ class BaseHandler(Handler):
         http://webapp-improved.appspot.com/api/webapp2_extras/sessions.html
 
         """
+        if not DEV:
+            is_ikea = self.request.host == 'ikea.redirectioneaza.ro'
+            self.is_ikea_subdomain = is_ikea
+            self.template_values['custom_subdomain'] = is_ikea
+
         self.session_store = sessions.get_store(request=self.request)
         try:
             webapp2.RequestHandler.dispatch(self)

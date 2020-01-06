@@ -20,11 +20,9 @@ class HomePage(BaseHandler):
 
         self.template_values['limit'] = DONATION_LIMIT
         self.template_values["DEFAULT_NGO_LOGO"] = DEFAULT_NGO_LOGO
-        self.template_values["custom_subdomain"] = False
 
-        route_name = self.request.route.name
         # if we are on the ikea subdomain, load the special page
-        if route_name == 'ikea-home':
+        if self.is_ikea_subdomain:
             ikea_ngos = [
                 'asociatia-aura-ion',
                 'asociatia-caritas-bucuresti',
@@ -49,7 +47,6 @@ class HomePage(BaseHandler):
             # filter out all they keys that we couldn't find
             ngos = [n for n in ngos if n]
 
-            self.template_values["custom_subdomain"] = True
         else:
             try:
                 list_keys = NgoEntity.query(NgoEntity.active == True).fetch(keys_only=True)
