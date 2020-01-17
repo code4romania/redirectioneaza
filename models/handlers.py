@@ -76,9 +76,18 @@ class BaseHandler(Handler):
 
         """
         if not DEV:
-            is_ikea = self.request.host == 'ikea.redirectioneaza.ro'
-            self.is_ikea_subdomain = is_ikea
-            self.template_values['custom_subdomain'] = is_ikea
+            host = self.request.host
+            custom_subdomains = [
+                'ikea.redirectioneaza.ro',
+                'lidl.redirectioneaza.ro',
+                'jysk.redirectioneaza.ro'
+            ]
+
+            self.is_ikea_subdomain = host == custom_subdomains[0]
+            self.is_lidl_subdomain = host == custom_subdomains[1]
+            self.is_jysk_subdomain = host == custom_subdomains[2]
+
+            self.template_values['custom_subdomain'] = host in custom_subdomains
 
         self.session_store = sessions.get_store(request=self.request)
         try:

@@ -45,9 +45,34 @@ class HomePage(BaseHandler):
                 'world-vision-romania'
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in ikea_ngos])
-            # filter out all they keys that we couldn't find
-            ngos = [n for n in ngos if n]
 
+        elif self.is_lidl_subdomain:
+            lidl_ngos = [
+                'asociatia-centrul-step-by-step-pentru-educatie-si-dezvoltare-profesionala',
+                'asociatia-pentru-protectia-animalelor-kola-kariola',
+                'asociatia-robi',
+                'banca-pentru-colectarea-si-distributia-alimentelor',
+                'code-for-romania',
+                'fundatianoiorizonturi',
+                'fundatia-motivation-romania',
+                'fundatia-pentru-smurd',
+                'world-vision-romania',
+                'teach-for-romania'
+            ]
+            ngos = get_multi([Key(NgoEntity, k) for k in lidl_ngos])
+
+        elif self.is_jysk_subdomain:
+            jysk_ngos = [
+                'asociatia-anais',
+                'asociatia-autism-europa-centrul-de-resurse-si-referinta-in-autism-micul-print',
+                'asociatia-ecoassist-iniiativa-plantam-fapte-bune-in-romania',
+                'asociatia-magicamp',
+                'asociatia-necuvinte',
+                'inimacopiilor',
+                'hope-and-homes-for-children-romania',
+                'policy-center-for-roma-and-minorities'
+            ]
+            ngos = get_multi([Key(NgoEntity, k) for k in jysk_ngos])
         else:
             try:
                 list_keys = NgoEntity.query(NgoEntity.active == True).fetch(keys_only=True)
@@ -57,6 +82,9 @@ class HomePage(BaseHandler):
             except Exception, e:
                 info(e)
                 ngos = NgoEntity.query(NgoEntity.active == True).fetch(4)
+
+        # filter out all the keys that we couldn't find
+        ngos = [n for n in ngos if n]
 
         self.template_values["ngos"] = ngos
                 
