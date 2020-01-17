@@ -25,6 +25,7 @@ class HomePage(BaseHandler):
         if self.is_ikea_subdomain:
             ikea_ngos = [
                 'asociatia-aura-ion',
+                'asociatia-activity',
                 'asociatia-caritas-bucuresti',
                 'asociatia-casa-ioana',
                 'code-for-romania',
