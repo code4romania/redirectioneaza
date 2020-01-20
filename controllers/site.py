@@ -68,11 +68,24 @@ class HomePage(BaseHandler):
                 'asociatia-ecoassist-iniiativa-plantam-fapte-bune-in-romania',
                 'asociatia-magicamp',
                 'asociatia-necuvinte',
+                'asociatia-salvatorilor-montani-victoria',
+                'code-for-romania',
+                'comitetul-national-paralimpic',
                 'inimacopiilor',
                 'hope-and-homes-for-children-romania',
                 'policy-center-for-roma-and-minorities'
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in jysk_ngos])
+        elif self.is_avon_subdomain:
+            avon_ngos = [
+                'asociatia-anais',
+                'asociatia-mame',
+                'asociatia-touched-romania',
+                'caravanacumedici',
+                'code-for-romania',
+                'ffff'
+            ]
+            ngos = get_multi([Key(NgoEntity, k) for k in avon_ngos])
         else:
             try:
                 list_keys = NgoEntity.query(NgoEntity.active == True).fetch(keys_only=True)
