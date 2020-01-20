@@ -75,21 +75,21 @@ class BaseHandler(Handler):
         http://webapp-improved.appspot.com/api/webapp2_extras/sessions.html
 
         """
-        if not DEV:
-            host = self.request.host
-            custom_subdomains = [
-                'ikea.redirectioneaza.ro',
-                'lidl.redirectioneaza.ro',
-                'jysk.redirectioneaza.ro',
-                'avon.redirectioneaza.ro'
-            ]
 
-            self.is_ikea_subdomain = host == custom_subdomains[0]
-            self.is_lidl_subdomain = host == custom_subdomains[1]
-            self.is_jysk_subdomain = host == custom_subdomains[2]
-            self.is_avon_subdomain = host == custom_subdomains[3]
+        host = self.request.host
+        custom_subdomains = [
+            'ikea.redirectioneaza.ro',
+            'lidl.redirectioneaza.ro',
+            'jysk.redirectioneaza.ro',
+            'avon.redirectioneaza.ro'
+        ]
 
-            self.template_values['custom_subdomain'] = host in custom_subdomains
+        self.is_ikea_subdomain = host == custom_subdomains[0]
+        self.is_lidl_subdomain = host == custom_subdomains[1]
+        self.is_jysk_subdomain = host == custom_subdomains[2]
+        self.is_avon_subdomain = host == custom_subdomains[3]
+
+        self.template_values['custom_subdomain'] = host in custom_subdomains
 
         self.session_store = sessions.get_store(request=self.request)
         try:
