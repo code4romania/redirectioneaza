@@ -51,10 +51,6 @@
         <div class="row">
             <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
                 <h2 id="donation-page-title">Redirecționează în 3 pași simpli</h2>
-                <div class="alert alert-dismissible alert-info">
-                    <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong>Atentie! </strong><span>ANAF încă nu a actualizat formular 230 pentru anul 2020. Documentul ce var rezulta prin completarea formularului de mai jos s-ar putea sa nu fie valid.</span>
-                </div>
                 <h3 class="donation-page-subtitle">1. Completează și descarcă formularul</h3>
                 {% if ngo.account and ngo.cif %}
                     <form id="twopercent" class="form form-horizontal" action="{{ ngo.key.id() }}/doilasuta" role="form" method="post">
@@ -126,7 +122,7 @@
                                 </div>
                             </div>
                         </fieldset>
-                        <fieldset class="margin-bottom">
+{#                         <fieldset class="margin-bottom">
                             <div class="form-group type-of-income">
                                 <div class="col-xs-12">
                                     <legend>
@@ -149,7 +145,7 @@
                                     </label>
                                 </div>
                             </div>
-                        </fieldset>
+                        </fieldset> #}
                         <fieldset>
                             <div class="form-group">
                                 <div class="col-xs-12 col-lg-10 checkbox">

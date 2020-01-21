@@ -186,7 +186,7 @@ class TwoPercentHandler(BaseHandler):
         # if he would like the ngo to see the donation
         donor_dict['anonymous'] = post.get('anonim') != 'on'
 
-        donor_dict['income'] = post.get('income', 'wage')
+        # donor_dict['income'] = post.get('income', 'wage')
 
         # the ngo data
         ngo_data = {

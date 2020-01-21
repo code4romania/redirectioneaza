@@ -21,7 +21,7 @@ pdfmetrics.registerFont(TTFont('OpenSans', font_path))
 
 
 default_font_size = 15
-image_path = "/static/images/formular.jpeg"
+image_path = "/static/images/formular.jpg"
 
 def add_donor_data(c, person):
     
@@ -29,7 +29,7 @@ def add_donor_data(c, person):
     if len(person["first_name"]) > 18:
         c.setFontSize(12)
 
-    donor_block_x = 689
+    donor_block_x = 673
 
     c.drawString(67, donor_block_x, person["first_name"])
     c.setFontSize(default_font_size)
@@ -77,7 +77,7 @@ def add_donor_data(c, person):
 
     # =======================================
     # FOURTH ROW
-    fourth_row_x = donor_block_x - 68
+    fourth_row_x = donor_block_x - 67
 
     c.setFontSize(14)
     # bloc
@@ -138,21 +138,22 @@ def add_donor_data(c, person):
     # first x mark
     # Venituri din salarii si asimilate salariilor
     # pension
-    if person['income'] == 'pension':
-        c.drawString(172, donor_block_x - 162, "x")
-    # wage
-    else:
-        c.drawString(172, donor_block_x - 145, "x")
+    # if person['income'] == 'pension':
+    #     c.drawString(172, donor_block_x - 162, "x")
+    # # wage
+    # else:
+    #     c.drawString(172, donor_block_x - 145, "x")
 
 
 def add_ngo_data(c, ong):
-    start_ong_x = 462
+    start_ong_x = 440
 
     # the x mark
     c.drawString(218, start_ong_x, "x")
     # the cif code
     c.setFontSize(9)
-    c.drawString(453, start_ong_x, ong["cif"])
+    start_cif = start_ong_x - 39
+    c.drawString(245, start_cif, ong["cif"])
 
     org_name = ong["name"]
     if len(org_name) > 79:
@@ -160,7 +161,8 @@ def add_ngo_data(c, ong):
     elif len(org_name) > 65:
         c.setFontSize(12)
 
-    c.drawString(178, start_ong_x - 20, org_name.encode('utf-8'))
+    # ngo name
+    c.drawString(180, start_ong_x - 61, org_name.encode('utf-8'))
 
     c.setFontSize(11)
 
@@ -169,7 +171,7 @@ def add_ngo_data(c, ong):
         if i%5 == 0:
             account = account[:i] + " " + account[i:]
 
-    c.drawString(106, start_ong_x - 41, account)
+    c.drawString(106, start_ong_x - 83, account)
 
 def add_special_status_ngo_data(c, ong):
     """Used to add data for NGOs with a special status: they received 3,5% not 2"""
