@@ -86,6 +86,15 @@ class HomePage(BaseHandler):
                 'ffff'
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in avon_ngos])
+        elif self.is_carturesti_subdomain:
+            avon_ngos = [
+                'ajungemmari',
+                'asociatia-magicamp',
+                'code-for-romania',
+                'fundatiacarturesti',
+                'teach-for-romania'
+            ]
+            ngos = get_multi([Key(NgoEntity, k) for k in avon_ngos])
         else:
             try:
                 list_keys = NgoEntity.query(NgoEntity.active == True).fetch(keys_only=True)
