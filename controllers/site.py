@@ -28,19 +28,21 @@ class HomePage(BaseHandler):
                 'asociatia-activity',
                 'asociatia-caritas-bucuresti',
                 'asociatia-casa-ioana',
-                'code-for-romania',
-                'organizatia-umanitara-concordia',
-                'societatea-nationala-de-cruce-rosie-din-romania-filiala-sector-6-bucuresti',
                 'asociatia-ecoteca',
-                'freemiorita',
                 'asociatia-help-autism',
                 'asociatia-magicamp',
+                'asociatia-traieste-cu-bucurie',
+                'asociatia-unu-si-unu',
+                'code-for-romania',
+                'filiala-bucureti-a-asociaiei-terra-dacica-aeterna',
+                'freemiorita',
                 'fundatia-motivation-romania',
+                'liliecii-din-mediul-urban',
+                'organizatia-umanitara-concordia',
                 'padureacopiilor',
                 'scoala-de-valori',
+                'societatea-nationala-de-cruce-rosie-din-romania-filiala-sector-6-bucuresti',
                 'teach-for-romania',
-                'filiala-bucureti-a-asociaiei-terra-dacica-aeterna',
-                'asociatia-unu-si-unu',
                 'viitorplus',
                 'world-vision-romania'
             ]
@@ -72,7 +74,7 @@ class HomePage(BaseHandler):
                 'code-for-romania',
                 'comitetul-national-paralimpic',
                 'inimacopiilor',
-                'hope-and-homes-for-children-romania',
+                'hopeandhomesromania',
                 'policy-center-for-roma-and-minorities'
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in jysk_ngos])
@@ -83,7 +85,8 @@ class HomePage(BaseHandler):
                 'asociatia-touched-romania',
                 'caravanacumedici',
                 'code-for-romania',
-                'ffff'
+                'ffff',
+                'navimed-navigatori-medicali'
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in avon_ngos])
         elif self.is_carturesti_subdomain:
