@@ -166,10 +166,11 @@ def add_ngo_data(c, ong):
 
     c.setFontSize(11)
 
-    account = ong["account"]
-    for i, l in enumerate(account):
-        if i%5 == 0:
-            account = account[:i] + " " + account[i:]
+    account = ''
+    for i, l in enumerate(ong["account"]):
+        account += l
+        if (i + 1) % 4 == 0:
+            account += " "
 
     c.drawString(106, start_ong_x - 83, account)
 
@@ -246,7 +247,7 @@ def create_pdf(person, ong):
         cif
         account
     """
-    
+
     # packet = StringIO.StringIO()
     # we could also use StringIO
     packet = tempfile.TemporaryFile(mode='w+b')
