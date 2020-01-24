@@ -47,6 +47,7 @@ class HomePage(BaseHandler):
                 'world-vision-romania'
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in ikea_ngos])
+            self.template_values['company_name'] = 'IKEA'
 
         elif self.is_lidl_subdomain:
             lidl_ngos = [
@@ -62,6 +63,7 @@ class HomePage(BaseHandler):
                 'teach-for-romania'
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in lidl_ngos])
+            self.template_values['company_name'] = 'LIDL'
 
         elif self.is_jysk_subdomain:
             jysk_ngos = [
@@ -78,6 +80,8 @@ class HomePage(BaseHandler):
                 'policy-center-for-roma-and-minorities'
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in jysk_ngos])
+            self.template_values['company_name'] = 'JYSK'
+
         elif self.is_avon_subdomain:
             avon_ngos = [
                 'asociatia-anais',
@@ -89,6 +93,8 @@ class HomePage(BaseHandler):
                 'navimed-navigatori-medicali'
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in avon_ngos])
+            self.template_values['company_name'] = 'AVON'
+
         elif self.is_carturesti_subdomain:
             carturesti_ngos = [
                 'ajungemmari',
@@ -98,6 +104,8 @@ class HomePage(BaseHandler):
                 'teach-for-romania'
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in carturesti_ngos])
+            self.template_values['company_name'] = 'CARTURESTI'
+
         else:
             try:
                 list_keys = NgoEntity.query(NgoEntity.active == True).fetch(keys_only=True)
