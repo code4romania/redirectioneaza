@@ -79,6 +79,8 @@ class Donor(BaseEntity):
     # type of income: wage or pension
     income = ndb.StringProperty(indexed=False, default='wage') # choices=['wage', 'pension']
 
+    two_years = ndb.BooleanProperty(indexed=False, default=False)
+
     geoip = ndb.TextProperty()
 
     ngo = ndb.KeyProperty(indexed=True, kind="NgoEntity")

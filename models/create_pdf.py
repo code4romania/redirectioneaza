@@ -135,21 +135,16 @@ def add_donor_data(c, person):
 
     c.setFontSize(default_font_size)
 
-    # first x mark
-    # Venituri din salarii si asimilate salariilor
-    # pension
-    # if person['income'] == 'pension':
-    #     c.drawString(172, donor_block_x - 162, "x")
-    # # wage
-    # else:
-    #     c.drawString(172, donor_block_x - 145, "x")
+    # if redirecting for 2 years
+    if person['two_years']:
+        c.drawString(326, 420, "x")
 
 
 def add_ngo_data(c, ong):
     start_ong_x = 440
 
     # the x mark
-    c.drawString(218, start_ong_x, "x")
+    c.drawString(219, start_ong_x, "x")
     # the cif code
     c.setFontSize(9)
     start_cif = start_ong_x - 39
