@@ -64,8 +64,8 @@ class GetNgoForm(BaseHandler):
             self.abort(404)
 
         # if we have an form created for this ngo, return the url
-        # if ngo.form_url:
-        #     self.redirect( str(ngo.form_url), abort=True )
+        if ngo.form_url:
+            self.redirect(str(ngo.form_url), abort=True)
 
         # else, create a new one and upload to GCS for future use
         ngo_dict = {

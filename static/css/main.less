@@ -119,7 +119,28 @@ a {
 #sponsor-container {
     float: right;
     padding: 8px 12px;
-    width: 146px;
+    // max-width: 240px;
+
+    p  {
+        color: @link-color;
+        margin: 0;
+    }
+
+    ul {
+        display: flex;
+
+        li {
+            flex: 1;
+        }
+    }
+
+    img {
+        max-width: 120px;
+
+        &.second {
+            padding: 4px 0 0 10px;
+        }
+    }
 }
 
 #creator-container {
