@@ -37,6 +37,7 @@ class HomePage(BaseHandler):
                 'filiala-bucureti-a-asociaiei-terra-dacica-aeterna',
                 'freemiorita',
                 'fundatia-motivation-romania',
+                'fundatia-cmu-regina-maria',
                 'liliecii-din-mediul-urban',
                 'organizatia-umanitara-concordia',
                 'padureacopiilor',
