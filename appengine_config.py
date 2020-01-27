@@ -49,7 +49,7 @@ MONTH_NAMES = ['', 'Ianuarie', 'Februarie', 'Martie', 'Aprilie', 'Mai', 'Iunie',
 VIEWS_FOLDER = "/views"
 
 DEV_DEPENDECIES_LOCATION = "/bower_components"
-TITLE = "redirectioneaza.ro"
+TITLE = "redirectioneaza 3,5%"
 
 SESSION_SECRET_KEY = os.environ.get('SESSION_SECRET_KEY')
 
