@@ -26,6 +26,7 @@ class HomePage(BaseHandler):
             ikea_ngos = [
                 'asociatia-aura-ion',
                 'asociatia-activity',
+                'asociatia-ana-si-copiii',
                 'asociatia-caritas-bucuresti',
                 'asociatia-casa-ioana',
                 'asociatia-ecoteca',
@@ -106,6 +107,20 @@ class HomePage(BaseHandler):
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in carturesti_ngos])
             self.template_values['company_name'] = 'CARTURESTI'
+
+        elif self.is_cez_subdomain:
+            cez_ngos = [
+                'asociatia-habitat-for-humanity-romania',
+                'asociatia-little-people-romania',
+                'fundatia-sf-dimitrie',
+                'fundatianoiorizonturi',
+                'niciodatasingur',
+                'sonoro',
+                'the-social-incubator',
+                'world-vision-romania'
+            ]
+            ngos = get_multi([Key(NgoEntity, k) for k in cez_ngos])
+            self.template_values['company_name'] = 'CEZ'
 
         else:
             try:
