@@ -273,9 +273,11 @@ def create_pdf(person, ong):
 
     # DRAW ONG DATA
     # if the ngo has a special status, the form is completed differently
-    if ong['special_status']:
-        add_special_status_ngo_data(c, ong)
-    else:
+    # if ong['special_status']:
+    #     add_special_status_ngo_data(c, ong)
+    # else:
+    #     add_ngo_data(c, ong)
+    if ong:
         add_ngo_data(c, ong)
 
     c.save()
