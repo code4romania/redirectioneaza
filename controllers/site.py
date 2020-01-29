@@ -16,7 +16,7 @@ class HomePage(BaseHandler):
     template_name = 'index.html'
     def get(self):
 
-        self.template_values["title"] = "redirectioneaza 2%"
+        self.template_values["title"] = "redirectioneaza.ro"
 
         self.template_values['limit'] = DONATION_LIMIT
         self.template_values["DEFAULT_NGO_LOGO"] = DEFAULT_NGO_LOGO
