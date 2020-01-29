@@ -74,22 +74,21 @@ class EmailManager(object):
         text_template = kwargs.get("text_template")
         html_template = kwargs.get("html_template", "")
 
-        sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('SENDGRID_API_KEY'))
-        
-        sender = Email(sender["email"], sender["name"])
-        receiver = Email(receiver["email"], receiver["name"])
+        email = Mail()
 
-        # info(text_template)
-        
-        text_content = Content("text/plain", text_template)
-        email = Mail(sender, subject, receiver, text_content)
+        email.from_email = From(sender["email"], sender["name"])
+        email.to = To(receiver["email"], receiver["name"])
+
+        email.subject = Subject(subject)
+        email.content = [Content("text/plain", text_template)]
 
         if html_template:
             html_content = Content("text/html", html_template)
-            email.add_content(html_content)
+            email.content.append(html_content)
 
         if not DEV or not kwargs.get("developement", True):
-            response = sg.client.mail.send.post(request_body=email.get())
+            sg = sendgrid.SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+            response = sg.send(email)
             
             if response.status_code == 202:
                 return True
