@@ -37,6 +37,7 @@ class HomePage(BaseHandler):
                 'code-for-romania',
                 'filiala-bucureti-a-asociaiei-terra-dacica-aeterna',
                 'freemiorita',
+                'fundatia-hospice-casa-sperantei',
                 'fundatia-motivation-romania',
                 'fundatia-cmu-regina-maria',
                 'liliecii-din-mediul-urban',
@@ -54,6 +55,7 @@ class HomePage(BaseHandler):
         elif self.is_lidl_subdomain:
             lidl_ngos = [
                 'asociatia-centrul-step-by-step-pentru-educatie-si-dezvoltare-profesionala',
+                'asociatia-mai-mult-verde',
                 'asociatia-pentru-protectia-animalelor-kola-kariola',
                 'asociatia-robi',
                 'banca-pentru-colectarea-si-distributia-alimentelor',
