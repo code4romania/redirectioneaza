@@ -80,11 +80,15 @@ class EmailManager(object):
         email.to = To(receiver["email"], receiver["name"])
 
         email.subject = Subject(subject)
-        email.content = [Content("text/plain", text_template)]
 
         if html_template:
-            html_content = Content("text/html", html_template)
-            email.content.append(html_content)
+            email.content = [
+                Content("text/html", html_template),
+                Content("text/plain", text_template)
+            ]
+        else:
+            email.content = Content("text/plain", text_template)
+
 
         if not DEV or not kwargs.get("developement", True):
             sg = sendgrid.SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
