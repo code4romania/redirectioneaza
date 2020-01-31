@@ -6,6 +6,21 @@ $(function () {
     var api = '/api/ngos';
     var searcEl = $("#search-bar");
     var ngos = [];
+    var latinCharMap = {
+      'ă': 'a',
+      'â': 'a',
+      'î': 'i',
+      'ș': 's', // comma
+      'ț': 't',
+      'ş': 's', // cedilla
+      'ţ': 't'
+    };
+
+    function latinise(str) {
+      return str.replace(/[^\u0000-\u007E]/g, function(c) {
+        return latinCharMap[c] || c;
+      });
+    }
 
     function setupEasyAutocomplete() {
         var options = {
@@ -27,7 +42,10 @@ $(function () {
                     window.location.href = selected.url;
                 },
                 match: {
-                    enabled: true
+                    enabled: true,
+                    method: function (element, phrase) {
+                      return latinise(element).search(latinise(phrase)) > -1;
+                    }
                 }
             }
         };
