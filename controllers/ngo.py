@@ -276,6 +276,7 @@ class TwoPercentHandler(BaseHandler):
         self.template_values["ngo"] = self.ngo
         
         self.template_values["counties"] = LIST_OF_COUNTIES
+        self.template_values['limit'] = DONATION_LIMIT
         self.template_values["errors"] = errors
         
         for key in self.request.POST:
