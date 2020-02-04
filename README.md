@@ -1,4 +1,4 @@
-# Redirectioneaza 2%
+# Redirectioneaza 
 
 [![GitHub contributors](https://img.shields.io/github/contributors/code4romania/redirectioneaza.svg?style=for-the-badge)](https://github.com/code4romania/redirectioneaza/graphs/contributors) [![GitHub last commit](https://img.shields.io/github/last-commit/code4romania/redirectioneaza.svg?style=for-the-badge)](https://github.com/code4romania/redirectioneaza/commits/master) [![License: MPL 2.0](https://img.shields.io/badge/license-MPL%202.0-brightgreen.svg?style=for-the-badge)](https://opensource.org/licenses/MPL-2.0)
 
@@ -10,17 +10,17 @@
 
 [See the project live](http://redirectioneaza.ro/)
 
-HELPING SHOULD BE SIMPLE - Every year people can redirect 2% of their income tax to a worthy cause. However, most of them never do it, being put off by two hurdles: the bureaucratic process and the lack of information on NGOs they could help.
+HELPING SHOULD BE SIMPLE - Every year people can redirect up to 3.5% of their income tax to a worthy cause. However, most of them never do it, being put off by two hurdles: the bureaucratic process and the lack of information on NGOs they could help.
 
 Moreover, NGOs themselves have a hard time getting their message across to as many people as possible.
 
-The website will have information on a variety of NGOs that can be supported by redirecting 2% of the income tax. It will also be a means for NGOs to showcase their projects to a wider audience and convince them to re-direct the 2% to them.
+The website will have information on a variety of NGOs that can be supported by redirecting up to 3.5% of the income tax. It will also be a means for NGOs to showcase their projects to a wider audience and convince them to re-direct the up to 3.5% to them.
 
 Direct contact between the two will not be necessary anymore, which means saving time and resources for both and more #230 tax forms submitted.
 
 SUPPORT A WORTHY CAUSE FOR FREE IN 5 EASY STEPS
 
-1. browse and choose the NGO you want to redirect 2% of your income tax to
+1. browse and choose the NGO you want to redirect up to 3.5% of your income tax to
 2. fill in tax form #230 online
 3. print the filled in form
 4. sign the form
