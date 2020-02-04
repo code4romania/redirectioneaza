@@ -54,17 +54,24 @@ class HomePage(BaseHandler):
 
         elif self.is_lidl_subdomain:
             lidl_ngos = [
+                'asociatia-banca-locala-pentru-alimente-roman',
                 'asociatia-centrul-step-by-step-pentru-educatie-si-dezvoltare-profesionala',
                 'asociatia-mai-mult-verde',
+                'asociatia-pentru-protectia-animalelor-cezar',
                 'asociatia-pentru-protectia-animalelor-kola-kariola',
                 'asociatia-robi',
                 'banca-pentru-colectarea-si-distributia-alimentelor',
+                'banca-regionala-pentru-alimente-brasov',
                 'code-for-romania',
                 'fundatianoiorizonturi',
+                'fundatia-comunitara-iasi',
+                'fundatia-comunitara-bucuresti',
                 'fundatia-motivation-romania',
                 'fundatia-pentru-smurd',
-                'world-vision-romania',
-                'teach-for-romania'
+                'sor',
+                'httpwwwsalvaticopiiirodoilasuta',
+                'teach-for-romania',
+                'world-vision-romania'
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in lidl_ngos])
             self.template_values['company_name'] = 'LIDL'
@@ -123,6 +130,24 @@ class HomePage(BaseHandler):
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in cez_ngos])
             self.template_values['company_name'] = 'CEZ'
+
+        elif self.is_ing_subdomain:
+            ing_ngos = [
+               'asociatia-ropot',
+               'asociatiapentrudezvoltareurbana',
+               'asociatia-daruieste-aripi',
+               'asociatia-ana-si-copiii',
+               'asociatia-mame',
+               'caravanacumedici',
+               'code-for-romania',
+               'fundatia-comunitara-bucuresti',
+               'fundatia-hospice-casa-sperantei',
+               'inimacopiilor',
+               'un-copil-o-speranta',
+               'viitorplus'
+            ]
+            ngos = get_multi([Key(NgoEntity, k) for k in ing_ngos])
+            self.template_values['company_name'] = 'ING'
 
         else:
             try:
