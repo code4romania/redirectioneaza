@@ -275,7 +275,7 @@ class BaseHandler(Handler):
             }
 
         elif email_type == "twopercent-form":
-            subject = "Formularul tau de redirectionare 2%"
+            subject = "Formularul tau de redirectionare"
             
             html_template = None # self.jinja_enviroment.get_template("email/twopercent-form/twopercent-form.html")
             txt_template = self.jinja_enviroment.get_template("email/twopercent-form/twopercent_form.txt")
