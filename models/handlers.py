@@ -84,7 +84,8 @@ class BaseHandler(Handler):
             'avon.redirectioneaza.ro',
             'carturesti.redirectioneaza.ro',
             'cez.redirectioneaza.ro',
-            'ing.redirectioneaza.ro'
+            'ing.redirectioneaza.ro',
+            'patria.redirectioneaza.ro'
         ]
 
         self.is_ikea_subdomain = host == custom_subdomains[0]
@@ -94,6 +95,7 @@ class BaseHandler(Handler):
         self.is_carturesti_subdomain = host == custom_subdomains[4]
         self.is_cez_subdomain = host == custom_subdomains[5]
         self.is_ing_subdomain = host == custom_subdomains[6]
+        self.is_patria_subdomain = host == custom_subdomains[7]
 
         self.template_values['custom_subdomain'] = host in custom_subdomains
 

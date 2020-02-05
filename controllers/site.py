@@ -149,6 +149,23 @@ class HomePage(BaseHandler):
             ngos = get_multi([Key(NgoEntity, k) for k in ing_ngos])
             self.template_values['company_name'] = 'ING'
 
+        elif self.is_patria_subdomain:
+            patria_ngos = [
+                'asociatia-ana-si-copiii',
+                'asociatia-ateliere-fara-frontiere',
+                'asociatia-crestem-romania-impreuna',
+                'asociatia-kinetobebe',
+                'asociatia-administratorilor-de-piete-din-romania',
+                'asociatia-pedia-pentru-sprijinirea-copiilor-cu-deficiente-neuropsihomotorii',
+                'atca-asociatia-de-terapie-comportamentala-aplicata',
+                'code-for-romania',
+                'the-social-incubator',
+                'viitorplus',
+                'world-vision-romania'
+            ]
+            ngos = get_multi([Key(NgoEntity, k) for k in patria_ngos])
+            self.template_values['company_name'] = 'PATRIA'
+
         else:
             try:
                 list_keys = NgoEntity.query(NgoEntity.active == True).fetch(keys_only=True)
