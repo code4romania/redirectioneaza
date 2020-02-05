@@ -164,7 +164,7 @@ class HomePage(BaseHandler):
                 'world-vision-romania'
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in patria_ngos])
-            self.template_values['company_name'] = 'PATRIA'
+            self.template_values['company_name'] = 'PATRIA BANK'
 
         else:
             try:
