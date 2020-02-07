@@ -55,14 +55,18 @@ class HomePage(BaseHandler):
         elif self.is_lidl_subdomain:
             lidl_ngos = [
                 'asociatia-banca-locala-pentru-alimente-roman',
+                'banca-pentru-alimente-oradea',
+                'bancadealimentecluj',
                 'asociatia-centrul-step-by-step-pentru-educatie-si-dezvoltare-profesionala',
                 'asociatia-mai-mult-verde',
                 'asociatia-pentru-protectia-animalelor-cezar',
                 'asociatia-pentru-protectia-animalelor-kola-kariola',
+                'asociatia-pentru-valori-in-educatie',
                 'asociatia-robi',
                 'banca-pentru-colectarea-si-distributia-alimentelor',
                 'banca-regionala-pentru-alimente-brasov',
                 'code-for-romania',
+                'free-amely-2007',
                 'fundatianoiorizonturi',
                 'fundatia-comunitara-iasi',
                 'fundatia-comunitara-bucuresti',
