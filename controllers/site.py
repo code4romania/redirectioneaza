@@ -170,6 +170,31 @@ class HomePage(BaseHandler):
             ngos = get_multi([Key(NgoEntity, k) for k in patria_ngos])
             self.template_values['company_name'] = 'PATRIA BANK'
 
+        elif self.is_continental_subdomain:
+            continental_ngos = [
+                'asociatia-pro-palatul-copiilor-sibiu',
+                'ajungemmari',
+                'aleg',
+                'ama-zambet-de-copil',
+                'asociatia-casa-share',
+                'asociatia-crestina-for-help',
+                'asociatia-iti-arat-ca-pot',
+                'asociatia-little-people-romania',
+                'asociatia-magicamp',
+                'asociatia-stergem-o-lacrima',
+                'asociatia-umanitara-dare-to-care',
+                'cu-verdele-n-sus',
+                'fundatia-pentru-smurd',
+                'fundatia-pentru-voi',
+                'fundatia-united-way-romania',
+                'mainiunite',
+                'politehnica',
+                'recorder',
+                'un-copil-o-speranta'
+            ]
+            ngos = get_multi([Key(NgoEntity, k) for k in continental_ngos])
+            self.template_values['company_name'] = 'CONTINENTAL'
+
         else:
             try:
                 list_keys = NgoEntity.query(NgoEntity.active == True).fetch(keys_only=True)
