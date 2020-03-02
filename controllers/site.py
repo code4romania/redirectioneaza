@@ -137,13 +137,16 @@ class HomePage(BaseHandler):
 
         elif self.is_ing_subdomain:
             ing_ngos = [
-               'asociatia-ropot',
                'asociatiapentrudezvoltareurbana',
-               'asociatia-daruieste-aripi',
                'asociatia-ana-si-copiii',
+               'asociatia-club-lions-diamond',
+               'asociatia-daruieste-aripi',
+               'asociatia-ropot',
                'asociatia-mame',
                'caravanacumedici',
+               'carusel',
                'code-for-romania',
+               'fundatia-entreprenation',
                'fundatia-comunitara-bucuresti',
                'fundatia-hospice-casa-sperantei',
                'inimacopiilor',
@@ -198,6 +201,33 @@ class HomePage(BaseHandler):
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in continental_ngos])
             self.template_values['company_name'] = 'CONTINENTAL'
+
+        elif self.is_smartbill_subdomain:
+            smartbill_ngos = [
+                'animallife',
+                'asociatiasusinima',
+                'asociatia-de-poveste',
+                'asociatia-magicamp',
+                'asociatia-little-people-romania',
+                'baby-care-sibiu',
+                'cu-verdele-n-sus',
+                'fundatia-comunitara-sibiu',
+                'fundatia-polisano',
+                'la-primul-bebe'
+            ]
+            ngos = get_multi([Key(NgoEntity, k) for k in smartbill_ngos])
+            self.template_values['company_name'] = 'SMARTBILL'
+
+        elif self.is_nestle_subdomain:
+            nesle_ngos = [
+                'asociatia-panda',
+                'asociatia-valentina-romania',
+                'banca-pentru-colectarea-si-distributia-alimentelor',
+                'clubul-cainilor-utilitari-echipa-de-cautare-si-salvare-search-and-rescue',
+                'sos-satele-copiilor-romania'
+            ]
+            ngos = get_multi([Key(NgoEntity, k) for k in nesle_ngos])
+            self.template_values['company_name'] = 'SMARTBILL'
 
         else:
             try:
