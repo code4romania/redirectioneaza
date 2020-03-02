@@ -220,14 +220,13 @@ class HomePage(BaseHandler):
 
         elif self.is_nestle_subdomain:
             nesle_ngos = [
-                'asociatia-panda',
                 'asociatia-valentina-romania',
                 'banca-pentru-colectarea-si-distributia-alimentelor',
                 'clubul-cainilor-utilitari-echipa-de-cautare-si-salvare-search-and-rescue',
                 'sos-satele-copiilor-romania'
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in nesle_ngos])
-            self.template_values['company_name'] = 'SMARTBILL'
+            self.template_values['company_name'] = 'Nestle'
 
         else:
             try:
