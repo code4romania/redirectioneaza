@@ -88,7 +88,8 @@ class BaseHandler(Handler):
             'patria.redirectioneaza.ro',
             'continental.redirectioneaza.ro',
             'smartbill.redirectioneaza.ro',
-            'nestle.redirectioneaza.ro'
+            'nestle.redirectioneaza.ro',
+            'digi.redirectioneaza.ro'
         ]
 
         self.is_ikea_subdomain = host == custom_subdomains[0]
@@ -102,6 +103,7 @@ class BaseHandler(Handler):
         self.is_continental_subdomain = host == custom_subdomains[8]
         self.is_smartbill_subdomain = host == custom_subdomains[9]
         self.is_nestle_subdomain = host == custom_subdomains[10]
+        self.is_digi_subdomain = host == custom_subdomains[11]
 
         self.template_values['custom_subdomain'] = host in custom_subdomains
 
