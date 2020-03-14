@@ -72,9 +72,14 @@ class GetNgoForm(BaseHandler):
             "name": ngo.name,
             "cif": ngo.cif,
             "account": ngo.account,
+            "two_years": True,
             "special_status": ngo.special_status
         }
-        pdf = create_pdf({}, ngo_dict)
+        donor = {
+            # we assume that ngos are looking for people with income from wages
+            "income": "wage"
+        }
+        pdf = create_pdf(donor, ngo_dict)
 
         # filename = "Formular 2% - {0}.pdf".format(ngo.name)
         filename = "Formular_donatie.pdf".format(ngo.name)

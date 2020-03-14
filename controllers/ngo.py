@@ -54,7 +54,7 @@ class TwoPercentHandler(BaseHandler):
             self.session.pop("has_cnp")
             # also we can use self.session.clear(), but it might delete the logged in user's session
         
-        self.template_values["title"] = "Donatie"
+        self.template_values["title"] = "Donatie 2%"
         # make sure the ngo shows a logo
         ngo.logo = ngo.logo if ngo.logo else DEFAULT_NGO_LOGO
         self.template_values["ngo"] = ngo
@@ -183,16 +183,21 @@ class TwoPercentHandler(BaseHandler):
         donor_dict["city"] = get_post_value("localitate").title()
         donor_dict["county"] = get_post_value("judet")
 
+        # if the user wants to redirect for 2 years
+        two_years = post.get('two-years') == 'on'
+
         # if he would like the ngo to see the donation
         donor_dict['anonymous'] = post.get('anonim') != 'on'
 
-        donor_dict['two_years'] = post.get('two-years') == 'on'
+        # what kind of income does he have: wage or other
+        donor_dict['income'] = post.get('income', 'wage')
 
         # the ngo data
         ngo_data = {
             "name": self.ngo.name,
             "account": self.ngo.account.upper(),
             "cif": self.ngo.cif,
+            "two_years": two_years,
             "special_status": self.ngo.special_status
         }
         
@@ -234,7 +239,8 @@ class TwoPercentHandler(BaseHandler):
             email = donor_dict['email'],
             tel = donor_dict['tel'],
             anonymous = donor_dict['anonymous'],
-            two_years = donor_dict['two_years'],
+	    two_years = two_years,
+            income = donor_dict['income'],
             # make a request to get geo ip data for this user
             geoip = self.get_geoip_data(),
             ngo = self.ngo.key,
@@ -272,11 +278,10 @@ class TwoPercentHandler(BaseHandler):
 
             return
 
-        self.template_values["title"] = "Donatie"
+        self.template_values["title"] = "Donatie 2%"
         self.template_values["ngo"] = self.ngo
         
         self.template_values["counties"] = LIST_OF_COUNTIES
-        self.template_values['limit'] = DONATION_LIMIT
         self.template_values["errors"] = errors
         
         for key in self.request.POST:
@@ -294,7 +299,7 @@ class DonationSucces(BaseHandler):
 
         self.template_values["ngo"] = self.ngo
         self.template_values["donor"] = self.donor
-        self.template_values["title"] = "Donatie - succes"
+        self.template_values["title"] = "Donatie 2% - succes"
         self.template_values['limit'] = DONATION_LIMIT
 
         # county = self.donor.county.lower()

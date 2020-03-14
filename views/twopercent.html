@@ -48,14 +48,6 @@
     {# if we are in the correct timerame: 1 Jan to 25 May, allow the donation, else display a message #}
     {% if can_donate %}
 
-        <div class="row margin-top">
-            <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
-                <div class="alert alert-warning">
-                    <strong>Notă!</strong> De curând, ANAF a făcut o schimbare formularului 230. Lucrăm din greu pentru a actualiza și versiunea de pe redirectioneaza.ro. Revino în curând pentru a completa folosind ultima versiune.
-                </div>
-            </div>
-        </div>
-
         <div class="row">
             <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
                 <h2 id="donation-page-title">Redirecționează în 3 pași simpli</h2>
@@ -130,6 +122,30 @@
                                 </div>
                             </div>
                         </fieldset>
+                        <fieldset class="margin-bottom">
+                            <div class="form-group type-of-income">
+                                <div class="col-xs-12">
+                                    <legend>
+                                        Tip de venit <br>
+                                    </legend>
+                                    <p class="income-explanation">
+                                        Pentru ce tip de venit vrei să redirecționezi către acest ONG?
+                                    </p>
+                                </div>
+                                <div class="col-xs-12">
+                                    <label for="income-wage">
+                                        <input id="income-wage" type="radio" name="income" value="wage" checked />
+                                        Salariu/Pensie
+                                    </label>
+                                </div>
+                                <div class="col-xs-12">
+                                    <label for="income-pension">
+                                        <input id="income-pension" type="radio" name="income" value="other" />
+                                        Alte tipuri de venituri: drepturi de autor, etc.
+                                    </label>
+                                </div>
+                            </div>
+                        </fieldset>
                         <fieldset>
                             <div class="form-group">
                                 <div class="col-xs-12 col-lg-10 checkbox">
@@ -139,8 +155,6 @@
                                     </label>
                                 </div>
                             </div>
-                        </fieldset>
-                        <fieldset>
                             <div class="form-group">
                                 <div class="col-xs-12 col-lg-10 checkbox">
                                     <label class="anonim-label" for="anonim">
@@ -221,9 +235,9 @@
         <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 text-center">
             <ul id="donation-form-explanation" class="list-unstyled collapse">
                 <li>
-                    <h3>Ce reprezintă formularul de redirectionare?</h3>
+                    <h3>Ce reprezintă formularul de 2%?</h3>
                     <p class="text-muted">
-                        Formularul este o metodă prin care oricine își poate redirecționa pana la 3.5% din impozitul anual către un ONG. Acest lucru înseamnă că acea sumă nu va mai ajunge în bugetul statului ci va fi direcționată către contul ONG-ului.
+                        Formularul este o metodă prin care oricine își poate redirecționa 2% din impozitul anual către un ONG. Acest lucru înseamnă că acea sumă nu va mai ajunge în bugetul statului ci va fi direcționată către contul ONG-ului.
                     </p>
                 </li>
                 <li>
@@ -235,7 +249,7 @@
                 <li>
                     <h3>Care sunt următorii pași?</h3>
                     <p class="text-muted">
-                        După ce vei completa toate datele din acest formular, vei fi direcționat către o pagină de unde poți descarcă fișierul PDF. Acela va conține datele tale și datele ONG-ului care va primi cei pana la 3.5%.
+                        După ce vei completa toate datele din acest formular, vei fi direcționat către o pagină de unde poți descarcă fișierul PDF. Acela va conține datele tale și datele ONG-ului care va primi cei 2%.
                     </p>
                 </li>
             </ul>

@@ -21,7 +21,10 @@ pdfmetrics.registerFont(TTFont('OpenSans', font_path))
 
 
 default_font_size = 15
-image_path = "/static/images/formular.jpg"
+image_path = "/static/images/formular.jpeg"
+
+first_page = "/static/images/first_page.jpg"
+second_page = "/static/images/second_page.jpg"
 
 def add_donor_data(c, person):
     
@@ -29,7 +32,7 @@ def add_donor_data(c, person):
     if len(person["first_name"]) > 18:
         c.setFontSize(12)
 
-    donor_block_x = 673
+    donor_block_x = 655
 
     c.drawString(67, donor_block_x, person["first_name"])
     c.setFontSize(default_font_size)
@@ -42,17 +45,17 @@ def add_donor_data(c, person):
     if len(last_name) > 34:
         c.setFontSize(10)
 
-    c.drawString(67, donor_block_x-23, last_name)
+    c.drawString(67, donor_block_x - 27, last_name)
 
 
     # =======================================
     # THIRD ROW
     # 
-    third_row_x = donor_block_x - 45
+    third_row_x = donor_block_x - 59
 
     # the street
     street = person["street"]
-
+    info(len(street))
     if len(street) > 40:
         c.setFontSize(8)
     elif len(street) in range(36, 41):
@@ -77,7 +80,7 @@ def add_donor_data(c, person):
 
     # =======================================
     # FOURTH ROW
-    fourth_row_x = donor_block_x - 67
+    fourth_row_x = donor_block_x - 88
 
     c.setFontSize(14)
     # bloc
@@ -104,7 +107,7 @@ def add_donor_data(c, person):
 
 
     # oras
-    c.drawString(69, donor_block_x - 90, person["city"])
+    c.drawString(69, donor_block_x - 120, person["city"])
 
     c.setFontSize(16)
 
@@ -125,30 +128,24 @@ def add_donor_data(c, person):
         else:
             c.setFontSize(8)
 
-        c.drawString(start_email_x, third_row_x + 12, person['email'])
+        c.drawString(start_email_x, third_row_x + 14, person['email'])
 
     # telephone
     if person['tel']:
         c.setFontSize(12)
-        c.drawString(start_email_x, third_row_x - 15, person['tel'])
+        c.drawString(start_email_x, third_row_x - 20, person['tel'])
     
 
     c.setFontSize(default_font_size)
 
-    # if redirecting for 2 years
-    if person['two_years']:
-        c.drawString(326, 420, "x")
-
-
 def add_ngo_data(c, ong):
-    start_ong_x = 440
+    start_ong_y = 410
 
     # the x mark
-    c.drawString(219, start_ong_x, "x")
+    c.drawString(218, start_ong_y, "x")
     # the cif code
     c.setFontSize(9)
-    start_cif = start_ong_x - 39
-    c.drawString(245, start_cif, ong["cif"])
+    c.drawString(453, start_ong_y, ong["cif"])
 
     org_name = ong["name"]
     if len(org_name) > 79:
@@ -156,29 +153,65 @@ def add_ngo_data(c, ong):
     elif len(org_name) > 65:
         c.setFontSize(12)
 
-    # ngo name
-    c.drawString(180, start_ong_x - 61, org_name.encode('utf-8'))
+    c.drawString(178, start_ong_y - 25, org_name.encode('utf-8'))
 
     c.setFontSize(11)
 
-    account = ''
-    for i, l in enumerate(ong["account"]):
-        account += l
-        if (i + 1) % 4 == 0:
-            account += " "
+    account = ong["account"]
+    for i, l in enumerate(account):
+        if i%5 == 0:
+            account = account[:i] + " " + account[i:]
 
-    c.drawString(106, start_ong_x - 83, account)
+    c.drawString(106, start_ong_y - 52, account)
+
+def add_ngo_data_2(c, ong, is_wage = True):
+    start_ong_y = 795 if is_wage else 521
+
+    # the x mark
+    c.drawString(220, start_ong_y, "x")
+
+    years_y = start_ong_y
+    years_y -= 0 if is_wage else 2
+    # donating for 1 or 2 years
+    years_y -= 44 if ong["two_years"] else 21
+    c.drawString(326, years_y, "x")
+
+
+    # the cif code
+    c.setFontSize(9)
+    substract = 65 if is_wage else 73
+    c.drawString(240, start_ong_y - substract, ong["cif"])
+
+    org_name = ong["name"]
+    if len(org_name) > 79:
+        c.setFontSize(9)
+    elif len(org_name) > 65:
+        c.setFontSize(12)
+
+    substract = 87 if is_wage else 97
+    c.drawString(178, start_ong_y - substract, org_name.encode('utf-8'))
+
+    c.setFontSize(11)
+
+    account = ong["account"]
+    for i, l in enumerate(account):
+        if i%5 == 0:
+            account = account[:i] + " " + account[i:]
+
+    substract = 112 if is_wage else 125
+    c.drawString(106, start_ong_y - substract, account)
 
 def add_special_status_ngo_data(c, ong):
     """Used to add data for NGOs with a special status: they received 3,5% not 2"""
 
-    start_ong_x = 319
+    start_ong_y = 235
 
     # the x mark
-    c.drawString(538, start_ong_x, "x")
+    c.drawString(548, start_ong_y, "x")
+
     # the cif code
     c.setFontSize(9)
-    c.drawString(492, start_ong_x - 40, ong["cif"])
+    c.drawString(492, start_ong_y - 40, ong["cif"])
 
     try:
         org_name = ong["name"].encode('utf-8')
@@ -203,10 +236,10 @@ def add_special_status_ngo_data(c, ong):
                 break
 
         c.setFontSize(8)
-        c.drawString(250, start_ong_x - 35, first_row)
-        c.drawString(250, start_ong_x - 42, second_row)
+        c.drawString(250, start_ong_y - 35, first_row)
+        c.drawString(250, start_ong_y - 42, second_row)
     else:
-        c.drawString(250, start_ong_x - 40, org_name)
+        c.drawString(250, start_ong_y - 40, org_name)
 
     c.setFontSize(11)
 
@@ -215,9 +248,9 @@ def add_special_status_ngo_data(c, ong):
         if i%5 == 0:
             account = account[:i] + " " + account[i:]
 
-    c.drawString(104, start_ong_x - 63, account)
+    c.drawString(104, start_ong_y - 66, account)
 
-def create_pdf(person, ong):
+def create_pdf(person = {}, ong = {}):
     """method used to create the pdf
 
     person: dict with the person's data 
@@ -242,7 +275,7 @@ def create_pdf(person, ong):
         cif
         account
     """
-
+    
     # packet = StringIO.StringIO()
     # we could also use StringIO
     packet = tempfile.TemporaryFile(mode='w+b')
@@ -251,7 +284,7 @@ def create_pdf(person, ong):
     width, height = A4 
     
     # add the image as background
-    background = ImageReader( abs_path + image_path )
+    background = ImageReader( abs_path + first_page )
     c.drawImage(background, 0, 0, width=width, height=height)
 
     # the default font size
@@ -260,25 +293,35 @@ def create_pdf(person, ong):
     c.setFontSize(default_font_size)
 
     # the year
-    # this is the previous year, starting from 1 Jan until - 25 May ??
+    # this is the previous year
     year = str( datetime.now().year - 1 )
-    start_x = 305
+    start_x = 315
     for letter in year:
-        c.drawString(start_x, 734, letter)
+        c.drawString(start_x, 714, letter)
         start_x += 18
 
     # DRAW DONOR DATA
-    if person:
+    if person.get('first_name'):
         add_donor_data(c, person)
 
-    # DRAW ONG DATA
-    # if the ngo has a special status, the form is completed differently
-    # if ong['special_status']:
-    #     add_special_status_ngo_data(c, ong)
-    # else:
-    #     add_ngo_data(c, ong)
-    if ong:
-        add_ngo_data(c, ong)
+    # Venituri din salarii/pensii
+    if person['income'] == 'wage':
+        # DRAW ONG DATA
+        # if the ngo has a special status, the form is completed differently
+        if ong['special_status']:
+            add_special_status_ngo_data(c, ong)
+        else:
+            add_ngo_data(c, ong)
+
+    # add second page
+
+    # add the image as background
+    background = ImageReader( abs_path + second_page )
+    c.showPage()
+    c.drawImage(background, 0, 0, width=width, height=height)
+
+    # DRAW ONG DATA - part 2
+    add_ngo_data_2(c, ong, person['income'] == 'wage')
 
     c.save()
 
