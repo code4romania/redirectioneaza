@@ -183,9 +183,13 @@ class TwoPercentHandler(BaseHandler):
         donor_dict["city"] = get_post_value("localitate").title()
         donor_dict["county"] = get_post_value("judet")
 
+        # if the user wants to redirect for 2 years
+        two_years = post.get('two-years') == 'on'
+
         # if he would like the ngo to see the donation
         donor_dict['anonymous'] = post.get('anonim') != 'on'
 
+        # what kind of income does he have: wage or other
         donor_dict['income'] = post.get('income', 'wage')
 
         # the ngo data
@@ -193,6 +197,7 @@ class TwoPercentHandler(BaseHandler):
             "name": self.ngo.name,
             "account": self.ngo.account.upper(),
             "cif": self.ngo.cif,
+            "two_years": two_years,
             "special_status": self.ngo.special_status
         }
         
