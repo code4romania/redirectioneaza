@@ -26,6 +26,15 @@ image_path = "/static/images/formular.jpeg"
 first_page = "/static/images/first_page.jpg"
 second_page = "/static/images/second_page.jpg"
 
+def format_ngo_account(ngo_account):
+    account = ''
+    for i, l in enumerate(ngo_account):
+        account += l
+        if (i + 1) % 4 == 0:
+            account += " "
+
+    return account
+
 def add_donor_data(c, person):
     
     # the first name
@@ -157,11 +166,7 @@ def add_ngo_data(c, ong):
 
     c.setFontSize(11)
 
-    account = ong["account"]
-    for i, l in enumerate(account):
-        if i%5 == 0:
-            account = account[:i] + " " + account[i:]
-
+    account = format_ngo_account(ong["account"])
     c.drawString(106, start_ong_y - 52, account)
 
 def add_ngo_data_2(c, ong, is_wage = True):
@@ -193,10 +198,7 @@ def add_ngo_data_2(c, ong, is_wage = True):
 
     c.setFontSize(11)
 
-    account = ong["account"]
-    for i, l in enumerate(account):
-        if i%5 == 0:
-            account = account[:i] + " " + account[i:]
+    account = format_ngo_account(ong["account"])
 
     substract = 112 if is_wage else 125
     c.drawString(106, start_ong_y - substract, account)
@@ -243,11 +245,7 @@ def add_special_status_ngo_data(c, ong):
 
     c.setFontSize(11)
 
-    account = ong["account"]
-    for i, l in enumerate(account):
-        if i%5 == 0:
-            account = account[:i] + " " + account[i:]
-
+    account = format_ngo_account(ong["account"])
     c.drawString(104, start_ong_y - 66, account)
 
 def create_pdf(person = {}, ong = {}):
