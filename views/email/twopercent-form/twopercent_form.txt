@@ -3,9 +3,10 @@
 Folosește acest link pentru a descărca formulatul completat de tine: 
 {{ form_url }}
 
-Mai departe, va trebui să printezi și să semnezi acest formular. Apoi, ai două opțiuni:
+Mai departe, va trebui să printezi și să semnezi acest formular. Apoi, ai trei opțiuni:
 * fie îl trimiți prin poștă, cu scrisoare recomandată, către unitatea ANAF de care aparții;
-* fie îl trimiți prin curier sau poștă la adresa ONG-ului și se ocupă ei de depunerea lui. Adresele le vei găsi în paginile fiecărui ONG pe masură ce completezi. Desigur, poți să înmânezi formularul în persoană ONG-ului, dacă e cazul. 
+* fie îl trimiți prin curier sau poștă la adresa ONG-ului și se ocupă ei de depunerea lui. Adresele le vei găsi în paginile fiecărui ONG pe masură ce completezi. Desigur, poți să înmânezi formularul în persoană ONG-ului, dacă e cazul.
+* fie îl trimiți, după ce l-ai tipărit și semnat, scanat pe email ONG-ului ales de tine iar el se vor ocupa mai departe să ajungă în numele tău la ANAF-ul de cara aparții. Te rugăm să verifici că ONG-ul are capacitatea de depune electronic formularul în numele tău.
 
 Dacă vrei să fii un adevărat super-erou civic, descarcă formularul precompletat de pe pagina ONG-ului pe care vrei să îl susții, printează-l în mai multe exemplare și transmite-l colegilor, prietenilor și familiei și încurajează-i să redirecționeze.
 

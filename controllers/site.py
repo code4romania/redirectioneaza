@@ -234,7 +234,9 @@ class HomePage(BaseHandler):
                 'angels-down-friends',
                 'asociatia-orizont-de-inger',
                 'casiopeea',
-                'hopeandhomesrom',
+                'code-for-romania',
+                'hopeandhomesromania',
+                'httpwwwsalvaticopiiirodoilasuta',
                 'sos-satele-copiilor-romania',
                 'world-vision-romania',
             ]
