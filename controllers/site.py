@@ -275,7 +275,7 @@ class HomePage(BaseHandler):
                 # Asociatia Clubul Sportiv Bucharest Running Club
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in raiffeisen_ngos])
-            self.template_values['company_name'] = 'RAIFFEISEN'
+            self.template_values['company_name'] = 'Raiffeisen Bank'
 
         else:
             try:
