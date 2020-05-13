@@ -44,7 +44,7 @@ $(function () {
         var val = this.value;
         if(!val) return;
 
-        var regex = /^[\w\s.\-ăîâșț]+$/gi;
+        var regex = /^[\w\s.\-ăîâșțşţ]+$/gi;
         // if we have no match
         if(!val.match(regex)) {
             showError(this);
