@@ -105,7 +105,7 @@ class BaseHandler(Handler):
         self.is_smartbill_subdomain = host == custom_subdomains[9]
         self.is_nestle_subdomain = host == custom_subdomains[10]
         self.is_digi_subdomain = host == custom_subdomains[11]
-        self.is_raiffeisen_subdomain = host == custom_subdomains[11]
+        self.is_raiffeisen_subdomain = host == custom_subdomains[12]
 
         self.template_values['custom_subdomain'] = host in custom_subdomains
 

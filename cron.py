@@ -48,7 +48,7 @@ class NgoStats(Handler):
         result += 'Onguri: {0} <br>'.format(ngos)
         result += 'Formulare: {0} <br><br><br>'.format(donors)
 
-        result = 'Rezultate total: <br>'
+        result += 'Rezultate total: <br>'
         result += 'Onguri: {0} <br>'.format(all_ngos)
         result += 'Formulare: {0} <br><br><br>'.format(all_donors)
 
