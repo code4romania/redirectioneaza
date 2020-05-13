@@ -268,10 +268,10 @@ class HomePage(BaseHandler):
                 'yuppicamp',
                 'teach-for-romania',
                 'sonoro',
+                'tasuleasa-social',
                 # TODO: add the following NGOs when available:
                 # OvidiuRo
                 # Asociatia pentru Relatii Comunitare(ARC)
-                # Asociatia Tasuleasa Social
                 # Asociatia Clubul Sportiv Bucharest Running Club
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in raiffeisen_ngos])
