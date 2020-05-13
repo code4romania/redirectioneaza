@@ -29,7 +29,7 @@ def get_jinja_enviroment(account_view_folder=''):
             + account_view_folder ),
         extensions=['jinja2.ext.autoescape', 'jinja2.ext.i18n'],
         autoescape=True)
-    
+
 # default values for every template
 template_settings = {
     "bower_components": DEV_DEPENDECIES_LOCATION,
@@ -89,7 +89,8 @@ class BaseHandler(Handler):
             'continental.redirectioneaza.ro',
             'smartbill.redirectioneaza.ro',
             'nestle.redirectioneaza.ro',
-            'digi.redirectioneaza.ro'
+            'digi.redirectioneaza.ro',
+            'rzbr.redirectioneaza.ro',
         ]
 
         self.is_ikea_subdomain = host == custom_subdomains[0]
@@ -104,6 +105,7 @@ class BaseHandler(Handler):
         self.is_smartbill_subdomain = host == custom_subdomains[9]
         self.is_nestle_subdomain = host == custom_subdomains[10]
         self.is_digi_subdomain = host == custom_subdomains[11]
+        self.is_raiffeisen_subdomain = host == custom_subdomains[11]
 
         self.template_values['custom_subdomain'] = host in custom_subdomains
 
@@ -129,7 +131,7 @@ class BaseHandler(Handler):
 
     def render(self, template_name=None):
         template = template_name if template_name is not None else self.template_name
-        
+
         self.set_template( template )
 
         self.response.headers.update(HTTP_HEADERS)
@@ -197,13 +199,13 @@ class BaseHandler(Handler):
 
         if ngo_id and donor_id:
             list_of_entities = ndb.get_multi([
-                ndb.Key("NgoEntity", ngo_id), 
+                ndb.Key("NgoEntity", ngo_id),
                 ndb.Key("Donor", donor_id)
             ])
 
             ngo = list_of_entities[0]
             donor = list_of_entities[1]
-        
+
         else:
             ngo = ndb.Key("NgoEntity", ngo_id).get() if ngo_id else None
 
@@ -237,7 +239,7 @@ class BaseHandler(Handler):
         # and redirect to the ngo page
         if donor is None:
             if "donor_id" in self.session:
-                self.session.pop("donor_id") 
+                self.session.pop("donor_id")
 
             self.redirect( self.uri_for("ngo-url", ngo_url=ngo_id) )
             return False
@@ -262,7 +264,7 @@ class BaseHandler(Handler):
 
             html_template = self.jinja_enviroment.get_template("email/signup/signup_inline.html")
             txt_template = self.jinja_enviroment.get_template("email/signup/signup_text.txt")
-        
+
             template_values = {
                 "name": user.last_name,
                 "contact_url": CONTACT_FORM_URL,
@@ -276,10 +278,10 @@ class BaseHandler(Handler):
             user_id = user.get_id()
             token = self.user_model.create_signup_token(user_id)
             verification_url = self.uri_for('verification', type='p', user_id=user_id, signup_token=token, _full=True)
-            
+
             html_template = None # self.jinja_enviroment.get_template("email/reset/reset-password.html")
             txt_template = self.jinja_enviroment.get_template("email/reset/reset_password.txt")
-            
+
             template_values = {
                 "name": user.last_name,
                 "contact_url": CONTACT_FORM_URL,
@@ -288,10 +290,10 @@ class BaseHandler(Handler):
 
         elif email_type == "twopercent-form":
             subject = "Formularul tau de redirectionare"
-            
+
             html_template = None # self.jinja_enviroment.get_template("email/twopercent-form/twopercent-form.html")
             txt_template = self.jinja_enviroment.get_template("email/twopercent-form/twopercent_form.txt")
-            
+
             template_values = {
                 "name": user.last_name,
                 "form_url": user.pdf_url,
@@ -327,7 +329,7 @@ def user_required(handler):
     Will also fail if there's no session present.
     """
     def check_login(self, *args, **kwargs):
-        
+
         auth = self.auth
         if not auth.get_user_by_session() and not users.is_current_user_admin():
             self.redirect(self.uri_for('login'), abort=True)

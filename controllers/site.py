@@ -243,11 +243,45 @@ class HomePage(BaseHandler):
             ngos = get_multi([Key(NgoEntity, k) for k in digi_ngos])
             self.template_values['company_name'] = 'DIGI'
 
+        elif self.is_raiffeisen_subdomain:
+            raiffeisen_ngos = [
+                'fundatia-hategan',
+                'sonoro',
+                'fanzin',
+                'fundatia-light-into-europe',
+                'asociatia-green-revolution',
+                'fundatia-principesa-margareta-a-romaniei',
+                'fundatia-leaders',
+                'fundatia-cmu-regina-maria',
+                'asociatia-coolturala-noua-ne-pasa',
+                'junior-achievement-romania',
+                'fundatia-cmu-regina-maria',
+                'aspen-romania',
+                'asociatia-romana-de-dezbateri-oratorie-si-retorica-ardor',
+                'yuppicamp',
+                'asociatia-studentilor-francofoni-din-iasi',
+                'asociatia-dream-project',
+                'fundatia-cartea-calatoare',
+                'fundatia-dezvoltarea-popoarelor-filiala-cluj',
+                'fundatia-alma-mater-napocensis',
+                'asociatia-civica',
+                'fundatia-united-way-romania',
+                'asociatia-hercules',
+                'teach-for-romania',
+                # TODO: add the following NGOs when available:
+                # OvidiuRo
+                # Asociatia pentru Relatii Comunitare(ARC)
+                # Asociatia Tasuleasa Social
+                # Asociatia Clubul Sportiv Bucharest Running Club
+            ]
+            ngos = get_multi([Key(NgoEntity, k) for k in raiffeisen_ngos])
+            self.template_values['company_name'] = 'RAIFFEISEN'
+
         else:
             try:
                 list_keys = NgoEntity.query(NgoEntity.active == True).fetch(keys_only=True)
                 list_keys = sample(list_keys, 4)
-                
+
                 ngos = get_multi(list_keys)
             except Exception, e:
                 info(e)
@@ -257,7 +291,7 @@ class HomePage(BaseHandler):
         ngos = [n for n in ngos if n]
 
         self.template_values["ngos"] = ngos
-                
+
         # render a response
         self.render()
 
@@ -322,10 +356,10 @@ class PolicyHandler(BaseHandler):
 
 def NotFoundPage(request, response, exception):
     """handles the 404 page
-        we can't use BaseHandler for this page. 
+        we can't use BaseHandler for this page.
         webapp2 only accepts a simple function like this one
     """
-    
+
     # create a mock handler so we can user templates
     handler = BaseHandler(request, response)
 
@@ -336,7 +370,7 @@ def NotFoundPage(request, response, exception):
 def InternalErrorPage(request, response, exception):
     """handles the 500 page. same as the 404 page
     """
-    
+
     # create a mock handler so we can user templates
     handler = BaseHandler(request, response)
 
