@@ -38,12 +38,19 @@ class NgoStats(Handler):
         start_year = datetime(now.year, 1, 1, 0, 0)
 
         # get all the ngos
+        all_ngos = NgoEntity.query().count()
+        all_donors = Donor.query().count()
+
         ngos = NgoEntity.query(NgoEntity.date_created > start_year).count()
         donors = Donor.query(Donor.date_created > start_year).count()
 
         result = 'Rezultate pentru anul acesta: <br>'
         result += 'Onguri: {0} <br>'.format(ngos)
-        result += 'Formulare: {0} <br>'.format(donors)
+        result += 'Formulare: {0} <br><br><br>'.format(donors)
+
+        result = 'Rezultate total: <br>'
+        result += 'Onguri: {0} <br>'.format(all_ngos)
+        result += 'Formulare: {0} <br><br><br>'.format(all_donors)
 
         self.response.write(result)
 
