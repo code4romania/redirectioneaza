@@ -130,7 +130,8 @@ class HomePage(BaseHandler):
                 'niciodatasingur',
                 'sonoro',
                 'the-social-incubator',
-                'world-vision-romania'
+                'world-vision-romania',
+                'code-for-romania'
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in cez_ngos])
             self.template_values['company_name'] = 'CEZ'
@@ -197,7 +198,8 @@ class HomePage(BaseHandler):
                 'mainiunite',
                 'politehnica',
                 'recorder',
-                'un-copil-o-speranta'
+                'un-copil-o-speranta',
+                'code-for-romania'
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in continental_ngos])
             self.template_values['company_name'] = 'CONTINENTAL'
