@@ -169,7 +169,8 @@ class HomePage(BaseHandler):
                 'code-for-romania',
                 'the-social-incubator',
                 'viitorplus',
-                'world-vision-romania'
+                'world-vision-romania',
+                'daruieste-viata'
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in patria_ngos])
             self.template_values['company_name'] = 'PATRIA BANK'
