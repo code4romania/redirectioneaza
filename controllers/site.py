@@ -272,13 +272,23 @@ class HomePage(BaseHandler):
                 'teach-for-romania',
                 'sonoro',
                 'tasuleasa-social',
+                'runinbucharest',
                 # TODO: add the following NGOs when available:
                 # OvidiuRo
                 # Asociatia pentru Relatii Comunitare(ARC)
-                # Asociatia Clubul Sportiv Bucharest Running Club
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in raiffeisen_ngos])
             self.template_values['company_name'] = 'Raiffeisen Bank'
+
+        elif self.is_dbo_subdomain:
+            dbo_ngos = [
+                'asociatia-cartierul-creativ',
+                'gaming-week',
+                'rgda',
+                'women-in-games-romania',
+            ]
+            ngos = get_multi([Key(NgoEntity, k) for k in dbo_ngos])
+            self.template_values['company_name'] = 'DBO People'
 
         else:
             try:

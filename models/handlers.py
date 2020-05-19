@@ -91,6 +91,7 @@ class BaseHandler(Handler):
             'nestle.redirectioneaza.ro',
             'digi.redirectioneaza.ro',
             'rzbr.redirectioneaza.ro',
+            'dbo.redirectioneaza.ro',
         ]
 
         self.is_ikea_subdomain = host == custom_subdomains[0]
@@ -106,6 +107,7 @@ class BaseHandler(Handler):
         self.is_nestle_subdomain = host == custom_subdomains[10]
         self.is_digi_subdomain = host == custom_subdomains[11]
         self.is_raiffeisen_subdomain = host == custom_subdomains[12]
+        self.is_dbo_subdomain = host == custom_subdomains[13]
 
         self.template_values['custom_subdomain'] = host in custom_subdomains
 
