@@ -72,7 +72,7 @@ class GetNgoForm(BaseHandler):
             "name": ngo.name,
             "cif": ngo.cif,
             "account": ngo.account,
-            "two_years": True,
+            "two_years": False,
             "special_status": ngo.special_status
         }
         donor = {
