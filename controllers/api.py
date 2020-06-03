@@ -72,7 +72,9 @@ class GetNgoForm(BaseHandler):
             "name": ngo.name,
             "cif": ngo.cif,
             "account": ngo.account,
-            "two_years": False,
+            # do not add any checkmark on this form regarding the number of years
+            "years_checkmark": False,
+            # "two_years": False,
             "special_status": ngo.special_status
         }
         donor = {

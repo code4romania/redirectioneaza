@@ -175,12 +175,12 @@ def add_ngo_data_2(c, ong, is_wage = True):
     # the x mark
     c.drawString(220, start_ong_y, "x")
 
-    years_y = start_ong_y
-    years_y -= 0 if is_wage else 2
-    # donating for 1 or 2 years
-    years_y -= 44 if ong["two_years"] else 21
-    c.drawString(326, years_y, "x")
-
+    if ong.get('years_checkmark') != False:
+        years_y = start_ong_y
+        years_y -= 0 if is_wage else 2
+        # donating for 1 or 2 years
+        years_y -= 44 if ong["two_years"] else 21
+        c.drawString(326, years_y, "x")
 
     # the cif code
     c.setFontSize(9)
@@ -285,8 +285,6 @@ def create_pdf(person = {}, ong = {}):
     background = ImageReader( abs_path + first_page )
     c.drawImage(background, 0, 0, width=width, height=height)
 
-    # the default font size
-    # info(c.getAvailableFonts())
     c.setFont('OpenSans', default_font_size)
     c.setFontSize(default_font_size)
 
@@ -317,6 +315,9 @@ def create_pdf(person = {}, ong = {}):
     background = ImageReader( abs_path + second_page )
     c.showPage()
     c.drawImage(background, 0, 0, width=width, height=height)
+
+    c.setFont('OpenSans', default_font_size)
+    c.setFontSize(default_font_size)
 
     # DRAW ONG DATA - part 2
     add_ngo_data_2(c, ong, person['income'] == 'wage')
