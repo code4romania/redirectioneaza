@@ -190,6 +190,9 @@ class NgoDetailsHandler(AccountHandler):
             self.render()
             return
 
+        # remove white spaces from account
+        ong_account = ong_account.replace(' ', '')
+
         # if the user already has an ngo, update it
         if user.ngo:
 

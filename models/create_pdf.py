@@ -27,6 +27,9 @@ first_page = "/static/images/first_page.jpg"
 second_page = "/static/images/second_page.jpg"
 
 def format_ngo_account(ngo_account):
+    # remove white spaces from account
+    ngo_account = ngo_account.replace(' ', '')
+
     account = ''
     for i, l in enumerate(ngo_account):
         account += l
