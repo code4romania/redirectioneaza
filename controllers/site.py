@@ -217,6 +217,7 @@ class HomePage(BaseHandler):
                 'cu-verdele-n-sus',
                 'fundatia-comunitara-sibiu',
                 'fundatia-polisano',
+                'asociatialuthelo',
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in smartbill_ngos])
             self.template_values['company_name'] = 'SMARTBILL'
