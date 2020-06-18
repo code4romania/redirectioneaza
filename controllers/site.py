@@ -64,6 +64,7 @@ class HomePage(BaseHandler):
                 'asociatia-pentru-protectia-animalelor-kola-kariola',
                 'asociatia-robi',
                 'asociatia-pentru-valori-in-educatie',
+                'wwf',
                 'banca-pentru-colectarea-si-distributia-alimentelor',
                 'banca-regionala-pentru-alimente-brasov',
                 'code-for-romania',
