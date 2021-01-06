@@ -190,7 +190,6 @@ class HomePage(BaseHandler):
                 'aleg',
                 'animallife',
                 'asociatia-pro-palatul-copiilor-sibiu',
-                'asociatia-pro-palatul-copiilor-sibiu',
                 'recorder',
                 'asociatia-stergem-o-lacrima',
                 'asociatia-umanitara-dare-to-care',
