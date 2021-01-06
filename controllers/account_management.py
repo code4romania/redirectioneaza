@@ -165,19 +165,12 @@ class ForgotPasswordHandler(AccountHandler):
             return
 
         user = self.user_model.get_by_auth_id(email)
-        if not user:            
-            self.template_values.update({
-                "errors": "Se pare ca nu exita un cont cu aceasta adresa!"
-            })
-
-            self.render()
-            return
-
-        self.send_email("reset-password", user)
+        if user:            
+            self.send_email("reset-password", user)
         
         self.template_values.update({
             "errors": False,
-            "found": "Un email a fost trimis catre acea adresa"
+            "found": "Daca adresa este asociata unui cont, vei primi in scurt timp un e-mail cu instructiuni de resetare a parolei."
         })
 
         self.render()
