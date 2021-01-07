@@ -41,7 +41,7 @@ USER_UPLOADS_FOLDER = 'uploads'
 USER_FORMS = 'documents'
 
 now = datetime.now()
-DONATION_LIMIT = date(now.year, 6, 30)
+DONATION_LIMIT = date(now.year, 5, 25)
 MONTH_NAMES = ['', 'Ianuarie', 'Februarie', 'Martie', 'Aprilie', 'Mai', 'Iunie', 'Iulie', 'August', 'Septembrie', 'Octombrie', 'Noiembrie', 'Decembrie']
 
 
