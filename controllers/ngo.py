@@ -54,7 +54,7 @@ class TwoPercentHandler(BaseHandler):
             self.session.pop("has_cnp")
             # also we can use self.session.clear(), but it might delete the logged in user's session
         
-        self.template_values["title"] = "Donatie 2%"
+        self.template_values["title"] = ngo.name
         # make sure the ngo shows a logo
         ngo.logo = ngo.logo if ngo.logo else DEFAULT_NGO_LOGO
         self.template_values["ngo"] = ngo

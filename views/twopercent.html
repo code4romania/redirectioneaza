@@ -61,7 +61,7 @@
                 <h2 id="donation-page-title">Redirecționează în 3 pași simpli</h2>
                 <h3 class="donation-page-subtitle">1. Completează și descarcă formularul</h3>
                 {% if ngo.account and ngo.cif %}
-                    <form id="twopercent" class="form form-horizontal" action="{{ ngo.key.id() }}/doilasuta" role="form" method="post">
+                    <form id="twopercent" class="form form-horizontal" action="{{ uri_for('twopercent', ngo_url=ngo.key.id()) }}" role="form" method="post">
                         
                         <fieldset class="margin-bottom">
                             <legend>Date personale</legend>
