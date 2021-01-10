@@ -177,6 +177,7 @@ class NgoDetailsHandler(AccountHandler):
 
         ong_adresa = self.request.get('ong-adresa')
         ong_judet = self.request.get('ong-judet', "")
+        ong_activity = self.request.get('ong-activitate', "")
 
         ong_cif = self.request.get('ong-cif')
         ong_account = self.request.get('ong-cont')
@@ -213,6 +214,7 @@ class NgoDetailsHandler(AccountHandler):
 
                 ngo.address = ong_adresa
                 ngo.county = ong_judet
+                ngo.active_region = ong_activity
 
                 ngo.email = ong_email
                 ngo.website = ong_website

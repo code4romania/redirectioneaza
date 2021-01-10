@@ -58,6 +58,23 @@
         </div>
         <div class="form-group">
             <div class="col-xs-12">
+                <label for="ong-activitate">In ce regiune isi desfasoara ONG-ul activitatea?</label>
+                <select class="form-control" id="ong-activitate" name="ong-activitate" required x-moz-errormessage="Zona de activitate este obligatorie" title="Zona de activitate este obligatorie">
+                    <option value="">Zona de activitate</option>
+                    <option value="RO" {{ "selected" if county == ngo.active_region }}>National</option>
+                    <optgroup label="Bucuresti">
+                        {% for number in range(1, 7) %}
+                            <option value="{{ number }}" {{ "selected" if number|string == ngo.active_region }}>Sector {{ number }}</option>
+                        {% endfor %}
+                    </optgroup>
+                    {% for county in counties %}
+                        <option value="{{ county }}" {{ "selected" if county == ngo.active_region }} >{{ county }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="form-group choose-url-group">
+            <div class="col-xs-12">
                 <div>Poti alege un url personalizat pentru asociatia ta:</div>
                 <p class="text-muted">(acesta nu va mai putea fi schimbat ulterior)</p>
                 {# this div is only used to contain the two and to add the has-warning class #}

@@ -30,6 +30,25 @@ class NgoRemoveForms(Handler):
 
         ndb.put_multi(to_save)
 
+class NgoUpdate(Handler):
+    """
+    Used to loop through all the ngos and update something about them
+    """
+    
+    def get(self):
+
+        # get all the ngos
+        ngos = NgoEntity.query().fetch()
+        to_save = []
+
+        for ngo in ngos:
+            ngo.active_region = ngo.county
+            to_save.append(ngo)
+
+        ndb.put_multi(to_save)
+
+        self.response.write('Done')
+
 class NgoStats(Handler):
     
     def get(self):
@@ -57,5 +76,6 @@ class NgoStats(Handler):
 
 cron_routes = [
     r('/ngos/remove-form',    handler=NgoRemoveForms,    name="ngo-remove-form"),
-    r('/ngos/stats',    handler=NgoStats,    name="ngo-stats")
+    r('/ngos/stats',    handler=NgoStats,    name="ngo-stats"),
+    r('/ngos/update',   handler=NgoUpdate,   name="ngo-update")
 ]

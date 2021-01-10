@@ -29,6 +29,7 @@ class NgoEntity(BaseEntity):
     cif = ndb.StringProperty(indexed=True)
     address = ndb.TextProperty()
     county = ndb.StringProperty(indexed=True)
+    active_region = ndb.StringProperty(indexed=True)
 
     # the ngo's phone number
     tel = ndb.StringProperty(indexed=True)
