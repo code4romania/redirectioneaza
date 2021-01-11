@@ -118,6 +118,7 @@ class HomePage(BaseHandler):
                 'code-for-romania',
                 'fundatiacarturesti',
                 'teach-for-romania',
+                'asociatia-pirita-children-copiii-din-pirita',
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in carturesti_ngos])
             self.template_values['company_name'] = 'CARTURESTI'
@@ -133,6 +134,14 @@ class HomePage(BaseHandler):
                 'fundatianoiorizonturi',
                 'fundatia-sf-dimitrie',
                 'world-vision-romania',
+                'fundatia-progress',
+                'fundatia-alex-tache',
+                'httpwwwsalvaticopiiirodoilasuta',
+                'crucea-rosie-filiala-teleorman',
+                'filiala-de-cruce-rosie-constanta',
+                'filiala-de-cruce-rosie-olt',
+                'crucea-rosie-romana-filiala-valcea',
+                'lets-do-it-romania'
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in cez_ngos])
             self.template_values['company_name'] = 'CEZ'
