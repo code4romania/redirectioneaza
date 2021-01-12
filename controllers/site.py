@@ -86,14 +86,12 @@ class HomePage(BaseHandler):
                 'asociatia-anais',
                 'asociatia-autism-europa-centrul-de-resurse-si-referinta-in-autism-micul-print',
                 'asociatia-ecoassist-iniiativa-plantam-fapte-bune-in-romania',
-                'inimacopiilor',
                 'asociatia-magicamp',
-                'asociatia-necuvinte',
                 'asociatia-salvatorilor-montani-victoria',
                 'code-for-romania',
                 'comitetul-national-paralimpic',
                 'hopeandhomesromania',
-                'policy-center-for-roma-and-minorities',
+                'wwf',
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in jysk_ngos])
             self.template_values['company_name'] = 'JYSK'
