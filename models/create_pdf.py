@@ -21,10 +21,8 @@ pdfmetrics.registerFont(TTFont('OpenSans', font_path))
 
 
 default_font_size = 15
-image_path = "/static/images/formular.jpeg"
+form_image_path = "/static/images/formular-2021.jpg"
 
-first_page = "/static/images/first_page.jpg"
-second_page = "/static/images/second_page.jpg"
 
 def format_ngo_account(ngo_account):
     # remove white spaces from account
@@ -39,14 +37,14 @@ def format_ngo_account(ngo_account):
     return account
 
 def add_donor_data(c, person):
-    
+
+    donor_block_x = 690
+
     # the first name
     if len(person["first_name"]) > 18:
         c.setFontSize(12)
 
-    donor_block_x = 655
-
-    c.drawString(67, donor_block_x, person["first_name"])
+    c.drawString(75, donor_block_x, person["first_name"])
     c.setFontSize(default_font_size)
 
     # father's first letter
@@ -57,7 +55,7 @@ def add_donor_data(c, person):
     if len(last_name) > 34:
         c.setFontSize(10)
 
-    c.drawString(67, donor_block_x - 27, last_name)
+    c.drawString(75, donor_block_x - 27, last_name)
 
 
     # =======================================
@@ -127,7 +125,7 @@ def add_donor_data(c, person):
     start_x = 336
     for letter in person["cnp"]:
         c.drawString(start_x, donor_block_x - 10, letter)
-        start_x += 18.4
+        start_x += 16
 
 
     # email
@@ -151,105 +149,32 @@ def add_donor_data(c, person):
     c.setFontSize(default_font_size)
 
 def add_ngo_data(c, ong):
-    start_ong_y = 410
+    start_ong_y = 460
 
     # the x mark
-    c.drawString(218, start_ong_y, "x")
+    c.drawString(226, start_ong_y, "x")
+
+    if ong["two_years"]:
+        c.drawString(320, start_ong_y - 24, "x")
+
     # the cif code
     c.setFontSize(9)
-    c.drawString(453, start_ong_y, ong["cif"])
+    c.drawString(250, start_ong_y - 44, ong["cif"])
 
+    # the name
     org_name = ong["name"]
     if len(org_name) > 79:
         c.setFontSize(9)
     elif len(org_name) > 65:
         c.setFontSize(12)
 
-    c.drawString(178, start_ong_y - 25, org_name.encode('utf-8'))
+    c.drawString(188, start_ong_y - 66, org_name.encode('utf-8'))
 
     c.setFontSize(11)
 
+    # the bank account
     account = format_ngo_account(ong["account"])
-    c.drawString(106, start_ong_y - 52, account)
-
-def add_ngo_data_2(c, ong, is_wage = True):
-    start_ong_y = 795 if is_wage else 521
-
-    # the x mark
-    c.drawString(220, start_ong_y, "x")
-
-    if ong.get('years_checkmark') != False:
-        years_y = start_ong_y
-        years_y -= 0 if is_wage else 2
-        # donating for 1 or 2 years
-        years_y -= 44 if ong["two_years"] else 21
-        c.drawString(326, years_y, "x")
-
-    # the cif code
-    c.setFontSize(9)
-    substract = 65 if is_wage else 73
-    c.drawString(240, start_ong_y - substract, ong["cif"])
-
-    org_name = ong["name"]
-    if len(org_name) > 79:
-        c.setFontSize(9)
-    elif len(org_name) > 65:
-        c.setFontSize(12)
-
-    substract = 87 if is_wage else 97
-    c.drawString(178, start_ong_y - substract, org_name.encode('utf-8'))
-
-    c.setFontSize(11)
-
-    account = format_ngo_account(ong["account"])
-
-    substract = 112 if is_wage else 125
-    c.drawString(106, start_ong_y - substract, account)
-
-def add_special_status_ngo_data(c, ong):
-    """Used to add data for NGOs with a special status: they received 3,5% not 2"""
-
-    start_ong_y = 235
-
-    # the x mark
-    c.drawString(548, start_ong_y, "x")
-
-    # the cif code
-    c.setFontSize(9)
-    c.drawString(492, start_ong_y - 40, ong["cif"])
-
-    try:
-        org_name = ong["name"].encode('utf-8')
-    except Exception as e:
-        org_name = ong["name"]
-
-    # crop the text at max 60 length
-    org_name = org_name[:60]
-
-    # if the name is too long
-    # split it in two rows
-    if len(org_name) > 27:
-        first_row = ""
-        second_row = ""
-
-        arr = org_name.split(" ")
-        for i in range(0, len(arr) + 1):
-            first_row = " ".join(arr[0: i+1])
-            if len(first_row) > 28:
-                first_row = " ".join(arr[0: i])
-                second_row = " ".join(arr[i: len(arr)])
-                break
-
-        c.setFontSize(8)
-        c.drawString(250, start_ong_y - 35, first_row)
-        c.drawString(250, start_ong_y - 42, second_row)
-    else:
-        c.drawString(250, start_ong_y - 40, org_name)
-
-    c.setFontSize(11)
-
-    account = format_ngo_account(ong["account"])
-    c.drawString(104, start_ong_y - 66, account)
+    c.drawString(116, start_ong_y - 92, account)
 
 def create_pdf(person = {}, ong = {}):
     """method used to create the pdf
@@ -282,10 +207,10 @@ def create_pdf(person = {}, ong = {}):
     packet = tempfile.TemporaryFile(mode='w+b')
     
     c = canvas.Canvas(packet, A4)
-    width, height = A4 
+    width, height = A4
     
     # add the image as background
-    background = ImageReader( abs_path + first_page )
+    background = ImageReader( abs_path + form_image_path )
     c.drawImage(background, 0, 0, width=width, height=height)
 
     c.setFont('OpenSans', default_font_size)
@@ -294,36 +219,16 @@ def create_pdf(person = {}, ong = {}):
     # the year
     # this is the previous year
     year = str( datetime.now().year - 1 )
-    start_x = 315
+    start_x = 305
     for letter in year:
-        c.drawString(start_x, 714, letter)
-        start_x += 18
+        c.drawString(start_x, 745, letter)
+        start_x += 16
 
     # DRAW DONOR DATA
     if person.get('first_name'):
         add_donor_data(c, person)
 
-    # Venituri din salarii/pensii
-    if person['income'] == 'wage':
-        # DRAW ONG DATA
-        # if the ngo has a special status, the form is completed differently
-        if ong['special_status']:
-            add_special_status_ngo_data(c, ong)
-        else:
-            add_ngo_data(c, ong)
-
-    # add second page
-
-    # add the image as background
-    background = ImageReader( abs_path + second_page )
-    c.showPage()
-    c.drawImage(background, 0, 0, width=width, height=height)
-
-    c.setFont('OpenSans', default_font_size)
-    c.setFontSize(default_font_size)
-
-    # DRAW ONG DATA - part 2
-    add_ngo_data_2(c, ong, person['income'] == 'wage')
+    add_ngo_data(c, ong)
 
     c.save()
 
