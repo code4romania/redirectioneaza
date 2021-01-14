@@ -38,7 +38,7 @@ def format_ngo_account(ngo_account):
 
 def add_donor_data(c, person):
 
-    donor_block_x = 690
+    donor_block_x = 681
 
     # the first name
     if len(person["first_name"]) > 18:
@@ -55,13 +55,13 @@ def add_donor_data(c, person):
     if len(last_name) > 34:
         c.setFontSize(10)
 
-    c.drawString(75, donor_block_x - 27, last_name)
+    c.drawString(75, donor_block_x - 22, last_name)
 
 
     # =======================================
     # THIRD ROW
     # 
-    third_row_x = donor_block_x - 59
+    third_row_x = donor_block_x - 45
 
     # the street
     street = person["street"]
@@ -90,7 +90,7 @@ def add_donor_data(c, person):
 
     # =======================================
     # FOURTH ROW
-    fourth_row_x = donor_block_x - 88
+    fourth_row_x = donor_block_x - 67
 
     c.setFontSize(14)
     # bloc
@@ -117,7 +117,7 @@ def add_donor_data(c, person):
 
 
     # oras
-    c.drawString(69, donor_block_x - 120, person["city"])
+    c.drawString(69, donor_block_x - 90, person["city"])
 
     c.setFontSize(16)
 
@@ -125,7 +125,7 @@ def add_donor_data(c, person):
     start_x = 336
     for letter in person["cnp"]:
         c.drawString(start_x, donor_block_x - 10, letter)
-        start_x += 16
+        start_x += 18.5
 
 
     # email
@@ -143,23 +143,23 @@ def add_donor_data(c, person):
     # telephone
     if person['tel']:
         c.setFontSize(12)
-        c.drawString(start_email_x, third_row_x - 20, person['tel'])
+        c.drawString(start_email_x, third_row_x - 15, person['tel'])
     
 
     c.setFontSize(default_font_size)
 
 def add_ngo_data(c, ong):
-    start_ong_y = 460
+    start_ong_y = 449
 
     # the x mark
-    c.drawString(226, start_ong_y, "x")
+    c.drawString(219, start_ong_y, "x")
 
     if ong["two_years"]:
-        c.drawString(320, start_ong_y - 24, "x")
+        c.drawString(325, start_ong_y - 21, "x")
 
     # the cif code
     c.setFontSize(9)
-    c.drawString(250, start_ong_y - 44, ong["cif"])
+    c.drawString(250, start_ong_y - 41, ong["cif"])
 
     # the name
     org_name = ong["name"]
@@ -168,13 +168,13 @@ def add_ngo_data(c, ong):
     elif len(org_name) > 65:
         c.setFontSize(12)
 
-    c.drawString(188, start_ong_y - 66, org_name.encode('utf-8'))
+    c.drawString(186, start_ong_y - 64, org_name.encode('utf-8'))
 
     c.setFontSize(11)
 
     # the bank account
     account = format_ngo_account(ong["account"])
-    c.drawString(116, start_ong_y - 92, account)
+    c.drawString(110, start_ong_y - 86, account)
 
 def create_pdf(person = {}, ong = {}):
     """method used to create the pdf
@@ -221,8 +221,8 @@ def create_pdf(person = {}, ong = {}):
     year = str( datetime.now().year - 1 )
     start_x = 305
     for letter in year:
-        c.drawString(start_x, 745, letter)
-        start_x += 16
+        c.drawString(start_x, 736, letter)
+        start_x += 18
 
     # DRAW DONOR DATA
     if person.get('first_name'):
