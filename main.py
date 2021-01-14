@@ -82,12 +82,12 @@ app = webapp2.WSGIApplication([
         r('/api/ngos',                      handler=NgosApi,        name='api-ngos'),
 
         # ADMIN HANDLERS
-        r('/admin',             handler=AdminHandler,       name='admin'),
+        r('/admin',             handler=AdminHome,          name='admin'),
+        r('/admin/organizatii', handler=AdminNgosList,      name='admin-nogs'),
         r('/admin/conturi',     handler=UserAccounts,       name='admin-users'),
         r('/admin/campanii',    handler=SendCampaign,       name='admin-campanii'),
         r('/admin/ong-nou',     handler=AdminNewNgoHandler, name='admin-ong-nou'),
         r('/admin/<ngo_url>',   handler=AdminNgoHandler,    name='admin-ong'),
-
 
         r('/<ngo_url>',           handler=TwoPercentHandler,  name="twopercent"),
         r('/<ngo_url>/succes',    handler=DonationSucces,     name="ngo-twopercent-success"),

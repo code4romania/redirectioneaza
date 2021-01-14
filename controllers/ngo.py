@@ -2,7 +2,7 @@
 
 from urlparse import urlparse
 
-from google.appengine.api import urlfetch
+from google.appengine.api import urlfetch, users
 from google.appengine.ext import ndb
 
 from hashlib import sha1
@@ -106,6 +106,7 @@ class TwoPercentHandler(BaseHandler):
         can_donate = not now.date() > DONATION_LIMIT
 
         self.template_values["can_donate"] = can_donate
+        self.template_values["is_admin"] = users.is_current_user_admin()
         
         self.render()
 

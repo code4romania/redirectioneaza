@@ -1,6 +1,7 @@
 
+from logging import error
 from operator import itemgetter
-
+from datetime import datetime
 
 from google.appengine.api import users, mail
 from google.appengine.ext import ndb
@@ -11,13 +12,71 @@ from my_account import NgoDetailsHandler
 from models.models import NgoEntity, Donor
 from models.user import User
 
-from appengine_config import LIST_OF_COUNTIES
+from appengine_config import LIST_OF_COUNTIES, START_YEAR
 
 """
 Handlers  for admin routing
 """
-class AdminHandler(BaseHandler):
+class AdminHome(BaseHandler):
     template_name = 'admin/index.html'
+    def get(self):
+
+        if users.is_current_user_admin():
+            user = users.get_current_user()
+        else:
+            self.redirect(users.create_login_url("/admin"))
+
+        self.template_values["title"] = "Admin"
+
+        try:
+            projection = [NgoEntity.county, NgoEntity.date_created]
+            ngos = NgoEntity.query().fetch(projection=projection)
+        except Exception, e:
+            error(e)
+            ngos = NgoEntity.query().fetch()
+
+        donations = Donor.query().fetch(projection=[Donor.date_created, Donor.county])
+
+        now = datetime.now()
+
+        stats_dict = {
+            "ngos": len(ngos),
+            "forms": len(donations),
+            "years": {},
+            "counties": {}
+        }
+        for x in xrange(START_YEAR, now.year + 1):
+            stats_dict["years"][x] = {
+                "ngos": 0,
+                "forms": 0,
+            }
+
+        counties = LIST_OF_COUNTIES + ['1', '2', '3', '4', '5', '6']
+
+        for county in counties:
+            stats_dict["counties"][county] = {
+                "ngos": 0,
+                "forms": 0,
+            }
+
+        for ngo in ngos:
+            stats_dict["years"][ngo.date_created.year]['ngos'] += 1
+            if ngo.county:
+                stats_dict["counties"][ngo.county]['ngos'] += 1
+
+        for donation in donations:
+            stats_dict["years"][donation.date_created.year]['forms'] += 1
+            stats_dict["counties"][donation.county]['forms'] += 1
+
+        print stats_dict
+
+        self.template_values["stats_dict"] = stats_dict
+
+        # render a response
+        self.render()
+
+class AdminNgosList(BaseHandler):
+    template_name = 'admin/ngos.html'
     def get(self):
 
         if users.is_current_user_admin():

@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block header %}
+    {% include "admin/header.html" %}
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Nume ONG</th>
+                <th>Email</th>
+                <th>Judet</th>
+                <th>Cont asociat</th>
+                <th>Nr. donatii</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if ngos %}
+                {% for ngo in ngos %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>
+                            <a href="/admin/{{ ngo.key.id() }}">{{ ngo.name }}</a>
+                        </td>
+                        <td>
+                            {{ ngo.email or '' }}
+                        </td>
+                        <td>{{ ngo.county }}</td>
+                        <td class="{{ 'success' if ngo.account_attached }}">
+                            {{ ngo.account_attached }}
+                        </td>
+                        <td>{{ ngo.number_of_donations }}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="6">
+                        <p class="well well-lg text-center">
+                            Din pacate nu exita nici un ONG inregistrat.
+                        </p>
+                    </td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
