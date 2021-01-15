@@ -51,7 +51,7 @@ class AdminHome(BaseHandler):
                 "forms": 0,
             }
 
-        counties = LIST_OF_COUNTIES + ['1', '2', '3', '4', '5', '6']
+        counties = LIST_OF_COUNTIES + ['1', '2', '3', '4', '5', '6', 'RO']
 
         for county in counties:
             stats_dict["counties"][county] = {
@@ -60,12 +60,16 @@ class AdminHome(BaseHandler):
             }
 
         for ngo in ngos:
-            stats_dict["years"][ngo.date_created.year]['ngos'] += 1
+            if ngo.date_created.year in stats_dict["years"]:
+                stats_dict["years"][ngo.date_created.year]['ngos'] += 1
+
             if ngo.county:
                 stats_dict["counties"][ngo.county]['ngos'] += 1
 
         for donation in donations:
-            stats_dict["years"][donation.date_created.year]['forms'] += 1
+            if donation.date_created.year in stats_dict["years"]:
+                stats_dict["years"][donation.date_created.year]['forms'] += 1
+
             stats_dict["counties"][donation.county]['forms'] += 1
 
         print stats_dict
