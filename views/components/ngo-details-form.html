@@ -124,11 +124,24 @@
                     <input type="checkbox" id="ong-verificat" name="ong-verificat" {{ "checked" if ngo.verified }} />
                 </div>
             </div>
-            <div class="form-group">
-                <div class="col-xs-12">
-                    <textarea class="form-control" name="alte-adrese-email" placeholder="Adrese de email" rows="3" >{{ other_emails }}</textarea>
+
+            {% if owner %}
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <p>Cont asociat:</p>
+                            </div>
+                            <div class="panel-body">
+                                <p>Nume: {{ "{0} {1}".format(owner.first_name, owner.last_name) }}</p>
+                                <p>Email: {{ owner.email }}</p>
+                                <p>Verificat: {{ owner.verified }}</p>
+                                <p>Creat la: {{ owner.created.strftime("%d/%m/%Y") }}</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            {% endif %}
         </fieldset>
     {% endif %}
 

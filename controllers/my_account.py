@@ -133,7 +133,6 @@ class NgoDetailsHandler(AccountHandler):
             
             ngo = user.ngo.get()
             self.template_values["ngo"] = ngo
-            # self.template_values["ngo_upload_url"] = self.uri_for("api-ngo-upload-url")
             self.template_values["counties"] = LIST_OF_COUNTIES
             
             self.render()

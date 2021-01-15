@@ -162,6 +162,8 @@ class AdminNgoHandler(NgoDetailsHandler):
         self.template_values["counties"] = LIST_OF_COUNTIES
         self.template_values["ngo"] = ngo
         
+        self.template_values["owner"] = User.query(User.ngo == ngo.key).get()
+        
         self.template_values["other_emails"] = ', '.join(str(x) for x in ngo.other_emails) if ngo.other_emails else ""
 
         # render a response

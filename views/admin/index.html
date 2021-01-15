@@ -8,26 +8,56 @@
 {% block content %}
 <div class="container">
     <div class="row">
+        <div class="col-xs-12">
+            <h3>General stats</h3>
+            <p>ONG-uri: {{ stats_dict["ngos"] }}</p>
+            <p>Formulare: {{ stats_dict["forms"] }}</p>
+        </div>
         {% for key, value in stats_dict['years'].iteritems()|reverse %}
             <div class="col-xs-2">
                 <div class="panel panel-default">
-                  <div class="panel-body">
-                    <p>
+                    <div class="panel-heading">
                         {{ key }}
-                    </p>
-                    <p>
-                        ONG-uri: {{ value["ngos"] }}
-                    </p>
-                    <p>
-                        Formulare: {{ value["forms"] }}
-                    </p>
-                  </div>
+                    </div>
+                    <div class="panel-body">
+                        <p>
+                            ONG-uri: {{ value["ngos"] }}
+                        </p>
+                        <p>
+                            Formulare: {{ value["forms"] }}
+                        </p>
+                    </div>
                 </div>
             </div>
         {% endfor %}
     </div>
+
     <div class="row">
-        
+        <div class="col-xs-12">
+            <h4>Statistici pe judet (total)</h4>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Judet/Sector</th>
+                        <th>ONG-uri</th>
+                        <th>Formulare</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for key, value in stats_dict["counties"].iteritems()|sort %}
+                        <tr>
+                            <td>{{key}}</td>
+                            <td>
+                                {{ value["ngos"] }}
+                            </td>
+                            <td>
+                                {{ value["forms"] }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 {% endblock %}
