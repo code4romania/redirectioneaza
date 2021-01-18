@@ -105,6 +105,11 @@ class HomePage(BaseHandler):
                 'code-for-romania',
                 'ffff',
                 'navimed-navigatori-medicali',
+                'zi-de-bine',
+                'asociatia-necuvinte',
+                'asociatia-pentru-preventia-si-lupta-impotriva-cancerului-amazonia',
+                'fundatia-cmu-regina-maria',
+                'fundatia-hospice-casa-sperantei',
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in avon_ngos])
             self.template_values['company_name'] = 'AVON'
@@ -139,7 +144,11 @@ class HomePage(BaseHandler):
                 'filiala-de-cruce-rosie-constanta',
                 'filiala-de-cruce-rosie-olt',
                 'crucea-rosie-romana-filiala-valcea',
-                'lets-do-it-romania'
+                'lets-do-it-romania',
+                'yesromania',
+                'fundatia-principesa-margareta-a-romaniei',
+                'asociatia-roi',
+                'asociatia-vatra-cu-idei',
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in cez_ngos])
             self.template_values['company_name'] = 'CEZ'
@@ -208,6 +217,8 @@ class HomePage(BaseHandler):
                 'fundatia-united-way-romania',
                 'politehnica',
                 'un-copil-o-speranta',
+                'fundatia-serviciilor-sociale-bethany',
+                'fundatia-comunitara-iasi',
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in continental_ngos])
             self.template_values['company_name'] = 'CONTINENTAL'
