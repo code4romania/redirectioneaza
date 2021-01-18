@@ -154,7 +154,7 @@ def add_ngo_data(c, ong):
     # the x mark
     c.drawString(219, start_ong_y, "x")
 
-    if ong["two_years"]:
+    if ong.get('two_years'):
         c.drawString(325, start_ong_y - 21, "x")
 
     # the cif code
