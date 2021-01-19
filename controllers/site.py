@@ -146,7 +146,7 @@ class HomePage(BaseHandler):
                 'crucea-rosie-romana-filiala-valcea',
                 'lets-do-it-romania',
                 'yesromania',
-                'fundatia-principesa-margareta-a-romaniei',
+                'fundatia-regala-margareta-a-romaniei',
                 'asociatia-roi',
                 'asociatia-vatra-cu-idei',
             ]
@@ -285,7 +285,7 @@ class HomePage(BaseHandler):
                 'fundatia-hategan',
                 'fundatia-leaders',
                 'fundatia-light-into-europe',
-                'fundatia-principesa-margareta-a-romaniei',
+                'fundatia-regala-margareta-a-romaniei',
                 'fundatia-cmu-regina-maria',
                 'fundatia-united-way-romania',
                 'aspen-romania',
