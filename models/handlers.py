@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 
 import os
 import webapp2
@@ -314,7 +315,7 @@ class BaseHandler(Handler):
                 "email": CONTACT_EMAIL_ADDRESS
             }
             receiver = {
-                "name": "{0} {1}".format(user.first_name, user.last_name),
+                "name": u"{0} {1}".format(user.first_name, user.last_name),
                 "email": user.email
             }
 

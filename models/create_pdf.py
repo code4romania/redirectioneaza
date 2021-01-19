@@ -65,7 +65,7 @@ def add_donor_data(c, person):
 
     # the street
     street = person["street"]
-    info(len(street))
+
     if len(street) > 40:
         c.setFontSize(8)
     elif len(street) in range(36, 41):

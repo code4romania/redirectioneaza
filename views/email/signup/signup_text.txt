@@ -2,7 +2,7 @@ Salut {{ name }},
 
 Bine ai venit pe platforma redirectioneaza.ro.
 
-Pentru a-ti activa contul te rugam sa confirmi adresa de email accesand link-ul de mai jos:
+Pentru a-ti activa contul te rugam sa confirmi adresa de email apasand butonul de mai jos:
 {{ url }}
 
 Multumim,

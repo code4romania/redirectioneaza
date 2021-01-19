@@ -165,7 +165,7 @@ class ForgotPasswordHandler(AccountHandler):
             return
 
         user = self.user_model.get_by_auth_id(email)
-        if user:            
+        if user:
             self.send_email("reset-password", user)
         
         self.template_values.update({
