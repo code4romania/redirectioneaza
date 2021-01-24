@@ -55,6 +55,7 @@ $(function () {
 
     $.get(api).done(function (response) {
         ngos = response;
+        console.log(ngos)
         setupEasyAutocomplete()
     })
 
@@ -65,3 +66,5 @@ $(function () {
     // };
 
 })
+
+// $('#serch-ong-judet-option').text("Change it")
