@@ -45,14 +45,18 @@
                 <div class="search-bar-container">
                     <input id="search-bar" type="text" placeholder="Caută un ONG" />
                     <div class="search-button-wrapper flex-center-v">
-                        <button type="button" class="btn btn-primary">Cauta</button>
+                        <button id="search-button" type="button" class="btn btn-primary">Cauta</button>
                     </div>
                 </div>
             </div>
         {% endif %}
     </div>
 
-    <div class="row text-center">
+    <div id="search-result-wrapper" class="row text-center" >
+        
+    </div>
+
+    <div class="row text-center" style="margin-top: 2rem;">
         {% for ngo in ngos %}
             <div class="col-xs-12 col-sm-4 col-md-3">
                 <div class="ong-panel panel panel-default">

@@ -21,6 +21,10 @@ $(function () {
     };
 
     const selectElement = $('#search-ong-judet-select')
+    const searchButton = $('#search-button')
+    const resultWrapper = $('#search-result-wrapper')
+    const defaultLogo = 'https://storage.googleapis.com/redirectioneaza/logo_bw.png'
+    const maxDescLength = 125;
 
     function generateSelectOptions(localNgos){
 
@@ -119,6 +123,17 @@ $(function () {
         searcEl.easyAutocomplete(options);
     }
 
+    function getShortenDescription(desc){
+        if(desc.length > maxDescLength){
+            var shortenedStr = desc.substr(0, maxDescLength)
+            shortenedStr = shortenedStr.substr(0, Math.min(shortenedStr.length, shortenedStr.lastIndexOf(" ")))
+
+            return `${shortenedStr} ...`
+        }else{
+            return desc
+        }
+    }
+
     $.get(api).done(function (response) {
         // allNgos = response;
         allNgos = ngos
@@ -128,9 +143,11 @@ $(function () {
     })
 
     selectElement.on("change", function(){
+
         const value = String(this.value)
         if(value === "none"){
             setupEasyAutocomplete(allNgos)
+            filteredNgos = allNgos
         }else{
             filteredNgos = allNgos.filter((ngo) => ngo.active_region === value)
             setupEasyAutocomplete(filteredNgos)
@@ -138,6 +155,29 @@ $(function () {
         
     })
 
+    searchButton.on("click", function(){
+        console.log(filteredNgos)
+
+        resultWrapper.html('')
+        filteredNgos.map(function(ngo){
+            resultWrapper.append(`
+            <div class="col-xs-12 col-sm-4 col-md-3">
+                <div class="ong-panel panel panel-default">
+                    <a href="${ngo.url}">
+                        <div class="ong-logo">
+                            <img src="${ngo.logo ? ngo.logo : defaultLogo}" class="img-responsive center-block" alt="${ngo.name}-logo" />
+                        </div>
+                        <div class="panel-heading">${ngo.name}</div>
+                    </a>
+                <div class="panel-body">
+                    ${getShortenDescription(ngo.description)}
+                </div>
+                </div>
+            </div>
+            `)
+        }).join('')
+        resultWrapper.css('border-bottom', "1px solid lightgrey");
+    })
     // var doit;
     // window.onresize = function(){
     //   clearTimeout(doit);
