@@ -45,9 +45,9 @@ class HomePage(BaseHandler):
                 'fundatia-cmu-regina-maria',
                 'world-vision-romania',
                 'organizatia-umanitara-concordia',
+                'liliecii-din-mediul-urban',
                 'teach-for-romania',
                 'viitorplus',
-                'liliecii-din-mediul-urban',
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in ikea_ngos])
             self.template_values['company_name'] = 'IKEA'
@@ -77,6 +77,13 @@ class HomePage(BaseHandler):
                 'httpwwwsalvaticopiiirodoilasuta',
                 'sor',
                 'teach-for-romania',
+                'ffcr',
+                'fundatia-leaders',
+                'fundatiacomunitaracluj',
+                'fco',
+                'fundatia-comunitara-galati',
+                'zi-de-bine',
+                'media-dor',
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in lidl_ngos])
             self.template_values['company_name'] = 'LIDL'
@@ -85,6 +92,7 @@ class HomePage(BaseHandler):
             jysk_ngos = [
                 'asociatia-anais',
                 'asociatia-autism-europa-centrul-de-resurse-si-referinta-in-autism-micul-print',
+                'asociatia-casa-buna',
                 'asociatia-ecoassist-iniiativa-plantam-fapte-bune-in-romania',
                 'asociatia-magicamp',
                 'asociatia-salvatorilor-montani-victoria',
@@ -122,6 +130,7 @@ class HomePage(BaseHandler):
                 'fundatiacarturesti',
                 'teach-for-romania',
                 'asociatia-pirita-children-copiii-din-pirita',
+                'asociatia-casa-buna',
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in carturesti_ngos])
             self.template_values['company_name'] = 'CARTURESTI'

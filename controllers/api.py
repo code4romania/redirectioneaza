@@ -49,7 +49,9 @@ class NgosApi(BaseHandler):
             response.append({
                 "name": ngo.name,
                 "url": self.uri_for('twopercent', ngo_url=ngo.key.id()),
-                "logo": ngo.logo if ngo.logo else DEFAULT_NGO_LOGO
+                "logo": ngo.logo if ngo.logo else DEFAULT_NGO_LOGO,
+                "active_region": ngo.active_region,
+                "description": ngo.description
             })
 
         self.return_json(response)
