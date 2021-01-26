@@ -39,17 +39,15 @@
             <div class="search-bar-wrapper">
                 <div class="county-select-container flex-center-hv">
                     <select class="form-control" id="search-ong-judet-select" name="ong-judet" required x-moz-errormessage="Judetul este obligatoriu" title="Judetul este obligatoriu">
-                        {% for ngo in ngos %}
-                            <option value="{{ ngo.county }}" id="serch-ong-judet-option">{{ ngo.county }}</option>
-                        {% endfor %}
-
+                        <option value="Alba" id="serch-ong-judet-option">Alba</option>
+                        <option value="Arad" id="serch-ong-judet-option">Arad</option>
                     </select>
                 </div>
                 <div class="search-bar-container">
                     <input id="search-bar" type="text" placeholder="Caută un ONG" />
-                </div>
-                <div class="search-button-wrapper flex-center-v">
-                    <button type="button" class="btn btn-primary">Cauta</button>
+                    <div class="search-button-wrapper flex-center-v">
+                        <button type="button" class="btn btn-primary">Cauta</button>
+                    </div>
                 </div>
             </div>
         {% endif %}
