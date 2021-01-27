@@ -318,6 +318,60 @@ class HomePage(BaseHandler):
             ngos = get_multi([Key(NgoEntity, k) for k in dbo_ngos])
             self.template_values['company_name'] = 'DBO People'
 
+        elif self.is_ursus_subdomain:
+            ursus_ngos = [
+                'asociatia-reality-check',
+                'freemiorita',
+                'asociatia-ateliere-fara-frontiere',
+                'fundatia-comunitara-bucuresti',
+                'fundatia-comunitara-buzau',
+                'arcen',
+                'media-dor',
+                'carusel',
+                'alianta-pentru-lupta-impotriva-alcoolismului-si-toxicomaniilor-aliat',
+                'fundatia-fara',
+                'fundatia-motivation-romania',
+                'amais',
+                'asociatia-sf-ana',
+                'accept',
+                'asociatia-activewatch',
+                'fundatia-cpe-centrul-parteneriat-pentru-egalitate',
+                'asociatia-lrnty-learnity',
+                'asociatia-de-a-arhitectura',
+                'teach-for-romania',
+                'book-land',
+                'asociatia-centrul-step-by-step-pentru-educatie-si-dezvoltare-profesionala',
+                'asociatia-touched-romania',
+                'centrul-de-dezvoltare-curriculara-si-studii-de-gen-filia',
+                'fundatia-pentru-smurd',
+                'rerise',
+                'societatea-nationala-de-cruce-rosie-din-romania-filiala-sector-6-bucuresti',
+                'policy-center-for-roma-and-minorities',
+                'fundatia-conservation-carpathia',
+                'asociatia-parcul-natural-vacaresti',
+                'padureacopiilor',
+                'liliecii-din-mediul-urban',
+                'asociatia-robi',
+                'asociatia-pentru-protectia-animalelor-kola-kariola',
+                'asociatia-little-people-romania',
+                'inimacopiilor',
+                'fundatia-cmu-regina-maria',
+                'asociatia-magicamp',
+                'organizatia-umanitara-concordia',
+                'ajungemmari',
+                'fundatia-pentru-voi',
+                'fundatia-united-way-romania',
+                'code-for-romania',
+                'cartea-daliei',
+                'codette',
+                'cere-participare',
+                'fundatia-pact',
+                'funky',
+                'fundatia-special-olympics-din-romania',
+            ]
+            ngos = get_multi([Key(NgoEntity, k) for k in ursus_ngos])
+            self.template_values['company_name'] = 'Ursus'
+
         else:
             try:
                 list_keys = NgoEntity.query(NgoEntity.active == True).fetch(keys_only=True)
