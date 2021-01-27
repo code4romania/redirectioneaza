@@ -156,27 +156,47 @@ $(function () {
     })
 
     searchButton.on("click", function(){
-        console.log(filteredNgos)
+
+        const searchValue = searcEl.val().toLocaleLowerCase()
+        const selectedCounty = selectElement.val()
+        const latinisedSearch = latinise(searchValue)
+
+        if(selectedCounty === 'none' && !searchValue) {
+            window.location.href = "/asociatii"
+            return;
+        }
+
+        const countyAndSearchItem = filteredNgos.filter(function(ngo){
+            const latinisedName = latinise(ngo.name).toLocaleLowerCase();
+            return latinisedName.search(latinisedSearch) > -1;
+        })
 
         resultWrapper.html('')
-        filteredNgos.map(function(ngo){
-            resultWrapper.append(`
-            <div class="col-xs-12 col-sm-4 col-md-3">
-                <div class="ong-panel panel panel-default">
-                    <a href="${ngo.url}">
-                        <div class="ong-logo">
-                            <img src="${ngo.logo ? ngo.logo : defaultLogo}" class="img-responsive center-block" alt="${ngo.name}-logo" />
-                        </div>
-                        <div class="panel-heading">${ngo.name}</div>
-                    </a>
-                <div class="panel-body">
-                    ${getShortenDescription(ngo.description)}
-                </div>
-                </div>
-            </div>
-            `)
-        }).join('')
+        const hasValue = countyAndSearchItem.length > 0
         resultWrapper.css('border-bottom', "1px solid lightgrey");
+        if(hasValue){
+            countyAndSearchItem.map(function(ngo){
+                resultWrapper.append(`
+                <div class="col-xs-12 col-sm-4 col-md-3">
+                    <div class="ong-panel panel panel-default">
+                        <a href="${ngo.url}">
+                            <div class="ong-logo">
+                                <img src="${ngo.logo ? ngo.logo : defaultLogo}" class="img-responsive center-block" alt="${ngo.name}-logo" />
+                            </div>
+                            <div class="panel-heading">${ngo.name}</div>
+                        </a>
+                    <div class="panel-body">
+                        ${getShortenDescription(ngo.description)}
+                    </div>
+                    </div>
+                </div>
+                `)
+            }).join('')
+        }else{
+            resultWrapper.append(`
+                <p>Nu s-a găsit niciun rezultat.</p>
+            `)
+        }
     })
     // var doit;
     // window.onresize = function(){
