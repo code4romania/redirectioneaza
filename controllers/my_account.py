@@ -305,6 +305,7 @@ class NgoDetailsHandler(AccountHandler):
             
             address = ong_adresa,
             county = ong_judet,
+            active_region = ong_activity,
             
             cif = ong_cif,
             account = ong_account,
