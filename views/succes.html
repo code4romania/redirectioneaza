@@ -33,18 +33,19 @@
         </div>
 
         <div class="row instructions-row">
-            <div class="col-xs-12 col-md-8 col-md-offset-2 margin-top">
-                <a href="{{ donor.pdf_url }}" class="btn btn-primary btn-block ngo-form-url" download="Formular_donatie_2%.pdf" target="_blank">
+            <div class="col-xs-12 col-md-8 col-md-offset-2 text-center">
+                <a href="{{ donor.pdf_url }}" class="btn btn-primary btn-lg ngo-form-url" download="Formular_donatie_2%.pdf" target="_blank">
                     Descarca formularul tau
                 </a>
             </div>
-            <div class="col-xs-12 col-md-8 col-md-offset-2 margin-top">
+            <div class="col-xs-12 col-md-8 col-md-offset-2">
+                <h4>Urmatorii pasi:</h4>
                 <ol class="list" start="2">
                     <li>
                         Printeaza formularul, completeaza campul de CNP daca nu ai facut-o la pasul anterior si semneaza-l.
                     </li>
                     <li>
-                        Ai urmatoarele optiuni:
+                        Apoi, ai urmatoarele optiuni:
                         <ol type="A">
                             <li>
                                 Fie il trimiti prin posta cu <strong>scrisoare recomandata</strong> catre unitatea ANAF de care apartii.
@@ -60,23 +61,33 @@
                                 {% endif %}
                             </li>
                             <li>
-                                Fie il trimiti prin posta sau curier la adresa ONG-ului si se ocupa ei de depunerea lui. Daca sunteti in acelasi oras, le poti face o vizita, suntem siguri ca sunt bucurosi de oaspeti 
-                                {% if ngo.address %}
-                                    <div class="address-box">
-                                        <strong>{{ ngo.name }}</strong>
-                                        <br>
-                                        Adresa: {{ ngo.address }}
-                                    </div>
-                                {% endif %}
+                                Fie il trimiti prin posta sau curier la adresa ONG-ului si se ocupa ei de depunerea lui. Adresa lor este: <strong>{{ ngo.name }}, {{ ngo.address }}</strong>.
                             </li>
                         </ol>
                     </li>
                 </ol>
             </div>
             <div class="col-xs-12 col-md-8 col-md-offset-2 margin-top text-center">
-                <h4>Trimite pana la data de <strong class="deadline">{{ limit.day }} {{ months[limit.month] }}</strong>!</h4>
+                <h4>Trimite formularul completat pana la data de <strong class="deadline">{{ limit.day }} {{ months[limit.month] }}</strong>!</h4>
             </div>
         </div>
+
+        {% if ngo.tel or ngo.email %}
+            <div class="row">
+                <div class="col-xs-12 col-md-6 col-md-offset-3 margin-top">
+                    <h5>
+                        Daca doresti sa iei legatura cu organizatia pentru colectarea formularului sau alte informatii, o poti face la:
+                    </h5>
+                    <p>
+                        {{ "Telefon: {0}".format(ngo.tel) if ngo.tel }} <br>
+                    </p>
+                    <p>
+                        {{ "Email: {0}".format(ngo.email) if ngo.email }}
+                    </p>
+                    
+                </div>
+            </div>
+        {% endif %}
 
         {% include "components/be-a-hero.html" %}
 
