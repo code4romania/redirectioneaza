@@ -70,24 +70,15 @@
             <div class="col-xs-12 col-md-8 col-md-offset-2 margin-top text-center">
                 <h4>Trimite formularul completat pana la data de <strong class="deadline">{{ limit.day }} {{ months[limit.month] }}</strong>!</h4>
             </div>
+            {% if ngo.tel or ngo.email %}
+                <div class="col-xs-12 col-md-8 col-md-offset-2 ngo-details">
+                    Daca doresti sa iei legatura cu organizatia pentru colectarea formularului sau alte informatii, o poti face la: <br>
+                    {{ "Telefon: {0}".format(ngo.tel) if ngo.tel }} <br>
+                    {{ "Email: {0}".format(ngo.email) if ngo.email }}
+                </div>
+            {% endif %}
         </div>
 
-        {% if ngo.tel or ngo.email %}
-            <div class="row">
-                <div class="col-xs-12 col-md-6 col-md-offset-3 margin-top">
-                    <h5>
-                        Daca doresti sa iei legatura cu organizatia pentru colectarea formularului sau alte informatii, o poti face la:
-                    </h5>
-                    <p>
-                        {{ "Telefon: {0}".format(ngo.tel) if ngo.tel }} <br>
-                    </p>
-                    <p>
-                        {{ "Email: {0}".format(ngo.email) if ngo.email }}
-                    </p>
-                    
-                </div>
-            </div>
-        {% endif %}
 
         {% include "components/be-a-hero.html" %}
 
