@@ -84,6 +84,8 @@ class HomePage(BaseHandler):
                 'fundatia-comunitara-galati',
                 'zi-de-bine',
                 'media-dor',
+                'banca-regionala-pentru-alimente-constanta',
+                'asociatia-little-people-romania',
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in lidl_ngos])
             self.template_values['company_name'] = 'LIDL'
@@ -371,6 +373,19 @@ class HomePage(BaseHandler):
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in ursus_ngos])
             self.template_values['company_name'] = 'Ursus'
+        
+        elif self.is_carrefour_subdomain:
+            carrefour_ngos = [
+                'crucea-rosie-romana',
+                'httpwwwsalvaticopiiirodoilasuta',
+                'asociatia-ana-si-copiii',
+                'fundatia-hospice-casa-sperantei',
+                'fundatia-cmu-regina-maria',
+                'policy-center-for-roma-and-minorities',
+                'asociatia-ateliere-fara-frontiere',
+            ]
+            ngos = get_multi([Key(NgoEntity, k) for k in carrefour_ngos])
+            self.template_values['company_name'] = 'Carrefour'
 
         else:
             try:
