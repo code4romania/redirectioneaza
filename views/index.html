@@ -36,15 +36,27 @@
 
         
         {% if not custom_subdomain %}
-            <div class="row">
-                <div class="col-xs-12 col-md-10 col-md-offset-1 search-bar-container">
+            <div class="search-bar-wrapper">
+                <div class="county-select-container flex-center-hv">
+                    <select class="form-control" id="search-ong-judet-select" name="ong-judet" required x-moz-errormessage="Judetul este obligatoriu" title="Judetul este obligatoriu">
+                       
+                    </select>
+                </div>
+                <div class="search-bar-container">
                     <input id="search-bar" type="text" placeholder="Caută un ONG" />
+                    <div class="search-button-wrapper flex-center-v">
+                        <button id="search-button" type="button" class="btn btn-primary">Cauta</button>
+                    </div>
                 </div>
             </div>
         {% endif %}
     </div>
 
-    <div class="row text-center">
+    <div id="search-result-wrapper" class="row text-center" >
+        
+    </div>
+
+    <div class="row text-center" style="margin-top: 2rem;">
         {% for ngo in ngos %}
             <div class="col-xs-6 col-sm-4 col-md-3">
                 <div class="ong-panel panel panel-default">
