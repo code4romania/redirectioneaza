@@ -86,6 +86,9 @@ class HomePage(BaseHandler):
                 'media-dor',
                 'banca-regionala-pentru-alimente-constanta',
                 'asociatia-little-people-romania',
+                'asociatia-banca-regionala-pentru-alimente-timisoara',
+                'ambasada-sustenabilitatii-in-romania',
+                'fundatia-hospice-casa-sperantei',
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in lidl_ngos])
             self.template_values['company_name'] = 'LIDL'
@@ -370,6 +373,7 @@ class HomePage(BaseHandler):
                 'fundatia-pact',
                 'funky',
                 'fundatia-special-olympics-din-romania',
+                'asociatia-climb-again',
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in ursus_ngos])
             self.template_values['company_name'] = 'Ursus'
@@ -383,6 +387,8 @@ class HomePage(BaseHandler):
                 'fundatia-cmu-regina-maria',
                 'policy-center-for-roma-and-minorities',
                 'asociatia-ateliere-fara-frontiere',
+                'asociatia-zambetul-ingerilor',
+                'fundatia-pentru-dezvoltarea-agriculturii',
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in carrefour_ngos])
             self.template_values['company_name'] = 'Carrefour'
