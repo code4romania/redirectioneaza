@@ -256,7 +256,7 @@ class HomePage(BaseHandler):
 
         elif self.is_nestle_subdomain:
             nesle_ngos = [
-                'clubul-cainilor-utilitari-echipa-de-cautare-si-salvare-search-and-rescue',
+                'clubul-cainilor-utilitari',
                 'asociatia-valentina-romania',
                 'banca-pentru-colectarea-si-distributia-alimentelor',
                 'sos-satele-copiilor-romania',
