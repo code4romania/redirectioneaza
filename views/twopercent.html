@@ -12,6 +12,7 @@
 
     {# load the recaptcha api #}
     <script src='https://www.google.com/recaptcha/api.js?hl=ro' async defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@3.0.0-beta.4/dist/signature_pad.umd.min.js" async defer></script>
 {% endblock %}
 
 {# error messages, also found in the js file twopercent.js #}
@@ -57,7 +58,7 @@
         </div> #}
 
         <div class="row">
-            <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
+            <div id="twopercent-form-wrapper" class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
                 <h2 id="donation-page-title">Redirecționează în 3 pași simpli</h2>
                 <h3 class="donation-page-subtitle">1. Completează și descarcă formularul</h3>
                 {% if ngo.account and ngo.cif %}
@@ -155,11 +156,32 @@
                             </div>
                         </fieldset> #}
                         <fieldset>
+                            <div class="signature-title-wrapper">
+                                <legend>Semnătura</legend>
+                                <button id="clear-signature" class="btn btn-primary" type="button">
+                                    Reseteaza
+                                </button>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <canvas id="signature" width="600" height="200" style="border: 1px solid #ddd;"></canvas>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
                             <div class="form-group">
                                 <div class="col-xs-12 col-lg-10 checkbox">
                                     <label for="two-years">
                                         <input id="two-years" type="checkbox" name="two-years" />
                                         Vreau ca redirecționarea să se realizeze pe o perioadă de 2 ani
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12 col-lg-10 checkbox">
+                                    <label for="two-years">
+                                        <input id="two-years" type="checkbox" name="two-years" />
+                                       Sunt de acord ca semnatura sa fie prelucrata.
                                     </label>
                                 </div>
                             </div>
