@@ -72,8 +72,6 @@ class AdminHome(BaseHandler):
 
             stats_dict["counties"][donation.county]['forms'] += 1
 
-        print stats_dict
-
         self.template_values["stats_dict"] = stats_dict
 
         # render a response

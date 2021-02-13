@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
+from datetime import datetime
 
 from google.appengine.ext.ndb import get_multi, Key
 
 from appengine_config import DEFAULT_NGO_LOGO, DONATION_LIMIT
 from models.handlers import BaseHandler
-from models.models import NgoEntity
+from models.models import NgoEntity, Donor
 
 from random import sample
 from logging import info
@@ -377,6 +378,8 @@ class HomePage(BaseHandler):
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in ursus_ngos])
             self.template_values['company_name'] = 'Ursus'
+            self.template_values['custom_header'] = True
+            self.template_values['custom_note'] = True
         
         elif self.is_carrefour_subdomain:
             carrefour_ngos = [
@@ -407,6 +410,14 @@ class HomePage(BaseHandler):
         ngos = [n for n in ngos if n]
 
         self.template_values["ngos"] = ngos
+
+        now = datetime.now()
+        self.template_values["stats"] = {
+            "ngos": NgoEntity.query().count(),
+            "forms": Donor.query(Donor.date_created > datetime(now.year, 1, 1)).count()
+        }
+
+        self.template_values["current_year"] = now.year
 
         # render a response
         self.render()

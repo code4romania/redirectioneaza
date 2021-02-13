@@ -18,10 +18,18 @@
             <img class="col-xs-12 col-md-6 col-md-offset-3" src="/images/index.png">
         </div>
         {% if company_name %}
-            <h1>
-                Redirecționează 3.5% din impozitul tău <br>
-                către unul dintre ONG-urile susținute de {{ company_name }}.
-            </h1>
+            {# we have a custom header for some companies #}
+            {% if custom_header %}
+                <h1>
+                    Redirecționează 3.5% din impozitul tău <br>
+                    către o cauză la alegere
+                </h1>
+            {% else %}
+                <h1>
+                    Redirecționează 3.5% din impozitul tău <br>
+                    către unul dintre ONG-urile susținute de {{ company_name }}.
+                </h1>
+            {% endif %}
         {% else %}
             <h1>
                 Redirecționează 3.5%<br>
@@ -32,8 +40,15 @@
         <h4 class="note">
             Fără să te coste nimic în plus, redirecționând, oferi un strop de putere în plus unui ONG care să facă bine și în numele tău. 
         </h4>
-        <h4>Poți opta pentru redistribuirea sumei până pe <strong class="deadline">{{ limit.day }} {{ months[limit.month] }} {{ limit.year }}</strong>.</h4>
-
+        <h4>
+            Poți opta pentru redistribuirea sumei până pe <strong class="deadline">{{ limit.day }} {{ months[limit.month] }} {{ limit.year }}</strong>.
+        </h4>
+        {% if custom_note %}
+            <h4>
+                Dacă ONG-ul tău preferat nu se afla pe aceasta pagina, <br>
+                consultă lista completă de organizații pe <a href="{{ uri_for('home') }}">redirectioneaza.ro</a>.
+            </h4>
+        {% endif %}
         
         {% if not custom_subdomain %}
             <div class="row">
@@ -68,6 +83,23 @@
                 </div>
             </div>
         {% endif %}
+    </div>
+
+    <div class="row margin-top">
+        <div class="col-xs-12 col-md-3 col-md-offset-2">
+            <h3>{{ stats["ngos"] }}</h3>
+            organizații înscrise în platformă
+        </div>
+        <div class="col-xs-12 col-md-3">
+            <h3>{{ stats["forms"] }}</h3>
+            formulare completate în {{ current_year }}
+        </div>
+        <div class="col-xs-12 col-md-3">
+            <h3>
+                <span class="h5">peste</span> 1.000.000 <span class="h5">RON</span>
+            </h3>
+            redirecționați spre ONG-uri în {{ current_year }}
+        </div>
     </div>
 
     <div class="row homepage-paragraph about-section">
