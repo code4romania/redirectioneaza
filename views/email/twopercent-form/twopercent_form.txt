@@ -7,10 +7,11 @@ Mai departe, va trebui să printezi și să semnezi acest formular. Apoi, ai tre
 * fie îl trimiți prin poștă, cu scrisoare recomandată, către unitatea ANAF de care aparții;
 * fie îl trimiți prin curier sau poștă la adresa ONG-ului și se ocupă ei de depunerea lui. Adresele le vei găsi în paginile fiecărui ONG pe masură ce completezi. Desigur, poți să înmânezi formularul în persoană ONG-ului, dacă e cazul.
 
-Datele organizatiei:
+Datele organizației:
 Nume: {{ ngo.name }}
 Adresa: {{ ngo.address }}
 {% if ngo.email %}Email: {{ ngo.email }}{% endif %}
+{% if ngo.tel %}Telefon: {{ ngo.tel }}{% endif %}
 
 Dacă vrei să fii un adevărat super-erou civic, descarcă formularul precompletat de pe pagina ONG-ului pe care vrei să îl susții, printează-l în mai multe exemplare și transmite-l colegilor, prietenilor și familiei și încurajează-i să redirecționeze.
 
