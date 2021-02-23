@@ -256,7 +256,7 @@ class TwoPercentHandler(BaseHandler):
         self.session["has_cnp"] = bool(donor_dict["cnp"])
 
         # send and email to the donor with a link to the PDF file
-        self.send_email("twopercent-form", donor)
+        self.send_email("twopercent-form", donor, self.ngo)
 
         # if not an ajax request, redirect
         if self.is_ajax:

@@ -257,7 +257,7 @@ class BaseHandler(Handler):
 
         return True
 
-    def send_email(self, email_type, user):
+    def send_email(self, email_type, user, ngo=None):
 
         if not user.email:
             return
@@ -292,7 +292,7 @@ class BaseHandler(Handler):
             template_values = {
                 "name": user.last_name,
                 "contact_url": CONTACT_FORM_URL,
-                "url": verification_url,
+                "url": verification_url
             }
 
         elif email_type == "twopercent-form":
@@ -304,7 +304,8 @@ class BaseHandler(Handler):
             template_values = {
                 "name": user.last_name,
                 "form_url": user.pdf_url,
-                "contact_url": CONTACT_FORM_URL
+                "contact_url": CONTACT_FORM_URL,
+                "ngo": ngo
             }
         else:
             return
