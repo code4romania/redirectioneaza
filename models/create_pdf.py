@@ -176,6 +176,9 @@ def add_ngo_data(c, ong):
     account = format_ngo_account(ong["account"])
     c.drawString(110, start_ong_y - 86, account)
 
+    if ong.get('percent'):
+        c.drawString(146, start_ong_y - 108, ong.get('percent'))
+
 def create_pdf(person = {}, ong = {}):
     """method used to create the pdf
 
