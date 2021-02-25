@@ -58,8 +58,7 @@ class HomePage(BaseHandler):
                 'asociatia-banca-locala-pentru-alimente-roman',
                 'banca-pentru-alimente-oradea',
                 'asociatia-centrul-step-by-step-pentru-educatie-si-dezvoltare-profesionala',
-                'bancadealimentecluj',
-                'free-amely-2007',
+                'asociatia-pentru-protectia-animalelor-cezar',
                 'asociatia-mai-mult-verde',
                 'asociatia-pentru-protectia-animalelor-cezar',
                 'asociatia-pentru-protectia-animalelor-kola-kariola',
@@ -68,27 +67,30 @@ class HomePage(BaseHandler):
                 'wwf',
                 'banca-pentru-colectarea-si-distributia-alimentelor',
                 'banca-regionala-pentru-alimente-brasov',
+                'bancadealimentecluj',
                 'code-for-romania',
                 'fundatia-comunitara-bucuresti',
                 'fundatia-comunitara-iasi',
                 'fundatia-motivation-romania',
                 'fundatianoiorizonturi',
-                'fundatia-pentru-smurd',
                 'world-vision-romania',
                 'httpwwwsalvaticopiiirodoilasuta',
                 'sor',
                 'teach-for-romania',
                 'ffcr',
                 'fundatia-leaders',
+                'the-institute',
+                'asociatia-banca-regionala-pentru-alimente-timisoara',
+                'banca-regionala-pentru-alimente-constanta',
                 'fundatiacomunitaracluj',
                 'fco',
+                'fundatia-comunitara-brasov',
                 'fundatia-comunitara-galati',
                 'zi-de-bine',
                 'media-dor',
-                'banca-regionala-pentru-alimente-constanta',
-                'asociatia-little-people-romania',
-                'asociatia-banca-regionala-pentru-alimente-timisoara',
                 'ambasada-sustenabilitatii-in-romania',
+                'fundatia-motivation-romania',
+                'asociatia-little-people-romania',
                 'fundatia-hospice-casa-sperantei',
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in lidl_ngos])
@@ -143,27 +145,28 @@ class HomePage(BaseHandler):
 
         elif self.is_cez_subdomain:
             cez_ngos = [
-                'asociatia-habitat-for-humanity-romania',
                 'asociatia-little-people-romania',
-                'niciodatasingur',
                 'sonoro',
                 'the-social-incubator',
                 'code-for-romania',
                 'fundatianoiorizonturi',
                 'fundatia-sf-dimitrie',
                 'world-vision-romania',
+                'asociatia-habitat-for-humanity-romania',
+                'niciodatasingur',
+                'asociatia-vatra-cu-idei',
                 'fundatia-progress',
+                'yesromania',
                 'fundatia-alex-tache',
+                'fundatia-principesa-margareta-a-romaniei',
                 'httpwwwsalvaticopiiirodoilasuta',
+                'asociatia-roi',
+                'asociatia-vasiliada',
                 'crucea-rosie-filiala-teleorman',
                 'filiala-de-cruce-rosie-constanta',
                 'filiala-de-cruce-rosie-olt',
                 'crucea-rosie-romana-filiala-valcea',
                 'lets-do-it-romania',
-                'yesromania',
-                'fundatia-regala-margareta-a-romaniei',
-                'asociatia-roi',
-                'asociatia-vatra-cu-idei',
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in cez_ngos])
             self.template_values['company_name'] = 'CEZ'
@@ -380,7 +383,7 @@ class HomePage(BaseHandler):
             self.template_values['company_name'] = 'Ursus'
             self.template_values['custom_header'] = True
             self.template_values['custom_note'] = True
-        
+
         elif self.is_carrefour_subdomain:
             carrefour_ngos = [
                 'crucea-rosie-romana',
