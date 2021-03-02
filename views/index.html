@@ -85,22 +85,24 @@
         {% endif %}
     </div>
 
-    <div class="row margin-top">
-        <div class="col-xs-12 col-md-3 col-md-offset-2">
-            <h3>{{ stats["ngos"] }}</h3>
-            organizații înscrise în platformă
+    {% if stats %}
+        <div class="row margin-top">
+            <div class="col-xs-12 col-md-3 col-md-offset-2">
+                <h3>{{ stats["ngos"] }}</h3>
+                organizații înscrise în platformă
+            </div>
+            <div class="col-xs-12 col-md-3">
+                <h3>{{ stats["forms"] }}</h3>
+                formulare completate în {{ current_year }}
+            </div>
+            <div class="col-xs-12 col-md-3">
+                <h3>
+                    <span class="h5">peste</span> 1.000.000 <span class="h5">RON</span>
+                </h3>
+                redirecționați spre ONG-uri în {{ current_year }}
+            </div>
         </div>
-        <div class="col-xs-12 col-md-3">
-            <h3>{{ stats["forms"] }}</h3>
-            formulare completate în {{ current_year }}
-        </div>
-        <div class="col-xs-12 col-md-3">
-            <h3>
-                <span class="h5">peste</span> 1.000.000 <span class="h5">RON</span>
-            </h3>
-            redirecționați spre ONG-uri în {{ current_year }}
-        </div>
-    </div>
+    {% endif %}
 
     <div class="row homepage-paragraph about-section">
         <div class="col-xs-12 col-md-8 col-md-offset-2">

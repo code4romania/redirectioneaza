@@ -415,10 +415,12 @@ class HomePage(BaseHandler):
         self.template_values["ngos"] = ngos
 
         now = datetime.now()
-        self.template_values["stats"] = {
-            "ngos": NgoEntity.query().count(),
-            "forms": Donor.query(Donor.date_created > datetime(now.year, 1, 1)).count()
-        }
+        # if we are not on a subdomain page, compute some stats
+        if not self.template_values.get('company_name'):
+            self.template_values["stats"] = {
+                "ngos": NgoEntity.query().count(),
+                "forms": Donor.query(Donor.date_created > datetime(now.year, 1, 1)).count()
+            }
 
         self.template_values["current_year"] = now.year
 
