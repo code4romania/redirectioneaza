@@ -25,23 +25,18 @@ class HomePage(BaseHandler):
         # if we are on the ikea subdomain, load the special page
         if self.is_ikea_subdomain:
             ikea_ngos = [
-                'asociatia-ana-si-copiii',
                 'asociatia-aura-ion',
                 'asociatia-caritas-bucuresti',
                 'asociatia-casa-ioana',
                 'asociatia-activity',
-                'asociatia-ecoteca',
                 'asociatia-help-autism',
                 'asociatia-magicamp',
                 'padureacopiilor',
-                'scoala-de-valori',
                 'asociatia-traieste-cu-bucurie',
                 'asociatia-unu-si-unu',
                 'code-for-romania',
                 'societatea-nationala-de-cruce-rosie-din-romania-filiala-sector-6-bucuresti',
-                'filiala-bucureti-a-asociaiei-terra-dacica-aeterna',
                 'freemiorita',
-                'fundatia-hospice-casa-sperantei',
                 'fundatia-motivation-romania',
                 'fundatia-cmu-regina-maria',
                 'world-vision-romania',
@@ -49,6 +44,22 @@ class HomePage(BaseHandler):
                 'liliecii-din-mediul-urban',
                 'teach-for-romania',
                 'viitorplus',
+                'asociatia-de-ajutor-amurtel',
+                'atca-asociatia-de-terapie-comportamentala-aplicata',
+                'asociatia-blondie',
+                'asociatia-casa-buna',
+                'gritty',
+                'asociatia-habitat-for-humanity-romania',
+                'asociatia-hai-cu-bicla',
+                'hopeandhomesromania',
+                'asociatia-kogayon',
+                'ajungemmari',
+                'ovidiuro',
+                'asociatia-parcul-natural-vacaresti',
+                'roma-education-fund-romania',
+                'httpwwwsalvaticopiiirodoilasuta',
+                'sos-satele-copiilor-romania',
+                'zi-de-bine',
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in ikea_ngos])
             self.template_values['company_name'] = 'IKEA'
@@ -380,7 +391,7 @@ class HomePage(BaseHandler):
             self.template_values['company_name'] = 'Ursus'
             self.template_values['custom_header'] = True
             self.template_values['custom_note'] = True
-        
+
         elif self.is_carrefour_subdomain:
             carrefour_ngos = [
                 'crucea-rosie-romana',
