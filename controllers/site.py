@@ -60,6 +60,7 @@ class HomePage(BaseHandler):
                 'httpwwwsalvaticopiiirodoilasuta',
                 'sos-satele-copiilor-romania',
                 'zi-de-bine',
+                'bikers-for-humanity',
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in ikea_ngos])
             self.template_values['company_name'] = 'IKEA'
