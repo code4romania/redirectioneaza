@@ -61,6 +61,7 @@ class HomePage(BaseHandler):
                 'sos-satele-copiilor-romania',
                 'zi-de-bine',
                 'bikers-for-humanity',
+                'fundatia-usa-deschisa',
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in ikea_ngos])
             self.template_values['company_name'] = 'IKEA'
@@ -104,6 +105,7 @@ class HomePage(BaseHandler):
                 'fundatia-motivation-romania',
                 'asociatia-little-people-romania',
                 'fundatia-hospice-casa-sperantei'
+                'clubul-cainilor-utilitari',
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in lidl_ngos])
             self.template_values['company_name'] = 'LIDL'
