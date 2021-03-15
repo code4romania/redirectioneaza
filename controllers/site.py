@@ -106,6 +106,7 @@ class HomePage(BaseHandler):
                 'asociatia-little-people-romania',
                 'fundatia-hospice-casa-sperantei'
                 'clubul-cainilor-utilitari',
+                'free-amely-2007',
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in lidl_ngos])
             self.template_values['company_name'] = 'LIDL'
