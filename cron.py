@@ -31,6 +31,18 @@ class NgoRemoveForms(Handler):
         ndb.put_multi(to_save)
 
 
+class NgoExport(Handler):
+    def get(self):
+        ngos = NgoEntity.query().fetch()
+        
+        string = ''
+        for ngo in ngos:
+            string += u'{0},{1}\n'.format(ngo.name, ngo.cif)
+
+        self.response.headers['Content-Disposition'] = 'attachment; filename="export.csv"'
+        self.response.write(string)
+
 cron_routes = [
-    r('/ngos/remove-form',    handler=NgoRemoveForms,    name="ngo-remove-form")
+    r('/ngos/remove-form',  handler=NgoRemoveForms,    name="ngo-remove-form"),
+    r('/ngos/export',       handler=NgoExport)
 ]
