@@ -188,20 +188,17 @@ class HomePage(BaseHandler):
 
         elif self.is_ing_subdomain:
             ing_ngos = [
-                'asociatiapentrudezvoltareurbana',
                 'asociatia-ana-si-copiii',
-                'asociatia-club-lions-diamond',
                 'asociatia-daruieste-aripi',
+                'asociatia-educatie-pentru-viata-reala',
                 'asociatia-ropot',
                 'asociatia-mame',
-                'caravanacumedici',
                 'carusel',
                 'code-for-romania',
                 'fundatia-entreprenation',
                 'fundatia-comunitara-bucuresti',
-                'fundatia-hospice-casa-sperantei',
+                'fundatia-inima-de-copil',
                 'inimacopiilor',
-                'un-copil-o-speranta',
                 'viitorplus',
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in ing_ngos])
