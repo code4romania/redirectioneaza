@@ -28,6 +28,7 @@ class HomePage(BaseHandler):
                 'asociatia-aura-ion',
                 'asociatia-caritas-bucuresti',
                 'asociatia-casa-ioana',
+                'asociatia-climb-again',
                 'asociatia-activity',
                 'asociatia-help-autism',
                 'asociatia-magic',
