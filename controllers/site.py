@@ -192,6 +192,7 @@ class HomePage(BaseHandler):
                 'asociatia-ana-si-copiii',
                 'asociatia-daruieste-aripi',
                 'asociatia-educatie-pentru-viata-reala',
+                'asociatia-pavel',
                 'asociatia-ropot',
                 'asociatia-mame',
                 'carusel',
