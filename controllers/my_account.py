@@ -18,6 +18,7 @@ from logging import info
 
 
 incomplete_form_data = "Te rugam sa completezi datele din formular."
+email_required = "Pentru a activa aceast optiune trebuie sa completezi adresa de email."
 url_taken = "Din pacate acest url este folosit deja."
 not_unique = 'Se pare ca acest cod CIF sau cont bancar este deja inscris. ' \
              'Daca reprezinti ONG-ul cu aceste date, te rugam sa ne contactezi.'
@@ -181,12 +182,20 @@ class NgoDetailsHandler(AccountHandler):
         ong_cif = self.request.get('ong-cif')
         ong_account = self.request.get('ong-cont')
         ong_special_status = self.request.get('special-status') == "on"
+        ong_accepts_forms = self.request.get('accepts-forms') == "on"
 
         ong_url = self.request.get('ong-url')
 
         # validation
         if not ong_nume or not ong_descriere or not ong_adresa or not ong_url or not ong_cif or not ong_account:
             self.template_values["errors"] = incomplete_form_data
+            self.template_values["ngo"] = user.ngo.get() if user.ngo else {}
+            self.render()
+            return
+
+        if ong_accepts_forms and not ong_email:
+            self.template_values["errors"] = email_required
+            self.template_values["ngo"] = user.ngo.get() if user.ngo else {}
             self.render()
             return
 
@@ -220,6 +229,7 @@ class NgoDetailsHandler(AccountHandler):
                 ngo.tel = ong_tel
 
                 ngo.special_status = ong_special_status
+                ngo.accepts_forms = ong_accepts_forms
 
                 # if no one uses this CIF
                 if ong_cif != ngo.cif:
@@ -309,7 +319,8 @@ class NgoDetailsHandler(AccountHandler):
             
             cif = ong_cif,
             account = ong_account,
-            special_status = ong_special_status
+            special_status = ong_special_status,
+            accepts_forms = ong_accepts_forms
         )
 
         # check for unique url

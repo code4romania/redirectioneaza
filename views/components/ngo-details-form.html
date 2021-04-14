@@ -108,7 +108,18 @@
                 Asociatie inregistrata ca furnizor autorizat de servicii sociale
             </label>
         </div>
-        
+        <div class="form-group special-status">
+            <div class="col-xs-4 text-right">
+                <input id="accepts-forms" name="accepts-forms" type="checkbox" {{ "checked" if ngo.accepts_forms }}>
+            </div>
+            <label for="accepts-forms" class="col-xs-8">
+                Doresc sa primesc formularele completate pe email <br>
+                <span class="explanation">
+                    Selectand aceasta optiune confirm ca ONG-ul are cont SPV pentru a depune formularele
+                </span>
+            </label>
+        </div>
+    
     </fieldset>
     {% if is_admin %}
         <fieldset>

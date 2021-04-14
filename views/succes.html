@@ -40,13 +40,19 @@
             </div>
             <div class="col-xs-12 col-md-8 col-md-offset-2">
                 <h4>Urmatorii pasi:</h4>
-                <ol class="list" start="2">
+                <ul class="list list-unstyled">
                     <li>
-                        Printeaza formularul, completeaza campul de CNP daca nu ai facut-o la pasul anterior si semneaza-l.
+                        Pasul 2. Printeaza formularul, completeaza campul de CNP daca nu ai facut-o la pasul anterior si semneaza-l.
                     </li>
                     <li>
-                        Apoi, ai urmatoarele optiuni:
+                        Pasul 3. Apoi, ai urmatoarele optiuni:
                         <ol type="A">
+                            {# if the ngo agreed to receive forms through email #}
+                            {% if ngo.accepts_forms %}
+                                <li>
+                                    Fie îl scanezi și îl trimiți pe e-mail ONG-ului si se ocupa ei de depunerea lui. Adresa de e-mail a ONG-ului este: <a href="mailto:{{ ngo.email }}">{{ ngo.email }}</a>;
+                                </li>
+                            {% endif %}
                             <li>
                                 Fie il trimiti prin posta cu <strong>scrisoare recomandata</strong> catre unitatea ANAF de care apartii.
                                 {% if anaf %}
@@ -57,7 +63,7 @@
                                         Adresa: {{ anaf['address'] }}
                                     </div>
                                 {% else %}
-                                    Cauta oficiul de care apartii in <a href="https://static.anaf.ro/static/10/Anaf/AsistentaContribuabili_r/telefoane_judete/Regiuni.htm" target="_blank">aceasta</a> lista.
+                                    Cauta oficiul de care apartii in <a href="https://static.anaf.ro/static/10/Anaf/AsistentaContribuabili_r/telefoane_judete/Regiuni.htm" target="_blank">aceasta</a> lista;
                                 {% endif %}
                             </li>
                             <li>
@@ -65,7 +71,7 @@
                             </li>
                         </ol>
                     </li>
-                </ol>
+                </ul>
             </div>
             <div class="col-xs-12 col-md-8 col-md-offset-2 margin-top text-center">
                 <h4>Trimite formularul completat pana la data de <strong class="deadline">{{ limit.day }} {{ months[limit.month] }}</strong>!</h4>
