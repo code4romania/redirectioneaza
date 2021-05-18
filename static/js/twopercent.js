@@ -158,6 +158,26 @@ $(function () {
         anchor.click();
     }
 
+    
+    // ######## signature ########
+
+    var canvas = document.getElementById("signature");
+    var twpPercWrapper = document.getElementById("twopercent-form-wrapper");
+    var signaturePad
+    window.addEventListener('resize', resizeCanvas, false);
+    function resizeCanvas() {
+        canvas.width = twpPercWrapper.clientWidth - 30;
+        canvas.height = 150;
+
+        signaturePad = new SignaturePad(canvas, { drawOnly:true, lineTop:200, penWidth: 1, lineWidth: 1 });
+    }
+    resizeCanvas();
+    $('#clear-signature').on('click', function(){
+        signaturePad.clear();
+    });
+
+    // ----- signature -------
+
     window.onSubmit = function(token) {
 
         submitFormButton.removeClass("btn-primary").addClass("btn-success").attr("disabled", true);
@@ -216,4 +236,5 @@ $(function () {
             }
         });
     };
+
 });
