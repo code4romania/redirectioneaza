@@ -321,9 +321,13 @@ class HomePage(BaseHandler):
                 'junior-achievement-romania',
                 'tasuleasa-social',
                 'teach-for-romania',
-                # TODO: add the following NGOs when available:
-                # OvidiuRo
-                # Asociatia pentru Relatii Comunitare(ARC)
+                'ovidiuro',
+                'agora-debate',
+                'fundatia-worldskills-romania',
+                'asociatia-pentru-educatie-digitala-bigger-picture',
+                'bancadealimentecluj',
+                'seeding-knowledge',
+                'fundatia-comunitara-bucuresti',
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in raiffeisen_ngos])
             self.template_values['company_name'] = 'Raiffeisen Bank'
