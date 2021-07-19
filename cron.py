@@ -35,9 +35,9 @@ class NgoExport(Handler):
     def get(self):
         ngos = NgoEntity.query().fetch()
         
-        string = ''
+        string = 'Nume, Cif, Judet, Regiune de activitate, Email, Website, Adresa \n'
         for ngo in ngos:
-            string += u'{0},{1}\n'.format(ngo.name, ngo.cif)
+            string += u'{0},{1}, {2}, {3}, {4}, {5}, {6}\n'.format(ngo.name, ngo.cif, ngo.county, ngo.active_region, ngo.email, ngo.website, ngo.address)
 
         self.response.headers['Content-Disposition'] = 'attachment; filename="export.csv"'
         self.response.write(string)
