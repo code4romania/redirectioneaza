@@ -118,6 +118,7 @@ class HomePage(BaseHandler):
                 'asociatia-autism-europa-centrul-de-resurse-si-referinta-in-autism-micul-print',
                 'asociatia-casa-buna',
                 'asociatia-ecoassist-iniiativa-plantam-fapte-bune-in-romania',
+                'asociatia-kinetobebe',
                 'asociatia-magic',
                 'asociatia-salvatorilor-montani-victoria',
                 'code-for-romania',
