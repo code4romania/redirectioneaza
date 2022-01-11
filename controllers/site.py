@@ -210,15 +210,18 @@ class HomePage(BaseHandler):
         elif self.is_patria_subdomain:
             patria_ngos = [
                 'asociatia-administratorilor-de-piete-din-romania',
+                'asociatia-ana-si-copiii',
                 'asociatia-ateliere-fara-frontiere',
                 'asociatia-crestem-romania-impreuna',
                 'asociatia-inspiraction',
                 'asociatia-kinetobebe',
                 'asociatia-micile-bucurii',
+                'asociatia-pedia-pentru-sprijinirea-copiilor-cu-deficiente-neuropsihomotorii',
                 'atca-asociatia-de-terapie-comportamentala-aplicata',
                 'code-for-romania',
                 'daruieste-viata',
                 'fundatia-patria-credit',
+                'the-social-incubator',
                 'world-vision-romania',
                 'viitorplus',
             ]
