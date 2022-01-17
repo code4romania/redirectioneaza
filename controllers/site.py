@@ -238,6 +238,7 @@ class HomePage(BaseHandler):
                 'asociatia-iti-arat-ca-pot',
                 'asociatia-little-people-romania',
                 'asociatia-magic',
+                'asociatia-oncohelp',
                 'mainiunite',
                 'aleg',
                 'animallife',
