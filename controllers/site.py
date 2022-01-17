@@ -331,6 +331,7 @@ class HomePage(BaseHandler):
                 'rolda',
                 'sos-satele-copiilor-romania',
                 'the-social-incubator',
+                'viitorplus',
                 'world-vision-romaniahopeandhomesromania',
                 'wwf',
                 'zi-de-bine',
