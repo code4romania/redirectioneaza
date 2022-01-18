@@ -525,7 +525,7 @@ class NgoListHandler(BaseHandler):
     template_name = 'all-ngos.html'
     def get(self):
         # self.abort(404)
-        self.template_values["title"] = "Asociatii"
+        self.template_values["title"] = "Asociații"
 
         ngos = NgoEntity.query(NgoEntity.active == True).fetch()
         self.template_values["ngos"] = ngos
@@ -538,7 +538,7 @@ class TermsHandler(BaseHandler):
     template_name = 'terms.html'
     def get(self):
 
-        self.template_values["title"] = "Termeni si conditii"
+        self.template_values["title"] = "Termeni și condiții"
 
         # render a response
         self.render()
@@ -547,7 +547,7 @@ class NoteHandler(BaseHandler):
     template_name = 'note.html'
     def get(self):
 
-        self.template_values["title"] = "Nota de informare"
+        self.template_values["title"] = "Notă de informare"
 
         # render a response
         self.render()
@@ -565,7 +565,7 @@ class PolicyHandler(BaseHandler):
     template_name = 'policy.html'
     def get(self):
 
-        self.template_values["title"] = "Politica de confidentialitate"
+        self.template_values["title"] = "Politica de confidențialitate"
 
         # render a response
         self.render()
