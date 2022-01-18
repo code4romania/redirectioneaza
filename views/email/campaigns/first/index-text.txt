@@ -1,16 +1,18 @@
 
-Cea mai simpla metoda de a colecta formularele de pana la 3.5%
+Cea mai simplă metodă de a colecta formularele de până la 3.5%
 
-Proiectul redirectioneaza.ro tocmai a lansat o noua cale prin care orice ONG poate colecta formularul de pana la 3.5%.
+Proiectul redirectioneaza.ro tocmai a lansat o nouă cale prin care orice ONG poate colecta formularul de până la 3.5%.
+
 Citeste mai multe - https://www.redirectioneaza.ro
 
-Cum functioneaza
-1. Un donator completeaza un formular simplu
-2. Datele sale impreuna cu cele ale asociatiei sunt folosite pentru a crea si popula un fisier PDF
-3. Cel ce doneaza poate apoi printa si expedia formularul catre ANAF
-4. Asociatia va putea avea o lista cu cei care au donat
+Cum funcționează:
+1. Un donator completează un formular simplu
+2. Datele sale împreună cu cele ale asociației sunt folosite pentru a crea și popula un fisier PDF
+3. Cel ce doneaza poate apoi printa și expedia formularul către ANAF
+4. Asociatia va putea avea o listă cu cei care au donat
 
 Pentru donatori oferim cea mai sigura metoda de a completa formularul.
-Datele sunt trimise folosind o conexiune sigura si sunt folosite doar pentru a crea fisierul PDF.
+
+Datele sunt trimise folosind o conexiune sigură și sunt folosite doar pentru a crea fișierul PDF.
 
 redirectioneaza.ro

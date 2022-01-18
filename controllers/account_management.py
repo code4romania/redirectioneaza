@@ -28,12 +28,12 @@ class LoginHandler(AccountHandler):
         password = post.get('parola')
 
         if not email:
-            self.template_values["errors"] = "Campul email nu poate fi gol."
+            self.template_values["errors"] = "Câmpul email nu poate fi gol."
             self.render()
             return
 
         if not password:
-            self.template_values["errors"] = "Campul parola nu poate fi gol."
+            self.template_values["errors"] = "Câmpul parola nu poate fi gol."
             self.render()
             return
 
@@ -42,7 +42,7 @@ class LoginHandler(AccountHandler):
         # if the captcha is not valid return
         if not captcha_response.is_valid:
             
-            self.template_values["errors"] = "Se pare ca a fost o problema cu verificarea reCAPTCHA. Te rugam sa incerci din nou."
+            self.template_values["errors"] = "Se pare ca a fost o problema cu verificarea reCAPTCHA. Te rugăm să încerci din nou."
             self.render()
             return
 
@@ -56,7 +56,7 @@ class LoginHandler(AccountHandler):
             warn('Invalid email or password: {0}'.format(email))
 
             self.template_values['email'] = email
-            self.template_values["errors"] = "Se pare ca aceasta combinatie de email si parola este incorecta."
+            self.template_values["errors"] = "Se pare că această combinație de email și parolă este incorectă."
             self.render()
 
 
@@ -82,22 +82,22 @@ class SignupHandler(AccountHandler):
         password = post.get('parola')
 
         if not first_name:
-            self.template_values["errors"] = "Campul nume nu poate fi gol."
+            self.template_values["errors"] = "Câmpul nume nu poate fi gol."
             self.render()
             return
 
         if not last_name:
-            self.template_values["errors"] = "Campul prenume nu poate fi gol."
+            self.template_values["errors"] = "Câmpul prenume nu poate fi gol."
             self.render()
             return
 
         if not email:
-            self.template_values["errors"] = "Campul email nu poate fi gol."
+            self.template_values["errors"] = "Câmpul email nu poate fi gol."
             self.render()
             return
 
         if not password:
-            self.template_values["errors"] = "Campul parola nu poate fi gol."
+            self.template_values["errors"] = "Câmpul parola nu poate fi gol."
             self.render()
             return
 
@@ -106,7 +106,7 @@ class SignupHandler(AccountHandler):
         # if the captcha is not valid return
         if not captcha_response.is_valid:
             
-            self.template_values["errors"] = "Se pare ca a fost o problema cu verificarea reCAPTCHA. Te rugam sa incerci din nou."
+            self.template_values["errors"] = "Se pare că a fost o problemă cu verificarea reCAPTCHA. Te rugăm să încerci din nou."
             self.render()
             return
 
@@ -117,7 +117,7 @@ class SignupHandler(AccountHandler):
         )
 
         if not success: #user_data is a tuple
-            self.template_values["errors"] = "Exista deja un cont cu aceasta adresa."
+            self.template_values["errors"] = "Există deja un cont cu această adresă."
             
             self.template_values.update({
                 "nume": first_name,
@@ -137,7 +137,7 @@ class SignupHandler(AccountHandler):
             self.redirect(self.uri_for('contul-meu'))
         except Exception, e:
             
-            self.template_values["errors"] = "Se pare ca a aparut o problema. Te rugam sa incerci din nou"
+            self.template_values["errors"] = "Se pare că a aparut o problemă. Te rugăm să încerci din nou"
             self.render()
 
 class ForgotPasswordHandler(AccountHandler):
@@ -152,7 +152,7 @@ class ForgotPasswordHandler(AccountHandler):
         email = post.get('email')
 
         if not email:
-            self.template_values["errors"] = "Campul email nu poate fi gol."
+            self.template_values["errors"] = "Câmpul email nu poate fi gol."
             self.render()
             return
 
@@ -160,7 +160,7 @@ class ForgotPasswordHandler(AccountHandler):
         # if the captcha is not valid return
         if not captcha_response.is_valid:
             
-            self.template_values["errors"] = "Se pare ca a fost o problema cu verificarea reCAPTCHA. Te rugam sa incerci din nou."
+            self.template_values["errors"] = "Se pare că a fost o problemă cu verificarea reCAPTCHA. Te rugăm să încerci din nou."
             self.render()
             return
 
@@ -170,7 +170,7 @@ class ForgotPasswordHandler(AccountHandler):
         
         self.template_values.update({
             "errors": False,
-            "found": "Daca adresa este asociata unui cont, vei primi in scurt timp un e-mail cu instructiuni de resetare a parolei."
+            "found": "Dacă adresa este asociată unui cont, vei primi în scurt timp un e-mail cu instrucțiuni de resetare a parolei."
         })
 
         self.render()
@@ -234,14 +234,14 @@ class SetPasswordHandler(AccountHandler):
 
         if not password:
             self.template_values.update({
-                "errors": "Nu uita sa scrii o parola noua."
+                "errors": "Nu uita să scrii o parolă nouă."
             })
             self.render()
             return
 
         if password != confirm_password:
             self.template_values.update({
-                "errors": "Te rugam sa confirmi parola. A doua parola nu seamana cu prima."
+                "errors": "Te rugăm să confirmi parola. A doua parolă nu seamană cu prima."
             })
             self.render()
             return

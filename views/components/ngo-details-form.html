@@ -1,7 +1,7 @@
 
 <form id="ong-details-form" class="form form-horizontal" action="/asociatia" role="form" method="post">
     <fieldset>
-        <legend>Datele asociatiei:</legend>
+        <legend>Datele asociației:</legend>
         <div class="form-group">
             <div class="col-xs-12">
                 <input class="form-control" type="text" id="ong-nume" name="ong-nume" placeholder="Numele Asociatiei" value="{{ ngo.name }}" required maxlength="150" />
@@ -12,7 +12,7 @@
                 <div id="upload-logo" class="{{ 'hidden' if ngo.logo }}">
                     <label for="ong-logo">
                         <i class="glyphicon glyphicon-picture upload-file-icon"></i>
-                        <p>Logo-ul asociatiei</p>
+                        <p>Logo-ul asociației</p>
                     </label>
                     <input type="file" id="ong-logo" class="hidden" accept="image/*" name="ong-logo" />
                 </div>
@@ -43,7 +43,7 @@
             </div>
             <div class="col-xs-4">
                 <select class="form-control" id="ong-judet" name="ong-judet" required x-moz-errormessage="Judetul este obligatoriu" title="Judetul este obligatoriu">
-                    <option value="">Judetul</option>
+                    <option value="">Județul</option>
                     <option value="RO" {{ "selected" if county == ngo.county }}>Toata tara</option>
                     <optgroup label="Bucuresti">
                         {% for number in range(1, 7) %}
@@ -58,7 +58,7 @@
         </div>
         <div class="form-group">
             <div class="col-xs-12">
-                <label for="ong-activitate">In ce regiune isi desfasoara ONG-ul activitatea?</label>
+                <label for="ong-activitate">În ce regiune iși desfășoară ONG-ul activitatea?</label>
                 <select class="form-control" id="ong-activitate" name="ong-activitate" required x-moz-errormessage="Zona de activitate este obligatorie" title="Zona de activitate este obligatorie">
                     <option value="">Zona de activitate</option>
                     <option value="RO" {{ "selected" if county == ngo.active_region }}>National</option>
