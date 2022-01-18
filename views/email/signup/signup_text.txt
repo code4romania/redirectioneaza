@@ -2,10 +2,10 @@ Salut {{ name }},
 
 Bine ai venit pe platforma redirectioneaza.ro.
 
-Pentru a-ti activa contul te rugam sa confirmi adresa de email apasand butonul de mai jos:
+Pentru a-ți activa contul te rugăm să confirmi adresa de email apăsând butonul de mai jos:
 {{ url }}
 
-Multumim,
+Mulțumim,
 echipa redirectioneaza.ro
 
 Ai primit din greseala acest email? Contacteaza-ne!

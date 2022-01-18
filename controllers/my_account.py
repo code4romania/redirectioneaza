@@ -17,11 +17,11 @@ from api import check_ngo_url
 from logging import info
 
 
-incomplete_form_data = "Te rugam sa completezi datele din formular."
-email_required = "Pentru a activa aceast optiune trebuie sa completezi adresa de email."
-url_taken = "Din pacate acest url este folosit deja."
-not_unique = 'Se pare ca acest cod CIF sau cont bancar este deja inscris. ' \
-             'Daca reprezinti ONG-ul cu aceste date, te rugam sa ne contactezi.'
+incomplete_form_data = "Te rugăm să completezi datele din formular."
+email_required = "Pentru a activa această opțiune trebuie să completezi adresa de email."
+url_taken = "Din păcate acest URL este folosit deja."
+not_unique = 'Se pare că acest cod CIF sau acest cont bancar este deja inscris. ' \
+             'Dacă reprezinți ONG-ul cu aceste date, te rugăm sa ne contactezi.'
 
 class MyAccountHandler(AccountHandler):
     template_name = 'ngo/my-account.html'
@@ -126,7 +126,7 @@ class NgoDetailsHandler(AccountHandler):
     @user_required
     def get(self):
         user = self.user
-        self.template_values["title"] = "Date asociatie"
+        self.template_values["title"] = "Date asociație"
 
         # if the user has an ngo attached, allow him to edit it
         if user.ngo:

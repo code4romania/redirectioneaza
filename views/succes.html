@@ -16,11 +16,11 @@
             {# if the ngo allows the donor to upload the signed and scaned pdf  #} 
             {% if ngo.allow_upload %}
             <div class="col-xs-12 col-md-6 col-md-offset-3">
-                <h3>Daca doresti, incarca formularul pentru a fi expediat de ONG catre ANAF in numele tau:</h3>
+                <h3>Dacă dorești, încarcă formularul pentru a fi expediat de ONG către ANAF în numele tău:</h3>
                 <form action="{{ ngo.key.id()/succes }}" class="form" enctype="multipart/form-data">
                     <div class="form-group text-center">
                         <label for="signed-pdf" class="btn btn-default btn-lg">
-                            Alege un fisier
+                            Alege un fișier
                         </label>
                         <input id="signed-pdf" name="signed-pdf" type="file" accept="image/*, application/pdf" class="hidden" required title="Va rugam alegeti un fisier" x-moz-errormessage="Va rugam alegeti un fisier" />
                     </div>
@@ -35,50 +35,50 @@
         <div class="row instructions-row">
             <div class="col-xs-12 col-md-8 col-md-offset-2 text-center">
                 <a href="{{ donor.pdf_url }}" class="btn btn-primary btn-lg ngo-form-url" download="Formular_donatie_2%.pdf" target="_blank">
-                    Descarca formularul tau
+                    Descarcă formularul tău
                 </a>
             </div>
             <div class="col-xs-12 col-md-8 col-md-offset-2">
-                <h4>Urmatorii pasi:</h4>
+                <h4>Următorii pași:</h4>
                 <ul class="list list-unstyled">
                     <li>
-                        Pasul 2. Printeaza formularul, completeaza campul de CNP daca nu ai facut-o la pasul anterior si semneaza-l.
+                        Pasul 2. Printează formularul, completează câmpul de CNP dacă nu ai făcut-o la pasul anterior și semnează-l.
                     </li>
                     <li>
-                        Pasul 3. Apoi, ai urmatoarele optiuni:
+                        Pasul 3. Apoi, ai următoarele optiuni:
                         <ol type="A">
                             {# if the ngo agreed to receive forms through email #}
                             {% if ngo.accepts_forms %}
                                 <li>
-                                    Fie îl scanezi și îl trimiți pe e-mail ONG-ului si se ocupa ei de depunerea lui. Adresa de e-mail a ONG-ului este: <a href="mailto:{{ ngo.email }}">{{ ngo.email }}</a>;
+                                    Fie îl scanezi și îl trimiți pe e-mail ONG-ului și se ocupă ei de depunerea lui. Adresa de e-mail a ONG-ului este: <a href="mailto:{{ ngo.email }}">{{ ngo.email }}</a>;
                                 </li>
                             {% endif %}
                             <li>
-                                Fie il trimiti prin posta cu <strong>scrisoare recomandata</strong> catre unitatea ANAF de care apartii.
+                                Fie îl trimiți prin poștă cu <strong>scrisoare recomandată</strong> către unitatea ANAF de care aparții.
                                 {% if anaf %}
-                                    <strong>In cazul tau, aceasta este:</strong>
+                                    <strong>În cazul tău, aceasta este:</strong>
                                     <div class="address-box">
                                         <strong>{{ anaf['name'] }}</strong>
                                         <br>
                                         Adresa: {{ anaf['address'] }}
                                     </div>
                                 {% else %}
-                                    Cauta oficiul de care apartii in <a href="https://static.anaf.ro/static/10/Anaf/AsistentaContribuabili_r/telefoane_judete/Regiuni.htm" target="_blank">aceasta</a> lista;
+                                    Caută oficiul de care aparții în <a href="https://static.anaf.ro/static/10/Anaf/AsistentaContribuabili_r/telefoane_judete/Regiuni.htm" target="_blank">această</a> listă;
                                 {% endif %}
                             </li>
                             <li>
-                                Fie il trimiti prin posta sau curier la adresa ONG-ului si se ocupa ei de depunerea lui. Adresa lor este: <strong>{{ ngo.name }}, {{ ngo.address }}</strong>.
+                                Fie îl trimiți prin poștă sau curier la adresa ONG-ului și se ocupă ei de depunerea lui. Adresa lor este: <strong>{{ ngo.name }}, {{ ngo.address }}</strong>.
                             </li>
                         </ol>
                     </li>
                 </ul>
             </div>
             <div class="col-xs-12 col-md-8 col-md-offset-2 margin-top text-center">
-                <h4>Trimite formularul completat pana la data de <strong class="deadline">{{ limit.day }} {{ months[limit.month] }}</strong>!</h4>
+                <h4>Trimite formularul completat până la data de <strong class="deadline">{{ limit.day }} {{ months[limit.month] }}</strong>!</h4>
             </div>
             {% if ngo.tel or ngo.email %}
                 <div class="col-xs-12 col-md-8 col-md-offset-2 ngo-details">
-                    Daca doresti sa iei legatura cu organizatia pentru colectarea formularului sau alte informatii, o poti face la: <br>
+                    Dacă dorești să iei legatura cu organizația pentru colectarea formularului sau alte informații, o poți face la: <br>
                     {{ "Telefon: {0}".format(ngo.tel) if ngo.tel }} <br>
                     {{ "Email: {0}".format(ngo.email) if ngo.email }}
                 </div>

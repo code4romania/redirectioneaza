@@ -280,7 +280,7 @@ class TwoPercentHandler(BaseHandler):
 
             return
 
-        self.template_values["title"] = "Donatie 2%"
+        self.template_values["title"] = "Donație 3.5%"
         self.template_values["ngo"] = self.ngo
         
         self.template_values["counties"] = LIST_OF_COUNTIES
@@ -301,7 +301,7 @@ class DonationSucces(BaseHandler):
 
         self.template_values["ngo"] = self.ngo
         self.template_values["donor"] = self.donor
-        self.template_values["title"] = "Donatie - succes"
+        self.template_values["title"] = "Donație - succes"
         self.template_values['limit'] = DONATION_LIMIT
 
         # county = self.donor.county.lower()

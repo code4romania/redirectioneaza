@@ -2,7 +2,7 @@
 
     
 <div id="donation-table" class="col-xs-12 col-md-8 col-md-offset-2">
-    <p>Mai jos gasesti o lista cu toate persoanele care au completat formularul de redirectionare:</p>
+    <p>Mai jos găsești o listă cu toate persoanele care au completat formularul de redirectionare:</p>
     
     {% for key, value in donors.iteritems() %}
 
@@ -13,7 +13,7 @@
                     <tr>
                         <th>#</th>
                         <th>Nume</th>
-                        <th>Oras, <span class="text-muted">Judet</span></th>
+                        <th>Oraș, <span class="text-muted">Județ</span></th>
                         <th>Email</th>
                         <th>Telefon</th>
                     </tr>
@@ -32,7 +32,7 @@
                                 {% else %}
                                     <td colspan="2" class="text-center text-muted">
                                         Aceasta persoana a ales <br>
-                                        sa nu-si arate datele de contact.
+                                        să nu-și arate datele de contact.
                                     </td>
                                 {% endif %}
                             </tr>
@@ -41,7 +41,7 @@
                         <tr>
                             <td colspan="5">
                                 <p class="well well-lg text-center">
-                                    Din pacate nu exita nici un document completat pentru acest an.
+                                    Din păcate nu exită nici un document completat pentru acest an.
                                 </p>
                             </td>
                         </tr>
