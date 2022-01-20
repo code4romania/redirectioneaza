@@ -280,7 +280,7 @@ class TwoPercentHandler(BaseHandler):
 
             return
 
-        self.template_values["title"] = "Donație 3.5%"
+        self.template_values["title"] = u"Donație 3.5%"
         self.template_values["ngo"] = self.ngo
         
         self.template_values["counties"] = LIST_OF_COUNTIES

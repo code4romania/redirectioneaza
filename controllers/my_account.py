@@ -18,10 +18,10 @@ from api import check_ngo_url
 from logging import info
 
 
-incomplete_form_data = "Te rugăm să completezi datele din formular."
-email_required = "Pentru a activa această opțiune trebuie să completezi adresa de email."
-url_taken = "Din păcate acest URL este folosit deja."
-not_unique = 'Se pare că acest cod CIF sau acest cont bancar este deja inscris. ' \
+incomplete_form_data = u"Te rugăm să completezi datele din formular."
+email_required = u"Pentru a activa această opțiune trebuie să completezi adresa de email."
+url_taken = u"Din păcate acest URL este folosit deja."
+not_unique = u'Se pare că acest cod CIF sau acest cont bancar este deja inscris. ' \
              'Dacă reprezinți ONG-ul cu aceste date, te rugăm sa ne contactezi.'
 
 class MyAccountHandler(AccountHandler):

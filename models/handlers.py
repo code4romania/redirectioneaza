@@ -280,7 +280,7 @@ class BaseHandler(Handler):
             }
 
         elif email_type == "reset-password":
-            subject = "Resetare parolă pentru contul redirectioneaza.ro"
+            subject = u"Resetare parolă pentru contul redirectioneaza.ro"
 
             user_id = user.get_id()
             token = self.user_model.create_signup_token(user_id)
@@ -296,7 +296,7 @@ class BaseHandler(Handler):
             }
 
         elif email_type == "twopercent-form":
-            subject = "Formularul tău de redirecționare"
+            subject = u"Formularul tău de redirecționare"
 
             html_template = None # self.jinja_enviroment.get_template("email/twopercent-form/twopercent-form.html")
             txt_template = self.jinja_enviroment.get_template("email/twopercent-form/twopercent_form.txt")

@@ -538,7 +538,7 @@ class TermsHandler(BaseHandler):
     template_name = 'terms.html'
     def get(self):
 
-        self.template_values["title"] = "Termeni și condiții"
+        self.template_values["title"] = u"Termeni și condiții"
 
         # render a response
         self.render()
@@ -547,7 +547,7 @@ class NoteHandler(BaseHandler):
     template_name = 'note.html'
     def get(self):
 
-        self.template_values["title"] = "Notă de informare"
+        self.template_values["title"] = u"Notă de informare"
 
         # render a response
         self.render()
@@ -565,7 +565,7 @@ class PolicyHandler(BaseHandler):
     template_name = 'policy.html'
     def get(self):
 
-        self.template_values["title"] = "Politica de confidențialitate"
+        self.template_values["title"] = u"Politica de confidențialitate"
 
         # render a response
         self.render()
