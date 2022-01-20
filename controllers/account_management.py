@@ -1,4 +1,4 @@
-
+# -*- coding: utf-8 -*-
 
 from models.handlers import AccountHandler, user_required
 from webapp2_extras.auth import InvalidPasswordError, InvalidAuthIdError

@@ -346,7 +346,7 @@ class HomePage(BaseHandler):
                 'viitorplus',
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in nesle_ngos])
-            self.template_values['company_name'] = 'NESTLE'
+            self.template_values['company_name'] = 'NESTLÉ'
 
         elif self.is_digi_subdomain:
             digi_ngos = [
@@ -525,7 +525,7 @@ class NgoListHandler(BaseHandler):
     template_name = 'all-ngos.html'
     def get(self):
         # self.abort(404)
-        self.template_values["title"] = "Asociații"
+        self.template_values["title"] = u"Asociații"
 
         ngos = NgoEntity.query(NgoEntity.active == True).fetch()
         self.template_values["ngos"] = ngos
