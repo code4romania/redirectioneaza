@@ -199,7 +199,8 @@ class TwoPercentHandler(BaseHandler):
             "account": self.ngo.account.upper(),
             "cif": self.ngo.cif,
             "two_years": two_years,
-            "special_status": self.ngo.special_status
+            "special_status": self.ngo.special_status,
+            "percent": "3,5%"
         }
         
         if len(errors["fields"]):
@@ -240,7 +241,7 @@ class TwoPercentHandler(BaseHandler):
             email = donor_dict['email'],
             tel = donor_dict['tel'],
             anonymous = donor_dict['anonymous'],
-	    two_years = two_years,
+            two_years = two_years,
             income = donor_dict['income'],
             # make a request to get geo ip data for this user
             geoip = self.get_geoip_data(),
@@ -255,7 +256,7 @@ class TwoPercentHandler(BaseHandler):
         self.session["has_cnp"] = bool(donor_dict["cnp"])
 
         # send and email to the donor with a link to the PDF file
-        self.send_email("twopercent-form", donor)
+        self.send_email("twopercent-form", donor, self.ngo)
 
         # if not an ajax request, redirect
         if self.is_ajax:
@@ -279,7 +280,7 @@ class TwoPercentHandler(BaseHandler):
 
             return
 
-        self.template_values["title"] = "Donatie 2%"
+        self.template_values["title"] = u"Donație 3.5%"
         self.template_values["ngo"] = self.ngo
         
         self.template_values["counties"] = LIST_OF_COUNTIES
@@ -300,7 +301,7 @@ class DonationSucces(BaseHandler):
 
         self.template_values["ngo"] = self.ngo
         self.template_values["donor"] = self.donor
-        self.template_values["title"] = "Donatie 2% - succes"
+        self.template_values["title"] = u"Donație - succes"
         self.template_values['limit'] = DONATION_LIMIT
 
         # county = self.donor.county.lower()

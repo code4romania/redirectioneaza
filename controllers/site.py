@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
+from datetime import datetime
 
 from google.appengine.ext.ndb import get_multi, Key
 
 from appengine_config import DEFAULT_NGO_LOGO, DONATION_LIMIT
 from models.handlers import BaseHandler
-from models.models import NgoEntity
+from models.models import NgoEntity, Donor
 
 from random import sample
 from logging import info
@@ -24,23 +25,19 @@ class HomePage(BaseHandler):
         # if we are on the ikea subdomain, load the special page
         if self.is_ikea_subdomain:
             ikea_ngos = [
-                'asociatia-ana-si-copiii',
                 'asociatia-aura-ion',
                 'asociatia-caritas-bucuresti',
                 'asociatia-casa-ioana',
+                'asociatia-climb-again',
                 'asociatia-activity',
-                'asociatia-ecoteca',
                 'asociatia-help-autism',
-                'asociatia-magicamp',
+                'asociatia-magic',
                 'padureacopiilor',
-                'scoala-de-valori',
                 'asociatia-traieste-cu-bucurie',
                 'asociatia-unu-si-unu',
                 'code-for-romania',
                 'societatea-nationala-de-cruce-rosie-din-romania-filiala-sector-6-bucuresti',
-                'filiala-bucureti-a-asociaiei-terra-dacica-aeterna',
                 'freemiorita',
-                'fundatia-hospice-casa-sperantei',
                 'fundatia-motivation-romania',
                 'fundatia-cmu-regina-maria',
                 'world-vision-romania',
@@ -48,6 +45,24 @@ class HomePage(BaseHandler):
                 'liliecii-din-mediul-urban',
                 'teach-for-romania',
                 'viitorplus',
+                'asociatia-de-ajutor-amurtel',
+                'atca-asociatia-de-terapie-comportamentala-aplicata',
+                'asociatia-blondie',
+                'asociatia-casa-buna',
+                'gritty',
+                'asociatia-habitat-for-humanity-romania',
+                'asociatia-hai-cu-bicla',
+                'hopeandhomesromania',
+                'asociatia-kogayon',
+                'ajungemmari',
+                'ovidiuro',
+                'asociatia-parcul-natural-vacaresti',
+                'roma-education-fund-romania',
+                'httpwwwsalvaticopiiirodoilasuta',
+                'sos-satele-copiilor-romania',
+                'zi-de-bine',
+                'bikers-for-humanity',
+                'fundatia-usa-deschisa',
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in ikea_ngos])
             self.template_values['company_name'] = 'IKEA'
@@ -57,8 +72,7 @@ class HomePage(BaseHandler):
                 'asociatia-banca-locala-pentru-alimente-roman',
                 'banca-pentru-alimente-oradea',
                 'asociatia-centrul-step-by-step-pentru-educatie-si-dezvoltare-profesionala',
-                'bancadealimentecluj',
-                'free-amely-2007',
+                'asociatia-pentru-protectia-animalelor-cezar',
                 'asociatia-mai-mult-verde',
                 'asociatia-pentru-protectia-animalelor-cezar',
                 'asociatia-pentru-protectia-animalelor-kola-kariola',
@@ -67,28 +81,33 @@ class HomePage(BaseHandler):
                 'wwf',
                 'banca-pentru-colectarea-si-distributia-alimentelor',
                 'banca-regionala-pentru-alimente-brasov',
+                'bancadealimentecluj',
                 'code-for-romania',
                 'fundatia-comunitara-bucuresti',
                 'fundatia-comunitara-iasi',
                 'fundatia-motivation-romania',
                 'fundatianoiorizonturi',
-                'fundatia-pentru-smurd',
                 'world-vision-romania',
                 'httpwwwsalvaticopiiirodoilasuta',
                 'sor',
                 'teach-for-romania',
                 'ffcr',
                 'fundatia-leaders',
+                'the-institute',
+                'asociatia-banca-regionala-pentru-alimente-timisoara',
+                'banca-regionala-pentru-alimente-constanta',
                 'fundatiacomunitaracluj',
                 'fco',
+                'fundatia-comunitara-brasov',
                 'fundatia-comunitara-galati',
                 'zi-de-bine',
                 'media-dor',
-                'banca-regionala-pentru-alimente-constanta',
-                'asociatia-little-people-romania',
-                'asociatia-banca-regionala-pentru-alimente-timisoara',
                 'ambasada-sustenabilitatii-in-romania',
-                'fundatia-hospice-casa-sperantei',
+                'fundatia-motivation-romania',
+                'asociatia-little-people-romania',
+                'fundatia-hospice-casa-sperantei'
+                'clubul-cainilor-utilitari',
+                'free-amely-2007',
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in lidl_ngos])
             self.template_values['company_name'] = 'LIDL'
@@ -99,7 +118,8 @@ class HomePage(BaseHandler):
                 'asociatia-autism-europa-centrul-de-resurse-si-referinta-in-autism-micul-print',
                 'asociatia-casa-buna',
                 'asociatia-ecoassist-iniiativa-plantam-fapte-bune-in-romania',
-                'asociatia-magicamp',
+                'asociatia-kinetobebe',
+                'asociatia-magic',
                 'asociatia-salvatorilor-montani-victoria',
                 'code-for-romania',
                 'comitetul-national-paralimpic',
@@ -130,7 +150,7 @@ class HomePage(BaseHandler):
         elif self.is_carturesti_subdomain:
             carturesti_ngos = [
                 'ajungemmari',
-                'asociatia-magicamp',
+                'asociatia-magic',
                 'code-for-romania',
                 'fundatiacarturesti',
                 'teach-for-romania',
@@ -142,47 +162,46 @@ class HomePage(BaseHandler):
 
         elif self.is_cez_subdomain:
             cez_ngos = [
-                'asociatia-habitat-for-humanity-romania',
                 'asociatia-little-people-romania',
-                'niciodatasingur',
                 'sonoro',
                 'the-social-incubator',
                 'code-for-romania',
                 'fundatianoiorizonturi',
                 'fundatia-sf-dimitrie',
                 'world-vision-romania',
+                'asociatia-habitat-for-humanity-romania',
+                'niciodatasingur',
+                'asociatia-vatra-cu-idei',
                 'fundatia-progress',
+                'yesromania',
                 'fundatia-alex-tache',
+                'fundatia-principesa-margareta-a-romaniei',
                 'httpwwwsalvaticopiiirodoilasuta',
+                'asociatia-roi',
+                'asociatia-vasiliada',
                 'crucea-rosie-filiala-teleorman',
                 'filiala-de-cruce-rosie-constanta',
                 'filiala-de-cruce-rosie-olt',
                 'crucea-rosie-romana-filiala-valcea',
-                'lets-do-it-romania',
-                'yesromania',
-                'fundatia-regala-margareta-a-romaniei',
-                'asociatia-roi',
-                'asociatia-vatra-cu-idei',
+                'lets-do-it-romania'
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in cez_ngos])
             self.template_values['company_name'] = 'CEZ'
 
         elif self.is_ing_subdomain:
             ing_ngos = [
-                'asociatiapentrudezvoltareurbana',
                 'asociatia-ana-si-copiii',
-                'asociatia-club-lions-diamond',
                 'asociatia-daruieste-aripi',
+                'asociatia-educatie-pentru-viata-reala',
+                'asociatia-pavel',
                 'asociatia-ropot',
                 'asociatia-mame',
-                'caravanacumedici',
                 'carusel',
                 'code-for-romania',
                 'fundatia-entreprenation',
                 'fundatia-comunitara-bucuresti',
-                'fundatia-hospice-casa-sperantei',
+                'fundatia-inima-de-copil',
                 'inimacopiilor',
-                'un-copil-o-speranta',
                 'viitorplus',
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in ing_ngos])
@@ -190,16 +209,19 @@ class HomePage(BaseHandler):
 
         elif self.is_patria_subdomain:
             patria_ngos = [
-                'asociatia-kinetobebe',
                 'asociatia-administratorilor-de-piete-din-romania',
                 'asociatia-ana-si-copiii',
                 'asociatia-ateliere-fara-frontiere',
                 'asociatia-crestem-romania-impreuna',
+                'asociatia-inspiraction',
+                'asociatia-kinetobebe',
+                'asociatia-micile-bucurii',
                 'asociatia-pedia-pentru-sprijinirea-copiilor-cu-deficiente-neuropsihomotorii',
-                'the-social-incubator',
                 'atca-asociatia-de-terapie-comportamentala-aplicata',
                 'code-for-romania',
                 'daruieste-viata',
+                'fundatia-patria-credit',
+                'the-social-incubator',
                 'world-vision-romania',
                 'viitorplus',
             ]
@@ -215,7 +237,8 @@ class HomePage(BaseHandler):
                 'asociatia-crestina-for-help',
                 'asociatia-iti-arat-ca-pot',
                 'asociatia-little-people-romania',
-                'asociatia-magicamp',
+                'asociatia-magic',
+                'asociatia-oncohelp',
                 'mainiunite',
                 'aleg',
                 'animallife',
@@ -242,7 +265,7 @@ class HomePage(BaseHandler):
                 'asociatia-de-poveste',
                 'la-primul-bebe',
                 'asociatia-little-people-romania',
-                'asociatia-magicamp',
+                'asociatia-magic',
                 'animallife',
                 'asociatiasusinima',
                 'baby-care-sibiu',
@@ -256,13 +279,74 @@ class HomePage(BaseHandler):
 
         elif self.is_nestle_subdomain:
             nesle_ngos = [
+                'calator-prin-romania',
+                'acasainbanat',
+                'asociatia-act-for-tomorrow',
+                'asociatia-ana-si-copiii',
+                'asociatia-animal-society',
+                'forumapulum',
+                'asociatia-ateliere-fara-frontiere',
+                'asociatia-blondie',
+                'cepec',
                 'clubul-cainilor-utilitari',
-                'asociatia-valentina-romania',
-                'banca-pentru-colectarea-si-distributia-alimentelor',
+                'daruieste-viata',
+                'asociatia-edit',
+                'asociatia-ecoassist-iniiativa-plantam-fapte-bune-in-romania',
+                'geeks',
+                'gifted',
+                'growupromania',
+                'asociatia-habitat-for-humanity-romania',
+                'junior-achievement-romania',
+                'asociatia-lume-buna',
+                'asociatia-magic',
+                'ovidiuro',
+                'asociatia-pavel',
+                'padureacopiilor',
+                'asociatia-parcul-natural-vacaresti',
+                'asociatia-pas-cu-pas-oradea',
+                'asociatia-pentru-educatie-digitala-bigger-picture',
+                'preocupati-de-viitor',
+                'asociatia-pro-vita-bucuresti',
+                'asociatia-romana-de-dezbateri-oratorie-si-retorica-ardor',
+                'asociatia-salvati-flora-si-fauna-deltei-dunarii',
+                'asociatia-samas',
+                'asociatia-sansa-ta',
+                'asociatia-semper-musica',
+                'asociatia-solar-decatlon-bucuresti',
+                'the-social-incubator',
+                'asociatia-unu-si-unu',
+                'wwf',
+                'zi-de-bine',
+                'centrul-pentru-politici-durabile-ecopolis',
+                'asociatia-centrul-step-by-step-pentru-educatie-si-dezvoltare-profesionala',
+                'fundatia-adapostul-speranta',
+                'fundatia-romanian-angel-appeal',
+                'fundatia-comunitara-bucuresti',
+                'fundatia-conservation-carpathia',
+                'fundatia-crucea-alb-galbena',
+                'fundatia-serviciilor-sociale-bethany',
+                'fundatiaenescu',
+                'fundatia-hospice-casa-sperantei',
+                'fundatia-impreuna-pentru-solidaritate-sociala',
+                'fundatia-inocenti-bucuresti',
+                'izvorulalb',
+                'fundatianoiorizonturi',
+                'fundatia-pact',
+                'fundatia-regala-margareta-a-romaniei',
+                'rolda',
+                'world-vision-romania',
+                'hopeandhomesromania',
+                'asociatia-institutul-de-cercetare-in-permacultura-din-romania',
+                'asociatia-mai-mult-verde',
+                'mihaieminescutrust',
+                'organizatia-umanitara-concordia',
+                'httpwwwsalvaticopiiirodoilasuta',
+                'sor',
                 'sos-satele-copiilor-romania',
+                'viitorplus',
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in nesle_ngos])
-            self.template_values['company_name'] = 'NESTLE'
+            self.template_values['company_name'] = u'NESTLÉ'
 
         elif self.is_digi_subdomain:
             digi_ngos = [
@@ -306,9 +390,13 @@ class HomePage(BaseHandler):
                 'junior-achievement-romania',
                 'tasuleasa-social',
                 'teach-for-romania',
-                # TODO: add the following NGOs when available:
-                # OvidiuRo
-                # Asociatia pentru Relatii Comunitare(ARC)
+                'ovidiuro',
+                'agora-debate',
+                'fundatia-worldskills-romania',
+                'asociatia-pentru-educatie-digitala-bigger-picture',
+                'bancadealimentecluj',
+                'seeding-knowledge',
+                'fundatia-comunitara-bucuresti',
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in raiffeisen_ngos])
             self.template_values['company_name'] = 'Raiffeisen Bank'
@@ -361,7 +449,7 @@ class HomePage(BaseHandler):
                 'asociatia-little-people-romania',
                 'inimacopiilor',
                 'fundatia-cmu-regina-maria',
-                'asociatia-magicamp',
+                'asociatia-magic',
                 'organizatia-umanitara-concordia',
                 'ajungemmari',
                 'fundatia-pentru-voi',
@@ -377,7 +465,9 @@ class HomePage(BaseHandler):
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in ursus_ngos])
             self.template_values['company_name'] = 'Ursus'
-        
+            self.template_values['custom_header'] = True
+            self.template_values['custom_note'] = True
+
         elif self.is_carrefour_subdomain:
             carrefour_ngos = [
                 'crucea-rosie-romana',
@@ -408,6 +498,16 @@ class HomePage(BaseHandler):
 
         self.template_values["ngos"] = ngos
 
+        now = datetime.now()
+        # if we are not on a subdomain page, compute some stats
+        if not self.template_values.get('company_name'):
+            self.template_values["stats"] = {
+                "ngos": NgoEntity.query().count(),
+                "forms": Donor.query(Donor.date_created > datetime(now.year, 1, 1)).count()
+            }
+
+        self.template_values["current_year"] = now.year
+
         # render a response
         self.render()
 
@@ -425,7 +525,7 @@ class NgoListHandler(BaseHandler):
     template_name = 'all-ngos.html'
     def get(self):
         # self.abort(404)
-        self.template_values["title"] = "Asociatii"
+        self.template_values["title"] = u"Asociații"
 
         ngos = NgoEntity.query(NgoEntity.active == True).fetch()
         self.template_values["ngos"] = ngos
@@ -438,7 +538,7 @@ class TermsHandler(BaseHandler):
     template_name = 'terms.html'
     def get(self):
 
-        self.template_values["title"] = "Termeni si conditii"
+        self.template_values["title"] = u"Termeni și condiții"
 
         # render a response
         self.render()
@@ -447,7 +547,7 @@ class NoteHandler(BaseHandler):
     template_name = 'note.html'
     def get(self):
 
-        self.template_values["title"] = "Nota de informare"
+        self.template_values["title"] = u"Notă de informare"
 
         # render a response
         self.render()
@@ -465,7 +565,7 @@ class PolicyHandler(BaseHandler):
     template_name = 'policy.html'
     def get(self):
 
-        self.template_values["title"] = "Politica de confidentialitate"
+        self.template_values["title"] = u"Politica de confidențialitate"
 
         # render a response
         self.render()

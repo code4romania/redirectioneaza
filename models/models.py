@@ -45,6 +45,9 @@ class NgoEntity(BaseEntity):
     # if the ngo has a special status (eg. social ngo) they are entitled to 3.5% donation, not 2%
     special_status = ndb.BooleanProperty(indexed=True, default=False)
 
+    # if the ngo accepts to receive donation forms through email
+    accepts_forms = ndb.BooleanProperty(indexed=True, default=False)
+
     # bool telling if the ngo should be shown to the public (the ngo might be banned)
     active = ndb.BooleanProperty(indexed=True, default=True)
 

@@ -46,7 +46,7 @@ app = webapp2.WSGIApplication([
         ]),
 
         # the public part of the app
-        r('/',                  handler=HomePage),
+        r('/',                  handler=HomePage,       name="home"),
         r('/ong',               handler=ForNgoHandler),
         
         # backup in case of old urls. to be removed

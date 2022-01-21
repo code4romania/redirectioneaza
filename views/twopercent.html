@@ -16,8 +16,8 @@
 {% endblock %}
 
 {# error messages, also found in the js file twopercent.js #}
-{% set server_error = "Se pare ca am intampinat o eroare pe server. Va rugam incercati din nou." %}
-{% set fields_error = "Se pare ca urmatoarele date sunt invalide: " %}
+{% set server_error = "Se pare că am întampinat o eroare pe server. Vă rugam incercați din nou." %}
+{% set fields_error = "Se pare că urmatoarele date sunt invalide: " %}
 
 {% block content %}
 
@@ -60,7 +60,7 @@
         <div class="row">
             <div id="twopercent-form-wrapper" class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
                 <h2 id="donation-page-title">Redirecționează în 3 pași simpli</h2>
-                <h3 class="donation-page-subtitle">1. Completează și descarcă formularul</h3>
+                <h3 class="donation-page-subtitle">Pasul 1. Completează și descarcă formularul</h3>
                 {% if ngo.account and ngo.cif %}
                     <form id="twopercent" class="form form-horizontal" action="{{ uri_for('twopercent', ngo_url=ngo.key.id()) }}" role="form" method="post">
                         
@@ -236,8 +236,9 @@
                 <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
                     <div class="alert alert-dismissible alert-info">
                         <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>Notă!</strong> Toate datele de pe această pagină sunt transmise folosind o conexiune sigură. Următoarele date sunt stocate temporar, până la completarea formularului: numele, prenumele, orasul, judetul, email/telefon. După completarea formularului, aceste date sunt șterse, excepție făcând cazul în care ați optat să permiteți ONG-ului să vă contacteze. În acest caz, datele sunt stocate pe platforma Redirecționează cu scopul de a oferi acces ONG-ului la ele. <br /> <br />
-                        Poți citi mai multe despre <a href="{{ uri_for('note') }}" target="_blank">Drepturile tale cu privire la protectia datelor</a>.
+                        <strong>Notă!</strong> Toate datele de pe această pagină sunt transmise folosind o conexiune sigură. Următoarele date sunt stocate temporar, până la completarea formularului: numele, prenumele, orasul, judetul, email/telefon. După completarea formularului, aceste date sunt șterse, excepție făcând cazul în care ați optat să permiteți ONG-ului să vă contacteze. În acest caz, datele sunt stocate pe platforma Redirecționează cu scopul de a oferi acces ONG-ului la ele. <br />
+                        Poți citi mai multe despre <a href="{{ uri_for('note') }}" target="_blank">Drepturile tale cu privire la protectia datelor</a>. <br /><br />
+                        Prin completarea acestui formular, redirecționezi 3.5% din impozitul pe venit către organizația pe care ai ales-o.
                     </div>
                 </div>
             </div>
