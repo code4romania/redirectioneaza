@@ -298,8 +298,8 @@ class BaseHandler(Handler):
         elif email_type == "twopercent-form":
             subject = u"Formularul tău de redirecționare"
 
-            html_template = None # self.jinja_enviroment.get_template("email/twopercent-form/twopercent-form.html")
-            txt_template = self.jinja_enviroment.get_template("email/twopercent-form/twopercent_form.txt")
+            html_template = jinja_enviroment.get_template("email/twopercent-form/twopercent_form.html")
+            txt_template = self.jinja_enviroment.get_template("email/twopercent-form/twopercent_form_text.txt")
 
             template_values = {
                 "name": user.last_name,
