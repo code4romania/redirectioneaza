@@ -301,7 +301,7 @@ class DonationSucces(BaseHandler):
 
         self.template_values["ngo"] = self.ngo
         self.template_values["donor"] = self.donor
-        self.template_values["title"] = "Donație - succes"
+        self.template_values["title"] = u"Donație - succes"
         self.template_values['limit'] = DONATION_LIMIT
 
         # county = self.donor.county.lower()
