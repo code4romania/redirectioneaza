@@ -127,7 +127,7 @@ class NgoDetailsHandler(AccountHandler):
     @user_required
     def get(self):
         user = self.user
-        self.template_values["title"] = "Date asociație"
+        self.template_values["title"] = u"Date asociație"
 
         # if the user has an ngo attached, allow him to edit it
         if user.ngo:
