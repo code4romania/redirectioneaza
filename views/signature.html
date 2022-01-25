@@ -1,0 +1,38 @@
+{% extends "base.html" %} 
+
+{% block additional_headers %}
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@3.0.0-beta.4/dist/signature_pad.umd.min.js" async defer></script>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-lg-8 col-lg-offset-2">
+                <div class="signature-container">
+                    <div class="signature-title-wrapper">
+                        <span>Semnătura</span>
+                        <button id="clear-signature" class="btn btn-primary" type="button">
+                            Resetează
+                        </button>
+                    </div>
+                    <canvas id="signature" width="600" height="200" style="border: 1px solid #ddd;"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <form action="{{ uri_for('ngo-twopercent-signature', ngo_url=ngo.key.id()) }}" role="form" method="post">
+                    <input id="signature-input" type="hidden" name="signature">
+                    <button class="btn btn-primary btn-lg" type="submit">
+                        Trimite
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript" src="/js/signature.js"></script>
+{% endblock %}

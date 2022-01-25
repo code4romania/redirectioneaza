@@ -13,6 +13,13 @@ $(function () {
     var ngoUrl = window.location.href;
     var form = $("#twopercent");
 
+    var invalidFormAlert = $("#invalid-form-alert");
+    var submitFormButton = $("#submit-twopercent-form");
+    var signForm = $('#sign-form')
+    var submitForm = $('.signature-container')
+
+    var cnpField = $("#cnp")
+
     $('[data-toggle="popover"]').popover({
         trigger: "focus",
         placement: ( $(window).width() > 790 ) ? "right" : "bottom"
@@ -85,7 +92,7 @@ $(function () {
         return ( cnp[12] === hashResult );
     }
 
-    $("#cnp").on("blur", function(){
+    cnpField.on("blur", function(){
         var val = this.value;
 
         // if the user provided a value make sure it's valid
@@ -117,8 +124,23 @@ $(function () {
         }
     });
 
-    var invalidFormAlert = $("#invalid-form-alert");
-    var submitFormButton = $("#submit-twopercent-form");
+    signForm.on('click', function (ev) {
+        var cnpVal = cnpField.val()
+
+        if (!cnpVal) {
+            ev.preventDefault()
+            showError(cnpField)
+            cnpField.focus()
+        } else {
+            if (!validCNP(cnpVal)) {
+                ev.preventDefault()
+                showError(cnpField)
+                cnpField.focus()
+            } else {
+                // else, the form will be submitted
+            }
+        }
+    })
 
     form.on("submit", function(ev){
         ev.preventDefault();
@@ -150,37 +172,10 @@ $(function () {
 
     });
 
-    function forceDownload(href) {
-        var anchor = document.createElement('a');
-        anchor.href = href;
-        anchor.download = 'Formular 2%.pdf';
-        document.body.appendChild(anchor);
-        anchor.click();
-    }
-
-    
-    // ######## signature ########
-
-    var canvas = document.getElementById("signature");
-    var twpPercWrapper = document.getElementById("twopercent-form-wrapper");
-    var signaturePad
-    window.addEventListener('resize', resizeCanvas, false);
-    function resizeCanvas() {
-        canvas.width = twpPercWrapper.clientWidth - 30;
-        canvas.height = 150;
-
-        signaturePad = new SignaturePad(canvas, { drawOnly:true, lineTop:200, penWidth: 1, lineWidth: 1 });
-    }
-    resizeCanvas();
-    $('#clear-signature').on('click', function(){
-        signaturePad.clear();
-    });
-
-    // ----- signature -------
-
     window.onSubmit = function(token) {
 
-        submitFormButton.removeClass("btn-primary").addClass("btn-success").attr("disabled", true);
+        submitFormButton.removeClass("btn-primary").attr("disabled", true);
+        signForm.removeClass("btn-primary").attr("disabled", true);
 
         $('<input />').attr('type', 'hidden')
             .attr('name', "g-recaptcha-response").attr('value', token)
@@ -193,19 +188,13 @@ $(function () {
             dataType: "json",
             data: form.serialize(),
             success: function(data) {
-
-                // download the pdf file
-                // forceDownload(data.form_url)
-
                 if( data.url ) {
-                    // we need a delay between the file download and the redirect
-                    // setTimeout(function () {
-                        // redirect to the success page
-                        window.location = data.url;
-                    // }, 1000)
+                    window.location = data.url;
                 } else {
                     message = errors["server_error"];
                     submitFormButton.addClass("btn-primary").removeClass("btn-success").attr("disabled", false);
+                    signForm.addClass("btn-primary").removeClass("btn-success").attr("disabled", false);
+
                     invalidFormAlert.removeClass("hidden").find("span").text(message);
                     grecaptcha.reset();
                 }

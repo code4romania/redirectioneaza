@@ -251,7 +251,6 @@ class BaseHandler(Handler):
             self.redirect( self.uri_for("ngo-url", ngo_url=ngo_id) )
             return False
 
-
         self.ngo = ngo
         self.donor = donor
 

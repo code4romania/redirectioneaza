@@ -91,9 +91,9 @@ class Donor(BaseEntity):
 
     # the pdf to be downloaded by the donor
     pdf_url = ndb.StringProperty()
-    # the url of the pdf/image after it was signed and scanned
-    # only if the ngo allows it
-    pdf_signed_url = ndb.StringProperty()
+
+    # the name of the file in the bucket
+    filename = ndb.StringProperty(indexed=False)
 
     # meta data
     date_created = ndb.DateTimeProperty(indexed=True, auto_now_add=True)

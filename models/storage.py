@@ -77,12 +77,18 @@ class CloudStorage(object):
 
         
 
-    def read_file(self, filename):
+    @staticmethod
+    def read_file(filename):
+        if filename is None:
+            return
+        
+        # add the bucket name at the begining of the file
+        filename = "/{0}/{1}".format(CloudStorage.get_bucket_name(), filename)
 
         gcs_file = gcs.open(filename)
-        info(gcs_file.readline())
-        
-        gcs_file.seek(-1024, os.SEEK_END)
-        info(gcs_file.read())
+
+        file = gcs_file.read()
         
         gcs_file.close()
+
+        return file

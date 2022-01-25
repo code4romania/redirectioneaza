@@ -156,32 +156,11 @@
                             </div>
                         </fieldset> #}
                         <fieldset>
-                            <div class="signature-title-wrapper">
-                                <legend>Semnătura</legend>
-                                <button id="clear-signature" class="btn btn-primary" type="button">
-                                    Reseteaza
-                                </button>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-xs-12">
-                                    <canvas id="signature" width="600" height="200" style="border: 1px solid #ddd;"></canvas>
-                                </div>
-                            </div>
-                        </fieldset>
-                        <fieldset>
                             <div class="form-group">
                                 <div class="col-xs-12 col-lg-10 checkbox">
                                     <label for="two-years">
                                         <input id="two-years" type="checkbox" name="two-years" />
                                         Vreau ca redirecționarea să se realizeze pe o perioadă de 2 ani
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-xs-12 col-lg-10 checkbox">
-                                    <label for="two-years">
-                                        <input id="two-years" type="checkbox" name="two-years" />
-                                       Sunt de acord ca semnatura sa fie prelucrata.
                                     </label>
                                 </div>
                             </div>
@@ -201,13 +180,32 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="form-group margin-top">
-                                <div class="col-xs-12">
-                                    <button id="submit-twopercent-form" type="submit" class="btn btn-lg btn-primary">
-                                        {# Descarcă și mergi la pasul următor #}
-                                        Mergi la pasul următor
-                                    </button>
-                                </div>
+                            <div class="form-group margin-top submit-container">
+                                {# if the ngo wants to receive forms through email #}
+                                {# ngo.accepts_forms #}
+                                {% if True %}
+                                    <div class="col-xs-12">
+                                        Din anul 2022 formularele 230 pot fi depuse online. Dacă vrei să printezi formularul și să îl semnezi, atunci apasă mai jos butonul Descarcă formular și urmează instrucțiunile. Dacă vrei să semnezi și să depui formularul online atunci apasă mai jos Semnează formular și urmează instrucțiunile.
+                                    </div>
+
+                                    <div class="col-xs-12 col-lg-6 margin-top">
+                                        <button id="submit-twopercent-form" type="submit" class="btn btn-lg btn-primary">
+                                            Descarcă formular
+                                        </button>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6 margin-top">
+                                        <input type="hidden" name="wants-to-sign" value="True">
+                                        <button id="sign-form" class="btn btn-primary btn-lg" type="submit">
+                                            Semnează formular
+                                        </button>
+                                    </div>
+                                {% else %}
+                                    <div class="col-xs-12">
+                                        <button id="submit-twopercent-form" type="submit" class="btn btn-lg btn-primary">
+                                            Mergi la pasul următor
+                                        </button>
+                                    </div>
+                                {% endif %}
                             </div>
                         </fieldset>
                     </form>

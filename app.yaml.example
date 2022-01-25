@@ -13,6 +13,10 @@ libraries:
   version: "2.5.2"
 - name: jinja2
   version: latest
+- name: ssl
+  version: "2.7.11"
+- name: lxml
+  version: latest
 
 skip_files:
 # the default rules

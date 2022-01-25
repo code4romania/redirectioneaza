@@ -16,7 +16,7 @@ from appengine_config import CAPTCHA_PRIVATE_KEY, CAPTCHA_POST_PARAM, DEFAULT_NG
 from models.handlers import BaseHandler
 from models.models import NgoEntity, Donor
 from models.storage import CloudStorage
-from models.create_pdf import create_pdf
+from models.create_pdf import create_pdf, add_signature
 
 from captcha import submit
 
@@ -187,6 +187,13 @@ class TwoPercentHandler(BaseHandler):
         # if the user wants to redirect for 2 years
         two_years = post.get('two-years') == 'on'
 
+        # if the ngo accepts online forms
+        signature_required = False
+        if self.ngo.accepts_forms:
+            wants_to_sign = post.get('wants-to-sign', False)
+            if wants_to_sign == 'True':
+                signature_required = True
+
         # if he would like the ngo to see the donation
         donor_dict['anonymous'] = post.get('anonim') != 'on'
 
@@ -246,7 +253,8 @@ class TwoPercentHandler(BaseHandler):
             # make a request to get geo ip data for this user
             geoip = self.get_geoip_data(),
             ngo = self.ngo.key,
-            pdf_url = file_url
+            pdf_url = file_url,
+            filename = filename
         )
 
         donor.put()
@@ -254,9 +262,15 @@ class TwoPercentHandler(BaseHandler):
         # set the donor id in cookie
         self.session["donor_id"] = str(donor.key.id())
         self.session["has_cnp"] = bool(donor_dict["cnp"])
+        self.session["signature_required"] = signature_required
 
-        # send and email to the donor with a link to the PDF file
-        self.send_email("twopercent-form", donor, self.ngo)
+        if not signature_required:
+            # send and email to the donor with a link to the PDF file
+            self.send_email("twopercent-form", donor, self.ngo)
+
+        url = self.uri_for("ngo-twopercent-success", ngo_url=ngo_url)
+        if signature_required:
+            url = self.uri_for("ngo-twopercent-signature", ngo_url=ngo_url)
 
         # if not an ajax request, redirect
         if self.is_ajax:
@@ -264,12 +278,11 @@ class TwoPercentHandler(BaseHandler):
             self.response.set_status(200)
             
             response = {
-                "url": self.uri_for("ngo-twopercent-success", ngo_url=ngo_url),
-                "form_url": file_url
+                "url": url
             }
             self.response.write(json.dumps(response))
         else:
-            self.redirect( self.uri_for("ngo-twopercent-success", ngo_url=ngo_url) )
+            self.redirect( url )
 
     def return_error(self, errors):
         
@@ -291,6 +304,45 @@ class TwoPercentHandler(BaseHandler):
 
         # render a response
         self.render()
+
+class FormSignature(BaseHandler):
+    template_name = 'signature.html'
+    def get(self, ngo_url):
+
+        if self.get_ngo_and_donor() is False:
+            return
+
+        if not self.session.get("signature_required", False):
+            return self.redirect( self.uri_for("twopercent", ngo_url=ngo_url) )
+
+        self.template_values["title"] = u"Donație - semnătura"
+        self.template_values["ngo"] = self.ngo
+
+        self.render()
+
+    def post(self, ngo_url):
+
+        if self.get_ngo_and_donor() is False:
+            return
+
+        signature_image = self.request.get('signature', None)
+
+        if not signature_image:
+            return self.redirect( self.uri_for("ngo-twopercent-signature", ngo_url=ngo_url) )
+
+        # add the image to the PDF
+        pdf = CloudStorage.read_file(self.donor.filename)
+        new_pdf = add_signature(pdf, signature_image)
+
+        # update the pdf
+        CloudStorage.save_file(new_pdf, self.donor.filename)
+
+        self.send_email("twopercent-form", self.donor, self.ngo)
+
+        # url = self.uri_for("ngo-twopercent-signature", ngo_url=ngo_url)
+        url = self.uri_for("ngo-twopercent-success", ngo_url=ngo_url)
+
+        self.redirect( url )
 
 class DonationSucces(BaseHandler):
     template_name = 'succes.html'
@@ -315,17 +367,3 @@ class DonationSucces(BaseHandler):
 
 
         self.render()
-
-    def post(self, ngo_url):
-        # TODO: to be implemented
-        post = self.request
-
-        if self.get_ngo_and_donor() is False:
-            return
-
-        self.session.pop("donor_id")
-
-        signed_pdf = post.get("signed-pdf")
-
-        # TODO file upload
-        

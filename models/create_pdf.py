@@ -1,24 +1,27 @@
-import os
 
+import os
+import StringIO
+import base64
 import tempfile
 
-from google.appengine.api import app_identity
+from io import BytesIO
+from datetime import datetime
 
+from pyPdf import PdfFileWriter, PdfFileReader
 from reportlab.pdfgen import canvas
 from reportlab.lib.utils import ImageReader
 from reportlab.lib.pagesizes import A4
+from reportlab.graphics import renderPDF
 
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
-
-from datetime import datetime
+from svglib.svglib import svg2rlg
 
 from logging import info
 
 abs_path = os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir))
 font_path = abs_path + "/static/font/opensans.ttf"
 pdfmetrics.registerFont(TTFont('OpenSans', font_path))
-
 
 default_font_size = 15
 form_image_path = "/static/images/formular-2021.jpg"
@@ -240,3 +243,48 @@ def create_pdf(person = {}, ong = {}):
     # packet.type = "application/pdf"
 
     return packet
+
+def add_signature(pdf, image):
+
+    pdf_string = StringIO.StringIO(pdf)
+    existing_pdf = PdfFileReader(pdf_string)
+
+    packet = tempfile.TemporaryFile(mode='w+b')
+
+    # init pdf canvas
+    c = canvas.Canvas(packet, A4)
+
+    # add the image as background
+    # remove the header added by javascript
+    image = image.split(',')[1]
+    # make sure the string has the right padding
+    image = image + '=' * (-len(image) % 4)
+    base_image = base64.b64decode(image)
+    byte_image = BytesIO(base_image)
+    # make this a svg2rlg object
+    drawing = svg2rlg(byte_image)
+    # scale it down, from 750 x 150
+    drawing.scale(0.15, 0.15)
+
+    # add it to the PDF
+    renderPDF.draw(drawing, c, 154, 136)
+
+    c.save()
+    packet.seek(0)
+
+    new_pdf = PdfFileReader(packet)
+
+    page = existing_pdf.getPage(0)
+    page.mergePage(new_pdf.getPage(0))
+
+    output = PdfFileWriter()
+    output.addPage(page)
+
+    outputStream = tempfile.TemporaryFile(mode='w+b')
+    output.write(outputStream)
+
+    outputStream.seek(0)
+
+    packet.close()
+
+    return outputStream

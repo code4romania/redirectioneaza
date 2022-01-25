@@ -12,7 +12,7 @@ from controllers.account_management import *
 from controllers.my_account import *
 from controllers.api import *
 from controllers.admin import *
-from controllers.ngo import NgoHandler, TwoPercentHandler, DonationSucces
+from controllers.ngo import NgoHandler, TwoPercentHandler, FormSignature, DonationSucces
 
 from cron import cron_routes
 
@@ -90,6 +90,7 @@ app = webapp2.WSGIApplication([
         r('/admin/<ngo_url>',   handler=AdminNgoHandler,    name='admin-ong'),
 
         r('/<ngo_url>',           handler=TwoPercentHandler,  name="twopercent"),
+        r('/<ngo_url>/semnatura', handler=FormSignature,      name="ngo-twopercent-signature"),
         r('/<ngo_url>/succes',    handler=DonationSucces,     name="ngo-twopercent-success"),
 
         r('/<ngo_url>/doilasuta', handler=NgoHandler,         name="ngo-url"),
