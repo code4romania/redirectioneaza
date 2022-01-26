@@ -310,7 +310,7 @@ class BaseHandler(Handler):
             subject = u"Formularul tău de redirecționare"
 
             html_template = self.jinja_enviroment.get_template("email/signed-form/signed_form.html")
-            txt_template = self.jinja_enviroment.get_template("email/signed-form/signed-form_text.txt")
+            txt_template = self.jinja_enviroment.get_template("email/signed-form/signed_form_text.txt")
 
             template_values = {
                 "form_url": user.pdf_url,
