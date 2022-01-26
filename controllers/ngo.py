@@ -337,7 +337,7 @@ class FormSignature(BaseHandler):
         # update the pdf
         CloudStorage.save_file(new_pdf, self.donor.filename)
 
-        self.send_email("twopercent-form", self.donor, self.ngo)
+        self.send_email("signed-form", self.donor)
 
         self.session.pop("signature_required")
 
