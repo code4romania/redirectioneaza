@@ -249,6 +249,7 @@ class HomePage(BaseHandler):
                 'baby-care-sibiu',
                 'code-for-romania',
                 'cu-verdele-n-sus',
+                'afiom',
                 'fundatia-pentru-voi',
                 'fundatia-pentru-smurd',
                 'fundatia-united-way-romania',
