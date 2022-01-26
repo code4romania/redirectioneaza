@@ -309,7 +309,7 @@ class BaseHandler(Handler):
         elif email_type == "signed-form":
             subject = u"Formularul tău de redirecționare"
 
-            html_template = self.jinja_enviroment.get_template("email/signed-form/signed-form.html")
+            html_template = self.jinja_enviroment.get_template("email/signed-form/signed_form.html")
             txt_template = self.jinja_enviroment.get_template("email/signed-form/signed-form_text.txt")
 
             template_values = {
