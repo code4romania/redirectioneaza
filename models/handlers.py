@@ -314,6 +314,15 @@ class BaseHandler(Handler):
             template_values = {
                 "form_url": user.pdf_url,
             }
+        elif email_type == "ngo-signed-form":
+            subject = u"Un nou formular de redirecționare"
+
+            # html_template = self.jinja_enviroment.get_template("email/ngo-signed-form/signed_form.html")
+            txt_template = self.jinja_enviroment.get_template("email/ngo-signed-form/signed_form_text.txt")
+
+            template_values = {
+                "form_url": user.pdf_url,
+            }
         else:
             return
 

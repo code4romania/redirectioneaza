@@ -138,6 +138,10 @@ $(function () {
                 cnpField.focus()
             } else {
                 // else, the form will be submitted
+                hideError(cnpField)
+                $('<input />').attr('type', 'hidden')
+                    .attr('name', "wants-to-sign").attr('value', 'True')
+                    .appendTo(form);
             }
         }
     })

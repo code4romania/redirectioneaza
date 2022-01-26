@@ -338,8 +338,12 @@ class FormSignature(BaseHandler):
         CloudStorage.save_file(new_pdf, self.donor.filename)
 
         self.send_email("signed-form", self.donor)
+        self.send_email("ngo-signed-form", self.donor)
 
         self.session.pop("signature_required")
+
+        self.donor.has_signed = True
+        self.donor.put()
 
         # url = self.uri_for("ngo-twopercent-signature", ngo_url=ngo_url)
         url = self.uri_for("ngo-twopercent-success", ngo_url=ngo_url)

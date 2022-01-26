@@ -95,6 +95,9 @@ class Donor(BaseEntity):
     # the name of the file in the bucket
     filename = ndb.StringProperty(indexed=False)
 
+    # if the document was signed
+    has_signed = ndb.BooleanProperty(indexed=False, default=False)
+
     # meta data
     date_created = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
 
