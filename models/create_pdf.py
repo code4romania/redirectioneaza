@@ -264,10 +264,10 @@ def add_signature(pdf, image):
     # make this a svg2rlg object
     drawing = svg2rlg(byte_image)
     # scale it down, from 750 x 150
-    drawing.scale(0.15, 0.15)
+    drawing.scale(0.1, 0.1)
 
     # add it to the PDF
-    renderPDF.draw(drawing, c, 154, 136)
+    renderPDF.draw(drawing, c, 168, 133)
 
     c.save()
     packet.seek(0)

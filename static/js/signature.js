@@ -8,13 +8,13 @@ $(function () {
 
     var resizeCanvas = function() {
         canvas.width = twpPercWrapper.clientWidth;
-        canvas.height = 150;
+        canvas.height = 300;
 
         signaturePad = new SignaturePad(canvas,
             {
                 backgroundColor: 'rgb(255,255,255)',
-                drawOnly:true,
-                lineTop:200,
+                drawOnly: true,
+                lineTop: 200,
                 penWidth: 1,
                 lineWidth: 1
             }

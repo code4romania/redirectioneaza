@@ -9,11 +9,8 @@
         <div class="row">
             <div class="col-xs-12 col-lg-8 col-lg-offset-2">
                 <div class="signature-container">
-                    <div class="signature-title-wrapper">
-                        <span>Semnătura</span>
-                        <button id="clear-signature" class="btn btn-primary" type="button">
-                            Resetează
-                        </button>
+                    <div class="signature-title-wrapper text-center">
+                        <span>Adaugă semnătura pentru a finaliza completarea formularului</span>
                     </div>
                     <canvas id="signature" width="600" height="200" style="border: 1px solid #ddd;"></canvas>
                 </div>
@@ -21,8 +18,13 @@
         </div>
 
         <div class="row">
-            <div class="col-xs-12">
-                <form action="{{ uri_for('ngo-twopercent-signature', ngo_url=ngo.key.id()) }}" role="form" method="post">
+            <div class="col-xs-12 col-lg-8 col-lg-offset-2">
+                <form action="{{ uri_for('ngo-twopercent-signature', ngo_url=ngo.key.id()) }}" role="form" method="post" class="signature-form">
+                    <span class="reset-button">
+                        <button id="clear-signature" class="btn btn-lg" type="button">
+                        Resetează
+                    </button>
+                    </span>
                     <input id="signature-input" type="hidden" name="signature">
                     <button class="btn btn-primary btn-lg" type="submit">
                         Trimite

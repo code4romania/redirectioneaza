@@ -339,6 +339,8 @@ class FormSignature(BaseHandler):
 
         self.send_email("twopercent-form", self.donor, self.ngo)
 
+        self.session.pop("signature_required")
+
         # url = self.uri_for("ngo-twopercent-signature", ngo_url=ngo_url)
         url = self.uri_for("ngo-twopercent-success", ngo_url=ngo_url)
 
