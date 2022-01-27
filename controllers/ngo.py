@@ -338,7 +338,7 @@ class FormSignature(BaseHandler):
         CloudStorage.save_file(new_pdf, self.donor.filename)
 
         self.send_email("signed-form", self.donor)
-        self.send_email("ngo-signed-form", self.donor)
+        self.send_email("ngo-signed-form", self.donor, self.ngo)
 
         self.session.pop("signature_required")
 

@@ -261,6 +261,15 @@ class BaseHandler(Handler):
         if not user.email:
             return
 
+        try:
+            receiver = {
+                "name": u"{0} {1}".format(user.first_name, user.last_name),
+                "email": user.email
+            }
+        except Exception, e:
+            warn(e)
+            return
+
         if email_type == "signup":
             subject = "Confirmare cont redirectioneaza.ro"
 
@@ -317,12 +326,20 @@ class BaseHandler(Handler):
         elif email_type == "ngo-signed-form":
             subject = u"Un nou formular de redirecționare"
 
-            # html_template = self.jinja_enviroment.get_template("email/ngo-signed-form/signed_form.html")
+            html_template = None # self.jinja_enviroment.get_template("email/ngo-signed-form/signed_form.html")
             txt_template = self.jinja_enviroment.get_template("email/ngo-signed-form/signed_form_text.txt")
 
             template_values = {
                 "form_url": user.pdf_url,
             }
+
+            if ngo.email:
+                receiver = {
+                    "name": u"{0}".format(ngo.name),
+                    "email": ngo.email
+                }
+            else:
+                receiver = None
         else:
             return
 
@@ -335,10 +352,10 @@ class BaseHandler(Handler):
                 "name": "redirectioneaza",
                 "email": CONTACT_EMAIL_ADDRESS
             }
-            receiver = {
-                "name": u"{0} {1}".format(user.first_name, user.last_name),
-                "email": user.email
-            }
+
+            # no email for receiver, return
+            if not receiver:
+                return
 
             EmailManager.send_email(sender=sender, receiver=receiver, subject=subject, text_template=text_body, html_template=html_body)
 
