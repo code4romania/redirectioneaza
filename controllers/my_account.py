@@ -24,6 +24,9 @@ url_taken = u"Din păcate acest URL este folosit deja."
 not_unique = u'Se pare că acest cod CIF sau acest cont bancar este deja inscris. ' \
              u'Dacă reprezinți ONG-ul cu aceste date, te rugăm sa ne contactezi.'
 
+# for admins
+no_new_owner = 'Nu am putut gasi contul cu aceasta adresa'
+
 class MyAccountHandler(AccountHandler):
     template_name = 'ngo/my-account.html'
 
@@ -186,6 +189,7 @@ class NgoDetailsHandler(AccountHandler):
         ong_accepts_forms = self.request.get('accepts-forms') == "on"
 
         ong_url = self.request.get('ong-url')
+        new_owner = self.request.get('new-ngo-owner')
 
         # validation
         if not ong_nume or not ong_descriere or not ong_adresa or not ong_url or not ong_cif or not ong_account:
@@ -288,6 +292,21 @@ class NgoDetailsHandler(AccountHandler):
                         new_ngo.key = new_key
                         
                         ngo = new_ngo
+
+                    if new_owner:
+                        new_owner = User.query(User.email == new_owner).get()
+                        if new_owner:
+                            # delete the associtation between the old account and the NGO
+                            old_user = User.query(User.ngo == ngo.key).get()
+                            old_user.ngo = None
+                            new_owner.ngo = ngo.key
+
+                            old_user.put()
+                            new_owner.put()
+                        else:
+                            self.template_values["errors"] = no_new_owner
+                            self.render()
+                            return
 
 
                 # save the changes
