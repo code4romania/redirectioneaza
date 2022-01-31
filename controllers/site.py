@@ -471,15 +471,18 @@ class HomePage(BaseHandler):
 
         elif self.is_carrefour_subdomain:
             carrefour_ngos = [
+                'amais',
+                'asociatia-magic',
                 'crucea-rosie-romana',
+                'asociatia-red-panda',
                 'httpwwwsalvaticopiiirodoilasuta',
                 'asociatia-ana-si-copiii',
                 'fundatia-hospice-casa-sperantei',
-                'fundatia-cmu-regina-maria',
                 'policy-center-for-roma-and-minorities',
                 'asociatia-ateliere-fara-frontiere',
-                'asociatia-zambetul-ingerilor',
                 'fundatia-pentru-dezvoltarea-agriculturii',
+                'fundatia-united-way-romania',
+                'world-vision-romania',
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in carrefour_ngos])
             self.template_values['company_name'] = 'Carrefour'
