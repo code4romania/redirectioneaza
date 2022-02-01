@@ -56,7 +56,7 @@ class LoginHandler(AccountHandler):
             warn('Invalid email or password: {0}'.format(email))
 
             self.template_values['email'] = email
-            self.template_values["errors"] = "Se pare că această combinație de email și parolă este incorectă."
+            self.template_values["errors"] = u"Se pare că această combinație de email și parolă este incorectă."
             self.render()
 
 
