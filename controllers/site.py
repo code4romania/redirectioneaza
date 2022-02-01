@@ -66,6 +66,8 @@ class HomePage(BaseHandler):
                 'the-social-incubator',
                 'comunitatea-onedu-romania',
                 'pe-stop',
+                'filiala-bucureti-a-asociaiei-terra-dacica-aeterna',
+                'fundatia-hospice-casa-sperantei',
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in ikea_ngos])
             self.template_values['company_name'] = 'IKEA'
