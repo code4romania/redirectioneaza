@@ -234,7 +234,7 @@ class SetPasswordHandler(AccountHandler):
 
         if not password:
             self.template_values.update({
-                "errors": "Nu uita să scrii o parolă nouă."
+                "errors": u"Nu uita să scrii o parolă nouă."
             })
             self.render()
             return
