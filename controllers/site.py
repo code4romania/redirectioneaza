@@ -352,6 +352,7 @@ class HomePage(BaseHandler):
                 'sor',
                 'sos-satele-copiilor-romania',
                 'viitorplus',
+                'ingeri-pentru-suflete',
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in nesle_ngos])
             self.template_values['company_name'] = u'NESTLÉ'
