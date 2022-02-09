@@ -32,6 +32,7 @@
                         <a href="{{ ngo_website }}" target="_blank">{{ ngo_website_description }}</a>
                     </p>
                 {% endif %}
+
                 {% if is_admin %}
                     <a href="{{ uri_for('admin-ong', ngo_url=ngo.key.id()) }}" class="btn btn-link">
                         Editează ONG-ul

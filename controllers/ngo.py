@@ -287,18 +287,25 @@ class TwoPercentHandler(BaseHandler):
     def return_error(self, errors):
         
         if self.is_ajax:
-
             self.response.set_status(400)
             self.response.write(json.dumps(errors))
 
             return
 
-        self.template_values["title"] = u"Donație 3.5%"
-        self.template_values["ngo"] = self.ngo
-        
+        self.template_values["title"] = ngo.name
+        # make sure the ngo shows a logo
+        ngo.logo = ngo.logo if ngo.logo else DEFAULT_NGO_LOGO
+        self.template_values["ngo"] = ngo
         self.template_values["counties"] = LIST_OF_COUNTIES
+        self.template_values['limit'] = DONATION_LIMIT
+
         self.template_values["errors"] = errors
-        
+
+        now = datetime.datetime.now()
+        can_donate = not now.date() > DONATION_LIMIT
+
+        self.template_values["can_donate"] = can_donate
+
         for key in self.request.POST:
             self.template_values[ key ] = self.request.POST[ key ]
 
