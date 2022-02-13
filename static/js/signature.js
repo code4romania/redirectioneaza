@@ -7,19 +7,27 @@ $(function () {
     signaturePad = null
 
     var resizeCanvas = function() {
-        canvas.width = twpPercWrapper.clientWidth;
-        canvas.height = 300;
+        var data = signaturePad.toData();
+        var ratio = Math.max(window.devicePixelRatio || 1, 1);
 
-        signaturePad = new SignaturePad(canvas,
-            {
-                backgroundColor: 'rgb(255,255,255)',
-                drawOnly: true,
-                lineTop: 200,
-                penWidth: 1,
-                lineWidth: 1
-            }
-        );
+        canvas.width = canvas.offsetWidth * ratio;
+        canvas.height = canvas.offsetHeight * ratio;
+        canvas.getContext('2d').scale(ratio, ratio);
+
+        signaturePad.clear()
+        signaturePad.fromData(data)
     }
+
+    signaturePad = new SignaturePad(canvas,
+        {
+            backgroundColor: 'transparent',
+            penColor: '#354A8F',
+            drawOnly: true,
+            lineTop: 200,
+            penWidth: 1,
+            lineWidth: 1
+        }
+    );
 
     resizeCanvas();
 

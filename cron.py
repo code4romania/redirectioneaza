@@ -42,7 +42,26 @@ class NgoExport(Handler):
         self.response.headers['Content-Disposition'] = 'attachment; filename="export.csv"'
         self.response.write(string)
 
+
+# used to make custom exports
+class CustomExport(Handler):
+    def get(self):
+        query_start = datetime(2022, 1, 27, 0, 0)
+
+        # ngos = NgoEntity.query().fetch()
+        donors = Donor.query(Donor.date_created >= query_start).fetch()
+        
+        string = 'Nume donator| Prenume donator| Email| A semnat| Link PDF| Nume asociatie| Email| Accepta formulare online\n'
+        for donor in donors:
+            ngo = donor.ngo.get()
+            string += u'{0}| {1}| {2}| {3}| {4}| {5}| {6}| {7}\n'.format(donor.first_name, donor.last_name, donor.email, donor.has_signed, donor.pdf_url,
+                ngo.name, ngo.email, ngo.accepts_forms)
+
+        self.response.headers['Content-Disposition'] = 'attachment; filename="export.csv"'
+        self.response.write(string)
+
 cron_routes = [
     r('/ngos/remove-form',  handler=NgoRemoveForms,    name="ngo-remove-form"),
-    r('/ngos/export',       handler=NgoExport)
+    r('/ngos/export',       handler=NgoExport),
+    r('/export/custom',       handler=CustomExport)
 ]

@@ -76,9 +76,9 @@ HTTP_HEADERS = {
     "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
 
     # don't allow the site to be embeded
-    "X-Frame-Options": "Deny",
+    # "X-Frame-Options": "Deny",
     "X-Content-Type-Options": "nosniff",
-    "X-XSS-Protection": "1; mode=block",
+    # "X-XSS-Protection": "1; mode=block",
     # "Content-Security-Policy": "default-src 'self'; script-src 'self' 'sha256-wwUprMhWJHcJgH7bVT8BB8TYRW7F8WDk5qBJvaLAsEw=' https://maxcdn.bootstrapcdn.com https://ajax.googleapis.com https://www.google.com https://www.gstatic.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://maxcdn.bootstrapcdn.com https://fonts.googleapis.com; img-src 'self' https://storage.googleapis.com/ https://www.google-analytics.com/; font-src 'self' https://fonts.gstatic.com https://maxcdn.bootstrapcdn.com; media-src 'none'; object-src 'none'; child-src https://www.google.com/recaptcha/; frame-ancestors 'none'; form-action 'self'; report-uri https://donezsieu.report-uri.io/r/default/csp/enforce;"
 }
 

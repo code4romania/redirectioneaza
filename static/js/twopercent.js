@@ -173,7 +173,6 @@ $(function () {
         if( grecaptcha && typeof grecaptcha.execute == "function" ) {
             grecaptcha.execute();
         }
-
     });
 
     window.onSubmit = function(token) {

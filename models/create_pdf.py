@@ -263,11 +263,16 @@ def add_signature(pdf, image):
     byte_image = BytesIO(base_image)
     # make this a svg2rlg object
     drawing = svg2rlg(byte_image)
-    # scale it down, from 750 x 150
-    drawing.scale(0.1, 0.1)
+
+    new_width = 90
+    scaled_down = (new_width / drawing.width)
+
+    # we want to scale the image down and stil keep it's aspect ratio
+    # the image might have dimensions of 750 x 200
+    drawing.scale(scaled_down, scaled_down)
 
     # add it to the PDF
-    renderPDF.draw(drawing, c, 168, 133)
+    renderPDF.draw(drawing, c, 166, 134)
 
     c.save()
     packet.seek(0)
