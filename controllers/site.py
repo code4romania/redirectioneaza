@@ -201,6 +201,7 @@ class HomePage(BaseHandler):
                 'asociatia-educatie-pentru-viata-reala',
                 'asociatia-pavel',
                 'asociatia-ropot',
+                'the-social-incubator',
                 'caravanacumedici',
                 'code-for-romania',
                 'envision',
