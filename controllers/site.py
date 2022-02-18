@@ -110,7 +110,7 @@ class HomePage(BaseHandler):
                 'ambasada-sustenabilitatii-in-romania',
                 'fundatia-motivation-romania',
                 'asociatia-little-people-romania',
-                'fundatia-hospice-casa-sperantei'
+                'fundatia-hospice-casa-sperantei',
                 'clubul-cainilor-utilitari',
                 'free-amely-2007',
             ]
@@ -195,18 +195,20 @@ class HomePage(BaseHandler):
 
         elif self.is_ing_subdomain:
             ing_ngos = [
-                'asociatia-ana-si-copiii',
+                'ambasada-sustenabilitatii-in-romania',
+                'asociatia-ateliere-fara-frontiere',
                 'asociatia-daruieste-aripi',
                 'asociatia-educatie-pentru-viata-reala',
                 'asociatia-pavel',
                 'asociatia-ropot',
-                'asociatia-mame',
-                'carusel',
+                'caravanacumedici',
                 'code-for-romania',
-                'fundatia-entreprenation',
+                'envision',
                 'fundatia-comunitara-bucuresti',
+                'fundatia-conservation-carpathia',
                 'fundatia-inima-de-copil',
-                'inimacopiilor',
+                'fundatia-motivation-romania',
+                'atca-asociatia-de-terapie-comportamentala-aplicata',
                 'viitorplus',
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in ing_ngos])
