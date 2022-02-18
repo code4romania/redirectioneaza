@@ -360,21 +360,6 @@ class HomePage(BaseHandler):
             ngos = get_multi([Key(NgoEntity, k) for k in nesle_ngos])
             self.template_values['company_name'] = u'NESTLÉ'
 
-        elif self.is_digi_subdomain:
-            digi_ngos = [
-                'angels-down-friends',
-                'asociatia-ateliere-fara-frontiere',
-                'asociatia-orizont-de-inger',
-                'casiopeea',
-                'code-for-romania',
-                'hopeandhomesromania',
-                'world-vision-romania',
-                'httpwwwsalvaticopiiirodoilasuta',
-                'sos-satele-copiilor-romania',
-            ]
-            ngos = get_multi([Key(NgoEntity, k) for k in digi_ngos])
-            self.template_values['company_name'] = 'DIGI'
-
         elif self.is_raiffeisen_subdomain:
             raiffeisen_ngos = [
                 'asociatia-civica',
