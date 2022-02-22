@@ -197,6 +197,7 @@ class HomePage(BaseHandler):
             ing_ngos = [
                 'ambasada-sustenabilitatii-in-romania',
                 'asociatia-ateliere-fara-frontiere',
+                'coalitia-pentru-economia-circulara-cerc',
                 'asociatia-daruieste-aripi',
                 'asociatia-educatie-pentru-viata-reala',
                 'asociatia-pavel',
