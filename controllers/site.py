@@ -310,6 +310,7 @@ class HomePage(BaseHandler):
                 'junior-achievement-romania',
                 'asociatia-lume-buna',
                 'asociatia-magic',
+                'asociatia-noel',
                 'ovidiuro',
                 'asociatia-pavel',
                 'padureacopiilor',
