@@ -485,6 +485,22 @@ class HomePage(BaseHandler):
             ngos = get_multi([Key(NgoEntity, k) for k in carrefour_ngos])
             self.template_values['company_name'] = 'Carrefour'
 
+        elif self.is_hella_subdomain:
+            hella_ngos = [
+                'asociatia-little-people-romania',
+                'asociatia-copii-si-zane',
+                'acasainbanat',
+                'solidart',
+                'fundatia-missio-link-international',
+                'fundatia-united-way-romania',
+                'asociatia-oncohelpp',
+                'asociatia-pieces-of-heaven',
+                'asociatia-aikon',
+                'educatia-la-sat',
+            ]
+            ngos = get_multi([Key(NgoEntity, k) for k in hella_ngos])
+            self.template_values['company_name'] = 'Hella'
+
         else:
             try:
                 list_keys = NgoEntity.query(NgoEntity.active == True).fetch(keys_only=True)
