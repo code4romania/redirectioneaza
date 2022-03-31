@@ -94,6 +94,7 @@ class BaseHandler(Handler):
             'dbo.redirectioneaza.ro',
             'ursus.redirectioneaza.ro',
             'carrefour.redirectioneaza.ro'
+            'hella.redirectioneaza.ro'
         ]
 
         self.is_ikea_subdomain = host == custom_subdomains[0]
@@ -111,6 +112,7 @@ class BaseHandler(Handler):
         self.is_dbo_subdomain = host == custom_subdomains[12]
         self.is_ursus_subdomain = host == custom_subdomains[13]
         self.is_carrefour_subdomain = host == custom_subdomains[14]
+        self.is_hella_subdomain = host == custom_subdomains[15]
 
         self.template_values['custom_subdomain'] = host in custom_subdomains
 
