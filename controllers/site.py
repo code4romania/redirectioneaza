@@ -487,16 +487,17 @@ class HomePage(BaseHandler):
 
         elif self.is_hella_subdomain:
             hella_ngos = [
+                'asociatia-aikon',
                 'asociatia-little-people-romania',
                 'asociatia-copii-si-zane',
                 'acasainbanat',
-                'solidart',
                 'fundatia-missio-link-international',
-                'fundatia-united-way-romania',
+                'life-is-better-with-friends',
+                'educatia-la-sat',
                 'asociatia-oncohelpp',
                 'asociatia-pieces-of-heaven',
-                'asociatia-aikon',
-                'educatia-la-sat',
+                'solidart',
+                'fundatia-united-way-romania',
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in hella_ngos])
             self.template_values['company_name'] = 'Hella'

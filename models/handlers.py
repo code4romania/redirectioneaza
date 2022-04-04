@@ -93,7 +93,7 @@ class BaseHandler(Handler):
             'rzbr.redirectioneaza.ro',
             'dbo.redirectioneaza.ro',
             'ursus.redirectioneaza.ro',
-            'carrefour.redirectioneaza.ro'
+            'carrefour.redirectioneaza.ro',
             'hella.redirectioneaza.ro'
         ]
 
