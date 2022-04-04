@@ -493,6 +493,7 @@ class HomePage(BaseHandler):
                 'solidart',
                 'fundatia-missio-link-international',
                 'fundatia-united-way-romania',
+                'life-is-better-with-friends',
                 'asociatia-oncohelpp',
                 'asociatia-pieces-of-heaven',
                 'asociatia-aikon',
