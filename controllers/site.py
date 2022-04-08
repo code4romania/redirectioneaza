@@ -487,16 +487,27 @@ class HomePage(BaseHandler):
 
         elif self.is_hella_subdomain:
             hella_ngos = [
+                'aiesec-craiova',
                 'asociatia-aikon',
+                'asociatia-alexandru-rosca-lugoj',
                 'asociatia-little-people-romania',
+                'asociatia-clubul-doamnelor-8-craiova',
+                'asociatia-club-sportiv-vointa-arad',
+                'asociatia-nationala-pentru-copii-si-adulti-cu-autism-din-romania-filiala-craiova',
                 'asociatia-copii-si-zane',
                 'acasainbanat',
+                'asociatia-hope-arad',
                 'fundatia-missio-link-international',
                 'life-is-better-with-friends',
                 'educatia-la-sat',
+                'asociatia-nevazatorilor-filiala-judeteana-arad',
                 'asociatia-oncohelpp',
                 'asociatia-pieces-of-heaven',
                 'solidart',
+                'asociatia-speologica-speowest-arad',
+                'asaeucv',
+                'asociatia-sportiva-tenis-club-ingrid-craiova',
+                'asociatia-pentru-promovarea-tinerilor-din-craiova',
                 'fundatia-united-way-romania',
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in hella_ngos])
