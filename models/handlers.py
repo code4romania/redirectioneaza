@@ -95,6 +95,7 @@ class BaseHandler(Handler):
             'ursus.redirectioneaza.ro',
             'carrefour.redirectioneaza.ro',
             'hella.redirectioneaza.ro'
+            'auchan.redirectioneaza.ro'
         ]
 
         self.is_ikea_subdomain = host == custom_subdomains[0]
@@ -113,6 +114,7 @@ class BaseHandler(Handler):
         self.is_ursus_subdomain = host == custom_subdomains[13]
         self.is_carrefour_subdomain = host == custom_subdomains[14]
         self.is_hella_subdomain = host == custom_subdomains[15]
+        self.is_auchan_subdomain = host == custom_subdomains[16]
 
         self.template_values['custom_subdomain'] = host in custom_subdomains
 
