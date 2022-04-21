@@ -531,6 +531,7 @@ class HomePage(BaseHandler):
                 'banca-regionala-pentru-alimente-constanta',
                 'banca-pentru-colectarea-si-distributia-alimentelor',
                 'code-for-romania',
+                'fundatia-fara',
                 'viitorplus',
                 'world-vision-romania',
                 'zi-de-bine',
