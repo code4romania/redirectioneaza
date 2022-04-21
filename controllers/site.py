@@ -515,25 +515,25 @@ class HomePage(BaseHandler):
 
         elif self.is_auchan_subdomain:
             auchan_ngos = [
-                'asociatia-ana-si-copiii',
-                'banca-pentru-colectarea-si-distributia-alimentelor',
-                'asociatia-bronx-people',
-                'asociatia-handicope',
-                'asociatia-touched-romania',
-                'world-vision-romania',
-                'asociatia-mame',
-                'viitorplus',
                 'asociatia-adi-hadean',
                 'asociatia-de-ajutor-amurtel',
-                'code-for-romania',
+                'asociatia-ana-si-copiii',
+                'asociatia-bronx-people',
                 'asociatia-casa-buna',
-                'banca-regionala-pentru-alimente-constanta',
+                'asociatia-handicope',
+                'asociatia-mame',
+                'asociatia-touched-romania',
+                'asociatia-banca-locala-pentru-alimente-roman',
                 'asociatia-banca-regionala-pentru-alimente-timisoara',
                 'bancadealimentecluj',
-                'zi-de-bine',
                 'banca-regionala-pentru-alimente-brasov',
-                'asociatia-banca-locala-pentru-alimente-roman',
                 'banca-pentru-alimente-oradea',
+                'banca-regionala-pentru-alimente-constanta',
+                'banca-pentru-colectarea-si-distributia-alimentelor',
+                'code-for-romania',
+                'viitorplus',
+                'world-vision-romania',
+                'zi-de-bine',
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in auchan_ngos])
             self.template_values['company_name'] = 'Auchan'
