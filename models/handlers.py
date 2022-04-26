@@ -78,45 +78,29 @@ class BaseHandler(Handler):
         """
 
         host = self.request.host
-        custom_subdomains = [
-            'ikea.redirectioneaza.ro',
-            'lidl.redirectioneaza.ro',
-            'jysk.redirectioneaza.ro',
-            'avon.redirectioneaza.ro',
-            'carturesti.redirectioneaza.ro',
-            'cez.redirectioneaza.ro',
-            'ing.redirectioneaza.ro',
-            'patria.redirectioneaza.ro',
-            'continental.redirectioneaza.ro',
-            'smartbill.redirectioneaza.ro',
-            'nestle.redirectioneaza.ro',
-            'rzbr.redirectioneaza.ro',
-            'dbo.redirectioneaza.ro',
-            'ursus.redirectioneaza.ro',
-            'carrefour.redirectioneaza.ro',
-            'hella.redirectioneaza.ro'
-            'auchan.redirectioneaza.ro'
-        ]
+        custom_subdomains = {
+            'ikea.redirectioneaza.ro': 'ikea',
+            'lidl.redirectioneaza.ro': 'lidl',
+            'jysk.redirectioneaza.ro': 'jysk',
+            'avon.redirectioneaza.ro': 'avon',
+            'carturesti.redirectioneaza.ro': 'carturesti',
+            'cez.redirectioneaza.ro': 'cez',
+            'ing.redirectioneaza.ro': 'ing',
+            'patria.redirectioneaza.ro': 'patria',
+            'continental.redirectioneaza.ro': 'continental',
+            'smartbill.redirectioneaza.ro': 'smartbill',
+            'nestle.redirectioneaza.ro': 'nestle',
+            'rzbr.redirectioneaza.ro': 'rzbr',
+            'dbo.redirectioneaza.ro': 'dbo',
+            'ursus.redirectioneaza.ro': 'ursus',
+            'carrefour.redirectioneaza.ro': 'carrefour',
+            'hella.redirectioneaza.ro': 'hella',
+            'auchan.redirectioneaza.ro': 'auchan'
+        }
 
-        self.is_ikea_subdomain = host == custom_subdomains[0]
-        self.is_lidl_subdomain = host == custom_subdomains[1]
-        self.is_jysk_subdomain = host == custom_subdomains[2]
-        self.is_avon_subdomain = host == custom_subdomains[3]
-        self.is_carturesti_subdomain = host == custom_subdomains[4]
-        self.is_cez_subdomain = host == custom_subdomains[5]
-        self.is_ing_subdomain = host == custom_subdomains[6]
-        self.is_patria_subdomain = host == custom_subdomains[7]
-        self.is_continental_subdomain = host == custom_subdomains[8]
-        self.is_smartbill_subdomain = host == custom_subdomains[9]
-        self.is_nestle_subdomain = host == custom_subdomains[10]
-        self.is_raiffeisen_subdomain = host == custom_subdomains[11]
-        self.is_dbo_subdomain = host == custom_subdomains[12]
-        self.is_ursus_subdomain = host == custom_subdomains[13]
-        self.is_carrefour_subdomain = host == custom_subdomains[14]
-        self.is_hella_subdomain = host == custom_subdomains[15]
-        self.is_auchan_subdomain = host == custom_subdomains[16]
+        self.custom_subdomain = custom_subdomains.get(host, None)
 
-        self.template_values['custom_subdomain'] = host in custom_subdomains
+        self.template_values['custom_subdomain'] = self.custom_subdomain is not None
 
         self.session_store = sessions.get_store(request=self.request)
         try:

@@ -23,7 +23,7 @@ class HomePage(BaseHandler):
         self.template_values["DEFAULT_NGO_LOGO"] = DEFAULT_NGO_LOGO
 
         # if we are on the ikea subdomain, load the special page
-        if self.is_ikea_subdomain:
+        if self.custom_subdomain == 'ikea':
             ikea_ngos = [
                 'asociatia-aura-ion',
                 'asociatia-caritas-bucuresti',
@@ -72,7 +72,7 @@ class HomePage(BaseHandler):
             ngos = get_multi([Key(NgoEntity, k) for k in ikea_ngos])
             self.template_values['company_name'] = 'IKEA'
 
-        elif self.is_lidl_subdomain:
+        elif self.custom_subdomain == 'lidl':
             lidl_ngos = [
                 'asociatia-banca-locala-pentru-alimente-roman',
                 'banca-pentru-alimente-oradea',
@@ -117,7 +117,7 @@ class HomePage(BaseHandler):
             ngos = get_multi([Key(NgoEntity, k) for k in lidl_ngos])
             self.template_values['company_name'] = 'LIDL'
 
-        elif self.is_jysk_subdomain:
+        elif self.custom_subdomain == 'jysk':
             jysk_ngos = [
                 'asociatia-anais',
                 'asociatia-autism-europa-centrul-de-resurse-si-referinta-in-autism-micul-print',
@@ -134,7 +134,7 @@ class HomePage(BaseHandler):
             ngos = get_multi([Key(NgoEntity, k) for k in jysk_ngos])
             self.template_values['company_name'] = 'JYSK'
 
-        elif self.is_avon_subdomain:
+        elif self.custom_subdomain == 'avon':
             avon_ngos = [
                 'asociatia-anais',
                 'caravanacumedici',
@@ -152,7 +152,7 @@ class HomePage(BaseHandler):
             ngos = get_multi([Key(NgoEntity, k) for k in avon_ngos])
             self.template_values['company_name'] = 'AVON'
 
-        elif self.is_carturesti_subdomain:
+        elif self.custom_subdomain == 'carturesti':
             carturesti_ngos = [
                 'ajungemmari',
                 'asociatia-magic',
@@ -165,7 +165,7 @@ class HomePage(BaseHandler):
             ngos = get_multi([Key(NgoEntity, k) for k in carturesti_ngos])
             self.template_values['company_name'] = 'CARTURESTI'
 
-        elif self.is_cez_subdomain:
+        elif self.custom_subdomain == 'cez':
             cez_ngos = [
                 'asociatia-little-people-romania',
                 'sonoro',
@@ -193,7 +193,7 @@ class HomePage(BaseHandler):
             ngos = get_multi([Key(NgoEntity, k) for k in cez_ngos])
             self.template_values['company_name'] = 'CEZ'
 
-        elif self.is_ing_subdomain:
+        elif self.custom_subdomain == 'ing':
             ing_ngos = [
                 'ambasada-sustenabilitatii-in-romania',
                 'asociatia-ateliere-fara-frontiere',
@@ -216,7 +216,7 @@ class HomePage(BaseHandler):
             ngos = get_multi([Key(NgoEntity, k) for k in ing_ngos])
             self.template_values['company_name'] = 'ING'
 
-        elif self.is_patria_subdomain:
+        elif self.custom_subdomain == 'patria':
             patria_ngos = [
                 'asociatia-administratorilor-de-piete-din-romania',
                 'asociatia-ana-si-copiii',
@@ -237,7 +237,7 @@ class HomePage(BaseHandler):
             ngos = get_multi([Key(NgoEntity, k) for k in patria_ngos])
             self.template_values['company_name'] = 'PATRIA BANK'
 
-        elif self.is_continental_subdomain:
+        elif self.custom_subdomain == 'continental':
             continental_ngos = [
                 'ajungemmari',
                 'ama-zambet-de-copil',
@@ -270,7 +270,7 @@ class HomePage(BaseHandler):
             ngos = get_multi([Key(NgoEntity, k) for k in continental_ngos])
             self.template_values['company_name'] = 'CONTINENTAL'
 
-        elif self.is_smartbill_subdomain:
+        elif self.custom_subdomain == 'smartbill':
             smartbill_ngos = [
                 'asociatia-de-poveste',
                 'la-primul-bebe',
@@ -287,7 +287,7 @@ class HomePage(BaseHandler):
             ngos = get_multi([Key(NgoEntity, k) for k in smartbill_ngos])
             self.template_values['company_name'] = 'SMARTBILL'
 
-        elif self.is_nestle_subdomain:
+        elif self.custom_subdomain == 'nestle':
             nesle_ngos = [
                 'calator-prin-romania',
                 'acasainbanat',
@@ -362,7 +362,7 @@ class HomePage(BaseHandler):
             ngos = get_multi([Key(NgoEntity, k) for k in nesle_ngos])
             self.template_values['company_name'] = u'NESTLÉ'
 
-        elif self.is_raiffeisen_subdomain:
+        elif self.custom_subdomain == 'raiffeisen':
             raiffeisen_ngos = [
                 'asociatia-civica',
                 'asociatia-coolturala-noua-ne-pasa',
@@ -400,7 +400,7 @@ class HomePage(BaseHandler):
             ngos = get_multi([Key(NgoEntity, k) for k in raiffeisen_ngos])
             self.template_values['company_name'] = 'Raiffeisen Bank'
 
-        elif self.is_dbo_subdomain:
+        elif self.custom_subdomain == 'dbo':
             dbo_ngos = [
                 'asociatia-cartierul-creativ',
                 'gaming-week',
@@ -410,7 +410,7 @@ class HomePage(BaseHandler):
             ngos = get_multi([Key(NgoEntity, k) for k in dbo_ngos])
             self.template_values['company_name'] = 'DBO People'
 
-        elif self.is_ursus_subdomain:
+        elif self.custom_subdomain == 'ursus':
             ursus_ngos = [
                 'asociatia-reality-check',
                 'freemiorita',
@@ -467,7 +467,7 @@ class HomePage(BaseHandler):
             self.template_values['custom_header'] = True
             self.template_values['custom_note'] = True
 
-        elif self.is_carrefour_subdomain:
+        elif self.custom_subdomain == 'carrefour':
             carrefour_ngos = [
                 'amais',
                 'asociatia-magic',
@@ -485,7 +485,7 @@ class HomePage(BaseHandler):
             ngos = get_multi([Key(NgoEntity, k) for k in carrefour_ngos])
             self.template_values['company_name'] = 'Carrefour'
 
-        elif self.is_hella_subdomain:
+        elif self.custom_subdomain == 'hella':
             hella_ngos = [
                 'aiesec-craiova',
                 'asociatia-aikon',
@@ -513,7 +513,7 @@ class HomePage(BaseHandler):
             ngos = get_multi([Key(NgoEntity, k) for k in hella_ngos])
             self.template_values['company_name'] = 'Hella'
 
-        elif self.is_auchan_subdomain:
+        elif self.custom_subdomain == 'auchan':
             auchan_ngos = [
                 'asociatia-adi-hadean',
                 'asociatia-de-ajutor-amurtel',

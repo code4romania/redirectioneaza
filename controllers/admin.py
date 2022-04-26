@@ -1,4 +1,5 @@
 
+from copy import deepcopy
 from logging import error
 from operator import itemgetter
 from datetime import datetime
@@ -14,6 +15,15 @@ from models.user import User
 
 from appengine_config import LIST_OF_COUNTIES, START_YEAR
 
+# dict used as cache
+stats_dict = {
+    "init": False,
+    "ngos": 0,
+    "forms": 0,
+    "years": {},
+    "counties": {}
+}
+
 """
 Handlers  for admin routing
 """
@@ -27,55 +37,74 @@ class AdminHome(BaseHandler):
             self.redirect(users.create_login_url("/admin"))
 
         self.template_values["title"] = "Admin"
-
-        try:
-            projection = [NgoEntity.county, NgoEntity.date_created]
-            ngos = NgoEntity.query().fetch(projection=projection)
-        except Exception, e:
-            error(e)
-            ngos = NgoEntity.query().fetch()
-
-        donations = Donor.query().fetch(projection=[Donor.date_created, Donor.county])
-
         now = datetime.now()
 
-        stats_dict = {
-            "ngos": len(ngos),
-            "forms": len(donations),
-            "years": {},
-            "counties": {}
-        }
-        for x in xrange(START_YEAR, now.year + 1):
-            stats_dict["years"][x] = {
-                "ngos": 0,
-                "forms": 0,
-            }
+        ngos = []
+        donations = []
+        from_date = datetime(now.year, 1, 1, 0, 0)
 
-        counties = LIST_OF_COUNTIES + ['1', '2', '3', '4', '5', '6', 'RO']
+        # if we don't have any data
+        if stats_dict["init"] == False:
+            try:
+                projection = [NgoEntity.county, NgoEntity.date_created]
+                ngos = NgoEntity.query(NgoEntity.date_created < from_date).fetch(projection=projection)
+            except Exception, e:
+                error(e)
+                ngos = NgoEntity.query(NgoEntity.date_created < from_date).fetch()
 
-        for county in counties:
-            stats_dict["counties"][county] = {
-                "ngos": 0,
-                "forms": 0,
-            }
+            donations = Donor.query(Donor.date_created < from_date).fetch(projection=[Donor.date_created, Donor.county])
 
-        for ngo in ngos:
-            if ngo.date_created.year in stats_dict["years"]:
-                stats_dict["years"][ngo.date_created.year]['ngos'] += 1
+            stats_dict['ngos'] = len(ngos)
+            stats_dict['forms'] = len(donations)
 
-            if ngo.county:
-                stats_dict["counties"][ngo.county]['ngos'] += 1
+            # init the rest of the dict
+            for x in xrange(START_YEAR, now.year + 1):
+                stats_dict["years"][x] = {
+                    "ngos": 0,
+                    "forms": 0,
+                }
 
-        for donation in donations:
-            if donation.date_created.year in stats_dict["years"]:
-                stats_dict["years"][donation.date_created.year]['forms'] += 1
+            counties = LIST_OF_COUNTIES + ['1', '2', '3', '4', '5', '6', 'RO']
 
-            stats_dict["counties"][donation.county]['forms'] += 1
+            for county in counties:
+                stats_dict["counties"][county] = {
+                    "ngos": 0,
+                    "forms": 0,
+                }
 
-        self.template_values["stats_dict"] = stats_dict
+            self.add_data(stats_dict, ngos, donations)
+
+            stats_dict["init"] = True
+
+
+        # just look at the last year
+        ngos = NgoEntity.query(NgoEntity.date_created >= from_date).fetch(projection=[NgoEntity.county, NgoEntity.date_created])
+        donations = Donor.query(Donor.date_created >= from_date).fetch(projection=[Donor.date_created, Donor.county])
+
+        stats = deepcopy(stats_dict)
+        stats['ngos'] = len(ngos) + stats_dict['ngos']
+        stats['forms'] = len(donations) + stats_dict['forms']
+
+        self.add_data(stats, ngos, donations)
+
+        self.template_values["stats_dict"] = stats
 
         # render a response
         self.render()
+
+    def add_data(self, obj, ngos, donations):
+        for ngo in ngos:
+            if ngo.date_created.year in obj["years"]:
+                obj["years"][ngo.date_created.year]['ngos'] += 1
+
+            if ngo.county:
+                obj["counties"][ngo.county]['ngos'] += 1
+
+        for donation in donations:
+            if donation.date_created.year in obj["years"]:
+                obj["years"][donation.date_created.year]['forms'] += 1
+
+            obj["counties"][donation.county]['forms'] += 1
 
 class AdminNgosList(BaseHandler):
     template_name = 'admin/ngos.html'

@@ -18,6 +18,11 @@ indexes:
 
 - kind: Donor
   properties:
+  - name: date_created
+  - name: county
+
+- kind: Donor
+  properties:
   - name: ngo
   - name: date_created
     direction: desc
@@ -66,3 +71,8 @@ indexes:
   - name: county
   - name: name
   - name: verified
+
+- kind: NgoEntity
+  properties:
+  - name: date_created
+  - name: county

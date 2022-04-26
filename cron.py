@@ -46,7 +46,7 @@ class NgoExport(Handler):
 # used to make custom exports
 class CustomExport(Handler):
     def get(self):
-        query_start = datetime(2022, 1, 27, 0, 0)
+        query_start = datetime(2022, 4, 1, 0, 0)
 
         # ngos = NgoEntity.query().fetch()
         donors = Donor.query(Donor.date_created >= query_start).fetch()
