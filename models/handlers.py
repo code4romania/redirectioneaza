@@ -95,7 +95,8 @@ class BaseHandler(Handler):
             'ursus.redirectioneaza.ro': 'ursus',
             'carrefour.redirectioneaza.ro': 'carrefour',
             'hella.redirectioneaza.ro': 'hella',
-            'auchan.redirectioneaza.ro': 'auchan'
+            'auchan.redirectioneaza.ro': 'auchan',
+            'loreal.redirectioneaza.ro': 'loreal',
         }
 
         self.custom_subdomain = custom_subdomains.get(host, None)
