@@ -542,6 +542,7 @@ class HomePage(BaseHandler):
         elif self.custom_subdomain == 'loreal':
             loreal_ngos = [
                 'asociatia-iele-sanziene',
+                'fundatia-cpe-centrul-parteneriat-pentru-egalitate',
                 'asociatia-touched-romania',
                 'aleg',
                 'asociatia-valentina-romania',
@@ -551,7 +552,7 @@ class HomePage(BaseHandler):
                 'fundatia-cmu-regina-maria',
                 'code-for-romania',
                 'ajungemmari',
-                'daruieste-viata'
+                'daruieste-viata',
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in loreal_ngos])
             self.template_values['company_name'] = u"L'Oréal"
