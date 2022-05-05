@@ -542,18 +542,18 @@ class HomePage(BaseHandler):
 
         elif self.custom_subdomain == 'loreal':
             loreal_ngos = [
+                'asociatia-ecoassist-iniiativa-plantam-fapte-bune-in-romania',
                 'asociatia-iele-sanziene',
-                'fundatia-cpe-centrul-parteneriat-pentru-egalitate',
-                'asociatia-touched-romania',
+                'ajungemmari',
                 'aleg',
                 'asociatia-valentina-romania',
-                'viitorplus',
-                'asociatia-ecoassist-iniiativa-plantam-fapte-bune-in-romania',
-                'fundatia-hospice-casa-sperantei',
-                'fundatia-cmu-regina-maria',
-                'code-for-romania',
-                'ajungemmari',
+                'asociatia-touched-romania',
                 'daruieste-viata',
+                'fundatia-cmu-regina-maria',
+                'fundatia-cpe-centrul-parteneriat-pentru-egalitate',
+                'fundatia-hospice-casa-sperantei',
+                'code-for-romania',
+                'viitorplus',
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in loreal_ngos])
             self.template_values['company_name'] = u"L'Oréal"
