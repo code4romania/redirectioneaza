@@ -540,6 +540,24 @@ class HomePage(BaseHandler):
             ngos = get_multi([Key(NgoEntity, k) for k in auchan_ngos])
             self.template_values['company_name'] = 'Auchan'
 
+        elif self.custom_subdomain == 'loreal':
+            loreal_ngos = [
+                'asociatia-iele-sanziene',
+                'fundatia-cpe-centrul-parteneriat-pentru-egalitate',
+                'asociatia-touched-romania',
+                'aleg',
+                'asociatia-valentina-romania',
+                'viitorplus',
+                'asociatia-ecoassist-iniiativa-plantam-fapte-bune-in-romania',
+                'fundatia-hospice-casa-sperantei',
+                'fundatia-cmu-regina-maria',
+                'code-for-romania',
+                'ajungemmari',
+                'daruieste-viata',
+            ]
+            ngos = get_multi([Key(NgoEntity, k) for k in loreal_ngos])
+            self.template_values['company_name'] = u"L'Oréal"
+
         else:
             try:
                 list_keys = NgoEntity.query(NgoEntity.active == True).fetch(keys_only=True)
