@@ -518,6 +518,7 @@ class HomePage(BaseHandler):
                 'asociatia-adi-hadean',
                 'asociatia-de-ajutor-amurtel',
                 'asociatia-ana-si-copiii',
+                'asociatia-ateliere-fara-frontiere',
                 'asociatia-bronx-people',
                 'asociatia-casa-buna',
                 'asociatia-handicope',
