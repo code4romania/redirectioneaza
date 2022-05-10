@@ -23,6 +23,16 @@ indexes:
 
 - kind: Donor
   properties:
+  - name: date_created
+  - name: pdf_url
+
+- kind: Donor
+  properties:
+  - name: has_signed
+  - name: pdf_url
+
+- kind: Donor
+  properties:
   - name: ngo
   - name: date_created
     direction: desc

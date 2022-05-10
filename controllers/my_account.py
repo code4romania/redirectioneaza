@@ -11,7 +11,7 @@ from google.appengine.api import mail
 from appengine_config import LIST_OF_COUNTIES, CONTACT_EMAIL_ADDRESS, START_YEAR, DONATION_LIMIT
 
 from models.handlers import AccountHandler, user_required
-from models.models import NgoEntity, Donor
+from models.models import NgoEntity, Donor, Job
 from models.user import User
 
 from api import check_ngo_url
@@ -37,6 +37,8 @@ class MyAccountHandler(AccountHandler):
         self.template_values["user"] = user
         self.template_values["title"] = "Contul meu"
         self.template_values['limit'] = DONATION_LIMIT
+
+        self.template_values['job_in_progress'] = Job.query(Job.ngo == user.ngo and Job.status == 'new').count() > 0
 
         now = datetime.datetime.now()
 

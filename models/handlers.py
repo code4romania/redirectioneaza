@@ -243,9 +243,9 @@ class BaseHandler(Handler):
 
         return True
 
-    def send_email(self, email_type, user, ngo=None):
+    def send_email(self, email_type, user, ngo=None, data={}):
 
-        if not user.email:
+        if not user or not user.email:
             return
 
         try:
@@ -350,6 +350,10 @@ class BaseHandler(Handler):
 
             warn(e)
 
+    def send_dynamic_email(self, template_id=None, email=None, data={}):
+        """Used to send email using sendgrid's dynamic templates"""
+
+        EmailManager.send_dynamic_email(template_id, email, data)
 
 def user_required(handler):
     """

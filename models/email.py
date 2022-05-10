@@ -20,6 +20,33 @@ class EmailManager(object):
     }
 
     @staticmethod
+    def send_dynamic_email(template_id, email, data):
+
+        if not DEV:
+            message = Mail(from_email=EmailManager.default_sender['email'], to_emails=email)
+            message.dynamic_template_data = data
+            message.template_id = template_id
+
+            try:
+                sg = sendgrid.SendGridAPIClient()
+                sg.send(message)
+            except Exception as e:
+                print(e)
+                return False
+
+            if response.status_code == 202:
+                return True
+            else:
+                warn(response.status_code)
+                warn(response.body)
+                return False
+        else:
+            info('Sending dynamic email. Template: {}. Email: {}'.format(template_id, email))
+            info('Data: {}'.format(data))
+
+            return True
+
+    @staticmethod
     def send_email(**kwargs):
         """
         kwargs:

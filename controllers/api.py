@@ -1,20 +1,22 @@
 
+import urllib2, urllib
+
 from datetime import datetime
 from hashlib import sha1
 
 from google.appengine.ext.ndb import Key
 from google.appengine.api import users, urlfetch
 
-from models.models import NgoEntity
+from models.models import NgoEntity, Donor, Job
 from models.handlers import BaseHandler, AccountHandler, user_required
 from models.storage import CloudStorage
 from models.create_pdf import create_pdf
 
-from appengine_config import USER_UPLOADS_FOLDER, DEFAULT_NGO_LOGO
+from appengine_config import PRODUCTION, USER_UPLOADS_FOLDER, DEFAULT_NGO_LOGO, DOMAIN, ZIP_WORKER
 
 from webapp2_extras import json, security
 
-from logging import info
+from logging import info, exception, warn
 
 
 def check_ngo_url(ngo_id=None):
@@ -99,6 +101,102 @@ class GetNgoForm(BaseHandler):
         ngo.put()
 
         self.redirect(str(ngo.form_url))
+
+
+class GetNgoForms(AccountHandler):
+
+    @user_required
+    def post(self):
+        ngo = self.user.ngo.get()
+
+        now = datetime.now()
+        start_of_year = datetime(now.year, 1, 1, 0, 0)
+
+        # get all the forms that have been completed since the start of the year
+        # and they are also signed
+        urls = Donor.query(Donor.date_created > start_of_year and Donor.has_signed == True).fetch(projection=['pdf_url'])
+        # extract only the urls from the array of models
+        urls = [u.pdf_url for u in urls]
+
+        # test data
+        # urls = [
+        #     "https://storage.googleapis.com/redirectioneaza/documents/202cb962ac59075b964b07152d234b70/112a1636d10a55105b9dd6477fd9ea3c6afa9c0c"
+        # ]
+
+        # if no forms
+        if len(urls) == 0:
+            return self.redirect(self.uri_for('contul-meu'))
+
+        # create job
+        job = Job(
+            ngo=ngo.key, 
+            owner=self.user.key
+        )
+        job.put()
+
+        export_folder = security.hash_password(ngo.key.id(), "md5") if PRODUCTION else 'development'
+        # make request
+        params = json.encode({
+            "urls": urls,
+            "path": "exports/{}/export-{}.zip".format(export_folder, job.key.id()),
+            "webhook": {
+                "url": "{}{}".format(DOMAIN, self.uri_for('webhook')),
+                "data": {
+                    "jobId": job.key.id()
+                }
+            }
+        })
+
+        request = urllib2.Request(
+            url = ZIP_WORKER,
+            data = params,
+            headers = {
+                "Content-type": "application/json"
+            }
+        )
+
+        try:
+            httpresp = urllib2.urlopen(request)
+
+            response = json.decode( httpresp.read() )
+            info(response)
+
+            httpresp.close()
+
+        except Exception, e:
+            exception(e)
+
+            # if job failed to start remotely
+            # job.key.delete()
+
+        finally:
+            self.redirect(self.uri_for('contul-meu'))
+
+
+class Webhook(BaseHandler):
+
+    def post(self):
+        body = json.decode(self.request.body)
+
+        data = body.get('data')
+        url = body.get('url')
+
+        # mark the job as done
+        job = Job.get_by_id(data.get('jobId'))
+
+        if not job:
+            exception('Received an webhook. Could not find job with id {}'.format(data.get('jobId')))
+
+        if job.status == 'done':
+            warn('Job with id {} is already done. Duplicate webhook'.format(job.key.id()))
+
+        job.status = 'done'
+        job.put()
+
+        owner = job.owner.get()
+
+        # send email
+        self.send_dynamic_email(template_id='d-312ab0a4221944e3ac728ae08c504a7c', email=owner.email, data={"link": url})
 
 class GetUploadUrl(AccountHandler):
 

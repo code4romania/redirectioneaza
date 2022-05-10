@@ -63,6 +63,11 @@ LIST_OF_COUNTIES = ['Alba', 'Arad', 'Arges', 'Bacau', 'Bihor', 'Bistrita-Nasaud'
 CONTACT_FORM_URL = "https://docs.google.com/forms/d/1PdigxpzW1omlTtexfu-gXEPEJmkiEltGLBaTQ8n-nk8/viewform"
 CONTACT_EMAIL_ADDRESS = "redirectioneaza@code4.ro"
 
+# the domain for the app
+# used to build urls that are sent outside
+DOMAIN = 'https://redirectioneaza' if PRODUCTION else 'http://127.0.0.1:8080'
+
+ZIP_WORKER = 'http://34.159.68.143/zip-docs' if PRODUCTION else 'http://localhost:8123/zip-docs'
 
 # ============================
 # Additional response headers

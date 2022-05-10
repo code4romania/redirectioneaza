@@ -96,16 +96,20 @@ class Donor(BaseEntity):
     filename = ndb.StringProperty(indexed=False)
 
     # if the document was signed
-    has_signed = ndb.BooleanProperty(indexed=False, default=False)
+    has_signed = ndb.BooleanProperty(indexed=True, default=False)
 
     # meta data
     date_created = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
 
 
-events = ["log-in", "form-submitted"]
-class Event(BaseEntity):
-    what = ndb.StringProperty(indexed=True, choices=events)
+class Job(BaseEntity):
+    """Keep track for download jobs"""
+    ngo = ndb.KeyProperty(indexed=True, kind="NgoEntity")
 
-    who = ndb.KeyProperty()
+    owner = ndb.KeyProperty(indexed=True, kind="User")
 
-    when = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
+    status = ndb.StringProperty(indexed=True, default='new', choices=['new', 'error', 'done'])
+
+    url = ndb.StringProperty()
+
+    date_created = ndb.DateTimeProperty(indexed=True, auto_now_add=True)
