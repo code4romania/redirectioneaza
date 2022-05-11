@@ -385,7 +385,7 @@ class HomePage(BaseHandler):
                 'fundatia-cmu-regina-maria',
                 'fundatia-leaders',
                 'fundatia-light-into-europe',
-                'fundatia-principesa-margareta-a-romaniei',
+                'fundatia-regala-margareta-a-romaniei',
                 'code-for-romania',
                 'junior-achievement-romania',
                 'ovidiuro',
