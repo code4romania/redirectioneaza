@@ -38,7 +38,9 @@ class MyAccountHandler(AccountHandler):
         self.template_values["title"] = "Contul meu"
         self.template_values['limit'] = DONATION_LIMIT
 
-        self.template_values['job_in_progress'] = Job.query(Job.ngo == user.ngo and Job.status == 'new').count() > 0
+        jobs = Job.query(Job.ngo == user.ngo).order(-Job.date_created).fetch()
+        self.template_values['jobs'] = jobs
+        self.template_values['job_in_progress'] = len([j for j in jobs if j.status == 'new']) > 0
 
         now = datetime.datetime.now()
 

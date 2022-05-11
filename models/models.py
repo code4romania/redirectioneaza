@@ -108,7 +108,7 @@ class Job(BaseEntity):
 
     owner = ndb.KeyProperty(indexed=True, kind="User")
 
-    status = ndb.StringProperty(indexed=True, default='new', choices=['new', 'error', 'done'])
+    status = ndb.StringProperty(indexed=False, default='new', choices=['new', 'error', 'done'])
 
     url = ndb.StringProperty()
 

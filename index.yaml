@@ -56,6 +56,12 @@ indexes:
   - name: last_name
   - name: tel
 
+- kind: Job
+  properties:
+  - name: ngo
+  - name: date_created
+    direction: desc
+
 - kind: NgoEntity
   properties:
   - name: county

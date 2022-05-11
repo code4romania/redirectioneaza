@@ -179,6 +179,7 @@ class Webhook(BaseHandler):
         body = json.decode(self.request.body)
 
         data = body.get('data')
+        error = body.get('error')
         url = body.get('url')
 
         # mark the job as done
@@ -190,7 +191,12 @@ class Webhook(BaseHandler):
         if job.status == 'done':
             warn('Job with id {} is already done. Duplicate webhook'.format(job.key.id()))
 
-        job.status = 'done'
+        if url:
+            job.url = url
+            job.status = 'done'
+        elif error:
+            job.status = 'error'
+
         job.put()
 
         owner = job.owner.get()
