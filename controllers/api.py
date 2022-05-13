@@ -137,6 +137,7 @@ class GetNgoForms(AccountHandler):
         export_folder = security.hash_password(ngo.key.id(), "md5") if PRODUCTION else 'development'
         # make request
         params = json.encode({
+            "passphrase": "",
             "urls": urls,
             "path": "exports/{}/export-{}.zip".format(export_folder, job.key.id()),
             "webhook": {
