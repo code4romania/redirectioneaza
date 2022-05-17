@@ -389,6 +389,7 @@ class HomePage(BaseHandler):
                 'code-for-romania',
                 'junior-achievement-romania',
                 'ovidiuro',
+                'peopleforsport',
                 'runinbucharest',
                 'teach-for-romania',
                 'the-social-incubator',
