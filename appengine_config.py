@@ -65,9 +65,10 @@ CONTACT_EMAIL_ADDRESS = "redirectioneaza@code4.ro"
 
 # the domain for the app
 # used to build urls that are sent outside
-DOMAIN = 'https://redirectioneaza' if PRODUCTION else 'http://127.0.0.1:8080'
+DOMAIN = 'https://redirectioneaza.ro' if PRODUCTION else 'http://127.0.0.1:8080'
 
-ZIP_WORKER = 'http://34.159.68.143/zip-docs' if PRODUCTION else 'http://localhost:8123/zip-docs'
+ZIP_ENDPOINT = os.environ.get('ZIPPY_ENDPOINT')
+ZIP_PASSPHRASE = os.environ.get('ZIPPY_PASSPHRASE')
 
 # ============================
 # Additional response headers

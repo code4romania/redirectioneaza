@@ -15,7 +15,7 @@ from logging import info, warn
 class EmailManager(object):
 
     default_sender = {
-        "name": "donezsi.eu",
+        "name": "redirectioneaza",
         "email": CONTACT_EMAIL_ADDRESS
     }
 
@@ -23,13 +23,15 @@ class EmailManager(object):
     def send_dynamic_email(template_id, email, data):
 
         if not DEV:
-            message = Mail(from_email=EmailManager.default_sender['email'], to_emails=email)
+            message = Mail()
+            message.from_email = From(EmailManager.default_sender['email'])
+            message.to = To(email)
             message.dynamic_template_data = data
             message.template_id = template_id
 
             try:
-                sg = sendgrid.SendGridAPIClient()
-                sg.send(message)
+                sg = sendgrid.SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+                response = sg.send(message)
             except Exception as e:
                 print(e)
                 return False

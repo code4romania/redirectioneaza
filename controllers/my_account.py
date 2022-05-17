@@ -8,7 +8,7 @@ from google.appengine.ext.ndb import put_multi, OR, Key
 from google.appengine.api import users
 from google.appengine.api import mail
 
-from appengine_config import LIST_OF_COUNTIES, CONTACT_EMAIL_ADDRESS, START_YEAR, DONATION_LIMIT
+from appengine_config import LIST_OF_COUNTIES, CONTACT_EMAIL_ADDRESS, START_YEAR, DONATION_LIMIT, DEV
 
 from models.handlers import AccountHandler, user_required
 from models.models import NgoEntity, Donor, Job
@@ -38,15 +38,17 @@ class MyAccountHandler(AccountHandler):
         self.template_values["title"] = "Contul meu"
         self.template_values['limit'] = DONATION_LIMIT
 
-        jobs = Job.query(Job.ngo == user.ngo).order(-Job.date_created).fetch()
-        self.template_values['jobs'] = jobs
-        self.template_values['job_in_progress'] = len([j for j in jobs if j.status == 'new']) > 0
-
         now = datetime.datetime.now()
 
         if user.ngo:
             ngo = user.ngo.get()
             self.template_values["ngo"] = ngo
+
+            if ngo.accepts_forms:
+                jobs = Job.query(Job.ngo == user.ngo).order(-Job.date_created).fetch()
+                self.template_values['jobs'] = jobs
+                self.template_values['job_in_progress'] = len([j for j in jobs if j.status == 'new']) > 0
+                self.template_values['show_download_button'] = DEV or ngo.key.id() == 'code-for-romania'
 
             # the url to distribute, use this instead of:
             # self.uri_for("ngo-url", ngo_url=ngo.key.id(), _full=True)

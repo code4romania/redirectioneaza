@@ -12,7 +12,7 @@ from models.handlers import BaseHandler, AccountHandler, user_required
 from models.storage import CloudStorage
 from models.create_pdf import create_pdf
 
-from appengine_config import PRODUCTION, USER_UPLOADS_FOLDER, DEFAULT_NGO_LOGO, DOMAIN, ZIP_WORKER
+from appengine_config import PRODUCTION, USER_UPLOADS_FOLDER, DEFAULT_NGO_LOGO, DOMAIN, ZIP_ENDPOINT, ZIP_PASSPHRASE
 
 from webapp2_extras import json, security
 
@@ -114,9 +114,10 @@ class GetNgoForms(AccountHandler):
 
         # get all the forms that have been completed since the start of the year
         # and they are also signed
-        urls = Donor.query(Donor.date_created > start_of_year and Donor.has_signed == True).fetch(projection=['pdf_url'])
+        urls = Donor.query(Donor.date_created > start_of_year and Donor.ngo == ngo.key).fetch()
+
         # extract only the urls from the array of models
-        urls = [u.pdf_url for u in urls]
+        urls = [u.pdf_url for u in urls if u.has_signed == True]
 
         # test data
         # urls = [
@@ -137,7 +138,7 @@ class GetNgoForms(AccountHandler):
         export_folder = security.hash_password(ngo.key.id(), "md5") if PRODUCTION else 'development'
         # make request
         params = json.encode({
-            "passphrase": "",
+            "passphrase": ZIP_PASSPHRASE,
             "urls": urls,
             "path": "exports/{}/export-{}.zip".format(export_folder, job.key.id()),
             "webhook": {
@@ -149,7 +150,7 @@ class GetNgoForms(AccountHandler):
         })
 
         request = urllib2.Request(
-            url = ZIP_WORKER,
+            url = ZIP_ENDPOINT,
             data = params,
             headers = {
                 "Content-type": "application/json"
@@ -168,7 +169,8 @@ class GetNgoForms(AccountHandler):
             exception(e)
 
             # if job failed to start remotely
-            # job.key.delete()
+            job.status = 'error'
+            job.put()
 
         finally:
             self.redirect(self.uri_for('contul-meu'))
@@ -179,15 +181,21 @@ class Webhook(BaseHandler):
     def post(self):
         body = json.decode(self.request.body)
 
-        data = body.get('data')
+        data = body.get('data', {})
+        job_id = body.get('jobId')
         error = body.get('error')
         url = body.get('url')
 
+        if not job_id:
+            exception('Did not receive jobId argument')
+            return
+
         # mark the job as done
-        job = Job.get_by_id(data.get('jobId'))
+        job = Job.get_by_id(job_id)
 
         if not job:
             exception('Received an webhook. Could not find job with id {}'.format(data.get('jobId')))
+            return
 
         if job.status == 'done':
             warn('Job with id {} is already done. Duplicate webhook'.format(job.key.id()))

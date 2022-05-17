@@ -292,6 +292,8 @@ class TwoPercentHandler(BaseHandler):
 
             return
 
+        ngo = self.ngo
+
         self.template_values["title"] = ngo.name
         # make sure the ngo shows a logo
         ngo.logo = ngo.logo if ngo.logo else DEFAULT_NGO_LOGO
