@@ -48,7 +48,6 @@ class MyAccountHandler(AccountHandler):
                 jobs = Job.query(Job.ngo == user.ngo).order(-Job.date_created).fetch()
                 self.template_values['jobs'] = jobs
                 self.template_values['job_in_progress'] = len([j for j in jobs if j.status == 'new']) > 0
-                self.template_values['show_download_button'] = DEV or ngo.key.id() == 'code-for-romania'
 
             # the url to distribute, use this instead of:
             # self.uri_for("ngo-url", ngo_url=ngo.key.id(), _full=True)

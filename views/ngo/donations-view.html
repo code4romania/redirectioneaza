@@ -10,7 +10,7 @@
             <p>{{ key }}</p>
 
             <div>
-                {% if key == current_year and ngo.accepts_forms and value and show_download_button %}
+                {% if key == current_year and ngo.accepts_forms and value %}
                     {% if job_in_progress %}
                         <div class="alert alert-info">
                             <strong>Atenție!</strong> Exportul datelor este în desfășurare. La finalizarea procesului vei primi un email cu un link de descărcare a tuturor formularelor care au fost semnate electronic. Dacă nu ai primit email, apasă butonul de refresh în această pagină și vei putea descărca arhiva direct de aici din platforma.
