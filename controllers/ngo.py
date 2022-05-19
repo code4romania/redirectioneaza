@@ -349,7 +349,7 @@ class FormSignature(BaseHandler):
         self.send_email("signed-form", self.donor)
         self.send_email("ngo-signed-form", self.donor, self.ngo)
 
-        self.session.pop("signature_required")
+        self.session.pop("signature_required", None)
 
         self.donor.has_signed = True
         self.donor.put()

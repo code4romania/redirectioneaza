@@ -14,6 +14,13 @@ indexes:
 - kind: Donor
   properties:
   - name: has_signed
+  - name: ngo
+  - name: date_created
+  - name: pdf_url
+
+- kind: Donor
+  properties:
+  - name: has_signed
   - name: pdf_url
 
 - kind: Donor

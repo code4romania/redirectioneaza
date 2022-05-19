@@ -8,7 +8,7 @@ from google.appengine.ext import ndb
 from models.handlers import Handler
 from models.models import NgoEntity, Donor
 
-from logging import info
+from logging import info, warn
 
 class NgoRemoveForms(Handler):
     
@@ -46,17 +46,32 @@ class NgoExport(Handler):
 # used to make custom exports
 class CustomExport(Handler):
     def get(self):
-        query_start = datetime(2022, 2, 1, 0, 0)
-        query_end = datetime(2022, 5, 1, 0, 0)
+        start_arg = self.request.get('start')
+        end_arg = self.request.get('end')
+
+        if not start_arg or not end_arg:
+            self.response.write('Missing start and end from URL. Format: ?start=23-1&end=19-5')
+            return
+
+        start_arg = start_arg.split('-')
+        end_arg = end_arg.split('-')
+        query_start = datetime(2022, int(start_arg[1]), int(start_arg[0]), 0, 0)
+        query_end = datetime(2022, int(end_arg[1]), int(end_arg[0]) + 1, 0, 0)
 
         # ngos = NgoEntity.query().fetch()
-        donors = Donor.query(Donor.date_created >= query_start and Donor.date_created < query_end).fetch()
-        
+        donors = Donor.query(ndb.AND(Donor.date_created >= query_start, Donor.date_created < query_end)).fetch()
+
+        info('Found {} donations'.format(len(donors)))
+
         string = 'Nume donator| Prenume donator| Email| A semnat| Link PDF| Nume asociatie| Email| Accepta formulare online\n'
         for donor in donors:
             ngo = donor.ngo.get()
-            string += u'{0}| {1}| {2}| {3}| {4}| {5}| {6}| {7}\n'.format(donor.first_name, donor.last_name, donor.email, donor.has_signed, donor.pdf_url,
-                ngo.name, ngo.email, ngo.accepts_forms)
+            if ngo:
+                string += u'{0}| {1}| {2}| {3}| {4}| {5}| {6}| {7}\n'.format(
+                    donor.first_name, donor.last_name, donor.email, donor.has_signed, donor.pdf_url,
+                    ngo.name, ngo.email, ngo.accepts_forms)
+            else:
+                warn('Could not find ngo for donation, ID: {}'.format(donor.key.id()))
 
         self.response.headers['Content-Disposition'] = 'attachment; filename="export.csv"'
         self.response.write(string)
@@ -64,5 +79,5 @@ class CustomExport(Handler):
 cron_routes = [
     r('/ngos/remove-form',  handler=NgoRemoveForms,    name="ngo-remove-form"),
     r('/ngos/export',       handler=NgoExport),
-    r('/export/custom',       handler=CustomExport)
+    r('/export/custom',     handler=CustomExport)
 ]

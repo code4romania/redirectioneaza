@@ -4,7 +4,7 @@ import urllib2, urllib
 from datetime import datetime
 from hashlib import sha1
 
-from google.appengine.ext.ndb import Key
+from google.appengine.ext.ndb import Key, AND
 from google.appengine.api import users, urlfetch
 
 from models.models import NgoEntity, Donor, Job
@@ -114,10 +114,12 @@ class GetNgoForms(AccountHandler):
 
         # get all the forms that have been completed since the start of the year
         # and they are also signed
-        urls = Donor.query(Donor.date_created > start_of_year and Donor.ngo == ngo.key).fetch()
+        urls = Donor.query(
+                AND(Donor.date_created > start_of_year, Donor.ngo == ngo.key, Donor.has_signed == True)
+            ).fetch(projection=['pdf_url'])
 
         # extract only the urls from the array of models
-        urls = [u.pdf_url for u in urls if u.has_signed == True]
+        urls = [u.pdf_url for u in urls]
 
         # test data
         # urls = [
