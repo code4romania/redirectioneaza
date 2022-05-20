@@ -114,12 +114,18 @@ class GetNgoForms(AccountHandler):
 
         # get all the forms that have been completed since the start of the year
         # and they are also signed
-        urls = Donor.query(
-                AND(Donor.date_created > start_of_year, Donor.ngo == ngo.key, Donor.has_signed == True)
-            ).fetch(projection=['pdf_url'])
+        donations = Donor.query(
+                AND(Donor.date_created > start_of_year, Donor.ngo == ngo.key)
+            ).fetch()
+
+                # TODO: why doesn't this work
+                # AND(Donor.date_created > start_of_year, Donor.ngo == ngo.key, Donor.has_signed == True)
+            # TODO: why doesn't this work
+            # https://stackoverflow.com/a/52017747
+            # ).fetch(projection=['pdf_url', 'has_signed'])
 
         # extract only the urls from the array of models
-        urls = [u.pdf_url for u in urls]
+        urls = [u.pdf_url for u in donations if u.has_signed]
 
         # test data
         # urls = [
@@ -128,6 +134,7 @@ class GetNgoForms(AccountHandler):
 
         # if no forms
         if len(urls) == 0:
+            warn('Could not find any signed forms for this ngo: {}'.format(ngo.key.id()))
             return self.redirect(self.uri_for('contul-meu'))
 
         # create job
@@ -160,12 +167,13 @@ class GetNgoForms(AccountHandler):
         )
 
         try:
-            httpresp = urllib2.urlopen(request)
+            pass
+            # httpresp = urllib2.urlopen(request)
 
-            response = json.decode( httpresp.read() )
-            info(response)
+            # response = json.decode( httpresp.read() )
+            # info(response)
 
-            httpresp.close()
+            # httpresp.close()
 
         except Exception, e:
             exception(e)
