@@ -167,13 +167,12 @@ class GetNgoForms(AccountHandler):
         )
 
         try:
-            pass
-            # httpresp = urllib2.urlopen(request)
+            httpresp = urllib2.urlopen(request)
 
-            # response = json.decode( httpresp.read() )
-            # info(response)
+            response = json.decode( httpresp.read() )
+            info(response)
 
-            # httpresp.close()
+            httpresp.close()
 
         except Exception, e:
             exception(e)

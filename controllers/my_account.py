@@ -53,26 +53,32 @@ class MyAccountHandler(AccountHandler):
             # self.uri_for("ngo-url", ngo_url=ngo.key.id(), _full=True)
             self.template_values["ngo_url"] = self.request.host + '/' + ngo.key.id() 
 
-            donor_projection = ['first_name', 'last_name', 'city', 'county', 'email', 'tel', 'anonymous', 'date_created']
-            donors = Donor.query(Donor.ngo == ngo.key).order(-Donor.date_created).fetch(projection=donor_projection)
-            
+            # TODO: add this back
+            # donor_projection = ['first_name', 'last_name', 'city', 'county', 'email', 'tel', 'anonymous', 'date_created']
+            donors = Donor.query(Donor.ngo == ngo.key).order(-Donor.date_created).fetch()
+
             years = xrange(now.year, START_YEAR-1, -1)
             grouped_donors = OrderedDict()
             for year in years:
                 grouped_donors[year] = []
             
 
+            # if the ngo has at leas one signed form this year
+            has_signed_form = False
+
             # group the donors by year
             for donor in donors:
-
                 index = donor.date_created.year
                 
                 if index in years:
                     grouped_donors[ index ].append(donor)
 
+                if donor.date_created.year == now.year and donor.has_signed:
+                    has_signed_form = True
+
             self.template_values["current_year"] = now.year
             self.template_values["donors"] = grouped_donors
-            # self.template_values["years"] = years
+            self.template_values["has_signed_form"] = has_signed_form
             
             can_donate = not now.date() > DONATION_LIMIT
 

@@ -17,7 +17,15 @@
                         </div>
                     {% endif %}
                     <form action="{{ uri_for('api-ngo-forms') }}" method="post">
-                        <button id="download-button" class="btn" type="submit">Descarcă formularele</button>
+                        {% if not has_signed_form %}
+                            <div class="alert alert-info">
+                                Organizația ta nu a primit niciun formular semnat digital încă, prin urmare nu poți descărca formularele.
+                            </div>
+                        {% endif %}
+                        <button id="download-button" class="btn" type="submit" 
+                            {% if not has_signed_form %}disabled{% endif %}>
+                            Descarcă formularele
+                        </button>
                     </form>
 
                     {% if jobs %}
