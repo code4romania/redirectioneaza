@@ -10,6 +10,20 @@ from models.models import NgoEntity, Donor
 
 from logging import info, warn
 
+class Migration(Handler):
+    """Used to create different migrations on the data"""
+
+    def get(self):
+        now = datetime.now()
+        start_of_year = datetime(now.year, 1, 1, 0, 0)
+        donations = Donor.query(Donor.date_created > start_of_year).fetch()
+
+        ndb.put_multi(donations)
+
+        self.response.write('OK')
+
+
+
 class NgoRemoveForms(Handler):
     
     def get(self):
@@ -77,6 +91,7 @@ class CustomExport(Handler):
         self.response.write(string)
 
 cron_routes = [
+    r('/migration',         handler=Migration),
     r('/ngos/remove-form',  handler=NgoRemoveForms,    name="ngo-remove-form"),
     r('/ngos/export',       handler=NgoExport),
     r('/export/custom',     handler=CustomExport)

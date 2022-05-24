@@ -115,13 +115,13 @@ class GetNgoForms(AccountHandler):
         # get all the forms that have been completed since the start of the year
         # and they are also signed
         donations = Donor.query(
-                AND(Donor.date_created > start_of_year, Donor.ngo == ngo.key)
+                # AND(Donor.date_created > start_of_year, Donor.ngo == ngo.key)
+                AND(Donor.has_signed == True, Donor.ngo == ngo.key)
             ).fetch()
 
-                # TODO: why doesn't this work
+                # TODO: problem with this query
+                # https://stackoverflow.com/a/52017747
                 # AND(Donor.date_created > start_of_year, Donor.ngo == ngo.key, Donor.has_signed == True)
-            # TODO: why doesn't this work
-            # https://stackoverflow.com/a/52017747
             # ).fetch(projection=['pdf_url', 'has_signed'])
 
         # extract only the urls from the array of models
