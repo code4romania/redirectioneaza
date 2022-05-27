@@ -13,6 +13,12 @@ indexes:
 
 - kind: Donor
   properties:
+  - name: date_created
+  - name: has_signed
+  - name: ngo
+
+- kind: Donor
+  properties:
   - name: has_signed
   - name: ngo
   - name: date_created

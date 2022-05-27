@@ -23,7 +23,7 @@
                             </div>
                         {% endif %}
                         <button id="download-button" class="btn" type="submit" 
-                            {% if not has_signed_form %}disabled{% endif %}>
+                            {% if not has_signed_form or not can_donate %}disabled{% endif %}>
                             Descarcă formularele
                         </button>
                     </form>

@@ -12,7 +12,7 @@ from models.handlers import BaseHandler, AccountHandler, user_required
 from models.storage import CloudStorage
 from models.create_pdf import create_pdf
 
-from appengine_config import PRODUCTION, USER_UPLOADS_FOLDER, DEFAULT_NGO_LOGO, DOMAIN, ZIP_ENDPOINT, ZIP_PASSPHRASE
+from appengine_config import PRODUCTION, USER_UPLOADS_FOLDER, DEFAULT_NGO_LOGO, DOMAIN, ZIP_ENDPOINT, ZIP_PASSPHRASE, DONATION_LIMIT
 
 from webapp2_extras import json, security
 
@@ -111,6 +111,9 @@ class GetNgoForms(AccountHandler):
 
         now = datetime.now()
         start_of_year = datetime(now.year, 1, 1, 0, 0)
+
+        if now.date() > DONATION_LIMIT:
+            return self.redirect(self.uri_for('contul-meu'))
 
         # get all the forms that have been completed since the start of the year
         # and they are also signed
