@@ -313,28 +313,34 @@
                     <a href="{{ form_url }}" class="btn-primary" itemprop="url" style="margin: 0;font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;box-sizing: border-box;font-size: 14px;color: #FFF;text-decoration: none;background-color: #348eda;border: solid #348eda;border-width: 10px 20px;line-height: 2em;font-weight: bold;text-align: center;cursor: pointer;display: inline-block;">Descarcă formularul completat de tine</a>
                   </td>
                 </tr>
+                {% if ngo.accepts_forms %}
                 <tr style="margin: 0;font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;box-sizing: border-box;font-size: 14px;">
                   <td class="content-block" style="margin: 0;font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;box-sizing: border-box;font-size: 14px;vertical-align: top;padding: 0 0 20px;">
                   Mai departe, va trebui să printezi și să semnezi acest formular. Apoi, ai următoarele opțiuni:
                   </td>
                 </tr>
-                {% if ngo.accepts_forms %}
                 <tr style="margin: 0;font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;box-sizing: border-box;font-size: 14px;">
                   <td class="content-block" style="margin: 0;font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;box-sizing: border-box;font-size: 14px;vertical-align: top;padding: 0 0 5px;">
                     - fie îl scanezi și îl trimiți pe e-mail ONG-ului si se ocupa ei de depunerea lui. Adresa de e-mail a ONG-ului este: {{ ngo.email }};
                   </td>
                 </tr>
-                {% endif %}
-                <tr style="margin: 0;font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;box-sizing: border-box;font-size: 14px;">
-                  <td class="content-block" style="margin: 0;font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;box-sizing: border-box;font-size: 14px;vertical-align: top;padding: 0 0 5px;">
-                    - fie îl trimiți prin poștă, cu scrisoare recomandată, către unitatea ANAF de care aparții;
-                  </td>
-                </tr>
                 <tr style="margin: 0;font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;box-sizing: border-box;font-size: 14px;">
                   <td class="content-block" style="margin: 0;font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;box-sizing: border-box;font-size: 14px;vertical-align: top;padding: 0 0 20px;">
-                    - fie îl trimiți prin curier sau poștă la adresa ONG-ului și se ocupă ei de depunerea lui. Adresele le vei găsi în paginile fiecărui ONG pe masură ce completezi. Desigur, poți să înmânezi formularul în persoană ONG-ului, dacă e cazul.
+                    - fie îl trimiți prin curier sau poștă la adresa ONG-ului și se ocupă ei de depunerea lui. Desigur, poți să înmânezi formularul în persoană ONG-ului, dacă e cazul.
                   </td>
                 </tr>
+                {% else %}
+                <tr style="margin: 0;font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;box-sizing: border-box;font-size: 14px;">
+                  <td class="content-block" style="margin: 0;font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;box-sizing: border-box;font-size: 14px;vertical-align: top;padding: 0 0 20px;">
+                    Mai departe, va trebui să printezi și să semnezi acest formular. Apoi, ai următoarea opțiune:
+                  </td>
+                </tr>
+                <tr style="margin: 0;font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;box-sizing: border-box;font-size: 14px;">
+                  <td class="content-block" style="margin: 0;font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;box-sizing: border-box;font-size: 14px;vertical-align: top;padding: 0 0 5px;">
+                    - îl trimiți prin curier sau poștă la adresa ONG-ului și se ocupă ei de depunerea lui. Desigur, poți să înmânezi formularul în persoană ONG-ului, dacă e cazul.
+                  </td>
+                </tr>
+                {% endif %}
                 <tr style="margin: 0;font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;box-sizing: border-box;font-size: 14px;">
                   <td class="content-block" style="margin: 0;font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;box-sizing: border-box;font-size: 14px;vertical-align: top;padding: 0 0 5px;">
                     <b>Datele organizației:</b>

@@ -37,7 +37,6 @@ template_settings = {
     "DEV": DEV,
     "PRODUCTION": PRODUCTION,
     "title": TITLE,
-    "contact_url": CONTACT_FORM_URL,
     "language": "ro",
     "base_url": "/",
     "months": MONTH_NAMES,
@@ -269,7 +268,6 @@ class BaseHandler(Handler):
 
             template_values = {
                 "name": user.last_name,
-                "contact_url": CONTACT_FORM_URL,
                 "url": verification_url,
                 "host": self.request.host
             }
@@ -286,7 +284,6 @@ class BaseHandler(Handler):
 
             template_values = {
                 "name": user.last_name,
-                "contact_url": CONTACT_FORM_URL,
                 "url": verification_url
             }
 

@@ -47,12 +47,14 @@ class AdminHome(BaseHandler):
         if stats_dict["init"] == False:
             try:
                 projection = [NgoEntity.county, NgoEntity.date_created]
-                ngos = NgoEntity.query(NgoEntity.date_created < from_date).fetch(projection=projection)
+                # ngos = NgoEntity.query(NgoEntity.date_created < from_date).fetch(projection=projection)
+                ngos = []
             except Exception, e:
                 error(e)
                 ngos = NgoEntity.query(NgoEntity.date_created < from_date).fetch()
 
-            donations = Donor.query(Donor.date_created < from_date).fetch(projection=[Donor.date_created, Donor.county])
+            # donations = Donor.query(Donor.date_created < from_date).fetch(projection=[Donor.date_created, Donor.county])
+            donations = []
 
             stats_dict['ngos'] = len(ngos)
             stats_dict['forms'] = len(donations)

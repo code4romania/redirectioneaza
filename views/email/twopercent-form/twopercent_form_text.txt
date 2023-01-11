@@ -1,13 +1,16 @@
 Îți mulțumim că ai ales să îți redirecționezi o parte din impozitul pe venit!
 
-Folosește acest link pentru a descărca formulatul completat de tine: 
+Descarcă formularul completat de tine
 {{ form_url }}
 
-Mai departe, va trebui să printezi și să semnezi acest formular. Apoi, ai trei opțiuni:
 {% if ngo.accepts_forms %}
-* fie îl scanezi și îl trimiți pe e-mail ONG-ului si se ocupa ei de depunerea lui. Adresa de e-mail a ONG-ului este: {{ ngo.email }};{% endif %}
-* fie îl trimiți prin poștă, cu scrisoare recomandată, către unitatea ANAF de care aparții;
-* fie îl trimiți prin curier sau poștă la adresa ONG-ului și se ocupă ei de depunerea lui. Adresele le vei găsi în paginile fiecărui ONG pe masură ce completezi. Desigur, poți să înmânezi formularul în persoană ONG-ului, dacă e cazul.
+Mai departe, va trebui să printezi și să semnezi acest formular. Apoi, ai următoarele opțiuni:
+- fie îl scanezi și îl trimiți pe e-mail ONG-ului si se ocupa ei de depunerea lui. Adresa de e-mail a ONG-ului este: {{ ngo.email }};
+- fie îl trimiți prin curier sau poștă la adresa ONG-ului și se ocupă ei de depunerea lui. Desigur, poți să înmânezi formularul în persoană ONG-ului, dacă e cazul.
+{% else %}
+Mai departe, va trebui să printezi și să semnezi acest formular. Apoi, ai următoarea opțiune:
+- îl trimiți prin curier sau poștă la adresa ONG-ului și se ocupă ei de depunerea lui. Desigur, poți să înmânezi formularul în persoană ONG-ului, dacă e cazul.
+{% endif %}
 
 Datele organizației:
 Nume: {{ ngo.name }}
@@ -16,5 +19,7 @@ Adresa: {{ ngo.address }}
 {% if ngo.tel %}Telefon: {{ ngo.tel }}{% endif %}
 
 Dacă vrei să fii un adevărat super-erou civic, descarcă formularul precompletat de pe pagina ONG-ului pe care vrei să îl susții, printează-l în mai multe exemplare și transmite-l colegilor, prietenilor și familiei și încurajează-i să redirecționeze.
+
+echipa redirectioneaza.ro
 
 Ai primit din greșeală acest email? Contactează-ne la redirectioneaza@code4.ro

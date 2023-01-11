@@ -4,7 +4,7 @@ import os
 
 from google.appengine.api.mail import EmailMessage
 
-from appengine_config import DEV, CONTACT_FORM_URL, CONTACT_EMAIL_ADDRESS
+from appengine_config import DEV, CONTACT_EMAIL_ADDRESS
 
 import sendgrid
 from sendgrid.helpers.mail import *
