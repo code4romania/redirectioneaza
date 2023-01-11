@@ -119,17 +119,17 @@ class HomePage(BaseHandler):
 
         elif self.custom_subdomain == 'jysk':
             jysk_ngos = [
-                'asociatia-anais',
                 'asociatia-autism-europa-centrul-de-resurse-si-referinta-in-autism-micul-print',
                 'asociatia-casa-buna',
                 'asociatia-ecoassist-iniiativa-plantam-fapte-bune-in-romania',
-                'asociatia-kinetobebe',
                 'asociatia-magic',
                 'asociatia-salvatorilor-montani-victoria',
                 'code-for-romania',
-                'comitetul-national-paralimpic',
-                'hopeandhomesromania',
                 'wwf',
+                'comitetul-national-paralimpic',
+                'hope-and-homes-for-children-romania',
+                'asociatia-reality-check',
+                'asociatia-club-alpin-zarnesti',
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in jysk_ngos])
             self.template_values['company_name'] = 'JYSK'
