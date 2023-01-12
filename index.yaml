@@ -14,6 +14,11 @@ indexes:
 - kind: Donor
   properties:
   - name: date_created
+  - name: county
+
+- kind: Donor
+  properties:
+  - name: date_created
   - name: has_signed
   - name: ngo
 

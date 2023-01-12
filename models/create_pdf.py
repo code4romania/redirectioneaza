@@ -264,8 +264,11 @@ def add_signature(pdf, image):
     # make this a svg2rlg object
     drawing = svg2rlg(byte_image)
 
-    new_width = 90
-    scaled_down = (new_width / drawing.width)
+    # we used to use width for scaling down but we move to height
+    # new_width = 90
+
+    new_height = 30
+    scaled_down = (new_height / drawing.height)
 
     # we want to scale the image down and stil keep it's aspect ratio
     # the image might have dimensions of 750 x 200
