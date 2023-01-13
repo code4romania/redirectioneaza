@@ -125,10 +125,9 @@ class HomePage(BaseHandler):
                 'asociatia-magic',
                 'asociatia-salvatorilor-montani-victoria',
                 'code-for-romania',
-                'hope-and-homes-for-children-romania',
+                'hopeandhomesromania',
                 'wwf',
                 'comitetul-national-paralimpic',
-                'hope-and-homes-for-children-romania',
                 'asociatia-reality-check',
                 'asociatia-club-alpin-zarnesti',
             ]
