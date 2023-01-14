@@ -14,8 +14,8 @@
                 <th>Nume ONG</th>
                 <th>Email</th>
                 <th>Județ</th>
-                <th>Cont asociat</th>
-                <th>Nr. donații</th>
+                {# <th>Cont asociat</th> #}
+                {# <th>Nr. donații</th> #}
             </tr>
         </thead>
         <tbody>
@@ -30,10 +30,10 @@
                             {{ ngo.email or '' }}
                         </td>
                         <td>{{ ngo.county }}</td>
-                        <td class="{{ 'success' if ngo.account_attached }}">
+                        {# <td class="{{ 'success' if ngo.account_attached }}">
                             {{ ngo.account_attached }}
-                        </td>
-                        <td>{{ ngo.number_of_donations }}</td>
+                        </td> #}
+                        {# <td>{{ ngo.number_of_donations }}</td> #}
                     </tr>
                 {% endfor %}
             {% else %}

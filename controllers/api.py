@@ -118,8 +118,8 @@ class GetNgoForms(AccountHandler):
         # get all the forms that have been completed since the start of the year
         # and they are also signed
         donations = Donor.query(
-                # AND(Donor.date_created > start_of_year, Donor.ngo == ngo.key)
-                AND(Donor.has_signed == True, Donor.ngo == ngo.key)
+                AND(Donor.has_signed == True, Donor.date_created > start_of_year, Donor.ngo == ngo.key)
+                # AND(Donor.has_signed == True, Donor.ngo == ngo.key)
             ).fetch()
 
                 # TODO: problem with this query

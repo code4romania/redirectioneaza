@@ -6,5 +6,6 @@ Formularul tău a fost trimis organizației. Îl poți vedea aici: {{ form_url }
 
 echipa redirectioneaza.ro
 
+Proiect realizat în totalitate prin implicarea voluntarilor Code for Romania. Pentru a ține proiecte ca acesta în viață și pentru a susține crearea unor noi aplicații de acest fel, puteți susține Code for Romania cu donație recurentă.
 
 Ai primit din greșeală acest email? Contactează-ne la redirectioneaza@code4.ro
