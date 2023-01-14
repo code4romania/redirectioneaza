@@ -128,7 +128,6 @@ class HomePage(BaseHandler):
                 'hopeandhomesromania',
                 'wwf',
                 'comitetul-national-paralimpic',
-                'hope-and-homes-for-children-romania',
                 'asociatia-reality-check',
                 'asociatia-club-alpin-zarnesti',
             ]
