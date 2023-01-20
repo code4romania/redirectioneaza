@@ -75,3 +75,7 @@ env_variables:
   SESSION_SECRET_KEY: ""
   CAPTCHA_PUBLIC_KEY: ""
   CAPTCHA_PRIVATE_KEY: ""
+  SMTP_HOST: ""
+  SMTP_PORT: ""
+  SMTP_USER: ""
+  SMTP_PASS: ""
