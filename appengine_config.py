@@ -60,7 +60,7 @@ BASE_ADMIN_LINK = "/admin"
 
 LIST_OF_COUNTIES = ['Alba', 'Arad', 'Arges', 'Bacau', 'Bihor', 'Bistrita-Nasaud', 'Botosani', 'Braila', 'Brasov', 'Buzau', 'Calarasi', 'Caras-Severin', 'Cluj', 'Constanta', 'Covasna', 'Dambovita', 'Dolj', 'Galati', 'Giurgiu', 'Gorj', 'Harghita', 'Hunedoara', 'Ialomita', 'Iasi', 'Ilfov', 'Maramures', 'Mehedinti', 'Mures', 'Neamt', 'Olt', 'Prahova', 'Salaj', 'Satu Mare', 'Sibiu', 'Suceava', 'Teleorman', 'Timis', 'Tulcea', 'Valcea', 'Vaslui', 'Vrancea']
 
-CONTACT_EMAIL_ADDRESS = "redirectioneaza@code4.ro"
+CONTACT_EMAIL_ADDRESS = "no-reply@redirectioneaza.ro"
 
 # the domain for the app
 # used to build urls that are sent outside

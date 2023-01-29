@@ -29,31 +29,30 @@ class EmailManager(object):
     @staticmethod
     def send_dynamic_email(template_id, email, data):
 
-        if not DEV:
-            message = Mail()
-            message.from_email = From(EmailManager.default_sender['email'])
-            message.to = To(email)
-            message.dynamic_template_data = data
-            message.template_id = template_id
-
-            try:
-                sg = sendgrid.SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
-                response = sg.send(message)
-            except Exception as e:
-                print(e)
-                return False
-
-            if response.status_code == 202:
-                return True
-            else:
-                warn(response.status_code)
-                warn(response.body)
-                return False
-        else:
+        if DEV:
             info('Sending dynamic email. Template: {}. Email: {}'.format(template_id, email))
             info('Data: {}'.format(data))
-
             return True
+
+        message = Mail()
+        message.from_email = From(EmailManager.default_sender['email'])
+        message.to = To(email)
+        message.dynamic_template_data = data
+        message.template_id = template_id
+
+        try:
+            sg = sendgrid.SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+            response = sg.send(message)
+        except Exception as e:
+            print(e)
+            return False
+
+        if response.status_code == 202:
+            return True
+        else:
+            warn(response.status_code)
+            warn(response.body)
+            return False
 
     @staticmethod
     def send_email(**kwargs):
@@ -67,44 +66,40 @@ class EmailManager(object):
             html_template
         """
 
-        # If there is no Sendgrid API Key, try to use the SMTP service
-        if not os.environ.get('SENDGRID_API_KEY'):
-            if not os.environ.get('SMTP_HOST') and not os.environ.get('SMTP_USER'):
-                error_message = "Cannot send emails! You have to set either the Sendgrid key or the SMTP details."
-                warn( error_message )
-                return False
-            else:
-                response = EmailManager.send_smtp_email(**kwargs)
-                if response is False:
-                    error_message = "Failed to send SMTP email: {0}{1}".format(kwargs.get("subject"), kwargs.get("receiver")["email"])
-                    warn( error_message )
-                    return False
-                else:
-                    return True
+        if DEV or kwargs.get("developement", False):
+            info('Called send_email() in DEV mode. Email not being sent.')
+            info(u'Receiver: {}. Subject: {}'.format(kwargs.get("receiver"), kwargs.get("subject")))
+            info(kwargs.get('text_template'))
+            
+            return True
 
-        # There is a Sendgrid API Key set
+        # make sure we have the SMTP env vars
+        if not os.environ.get('SMTP_HOST') and not os.environ.get('SMTP_USER'):
+            error_message = "Cannot send emails! You have to set either the Sendgrid key or the SMTP details."
+            warn( error_message )
+            return False
+
+        response = EmailManager.send_smtp_email(**kwargs)
+        if response:
+            return True
+
+        # if it failed through SMTP, try sendgrid as backup
+        warn("Failed to send SMTP email: {0}".format(kwargs.get("subject")))
+
         try:
-
             response = EmailManager.send_sendgrid_email(**kwargs)
 
             # if False then the send failed
             if response is False:
-                
-                # try appengine's mail API
-                response = EmailManager.send_appengine_email(**kwargs)
-                
-                # if this doesn't work either, give up
-                if response is False:
-                    error_message = "Failed to send email: {0}{1}".format(kwargs.get("subject"), kwargs.get("receiver")["email"])
-                    warn( error_message )
-                    return False
+                error_message = "Failed to send email: {0}".format(kwargs.get("subject"))
 
-            return True
+            return response
 
         except Exception, e:
             
             warn(e)
             return False
+
 
     @staticmethod
     def send_sendgrid_email(**kwargs):
@@ -141,70 +136,19 @@ class EmailManager(object):
         else:
             email.content = Content("text/plain", text_template)
 
-
-        if not DEV or not kwargs.get("developement", True):
-            sg = sendgrid.SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
-            response = sg.send(email)
-            
-            if response.status_code == 202:
-                return True
-            else:
-                
-                warn(response.status_code)
-                warn(response.body)
-
-                return False
+        sg = sendgrid.SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+        response = sg.send(email)
+        
+        if response.status_code == 202:
+            return True
         else:
-            info(email.get()['personalizations'])
-
-            content = email.get()['content']
-            if content:
-                info( content[0]['value'] )
             
-                if len(content) == 2:
-                    info( content[1] )
-            
-            return True
- 
-    @staticmethod
-    def send_appengine_email(**kwargs):
-
-        receiver = kwargs.get("receiver")
-        sender = kwargs.get("sender", EmailManager.default_sender)
-        subject = kwargs.get("subject")
-
-        # email content
-        text_template = kwargs.get("text_template")
-        html_template = kwargs.get("html_template", "")
-
-        # we must format the email address in this way
-        receiver_address = "{0} <{1}>".format(receiver["name"], receiver["email"])
-        sender_address = "{0} <{1}>".format(sender["name"], sender["email"])
-
-        try:
-            # create a new email object
-            message = EmailMessage(sender=sender_address, to=receiver_address, subject=subject)
-
-            # add the text body
-            message.body = text_template
-
-            if html_template:
-                message.html = html_template
-
-            if DEV:
-                info(message.body)
-
-            # send the email
-            # on dev the email is not actually sent just logged in the terminal
-            message.send()
-
-            return True
-
-        except Exception, e:
-            warn(e)
+            warn(response.status_code)
+            warn(response.body)
 
             return False
 
+ 
     @staticmethod
     def send_smtp_email(**kwargs):
 
