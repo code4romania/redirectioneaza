@@ -77,8 +77,12 @@
                 {% if ngo.tel or ngo.email %}
                     <div class="col-xs-12 col-md-8 col-md-offset-2 ngo-details">
                         Dacă dorești să iei legatura cu organizația pentru colectarea formularului sau alte informații, o poți face la: <br>
-                        {{ "Telefon: {0}".format(ngo.tel) if ngo.tel }} <br>
-                        {{ "Email: {0}".format(ngo.email) if ngo.email }}
+                        {% if ngo.tel %}
+                            Telefon: {{ ngo.tel }} <br>
+                        {% endif %}
+                        {% if ngo.email %}
+                            Email: {{ ngo.email }}
+                        {% endif %}
                     </div>
                 {% endif %}
             </div>
