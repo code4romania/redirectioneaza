@@ -1,6 +1,13 @@
 # -*- coding: utf-8 -*-
 
+# We need this in order to differentiate between the local and the
+# standard email libraries
+from __future__ import absolute_import
+
 import os
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 from google.appengine.api.mail import EmailMessage
 
@@ -60,6 +67,22 @@ class EmailManager(object):
             html_template
         """
 
+        # If there is no Sendgrid API Key, try to use the SMTP service
+        if not os.environ.get('SENDGRID_API_KEY'):
+            if not os.environ.get('SMTP_HOST') and not os.environ.get('SMTP_USER'):
+                error_message = "Cannot send emails! You have to set either the Sendgrid key or the SMTP details."
+                warn( error_message )
+                return False
+            else:
+                response = EmailManager.send_smtp_email(**kwargs)
+                if response is False:
+                    error_message = "Failed to send SMTP email: {0}{1}".format(kwargs.get("subject"), kwargs.get("receiver")["email"])
+                    warn( error_message )
+                    return False
+                else:
+                    return True
+
+        # There is a Sendgrid API Key set
         try:
 
             response = EmailManager.send_sendgrid_email(**kwargs)
@@ -174,6 +197,48 @@ class EmailManager(object):
             # send the email
             # on dev the email is not actually sent just logged in the terminal
             message.send()
+
+            return True
+
+        except Exception, e:
+            warn(e)
+
+            return False
+
+    @staticmethod
+    def send_smtp_email(**kwargs):
+
+        receiver = kwargs.get("receiver")
+        sender = kwargs.get("sender", EmailManager.default_sender)
+        subject = kwargs.get("subject")
+
+        # email content
+        text_template = kwargs.get("text_template")
+        html_template = kwargs.get("html_template", "")
+
+        # we must format the email address in this way
+        receiver_address = "{0} <{1}>".format(receiver["name"], receiver["email"])
+        sender_address = "{0} <{1}>".format(sender["name"], sender["email"])
+
+        message = MIMEMultipart('alternative')
+        message['Subject'] = subject
+        message['From'] = sender_address
+        message['To'] = receiver_address
+
+        text_version = MIMEText((text_template or '').encode('utf-8'), 'plain', 'utf-8')
+        html_version = MIMEText((html_template or '').encode('utf-8'), 'html', 'utf-8')
+        
+        message.attach(text_version)
+        if html_template:
+            message.attach(html_version)
+
+        try:
+            smtp = smtplib.SMTP(os.environ.get('SMTP_HOST'), port=os.environ.get('SMTP_PORT'))
+            smtp.ehlo()
+            smtp.starttls()
+            smtp.login(os.environ.get('SMTP_USER'), os.environ.get('SMTP_PASS'))
+            smtp.sendmail(sender_address, receiver_address, message.as_string())
+            smtp.quit()
 
             return True
 
