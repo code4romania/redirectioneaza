@@ -118,13 +118,13 @@ class EmailManager(object):
         subject = kwargs.get("subject", "").encode("utf-8")
 
         # email content
-        text_template = kwargs.get("text_template", "").encode("utf-8")
-        html_template = kwargs.get("html_template", "").encode("utf-8")
+        text_template = kwargs.get("text_template")
+        html_template = kwargs.get("html_template", "")
 
         email = Mail()
 
-        email.from_email = From(sender["email"].encode("utf-8"), sender["name"].encode("utf-8"))
-        email.to = To(receiver["email"].encode("utf-8"), receiver["name"].encode("utf-8"))
+        email.from_email = From(sender["email"], sender["name"])
+        email.to = To(receiver["email"], receiver["name"])
 
         email.subject = Subject(subject)
 
@@ -158,7 +158,6 @@ class EmailManager(object):
 
         # email content
         text_template = kwargs.get("text_template", "").encode("utf-8")
-        html_template = kwargs.get("html_template", "").encode("utf-8")
 
         # we must format the email address in this way
         receiver_address = "{0} <{1}>".format(receiver["name"], receiver["email"]).encode("utf-8")
@@ -170,10 +169,13 @@ class EmailManager(object):
         message['To'] = receiver_address
 
         text_version = MIMEText(text_template, 'plain', 'utf-8')
-        html_version = MIMEText(html_template, 'html', 'utf-8')
         
         message.attach(text_version)
-        if html_template:
+
+        # if we have an html version
+        if kwargs.get('html_template'):
+            html_template = kwargs.get("html_template", "").encode("utf-8")
+            html_version = MIMEText(html_template, 'html', 'utf-8')
             message.attach(html_version)
 
         try:

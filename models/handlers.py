@@ -6,7 +6,7 @@ import jinja2
 import urlparse
 import logging
 
-from logging import info, warn
+from logging import info, warn, exception
 
 # globals
 from appengine_config import *
@@ -148,7 +148,7 @@ class BaseHandler(Handler):
 
             self.response.write( json.encode(obj, default=json_serial) )
         except Exception, e:
-            warn(e)
+            exception(e)
 
             obj = {
                 "error": "Error when trying to json encode the response"
@@ -344,8 +344,7 @@ class BaseHandler(Handler):
             EmailManager.send_email(sender=sender, receiver=receiver, subject=subject, text_template=text_body, html_template=html_body)
 
         except Exception, e:
-
-            warn(e)
+            exception(e)
 
     def send_dynamic_email(self, template_id=None, email=None, data={}):
         """Used to send email using sendgrid's dynamic templates"""
