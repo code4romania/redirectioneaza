@@ -154,23 +154,23 @@ class EmailManager(object):
 
         receiver = kwargs.get("receiver")
         sender = kwargs.get("sender", EmailManager.default_sender)
-        subject = kwargs.get("subject")
+        subject = kwargs.get("subject", "").encode("utf-8")
 
         # email content
-        text_template = kwargs.get("text_template")
-        html_template = kwargs.get("html_template", "")
+        text_template = kwargs.get("text_template", "").encode("utf-8")
+        html_template = kwargs.get("html_template", "").encode("utf-8")
 
         # we must format the email address in this way
-        receiver_address = "{0} <{1}>".format(receiver["name"], receiver["email"])
-        sender_address = "{0} <{1}>".format(sender["name"], sender["email"])
+        receiver_address = "{0} <{1}>".format(receiver["name"], receiver["email"]).encode("utf-8")
+        sender_address = "{0} <{1}>".format(sender["name"], sender["email"]).encode("utf-8")
 
         message = MIMEMultipart('alternative')
         message['Subject'] = subject
         message['From'] = sender_address
         message['To'] = receiver_address
 
-        text_version = MIMEText((text_template or '').encode('utf-8'), 'plain', 'utf-8')
-        html_version = MIMEText((html_template or '').encode('utf-8'), 'html', 'utf-8')
+        text_version = MIMEText(text_template, 'plain', 'utf-8')
+        html_version = MIMEText(html_template, 'html', 'utf-8')
         
         message.attach(text_version)
         if html_template:
