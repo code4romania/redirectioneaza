@@ -71,10 +71,11 @@ handlers:
 
 env_variables:
   BUCKET_NAME: "redirectioneaza"
-  SENDGRID_API_KEY: ""
+
   SESSION_SECRET_KEY: ""
   CAPTCHA_PUBLIC_KEY: ""
   CAPTCHA_PRIVATE_KEY: ""
+
   SMTP_HOST: ""
   SMTP_PORT: ""
   SMTP_USER: ""
