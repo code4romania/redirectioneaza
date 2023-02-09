@@ -11,7 +11,7 @@ from email.mime.text import MIMEText
 
 from google.appengine.api.mail import EmailMessage
 
-from appengine_config import DEV, CONTACT_EMAIL_ADDRESS
+from appengine_config import DEV, UNICODE_CONTACT_EMAIL_ADDRESS
 
 import sendgrid
 from sendgrid.helpers.mail import *
@@ -22,8 +22,8 @@ from logging import info, warn
 class EmailManager(object):
 
     default_sender = {
-        "name": "redirectioneaza",
-        "email": CONTACT_EMAIL_ADDRESS
+        "name": u"redirectioneaza",
+        "email": UNICODE_CONTACT_EMAIL_ADDRESS,
     }
 
     @staticmethod
@@ -152,7 +152,7 @@ class EmailManager(object):
     @staticmethod
     def send_smtp_email(**kwargs):
 
-        receiver = kwargs.get("receiver")
+        receiver = kwargs.get("receiver")  # dict
         sender = kwargs.get("sender", EmailManager.default_sender)
         subject = kwargs.get("subject", "").encode("utf-8")
 
@@ -160,8 +160,8 @@ class EmailManager(object):
         text_template = kwargs.get("text_template", "").encode("utf-8")
 
         # we must format the email address in this way
-        receiver_address = "{0} <{1}>".format(receiver["name"], receiver["email"]).encode("utf-8")
-        sender_address = "{0} <{1}>".format(sender["name"], sender["email"]).encode("utf-8")
+        receiver_address = u"{0} <{1}>".format(receiver["name"], receiver["email"]).encode("utf-8")
+        sender_address = u"{0} <{1}>".format(sender["name"], sender["email"]).encode("utf-8")
 
         message = MIMEMultipart('alternative')
         message['Subject'] = subject

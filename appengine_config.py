@@ -62,6 +62,14 @@ LIST_OF_COUNTIES = ['Alba', 'Arad', 'Arges', 'Bacau', 'Bihor', 'Bistrita-Nasaud'
 
 CONTACT_EMAIL_ADDRESS = "no-reply@redirectioneaza.ro"
 
+
+# Make sure that we have an unicode email address instead of a bytestring
+if isinstance(CONTACT_EMAIL_ADDRESS, unicode):
+    UNICODE_CONTACT_EMAIL_ADDRESS = CONTACT_EMAIL_ADDRESS
+else:
+    UNICODE_CONTACT_EMAIL_ADDRESS = CONTACT_EMAIL_ADDRESS.decode("utf-8")
+
+
 # the domain for the app
 # used to build urls that are sent outside
 DOMAIN = 'https://redirectioneaza.ro' if PRODUCTION else 'http://127.0.0.1:8080'

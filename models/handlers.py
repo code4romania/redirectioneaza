@@ -250,14 +250,14 @@ class BaseHandler(Handler):
         try:
             receiver = {
                 "name": u"{0} {1}".format(user.first_name, user.last_name),
-                "email": user.email
+                "email": u"{0}".format(user.email)
             }
         except Exception, e:
             warn(e)
             return
 
         if email_type == "signup":
-            subject = "Confirmare cont redirectioneaza.ro"
+            subject = u"Confirmare cont redirectioneaza.ro"
 
             user_id = user.get_id()
             token = self.user_model.create_signup_token(user_id)
@@ -320,7 +320,7 @@ class BaseHandler(Handler):
             if ngo.email:
                 receiver = {
                     "name": u"{0}".format(ngo.name),
-                    "email": ngo.email
+                    "email": u"{0}".format(ngo.email),
                 }
             else:
                 receiver = None
@@ -333,8 +333,8 @@ class BaseHandler(Handler):
             html_body = html_template.render(template_values) if html_template else None
 
             sender = {
-                "name": "redirectioneaza",
-                "email": CONTACT_EMAIL_ADDRESS
+                "name": u"redirectioneaza",
+                "email": UNICODE_CONTACT_EMAIL_ADDRESS,
             }
 
             # no email for receiver, return
