@@ -67,7 +67,7 @@ class EmailManager(object):
         """
 
         if DEV or kwargs.get("developement", False):
-            info('Called send_email() in DEV mode. Email not being sent.')
+            info(u'Called send_email() in DEV mode. Email not being sent.')
             info(u'Receiver: {}. Subject: {}'.format(kwargs.get("receiver"), kwargs.get("subject")))
             info(kwargs.get('text_template'))
             
@@ -75,7 +75,7 @@ class EmailManager(object):
 
         # make sure we have the SMTP env vars
         if not os.environ.get('SMTP_HOST') and not os.environ.get('SMTP_USER'):
-            error_message = "Cannot send emails! You have to set either the Sendgrid key or the SMTP details."
+            error_message = u"Cannot send emails! You have to set either the Sendgrid key or the SMTP details."
             warn( error_message )
             return False
 
@@ -84,14 +84,14 @@ class EmailManager(object):
             return True
 
         # if it failed through SMTP, try sendgrid as backup
-        warn("Failed to send SMTP email: {0}".format(kwargs.get("subject")))
+        warn(u"Failed to send SMTP email: {0}".format(kwargs.get("subject")))
 
         try:
             response = EmailManager.send_sendgrid_email(**kwargs)
 
             # if False then the send failed
             if response is False:
-                error_message = "Failed to send email: {0}".format(kwargs.get("subject"))
+                error_message = u"Failed to send email: {0}".format(kwargs.get("subject"))
 
             return response
 
