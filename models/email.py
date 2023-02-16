@@ -8,6 +8,7 @@ import os
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from email.header import Header
 
 from google.appengine.api.mail import EmailMessage
 
@@ -159,9 +160,11 @@ class EmailManager(object):
         # email content
         text_template = kwargs.get("text_template", "").encode("utf-8")
 
-        # we must format the email address in this way
-        receiver_address = u"{0} <{1}>".format(receiver["name"], receiver["email"]).encode("utf-8")
-        sender_address = u"{0} <{1}>".format(sender["name"], sender["email"]).encode("utf-8")
+        receiver_address = Header(receiver["name"], "utf-8")
+        receiver_address.append("<{0}>".format(receiver["email"]), "ascii")
+
+        sender_address = Header(sender["name"], "utf-8")
+        sender_address.append("<{0}>".format(sender["email"]), "ascii")
 
         message = MIMEMultipart('alternative')
         message['Subject'] = subject
