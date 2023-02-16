@@ -84,21 +84,21 @@ class EmailManager(object):
             return True
 
         # if it failed through SMTP, try sendgrid as backup
-        warn(u"Failed to send SMTP email: {0}".format(kwargs.get("subject")))
+        warn(u"Failed to send SMTP email: {0} {1}".format(
+            kwargs.get("receiver", ""), kwargs.get("subject", "")))
 
         try:
             response = EmailManager.send_sendgrid_email(**kwargs)
-
-            # if False then the send failed
-            if response is False:
-                error_message = u"Failed to send email: {0}".format(kwargs.get("subject"))
-
-            return response
-
-        except Exception, e:
-            
+        except Exception as e:
+            warn(type(e).__name__)
             warn(e)
-            return False
+
+        # if the response is still False then the send failed
+        if response is False:
+            warn(u"Failed to send Sendgrid email: {0} {1}".format(
+                kwargs.get("receiver", ""), kwargs.get("subject", "")))
+
+        return response
 
 
     @staticmethod
@@ -142,10 +142,8 @@ class EmailManager(object):
         if response.status_code == 202:
             return True
         else:
-            
             warn(response.status_code)
             warn(response.body)
-
             return False
 
  
@@ -188,7 +186,8 @@ class EmailManager(object):
 
             return True
 
-        except Exception, e:
+        except Exception as e:
+            warn(type(e).__name__)
             warn(e)
 
             return False

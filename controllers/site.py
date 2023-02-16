@@ -564,7 +564,7 @@ class HomePage(BaseHandler):
                 list_keys = sample(list_keys, 4)
 
                 ngos = get_multi(list_keys)
-            except Exception, e:
+            except Exception as e:
                 info(e)
                 ngos = NgoEntity.query(NgoEntity.active == True).fetch(4)
 

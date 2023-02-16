@@ -177,7 +177,7 @@ class GetNgoForms(AccountHandler):
 
             httpresp.close()
 
-        except Exception, e:
+        except Exception as e:
             exception(e)
 
             # if job failed to start remotely

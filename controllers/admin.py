@@ -49,7 +49,7 @@ class AdminHome(BaseHandler):
                 projection = [NgoEntity.county, NgoEntity.date_created]
                 # ngos = NgoEntity.query(NgoEntity.date_created < from_date).fetch(projection=projection)
                 ngos = []
-            except Exception, e:
+            except Exception as e:
                 error(e)
                 ngos = NgoEntity.query(NgoEntity.date_created < from_date).fetch()
 
@@ -122,7 +122,7 @@ class AdminNgosList(BaseHandler):
         try:
             projection = [NgoEntity.name, NgoEntity.county, NgoEntity.verified, NgoEntity.email]
             ngos = NgoEntity.query().fetch(projection=projection)
-        except Exception, e:
+        except Exception as e:
             ngos = NgoEntity.query().fetch()
 
         # for ngo in ngos:

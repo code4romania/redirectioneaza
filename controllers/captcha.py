@@ -55,7 +55,7 @@ def submit(recaptcha_response_field, private_key, remoteip):
         response = json.decode( httpresp.read() )
         httpresp.close()
     
-    except Exception, e:
+    except Exception as e:
         return RecaptchaResponse(is_valid=False)
 
 

@@ -147,7 +147,7 @@ class BaseHandler(Handler):
                     raise TypeError("Type not serializable")
 
             self.response.write( json.encode(obj, default=json_serial) )
-        except Exception, e:
+        except Exception as e:
             exception(e)
 
             obj = {
@@ -252,7 +252,7 @@ class BaseHandler(Handler):
                 "name": u"{0} {1}".format(user.first_name, user.last_name),
                 "email": u"{0}".format(user.email)
             }
-        except Exception, e:
+        except Exception as e:
             warn(e)
             return
 
@@ -343,7 +343,7 @@ class BaseHandler(Handler):
 
             EmailManager.send_email(sender=sender, receiver=receiver, subject=subject, text_template=text_body, html_template=html_body)
 
-        except Exception, e:
+        except Exception as e:
             exception(e)
 
     def send_dynamic_email(self, template_id=None, email=None, data={}):

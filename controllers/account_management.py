@@ -135,8 +135,7 @@ class SignupHandler(AccountHandler):
             self.auth.set_session(self.auth.store.user_to_dict(user), remember=True)
             # redirect to my account
             self.redirect(self.uri_for('contul-meu'))
-        except Exception, e:
-            
+        except Exception as e:
             self.template_values["errors"] = u"Se pare că a aparut o problemă. Te rugăm să încerci din nou"
             self.render()
 
