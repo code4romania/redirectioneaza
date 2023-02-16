@@ -1,19 +1,17 @@
 
 from copy import deepcopy
+from datetime import datetime
 from logging import error
 from operator import itemgetter
-from datetime import datetime
 
 from google.appengine.api import users, mail
-from google.appengine.ext import ndb
 
+from appengine_config import (LIST_OF_COUNTIES, START_YEAR)
 from models.handlers import BaseHandler
-from my_account import NgoDetailsHandler
-
 from models.models import NgoEntity, Donor
 from models.user import User
+from my_account import NgoDetailsHandler
 
-from appengine_config import LIST_OF_COUNTIES, START_YEAR
 
 # dict used as cache
 stats_dict = {
@@ -23,6 +21,7 @@ stats_dict = {
     "years": {},
     "counties": {}
 }
+
 
 """
 Handlers  for admin routing
@@ -107,6 +106,7 @@ class AdminHome(BaseHandler):
                 obj["years"][donation.date_created.year]['forms'] += 1
 
             obj["counties"][donation.county]['forms'] += 1
+
 
 class AdminNgosList(BaseHandler):
     template_name = 'admin/ngos.html'
@@ -201,6 +201,7 @@ class AdminNgoHandler(NgoDetailsHandler):
 
         # render a response
         self.render()
+
 
 class SendCampaign(NgoDetailsHandler):
     template_name = 'admin/campaign.html'

@@ -1,21 +1,19 @@
 # -*- coding: utf-8 -*-
 
 import datetime
-
 from collections import OrderedDict
+from logging import info
 
 from google.appengine.ext.ndb import put_multi, OR, Key
 from google.appengine.api import users
-from google.appengine.api import mail
 
-from appengine_config import LIST_OF_COUNTIES, CONTACT_EMAIL_ADDRESS, START_YEAR, DONATION_LIMIT, DEV
-
+from api import check_ngo_url
+from appengine_config import (
+    LIST_OF_COUNTIES, CONTACT_EMAIL_ADDRESS, START_YEAR, DONATION_LIMIT
+)
 from models.handlers import AccountHandler, user_required
 from models.models import NgoEntity, Donor, Job
 from models.user import User
-
-from api import check_ngo_url
-from logging import info
 
 
 incomplete_form_data = u"Te rugăm să completezi datele din formular."
@@ -26,6 +24,7 @@ not_unique = u'Se pare că acest cod CIF sau acest cont bancar este deja inscris
 
 # for admins
 no_new_owner = 'Nu am putut gasi contul cu aceasta adresa'
+
 
 class MyAccountHandler(AccountHandler):
     template_name = 'ngo/my-account.html'
@@ -95,8 +94,8 @@ class MyAccountHandler(AccountHandler):
             
             # self.template_values["ngo_upload_url"] = self.uri_for("api-ngo-upload-url")
 
-        
         self.render()
+
 
 class MyAccountDetailsHandler(AccountHandler):
     template_name = 'ngo/my-account-details.html'
@@ -135,6 +134,7 @@ class MyAccountDetailsHandler(AccountHandler):
         user.put()
 
         self.render()
+
 
 class NgoDetailsHandler(AccountHandler):
     template_name = 'ngo/ngo-details.html'

@@ -9,13 +9,11 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.header import Header
-
-from appengine_config import DEV, UNICODE_CONTACT_EMAIL_ADDRESS
+from logging import info, warn
 
 import sendgrid
+from appengine_config import (DEV, UNICODE_CONTACT_EMAIL_ADDRESS)
 from sendgrid.helpers import mail as smail
-
-from logging import info, warn
 
 
 class EmailManager(object):

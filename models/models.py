@@ -12,7 +12,6 @@ class BaseEntity(ndb.Model):
     pass
 
 
-
 # to the list of counties add the whole country
 class NgoEntity(BaseEntity):
 
@@ -66,6 +65,7 @@ class NgoEntity(BaseEntity):
 
 class Fundraiser(BaseEntity):
     pass
+
 
 class Donor(BaseEntity):
     

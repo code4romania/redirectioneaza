@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
+
 from datetime import datetime
+from logging import info
+from random import sample
 
 from google.appengine.ext.ndb import get_multi, Key
 
-from appengine_config import DEFAULT_NGO_LOGO, DONATION_LIMIT
+from appengine_config import (DEFAULT_NGO_LOGO, DONATION_LIMIT)
 from models.handlers import BaseHandler
 from models.models import NgoEntity, Donor
 
-from random import sample
-from logging import info
 
 """
 Handlers used for site routing
@@ -586,6 +587,7 @@ class HomePage(BaseHandler):
         # render a response
         self.render()
 
+
 class ForNgoHandler(BaseHandler):
     template_name = 'for-ngos.html'
     def get(self):
@@ -609,6 +611,7 @@ class NgoListHandler(BaseHandler):
         # render a response
         self.render()
 
+
 class TermsHandler(BaseHandler):
     template_name = 'terms.html'
     def get(self):
@@ -617,6 +620,7 @@ class TermsHandler(BaseHandler):
 
         # render a response
         self.render()
+
 
 class NoteHandler(BaseHandler):
     template_name = 'note.html'
@@ -627,6 +631,7 @@ class NoteHandler(BaseHandler):
         # render a response
         self.render()
 
+
 class AboutHandler(BaseHandler):
     template_name = 'despre.html'
     def get(self):
@@ -636,6 +641,7 @@ class AboutHandler(BaseHandler):
         # render a response
         self.render()
 
+
 class PolicyHandler(BaseHandler):
     template_name = 'policy.html'
     def get(self):
@@ -644,6 +650,7 @@ class PolicyHandler(BaseHandler):
 
         # render a response
         self.render()
+
 
 def NotFoundPage(request, response, exception):
     """handles the 404 page
@@ -657,6 +664,7 @@ def NotFoundPage(request, response, exception):
     response.set_status(404)
 
     handler.render('404.html')
+
 
 def InternalErrorPage(request, response, exception):
     """handles the 500 page. same as the 404 page

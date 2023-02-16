@@ -1,19 +1,18 @@
-
-
-
 import urllib2, urllib
-from appengine_config import *
 
 from webapp2_extras import json
 
-from logging import info
+from appengine_config import *
+
 
 VERIFY_URL = CAPTCHA_VERIFY_URL
+
 
 class RecaptchaResponse(object):
     def __init__(self, is_valid, error_code=None):
         self.is_valid = is_valid
         self.error_code = error_code
+
 
 def submit(recaptcha_response_field, private_key, remoteip):
     """

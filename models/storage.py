@@ -2,12 +2,10 @@
 import os
 
 import cloudstorage as gcs
+from google.appengine.api import app_identity
 
 from appengine_config import DEV
 
-from google.appengine.api import app_identity
-
-from logging import info
 
 class CloudStorage(object):
     """docstring for CloudStorage"""
@@ -33,7 +31,6 @@ class CloudStorage(object):
         Args:
         filename: filename.
         """
-
 
         if file_to_save is None or filename is None:
             return
@@ -76,7 +73,6 @@ class CloudStorage(object):
         return file_url
 
         
-
     @staticmethod
     def read_file(filename):
         if filename is None:

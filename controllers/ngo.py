@@ -1,29 +1,23 @@
 # -*- coding: utf-8 -*-
 
+import datetime
+import re
+import json
+from hashlib import sha1
 from urlparse import urlparse
 
-from google.appengine.api import urlfetch, users
-from google.appengine.ext import ndb
-
-from hashlib import sha1
+from google.appengine.api import users
 from webapp2_extras import json, security
 
-from appengine_config import LIST_OF_COUNTIES, USER_UPLOADS_FOLDER, USER_FORMS, ANAF_OFFICES
-
-# also import captcha settings
-from appengine_config import CAPTCHA_PRIVATE_KEY, CAPTCHA_POST_PARAM, DEFAULT_NGO_LOGO, DONATION_LIMIT
-
+from appengine_config import (
+    CAPTCHA_PRIVATE_KEY, CAPTCHA_POST_PARAM, DEFAULT_NGO_LOGO, DONATION_LIMIT,
+    LIST_OF_COUNTIES, USER_FORMS, ANAF_OFFICES
+)
 from models.handlers import BaseHandler
 from models.models import NgoEntity, Donor
 from models.storage import CloudStorage
 from models.create_pdf import create_pdf, add_signature
-
 from captcha import submit
-
-from logging import info
-import re
-import json
-import datetime
 
 
 """
@@ -314,6 +308,7 @@ class TwoPercentHandler(BaseHandler):
         # render a response
         self.render()
 
+
 class FormSignature(BaseHandler):
     template_name = 'signature.html'
     def get(self, ngo_url):
@@ -358,6 +353,7 @@ class FormSignature(BaseHandler):
         url = self.uri_for("ngo-twopercent-success", ngo_url=ngo_url)
 
         self.redirect( url )
+
 
 class DonationSucces(BaseHandler):
     template_name = 'succes.html'

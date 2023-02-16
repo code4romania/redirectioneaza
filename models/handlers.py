@@ -1,24 +1,16 @@
 # -*- coding: utf-8 -*-
 
 import os
-import webapp2
 import jinja2
-import urlparse
-import logging
-
-from logging import info, warn, exception
-
-# globals
-from appengine_config import *
+import webapp2
+from logging import warn, exception
 
 # user object
-from google.appengine.api import users, urlfetch
-from google.appengine.api import mail
+from google.appengine.api import users
 from google.appengine.ext import ndb
-
 from webapp2_extras import sessions, auth, json
 
-from models import NgoEntity, Donor
+from appengine_config import *
 from email import EmailManager
 
 
@@ -30,6 +22,7 @@ def get_jinja_enviroment(account_view_folder=''):
             + account_view_folder ),
         extensions=['jinja2.ext.autoescape', 'jinja2.ext.i18n'],
         autoescape=True)
+
 
 # default values for every template
 template_settings = {
@@ -44,9 +37,11 @@ template_settings = {
     "errors": None
 }
 
+
 class Handler(webapp2.RequestHandler):
     """this is just a wrapper over webapp2.RequestHandler"""
     pass
+
 
 class BaseHandler(Handler):
 
@@ -351,6 +346,7 @@ class BaseHandler(Handler):
 
         EmailManager.send_dynamic_email(template_id, email, data)
 
+
 def user_required(handler):
     """
     Decorator that checks if there's a user associated with the current session.
@@ -365,6 +361,7 @@ def user_required(handler):
             return handler(self, *args, **kwargs)
 
     return check_login
+
 
 class AccountHandler(BaseHandler):
     """class used for logged in users"""

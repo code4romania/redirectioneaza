@@ -2,10 +2,8 @@
 import time
 
 from google.appengine.ext import ndb
-from webapp2_extras.appengine.auth import models
 from webapp2_extras import security
- 
-from models import BaseEntity
+from webapp2_extras.appengine.auth import models
  
  
 class User(models.User):

@@ -1,22 +1,21 @@
 
-import urllib2, urllib
-
+import urllib2
 from datetime import datetime
 from hashlib import sha1
+from logging import info, exception, warn
 
+from google.appengine.api import users
 from google.appengine.ext.ndb import Key, AND
-from google.appengine.api import users, urlfetch
+from webapp2_extras import json, security
 
+from appengine_config import (
+    PRODUCTION, USER_UPLOADS_FOLDER, DEFAULT_NGO_LOGO, DOMAIN, 
+    ZIP_ENDPOINT, ZIP_PASSPHRASE, DONATION_LIMIT
+)
 from models.models import NgoEntity, Donor, Job
 from models.handlers import BaseHandler, AccountHandler, user_required
 from models.storage import CloudStorage
 from models.create_pdf import create_pdf
-
-from appengine_config import PRODUCTION, USER_UPLOADS_FOLDER, DEFAULT_NGO_LOGO, DOMAIN, ZIP_ENDPOINT, ZIP_PASSPHRASE, DONATION_LIMIT
-
-from webapp2_extras import json, security
-
-from logging import info, exception, warn
 
 
 def check_ngo_url(ngo_id=None):
@@ -39,6 +38,7 @@ class CheckNgoUrl(AccountHandler):
         else:
             self.response.set_status(400)
 
+
 class NgosApi(BaseHandler):
 
     def get(self):
@@ -57,6 +57,7 @@ class NgosApi(BaseHandler):
             })
 
         self.return_json(response)
+
 
 class GetNgoForm(BaseHandler):
 
@@ -224,6 +225,7 @@ class Webhook(BaseHandler):
 
         # send email
         self.send_dynamic_email(template_id='d-312ab0a4221944e3ac728ae08c504a7c', email=owner.email, data={"link": url})
+
 
 class GetUploadUrl(AccountHandler):
 

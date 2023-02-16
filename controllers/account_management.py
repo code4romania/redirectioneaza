@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
-from models.handlers import AccountHandler, user_required
-from webapp2_extras.auth import InvalidPasswordError, InvalidAuthIdError
-
-from appengine_config import CAPTCHA_PRIVATE_KEY, CAPTCHA_POST_PARAM
+from logging import info, warn
 
 from captcha import submit
+from webapp2_extras.auth import InvalidPasswordError, InvalidAuthIdError
 
-from logging import info, warn
+from appengine_config import (CAPTCHA_PRIVATE_KEY, CAPTCHA_POST_PARAM)
+from models.handlers import AccountHandler, user_required
+
 
 class LoginHandler(AccountHandler):
     template_name = 'login.html'

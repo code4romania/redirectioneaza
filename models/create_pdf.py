@@ -1,23 +1,20 @@
 
+import base64
 import os
 import StringIO
-import base64
 import tempfile
-
 from io import BytesIO
 from datetime import datetime
 
 from pyPdf import PdfFileWriter, PdfFileReader
 from reportlab.pdfgen import canvas
+from reportlab.graphics import renderPDF
 from reportlab.lib.utils import ImageReader
 from reportlab.lib.pagesizes import A4
-from reportlab.graphics import renderPDF
-
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from svglib.svglib import svg2rlg
 
-from logging import info
 
 abs_path = os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir))
 font_path = abs_path + "/static/font/opensans.ttf"
@@ -38,6 +35,7 @@ def format_ngo_account(ngo_account):
             account += " "
 
     return account
+
 
 def add_donor_data(c, person):
 
@@ -151,6 +149,7 @@ def add_donor_data(c, person):
 
     c.setFontSize(default_font_size)
 
+
 def add_ngo_data(c, ong):
     start_ong_y = 449
 
@@ -181,6 +180,7 @@ def add_ngo_data(c, ong):
 
     if ong.get('percent'):
         c.drawString(146, start_ong_y - 108, ong.get('percent'))
+
 
 def create_pdf(person = {}, ong = {}):
     """method used to create the pdf
@@ -243,6 +243,7 @@ def create_pdf(person = {}, ong = {}):
     # packet.type = "application/pdf"
 
     return packet
+
 
 def add_signature(pdf, image):
 
