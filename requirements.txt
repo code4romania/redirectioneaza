@@ -1,5 +1,5 @@
-sendgrid
-GoogleAppEngineCloudStorageClient
-reportlab
-pyPdf
-svglib
+sendgrid==6.9.7
+GoogleAppEngineCloudStorageClient==1.9.22.1
+reportlab==3.5.59
+pyPdf==1.13
+svglib==0.9.4
