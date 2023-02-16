@@ -2,3 +2,4 @@ sendgrid
 GoogleAppEngineCloudStorageClient
 reportlab
 pyPdf
+svglib
