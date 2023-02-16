@@ -10,12 +10,10 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.header import Header
 
-from google.appengine.api.mail import EmailMessage
-
 from appengine_config import DEV, UNICODE_CONTACT_EMAIL_ADDRESS
 
 import sendgrid
-from sendgrid.helpers.mail import *
+from sendgrid.helpers import mail as smail
 
 from logging import info, warn
 
@@ -35,9 +33,9 @@ class EmailManager(object):
             info('Data: {}'.format(data))
             return True
 
-        message = Mail()
-        message.from_email = From(EmailManager.default_sender['email'])
-        message.to = To(email)
+        message = smail.Mail()
+        message.from_email = smail.From(EmailManager.default_sender['email'])
+        message.to = smail.To(email)
         message.dynamic_template_data = data
         message.template_id = template_id
 
@@ -122,20 +120,20 @@ class EmailManager(object):
         text_template = kwargs.get("text_template")
         html_template = kwargs.get("html_template", "")
 
-        email = Mail()
+        email = smail.Mail()
 
-        email.from_email = From(sender["email"], sender["name"])
-        email.to = To(receiver["email"], receiver["name"])
+        email.from_email = smail.From(sender["email"], sender["name"])
+        email.to = smail.To(receiver["email"], receiver["name"])
 
-        email.subject = Subject(subject)
+        email.subject = smail.Subject(subject)
 
         if html_template:
             email.content = [
-                Content("text/html", html_template),
-                Content("text/plain", text_template)
+                smail.Content("text/html", html_template),
+                smail.Content("text/plain", text_template)
             ]
         else:
-            email.content = Content("text/plain", text_template)
+            email.content = smail.Content("text/plain", text_template)
 
         sg = sendgrid.SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
         response = sg.send(email)
@@ -160,16 +158,16 @@ class EmailManager(object):
         # email content
         text_template = kwargs.get("text_template", "").encode("utf-8")
 
-        receiver_address = Header(receiver["name"], "utf-8")
-        receiver_address.append("<{0}>".format(receiver["email"]), "ascii")
+        encoded_receiver = Header(receiver["name"], "utf-8")
+        encoded_receiver.append("<{0}>".format(receiver["email"]), "ascii")
 
-        sender_address = Header(sender["name"], "utf-8")
-        sender_address.append("<{0}>".format(sender["email"]), "ascii")
+        encoded_sender = Header(sender["name"], "utf-8")
+        encoded_sender.append("<{0}>".format(sender["email"]), "ascii")
 
         message = MIMEMultipart('alternative')
         message['Subject'] = subject
-        message['From'] = sender_address
-        message['To'] = receiver_address
+        message['From'] = encoded_sender
+        message['To'] = encoded_receiver
 
         text_version = MIMEText(text_template, 'plain', 'utf-8')
         
@@ -186,7 +184,7 @@ class EmailManager(object):
             smtp.ehlo()
             smtp.starttls()
             smtp.login(os.environ.get('SMTP_USER'), os.environ.get('SMTP_PASS'))
-            smtp.sendmail(sender_address, receiver_address, message.as_string())
+            smtp.sendmail(sender["email"], receiver["email"], message.as_string())
             smtp.quit()
 
             return True
