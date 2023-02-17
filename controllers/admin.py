@@ -28,6 +28,7 @@ Handlers  for admin routing
 """
 class AdminHome(BaseHandler):
     template_name = 'admin/index.html'
+
     def get(self):
 
         if users.is_current_user_admin():
@@ -48,7 +49,7 @@ class AdminHome(BaseHandler):
                 projection = [NgoEntity.county, NgoEntity.date_created]
                 # ngos = NgoEntity.query(NgoEntity.date_created < from_date).fetch(projection=projection)
                 ngos = []
-            except Exception, e:
+            except Exception as e:
                 error(e)
                 ngos = NgoEntity.query(NgoEntity.date_created < from_date).fetch()
 
@@ -76,7 +77,6 @@ class AdminHome(BaseHandler):
             self.add_data(stats_dict, ngos, donations)
 
             stats_dict["init"] = True
-
 
         # just look at the last year
         ngos = NgoEntity.query(NgoEntity.date_created >= from_date).fetch(projection=[NgoEntity.county, NgoEntity.date_created])
@@ -110,6 +110,7 @@ class AdminHome(BaseHandler):
 
 class AdminNgosList(BaseHandler):
     template_name = 'admin/ngos.html'
+
     def get(self):
 
         if users.is_current_user_admin():
@@ -122,7 +123,7 @@ class AdminNgosList(BaseHandler):
         try:
             projection = [NgoEntity.name, NgoEntity.county, NgoEntity.verified, NgoEntity.email]
             ngos = NgoEntity.query().fetch(projection=projection)
-        except Exception, e:
+        except Exception as e:
             ngos = NgoEntity.query().fetch()
 
         # for ngo in ngos:
@@ -138,6 +139,7 @@ class AdminNgosList(BaseHandler):
 
 class UserAccounts(BaseHandler):
     template_name = 'admin/accounts.html'
+    
     def get(self):
         if users.is_current_user_admin():
             user = users.get_current_user()
@@ -159,13 +161,12 @@ class UserAccounts(BaseHandler):
 
 class AdminNewNgoHandler(BaseHandler):
     template_name = 'admin/ngo.html'
+
     def get(self):
-        
         if users.is_current_user_admin():
             user = users.get_current_user()
         else:
             self.redirect(users.create_login_url("/admin"))
-
 
         self.template_values["ngo_upload_url"] = self.uri_for("api-ngo-upload-url")
         self.template_values["check_ngo_url"] = "/api/ngo/check-url/"
@@ -179,8 +180,8 @@ class AdminNewNgoHandler(BaseHandler):
 
 class AdminNgoHandler(NgoDetailsHandler):
     template_name = 'admin/ngo.html'
+
     def get(self, ngo_url):
-        
         if users.is_current_user_admin():
             user = users.get_current_user()
         else:
@@ -205,17 +206,15 @@ class AdminNgoHandler(NgoDetailsHandler):
 
 class SendCampaign(NgoDetailsHandler):
     template_name = 'admin/campaign.html'
+
     def get(self):
         if users.is_current_user_admin():
             user = users.get_current_user()
         else:
             self.redirect(users.create_login_url("/admin"))
-
         self.render()
 
-
     def post(self):
-        
         if not users.is_current_user_admin():
             self.abort(400)
 

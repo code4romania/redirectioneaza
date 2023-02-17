@@ -401,7 +401,7 @@ class NgoDetailsHandler(AccountHandler):
             #     body = self.jinja_enviroment.get_template("email/admin/new-ngo.txt").render(values)
             #     # info(body)
             #     mail.send_mail(sender=CONTACT_EMAIL_ADDRESS, to="donezsieu@gmail.com", subject=subject, body=body)
-            # except Exception, e:
+            # except Exception as e:
             #     info(e)
 
             # do a refresh

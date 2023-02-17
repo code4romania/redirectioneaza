@@ -24,8 +24,8 @@ from captcha import submit
 Handlers used for ngo 
 """
 class NgoHandler(BaseHandler):
+    
     def get(self, ngo_url):
-
         self.redirect( self.uri_for("twopercent", ngo_url=ngo_url) )
 
 
@@ -33,7 +33,6 @@ class TwoPercentHandler(BaseHandler):
     template_name = 'twopercent.html'
 
     def get(self, ngo_url):
-
         ngo = NgoEntity.get_by_id(ngo_url)
         # if we didn't find it or the ngo doesn't have an active page
         if ngo is None or ngo.active == False:
@@ -62,15 +61,12 @@ class TwoPercentHandler(BaseHandler):
             try:
                 url_dict = urlparse(ngo_website)
 
-
                 if not url_dict.scheme:
                     url_dict = url_dict._replace(scheme='http')
-
 
                 # if we have a netloc, than the url is valid
                 # use the netloc as the website name
                 if url_dict.netloc:
-                
                     self.template_values["ngo_website_description"] = url_dict.netloc
                     self.template_values["ngo_website"] = url_dict.geturl()
                 
@@ -78,7 +74,6 @@ class TwoPercentHandler(BaseHandler):
                 # urlparse might send it to path
                 # move that to netloc and remove the path
                 elif url_dict.path:
-                    
                     url_dict = url_dict._replace(netloc=url_dict.path)
                     self.template_values["ngo_website_description"] = url_dict.path
                     
@@ -88,13 +83,11 @@ class TwoPercentHandler(BaseHandler):
                 else:
                     raise
 
-            except Exception, e:
-
+            except Exception as e:
                 self.template_values["ngo_website"] = None
+
         else:
-
             self.template_values["ngo_website"] = None    
-
 
         now = datetime.datetime.now()
         can_donate = not now.date() > DONATION_LIMIT
@@ -105,7 +98,6 @@ class TwoPercentHandler(BaseHandler):
         self.render()
 
     def post(self, ngo_url):
-
         post = self.request
         errors = {
             "fields": [],
@@ -128,26 +120,21 @@ class TwoPercentHandler(BaseHandler):
 
                 # it should only contains alpha numeric, spaces and dash
                 if re.match(r'^[\w\s.\-ăîâșț]+$', value, flags=re.I | re.UNICODE) is not None:
-                    
                     # additional validation
                     if arg == "cnp" and len(value) != 13:
                         errors["fields"].append(arg)
                         return ""
-
                     return value
                 
                 # the email has the @ so the first regex will fail
                 elif arg == 'email':
-
                     # if we found a match
                     if re.match(r'[^@]+@[^@]+\.[^@]+', value) is not None:
                         return value
-            
                     errors["fields"].append(arg)
                     return ''
 
                 else:
-
                     errors["fields"].append(arg)
             
             elif add_to_error_list:
@@ -279,7 +266,6 @@ class TwoPercentHandler(BaseHandler):
             self.redirect( url )
 
     def return_error(self, errors):
-        
         if self.is_ajax:
             self.response.set_status(400)
             self.response.write(json.dumps(errors))
@@ -311,8 +297,8 @@ class TwoPercentHandler(BaseHandler):
 
 class FormSignature(BaseHandler):
     template_name = 'signature.html'
-    def get(self, ngo_url):
 
+    def get(self, ngo_url):
         if self.get_ngo_and_donor() is False:
             return
 
@@ -325,7 +311,6 @@ class FormSignature(BaseHandler):
         self.render()
 
     def post(self, ngo_url):
-
         if self.get_ngo_and_donor() is False:
             return
 
@@ -357,8 +342,8 @@ class FormSignature(BaseHandler):
 
 class DonationSucces(BaseHandler):
     template_name = 'succes.html'
-    def get(self, ngo_url):
 
+    def get(self, ngo_url):
         if self.get_ngo_and_donor() is False:
             return
 
@@ -375,6 +360,5 @@ class DonationSucces(BaseHandler):
 
         # if the user didn't provide a CNP show a message
         self.template_values["has_cnp"] = self.session.get("has_cnp", False)
-
 
         self.render()

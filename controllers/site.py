@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
-from logging import info
+from logging import info, critical
 from random import sample
 
 from google.appengine.ext.ndb import get_multi, Key
@@ -16,8 +16,8 @@ Handlers used for site routing
 """
 class HomePage(BaseHandler):
     template_name = 'index.html'
-    def get(self):
 
+    def get(self):
         self.template_values["title"] = "redirectioneaza.ro"
 
         self.template_values['limit'] = DONATION_LIMIT
@@ -565,7 +565,7 @@ class HomePage(BaseHandler):
                 list_keys = sample(list_keys, 4)
 
                 ngos = get_multi(list_keys)
-            except Exception, e:
+            except Exception as e:
                 info(e)
                 ngos = NgoEntity.query(NgoEntity.active == True).fetch(4)
 
@@ -590,64 +590,59 @@ class HomePage(BaseHandler):
 
 class ForNgoHandler(BaseHandler):
     template_name = 'for-ngos.html'
+
     def get(self):
         # self.abort(404)
         self.template_values["title"] = "Pentru ONG-uri"
-
         # render a response
         self.render()
 
 
 class NgoListHandler(BaseHandler):
     template_name = 'all-ngos.html'
+
     def get(self):
         # self.abort(404)
         self.template_values["title"] = u"Asociații"
-
         ngos = NgoEntity.query(NgoEntity.active == True).fetch()
         self.template_values["ngos"] = ngos
         self.template_values["DEFAULT_NGO_LOGO"] = DEFAULT_NGO_LOGO
-
         # render a response
         self.render()
 
 
 class TermsHandler(BaseHandler):
     template_name = 'terms.html'
+
     def get(self):
-
         self.template_values["title"] = u"Termeni și condiții"
-
         # render a response
         self.render()
 
 
 class NoteHandler(BaseHandler):
     template_name = 'note.html'
+
     def get(self):
-
         self.template_values["title"] = u"Notă de informare"
-
         # render a response
         self.render()
 
 
 class AboutHandler(BaseHandler):
     template_name = 'despre.html'
+
     def get(self):
-
         self.template_values["title"] = "Despre Redirectioneaza.ro"
-
         # render a response
         self.render()
 
 
 class PolicyHandler(BaseHandler):
     template_name = 'policy.html'
+
     def get(self):
-
         self.template_values["title"] = u"Politica de confidențialitate"
-
         # render a response
         self.render()
 
@@ -660,9 +655,7 @@ def NotFoundPage(request, response, exception):
 
     # create a mock handler so we can user templates
     handler = BaseHandler(request, response)
-
     response.set_status(404)
-
     handler.render('404.html')
 
 
@@ -672,11 +665,6 @@ def InternalErrorPage(request, response, exception):
 
     # create a mock handler so we can user templates
     handler = BaseHandler(request, response)
-
-    from logging import critical
-
     critical(exception, exc_info=1)
-
     response.set_status(500)
-
     handler.render('500.html')

@@ -50,20 +50,15 @@ def submit(recaptcha_response_field, private_key, remoteip):
     
     try:
         httpresp = urllib2.urlopen(request)
-        
         response = json.decode( httpresp.read() )
         httpresp.close()
-    
-    except Exception, e:
+    except Exception as e:
         return RecaptchaResponse(is_valid=False)
-
 
     if response["success"]:
         return RecaptchaResponse(is_valid=True)
     else:
         response_object =  RecaptchaResponse(is_valid=False)
-
         if "error-codes" in response:
             response_object.error_code = response["error-codes"]
-
         return response_object

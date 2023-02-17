@@ -48,7 +48,6 @@ class BaseHandler(Handler):
     def __init__(self, *args, **kwargs):
         super(BaseHandler, self).__init__(*args, **kwargs)
 
-
         self.template_values = {}
         self.template_values.update(template_settings)
 
@@ -68,7 +67,6 @@ class BaseHandler(Handler):
         This snippet of code is taken from the webapp2 framework documentation.
         See more at
         http://webapp-improved.appspot.com/api/webapp2_extras/sessions.html
-
         """
 
         host = self.request.host
@@ -94,9 +92,7 @@ class BaseHandler(Handler):
         }
 
         self.custom_subdomain = custom_subdomains.get(host, None)
-
         self.template_values['custom_subdomain'] = self.custom_subdomain is not None
-
         self.session_store = sessions.get_store(request=self.request)
         try:
             webapp2.RequestHandler.dispatch(self)
@@ -121,9 +117,7 @@ class BaseHandler(Handler):
         template = template_name if template_name is not None else self.template_name
 
         self.set_template( template )
-
         self.response.headers.update(HTTP_HEADERS)
-
         self.response.write(self.template.render(self.template_values))
 
     def return_json(self, obj={}, status_code=200):
@@ -134,7 +128,6 @@ class BaseHandler(Handler):
         try:
             def json_serial(obj):
                 """JSON serializer for objects not serializable by default json code"""
-
                 if isinstance(obj, datetime) or isinstance(obj, date):
                     serial = obj.isoformat()
                     return serial
@@ -142,9 +135,8 @@ class BaseHandler(Handler):
                     raise TypeError("Type not serializable")
 
             self.response.write( json.encode(obj, default=json_serial) )
-        except Exception, e:
+        except Exception as e:
             exception(e)
-
             obj = {
                 "error": "Error when trying to json encode the response"
             }
@@ -190,13 +182,11 @@ class BaseHandler(Handler):
                 ndb.Key("NgoEntity", ngo_id),
                 ndb.Key("Donor", donor_id)
             ])
-
             ngo = list_of_entities[0]
             donor = list_of_entities[1]
 
         else:
             ngo = ndb.Key("NgoEntity", ngo_id).get() if ngo_id else None
-
             donor = ndb.Key("Donor", donor_id).get() if donor_id else None
 
         # if DEV and not donor:
@@ -228,7 +218,6 @@ class BaseHandler(Handler):
         if donor is None:
             if "donor_id" in self.session:
                 self.session.pop("donor_id")
-
             self.redirect( self.uri_for("ngo-url", ngo_url=ngo_id) )
             return False
 
@@ -247,7 +236,7 @@ class BaseHandler(Handler):
                 "name": u"{0} {1}".format(user.first_name, user.last_name),
                 "email": u"{0}".format(user.email)
             }
-        except Exception, e:
+        except Exception as e:
             warn(e)
             return
 
@@ -293,6 +282,7 @@ class BaseHandler(Handler):
                 "form_url": user.pdf_url,
                 "ngo": ngo
             }
+
         elif email_type == "signed-form":
             subject = u"Formularul tău de redirecționare"
 
@@ -302,6 +292,7 @@ class BaseHandler(Handler):
             template_values = {
                 "form_url": user.pdf_url,
             }
+
         elif email_type == "ngo-signed-form":
             subject = u"Un nou formular de redirecționare"
 
@@ -319,31 +310,26 @@ class BaseHandler(Handler):
                 }
             else:
                 receiver = None
+
         else:
             return
 
         try:
-
             text_body = txt_template.render(template_values) if txt_template else None
             html_body = html_template.render(template_values) if html_template else None
-
             sender = {
                 "name": u"redirectioneaza",
                 "email": UNICODE_CONTACT_EMAIL_ADDRESS,
             }
-
             # no email for receiver, return
             if not receiver:
                 return
-
             EmailManager.send_email(sender=sender, receiver=receiver, subject=subject, text_template=text_body, html_template=html_body)
-
-        except Exception, e:
+        except Exception as e:
             exception(e)
 
     def send_dynamic_email(self, template_id=None, email=None, data={}):
         """Used to send email using sendgrid's dynamic templates"""
-
         EmailManager.send_dynamic_email(template_id, email, data)
 
 
@@ -353,7 +339,6 @@ def user_required(handler):
     Will also fail if there's no session present.
     """
     def check_login(self, *args, **kwargs):
-
         auth = self.auth
         if not auth.get_user_by_session() and not users.is_current_user_admin():
             self.redirect(self.uri_for('login'), abort=True)
