@@ -19,8 +19,10 @@ from models.user import User
 incomplete_form_data = u"Te rugăm să completezi datele din formular."
 email_required = u"Pentru a activa această opțiune trebuie să completezi adresa de email."
 url_taken = u"Din păcate acest URL este folosit deja."
-not_unique = u'Se pare că acest cod CIF sau acest cont bancar este deja inscris. ' \
-             u'Dacă reprezinți ONG-ul cu aceste date, te rugăm sa ne contactezi.'
+not_unique = (
+    u'Se pare că acest cod CIF sau acest cont bancar este deja inscris. '
+    u'Dacă reprezinți ONG-ul cu aceste date, te rugăm sa ne contactezi.'
+)
 
 # for admins
 no_new_owner = 'Nu am putut gasi contul cu aceasta adresa'
@@ -31,7 +33,6 @@ class MyAccountHandler(AccountHandler):
 
     @user_required
     def get(self):
-
         user = self.user
         self.template_values["user"] = user
         self.template_values["title"] = "Contul meu"
@@ -61,7 +62,6 @@ class MyAccountHandler(AccountHandler):
             for year in years:
                 grouped_donors[year] = []
             
-
             # if the ngo has at leas one signed form this year
             has_signed_form = False
 
@@ -80,12 +80,10 @@ class MyAccountHandler(AccountHandler):
             self.template_values["has_signed_form"] = has_signed_form
             
             can_donate = not now.date() > DONATION_LIMIT
-
             self.template_values["can_donate"] = can_donate
 
         else:
             self.template_values["ngo"] = {}
-    
             self.template_values["counties"] = LIST_OF_COUNTIES
 
             # self.uri_for("api-ngo-check-url", ngo_url="")
@@ -102,7 +100,6 @@ class MyAccountDetailsHandler(AccountHandler):
 
     @user_required
     def get(self):
-
         user = self.user
         self.template_values["user"] = user
         self.template_values["title"] = "Date cont"
@@ -111,7 +108,6 @@ class MyAccountDetailsHandler(AccountHandler):
     
     @user_required
     def post(self):
-        
         user = self.user
         if user is None:
             self.abort(403)
@@ -130,7 +126,6 @@ class MyAccountDetailsHandler(AccountHandler):
         user.first_name = first_name
         user.last_name = last_name
         # user.email = email
-
         user.put()
 
         self.render()
@@ -159,14 +154,11 @@ class NgoDetailsHandler(AccountHandler):
             
     @user_required
     def post(self):
-        
         user = self.user
         if user is None:
             if users.is_current_user_admin():
                 user = users.get_current_user()
-
                 old_ngo_key = self.request.get('old-ong-url') if self.request.get('old-ong-url') else 1
-
                 user.ngo = Key(NgoEntity, old_ngo_key)
             else:
                 self.abort(403)
@@ -220,12 +212,10 @@ class NgoDetailsHandler(AccountHandler):
 
         # if the user already has an ngo, update it
         if user.ngo:
-
             ngo = user.ngo.get()
 
             # if the user has an ngo attached but it's not found, skip this and create a new one
             if ngo is not None:
-
                 # if the name, cif or bank account changed, remove the form url so we create it again
                 if ong_nume != ngo.name or ong_cif != ngo.cif or ong_account != ngo.account:
                     # if we encounter validation errors later, this will not get saved
@@ -319,7 +309,6 @@ class NgoDetailsHandler(AccountHandler):
                             self.render()
                             return
 
-
                 # save the changes
                 ngo.put()
                 
@@ -365,11 +354,9 @@ class NgoDetailsHandler(AccountHandler):
             self.render()
             return
 
-
         unique = NgoEntity.query(OR(NgoEntity.cif == ong_cif, NgoEntity.account == ong_account)).count(limit=1) == 0
         if not unique:
             # asks if he represents the ngo
-
             self.template_values["errors"] = not_unique
             self.render()
             return
@@ -377,18 +364,15 @@ class NgoDetailsHandler(AccountHandler):
             self.template_values["errors"] = True
 
         if users.is_current_user_admin():
-
             # a list of email addresses
             new_ngo.other_emails = [s.strip() for s in self.request.get('alte-adrese-email', "").split(",")]
-
-            new_ngo.put()
-        
+            new_ngo.put()      
             self.redirect(self.uri_for("admin-ong", ngo_url=ong_url))
         else:
             # link this user with the ngo
             # the ngo has a key even though we haven't saved it, we offered it an unique id
             user.ngo = new_ngo.key
-            
+
             # use put_multi to save rpc calls
             put_multi([new_ngo, user])
 
@@ -407,10 +391,15 @@ class NgoDetailsHandler(AccountHandler):
             # do a refresh
             self.redirect(self.uri_for("contul-meu"))
 
+
     def utf8_byte_truncate(text, max_bytes):
         """ truncate utf-8 text string to no more than max_bytes long """
+        import encodings
+
         byte_len = 0
+        _incr_encoder = encodings.search_function('utf8').incrementalencoder()
         _incr_encoder.reset()
+        
         for index,ch in enumerate(text):
             byte_len += len(_incr_encoder.encode(ch))
             if byte_len > max_bytes:
@@ -419,5 +408,4 @@ class NgoDetailsHandler(AccountHandler):
             return text
         
         result = text[:index]
-
         return result
