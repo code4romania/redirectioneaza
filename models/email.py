@@ -153,7 +153,7 @@ class EmailManager(object):
 
         receiver = kwargs.get("receiver")  # dict
         sender = kwargs.get("sender", EmailManager.default_sender)
-        subject = kwargs.get("subject", "").encode("utf-8")
+        subject = kwargs.get("subject", "")
 
         # email content
         text_template = kwargs.get("text_template", "").encode("utf-8")
@@ -165,7 +165,7 @@ class EmailManager(object):
         encoded_sender.append("<{0}>".format(sender["email"]), "ascii")
 
         message = MIMEMultipart('alternative')
-        message['Subject'] = subject
+        message['Subject'] = Header(subject, "utf-8")
         message['From'] = encoded_sender
         message['To'] = encoded_receiver
 
