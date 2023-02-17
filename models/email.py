@@ -23,6 +23,7 @@ class EmailManager(object):
         "email": UNICODE_CONTACT_EMAIL_ADDRESS,
     }
 
+
     @staticmethod
     def send_dynamic_email(template_id, email, data):
 
@@ -50,6 +51,7 @@ class EmailManager(object):
             warn(response.status_code)
             warn(response.body)
             return False
+
 
     @staticmethod
     def send_email(**kwargs):
@@ -81,21 +83,20 @@ class EmailManager(object):
             return True
 
         # if it failed through SMTP, try sendgrid as backup
-        warn(u"Failed to send SMTP email: {0}".format(kwargs.get("subject")))
+        warn(u"Failed to send SMTP email: {0} {1}".format(
+            kwargs.get("receiver", ""), kwargs.get("subject", "")))
 
         try:
             response = EmailManager.send_sendgrid_email(**kwargs)
-
-            # if False then the send failed
-            if response is False:
-                error_message = u"Failed to send email: {0}".format(kwargs.get("subject"))
-
-            return response
-
-        except Exception, e:
-            
+        except Exception as e:
+            warn(type(e).__name__)
             warn(e)
-            return False
+
+        if response is False:
+            warn(u"Failed to send Sendgrid email: {0} {1}".format(
+                kwargs.get("receiver", ""), kwargs.get("subject", "")))
+
+        return response
 
 
     @staticmethod
@@ -122,7 +123,6 @@ class EmailManager(object):
 
         email.from_email = smail.From(sender["email"], sender["name"])
         email.to = smail.To(receiver["email"], receiver["name"])
-
         email.subject = smail.Subject(subject)
 
         if html_template:
@@ -139,16 +139,13 @@ class EmailManager(object):
         if response.status_code == 202:
             return True
         else:
-            
             warn(response.status_code)
             warn(response.body)
-
             return False
 
  
     @staticmethod
     def send_smtp_email(**kwargs):
-
         receiver = kwargs.get("receiver")  # dict
         sender = kwargs.get("sender", EmailManager.default_sender)
         subject = kwargs.get("subject", "").encode("utf-8")
@@ -184,10 +181,8 @@ class EmailManager(object):
             smtp.login(os.environ.get('SMTP_USER'), os.environ.get('SMTP_PASS'))
             smtp.sendmail(sender["email"], receiver["email"], message.as_string())
             smtp.quit()
-
             return True
-
-        except Exception, e:
+        except Exception as e:
+            warn(type(e).__name__)
             warn(e)
-
             return False
