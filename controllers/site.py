@@ -262,6 +262,7 @@ class HomePage(BaseHandler):
                 'fundatia-pentru-voi',
                 'fundatia-pentru-smurd',
                 'fundatia-united-way-romania',
+                'club-sportiv-junior-adventure',
                 'politehnica',
                 'un-copil-o-speranta',
                 'fundatia-serviciilor-sociale-bethany',
