@@ -195,23 +195,20 @@ class HomePage(BaseHandler):
 
         elif self.custom_subdomain == 'ing':
             ing_ngos = [
-                'ambasada-sustenabilitatii-in-romania',
-                'asociatia-ateliere-fara-frontiere',
-                'coalitia-pentru-economia-circulara-cerc',
-                'asociatia-daruieste-aripi',
-                'asociatia-educatie-pentru-viata-reala',
-                'asociatia-pavel',
-                'asociatia-ropot',
-                'the-social-incubator',
-                'caravanacumedici',
-                'code-for-romania',
-                'envision',
-                'fundatia-comunitara-bucuresti',
-                'fundatia-conservation-carpathia',
-                'fundatia-inima-de-copil',
-                'fundatia-motivation-romania',
-                'atca-asociatia-de-terapie-comportamentala-aplicata',
-                'viitorplus',
+                'carusel',
+                'hopeandhomesromania',
+                'asociatia-pentru-protectia-animalelor-kola-kariola',
+                'asociatia-club-lions-diamond',
+                'asociatia-mental-help',
+                'asociatia-micile-bucurii',
+                'mission-4-life',
+                'niciodatasingur',
+                'tac',
+                'world-animal-veterinary-emissaries',
+                'societatea-nationala-de-cruce-rosie-din-romania-filiala-sector-6-bucuresti',
+                'asociatia-parcul-natural-vacaresti',
+                'asociatia-culturalis',
+                'centrul-pentru-politici-durabile-ecopolis',
             ]
             ngos = get_multi([Key(NgoEntity, k) for k in ing_ngos])
             self.template_values['company_name'] = 'ING'
