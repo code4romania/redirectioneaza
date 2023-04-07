@@ -195,6 +195,22 @@ class HomePage(BaseHandler):
 
         elif self.custom_subdomain == 'ing':
             ing_ngos = [
+                'ambasada-sustenabilitatii-in-romania',
+                'asociatia-ateliere-fara-frontiere',
+                'coalitia-pentru-economia-circulara-cerc',
+                'asociatia-daruieste-aripi',
+                'asociatia-educatie-pentru-viata-reala',
+                'asociatia-pavel',
+                'asociatia-ropot',
+                'the-social-incubator',
+                'caravanacumedici',
+                'code-for-romania',
+                'envision',
+                'fundatia-comunitara-bucuresti',
+                'fundatia-conservation-carpathia',
+                'fundatia-inima-de-copil',
+                'atca-asociatia-de-terapie-comportamentala-aplicata',
+                'viitorplus',
                 'carusel',
                 'hopeandhomesromania',
                 'asociatia-pentru-protectia-animalelor-kola-kariola',
