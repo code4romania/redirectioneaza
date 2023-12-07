@@ -278,3 +278,8 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+
+# Django static and media output dirs
+/backend/static/
+/backend/media/
+
