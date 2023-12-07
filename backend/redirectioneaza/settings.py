@@ -24,7 +24,7 @@ BASE_DIR = os.path.abspath(os.path.join(ROOT, "backend"))
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-#*_9knm02y(3)+mq41ns1%*!iz((u-wnbq62f(%i(qh7fyu9@+"
+SECRET_KEY = "django-insecure-demo-key"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -237,12 +237,12 @@ CONTACT_EMAIL_ADDRESS = "no-reply@redirectioneaza.ro"
 CAPTCHA_PUBLIC_KEY = (
     os.environ.get("CAPTCHA_PUBLIC_KEY")
     if PRODUCTION
-    else "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+    else "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"  # demo key
 )
 CAPTCHA_PRIVATE_KEY = (
     os.environ.get("CAPTCHA_PRIVATE_KEY")
     if PRODUCTION
-    else "6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe"
+    else "6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe"  # demo key
 )
 CAPTCHA_VERIFY_URL = "https://www.google.com/recaptcha/api/siteverify"
 CAPTCHA_POST_PARAM = "g-recaptcha-response"
