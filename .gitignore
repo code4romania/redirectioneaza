@@ -6,6 +6,8 @@ bower_components/
 *.sublime-workspace
 
 *.db
+.db_sqlite
+*.sqlite3
 
 .vs/
 
