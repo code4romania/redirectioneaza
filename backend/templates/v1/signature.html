@@ -15,7 +15,7 @@
         </div>
 
         <div class="signature-button-container">
-            <form action="{{ uri_for('ngo-twopercent-signature', ngo_url=ngo.key.id()) }}" role="form" method="post" class="signature-form">
+            <form action="{{ url('ngo-twopercent-signature', ngo_url=ngo.key.id()) }}" role="form" method="post" class="signature-form">
                 <span class="reset-button">
                     <button id="clear-signature" class="btn btn-lg" type="button">
                     Resetează
@@ -31,5 +31,5 @@
 {% endblock %}
 
 {% block scripts %}
-    <script type="text/javascript" src="/js/signature.js"></script>
+    <script type="text/javascript" src="{{ static('/js/signature.js') }}"></script>
 {% endblock %}

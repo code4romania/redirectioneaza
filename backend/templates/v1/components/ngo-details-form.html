@@ -180,7 +180,7 @@
 
 {# if it's a new ngo #}
 {% if not ngo.key %}
-    <script src="/js/ngo/ngo-url-check.js"></script>
+    <script src="{{ static('/js/ngo/ngo-url-check.js') }}"></script>
 {% endif %}
 
-<script src="/js/ngo/ngo-setup.js"></script>
+<script src="{{ static('/js/ngo/ngo-setup.js') }}"></script>

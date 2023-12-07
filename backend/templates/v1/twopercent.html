@@ -61,7 +61,7 @@
                 <h2 id="donation-page-title">Redirecționează în 3 pași simpli</h2>
                 <h3 class="donation-page-subtitle">Pasul 1. Completează și descarcă formularul</h3>
                 {% if ngo.account and ngo.cif %}
-                    <form id="twopercent" class="form form-horizontal" action="{{ uri_for('twopercent', ngo_url=ngo.key.id()) }}" role="form" method="post">
+                    <form id="twopercent" class="form form-horizontal" action="{{ url('twopercent', ngo_url=ngo.key.id()) }}" role="form" method="post">
                         
                         <fieldset class="margin-bottom">
                             <legend>Date personale</legend>
@@ -232,7 +232,7 @@
                     <div class="alert alert-dismissible alert-info">
                         <button type="button" class="close" data-dismiss="alert">×</button>
                         <strong>Notă!</strong> Toate datele de pe această pagină sunt transmise folosind o conexiune sigură. Următoarele date sunt stocate temporar, până la completarea formularului: numele, prenumele, orasul, judetul, email/telefon. După completarea formularului, aceste date sunt șterse, excepție făcând cazul în care ați optat să permiteți ONG-ului să vă contacteze. În acest caz, datele sunt stocate pe platforma Redirecționează cu scopul de a oferi acces ONG-ului la ele. <br />
-                        Poți citi mai multe despre <a href="{{ uri_for('note') }}" target="_blank">Drepturile tale cu privire la protectia datelor</a>. <br /><br />
+                        Poți citi mai multe despre <a href="{{ url('note') }}" target="_blank">Drepturile tale cu privire la protectia datelor</a>. <br /><br />
                         Prin completarea acestui formular, redirecționezi 3.5% din impozitul pe venit către organizația pe care ai ales-o.
                     </div>
                 </div>
@@ -289,7 +289,7 @@
 {% endblock %}
 
 {% block scripts %}
-    <script type="text/javascript" src="/js/shorten.js"></script>
+    <script type="text/javascript" src="{{ static('/js/shorten.js') }}"></script>
     
-    <script type="text/javascript" src="/js/twopercent.js"></script>
+    <script type="text/javascript" src="{{ static('/js/twopercent.js') }}"></script>
 {% endblock %}

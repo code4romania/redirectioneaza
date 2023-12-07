@@ -16,7 +16,7 @@
                             <strong>Atenție!</strong> Exportul datelor este în desfășurare. La finalizarea procesului vei primi un email cu un link de descărcare a tuturor formularelor care au fost semnate electronic. Dacă nu ai primit email, apasă butonul de refresh în această pagină și vei putea descărca arhiva direct de aici din platforma.
                         </div>
                     {% endif %}
-                    <form action="{{ uri_for('api-ngo-forms') }}" method="post">
+                    <form action="{{ url('api-ngo-forms') }}" method="post">
                         {% if not has_signed_form %}
                             <div class="alert alert-info">
                                 Organizația ta nu a primit niciun formular semnat digital încă, prin urmare nu poți descărca formularele.
