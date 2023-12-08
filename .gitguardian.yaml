@@ -1,0 +1,15 @@
+version: 2
+
+secret:
+  ignored-paths:
+    - '**/tests.py'
+
+  ignored-matches:
+    - name: reCAPTCHA Key
+      match: "6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe"
+    - name: reCAPTCHA Key
+      match: "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+    - name: Django Secret Key
+      match: "django-insecure-#*_9knm02y(3)+mq41ns1%*!iz((u-wnbq62f(%i(qh7fyu9@+"
+    - name: Django Secret Key
+      match: "django-insecure-demo-key"
