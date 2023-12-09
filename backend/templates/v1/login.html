@@ -22,6 +22,7 @@
     <div id="login-container" class="row">
         <div class="col-xs-12 col-sm-8 col-sm-offset-2" id="login">
             <form id='login-form' class="form form-horizontal" action="/login" role="form" method="post">
+                {{ csrf_input }}
                 <fieldset>
                     <legend>Login</legend>
                     <div class="form-group">

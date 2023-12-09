@@ -17,6 +17,7 @@
                         </div>
                     {% endif %}
                     <form action="{{ url('api-ngo-forms') }}" method="post">
+                        {{ csrf_input }}
                         {% if not has_signed_form %}
                             <div class="alert alert-info">
                                 Organizația ta nu a primit niciun formular semnat digital încă, prin urmare nu poți descărca formularele.

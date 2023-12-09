@@ -29,6 +29,7 @@
     <div id="login-container" class="row">
         <div class="col-xs-12 col-sm-6 col-sm-offset-3 col-lg-6 col-lg-offset-3" id="reset-password">
             <form class="form form-horizontal" action="/forgot" role="form" method="post">
+                {{ csrf_input }}
                 <fieldset>
                     <p>Pentru recuperarea parolei, te rugăm să introduci în câmpul de mai jos adresa de e-mail <strong>cu care te-ai înregistrat</strong> și apoi să apeăi butonul <strong>Trimite</strong>.</p>
                     <div class="form-group">

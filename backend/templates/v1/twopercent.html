@@ -63,6 +63,7 @@
                 {% if ngo.account and ngo.cif %}
                     <form id="twopercent" class="form form-horizontal" action="{{ url('twopercent', ngo_url=ngo.key.id()) }}" role="form" method="post">
                         
+                        {{ csrf_input }}
                         <fieldset class="margin-bottom">
                             <legend>Date personale</legend>
                             <div class="form-group">

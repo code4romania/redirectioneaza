@@ -283,3 +283,5 @@ cython_debug/
 /backend/static/
 /backend/media/
 
+/.vscode/
+
