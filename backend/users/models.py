@@ -66,6 +66,15 @@ class User(AbstractUser):
         on_delete=models.SET_NULL,
     )
 
+    # originally: verified
+    is_verified = models.BooleanField(
+        verbose_name=_("is verified"), db_index=True, default=False
+    )
+
+    validation_token = models.UUIDField(verbose_name=_("validation token"), blank=True, null=True, editable=False)
+    
+    token_timestamp = models.DateTimeField(verbose_name=_("validation token timestamp"), blank=True, null=True)
+
     objects = CustomUserManager()
 
     USERNAME_FIELD = "email"

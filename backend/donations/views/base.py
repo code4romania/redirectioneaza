@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.views.generic import TemplateView
 
 
@@ -10,4 +11,4 @@ class BaseHandler(Handler):
 
 
 class AccountHandler(BaseHandler):
-    pass
+    user_model = get_user_model()

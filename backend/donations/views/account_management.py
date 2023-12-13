@@ -1,8 +1,13 @@
-from django.shortcuts import render, redirect
+import uuid
+
 from django.conf import settings
+from django.contrib.auth import login
 from django.core.mail import send_mail
+from django.db import IntegrityError
+from django.shortcuts import render, redirect
 from django.urls import reverse
-from django.contrib.auth import get_user_model
+from django.utils import timezone
+
 
 from .base import BaseHandler, AccountHandler
 
@@ -63,27 +68,29 @@ class SignupHandler(AccountHandler):
 
         # # if the captcha is not valid return
         # if not captcha_response.is_valid:
-
         #     context["errors"] = "Se pare că a fost o problemă cu verificarea reCAPTCHA. Te rugăm să încerci din nou."
         #     return render(request, self.template_name, context)
 
-        # TODO: create the user
-        unique_properties = ["email"]
-        success, user = self.user_model.create_user(
-            email,
-            unique_properties,
+        user = self.user_model(
+            email=email,
             first_name=first_name,
             last_name=last_name,
-            email=email,
-            password_raw=password,
-            verified=False,
+            password=password,
+            is_verified=False,
+            validation_token=uuid.uuid4(),
+            token_timestamp=timezone.now(),
         )
 
+        try:
+            user.save()
+        except IntegrityError:
+            success = False
+        else:
+            success = True
+        
         if not success:  # user_data is a tuple
             context["errors"] = "Există deja un cont cu această adresă."
-
             context.update({"nume": first_name, "prenume": last_name, "email": email})
-
             return render(request, self.template_name, context)
 
         # TODO: Send the email
@@ -98,16 +105,10 @@ class SignupHandler(AccountHandler):
             fail_silently=False,
         )
 
-        try:
-            # login the user after signup
-            self.auth.set_session(self.auth.store.user_to_dict(user), remember=True)
-            # redirect to my account
-            return redirect(reverse("contul-meu"))
-        except Exception as e:
-            context[
-                "errors"
-            ] = "Se pare că a aparut o problemă. Te rugăm să încerci din nou"
-            return render(request, self.template_name, context)
+        # login the user after signup
+        login(request, user)
+        # redirect to my account
+        return redirect(reverse("contul-meu"))
 
 
 class VerificationHandler(AccountHandler):
