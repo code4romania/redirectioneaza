@@ -1,5 +1,5 @@
 """
-URL configuration for redirectioneaza project.
+URL configuration for the redirectioneaza project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.2/topics/http/urls/
@@ -16,10 +16,32 @@ Including another URLconf
 """
 from django.conf import settings
 from django.conf.urls.static import static
-from django.contrib import admin as django_admin
+from django.contrib import admin as django_admin, admin
 from django.urls import path, re_path
 
-from donations.views import *
+from donations.views.account_management import (
+    ForgotPasswordHandler,
+    LoginHandler,
+    LogoutHandler,
+    SetPasswordHandler,
+    SignupHandler,
+    VerificationHandler,
+)
+from donations.views.admin import (
+    AdminHome,
+    AdminNewNgoHandler,
+    AdminNgoHandler,
+    AdminNgosList,
+    SendCampaign,
+    UserAccounts,
+)
+from donations.views.api import CheckNgoUrl, GetNgoForm, GetNgoForms, GetUploadUrl, NgosApi, Webhook
+from donations.views.cron import CustomExport, NgoExport, NgoRemoveForms, Stats
+from donations.views.my_account import MyAccountDetailsHandler, MyAccountHandler, NgoDetailsHandler
+from donations.views.site import AboutHandler, ForNgoHandler, HomePage, NoteHandler, PolicyHandler, TermsHandler
+
+
+admin.site.site_header = f"Admin | {settings.VERSION_SUFFIX}"
 
 
 urlpatterns = (
@@ -66,13 +88,13 @@ urlpatterns = (
         path("api/ngos", NgosApi.as_view(), name="api-ngos"),
         path("webhook", Webhook.as_view(), name="webhook"),
         # ADMIN HANDLERS
-        path("admin", AdminHome.as_view(), name="admin"),
-        path("admin/organizatii", AdminNgosList.as_view(), name="admin-nogs"),
+        path("admin/organizatii", AdminNgosList.as_view(), name="admin-ngos"),
         path("admin/conturi", UserAccounts.as_view(), name="admin-users"),
         path("admin/campanii", SendCampaign.as_view(), name="admin-campanii"),
         path("admin/ong-nou", AdminNewNgoHandler.as_view(), name="admin-ong-nou"),
         path("admin/<ngo_url>", AdminNgoHandler.as_view(), name="admin-ong"),
-        ### TODO: Check the ngo_url parameter format because it currently captures too much
+        path("admin", AdminHome.as_view(), name="admin"),
+        # TODO: Check the ngo_url parameter format because it currently captures too much
         # path("<ngo_url>", TwoPercentHandler.as_view(), name="twopercent"),
         # path(
         #     "<ngo_url>/semnatura",

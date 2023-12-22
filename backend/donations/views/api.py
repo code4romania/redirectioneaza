@@ -1,6 +1,3 @@
-from django.shortcuts import render
-from django.conf import settings
-
 from .base import BaseHandler, AccountHandler
 
 
@@ -9,7 +6,7 @@ class CheckNgoUrl(AccountHandler):
 
 
 class NgosApi(BaseHandler):
-    pass
+    template_name = "all-ngos.html"
 
 
 class GetNgoForm(BaseHandler):

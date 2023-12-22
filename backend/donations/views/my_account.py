@@ -1,7 +1,5 @@
-from django.shortcuts import render
-from django.conf import settings
 
-from .base import BaseHandler, AccountHandler
+from .base import AccountHandler
 
 
 class MyAccountDetailsHandler(AccountHandler):

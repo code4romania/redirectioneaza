@@ -1,6 +1,5 @@
 import uuid
 
-from django.conf import settings
 from django.contrib.auth import login
 from django.core.mail import send_mail
 from django.db import IntegrityError
@@ -9,7 +8,7 @@ from django.urls import reverse
 from django.utils import timezone
 
 
-from .base import BaseHandler, AccountHandler
+from .base import AccountHandler
 
 
 class ForgotPasswordHandler(AccountHandler):
@@ -87,7 +86,7 @@ class SignupHandler(AccountHandler):
             success = False
         else:
             success = True
-        
+
         if not success:  # user_data is a tuple
             context["errors"] = "Există deja un cont cu această adresă."
             context.update({"nume": first_name, "prenume": last_name, "email": email})
