@@ -1,9 +1,11 @@
 {
-  "name": "donezsieu-gae",
+  "name": "redirectioneaza",
   "version": "0.0.0",
   "analytics": false,
   "authors": [
-    "Andrei Onel"
+    "Andrei Onel",
+    "Daniel Ursache",
+    "Tudor Amariei"
   ],
   "license": "MIT",
   "ignore": [

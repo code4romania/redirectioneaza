@@ -49,7 +49,7 @@ class User(AbstractUser):
         unique=True,
         help_text=_("We do not use this field"),
         validators=[],
-        null=True,
+        blank=True,
         editable=False,
     )
 
@@ -72,7 +72,7 @@ class User(AbstractUser):
     )
 
     validation_token = models.UUIDField(verbose_name=_("validation token"), blank=True, null=True, editable=False)
-    
+
     token_timestamp = models.DateTimeField(verbose_name=_("validation token timestamp"), blank=True, null=True)
 
     objects = CustomUserManager()

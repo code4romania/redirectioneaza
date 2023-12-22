@@ -8,12 +8,12 @@ class HomePage(BaseHandler):
     template_name = "index.html"
 
     def get(self, request, *args, **kwargs):
-        context = {}
-        context["title"] = "redirectioneaza.ro"
-
-        context["limit"] = settings.DONATION_LIMIT
-        context["DEFAULT_NGO_LOGO"] = settings.DEFAULT_NGO_LOGO
-        context["ngos"] = []
+        context = {
+            "title": "redirectioneaza.ro",
+            "limit": settings.DONATIONS_LIMIT,
+            "DEFAULT_NGO_LOGO": settings.DEFAULT_NGO_LOGO,
+            "ngos": [],
+        }
 
         return render(request, self.template_name, context)
 

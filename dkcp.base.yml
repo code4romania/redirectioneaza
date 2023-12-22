@@ -1,0 +1,34 @@
+version: '3.9'
+
+services:
+
+  redirect_base:
+    container_name: redirect
+    env_file:
+      - .env
+    environment:
+      - "PYTHONUNBUFFERED=1"
+    restart: on-failure
+
+  zippy_base:
+    container_name: zippy
+    env_file:
+      - .env
+    environment:
+      - "PYTHONUNBUFFERED=1"
+    restart: on-failure
+
+  db_base:
+    image: mysql:8.2.0
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - redirect_mysql:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: "${DATABASE_NAME}"
+      MYSQL_USER: "${DATABASE_USER}"
+      MYSQL_PASSWORD: "${DATABASE_PASSWORD}"
+      MYSQL_ROOT_PASSWORD: "${DATABASE_PASSWORD}"
+    ports:
+      - "${DATABASE_PORT:-3306}:3306"

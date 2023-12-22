@@ -1,0 +1,7 @@
+#!/command/with-contenv sh
+
+set -e
+
+cd /var/www/redirect/backend
+
+python3 manage.py qcluster

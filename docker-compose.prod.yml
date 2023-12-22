@@ -1,0 +1,41 @@
+version: '3.9'
+name: redirect_multi
+
+services:
+
+  webapp:
+    extends:
+      file: dkcp.base.yml
+      service: redirect_base
+    container_name: redirect_prod
+    build:
+      context: .
+      dockerfile: ./docker/dockerfiles/Dockerfile
+    volumes:
+      - ./backend/media:/var/www/redirect/backend/media
+    environment:
+      - "ENVIRONMENT=production"
+    ports:
+      - "${WEBAPP_PORT:-8080}:80"
+    depends_on:
+      - db
+
+  zippy:
+    container_name: zippy_prod
+    build:
+      context: ./zipper
+      dockerfile: Dockerfile
+      args:
+        ENVIRONMENT: "production"
+    volumes:
+      - ./creds/:/creds/
+    ports:
+      - "${API_PORT:-8123}:80"
+
+  db:
+    extends:
+      file: dkcp.base.yml
+      service: db_base
+
+volumes:
+  redirect_mysql:

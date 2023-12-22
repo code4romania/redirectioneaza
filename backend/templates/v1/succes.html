@@ -1,5 +1,5 @@
 
-{% extends "base.html" %} 
+{% extends "base.html" %}
 
 
 {% block content %}
@@ -24,7 +24,7 @@
             <div class="row">
                 <div class="col-xs-12 col-md-8 col-md-offset-2">
                     <p>
-                        Îți mulțumim! Formularul tau a fost trimis la organizatie si ai primit si tu pe email o copie a acestuia. 
+                        Îți mulțumim! Formularul tau a fost trimis la organizatie si ai primit si tu pe email o copie a acestuia.
                     </p>
                     <p>
                         Împreună suntem mai buni, mai puternici și mai curajosi. Împreună putem aduce o schimbare în bine în societatea noastră, de aceea avem nevoie de cât mai mulți oameni ca tine.
@@ -72,7 +72,7 @@
                     </ul>
                 </div>
                 <div class="col-xs-12 col-md-8 col-md-offset-2 margin-top text-center">
-                    <h4>Trimite formularul completat până la data de <strong class="deadline">{{ limit.day }} {{ months[limit.month] }}</strong>!</h4>
+                    <h4>Trimite formularul completat până la data de <strong class="deadline">{{ limit.day }} {{ month_limit }}</strong>!</h4>
                 </div>
                 {% if ngo.tel or ngo.email %}
                     <div class="col-xs-12 col-md-8 col-md-offset-2 ngo-details">

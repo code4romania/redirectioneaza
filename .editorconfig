@@ -1,0 +1,8 @@
+root = true
+
+[*]
+indent_size = 4
+indent_style = space
+
+[{*.js,*.jsx,*.ts,*.tsx,*.json,.prettierrc,*.yml,*.yaml,*.tf,*.lock.hcl,.bowerrc}]
+indent_size = 2

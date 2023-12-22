@@ -1,0 +1,68 @@
+version: '3.9'
+name: redirect_dev
+
+services:
+
+  webapp_sqlite:
+    profiles: [ "sqlite3" ]
+    extends:
+      service: redirect_dev_base
+    container_name: redirect_dev
+    volumes:
+      - ./backend/.db_sqlite:/var/www/redirect/backend/.db_sqlite
+    environment:
+      - "DATABASE_ENGINE=sqlite3"
+
+  webapp_mysql:
+    profiles: [ "mysql" ]
+    extends:
+      service: redirect_dev_base
+    container_name: redirect_dev
+    environment:
+      - "DATABASE_ENGINE=mysql"
+    depends_on:
+      - db
+
+  redirect_dev_base:
+    profiles: [ "_base" ]
+    extends:
+      file: dkcp.base.yml
+      service: redirect_base
+    container_name: redirect_webapp_dev_base
+    build:
+      context: .
+      dockerfile: ./docker/dockerfiles/Dockerfile.dev
+    volumes:
+      - ./backend:/var/www/redirect/backend
+    environment:
+      - "ENVIRONMENT=development"
+    ports:
+      - "${WEBAPP_PORT:-8080}:8000"
+
+  zippy:
+    profiles: [ "_base", "sqlite3", "mysql" ]
+    extends:
+      file: dkcp.base.yml
+      service: zippy_base
+    container_name: zippy_dev
+    build:
+      context: ./zipper
+      dockerfile: Dockerfile.dev
+      args:
+        ENVIRONMENT: "development"
+    volumes:
+      - ./zipper/creds/:/creds/
+    ports:
+      - "${API_PORT:-8123}:80"
+
+  db:
+    profiles: [ "mysql" ]
+    extends:
+      file: dkcp.base.yml
+      service: db_base
+    container_name: redirect_mysql_dev
+    volumes:
+      - ./docker/init-mysql:/docker-entrypoint-initdb.d
+
+volumes:
+  redirect_mysql:

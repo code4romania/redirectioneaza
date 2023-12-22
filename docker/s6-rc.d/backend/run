@@ -1,0 +1,23 @@
+#!/command/with-contenv sh
+
+set -e
+
+cd /var/www/redirect/backend/ || exit 1
+
+if [ "${ENVIRONMENT}" = "development" ]; then
+    echo "Running in development mode"
+
+    python3 -Wd manage.py runserver 0.0.0.0:8000
+else
+    echo "Running in production mode"
+
+    # https://docs.gunicorn.org/en/latest/design.html#how-many-workers
+    WORKERS=${GUNICORN_WORKESRS:-$(((2 * $(nproc)) + 1))}
+
+    python3 -m gunicorn redirectioneaza.wsgi \
+        --bind "unix:///run/gunicorn.sock" \
+        --log-level info \
+        --worker-class gevent \
+        --workers "${WORKERS}" \
+        --timeout 60
+fi
