@@ -1,0 +1,60 @@
+name: Backend Check
+
+on:
+  push:
+    branches:
+      - 'main'
+    paths:
+      - 'backend/**.py'
+      - 'backend/requirements*.*'
+      - 'backend/pyproject.toml'
+      - 'Dockerfile*'
+      - 'docker-compose*.yml'
+      - '.github/workflows/backend_check.yml'
+  pull_request:
+    branches:
+      - 'main'
+    paths:
+      - 'backend/**.py'
+      - 'backend/requirements*.*'
+      - 'backend/pyproject.toml'
+      - 'Dockerfile*'
+      - 'docker-compose*.yml'
+      - '.github/workflows/backend_check.yml'
+
+jobs:
+  static_analysis:
+    name: Run static analysis
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out Git repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.11
+        cache: 'pip'
+
+    - name: Cache pip
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements-dev.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+
+    - name: Install Black & Ruff with latest pip
+      run: |
+        python -m pip install --upgrade pip
+        cat ./backend/requirements-dev.txt | grep black== | cut -d' ' -f1 | xargs pip install
+        cat ./backend/requirements-dev.txt | grep ruff== | cut -d' ' -f1 | xargs pip install
+
+    - name: Lint files using Ruff
+      run: |
+        ruff check ./backend
+
+    - name: Check formatting with Black
+      run: |
+        black --check ./backend
+
