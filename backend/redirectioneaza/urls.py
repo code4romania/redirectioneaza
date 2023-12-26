@@ -67,8 +67,8 @@ urlpatterns = (
         path("logout", LogoutHandler.as_view(), name="logout"),
         path("forgot", ForgotPasswordHandler.as_view(), name="forgot"),
         # verification url: used for signup, and reset password
-        re_path(
-            "(?P<type>[v|p])/<int:user_id>-<str:signup_token>",
+        path(
+            "verify/<str:verification_type>/<int:user_id>-<uuid:signup_token>",
             VerificationHandler.as_view(),
             name="verification",
         ),

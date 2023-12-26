@@ -1,8 +1,11 @@
+import logging
 import uuid
 
 from django.contrib.auth import login, logout
+from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.db import IntegrityError
+from django.http import Http404
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.urls import reverse
@@ -10,6 +13,9 @@ from django.utils import timezone
 
 
 from .base import AccountHandler
+
+
+logger = logging.getLogger(__name__)
 
 
 class ForgotPasswordHandler(AccountHandler):
@@ -95,9 +101,18 @@ class SignupHandler(AccountHandler):
             context.update({"nume": first_name, "prenume": last_name, "email": email})
             return render(request, self.template_name, context)
 
-        # token = self.user_model.create_signup_token(user.id)
-        verification_url = "https://example.com/"
-        # verification_url = self.uri_for('verification', type='v', user_id=user.id, signup_token=token, _full=True)
+        token = user.refresh_token()
+        verification_url = "https://{}{}".format(
+            self.request.get_host(),
+            reverse(
+                'verification',
+                kwargs={
+                    "verification_type": "v",
+                    "user_id": user.id,
+                    "signup_token": token,
+                }
+            )
+        )
 
         template_values = {
             "name": user.last_name,
@@ -111,8 +126,8 @@ class SignupHandler(AccountHandler):
         message = EmailMultiAlternatives(
             "Confirmare cont redirectioneaza.ro",
             text_body,
-            "from@example.com",
-            ["to@example.com"],
+            settings.DEFAULT_FROM_EMAIL,
+            [user.email],
         )
         message.attach_alternative(html_body, "text/html")
         message.send(fail_silently=False)
@@ -124,4 +139,43 @@ class SignupHandler(AccountHandler):
 
 
 class VerificationHandler(AccountHandler):
-    pass
+    """handler used to:
+            verify new account
+            reset user password
+    """
+
+    template_name = 'parola-noua.html'
+
+    def get(self, request, verification_type, user_id, signup_token):
+        try:
+            user = self.user_model.objects.get(pk=user_id)
+        except self.user_model.DoesNotExist:
+            user = None
+
+        if not user or not user.verify_token(signup_token):
+            logger.info('Could not find any user with id "%s" signup token "%s"', user_id, signup_token)
+            raise Http404
+        else:
+            user.clear_token()
+
+        login(request, user)
+
+        if verification_type == 'v':
+            user.is_verified = True
+            user.clear_token(commit=False)
+            user.save()
+            return redirect(reverse("contul-meu"))
+
+        elif verification_type == 'p':
+            # supply user to the page
+            self.template_values.update({
+                "token": signup_token
+            })
+            context = {}
+            context["token"] = signup_token
+            context["is_admin"] = request.user.is_staff
+            return render(request, self.template_name, context)
+        else:
+            logger.info('verification type not supported')
+            raise Http404
+

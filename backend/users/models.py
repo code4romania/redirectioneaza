@@ -1,8 +1,11 @@
+import uuid
+
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import AbstractUser, UserManager
 from django.db import models
 from django.db.models.functions import Lower
 from django.utils.translation import gettext_lazy as _
+from django.utils import timezone
 
 from donations.models import Ngo
 
@@ -86,3 +89,23 @@ class User(AbstractUser):
             models.UniqueConstraint(Lower("email"), name="email_unique"),
         ]
         permissions = []
+
+    def refresh_token(self, commit=True):
+        self.token_timestamp = timezone.now()
+        self.validation_token = uuid.uuid4()
+        if commit:
+            self.save()
+        return self.validation_token
+
+    def verify_token(self, token):
+        if not self.validation_token or not token:
+            return False
+        if self.validation_token == token:
+            return True
+        return False
+
+    def clear_token(self, commit=True):
+        self.token_timestamp = None
+        self.validation_token = None
+        if commit:
+            self.save()
