@@ -57,9 +57,7 @@ class User(AbstractUser):
         editable=False,
     )
 
-    email = models.EmailField(
-        verbose_name=_("email address"), blank=False, null=False, unique=True
-    )
+    email = models.EmailField(verbose_name=_("email address"), blank=False, null=False, unique=True)
 
     ngo = models.ForeignKey(
         Ngo,
@@ -71,9 +69,7 @@ class User(AbstractUser):
     )
 
     # originally: verified
-    is_verified = models.BooleanField(
-        verbose_name=_("is verified"), db_index=True, default=False
-    )
+    is_verified = models.BooleanField(verbose_name=_("is verified"), db_index=True, default=False)
 
     validation_token = models.UUIDField(verbose_name=_("validation token"), blank=True, null=True, editable=False)
 
