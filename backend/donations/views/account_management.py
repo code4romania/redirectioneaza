@@ -1,7 +1,7 @@
 import logging
 import uuid
 
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, authenticate
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.db import IntegrityError
@@ -23,7 +23,51 @@ class ForgotPasswordHandler(AccountHandler):
 
 
 class LoginHandler(AccountHandler):
-    pass
+    template_name = "login.html"
+
+    def get(self, request):
+        context = {}
+        context["title"] = "Contul meu"
+
+        # if the user is logged in just redirect
+        if request.user.is_authenticated:
+            return redirect(reverse("contul-meu"))
+
+        return render(request, self.template_name, context)
+
+    def post(self, request):
+        email = request.POST.get("email", "").lower().strip()
+        password = request.POST.get("parola", "")
+
+        context = {}
+
+        if not email:
+            context["errors"] = "Câmpul email nu poate fi gol."
+            return render(request, self.template_name, context)
+
+        if not password:
+            context["errors"] = "Câmpul parola nu poate fi gol."
+            return render(request, self.template_name, context)
+
+        ## TODO: Fix captcha
+        # captcha_response = submit(post.get(CAPTCHA_POST_PARAM), CAPTCHA_PRIVATE_KEY, post.remote_addr)
+
+        # # if the captcha is not valid return
+        # if not captcha_response.is_valid:
+        #     context["errors"] = (
+        #         "Se pare că a fost o problemă cu verificarea reCAPTCHA." + "Te rugăm să încerci din nou."
+        #     )
+        #     return render(request, self.template_name, context)
+
+        user = authenticate(email=email, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect(reverse("contul-meu"))
+        else:
+            logger.warn("Invalid email or password: {0}".format(email))
+            context["email"] = email
+            context["errors"] = "Se pare că această combinație de email și parolă este incorectă."
+            return render(request, self.template_name, context)
 
 
 class LogoutHandler(AccountHandler):
@@ -52,7 +96,7 @@ class SignupHandler(AccountHandler):
         first_name = post.get("nume")
         last_name = post.get("prenume")
 
-        email = post.get("email")
+        email = post.get("email", "").lower().strip()
         password = post.get("parola")
 
         if not first_name:
@@ -79,7 +123,7 @@ class SignupHandler(AccountHandler):
         #     context["errors"] = "Se pare că a fost o problemă cu verificarea reCAPTCHA. Te rugăm să încerci din nou."
         #     return render(request, self.template_name, context)
 
-        user = self.user_model(
+        user = self.user_model.objects.create_user(
             email=email,
             first_name=first_name,
             last_name=last_name,
@@ -105,13 +149,13 @@ class SignupHandler(AccountHandler):
         verification_url = "https://{}{}".format(
             self.request.get_host(),
             reverse(
-                'verification',
+                "verification",
                 kwargs={
                     "verification_type": "v",
                     "user_id": user.id,
                     "signup_token": token,
-                }
-            )
+                },
+            ),
         )
 
         template_values = {
@@ -140,11 +184,11 @@ class SignupHandler(AccountHandler):
 
 class VerificationHandler(AccountHandler):
     """handler used to:
-            verify new account
-            reset user password
+    verify new account
+    reset user password
     """
 
-    template_name = 'parola-noua.html'
+    template_name = "parola-noua.html"
 
     def get(self, request, verification_type, user_id, signup_token):
         try:
@@ -160,22 +204,19 @@ class VerificationHandler(AccountHandler):
 
         login(request, user)
 
-        if verification_type == 'v':
+        if verification_type == "v":
             user.is_verified = True
             user.clear_token(commit=False)
             user.save()
             return redirect(reverse("contul-meu"))
 
-        elif verification_type == 'p':
+        elif verification_type == "p":
             # supply user to the page
-            self.template_values.update({
-                "token": signup_token
-            })
+            self.template_values.update({"token": signup_token})
             context = {}
             context["token"] = signup_token
             context["is_admin"] = request.user.is_staff
             return render(request, self.template_name, context)
         else:
-            logger.info('verification type not supported')
+            logger.info("verification type not supported")
             raise Http404
-

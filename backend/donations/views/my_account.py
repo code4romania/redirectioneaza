@@ -9,9 +9,9 @@ class MyAccountDetailsHandler(AccountHandler):
     pass
 
 
-@method_decorator(login_required, name='get')
+@method_decorator(login_required, name="get")
 class MyAccountHandler(AccountHandler):
-    template_name = 'ngo/my-account.html'
+    template_name = "ngo/my-account.html"
 
     def get(self, request):
         context = {
