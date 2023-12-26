@@ -1,9 +1,10 @@
 import uuid
 
-from django.contrib.auth import login
-from django.core.mail import send_mail
+from django.contrib.auth import login, logout
+from django.core.mail import EmailMultiAlternatives
 from django.db import IntegrityError
 from django.shortcuts import render, redirect
+from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils import timezone
 
@@ -20,7 +21,9 @@ class LoginHandler(AccountHandler):
 
 
 class LogoutHandler(AccountHandler):
-    pass
+    def get(self, request):
+        logout(request)
+        return redirect("/")
 
 
 class SetPasswordHandler(AccountHandler):
@@ -92,17 +95,27 @@ class SignupHandler(AccountHandler):
             context.update({"nume": first_name, "prenume": last_name, "email": email})
             return render(request, self.template_name, context)
 
-        # TODO: Send the email
-        # self.send_email("signup", user)
-        # XXX: We switch to Django's email sender
+        # token = self.user_model.create_signup_token(user.id)
+        verification_url = "https://example.com/"
+        # verification_url = self.uri_for('verification', type='v', user_id=user.id, signup_token=token, _full=True)
 
-        send_mail(
+        template_values = {
+            "name": user.last_name,
+            "url": verification_url,
+            "host": self.request.get_host(),
+        }
+
+        html_body = render_to_string("email/signup/signup_inline.html", context=template_values)
+        text_body = render_to_string("email/signup/signup_text.txt", context=template_values)
+
+        message = EmailMultiAlternatives(
             "Confirmare cont redirectioneaza.ro",
-            "Here is the message.",
+            text_body,
             "from@example.com",
             ["to@example.com"],
-            fail_silently=False,
         )
+        message.attach_alternative(html_body, "text/html")
+        message.send(fail_silently=False)
 
         # login the user after signup
         login(request, user)
