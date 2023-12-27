@@ -1,12 +1,11 @@
 FROM node:18.17.1-bookworm-slim as frontend
 
-WORKDIR /var/www/redirect/frontend
-
-COPY ./frontend/ .
+WORKDIR /var/www/redirect/build
+COPY ./backend/ .
 
 # install the frontend libraries:
-RUN npm ci --no-audit --ignore-scripts && \
-    npm run prod
+RUN npm install -g npm bower && \
+    bower install --allow-root --config.interactive=false
 
 FROM python:3.11.7-slim-bookworm as backend
 
@@ -25,6 +24,7 @@ ENV PATH="${VIRTUAL_ENV}/bin:${PATH}"
 
 WORKDIR /build
 COPY ./backend/requirements.txt .
+
 RUN python3 -m pip install --upgrade pip setuptools && \
     python3 -m pip install -r ./requirements.txt
 
@@ -74,7 +74,7 @@ ENV PATH="${VIRTUAL_ENV}/bin:${PATH}"
 COPY --from=backend "${VIRTUAL_ENV}" "${VIRTUAL_ENV}"
 COPY ./backend/ /var/www/redirect/backend/
 
-COPY --from=frontend /var/www/redirect/frontend/dist/ /var/www/redirect/frontend/dist/
+COPY --from=frontend /var/www/redirect/build/bower_components/ /var/www/redirect/backend/bower_components/
 
 # activate the virtualenv:
 RUN . "${VIRTUAL_ENV}/bin/activate"

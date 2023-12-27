@@ -33,7 +33,7 @@ upd-sqlite:                       ## run the project with sqlite in detached mod
 	docker compose --profile sqlite3 up -d --build
 
 up-mysql:                         ## run the project with mysql
-	docker compose --profile mysql up --build
+	docker compose --profile mysql up --build``
 
 upd-mysql:                        ## run the project with mysql in detached mode
 	docker compose --profile mysql up -d --build
