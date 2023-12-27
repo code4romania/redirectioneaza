@@ -42,6 +42,7 @@ env = environ.Env(
     DATABASE_HOST=(str, "localhost"),
     DATABASE_PORT=(str, "3306"),
     # site settings
+    APEX_DOMAIN=(str, "redirectioneaza.ro"),
     SITE_TITLE=(str, "redirectioneaza 3,5%"),
     DONATIONS_LIMIT_DATE=(str, "2016-05-25"),
     DONATIONS_LIMIT_TO_CURRENT_YEAR=(bool, True),
@@ -91,6 +92,7 @@ DJANGO_ADMIN_PASSWORD = env.str("DJANGO_ADMIN_PASSWORD", None)
 DJANGO_ADMIN_EMAIL = env.str("DJANGO_ADMIN_EMAIL", None)
 
 ALLOWED_HOSTS = []
+APEX_DOMAIN = env.str("APEX_DOMAIN")
 
 APPEND_SLASH = True
 
@@ -137,6 +139,7 @@ INSTALLED_APPS = [
     "django_q",
     # custom apps:
     "donations",
+    "partners",
     "users",
 ]
 
@@ -148,6 +151,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "partners.middleware.PartnerDomainMiddleware",
 ]
 
 ROOT_URLCONF = "redirectioneaza.urls"
