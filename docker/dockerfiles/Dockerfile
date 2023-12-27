@@ -1,20 +1,33 @@
-FROM node:18.17.1-bookworm-slim as frontend
+FROM node:18.17.1-bookworm as frontend
 
-WORKDIR /var/www/redirect/build
-COPY ./backend/ .
+# set up a user and group for bower since it's not working as root
+ARG USER=builduser
+ARG GROUP=${USER}
+ARG UID=10000
+ARG GID=10000
+
+RUN groupadd --gid ${GID} --non-unique ${GROUP} && \
+    useradd --create-home --shell /bin/bash --uid ${UID} --gid ${GID} --non-unique ${USER}
+
+USER ${USER}
+
+
+WORKDIR /home/${USER}/redirect/build
+ENV PATH /home/${USER}/redirect/build/node_modules/.bin:$PATH
 
 # install the frontend libraries:
-RUN npm install -g npm bower && \
-    bower install --allow-root --config.interactive=false
+COPY ./backend/package.json ./backend/package-lock.json ./backend/bower.json ./backend/.bowerrc ./
+RUN npm cache clean --force && npm ci && bower install
 
-FROM python:3.11.7-slim-bookworm as backend
+
+FROM python:3.11.7-bookworm as backend
 
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y --no-install-recommends \
-        gettext git gcc g++ && \
+        gettext && \
     python3 -m pip install --upgrade pip setuptools cython
 
 # Python virtualenv paths
@@ -50,7 +63,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y --no-install-recommends \
-    nginx gcc xz-utils gettext
+        nginx gcc xz-utils gettext
 
 # configure process manager
 ARG S6_OVERLAY_VERSION=3.1.2.1
@@ -74,7 +87,7 @@ ENV PATH="${VIRTUAL_ENV}/bin:${PATH}"
 COPY --from=backend "${VIRTUAL_ENV}" "${VIRTUAL_ENV}"
 COPY ./backend/ /var/www/redirect/backend/
 
-COPY --from=frontend /var/www/redirect/build/bower_components/ /var/www/redirect/backend/bower_components/
+COPY --from=frontend /home/builduser/redirect/build/bower_components/ /var/www/redirect/backend/bower_components/
 
 # activate the virtualenv:
 RUN . "${VIRTUAL_ENV}/bin/activate"
