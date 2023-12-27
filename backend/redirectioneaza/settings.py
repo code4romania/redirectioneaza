@@ -47,6 +47,10 @@ env = environ.Env(
     DONATIONS_LIMIT_DATE=(str, "2016-05-25"),
     DONATIONS_LIMIT_TO_CURRENT_YEAR=(bool, True),
     DEFAULT_NGO_LOGO=(str, "https://storage.googleapis.com/redirectioneaza/logo_bw.png"),
+    # security settings
+    ALLOWED_HOSTS=(list, ["*"]),
+    CORS_ALLOWED_ORIGINS=(list, []),
+    CORS_ALLOW_ALL_ORIGINS=(bool, False),
     # zipping settings
     ZIPPY_URL=(str, "zippy:8000"),
     # email settings
@@ -91,9 +95,16 @@ ENVIRONMENT = env.str("ENVIRONMENT")
 DJANGO_ADMIN_PASSWORD = env.str("DJANGO_ADMIN_PASSWORD", None)
 DJANGO_ADMIN_EMAIL = env.str("DJANGO_ADMIN_EMAIL", None)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 APEX_DOMAIN = env.str("APEX_DOMAIN")
 
+CSRF_HEADER_NAME = "HTTP_X_XSRF_TOKEN"
+CSRF_COOKIE_NAME = "XSRF-TOKEN"
+
+CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS")
+CORS_ALLOW_ALL_ORIGINS = env.bool("CORS_ALLOW_ALL_ORIGINS")
+
+# Application definition
 APPEND_SLASH = True
 
 # some settings will be different if it's not running in a container (e.g., locally, on a Mac)
