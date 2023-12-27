@@ -9,7 +9,10 @@ class InvalidSubdomain(Exception):
 
 
 class PartnerDomainMiddleware:
-    
+    """
+    Add the `request.partner` property based on the requested subdomain
+    """
+
     @staticmethod
     def extract_subdomain(host: str, apex: str) -> str:
         apex = apex.strip().lower()
@@ -30,16 +33,13 @@ class PartnerDomainMiddleware:
             subdomain = host.split(dot_apex, maxsplit=1)[0]
         else:
             raise InvalidSubdomain
-        
+
         return subdomain
 
     def __init__(self, get_response):
         self.get_response = get_response
 
     def __call__(self, request):
-        # Code to be executed for each request before
-        # the view (and later middleware) are called.
-
         try:
             subdomain = PartnerDomainMiddleware.extract_subdomain(request.get_host(), settings.APEX_DOMAIN)
         except InvalidSubdomain:
@@ -52,10 +52,11 @@ class PartnerDomainMiddleware:
                 partner = Partner.objects.get(subdomain=subdomain)
             except Partner.DoesNotExist:
                 partner = None
-            
+
         request.partner = partner
 
-        print("PARTNER=", partner)
+        # Code to be executed for each request before
+        # the view (and later middleware) are called.
 
         response = self.get_response(request)
 
