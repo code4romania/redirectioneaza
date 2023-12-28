@@ -26,3 +26,4 @@ gunicorn~=21.2.0
 
 # file storage
 whitenoise~=6.6.0
+django-storages[s3]~=1.14.2

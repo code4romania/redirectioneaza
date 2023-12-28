@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 import os
+from copy import deepcopy
 from datetime import date, datetime
 from pathlib import Path
 
@@ -74,6 +75,16 @@ env = environ.Env(
     CAPTCHA_REQUIRED_SCORE=(float, 0.5),
     CAPTCHA_VERIFY_URL=(str, "https://www.google.com/recaptcha/api/siteverify"),
     CAPTCHA_POST_PARAM=(str, "g-recaptcha-response"),
+    # aws settings
+    USE_S3=(bool, False),
+    AWS_STORAGE_DEFAULT_BUCKET_NAME=(str, ""),
+    AWS_STORAGE_PUBLIC_BUCKET_NAME=(str, ""),
+    AWS_STORAGE_PRIVATE_BUCKET_NAME=(str, ""),
+    AWS_DEFAULT_ACL=(str, ""),
+    AWS_PUBLIC_ACL=(str, ""),
+    AWS_PRIVATE_ACL=(str, ""),
+    AWS_REGION_NAME=(str, ""),
+    AWS_S3_REGION_NAME=(str, ""),
     # sentry
     SENTRY_DSN=(str, ""),
     SENTRY_TRACES_SAMPLE_RATE=(float, 0),
@@ -84,10 +95,10 @@ env = environ.Env(
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
+# SECURITY WARNING: keep the secret key used in production secret
 SECRET_KEY = env.str("SECRET_KEY")
 
-# SECURITY WARNING: don't run with debug turned on in production!
+# SECURITY WARNING: don't run with debug turned on in production
 DEBUG = env.bool("DEBUG")
 ENVIRONMENT = env.str("ENVIRONMENT")
 
@@ -147,6 +158,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # third party apps:
+    "storages",
     "django_q",
     # custom apps:
     "donations",
@@ -154,8 +166,13 @@ INSTALLED_APPS = [
     "users",
 ]
 
+if not env.bool("USE_S3"):
+    INSTALLED_APPS.append("whitenoise.runserver_nostatic")
+
+
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -206,15 +223,15 @@ DATABASES = {
     }
 }
 
-if env("DATABASE_ENGINE") == "mysql":
+if env.str("DATABASE_ENGINE") == "mysql":
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.mysql",
-            "NAME": env("DATABASE_NAME"),
-            "USER": env("DATABASE_USER"),
-            "PASSWORD": env("DATABASE_PASSWORD"),
-            "HOST": env("DATABASE_HOST"),
-            "PORT": env("DATABASE_PORT"),
+            "NAME": env.str("DATABASE_NAME"),
+            "USER": env.str("DATABASE_USER"),
+            "PASSWORD": env.str("DATABASE_PASSWORD"),
+            "HOST": env.str("DATABASE_HOST"),
+            "PORT": env.str("DATABASE_PORT"),
         }
     }
 
@@ -251,9 +268,9 @@ AUTH_PASSWORD_VALIDATORS = [
 EMAIL_BACKEND = env.str("EMAIL_BACKEND")
 EMAIL_SEND_METHOD = env.str("EMAIL_SEND_METHOD")
 
-DEFAULT_RECEIVE_EMAIL = env("DEFAULT_RECEIVE_EMAIL")
-DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL")
-NO_REPLY_EMAIL = env("NO_REPLY_EMAIL")
+DEFAULT_RECEIVE_EMAIL = env.email("DEFAULT_RECEIVE_EMAIL")
+DEFAULT_FROM_EMAIL = env.email("DEFAULT_FROM_EMAIL")
+NO_REPLY_EMAIL = env.email("NO_REPLY_EMAIL")
 
 EMAIL_HOST = env.str("EMAIL_HOST")
 EMAIL_PORT = env.str("EMAIL_PORT")
@@ -276,11 +293,18 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
+# Media & Static files storage
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = "static/"
-MEDIA_URL = "media/"
+public_static_location = "static"
+public_media_location = "media"
+private_media_location = "media"
+
+static_storage = "whitenoise.storage.CompressedStaticFilesStorage"
+media_storage = "django.core.files.storage.FileSystemStorage"
+
+STATIC_URL = f"{public_static_location}/"
+MEDIA_URL = f"{public_media_location}/"
 
 STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR, "static"))
 MEDIA_ROOT = os.path.abspath(os.path.join(BASE_DIR, "media"))
@@ -291,6 +315,62 @@ STATICFILES_DIRS = [
     os.path.abspath(os.path.join(DEV_DEPENDECIES_LOCATION)),
     os.path.abspath(os.path.join("static_extras")),
 ]
+
+default_storage_options = {}
+public_storage_options = {}
+private_storage_options = {}
+
+if env.bool("USE_S3"):
+    media_storage = "storages.backends.s3boto3.S3Boto3Storage"
+    static_storage = "storages.backends.s3boto3.S3StaticStorage"
+
+    # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html
+    default_storage_options = {
+        "bucket_name": (env.str("AWS_STORAGE_DEFAULT_BUCKET_NAME")),
+        "default_acl": (env.str("AWS_DEFAULT_ACL")),
+        "region_name": env.str("AWS_S3_REGION_NAME") or env.str("AWS_REGION_NAME"),
+        "object_parameters": {"CacheControl": "max-age=86400"},
+        "file_overwrite": False,
+    }
+
+    if aws_session_profile := env.str("AWS_S3_SESSION_PROFILE", default=None):
+        default_storage_options["session_profile"] = aws_session_profile
+    elif aws_access_key := env.str("AWS_ACCESS_KEY_ID", default=None):
+        default_storage_options["access_key"] = aws_access_key
+        default_storage_options["secret_key"] = env.str("AWS_SECRET_ACCESS_KEY")
+
+    private_storage_options = deepcopy(default_storage_options)
+    if private_acl := env.str("AWS_PRIVATE_ACL"):
+        private_storage_options["default_acl"] = private_acl
+    if bucket_name := env.str("AWS_STORAGE_PRIVATE_BUCKET_NAME"):
+        private_storage_options["bucket_name"] = bucket_name
+
+    public_storage_options = deepcopy(default_storage_options)
+    if public_acl := env.str("AWS_PUBLIC_ACL"):
+        public_storage_options["default_acl"] = public_acl
+    if public_bucket_name := env.str("AWS_STORAGE_PUBLIC_BUCKET_NAME"):
+        public_storage_options["bucket_name"] = public_bucket_name
+    if custom_domain := env.str("AWS_S3_CUSTOM_DOMAIN", default=None):
+        public_storage_options["custom_domain"] = custom_domain
+
+
+STORAGES = {
+    "default": {
+        "BACKEND": media_storage,
+        "LOCATION": private_media_location,
+        "OPTIONS": default_storage_options,
+    },
+    "public": {
+        "BACKEND": media_storage,
+        "LOCATION": public_media_location,
+        "OPTIONS": public_storage_options,
+    },
+    "staticfiles": {
+        "BACKEND": static_storage,
+        "LOCATION": public_static_location,
+        "OPTIONS": public_storage_options,
+    },
+}
 
 
 # Default primary key field type
