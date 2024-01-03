@@ -63,10 +63,9 @@ env = environ.Env(
     EMAIL_HOST_PASSWORD=(str, ""),
     EMAIL_USE_TLS=(str, ""),
     EMAIL_FAIL_SILENTLY=(bool, False),
-    CONTACT_EMAIL_ADDRESS=(str, "no-reply@redirectioneaza.ro"),
-    DEFAULT_FROM_EMAIL=(str, "email@example.com"),
-    DEFAULT_RECEIVE_EMAIL=(str, "email@example.com"),
-    NO_REPLY_EMAIL=(str, "noreply@example.com"),
+    CONTACT_EMAIL_ADDRESS=(str, "contact@redirectioneaza.ro"),
+    DEFAULT_FROM_EMAIL=(str, "no-reply@redirectioneaza.ro"),
+    NO_REPLY_EMAIL=(str, "no-reply@redirectioneaza.ro"),
     # django-q2 settings
     BACKGROUND_WORKERS_COUNT=(int, 1),
     # recaptcha settings
@@ -268,7 +267,6 @@ AUTH_PASSWORD_VALIDATORS = [
 EMAIL_BACKEND = env.str("EMAIL_BACKEND")
 EMAIL_SEND_METHOD = env.str("EMAIL_SEND_METHOD")
 
-DEFAULT_RECEIVE_EMAIL = env.str("DEFAULT_RECEIVE_EMAIL")
 DEFAULT_FROM_EMAIL = env.str("DEFAULT_FROM_EMAIL")
 NO_REPLY_EMAIL = env.str("NO_REPLY_EMAIL")
 
