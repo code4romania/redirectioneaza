@@ -1,33 +1,91 @@
 import logging
 import uuid
 
-from django.contrib.auth import login, logout, authenticate
 from django.conf import settings
-from django.core.mail import EmailMultiAlternatives
+from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import Http404
-from django.shortcuts import render, redirect
-from django.template.loader import render_to_string
+from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
-
+from redirectioneaza.common.messaging import send_email
 from .base import AccountHandler
-
 
 logger = logging.getLogger(__name__)
 
 
 class ForgotPasswordHandler(AccountHandler):
-    pass
+    template_name = "resetare-parola.html"
+
+    def get(self, request, *args, **kwargs):
+        context = {"title": "Resetare parola"}
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        context = {}
+        post = self.request.POST
+
+        email = post.get("email")
+
+        if not email:
+            context["errors"] = _("Câmpul email nu poate fi gol.")
+            return render(request, self.template_name, context)
+
+        ## TODO: Fix captcha
+        # captcha_response = submit(post.get(CAPTCHA_POST_PARAM), CAPTCHA_PRIVATE_KEY, post.remote_addr)
+        #
+        # # if the captcha is not valid return
+        # if not captcha_response.is_valid:
+        #     context["errors"] = _(
+        #         "Se pare că a fost o problemă cu verificarea reCAPTCHA. Te rugăm să încerci din nou."
+        #     )
+        #     return render(request, self.template_name, context)
+
+        try:
+            user = self.user_model.objects.get(email=email)
+        except self.user_model.DoesNotExist:
+            user = None
+
+        if user:
+            self._send_password_reset_email(user)
+
+        context["found"] = _("Dacă adresa de email este validă, vei primi un email cu instrucțiuni.")
+
+        return render(request, self.template_name, context)
+
+    def _send_password_reset_email(self, user):
+        template_context = {
+            "name": user.first_name,
+            "url": "{}://{}{}".format(
+                self.request.scheme,
+                self.request.get_host(),
+                reverse(
+                    "verification",
+                    kwargs={
+                        "verification_type": "p",
+                        "user_id": user.id,
+                        "signup_token": user.refresh_token(),
+                    },
+                ),
+            ),
+            "contact_mail": settings.CONTACT_EMAIL_ADDRESS,
+        }
+        send_email(
+            subject=_("Resetare parolă redirectioneaza.ro"),
+            to_emails=[user.email],
+            text_template="email/reset/reset_password.txt",
+            html_template="email/reset/reset_password.txt",
+            context=template_context,
+        )
 
 
 class LoginHandler(AccountHandler):
     template_name = "login.html"
 
-    def get(self, request):
-        context = {}
-        context["title"] = "Contul meu"
+    def get(self, request, *args, **kwargs):
+        context = {"title": "Contul meu"}
 
         # if the user is logged in just redirect
         if request.user.is_authenticated:
@@ -64,28 +122,60 @@ class LoginHandler(AccountHandler):
             login(request, user)
             return redirect(reverse("contul-meu"))
         else:
-            logger.warn("Invalid email or password: {0}".format(email))
+            logger.warning("Invalid email or password: {0}".format(email))
             context["email"] = email
             context["errors"] = "Se pare că această combinație de email și parolă este incorectă."
             return render(request, self.template_name, context)
 
 
 class LogoutHandler(AccountHandler):
-    def get(self, request):
+    def get(self, request, *args, **kwargs):
         logout(request)
         return redirect("/")
 
 
 class SetPasswordHandler(AccountHandler):
-    pass
+    template_name = "parola-noua.html"
+
+    def post(self, request, *args, **kwargs):
+        context = {}
+        post = self.request.POST
+
+        password = post.get("parola")
+        password_confirm = post.get("confirma-parola")
+
+        if not password:
+            context["errors"] = "Câmpul parola nu poate fi gol."
+            return render(request, self.template_name, context)
+
+        if not password_confirm:
+            context["errors"] = "Câmpul parola confirmare nu poate fi gol."
+            return render(request, self.template_name, context)
+
+        if password != password_confirm:
+            context["errors"] = "Parolele nu se potrivesc."
+            return render(request, self.template_name, context)
+
+        user = request.user
+
+        if not user:
+            logger.warning("Invalid user")
+            return redirect(reverse("login"))
+
+        user.set_password(password)
+        user.clear_token(commit=False)
+        user.save()
+
+        login(request, user)
+
+        return redirect(reverse("contul-meu"))
 
 
 class SignupHandler(AccountHandler):
     template_name = "cont-nou.html"
 
     def get(self, request, *args, **kwargs):
-        context = {}
-        context["title"] = "Cont nou"
+        context = {"title": "Cont nou"}
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
@@ -164,17 +254,13 @@ class SignupHandler(AccountHandler):
             "host": self.request.get_host(),
         }
 
-        html_body = render_to_string("email/signup/signup_inline.html", context=template_values)
-        text_body = render_to_string("email/signup/signup_text.txt", context=template_values)
-
-        message = EmailMultiAlternatives(
-            "Confirmare cont redirectioneaza.ro",
-            text_body,
-            settings.DEFAULT_FROM_EMAIL,
-            [user.email],
+        send_email(
+            subject=_("Confirmare cont redirectioneaza.ro"),
+            to_emails=[user.email],
+            text_template="email/signup/signup_text.txt",
+            html_template="email/signup/signup_inline.html",
+            context=template_values,
         )
-        message.attach_alternative(html_body, "text/html")
-        message.send(fail_silently=False)
 
         # login the user after signup
         login(request, user)
@@ -190,7 +276,11 @@ class VerificationHandler(AccountHandler):
 
     template_name = "parola-noua.html"
 
-    def get(self, request, verification_type, user_id, signup_token):
+    def get(self, request, *args, **kwargs):
+        verification_type = kwargs["verification_type"]
+        user_id = kwargs["user_id"]
+        signup_token = kwargs["signup_token"]
+
         try:
             user = self.user_model.objects.get(pk=user_id)
         except self.user_model.DoesNotExist:
@@ -210,13 +300,10 @@ class VerificationHandler(AccountHandler):
             user.save()
             return redirect(reverse("contul-meu"))
 
-        elif verification_type == "p":
+        if verification_type == "p":
             # supply user to the page
-            self.template_values.update({"token": signup_token})
-            context = {}
-            context["token"] = signup_token
-            context["is_admin"] = request.user.is_staff
+            context = {"token": signup_token, "is_admin": request.user.is_staff}
             return render(request, self.template_name, context)
-        else:
-            logger.info("verification type not supported")
-            raise Http404
+
+        logger.info("verification type not supported")
+        raise Http404

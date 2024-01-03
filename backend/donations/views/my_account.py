@@ -13,7 +13,7 @@ class MyAccountDetailsHandler(AccountHandler):
 class MyAccountHandler(AccountHandler):
     template_name = "ngo/my-account.html"
 
-    def get(self, request):
+    def get(self, request, *args, **kwargs):
         context = {
             "user": request.user,
             # TODO:
