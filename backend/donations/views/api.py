@@ -2,7 +2,8 @@ from .base import BaseHandler, AccountHandler
 
 
 class CheckNgoUrl(AccountHandler):
-    pass
+    def get(self, request, *args, **kwargs):
+        raise NotImplementedError("CheckNgoUrl not implemented yet")
 
 
 class NgosApi(BaseHandler):
@@ -10,16 +11,20 @@ class NgosApi(BaseHandler):
 
 
 class GetNgoForm(BaseHandler):
-    pass
+    def get(self, request, *args, **kwargs):
+        raise NotImplementedError("GetNgoForm not implemented yet")
 
 
 class GetNgoForms(AccountHandler):
-    pass
+    def get(self, request, *args, **kwargs):
+        raise NotImplementedError("GetNgoForms not implemented yet")
 
 
 class GetUploadUrl(AccountHandler):
-    pass
+    def get(self, request, *args, **kwargs):
+        raise NotImplementedError("GetUploadUrl not implemented yet")
 
 
 class Webhook(BaseHandler):
-    pass
+    def get(self, request, *args, **kwargs):
+        raise NotImplementedError("Webhook not implemented yet")
