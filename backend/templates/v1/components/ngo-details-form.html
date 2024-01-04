@@ -43,35 +43,13 @@
                 <input class="form-control" type="text" name="ong-adresa" placeholder="Adresa Asociației" value="{{ ngo.address if ngo }}" required maxlength="100" />
             </div>
             <div class="col-xs-4">
-                <select class="form-control" id="ong-judet" name="ong-judet" required x-moz-errormessage="Județul este obligatoriu" title="Județul este obligatoriu">
-                    <option value="">Județul</option>
-                    <option value="RO" {{ "selected" if county == ngo.county }}>Toată țara</option>
-                    <optgroup label="București">
-                        {% for number in range(1, 7) %}
-                            <option value="{{ number }}" {{ "selected" if number|string == ngo.county }}>Sector {{ number }}</option>
-                        {% endfor %}
-                    </optgroup>
-                    {% for county in counties %}
-                        <option value="{{ county }}" {{ "selected" if county == ngo.county }} >{{ county }}</option>
-                    {% endfor %}
-                </select>
+                {% include "components/county.html" %}
             </div>
         </div>
         <div class="form-group">
             <div class="col-xs-12">
                 <label for="ong-activitate">În ce regiune iși desfășoară ONG-ul activitatea?</label>
-                <select class="form-control" id="ong-activitate" name="ong-activitate" required x-moz-errormessage="Zona de activitate este obligatorie" title="Zona de activitate este obligatorie">
-                    <option value="">Zona de activitate</option>
-                    <option value="RO" {{ "selected" if county == ngo.active_region }}>National</option>
-                    <optgroup label="București">
-                        {% for number in range(1, 7) %}
-                            <option value="{{ number }}" {{ "selected" if number|string == ngo.active_region }}>Sector {{ number }}</option>
-                        {% endfor %}
-                    </optgroup>
-                    {% for county in counties %}
-                        <option value="{{ county }}" {{ "selected" if county == ngo.active_region }} >{{ county }}</option>
-                    {% endfor %}
-                </select>
+                {% include "components/county.html" %}
             </div>
         </div>
         <div class="form-group choose-url-group">

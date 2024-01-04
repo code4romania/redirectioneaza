@@ -52,6 +52,7 @@ class MyAccountHandler(AccountHandler):
             "limit": settings.DONATIONS_LIMIT,
             "ngo": user_ngo,
             "donors": grouped_donors,
+            "counties": settings.FORM_COUNTIES,
         }
         return render(request, self.template_name, context)
 
@@ -63,6 +64,7 @@ class NgoDetailsHandler(AccountHandler):
         context = {
             "user": request.user,
             "ngo": request.user.ngo if request.user.ngo else None,
+            "counties": settings.FORM_COUNTIES,
         }
 
         return render(request, self.template_name, context)
@@ -107,6 +109,7 @@ class NgoDetailsHandler(AccountHandler):
         context = {
             "user": request.user,
             "ngo": request.user.ngo if request.user.ngo else None,
+            "counties": settings.FORM_COUNTIES,
         }
 
         return render(request, self.template_name, context)
