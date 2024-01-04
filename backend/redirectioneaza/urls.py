@@ -38,7 +38,15 @@ from donations.views.admin import (
 from donations.views.api import CheckNgoUrl, GetNgoForm, GetNgoForms, GetUploadUrl, NgosApi, Webhook
 from donations.views.cron import CustomExport, NgoExport, NgoRemoveForms, Stats
 from donations.views.my_account import MyAccountDetailsHandler, MyAccountHandler, NgoDetailsHandler
-from donations.views.site import AboutHandler, ForNgoHandler, HomePage, NoteHandler, PolicyHandler, TermsHandler
+from donations.views.site import (
+    AboutHandler,
+    ForNgoHandler,
+    HomePage,
+    NgoListHandler,
+    NoteHandler,
+    PolicyHandler,
+    TermsHandler,
+)
 
 
 admin.site.site_header = f"Admin | {settings.VERSION_SUFFIX}"
@@ -51,7 +59,7 @@ urlpatterns = (
         path("ong/", ForNgoHandler.as_view()),
         # backup in case of old urls. to be removed
         path("pentru-ong-uri/", ForNgoHandler.as_view()),
-        # path("asociatii", NgoListHandler.as_view()),  # TODO
+        path("asociatii", NgoListHandler.as_view()),
         path("termeni/", TermsHandler.as_view()),
         path("TERMENI/", TermsHandler.as_view()),
         path("nota-de-informare/", NoteHandler.as_view(), name="note"),

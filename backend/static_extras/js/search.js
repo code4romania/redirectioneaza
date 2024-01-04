@@ -17,6 +17,9 @@ $(function () {
     };
 
     function latinise(str) {
+      if (!str) {
+        return '';
+      }
       return str.replace(/[^\u0000-\u007E]/g, function(c) {
         return latinCharMap[c] || c;
       });

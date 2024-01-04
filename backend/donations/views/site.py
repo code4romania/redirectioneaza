@@ -3,6 +3,7 @@ from django.conf import settings
 from django.urls import reverse
 
 from .base import BaseHandler
+from ..models import Ngo
 
 
 class HomePage(BaseHandler):
@@ -39,7 +40,17 @@ class ForNgoHandler(BaseHandler):
 
 
 class NgoListHandler(BaseHandler):
-    pass
+    template_name = "all-ngos.html"
+
+    def get(self, request, *args, **kwargs):
+        # TODO: the search isn't working
+        # TODO: add pagination
+        context = {
+            "title": "Toate ONG-urile",
+            "ngos": Ngo.objects.filter(is_active=True).order_by("name"),
+        }
+
+        return render(request, self.template_name, context)
 
 
 class NoteHandler(BaseHandler):
