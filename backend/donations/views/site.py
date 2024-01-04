@@ -10,11 +10,11 @@ class HomePage(BaseHandler):
     template_name = "index.html"
 
     def get(self, request, *args, **kwargs):
+        # TODO: the search isn't working
         context = {
-            "title": "redirectioneaza.ro",
             "limit": settings.DONATIONS_LIMIT,
             "DEFAULT_NGO_LOGO": settings.DEFAULT_NGO_LOGO,
-            "ngos": [],
+            "ngos": Ngo.objects.filter(is_active=True).order_by("name"),
         }
 
         return render(request, self.template_name, context)

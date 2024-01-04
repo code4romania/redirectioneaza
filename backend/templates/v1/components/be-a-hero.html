@@ -17,7 +17,7 @@
             </p>
 
             {# if we already have an url for this ngo's url #}
-            <a href="{{ url('api-ngo-form-url', ngo_url=ngo.key.id()) }}" class="btn btn-primary btn-block ngo-form-url">
+            <a href="{{ url('api-ngo-form-url', ngo_url=ngo.form_url) }}" class="btn btn-primary btn-block ngo-form-url">
                 Descarcă un model de formular
             </a>
         </div>

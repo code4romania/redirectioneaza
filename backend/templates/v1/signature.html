@@ -1,4 +1,4 @@
-{% extends "base.html" %} 
+{% extends "base.html" %}
 
 {% block additional_headers %}
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@3.0.0-beta.4/dist/signature_pad.umd.min.js"></script>
@@ -15,7 +15,7 @@
         </div>
 
         <div class="signature-button-container">
-            <form action="{{ url('ngo-twopercent-signature', ngo_url=ngo.key.id()) }}" role="form" method="post" class="signature-form">
+            <form action="{{ url('ngo-twopercent-signature', ngo_url=ngo.form_url) }}" role="form" method="post" class="signature-form">
                 {{ csrf_input }}
                 <span class="reset-button">
                     <button id="clear-signature" class="btn btn-lg" type="button">

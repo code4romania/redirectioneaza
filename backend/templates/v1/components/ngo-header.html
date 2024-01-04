@@ -34,7 +34,7 @@
                 {% endif %}
 
                 {% if is_admin %}
-                    <a href="{{ url('admin-ong', ngo_url=ngo.key.id()) }}" class="btn btn-link">
+                    <a href="{{ url('admin-ong', ngo_url=ngo.form_url) }}" class="btn btn-link">
                         Editează ONG-ul
                     </a>
                 {% endif %}
