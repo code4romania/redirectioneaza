@@ -58,12 +58,12 @@ urlpatterns = (
     [
         # the public part of the app
         path("", HomePage.as_view(), name="home"),
-        path("ong/", ForNgoHandler.as_view()),
+        path("ong/", ForNgoHandler.as_view(), name="ngo"),
+        path("pentru-ong-uri/", RedirectView.as_view(pattern_name="ngo", permanent=True)),
         # backup in case of old urls. to be removed
-        path("pentru-ong-uri/", ForNgoHandler.as_view()),
         path("asociatii", NgoListHandler.as_view()),
-        path("termeni/", TermsHandler.as_view()),
-        path("TERMENI/", TermsHandler.as_view()),
+        path("termeni/", TermsHandler.as_view(), name="terms"),
+        path("TERMENI/", RedirectView.as_view(pattern_name="terms", permanent=True)),
         path("nota-de-informare/", NoteHandler.as_view(), name="note"),
         path("politica/", PolicyHandler.as_view()),
         path("despre/", AboutHandler.as_view()),

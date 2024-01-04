@@ -4,6 +4,7 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q, QuerySet
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 
@@ -14,10 +15,12 @@ from ..models import Donor, Ngo
 class MyAccountDetailsHandler(AccountHandler):
     template_name = "ngo/my-account-details.html"
 
+    @method_decorator(login_required(login_url=reverse_lazy("login")))
     def get(self, request, *args, **kwargs):
         context = {"user": request.user}
         return render(request, self.template_name, context)
 
+    @method_decorator(login_required(login_url=reverse_lazy("login")))
     def post(self, request, *args, **kwargs):
         post = request.POST
 
@@ -31,10 +34,10 @@ class MyAccountDetailsHandler(AccountHandler):
         return render(request, self.template_name, context)
 
 
-@method_decorator(login_required, name="get")
 class MyAccountHandler(AccountHandler):
     template_name = "ngo/my-account.html"
 
+    @method_decorator(login_required(login_url=reverse_lazy("login")))
     def get(self, request, *args, **kwargs):
         user_ngo: Ngo = request.user.ngo if request.user.ngo else None
         donors: QuerySet[Donor] = Donor.objects.filter(Q(ngo=user_ngo)).order_by("-date_created")
@@ -60,6 +63,7 @@ class MyAccountHandler(AccountHandler):
 class NgoDetailsHandler(AccountHandler):
     template_name = "ngo/ngo-details.html"
 
+    @method_decorator(login_required(login_url=reverse_lazy("login")))
     def get(self, request, *args, **kwargs):
         context = {
             "user": request.user,
@@ -69,6 +73,7 @@ class NgoDetailsHandler(AccountHandler):
 
         return render(request, self.template_name, context)
 
+    @method_decorator(login_required(login_url=reverse_lazy("login")))
     def post(self, request, *args, **kwargs):
         post = request.POST
 
