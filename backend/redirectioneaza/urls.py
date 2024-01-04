@@ -17,7 +17,8 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin as django_admin, admin
-from django.urls import path
+from django.urls import path, re_path
+from django.views.generic import RedirectView
 
 from donations.views.account_management import (
     ForgotPasswordHandler,
@@ -38,6 +39,7 @@ from donations.views.admin import (
 from donations.views.api import CheckNgoUrl, GetNgoForm, GetNgoForms, GetUploadUrl, NgosApi, Webhook
 from donations.views.cron import CustomExport, NgoExport, NgoRemoveForms, Stats
 from donations.views.my_account import MyAccountDetailsHandler, MyAccountHandler, NgoDetailsHandler
+from donations.views.ngo import DonationSucces, FormSignature, TwoPercentHandler
 from donations.views.site import (
     AboutHandler,
     ForNgoHandler,
@@ -67,10 +69,6 @@ urlpatterns = (
         path("despre/", AboutHandler.as_view()),
         # account management
         path("cont-nou", SignupHandler.as_view()),
-        #
-        #
-        # TODO: all the URLs below this line
-        #
         path("login", LoginHandler.as_view(), name="login"),
         path("logout", LogoutHandler.as_view(), name="logout"),
         path("forgot", ForgotPasswordHandler.as_view(), name="forgot"),
@@ -85,11 +83,11 @@ urlpatterns = (
         path("contul-meu", MyAccountHandler.as_view(), name="contul-meu"),
         path("asociatia", NgoDetailsHandler.as_view(), name="asociatia"),
         path("date-cont", MyAccountDetailsHandler.as_view(), name="date-contul-meu"),
-        path(
-            "api/ngo/check-url/<ngo_url>",
-            CheckNgoUrl.as_view(),
-            name="api-ngo-check-url",
-        ),
+        #
+        #
+        # TODO: all the URLs until END_OF_TODO need to be implemented
+        #
+        path("api/ngo/check-url/<ngo_url>", CheckNgoUrl.as_view(), name="api-ngo-check-url"),
         path("api/ngo/upload-url", GetUploadUrl.as_view(), name="api-ngo-upload-url"),
         path("api/ngo/form/<ngo_url>", GetNgoForm.as_view(), name="api-ngo-form-url"),
         path("api/ngo/forms/download", GetNgoForms.as_view(), name="api-ngo-forms"),
@@ -102,24 +100,21 @@ urlpatterns = (
         path("admin/ong-nou", AdminNewNgoHandler.as_view(), name="admin-ong-nou"),
         path("admin/<ngo_url>", AdminNgoHandler.as_view(), name="admin-ong"),
         path("admin", AdminHome.as_view(), name="admin"),
-        # TODO: Check the ngo_url parameter format because it currently captures too much
-        # path("<ngo_url>", TwoPercentHandler.as_view(), name="twopercent"),
-        # path(
-        #     "<ngo_url>/semnatura",
-        #     FormSignature.as_view(),
-        #     name="ngo-twopercent-signature",
-        # ),
-        # path(
-        #     "<ngo_url>/succes", DonationSucces.as_view(), name="ngo-twopercent-success"
-        # ),
-        # path("<ngo_url>/doilasuta", NgoHandler.as_view(), name="ngo-url"),
         # Cron routes
         path("cron/stats", Stats.as_view()),
         path("cron/ngos/remove-form", NgoRemoveForms.as_view(), name="ngo-remove-form"),
         path("cron/ngos/export", NgoExport.as_view()),
         path("cron/export/custom", CustomExport.as_view()),
+        #
+        # END_OF_TODO
+        #
         # Django Admin
         path("django-admin/", django_admin.site.urls),
+        # must always be the last set of urls
+        re_path(r"^(?P<ngo_url>[\w-]+)/doilasuta", RedirectView.as_view(pattern_name="twopercent", permanent=True)),
+        re_path(r"^(?P<ngo_url>[\w-]+)/semnatura", FormSignature.as_view(), name="ngo-twopercent-signature"),
+        re_path(r"^(?P<ngo_url>[\w-]+)/succes", DonationSucces.as_view(), name="ngo-twopercent-success"),
+        re_path(r"^(?P<ngo_url>[\w-]+)/$", TwoPercentHandler.as_view(), name="twopercent"),
     ]
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

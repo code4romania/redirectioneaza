@@ -29,6 +29,10 @@ cffi==1.16.0
     # via
     #   -r requirements.txt
     #   cryptography
+chardet==5.2.0
+    # via
+    #   -r requirements.txt
+    #   reportlab
 click==8.1.7
     # via
     #   black
@@ -36,14 +40,31 @@ click==8.1.7
 croniter==2.0.1
     # via -r requirements.txt
 cryptography==41.0.7
-    # via -r requirements.txt
-django==4.2.8
     # via
     #   -r requirements.txt
+    #   django-cryptography
+cssselect2==0.7.0
+    # via
+    #   -r requirements.txt
+    #   svglib
+django==4.2.9
+    # via
+    #   -r requirements.txt
+    #   django-appconf
+    #   django-cryptography
+    #   django-localflavor
     #   django-picklefield
     #   django-q2
     #   django-storages
+django-appconf==1.0.6
+    # via
+    #   -r requirements.txt
+    #   django-cryptography
+django-cryptography==1.1
+    # via -r requirements.txt
 django-environ==0.11.2
+    # via -r requirements.txt
+django-localflavor==4.0
     # via -r requirements.txt
 django-picklefield==3.1
     # via
@@ -68,6 +89,10 @@ jmespath==1.0.1
     #   -r requirements.txt
     #   boto3
     #   botocore
+lxml==5.0.0
+    # via
+    #   -r requirements.txt
+    #   svglib
 markupsafe==2.1.3
     # via
     #   -r requirements.txt
@@ -82,6 +107,10 @@ packaging==23.2
     #   gunicorn
 pathspec==0.12.1
     # via black
+pillow==10.2.0
+    # via
+    #   -r requirements.txt
+    #   reportlab
 pip-tools==7.3.0
     # via -r requirements-dev.in
 platformdirs==4.1.0
@@ -93,6 +122,8 @@ pycparser==2.21
     #   -r requirements.txt
     #   cffi
 pymysql==1.1.0
+    # via -r requirements.txt
+pypdf==3.17.4
     # via -r requirements.txt
 pyproject-hooks==1.0.0
     # via build
@@ -107,10 +138,18 @@ python-geoip==1.2
     #   python-geoip-geolite2
 python-geoip-geolite2==2015.303
     # via -r requirements.txt
+python-stdnum==1.19
+    # via
+    #   -r requirements.txt
+    #   django-localflavor
 pytz==2023.3.post1
     # via
     #   -r requirements.txt
     #   croniter
+reportlab==4.0.8
+    # via
+    #   -r requirements.txt
+    #   svglib
 ruff==0.1.9
     # via -r requirements-dev.in
 s3transfer==0.10.0
@@ -128,6 +167,13 @@ sqlparse==0.4.4
     # via
     #   -r requirements.txt
     #   django
+svglib==1.5.1
+    # via -r requirements.txt
+tinycss2==1.2.1
+    # via
+    #   -r requirements.txt
+    #   cssselect2
+    #   svglib
 urllib3==2.0.7
     # via
     #   -r requirements.txt
@@ -137,6 +183,11 @@ wcwidth==0.2.12
     # via
     #   -r requirements.txt
     #   blessed
+webencodings==0.5.1
+    # via
+    #   -r requirements.txt
+    #   cssselect2
+    #   tinycss2
 wheel==0.42.0
     # via pip-tools
 whitenoise==6.6.0

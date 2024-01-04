@@ -7,8 +7,8 @@ from django.shortcuts import render
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 
-from ..models import Donor, Ngo
 from .base import AccountHandler
+from ..models import Donor, Ngo
 
 
 class MyAccountDetailsHandler(AccountHandler):
@@ -90,7 +90,7 @@ class NgoDetailsHandler(AccountHandler):
         ngo.address = post.get("ong-adresa")
         ngo.county = post.get("ong-judet")
         ngo.active_region = post.get("ong-activitate")
-        ngo.form_url = post.get("ong-url")
+        ngo.form_url = post.get("ong-url").lower()
         ngo.registration_number = post.get("ong-cif")
         ngo.bank_account = post.get("ong-cont")
         ngo.has_special_status = True if post.get("special-status") == "on" else False

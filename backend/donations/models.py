@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from django_cryptography.fields import encrypt
 
 
 class Ngo(models.Model):
@@ -59,7 +60,7 @@ class Ngo(models.Model):
     is_verified = models.BooleanField(verbose_name=_("is verified"), db_index=True, default=False)
 
     # originally: special_status
-    # if the ngo has a special status (eg. social ngo) they are entitled to 3.5% donation, not 2%
+    # if the ngo has a special status (e.g. social ngo) they are entitled to 3.5% donation, not 2%
     has_special_status = models.BooleanField(verbose_name=_("has special status"), db_index=True, default=False)
 
     # originally: accepts_forms
@@ -94,6 +95,12 @@ class Donor(models.Model):
 
     first_name = models.CharField(verbose_name=_("first name"), blank=True, null=False, default="", max_length=100)
     last_name = models.CharField(verbose_name=_("last name"), blank=True, null=False, default="", max_length=100)
+    initial = models.CharField(verbose_name=_("initials"), blank=True, null=False, default="", max_length=5)
+
+    personal_identifier = encrypt(
+        models.CharField(verbose_name=_("CNP"), blank=True, null=False, default="", max_length=13)
+    )
+
     city = models.CharField(
         verbose_name=_("city"),
         blank=True,
@@ -110,12 +117,12 @@ class Donor(models.Model):
         max_length=100,
         db_index=True,
     )
-    email = models.EmailField(verbose_name=_("email"), blank=False, null=False, db_index=True)
 
     # originally: tel
     phone = models.CharField(verbose_name=_("telephone"), blank=True, null=False, default="", max_length=30)
+    email = models.EmailField(verbose_name=_("email"), blank=False, null=False, db_index=True)
 
-    # orinally: "anonymous"
+    # originally: "anonymous"
     is_anonymous = models.BooleanField(
         verbose_name=_("anonymous"),
         db_index=True,
@@ -123,7 +130,7 @@ class Donor(models.Model):
         help_text=_("If the user would like the ngo to see the donation"),
     )
 
-    # orinally: "income"
+    # originally: "income"
     income_type = models.CharField(
         verbose_name=_("income type"),
         max_length=30,
@@ -140,17 +147,11 @@ class Donor(models.Model):
     )
 
     geoip = models.JSONField(verbose_name=_("Geo IP"), blank=True, null=False, default=dict)
-    # {
-    #     "country": country,
-    #     "region": region,
-    #     "city": city,
-    #     "lat_long": lat_long,
-    #     "ip_address": ip_address
-    # }
 
     pdf_url = models.URLField(verbose_name=_("PDF URL"), blank=True, null=False, default="", max_length=255)
     filename = models.CharField(verbose_name=_("filename"), blank=True, null=False, default="", max_length=100)
     has_signed = models.BooleanField(verbose_name=_("has signed"), db_index=True, default=False)
+
     date_created = models.DateTimeField(verbose_name=_("date created"), db_index=True, auto_now_add=timezone.now)
 
     class Meta:

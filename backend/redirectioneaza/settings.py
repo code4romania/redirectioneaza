@@ -18,6 +18,7 @@ from pathlib import Path
 import environ
 import sentry_sdk
 from django.utils import timezone
+from localflavor.ro.ro_counties import COUNTIES_CHOICES
 
 # Constants for memory sizes
 KIBIBYTE = 1024
@@ -404,49 +405,9 @@ START_YEAR = 2016
 
 DEFAULT_NGO_LOGO = env.str("DEFAULT_NGO_LOGO")
 
-LIST_OF_COUNTIES = [
-    "Alba",
-    "Arad",
-    "Arges",
-    "Bacau",
-    "Bihor",
-    "Bistrita-Nasaud",
-    "Botosani",
-    "Braila",
-    "Brasov",
-    "Buzau",
-    "Calarasi",
-    "Caras-Severin",
-    "Cluj",
-    "Constanta",
-    "Covasna",
-    "Dambovita",
-    "Dolj",
-    "Galati",
-    "Giurgiu",
-    "Gorj",
-    "Harghita",
-    "Hunedoara",
-    "Ialomita",
-    "Iasi",
-    "Ilfov",
-    "Maramures",
-    "Mehedinti",
-    "Mures",
-    "Neamt",
-    "Olt",
-    "Prahova",
-    "Salaj",
-    "Satu Mare",
-    "Sibiu",
-    "Suceava",
-    "Teleorman",
-    "Timis",
-    "Tulcea",
-    "Valcea",
-    "Vaslui",
-    "Vrancea",
-]
+LIST_OF_COUNTIES = [county[1] for county in COUNTIES_CHOICES]
+FORM_COUNTIES = deepcopy(LIST_OF_COUNTIES)
+FORM_COUNTIES.pop(LIST_OF_COUNTIES.index("București"))
 CONTACT_EMAIL_ADDRESS = env.str("CONTACT_EMAIL_ADDRESS")
 
 # Django Q2
