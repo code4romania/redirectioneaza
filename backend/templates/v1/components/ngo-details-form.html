@@ -5,48 +5,48 @@
         <legend>Datele asociației:</legend>
         <div class="form-group">
             <div class="col-xs-12">
-                <input class="form-control" type="text" id="ong-nume" name="ong-nume" placeholder="Numele Asociatiei" value="{{ ngo.name }}" required maxlength="150" />
+                <input class="form-control" type="text" id="ong-nume" name="ong-nume" placeholder="Numele Asociației" value="{{ ngo.name if ngo }}" required maxlength="150" />
             </div>
         </div>
         <div class="form-group">
             <div class="col-xs-4 text-center">
-                <div id="upload-logo" class="{{ 'hidden' if ngo.logo }}">
+                <div id="upload-logo" class="{{ 'hidden' if ngo.logo_url }}">
                     <label for="ong-logo">
                         <i class="glyphicon glyphicon-picture upload-file-icon"></i>
                         <p>Logo-ul asociației</p>
                     </label>
                     <input type="file" id="ong-logo" class="hidden" accept="image/*" name="ong-logo" />
                 </div>
-                <div id="display-logo" class="text-center {{ 'hidden' if not ngo.logo }}">
-                    <img id="ngo-logo" src="{{ ngo.logo }}" class="img-responsive center-block" />
-                    <span id="delete-ngo-logo" class="text-danger">Sterge</span>
-                    <input type="hidden" id="ong-logo-url" name="ong-logo-url" value="{{ ngo.logo }}" />
+                <div id="display-logo" class="text-center {{ 'hidden' if not ngo.logo_url }}">
+                    <img id="ngo-logo" src="{{ ngo.logo_url if ngo }}" class="img-responsive center-block" />
+                    <span id="delete-ngo-logo" class="text-danger">Șterge</span>
+                    <input type="hidden" id="ong-logo-url" name="ong-logo-url" value="{{ ngo.logo_url if ngo }}" />
                 </div>
             </div>
             <div class="col-xs-8">
-                <textarea class="form-control" name="ong-descriere" placeholder="O scurta descriere" rows="3" required >{{ ngo.description }}</textarea>
+                <textarea class="form-control" name="ong-descriere" placeholder="O scurta descriere" rows="3" required >{{ ngo.description if ngo }}</textarea>
             </div>
         </div>
         <div class="form-group">
             <div class="col-xs-4">
-                <input class="form-control" type="text" name="ong-tel" placeholder="telefon (optional)" value="{{ ngo.tel if ngo.tel }}" maxlength="20" />
+                <input class="form-control" type="text" name="ong-tel" placeholder="telefon (optional)" value="{{ ngo.phone if ngo and ngo.phone }}" maxlength="20" />
             </div>
             <div class="col-xs-4">
-                <input class="form-control" type="email" name="ong-email" placeholder="email (optional)" value="{{ ngo.email if ngo.email }}" maxlength="100" />
+                <input class="form-control" type="email" name="ong-email" placeholder="email (optional)" value="{{ ngo.email if ngo and ngo.email }}" maxlength="100" />
             </div>
             <div class="col-xs-4">
-                <input class="form-control" type="text" name="ong-website" placeholder="website (optional)" value="{{ ngo.website if ngo.website }}" maxlength="100" />
+                <input class="form-control" type="text" name="ong-website" placeholder="website (optional)" value="{{ ngo.website if ngo and ngo.website }}" maxlength="100" />
             </div>
         </div>
         <div class="form-group">
             <div class="col-xs-8">
-                <input class="form-control" type="text" name="ong-adresa" placeholder="Adresa Asociatiei" value="{{ ngo.address }}" required maxlength="100" />
+                <input class="form-control" type="text" name="ong-adresa" placeholder="Adresa Asociației" value="{{ ngo.address if ngo }}" required maxlength="100" />
             </div>
             <div class="col-xs-4">
-                <select class="form-control" id="ong-judet" name="ong-judet" required x-moz-errormessage="Judetul este obligatoriu" title="Judetul este obligatoriu">
+                <select class="form-control" id="ong-judet" name="ong-judet" required x-moz-errormessage="Județul este obligatoriu" title="Județul este obligatoriu">
                     <option value="">Județul</option>
-                    <option value="RO" {{ "selected" if county == ngo.county }}>Toata tara</option>
-                    <optgroup label="Bucuresti">
+                    <option value="RO" {{ "selected" if county == ngo.county }}>Toată țara</option>
+                    <optgroup label="București">
                         {% for number in range(1, 7) %}
                             <option value="{{ number }}" {{ "selected" if number|string == ngo.county }}>Sector {{ number }}</option>
                         {% endfor %}
@@ -63,7 +63,7 @@
                 <select class="form-control" id="ong-activitate" name="ong-activitate" required x-moz-errormessage="Zona de activitate este obligatorie" title="Zona de activitate este obligatorie">
                     <option value="">Zona de activitate</option>
                     <option value="RO" {{ "selected" if county == ngo.active_region }}>National</option>
-                    <optgroup label="Bucuresti">
+                    <optgroup label="București">
                         {% for number in range(1, 7) %}
                             <option value="{{ number }}" {{ "selected" if number|string == ngo.active_region }}>Sector {{ number }}</option>
                         {% endfor %}
@@ -76,14 +76,14 @@
         </div>
         <div class="form-group choose-url-group">
             <div class="col-xs-12">
-                <div>Poti alege un url personalizat pentru asociatia ta:</div>
+                <div>Poți alege un url personalizat pentru asociația ta:</div>
                 <p class="text-muted">(acesta nu va mai putea fi schimbat ulterior)</p>
                 {# this div is only used to contain the two and to add the has-warning class #}
                 <div>
                     <label for="ong-url" class="control-label">redirectioneaza.ro/</label>
-                    <input id="ong-url" class="form-control" type="text" name="ong-url" placeholder="url-ul asociatiei" value="{{ ngo.key.id() if ngo.key }}" required maxlength="150" {{ "readonly" if not is_admin and ngo.key  }} />
+                    <input id="ong-url" class="form-control" type="text" name="ong-url" placeholder="url-ul asociației" value="{{ ngo.form_url if ngo }}" required maxlength="150" {{ "readonly" if not is_admin and ngo.key  }} />
                 </div>
-            </div>  
+            </div>
         </div>
     </fieldset>
     <fieldset>
@@ -92,40 +92,40 @@
         <div class="form-group">
             <label for="ong-cif" class="col-xs-4 control-label">Codul Cif:</label>
             <div class="col-xs-8">
-                <input type="text" class="form-control" id="ong-cif" value="{{ ngo.cif }}" name="ong-cif" placeholder="Codul Cif" x-moz-errormessage="Codul Cif" title="Codul Cif" required maxlength="12" />
+                <input type="text" class="form-control" id="ong-cif" value="{{ ngo.registration_number if ngo }}" name="ong-cif" placeholder="Codul Cif" x-moz-errormessage="Codul Cif" title="Codul Cif" required maxlength="12" />
             </div>
         </div>
         <div class="form-group">
             <label for="ong-cont" class="col-xs-4 control-label">Codul IBAN al contului:</label>
             <div class="col-xs-8">
-                <input type="text" class="form-control" id="ong-cont" value="{{ ngo.account }}" name="ong-cont" placeholder="Codul IBAN" x-moz-errormessage="Codul IBAN" title="Codul IBAN" required maxlength="40" />
+                <input type="text" class="form-control" id="ong-cont" value="{{ ngo.bank_account if ngo }}" name="ong-cont" placeholder="Codul IBAN" x-moz-errormessage="Codul IBAN" title="Codul IBAN" required maxlength="40" />
             </div>
         </div>
         <div class="form-group special-status">
             <div class="col-xs-4 text-right">
-                <input id="special-status" name="special-status" type="checkbox" {{ "checked" if ngo.special_status }}>
+                <input id="special-status" name="special-status" type="checkbox" {{ "checked" if ngo and ngo.has_special_status }}>
             </div>
             <label for="special-status" class="col-xs-8">
-                Asociatie inregistrata ca furnizor autorizat de servicii sociale
+                Asociație înregistrată ca furnizor autorizat de servicii sociale
             </label>
         </div>
         <div class="form-group special-status">
             <div class="col-xs-4 text-right">
-                <input id="accepts-forms" name="accepts-forms" type="checkbox" {{ "checked" if ngo.accepts_forms }}>
+                <input id="accepts-forms" name="accepts-forms" type="checkbox" {{ "checked" if ngo and ngo.is_accepting_forms }}>
             </div>
             <label for="accepts-forms" class="col-xs-8">
                 Doresc sa primesc formularele completate pe email <br>
                 <span class="explanation">
-                    Selectand aceasta optiune confirm ca ONG-ul are cont SPV pentru a depune formularele
+                    Selectând aceasta opțiune confirm ca ONG-ul are cont SPV pentru a depune formularele
                 </span>
             </label>
         </div>
-    
+
     </fieldset>
     {% if is_admin %}
         <fieldset>
             <legend>Admin</legend>
-            <input id="old-ong-url" type="hidden" name="old-ong-url" value="{{ ngo.key.id() if ngo.key }}" />
+            <input id="old-ong-url" type="hidden" name="old-ong-url" value="{{ ngo.form_url if ngo }}" />
             <div class="form-group">
                 <div class="col-xs-12">
                     <label for="ong-activ" class="col-xs-3">Activ:</label>
@@ -159,7 +159,7 @@
                             </div>
                             <div class="panel-body">
                                 <p>
-                                    Daca vrei sa schimbi cine detine aces ONG, adauga mai jos adresa de email a noul cont:
+                                    Daca vrei sa schimbi cine deține aces ONG, adaugă mai jos adresa de email a noul cont:
                                 </p>
                                 <input class="form-control" type="text" name="new-ngo-owner" placeholder="Adresa de email" />
                             </div>
@@ -172,7 +172,7 @@
 
     <div class="form-group">
         <div class="col-xs-12">
-            <button type="submit" class="btn btn-primary margin-top">Salveaza</button>
+            <button type="submit" class="btn btn-primary margin-top">Salvează</button>
         </div>
     </div>
 </form>

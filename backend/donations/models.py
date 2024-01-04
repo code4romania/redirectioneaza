@@ -70,16 +70,11 @@ class Ngo(models.Model):
     is_active = models.BooleanField(verbose_name=_("is active"), db_index=True, default=True)
 
     # url to the ngo's 2% form, that contains only the ngo's details
-    form_url = models.URLField(verbose_name=_("form url"), blank=True, null=False, default="", max_length=255)
-
-    # TODO: Seems unused
-    # tags = models.CharField(verbose_name=_("tags"),max_length=255, db_index=True, blank=True)
+    form_url = models.CharField(
+        verbose_name=_("form url"), blank=True, null=False, default="", max_length=255, unique=True
+    )
 
     date_created = models.DateTimeField(verbose_name=_("date created"), db_index=True, auto_now_add=timezone.now)
-
-    # does the NGO allow the donor to upload the signed document
-    # TODO: This seems unused
-    # allow_upload = models.BooleanField(verbose_name=_("allow upload"),db_index=True, default=False)
 
     class Meta:
         verbose_name = _("NGO")

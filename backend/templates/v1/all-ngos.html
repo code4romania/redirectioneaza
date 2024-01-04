@@ -24,7 +24,7 @@
             <div class="col-xs-6 col-sm-4 col-md-3">
                 <div class="ong-panel panel panel-default">
                     <a href="{{ ngo.key.id() }}">
-                        {% set logo = ngo.logo if ngo.logo else DEFAULT_NGO_LOGO %}
+                        {% set logo = ngo.logo_url if ngo.logo_url else DEFAULT_NGO_LOGO %}
                         <div class="ong-logo">
                             <img src="{{ logo }}" class="img-responsive center-block" alt="{{ ngo.name }} logo" />
                         </div>
