@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.conf import settings
+from django.urls import reverse
 
 from .base import BaseHandler
 
@@ -22,8 +23,7 @@ class AboutHandler(BaseHandler):
     template_name = "despre.html"
 
     def get(self, request, *args, **kwargs):
-        context = {}
-        context["title"] = "Despre Redirectioneaza.ro"
+        context = {"title": "Despre Redirectioneaza.ro"}
         return render(request, self.template_name, context)
 
 
@@ -31,8 +31,10 @@ class ForNgoHandler(BaseHandler):
     template_name = "for-ngos.html"
 
     def get(self, request, *args, **kwargs):
-        context = {}
-        context["title"] = "Pentru ONG-uri"
+        if request.user.is_authenticated:
+            return redirect(reverse("contul-meu"))
+
+        context = {"title": "Pentru ONG-uri"}
         return render(request, self.template_name, context)
 
 
@@ -44,8 +46,7 @@ class NoteHandler(BaseHandler):
     template_name = "note.html"
 
     def get(self, request, *args, **kwargs):
-        context = {}
-        context["title"] = "Notă de informare"
+        context = {"title": "Notă de informare"}
         return render(request, self.template_name, context)
 
 
@@ -53,8 +54,7 @@ class PolicyHandler(BaseHandler):
     template_name = "policy.html"
 
     def get(self, request, *args, **kwargs):
-        context = {}
-        context["title"] = "Politica de confidențialitate"
+        context = {"title": "Politica de confidențialitate"}
         return render(request, self.template_name, context)
 
 
@@ -62,6 +62,5 @@ class TermsHandler(BaseHandler):
     template_name = "terms.html"
 
     def get(self, request, *args, **kwargs):
-        context = {}
-        context["title"] = "Termeni și condiții"
+        context = {"title": "Termeni și condiții"}
         return render(request, self.template_name, context)
