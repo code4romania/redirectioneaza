@@ -26,16 +26,16 @@
                     <legend>Datele contului tău</legend>
                     <div class="form-group">
                         <div class="col-xs-6">
-                            <input class="form-control" type="text" name="nume" value="{{ user.first_name }}" placeholder="Nume" required />
+                            <input class="form-control" type="text" name="nume" value="{{ user.last_name }}" placeholder="Nume" required />
                         </div>
                         <div class="col-xs-6">
-                            <input class="form-control" type="text" name="prenume" value="{{ user.last_name }}" placeholder="Prenume" required />
-                        </div>  
+                            <input class="form-control" type="text" name="prenume" value="{{ user.first_name }}" placeholder="Prenume" required />
+                        </div>
                     </div>
                     <div class="form-group">
                         <div class="col-xs-12">
                             <input class="form-control" type="email" value="{{ user.email }}" placeholder="Email" readonly />
-                        </div> 
+                        </div>
                     </div>
                     <button type="submit" class="btn btn-primary pull-right">Salvează</button>
                 </fieldset>

@@ -7,7 +7,23 @@ from .base import AccountHandler
 
 
 class MyAccountDetailsHandler(AccountHandler):
-    pass
+    template_name = "ngo/my-account-details.html"
+
+    def get(self, request, *args, **kwargs):
+        context = {"user": request.user}
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        post = request.POST
+
+        request.user.last_name = post.get("nume")
+        request.user.first_name = post.get("prenume")
+
+        request.user.save()
+
+        context = {"user": request.user}
+
+        return render(request, self.template_name, context)
 
 
 @method_decorator(login_required, name="get")
@@ -61,9 +77,12 @@ class NgoDetailsHandler(AccountHandler):
         ngo.bank_account = post.get("ong-cont")
         ngo.has_special_status = True if post.get("special-status") == "on" else False
         ngo.is_accepting_forms = True if post.get("accepts-forms") == "on" else False
+
+        ngo.other_emails = ""
+
+        # TODO: implement the image upload
         ngo.logo_url = post.get("ong-logo-url", "")
         ngo.image_url = post.get("ong-logo")
-        ngo.other_emails = ""
 
         ngo.save()
 
