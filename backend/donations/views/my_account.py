@@ -1,8 +1,13 @@
+from collections import OrderedDict
+
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q, QuerySet
 from django.shortcuts import render
+from django.utils import timezone
 from django.utils.decorators import method_decorator
 
-from ..models import Ngo
+from ..models import Donor, Ngo
 from .base import AccountHandler
 
 
@@ -31,9 +36,22 @@ class MyAccountHandler(AccountHandler):
     template_name = "ngo/my-account.html"
 
     def get(self, request, *args, **kwargs):
+        user_ngo: Ngo = request.user.ngo if request.user.ngo else None
+        donors: QuerySet[Donor] = Donor.objects.filter(Q(ngo=user_ngo)).order_by("-date_created")
+
+        years = range(timezone.now().year, settings.START_YEAR, -1)
+
+        grouped_donors = OrderedDict()
+        for donor in donors:
+            index = donor.date_created.year
+            if index in years:
+                grouped_donors[index].append(donor)
+
         context = {
             "user": request.user,
-            "ngo": request.user.ngo if request.user.ngo else None,
+            "limit": settings.DONATIONS_LIMIT,
+            "ngo": user_ngo,
+            "donors": grouped_donors,
         }
         return render(request, self.template_name, context)
 
