@@ -43,13 +43,21 @@
                 <input class="form-control" type="text" name="ong-adresa" placeholder="Adresa Asociației" value="{{ ngo.address if ngo }}" required maxlength="100" />
             </div>
             <div class="col-xs-4">
-                {% include "components/county.html" %}
+                {% with identifier="ong-judet" %}
+                {% with county=ngo.county if ngo %}
+                    {% include "components/county.html" %}
+                {% endwith %}
+                {% endwith %}
             </div>
         </div>
         <div class="form-group">
             <div class="col-xs-12">
                 <label for="ong-activitate">În ce regiune iși desfășoară ONG-ul activitatea?</label>
-                {% include "components/county.html" %}
+                {% with identifier="ong-activitate" %}
+                {% with county=ngo.active_region if ngo %}
+                    {% include "components/county.html" %}
+                {% endwith %}
+                {% endwith %}
             </div>
         </div>
         <div class="form-group choose-url-group">

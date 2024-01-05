@@ -79,15 +79,14 @@ class NgoDetailsHandler(AccountHandler):
 
         ngo: Ngo = request.user.ngo
 
+        is_new_ngo = False
         if not ngo:
+            is_new_ngo = True
+
             ngo = Ngo()
-            ngo.save()
 
             ngo.is_verified = False
             ngo.is_active = True
-
-            request.user.ngo = ngo
-            request.user.save()
 
         ngo.name = post.get("ong-nume")
         ngo.description = post.get("ong-descriere")
@@ -110,6 +109,10 @@ class NgoDetailsHandler(AccountHandler):
         ngo.image_url = post.get("ong-logo")
 
         ngo.save()
+
+        if is_new_ngo:
+            request.user.ngo = ngo
+            request.user.save()
 
         context = {
             "user": request.user,

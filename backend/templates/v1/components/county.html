@@ -1,8 +1,8 @@
-<select class="form-control" id="county" name="county" required x-moz-errormessage="Județul este obligatoriu" title="Județul este obligatoriu">
+<select class="form-control" id="{{ identifier }}" name="{{ identifier }}" required x-moz-errormessage="Județul este obligatoriu" title="Județul este obligatoriu">
     <option value="" class="select-placeholder">Județul</option>
     <optgroup label="București">
         {% for number in range(1, 7) %}
-            <option value="{{ number }}" {{ "selected" if number == county }}>Sector {{ number }}</option>
+            <option value="{{ number }}" {{ "selected" if number|string == county }}>Sector {{ number }}</option>
         {% endfor %}
     </optgroup>
     {% for county_name in counties %}

@@ -124,7 +124,11 @@
 
                             <div class="form-group">
                                 <div class="col-xs-6">
-                                    {% include "components/county.html" %}
+                                    {% with identifier="county" %}
+                                    {% with county=county %}
+                                        {% include "components/county.html" %}
+                                    {% endwith %}
+                                    {% endwith %}
                                 </div>
                                 <div class="col-xs-6">
                                     <input type="text" class="form-control text-capitalize" id="city" value="{{ city if city }}" name="city" placeholder="Localitate" x-moz-errormessage="Orașul este obligatoriu" maxlength="40" required />
