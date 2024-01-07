@@ -1,7 +1,12 @@
+import logging
+
 from django.conf import settings
 from django.http import Http404
 
 from .models import Partner
+
+
+logger = logging.getLogger(__name__)
 
 
 class InvalidSubdomain(Exception):
@@ -40,11 +45,13 @@ class PartnerDomainMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
+        logger.debug("Request host %s", request.get_host())
         try:
             subdomain = PartnerDomainMiddleware.extract_subdomain(request.get_host(), settings.APEX_DOMAIN)
         except InvalidSubdomain:
             raise Http404
 
+        logger.debug("Subdomain %s", subdomain or "None")
         if not subdomain:
             partner = None
         else:
@@ -54,6 +61,7 @@ class PartnerDomainMiddleware:
                 partner = None
 
         request.partner = partner
+        logger.debug("Request partner %s", request.partner or "None")
 
         # Code to be executed for each request before
         # the view (and later middleware) are called.
