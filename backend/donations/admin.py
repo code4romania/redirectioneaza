@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 
 @admin.register(Ngo)
 class NgoAdmin(admin.ModelAdmin):
-    list_display = ("id", "registration_number", "name")
+    list_display = ("registration_number", "name")
     list_display_links = ("registration_number", "name")
 
 

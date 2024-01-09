@@ -1,11 +1,41 @@
+import re
+
+from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models.functions import Lower
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django_cryptography.fields import encrypt
 
 
+def ngo_identifier_validator(value):
+    valid_identifier_sample: str = "asociatia-de-exemplu"
+    error_message = _("%(value)s is not a valid identifier. The identifier must look like %(sample)s") % {
+        "value": value,
+        "sample": valid_identifier_sample,
+    }
+
+    if not value.islower():
+        raise ValidationError(error_message)
+
+    regex = r"^[\w-]+$"
+    if not re.match(regex, value):
+        raise ValidationError(error_message)
+
+
 class Ngo(models.Model):
     # DEFAULT_NGO_LOGO = "https://storage.googleapis.com/redirectioneaza/logo_bw.png"
+
+    identifier = models.CharField(
+        verbose_name=_("identifier"),
+        primary_key=True,
+        blank=False,
+        null=False,
+        max_length=100,
+        db_index=True,
+        unique=True,
+        validators=[ngo_identifier_validator],
+    )
 
     name = models.CharField(verbose_name=_("Name"), blank=False, null=False, max_length=100, db_index=True)
     description = models.TextField(
@@ -14,9 +44,11 @@ class Ngo(models.Model):
 
     # originally: logo
     logo_url = models.URLField(verbose_name=_("logo url"), blank=True, null=False, default="")
+    logo = models.ImageField(verbose_name=_("logo"), blank=True, null=False, upload_to="logos")
 
     # originally: image_url
     image_url = models.URLField(verbose_name=_("image url"), blank=True, null=False, default="")
+    image = models.ImageField(verbose_name=_("image"), blank=True, null=False, upload_to="images")
 
     # originally: account
     bank_account = models.CharField(verbose_name=_("bank account"), max_length=100)
@@ -71,9 +103,8 @@ class Ngo(models.Model):
     is_active = models.BooleanField(verbose_name=_("is active"), db_index=True, default=True)
 
     # url to the ngo's 2% form, that contains only the ngo's details
-    form_url = models.CharField(
-        verbose_name=_("form url"), blank=True, null=False, default="", max_length=255, unique=True
-    )
+    form_url = models.URLField(verbose_name=_("form url"), blank=True, null=False, default="")
+    custom_form = models.FileField(verbose_name=_("custom form"), blank=True, null=False, upload_to="custom_forms")
 
     date_created = models.DateTimeField(verbose_name=_("date created"), db_index=True, auto_now_add=timezone.now)
 
@@ -81,8 +112,19 @@ class Ngo(models.Model):
         verbose_name = _("NGO")
         verbose_name_plural = _("NGOs")
 
+        constraints = [
+            models.UniqueConstraint(Lower("identifier"), name="identifier_unique"),
+        ]
+
     def __str__(self):
         return f"{self.name}"
+
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        if self.identifier:
+            self.identifier = self.identifier.lower()
+            self.identifier = self.identifier.replace(" ", "-")
+
+        super().save(force_insert, force_update, using, update_fields)
 
 
 class Donor(models.Model):
