@@ -143,9 +143,7 @@ class Donor(models.Model):
     last_name = models.CharField(verbose_name=_("last name"), blank=True, null=False, default="", max_length=100)
     initial = models.CharField(verbose_name=_("initials"), blank=True, null=False, default="", max_length=5)
 
-    personal_identifier = encrypt(
-        models.CharField(verbose_name=_("CNP"), blank=True, null=False, default="", max_length=13)
-    )
+    cnp = encrypt(models.CharField(verbose_name=_("CNP"), blank=True, null=False, default="", max_length=13))
 
     city = models.CharField(
         verbose_name=_("city"),

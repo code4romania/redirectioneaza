@@ -46,7 +46,7 @@
                             Pasul 3. Apoi, ai următoarele optiuni:
                             <ol type="A">
                                 {# if the ngo agreed to receive forms through email #}
-                                {% if ngo.accepts_forms %}
+                                {% if ngo.is_accepting_forms %}
                                     <li>
                                         Fie îl scanezi și îl trimiți pe e-mail ONG-ului și se ocupă ei de depunerea lui. Adresa de e-mail a ONG-ului este: <a href="mailto:{{ ngo.email }}">{{ ngo.email }}</a>;
                                     </li>
