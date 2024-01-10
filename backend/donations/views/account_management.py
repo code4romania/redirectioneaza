@@ -283,7 +283,7 @@ class VerificationHandler(AccountHandler):
 
         if verification_type not in ("p", "v"):
             raise Http404
-        
+
         try:
             user = self.user_model.objects.get(pk=user_id)
         except self.user_model.DoesNotExist:
