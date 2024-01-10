@@ -1,7 +1,25 @@
+import hashlib
+import re
+
+from functools import partial
+from django.conf import settings
+from django.core.files.storage import storages
 from django.db import models
+from django.db.models.functions import Lower
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django_cryptography.fields import encrypt
+
+
+def select_public_storage():
+    return storages["public"]
+
+
+def ngo_directory_path(subdir, instance, filename) -> str:
+    ngo_code: str = hashlib.sha1(f"ngo-{instance.pk}-{settings.SECRET_KEY}".encode()).hexdigest()
+
+    # file will be uploaded to MEDIA_ROOT/ngo-<id>-<hash>/<subdir>/<filename>
+    return "ngo-{0}-{1}/{2}/{3}".format(instance.pk, ngo_code[:10], subdir, filename)
 
 
 class Ngo(models.Model):
@@ -14,9 +32,11 @@ class Ngo(models.Model):
 
     # originally: logo
     logo_url = models.URLField(verbose_name=_("logo url"), blank=True, null=False, default="")
+    logo = models.ImageField(verbose_name=_("logo"), blank=True, null=False, storage=select_public_storage, upload_to=partial(ngo_directory_path, "logos"))
 
     # originally: image_url
     image_url = models.URLField(verbose_name=_("image url"), blank=True, null=False, default="")
+    image = models.ImageField(verbose_name=_("image"), blank=True, null=False, storage=select_public_storage, upload_to=partial(ngo_directory_path, "images"))
 
     # originally: account
     bank_account = models.CharField(verbose_name=_("bank account"), max_length=100)
@@ -70,9 +90,11 @@ class Ngo(models.Model):
     # originally: active
     is_active = models.BooleanField(verbose_name=_("is active"), db_index=True, default=True)
 
+    # TODO: this seems to act as an unique NGO identifier
+    # TODO: rename it to "identifier" in a future version
     # url to the ngo's 2% form, that contains only the ngo's details
-    form_url = models.CharField(
-        verbose_name=_("form url"), blank=True, null=False, default="", max_length=255, unique=True
+    form_url = models.SlugField(
+        verbose_name=_("form url"), blank=False, null=True, max_length=100, unique=True
     )
 
     date_created = models.DateTimeField(verbose_name=_("date created"), db_index=True, auto_now_add=timezone.now)
@@ -80,10 +102,25 @@ class Ngo(models.Model):
     class Meta:
         verbose_name = _("NGO")
         verbose_name_plural = _("NGOs")
+        constraints = [
+            models.UniqueConstraint(Lower("form_url"), name="form_url_unique"),
+        ]
 
     def __str__(self):
         return f"{self.name}"
 
+    def get_form_url(self):
+        if self.custom_form:
+            return "https://{}/{}".format(settings.APEX_DOMAIN, self.form_url)
+        else:
+            return ""
+
+    def save(self, *args, **kwargs):
+        # Force the form_url (which acts as an NGO identifier) to lowercase
+        if self.form_url:
+            self.form_url = self.form_url.lower().strip()
+        return super().save(*args, **kwargs)
+    
 
 class Donor(models.Model):
     INCOME_CHOICES = (
