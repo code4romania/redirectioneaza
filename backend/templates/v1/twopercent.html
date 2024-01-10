@@ -60,38 +60,38 @@
             <div id="twopercent-form-wrapper" class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
                 <h2 id="donation-page-title">Redirecționează în 3 pași simpli</h2>
                 <h3 class="donation-page-subtitle">Pasul 1. Completează și descarcă formularul</h3>
-                {% if ngo.account and ngo.cif %}
-                    <form id="twopercent" class="form form-horizontal" action="{{ url('twopercent', ngo_url=ngo.form_url) }}" role="form" method="post">
+                {% if ngo.bank_account and ngo.registration_number %}
+                    <form id="twopercent" class="form form-horizontal" action="{{ url('twopercent', kwargs={'ngo_url': ngo.form_url}) }}" role="form" method="post">
 
                         {{ csrf_input }}
                         <fieldset class="margin-bottom">
                             <legend>Date personale</legend>
                             <div class="form-group">
                                 <div class="col-xs-12 col-sm-5">
-                                    <input type="text" class="form-control text-capitalize" id="nume" value="{{ nume }}" name="nume" placeholder="Nume" maxlength="50" x-moz-errormessage="Numele este obligatoriu" autocomplete="family-name" required />
+                                    <input type="text" class="form-control text-capitalize" id="nume" value="{{ nume if nume }}" name="nume" placeholder="Nume" maxlength="50" x-moz-errormessage="Numele este obligatoriu" autocomplete="family-name" required />
                                 </div>
                                 <div class="col-xs-12 col-sm-7">
                                     <div class="row second-form-row">
                                         <div class="col-xs-9">
-                                            <input type="text" class="form-control text-capitalize" id="prenume" value="{{ prenume }}" name="prenume" placeholder="Prenume" maxlength="50" x-moz-errormessage="Prenumele este obligatoriu" autocomplete="given-name" required />
+                                            <input type="text" class="form-control text-capitalize" id="prenume" value="{{ prenume if prenume }}" name="prenume" placeholder="Prenume" maxlength="50" x-moz-errormessage="Prenumele este obligatoriu" autocomplete="given-name" required />
                                         </div>
                                         <div class="col-xs-3">
-                                            <input type="text" class="form-control text-capitalize text-center" id="tatal" value="{{ tatal }}" name="tatal" placeholder="Iniț. T." maxlength="1" data-toggle="popover" data-placement="right" x-moz-errormessage="" data-content="Inițiala tatălui" required />
+                                            <input type="text" class="form-control text-capitalize text-center" id="tatal" value="{{ tatal if tatal }}" name="tatal" placeholder="Iniț. T." maxlength="1" data-toggle="popover" data-placement="right" x-moz-errormessage="" data-content="Inițiala tatălui" required />
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-xs-12">
-                                    <input type="number" class="form-control text-center" id="cnp" value="{{ cnp }}" name="cnp" placeholder="CNP" x-moz-errormessage="Introdu un CNP valid" />
+                                    <input type="number" class="form-control text-center" id="cnp" value="{{ cnp if cnp }}" name="cnp" placeholder="CNP" x-moz-errormessage="Introdu un CNP valid" />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-xs-6">
-                                    <input id="email" class="form-control" name="email" type="email" value="{{ email }}" placeholder="Email" autocomplete="email" x-moz-errormessage="Te rugam sa introduci o adresa de email valida" required />
+                                    <input id="email" class="form-control" name="email" type="email" value="{{ email if email }}" placeholder="Email" autocomplete="email" x-moz-errormessage="Te rugam sa introduci o adresa de email valida" required />
                                 </div>
                                 <div class="col-xs-6">
-                                    <input id="telefon" class="form-control" name="tel" type="tel" value="{{ tel }}" placeholder="Telefon mobil (opțional)" autocomplete="tel" x-moz-errormessage="Te rugăm să introduci un număr de telefon valid" />
+                                    <input id="telefon" class="form-control" name="tel" type="tel" value="{{ tel if tel }}" placeholder="Telefon mobil (opțional)" autocomplete="tel" x-moz-errormessage="Te rugăm să introduci un număr de telefon valid" />
                                 </div>
                             </div>
                         </fieldset>
@@ -100,25 +100,25 @@
                             <legend>Adresa de domiciliu</legend>
                             <div class="form-group">
                                 <div class="col-xs-9">
-                                    <input type="text" class="form-control text-capitalize" id="strada" value="{{ strada }}" name="strada" placeholder="Strada" x-moz-errormessage="Strada este obligatorie" maxlength="70" required />
+                                    <input type="text" class="form-control text-capitalize" id="strada" value="{{ strada if strada }}" name="strada" placeholder="Strada" x-moz-errormessage="Strada este obligatorie" maxlength="70" required />
                                 </div>
                                 <div class="col-xs-3">
-                                    <input type="text" class="form-control" id="numar" value="{{ numar }}" name="numar" placeholder="Numar" x-moz-errormessage="Numarul este obligatoriu" maxlength="6" required />
+                                    <input type="text" class="form-control" id="numar" value="{{ numar if numar }}" name="numar" placeholder="Numar" x-moz-errormessage="Numarul este obligatoriu" maxlength="6" required />
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <div class="col-xs-3">
-                                    <input type="text" class="form-control" id="bloc" value="{{ bloc }}" name="bloc" placeholder="Bloc" maxlength="5">
+                                    <input type="text" class="form-control" id="bloc" value="{{ bloc if bloc }}" name="bloc" placeholder="Bloc" maxlength="5">
                                 </div>
                                 <div class="col-xs-3">
-                                    <input type="text" class="form-control" id="scara" value="{{ scara }}" name="scara" placeholder="Scara" maxlength="5">
+                                    <input type="text" class="form-control" id="scara" value="{{ scara if scara }}" name="scara" placeholder="Scara" maxlength="5">
                                 </div>
                                 <div class="col-xs-3">
-                                    <input type="text" class="form-control" id="etaj" value="{{ etaj }}" name="etaj" placeholder="Etaj" maxlength="5">
+                                    <input type="text" class="form-control" id="etaj" value="{{ etaj if etaj }}" name="etaj" placeholder="Etaj" maxlength="5">
                                 </div>
                                 <div class="col-xs-3">
-                                    <input type="text" class="form-control" id="ap" value="{{ ap }}" name="ap" placeholder="Ap." maxlength="5">
+                                    <input type="text" class="form-control" id="ap" value="{{ ap if ap }}" name="ap" placeholder="Ap." maxlength="5">
                                 </div>
                             </div>
 
@@ -127,7 +127,7 @@
                                     {% include "components/county.html" %}
                                 </div>
                                 <div class="col-xs-6">
-                                    <input type="text" class="form-control text-capitalize" id="localitate" value="{{ localitate }}" name="localitate" placeholder="Localitate" x-moz-errormessage="Orasul este obligatoriu" maxlength="40" required />
+                                    <input type="text" class="form-control text-capitalize" id="localitate" value="{{ localitate if localitate }}" name="localitate" placeholder="Localitate" x-moz-errormessage="Orasul este obligatoriu" maxlength="40" required />
                                 </div>
                             </div>
                         </fieldset>

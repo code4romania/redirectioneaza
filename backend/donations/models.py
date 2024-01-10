@@ -21,6 +21,11 @@ def ngo_directory_path(subdir, instance, filename) -> str:
     return "ngo-{0}-{1}/{2}/{3}".format(instance.pk, ngo_code[:10], subdir, filename)
 
 
+def year_directory_path(subdir, instance, filename) -> str:
+    timestamp = timezone.now()
+    return "{0}/{1}/{2}/{3}".format(subdir, timestamp.date().year, instance.pk, filename)
+
+
 class Ngo(models.Model):
     # DEFAULT_NGO_LOGO = "https://storage.googleapis.com/redirectioneaza/logo_bw.png"
 
@@ -196,6 +201,13 @@ class Donor(models.Model):
     pdf_url = models.URLField(verbose_name=_("PDF URL"), blank=True, null=False, default="", max_length=255)
     filename = models.CharField(verbose_name=_("filename"), blank=True, null=False, default="", max_length=100)
     has_signed = models.BooleanField(verbose_name=_("has signed"), db_index=True, default=False)
+
+    pdf_file = models.FileField(
+        verbose_name=_("PDF file"),
+        blank=True,
+        null=False,
+        upload_to=partial(year_directory_path, "documents"),
+    )
 
     date_created = models.DateTimeField(verbose_name=_("date created"), db_index=True, auto_now_add=timezone.now)
 
