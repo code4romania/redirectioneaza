@@ -15,8 +15,8 @@
 {% endblock %}
 
 {# error messages, also found in the js file twopercent.js #}
-{% set server_error = "Se pare că am întâmpinat o eroare pe server. Vă rugam încercați din nou." %}
-{% set fields_error = "Se pare că următoarele date sunt invalide: " %}
+{% set server_error = "Se pare că am întampinat o eroare pe server. Vă rugam incercați din nou." %}
+{% set fields_error = "Se pare că urmatoarele date sunt invalide: " %}
 
 {% block content %}
 
@@ -45,7 +45,7 @@
         </div>
     {% endif %}
 
-    {# if we are in the correct timeframe: 1 Jan to DONATIONS_LIMIT, allow the donation, else display a message #}
+    {# if we are in the correct timerame: 1 Jan to 30 June, allow the donation, else display a message #}
     {% if can_donate %}
 
         {# <div class="row margin-top">
@@ -60,38 +60,38 @@
             <div id="twopercent-form-wrapper" class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
                 <h2 id="donation-page-title">Redirecționează în 3 pași simpli</h2>
                 <h3 class="donation-page-subtitle">Pasul 1. Completează și descarcă formularul</h3>
-                {% if ngo.bank_account and ngo.registration_number %}
-                    <form id="twopercent" class="form form-horizontal" action="{{ url('twopercent', kwargs={'ngo_url': ngo.form_url}) }}" role="form" method="post">
+                {% if ngo.account and ngo.cif %}
+                    <form id="twopercent" class="form form-horizontal" action="{{ url('twopercent', ngo_url=ngo.form_url) }}" role="form" method="post">
 
                         {{ csrf_input }}
                         <fieldset class="margin-bottom">
                             <legend>Date personale</legend>
                             <div class="form-group">
                                 <div class="col-xs-12 col-sm-5">
-                                    <input type="text" class="form-control text-capitalize" id="last_name" value="{{ last_name if last_name }}" name="last_name" placeholder="Nume" maxlength="50" x-moz-errormessage="Numele este obligatoriu" autocomplete="family-name" required />
+                                    <input type="text" class="form-control text-capitalize" id="nume" value="{{ nume }}" name="nume" placeholder="Nume" maxlength="50" x-moz-errormessage="Numele este obligatoriu" autocomplete="family-name" required />
                                 </div>
                                 <div class="col-xs-12 col-sm-7">
                                     <div class="row second-form-row">
                                         <div class="col-xs-9">
-                                            <input type="text" class="form-control text-capitalize" id="first_name" value="{{ first_name if first_name }}" name="first_name" placeholder="Prenume" maxlength="50" x-moz-errormessage="Prenumele este obligatoriu" autocomplete="given-name" required />
+                                            <input type="text" class="form-control text-capitalize" id="prenume" value="{{ prenume }}" name="prenume" placeholder="Prenume" maxlength="50" x-moz-errormessage="Prenumele este obligatoriu" autocomplete="given-name" required />
                                         </div>
                                         <div class="col-xs-3">
-                                            <input type="text" class="form-control text-capitalize text-center" id="initial" value="{{ initial if initial }}" name="initial" placeholder="Iniț. T." maxlength="1" data-toggle="popover" data-placement="right" x-moz-errormessage="" data-content="Inițiala tatălui" required />
+                                            <input type="text" class="form-control text-capitalize text-center" id="tatal" value="{{ tatal }}" name="tatal" placeholder="Iniț. T." maxlength="1" data-toggle="popover" data-placement="right" x-moz-errormessage="" data-content="Inițiala tatălui" required />
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-xs-12">
-                                    <input type="number" class="form-control text-center" id="personal_identifier" value="{{ personal_identifier if personal_identifier }}" name="personal_identifier" placeholder="CNP" x-moz-errormessage="Introdu un CNP valid" />
+                                    <input type="number" class="form-control text-center" id="cnp" value="{{ cnp }}" name="cnp" placeholder="CNP" x-moz-errormessage="Introdu un CNP valid" />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-xs-6">
-                                    <input id="email" class="form-control" name="email" type="email" value="{{ email if email }}" placeholder="Email" autocomplete="email" x-moz-errormessage="Te rugam sa introduci o adresa de email valida" required />
+                                    <input id="email" class="form-control" name="email" type="email" value="{{ email }}" placeholder="Email" autocomplete="email" x-moz-errormessage="Te rugam sa introduci o adresa de email valida" required />
                                 </div>
                                 <div class="col-xs-6">
-                                    <input id="telefon" class="form-control" name="phone" type="tel" value="{{ phone if phone }}" placeholder="Telefon mobil (opțional)" autocomplete="tel" x-moz-errormessage="Te rugăm să introduci un număr de telefon valid" />
+                                    <input id="telefon" class="form-control" name="tel" type="tel" value="{{ tel }}" placeholder="Telefon mobil (opțional)" autocomplete="tel" x-moz-errormessage="Te rugăm să introduci un număr de telefon valid" />
                                 </div>
                             </div>
                         </fieldset>
@@ -100,38 +100,34 @@
                             <legend>Adresa de domiciliu</legend>
                             <div class="form-group">
                                 <div class="col-xs-9">
-                                    <input type="text" class="form-control text-capitalize" id="street" value="{{ street if street }}" name="street" placeholder="Strada" x-moz-errormessage="Strada este obligatorie" maxlength="70" required />
+                                    <input type="text" class="form-control text-capitalize" id="strada" value="{{ strada }}" name="strada" placeholder="Strada" x-moz-errormessage="Strada este obligatorie" maxlength="70" required />
                                 </div>
                                 <div class="col-xs-3">
-                                    <input type="text" class="form-control" id="street_number" value="{{ street_number if street_number }}" name="street_number" placeholder="Numar" x-moz-errormessage="Numarul este obligatoriu" maxlength="6" required />
+                                    <input type="text" class="form-control" id="numar" value="{{ numar }}" name="numar" placeholder="Numar" x-moz-errormessage="Numarul este obligatoriu" maxlength="6" required />
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <div class="col-xs-3">
-                                    <input type="text" class="form-control" id="block" value="{{ block if block }}" name="block" placeholder="Bloc" maxlength="5">
+                                    <input type="text" class="form-control" id="bloc" value="{{ bloc }}" name="bloc" placeholder="Bloc" maxlength="5">
                                 </div>
                                 <div class="col-xs-3">
-                                    <input type="text" class="form-control" id="entrance" value="{{ entrance if entrance }}" name="entrance" placeholder="Scara" maxlength="5">
+                                    <input type="text" class="form-control" id="scara" value="{{ scara }}" name="scara" placeholder="Scara" maxlength="5">
                                 </div>
                                 <div class="col-xs-3">
-                                    <input type="text" class="form-control" id="floor" value="{{ floor if floor }}" name="floor" placeholder="Etaj" maxlength="5">
+                                    <input type="text" class="form-control" id="etaj" value="{{ etaj }}" name="etaj" placeholder="Etaj" maxlength="5">
                                 </div>
                                 <div class="col-xs-3">
-                                    <input type="text" class="form-control" id="apartment" value="{{ apartment if apartment }}" name="apartment" placeholder="Ap." maxlength="5">
+                                    <input type="text" class="form-control" id="ap" value="{{ ap }}" name="ap" placeholder="Ap." maxlength="5">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <div class="col-xs-6">
-                                    {% with identifier="county" %}
-                                    {% with county=county %}
-                                        {% include "components/county.html" %}
-                                    {% endwith %}
-                                    {% endwith %}
+                                    {% include "components/county.html" %}
                                 </div>
                                 <div class="col-xs-6">
-                                    <input type="text" class="form-control text-capitalize" id="city" value="{{ city if city }}" name="city" placeholder="Localitate" x-moz-errormessage="Orașul este obligatoriu" maxlength="40" required />
+                                    <input type="text" class="form-control text-capitalize" id="localitate" value="{{ localitate }}" name="localitate" placeholder="Localitate" x-moz-errormessage="Orasul este obligatoriu" maxlength="40" required />
                                 </div>
                             </div>
                         </fieldset>
@@ -178,15 +174,15 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-xs-12 col-lg-10 checkbox">
-                                    <label class="agree-label" for="terms">
-                                        <input type="checkbox" name="terms" id="terms" required />
+                                    <label class="agree-label" for="agree">
+                                        <input type="checkbox" name="agree" id="agree" required />
                                         Sunt de acord cu <a href="/termeni" target="_blank">Termenii aplicației</a> și cu <a href="/politica" target="_blank">Politica de confidențialitate</a>.
                                     </label>
                                 </div>
                             </div>
                             <div class="form-group margin-top submit-container">
                                 {# if the ngo wants to receive forms through email #}
-                                {% if ngo.is_accepting_forms %}
+                                {% if ngo.accepts_forms %}
                                     <div class="col-xs-12">
                                         Din anul 2022 formularele 230 pot fi depuse online. Dacă vrei să printezi formularul și să îl semnezi, atunci apasă mai jos butonul Descarcă formular și urmează instrucțiunile. Dacă vrei să semnezi și să depui formularul online atunci apasă mai jos Semnează formular și urmează instrucțiunile.
                                     </div>
@@ -230,14 +226,14 @@
             </div>
         </div>
 
-        {% if not errors and ngo.bank_account and ngo.registration_number %}
+        {% if not errors and ngo.account and ngo.cif %}
             <div class="row donation-note">
                 {# info about saved data #}
                 <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
                     <div class="alert alert-dismissible alert-info">
                         <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>Notă!</strong> Toate datele de pe această pagină sunt transmise folosind o conexiune sigură. Următoarele date sunt stocate temporar, până la completarea formularului: numele, prenumele, orașul, județul, email/telefon. După completarea formularului, aceste date sunt șterse, excepție făcând cazul în care ați optat să permiteți ONG-ului să vă contacteze. În acest caz, datele sunt stocate pe platforma Redirecționează cu scopul de a oferi acces ONG-ului la ele. <br />
-                        Poți citi mai multe despre <a href="{{ url('note') }}" target="_blank">Drepturile tale cu privire la protecția datelor</a>. <br /><br />
+                        <strong>Notă!</strong> Toate datele de pe această pagină sunt transmise folosind o conexiune sigură. Următoarele date sunt stocate temporar, până la completarea formularului: numele, prenumele, orasul, judetul, email/telefon. După completarea formularului, aceste date sunt șterse, excepție făcând cazul în care ați optat să permiteți ONG-ului să vă contacteze. În acest caz, datele sunt stocate pe platforma Redirecționează cu scopul de a oferi acces ONG-ului la ele. <br />
+                        Poți citi mai multe despre <a href="{{ url('note') }}" target="_blank">Drepturile tale cu privire la protectia datelor</a>. <br /><br />
                         Prin completarea acestui formular, redirecționezi 3.5% din impozitul pe venit către organizația pe care ai ales-o.
                     </div>
                 </div>
@@ -274,7 +270,7 @@
                 <li>
                     <h3>Ce se întâmplă cu datele de pe această pagină?</h3>
                     <p class="text-muted">
-                        Datele de pe această pagină sunt folosite doar pentru a crea fișierul PDF. Doar numele, prenumele, orașul, județul și email-ul/telefonul sunt salvate în baza noastră de date pentru a-i oferi ocazia ONG-ului să intre în legătură cu tine, doar dacă tu decizi acest lucru.
+                        Datele de pe această pagină sunt folosite doar pentru a crea fișierul PDF. Doar numele, prenumele, orașul, județul și email-ul/telefonul sunt salvate în baza noastră de date pentru a-i oferi ocazia ONG-ului să intre în legatură cu tine, doar dacă tu decizi acest lucru.
                     </p>
                 </li>
                 <li>
