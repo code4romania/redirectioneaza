@@ -109,8 +109,8 @@ class Ngo(models.Model):
     def __str__(self):
         return f"{self.name}"
 
-    def get_form_url(self):
-        if self.custom_form:
+    def get_full_form_url(self):
+        if self.form_url:
             return "https://{}/{}".format(settings.APEX_DOMAIN, self.form_url)
         else:
             return ""
