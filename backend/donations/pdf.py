@@ -30,8 +30,8 @@ def format_ngo_account(ngo_account):
     ngo_account = ngo_account.replace(" ", "")
 
     account = ""
-    for i, l in enumerate(ngo_account):
-        account += l
+    for i, letter in enumerate(ngo_account):
+        account += letter
         if (i + 1) % 4 == 0:
             account += " "
 

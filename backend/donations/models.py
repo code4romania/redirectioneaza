@@ -1,7 +1,8 @@
 import hashlib
-
 from functools import partial
+
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.core.files.storage import storages
 from django.db import models
 from django.db.models.functions import Lower
@@ -26,13 +27,32 @@ def year_directory_path(subdir, instance, filename) -> str:
     return "{0}/{1}/{2}/{3}".format(subdir, timestamp.date().year, instance.pk, filename)
 
 
+def ngo_identifier_validator(value):
+    valid_identifier_sample: str = "asociatia-de-exemplu"
+    error_message = _("%(value)s is not a valid identifier. The identifier must look like %(sample)s") % {
+        "value": value,
+        "sample": valid_identifier_sample,
+    }
+
+    if not value.islower():
+        raise ValidationError(error_message)
+
+
 class Ngo(models.Model):
     # DEFAULT_NGO_LOGO = "https://storage.googleapis.com/redirectioneaza/logo_bw.png"
 
-    name = models.CharField(verbose_name=_("Name"), blank=False, null=False, max_length=100, db_index=True)
-    description = models.TextField(
-        verbose_name=_("description"),
+    slug = models.SlugField(
+        verbose_name=_("slug"),
+        blank=False,
+        null=False,
+        max_length=100,
+        db_index=True,
+        unique=True,
+        validators=[ngo_identifier_validator],
     )
+
+    name = models.CharField(verbose_name=_("Name"), blank=False, null=False, max_length=100, db_index=True)
+    description = models.TextField(verbose_name=_("description"))
 
     # originally: logo
     logo_url = models.URLField(verbose_name=_("logo url"), blank=True, null=False, default="")
@@ -109,17 +129,30 @@ class Ngo(models.Model):
     # TODO: this seems to act as an unique NGO identifier
     # TODO: rename it to "identifier" in a future version
     # url to the ngo's 2% form, that contains only the ngo's details
-    form_url = models.SlugField(
-        verbose_name=_("form url"), blank=False, max_length=100, unique=True, null=True
-    )  # noqa: DJ001
+    form_url = models.URLField(
+        verbose_name=_("form url"),
+        default="",
+        blank=True,
+        null=False,
+        max_length=255,
+    )
+    custom_form = models.FileField(
+        verbose_name=_("form with ngo data"),
+        blank=True,
+        null=False,
+        storage=select_public_storage,
+        upload_to=partial(ngo_directory_path, "forms"),
+    )
 
     date_created = models.DateTimeField(verbose_name=_("date created"), db_index=True, auto_now_add=timezone.now)
+    date_updated = models.DateTimeField(verbose_name=_("date updated"), db_index=True, auto_now=timezone.now)
 
     class Meta:
         verbose_name = _("NGO")
         verbose_name_plural = _("NGOs")
+
         constraints = [
-            models.UniqueConstraint(Lower("form_url"), name="form_url_unique"),
+            models.UniqueConstraint(Lower("slug"), name="slug__unique"),
         ]
 
     def __str__(self):

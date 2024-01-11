@@ -67,7 +67,7 @@
                 {# this div is only used to contain the two and to add the has-warning class #}
                 <div>
                     <label for="ong-url" class="control-label">redirectioneaza.ro/</label>
-                    <input id="ong-url" class="form-control" type="text" name="ong-url" placeholder="url-ul asociației" value="{{ ngo.form_url if ngo }}" required maxlength="150" {{ "readonly" if not is_admin and ngo.key  }} />
+                    <input id="ong-url" class="form-control" type="text" name="ong-url" placeholder="url-ul asociației" value="{{ ngo.slug if ngo }}" required maxlength="150" {{ "readonly" if not is_admin and ngo.key  }} />
                 </div>
             </div>
         </div>
@@ -111,7 +111,7 @@
     {% if is_admin %}
         <fieldset>
             <legend>Admin</legend>
-            <input id="old-ong-url" type="hidden" name="old-ong-url" value="{{ ngo.form_url if ngo }}" />
+            <input id="old-ong-url" type="hidden" name="old-ong-url" value="{{ ngo.slug if ngo }}" />
             <div class="form-group">
                 <div class="col-xs-12">
                     <label for="ong-activ" class="col-xs-3">Activ:</label>
