@@ -281,6 +281,9 @@ class VerificationHandler(AccountHandler):
         user_id = kwargs["user_id"]
         signup_token = kwargs["signup_token"]
 
+        if verification_type not in ("p", "v"):
+            raise Http404
+
         try:
             user = self.user_model.objects.get(pk=user_id)
         except self.user_model.DoesNotExist:

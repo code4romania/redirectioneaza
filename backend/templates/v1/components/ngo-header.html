@@ -12,7 +12,7 @@
             </div>
             <div class="media-body">
                 <h1>
-                    <a href="/{{ ngo.form_url }}">
+                    <a href="/{{ ngo.slug }}">
                         <span itemprop="name" >{{ ngo.name }}</span>
                     </a>
                 </h1>
@@ -34,7 +34,7 @@
                 {% endif %}
 
                 {% if is_admin %}
-                    <a href="{{ url('admin-ong', kwargs={'ngo_url': ngo.form_url}) }}" class="btn btn-link">
+                    <a href="{{ url('admin-ong', kwargs={'ngo_url': ngo.slug}) }}" class="btn btn-link">
                         Editează ONG-ul
                     </a>
                 {% endif %}

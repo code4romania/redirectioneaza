@@ -1,22 +1,78 @@
+import hashlib
+from functools import partial
+
+from django.conf import settings
+from django.core.exceptions import ValidationError
+from django.core.files.storage import storages
 from django.db import models
+from django.db.models.functions import Lower
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django_cryptography.fields import encrypt
 
 
+def select_public_storage():
+    return storages["public"]
+
+
+def ngo_directory_path(subdir, instance, filename) -> str:
+    ngo_code: str = hashlib.sha1(f"ngo-{instance.pk}-{settings.SECRET_KEY}".encode()).hexdigest()
+
+    # file will be uploaded to MEDIA_ROOT/ngo-<id>-<hash>/<subdir>/<filename>
+    return "ngo-{0}-{1}/{2}/{3}".format(instance.pk, ngo_code[:10], subdir, filename)
+
+
+def year_directory_path(subdir, instance, filename) -> str:
+    timestamp = timezone.now()
+    return "{0}/{1}/{2}/{3}".format(subdir, timestamp.date().year, instance.pk, filename)
+
+
+def ngo_identifier_validator(value):
+    valid_identifier_sample: str = "asociatia-de-exemplu"
+    error_message = _("%(value)s is not a valid identifier. The identifier must look like %(sample)s") % {
+        "value": value,
+        "sample": valid_identifier_sample,
+    }
+
+    if not value.islower():
+        raise ValidationError(error_message)
+
+
 class Ngo(models.Model):
     # DEFAULT_NGO_LOGO = "https://storage.googleapis.com/redirectioneaza/logo_bw.png"
 
-    name = models.CharField(verbose_name=_("Name"), blank=False, null=False, max_length=100, db_index=True)
-    description = models.TextField(
-        verbose_name=_("description"),
+    slug = models.SlugField(
+        verbose_name=_("slug"),
+        blank=False,
+        null=False,
+        max_length=100,
+        db_index=True,
+        unique=True,
+        validators=[ngo_identifier_validator],
     )
+
+    name = models.CharField(verbose_name=_("Name"), blank=False, null=False, max_length=100, db_index=True)
+    description = models.TextField(verbose_name=_("description"))
 
     # originally: logo
     logo_url = models.URLField(verbose_name=_("logo url"), blank=True, null=False, default="")
+    logo = models.ImageField(
+        verbose_name=_("logo"),
+        blank=True,
+        null=False,
+        storage=select_public_storage,
+        upload_to=partial(ngo_directory_path, "logos"),
+    )
 
     # originally: image_url
     image_url = models.URLField(verbose_name=_("image url"), blank=True, null=False, default="")
+    image = models.ImageField(
+        verbose_name=_("image"),
+        blank=True,
+        null=False,
+        storage=select_public_storage,
+        upload_to=partial(ngo_directory_path, "images"),
+    )
 
     # originally: account
     bank_account = models.CharField(verbose_name=_("bank account"), max_length=100)
@@ -70,19 +126,47 @@ class Ngo(models.Model):
     # originally: active
     is_active = models.BooleanField(verbose_name=_("is active"), db_index=True, default=True)
 
-    # url to the ngo's 2% form, that contains only the ngo's details
-    form_url = models.CharField(
-        verbose_name=_("form url"), blank=True, null=False, default="", max_length=255, unique=True
+    # url to the form that contains only the ngo's details
+    form_url = models.URLField(
+        verbose_name=_("form url"),
+        default="",
+        blank=True,
+        null=False,
+        max_length=255,
+    )
+    custom_form = models.FileField(
+        verbose_name=_("form with ngo data"),
+        blank=True,
+        null=False,
+        storage=select_public_storage,
+        upload_to=partial(ngo_directory_path, "forms"),
     )
 
     date_created = models.DateTimeField(verbose_name=_("date created"), db_index=True, auto_now_add=timezone.now)
+    date_updated = models.DateTimeField(verbose_name=_("date updated"), db_index=True, auto_now=timezone.now)
 
     class Meta:
         verbose_name = _("NGO")
         verbose_name_plural = _("NGOs")
 
+        constraints = [
+            models.UniqueConstraint(Lower("slug"), name="slug__unique"),
+        ]
+
     def __str__(self):
         return f"{self.name}"
+
+    def save(self, *args, **kwargs):
+        # Force the form_url (which acts as an NGO identifier) to lowercase
+        if self.form_url:
+            self.form_url = self.form_url.lower().strip()
+        return super().save(*args, **kwargs)
+
+    def get_full_form_url(self):
+        if self.form_url:
+            return "https://{}/{}".format(settings.APEX_DOMAIN, self.form_url)
+        else:
+            return ""
 
 
 class Donor(models.Model):
@@ -97,9 +181,7 @@ class Donor(models.Model):
     last_name = models.CharField(verbose_name=_("last name"), blank=True, null=False, default="", max_length=100)
     initial = models.CharField(verbose_name=_("initials"), blank=True, null=False, default="", max_length=5)
 
-    personal_identifier = encrypt(
-        models.CharField(verbose_name=_("CNP"), blank=True, null=False, default="", max_length=13)
-    )
+    cnp = encrypt(models.CharField(verbose_name=_("CNP"), blank=True, null=False, default="", max_length=13))
 
     city = models.CharField(
         verbose_name=_("city"),
@@ -151,6 +233,13 @@ class Donor(models.Model):
     pdf_url = models.URLField(verbose_name=_("PDF URL"), blank=True, null=False, default="", max_length=255)
     filename = models.CharField(verbose_name=_("filename"), blank=True, null=False, default="", max_length=100)
     has_signed = models.BooleanField(verbose_name=_("has signed"), db_index=True, default=False)
+
+    pdf_file = models.FileField(
+        verbose_name=_("PDF file"),
+        blank=True,
+        null=False,
+        upload_to=partial(year_directory_path, "documents"),
+    )
 
     date_created = models.DateTimeField(verbose_name=_("date created"), db_index=True, auto_now_add=timezone.now)
 
