@@ -126,9 +126,7 @@ class Ngo(models.Model):
     # originally: active
     is_active = models.BooleanField(verbose_name=_("is active"), db_index=True, default=True)
 
-    # TODO: this seems to act as an unique NGO identifier
-    # TODO: rename it to "identifier" in a future version
-    # url to the ngo's 2% form, that contains only the ngo's details
+    # url to the form that contains only the ngo's details
     form_url = models.URLField(
         verbose_name=_("form url"),
         default="",
