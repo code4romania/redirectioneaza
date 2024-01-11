@@ -110,7 +110,8 @@ class Ngo(models.Model):
     # TODO: rename it to "identifier" in a future version
     # url to the ngo's 2% form, that contains only the ngo's details
     form_url = models.SlugField(
-        verbose_name=_("form url"), blank=False, max_length=100, unique=True, null=True)  # noqa: DJ001
+        verbose_name=_("form url"), blank=False, max_length=100, unique=True, null=True
+    )  # noqa: DJ001
 
     date_created = models.DateTimeField(verbose_name=_("date created"), db_index=True, auto_now_add=timezone.now)
 

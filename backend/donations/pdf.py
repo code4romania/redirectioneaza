@@ -1,4 +1,3 @@
-
 import os
 from io import StringIO
 import base64
@@ -17,11 +16,10 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from svglib.svglib import svg2rlg
 
-from logging import info
 
 abs_path = os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir))
 font_path = abs_path + "/static/font/opensans.ttf"
-pdfmetrics.registerFont(TTFont('OpenSans', font_path))
+pdfmetrics.registerFont(TTFont("OpenSans", font_path))
 
 default_font_size = 15
 form_image_path = "/static/images/formular-2021.jpg"
@@ -29,9 +27,9 @@ form_image_path = "/static/images/formular-2021.jpg"
 
 def format_ngo_account(ngo_account):
     # remove white spaces from account
-    ngo_account = ngo_account.replace(' ', '')
+    ngo_account = ngo_account.replace(" ", "")
 
-    account = ''
+    account = ""
     for i, l in enumerate(ngo_account):
         account += l
         if (i + 1) % 4 == 0:
@@ -39,8 +37,8 @@ def format_ngo_account(ngo_account):
 
     return account
 
-def add_donor_data(c, person):
 
+def add_donor_data(c, person):
     donor_block_x = 681
 
     # the first name
@@ -60,10 +58,9 @@ def add_donor_data(c, person):
 
     c.drawString(75, donor_block_x - 22, last_name)
 
-
     # =======================================
     # THIRD ROW
-    # 
+    #
     third_row_x = donor_block_x - 45
 
     # the street
@@ -88,7 +85,7 @@ def add_donor_data(c, person):
     c.drawString(289, third_row_x, person["number"])
     c.setFontSize(default_font_size)
 
-    # 
+    #
     # =======================================
 
     # =======================================
@@ -112,12 +109,11 @@ def add_donor_data(c, person):
         c.setFontSize(12)
     else:
         c.setFontSize(8)
-    
+
     c.drawString(255, fourth_row_x, person["county"])
     c.setFontSize(default_font_size)
-    # 
+    #
     # =======================================
-
 
     # oras
     c.drawString(69, donor_block_x - 90, person["city"])
@@ -130,26 +126,25 @@ def add_donor_data(c, person):
         c.drawString(start_x, donor_block_x - 10, letter)
         start_x += 18.5
 
-
     # email
     start_email_x = 368
-    if person['email']:
-        if len(person['email']) < 32:
+    if person["email"]:
+        if len(person["email"]) < 32:
             c.setFontSize(12)
-        elif len(person['email']) < 40:
+        elif len(person["email"]) < 40:
             c.setFontSize(10)
         else:
             c.setFontSize(8)
 
-        c.drawString(start_email_x, third_row_x + 14, person['email'])
+        c.drawString(start_email_x, third_row_x + 14, person["email"])
 
     # telephone
-    if person['tel']:
+    if person["tel"]:
         c.setFontSize(12)
-        c.drawString(start_email_x, third_row_x - 15, person['tel'])
-    
+        c.drawString(start_email_x, third_row_x - 15, person["tel"])
 
     c.setFontSize(default_font_size)
+
 
 def add_ngo_data(c, ong):
     start_ong_y = 449
@@ -157,7 +152,7 @@ def add_ngo_data(c, ong):
     # the x mark
     c.drawString(219, start_ong_y, "x")
 
-    if ong.get('two_years'):
+    if ong.get("two_years"):
         c.drawString(325, start_ong_y - 21, "x")
 
     # the cif code
@@ -171,7 +166,7 @@ def add_ngo_data(c, ong):
     elif len(org_name) > 65:
         c.setFontSize(12)
 
-    c.drawString(186, start_ong_y - 64, org_name.encode('utf-8'))
+    c.drawString(186, start_ong_y - 64, org_name.encode("utf-8"))
 
     c.setFontSize(11)
 
@@ -179,13 +174,14 @@ def add_ngo_data(c, ong):
     account = format_ngo_account(ong["account"])
     c.drawString(110, start_ong_y - 86, account)
 
-    if ong.get('percent'):
-        c.drawString(146, start_ong_y - 108, ong.get('percent'))
+    if ong.get("percent"):
+        c.drawString(146, start_ong_y - 108, ong.get("percent"))
 
-def create_pdf(person = {}, ong = {}):
+
+def create_pdf(person={}, ong={}):
     """method used to create the pdf
 
-    person: dict with the person's data 
+    person: dict with the person's data
         first_name
         father
         last_name
@@ -207,31 +203,31 @@ def create_pdf(person = {}, ong = {}):
         cif
         account
     """
-    
+
     # packet = StringIO.StringIO()
     # we could also use StringIO
-    packet = tempfile.TemporaryFile(mode='w+b')
-    
+    packet = tempfile.TemporaryFile(mode="w+b")
+
     c = canvas.Canvas(packet, A4)
     width, height = A4
-    
+
     # add the image as background
-    background = ImageReader( abs_path + form_image_path )
+    background = ImageReader(abs_path + form_image_path)
     c.drawImage(background, 0, 0, width=width, height=height)
 
-    c.setFont('OpenSans', default_font_size)
+    c.setFont("OpenSans", default_font_size)
     c.setFontSize(default_font_size)
 
     # the year
     # this is the previous year
-    year = str( datetime.now().year - 1 )
+    year = str(datetime.now().year - 1)
     start_x = 305
     for letter in year:
         c.drawString(start_x, 736, letter)
         start_x += 18
 
     # DRAW DONOR DATA
-    if person.get('first_name'):
+    if person.get("first_name"):
         add_donor_data(c, person)
 
     add_ngo_data(c, ong)
@@ -244,21 +240,21 @@ def create_pdf(person = {}, ong = {}):
 
     return packet
 
-def add_signature(pdf, image):
 
+def add_signature(pdf, image):
     pdf_string = StringIO.StringIO(pdf)
     existing_pdf = PdfFileReader(pdf_string)
 
-    packet = tempfile.TemporaryFile(mode='w+b')
+    packet = tempfile.TemporaryFile(mode="w+b")
 
     # init pdf canvas
     c = canvas.Canvas(packet, A4)
 
     # add the image as background
     # remove the header added by javascript
-    image = image.split(',')[1]
+    image = image.split(",")[1]
     # make sure the string has the right padding
-    image = image + '=' * (-len(image) % 4)
+    image = image + "=" * (-len(image) % 4)
     base_image = base64.b64decode(image)
     byte_image = BytesIO(base_image)
     # make this a svg2rlg object
@@ -268,7 +264,7 @@ def add_signature(pdf, image):
     # new_width = 90
 
     new_height = 30
-    scaled_down = (new_height / drawing.height)
+    scaled_down = new_height / drawing.height
 
     # we want to scale the image down and stil keep it's aspect ratio
     # the image might have dimensions of 750 x 200
@@ -288,7 +284,7 @@ def add_signature(pdf, image):
     output = PdfFileWriter()
     output.addPage(page)
 
-    outputStream = tempfile.TemporaryFile(mode='w+b')
+    outputStream = tempfile.TemporaryFile(mode="w+b")
     output.write(outputStream)
 
     outputStream.seek(0)
