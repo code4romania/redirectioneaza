@@ -4,6 +4,7 @@ from hashlib import sha1
 from urllib.parse import urlparse
 
 from django.conf import settings
+from django.core.files import File
 from django.http import Http404, HttpRequest, JsonResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
@@ -171,7 +172,7 @@ class TwoPercentHandler(BaseHandler):
         }
 
         try:
-            ngo = Ngo.objects.get(ngo_url=ngo_url)
+            ngo = Ngo.objects.get(form_url=ngo_url)
         except Ngo.DoesNotExist:
             raise Http404
 
@@ -241,7 +242,7 @@ class TwoPercentHandler(BaseHandler):
 
         # if the ngo accepts online forms
         signature_required = False
-        if ngo.accepts_forms:
+        if ngo.is_accepting_forms:
             wants_to_sign = post.get('wants-to-sign', False)
             if wants_to_sign == 'True':
                 signature_required = True
@@ -255,16 +256,15 @@ class TwoPercentHandler(BaseHandler):
         # the ngo data
         ngo_data = {
             "name": ngo.name,
-            "account": ngo.account.upper(),
-            "cif": ngo.cif,
+            "account": ngo.bank_account.upper(),
+            "cif": ngo.registration_number,
             "two_years": two_years,
-            "special_status": ngo.special_status,
+            "special_status": ngo.has_special_status,
             "percent": "3,5%"
         }
         
         if len(errors["fields"]):
-            self.return_error(ngo, errors, is_ajax)
-            return
+            return self.return_error(request, ngo, errors, is_ajax)
 
         ## TODO: Captcha check
         # captcha_response = submit(post.get(CAPTCHA_POST_PARAM), CAPTCHA_PRIVATE_KEY, self.request.remote_addr)
@@ -285,14 +285,9 @@ class TwoPercentHandler(BaseHandler):
         # get the local time in iso format
         # run that through SHA1 hash
         # output a hex string
-        filename = "{0}/{1}/{2}".format(settings.USER_FORMS, str(user_folder), sha1( timezone.now() ).hexdigest())
+        filename = "{0}/{1}/{2}.pdf".format(settings.USER_FORMS, str(user_folder), sha1( timezone.now().isoformat().encode("utf8") ).hexdigest())
 
         pdf = create_pdf(donor_dict, ngo_data)
-
-        file_url = CloudStorage.save_file(pdf, filename)
-
-        # close the file after it has been uploaded
-        pdf.close()
 
         # create the donor and save it
         donor = Donor(
@@ -301,27 +296,38 @@ class TwoPercentHandler(BaseHandler):
             city = donor_dict["city"],
             county = donor_dict["county"],
             email = donor_dict['email'],
-            tel = donor_dict['tel'],
-            anonymous = donor_dict['anonymous'],
+            phone = donor_dict['tel'],
+            is_anonymous = donor_dict['anonymous'],
             two_years = two_years,
-            income = donor_dict['income'],
+            income_type = donor_dict['income'],
+
+            ## TODO:
             # make a request to get geo ip data for this user
-            geoip = self.get_geoip_data(),
-            ngo = ngo.key,
-            pdf_url = file_url,
+            # geoip = self.get_geoip_data(),
+
+            ngo = ngo,
             filename = filename
         )
+        donor.save()
 
-        donor.put()
+        donor.pdf_file.save(filename, File(pdf))
+
+        # close the file after it has been uploaded
+        pdf.close()
+
+        # TODO: Get rid of pdf_url
+        donor.pdf_url = donor.pdf_file.url
+        donor.save()
 
         # set the donor id in cookie
-        request.session["donor_id"] = str(donor.key.id())
+        request.session["donor_id"] = str(donor.pk)
         request.session["has_cnp"] = bool(donor_dict["cnp"])
         request.session["signature_required"] = signature_required
 
-        if not signature_required:
-            # send and email to the donor with a link to the PDF file
-            self.send_email("twopercent-form", donor, ngo)
+        # TODO: Send the email
+        # if not signature_required:
+        #     # send and email to the donor with a link to the PDF file
+        #     self.send_email("twopercent-form", donor, ngo)
 
         url = reverse("ngo-twopercent-success", kwargs={"ngo_url": ngo_url})
         if signature_required:
@@ -334,7 +340,7 @@ class TwoPercentHandler(BaseHandler):
         else:
             return redirect(url)
         
-    def return_error(self, ngo, errors, is_ajax):
+    def return_error(self, request, ngo, errors, is_ajax):
         
         if is_ajax:
             return JsonResponse(errors)
@@ -358,4 +364,4 @@ class TwoPercentHandler(BaseHandler):
             context[ key ] = self.request.POST[ key ]
 
         # render a response
-        self.render()
+        return render(request, self.template_name, context)
