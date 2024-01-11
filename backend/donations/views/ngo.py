@@ -23,7 +23,7 @@ class DonationSucces(BaseHandler):
 
         ngo_url = ngo_url.lower().strip()
         try:
-            ngo = Ngo.objects.get(form_url=ngo_url)
+            ngo = Ngo.objects.get(slug=ngo_url)
         except Ngo.DoesNotExist:
             ngo = None
 
@@ -63,7 +63,7 @@ class FormSignature(BaseHandler):
 
         ngo_url = ngo_url.lower().strip()
         try:
-            ngo = Ngo.objects.get(form_url=ngo_url)
+            ngo = Ngo.objects.get(slug=ngo_url)
         except Ngo.DoesNotExist:
             ngo = None
 
@@ -86,7 +86,7 @@ class TwoPercentHandler(BaseHandler):
 
     def get(self, request, ngo_url):
         try:
-            ngo = Ngo.objects.get(form_url=ngo_url)
+            ngo = Ngo.objects.get(slug=ngo_url)
         except Ngo.DoesNotExist:
             ngo = None
 
@@ -157,7 +157,7 @@ class TwoPercentHandler(BaseHandler):
         errors = {"fields": [], "server": False}
 
         try:
-            ngo = Ngo.objects.get(form_url=ngo_url)
+            ngo = Ngo.objects.get(slug=ngo_url)
         except Ngo.DoesNotExist:
             raise Http404
 
