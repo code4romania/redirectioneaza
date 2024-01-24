@@ -67,7 +67,7 @@
                 {# this div is only used to contain the two and to add the has-warning class #}
                 <div>
                     <label for="ong-url" class="control-label">redirectioneaza.ro/</label>
-                    <input id="ong-url" class="form-control" type="text" name="ong-url" placeholder="url-ul asociației" value="{{ ngo.form_url if ngo }}" required maxlength="150" {{ "readonly" if not is_admin and ngo.key  }} />
+                    <input id="ong-url" class="form-control" type="text" name="ong-url" placeholder="url-ul asociației" value="{{ ngo.slug if ngo }}" required maxlength="150" {{ "readonly" if not is_admin and ngo.key  }} />
                 </div>
             </div>
         </div>
@@ -111,7 +111,7 @@
     {% if is_admin %}
         <fieldset>
             <legend>Admin</legend>
-            <input id="old-ong-url" type="hidden" name="old-ong-url" value="{{ ngo.form_url if ngo }}" />
+            <input id="old-ong-url" type="hidden" name="old-ong-url" value="{{ ngo.slug if ngo }}" />
             <div class="form-group">
                 <div class="col-xs-12">
                     <label for="ong-activ" class="col-xs-3">Activ:</label>
@@ -119,7 +119,7 @@
                 </div>
                 <div class="col-xs-12">
                     <label for="ong-verificat" class="col-xs-3">Verificat:</label>
-                    <input type="checkbox" id="ong-verificat" name="ong-verificat" {{ "checked" if ngo.verified }} />
+                    <input type="checkbox" id="ong-verificat" name="ong-verificat" {{ "checked" if ngo.is_verified }} />
                 </div>
             </div>
 
@@ -133,7 +133,7 @@
                             <div class="panel-body">
                                 <p>Nume: {{ "{0} {1}".decode("utf-8").format(owner.first_name, owner.last_name) }}</p>
                                 <p>Email: {{ owner.email }}</p>
-                                <p>Verificat: {{ owner.verified }}</p>
+                                <p>Verificat: {{ owner.is_verified }}</p>
                                 <p>Creat la: {{ owner.created.strftime("%d/%m/%Y") }}</p>
                             </div>
                         </div>

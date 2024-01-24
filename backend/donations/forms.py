@@ -15,7 +15,7 @@ class DonorInputForm(forms.ModelForm):
     terms = forms.BooleanField(label=_("Terms"), required=True)
 
     ngo_id = forms.IntegerField(widget=forms.HiddenInput(), required=False)
-    personal_identifier = ROCNPField(label="CNP")
+    cnp = ROCNPField(label="CNP")
 
     class Meta:
         model = Donor
