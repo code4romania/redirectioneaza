@@ -92,7 +92,22 @@ class AdminHome(BaseHandler):
 
 
 class AdminNewNgoHandler(BaseHandler):
-    pass
+    template_name = "admin2/ngo.html"
+
+    def get(self, request, *args, **kwargs):
+        context = {}
+
+        if not request.user.is_staff:
+            return redirect(User.create_admin_login_url(reverse("admin-ong-nou")))
+
+        context["ngo_upload_url"] = reverse("api-ngo-upload-url")
+        context["check_ngo_url"] = "/api/ngo/check-url/"
+        context["counties"] = settings.LIST_OF_COUNTIES
+
+        context["ngo"] = {}
+
+        # render a response
+        return render(request, self.template_name, context)
 
 
 class AdminNgoHandler(BaseHandler):
