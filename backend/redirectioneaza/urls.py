@@ -109,7 +109,7 @@ urlpatterns = (
         # END_OF_TODO
         #
         # Django Admin
-        path("django-admin/", django_admin.site.urls),
+        path("web-con/", django_admin.site.urls),
         # must always be the last set of urls
         re_path(r"^(?P<ngo_url>[\w-]+)/doilasuta", RedirectView.as_view(pattern_name="twopercent", permanent=True)),
         re_path(r"^(?P<ngo_url>[\w-]+)/semnatura", FormSignature.as_view(), name="ngo-twopercent-signature"),
