@@ -1,7 +1,10 @@
+from django.conf import settings
 from django.core.exceptions import PermissionDenied, BadRequest
 from django.http import HttpResponse
-from django.views.decorators.csrf import csrf_exempt
+from django.urls import reverse
 from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
 
 from ..models import Ngo
 from .base import BaseHandler, AccountHandler
@@ -20,7 +23,23 @@ class CheckNgoUrl(AccountHandler):
 
 
 class NgosApi(BaseHandler):
-    template_name = "all-ngos.html"
+    def get(self, request, *args, **kwargs):
+        # get all the visible ngos
+        ngos = Ngo.objects.filter(is_active=True).all()
+
+        response = []
+        for ngo in ngos:
+            response.append(
+                {
+                    "name": ngo.name,
+                    "url": reverse("twopercent", kwargs={"ngo_url": ngo.slug}),
+                    "logo": ngo.logo if ngo.logo else settings.DEFAULT_NGO_LOGO,
+                    "active_region": ngo.active_region,
+                    "description": ngo.description,
+                }
+            )
+
+        return JsonResponse(response, safe=False)
 
 
 class GetNgoForm(BaseHandler):

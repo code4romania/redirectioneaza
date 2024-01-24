@@ -4,10 +4,10 @@ from datetime import datetime
 from django.conf import settings
 from django.core.exceptions import PermissionDenied, BadRequest
 from django.core.mail import send_mail
-from django.urls import reverse
+from django.http import Http404
 from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
-from django.http import Http404
+from django.urls import reverse
 from django.utils import timezone
 
 from users.models import User
