@@ -83,11 +83,12 @@ urlpatterns = (
         path("contul-meu", MyAccountHandler.as_view(), name="contul-meu"),
         path("asociatia", NgoDetailsHandler.as_view(), name="asociatia"),
         path("date-cont", MyAccountDetailsHandler.as_view(), name="date-contul-meu"),
+        # APIs
+        path("api/ngo/check-url/<ngo_url>", CheckNgoUrl.as_view(), name="api-ngo-check-url"),
         #
         #
         # TODO: all the URLs until END_OF_TODO need to be implemented
         #
-        path("api/ngo/check-url/<ngo_url>", CheckNgoUrl.as_view(), name="api-ngo-check-url"),
         path("api/ngo/upload-url", GetUploadUrl.as_view(), name="api-ngo-upload-url"),
         path("api/ngo/form/<ngo_url>", GetNgoForm.as_view(), name="api-ngo-form-url"),
         path("api/ngo/forms/download", GetNgoForms.as_view(), name="api-ngo-forms"),
