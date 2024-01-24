@@ -99,7 +99,7 @@ urlpatterns = (
         path("admin/campanii", SendCampaign.as_view(), name="admin-campanii"),
         path("admin/ong-nou", AdminNewNgoHandler.as_view(), name="admin-ong-nou"),
         path("admin/<ngo_url>", AdminNgoHandler.as_view(), name="admin-ong"),
-        path("admin", AdminHome.as_view(), name="admin"),
+        path("admin/", AdminHome.as_view(), name="admin-index"),  # name was "admin"
         # Cron routes
         path("cron/stats", Stats.as_view()),
         path("cron/ngos/remove-form", NgoRemoveForms.as_view(), name="ngo-remove-form"),
@@ -109,7 +109,7 @@ urlpatterns = (
         # END_OF_TODO
         #
         # Django Admin
-        path("web-con/", django_admin.site.urls),
+        path("admin/", django_admin.site.urls),
         # must always be the last set of urls
         re_path(r"^(?P<ngo_url>[\w-]+)/doilasuta", RedirectView.as_view(pattern_name="twopercent", permanent=True)),
         re_path(r"^(?P<ngo_url>[\w-]+)/semnatura", FormSignature.as_view(), name="ngo-twopercent-signature"),
