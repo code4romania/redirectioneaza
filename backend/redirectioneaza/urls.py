@@ -86,11 +86,11 @@ urlpatterns = (
         # APIs
         path("api/ngo/check-url/<ngo_url>", CheckNgoUrl.as_view(), name="api-ngo-check-url"),
         path("api/ngos", NgosApi.as_view(), name="api-ngos"),
+        path("api/ngo/upload-url", GetUploadUrl.as_view(), name="api-ngo-upload-url"),  # TODO
         #
         #
         # TODO: all the URLs until END_OF_TODO need to be implemented
         #
-        path("api/ngo/upload-url", GetUploadUrl.as_view(), name="api-ngo-upload-url"),
         path("api/ngo/form/<ngo_url>", GetNgoForm.as_view(), name="api-ngo-form-url"),
         path("api/ngo/forms/download", GetNgoForms.as_view(), name="api-ngo-forms"),
         path("webhook", Webhook.as_view(), name="webhook"),

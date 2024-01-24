@@ -1,13 +1,21 @@
+import json
+
+import logging
+from django.urls import reverse_lazy
+from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.core.exceptions import PermissionDenied, BadRequest
 from django.http import HttpResponse
+from django.http import JsonResponse
 from django.urls import reverse
 from django.utils.decorators import method_decorator
-from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse
 
 from ..models import Ngo
+from ..models.jobs import Job
 from .base import BaseHandler, AccountHandler
+
+
+logger = logging.getLogger(__name__)
 
 
 class CheckNgoUrl(AccountHandler):
@@ -52,17 +60,61 @@ class GetNgoForms(AccountHandler):
         raise NotImplementedError("GetNgoForms not implemented yet")
 
 
-@method_decorator(csrf_exempt, name="dispatch")
+@method_decorator(login_required(login_url=reverse_lazy("login")), name="dispatch")
 class GetUploadUrl(AccountHandler):
-    def get(self, request, *args, **kwargs):
-        raise NotImplementedError("GetUploadUrl not implemented yet")
-
     def post(self, request, *args, **kwargs):
-        # logo_file = request.FILES.get("files")
-        # print(logo_file)
-        raise NotImplementedError("GetUploadUrl not implemented yet")
+        files = request.FILES
+        if len(files) != 1:
+            raise BadRequest()
+
+        ngo = request.user.ngo
+        if not ngo:
+            raise BadRequest()
+            # # TODO: should we create the NGO here?
+            # ngo = Ngo.objects.create()
+            # ngo.save()
+            # request.user.ngo = ngo
+            # request.user.save()
+
+        ngo.logo = files[0]
+        ngo.save()
+
+        self.return_json({"file_urls": [ngo.logo.url]})
 
 
 class Webhook(BaseHandler):
-    def get(self, request, *args, **kwargs):
-        raise NotImplementedError("Webhook not implemented yet")
+    def post(self, request, *args, **kwargs):
+        body = json.decode(request.body)
+
+        data = body.get("data", {})
+        job_id = body.get("jobId")
+        error = body.get("error")
+        url = body.get("url")
+
+        if not job_id:
+            logger.error("Did not receive jobId argument")
+            raise BadRequest()
+
+        # mark the job as done
+        try:
+            job = Job.objects.get(id=job_id)
+        except Job.DoesNotExist:
+            logger.error("Received an webhook. Could not find job with id {}".format(data.get("jobId")))
+            raise BadRequest()
+
+        if job.status == "done":
+            logger.warning("Job with id {} is already done. Duplicate webhook".format(job.id))
+
+        if url:
+            job.url = url
+            job.status = "done"
+        elif error:
+            job.status = "error"
+
+        job.save()
+
+        # TODO:
+        # send email
+        # self.send_dynamic_email(
+        #     template_id="d-312ab0a4221944e3ac728ae08c504a7c", email=job.owner.email, data={"link": url}
+        # )
