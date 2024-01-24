@@ -94,9 +94,9 @@ urlpatterns = (
         path("api/ngos", NgosApi.as_view(), name="api-ngos"),
         path("webhook", Webhook.as_view(), name="webhook"),
         # ADMIN HANDLERS
-        path("admin/conturi", UserAccounts.as_view(), name="admin-users"),
         path("admin/campanii", SendCampaign.as_view(), name="admin-campanii"),
         path("admin/ong-nou", AdminNewNgoHandler.as_view(), name="admin-ong-nou"),
+        path("admin/conturi", UserAccounts.as_view(), name="admin-users"),
         path("admin/organizatii", AdminNgosList.as_view(), name="admin-ngos"),
         path("admin/<ngo_url>", AdminNgoHandler.as_view(), name="admin-ong"),
         path("admin/", AdminHome.as_view(), name="admin-index"),  # name was "admin"

@@ -146,4 +146,15 @@ class SendCampaign(BaseHandler):
 
 
 class UserAccounts(BaseHandler):
-    pass
+    template_name = "admin2/accounts.html"
+
+    def get(self, request, *args, **kwargs):
+        context = {}
+
+        if not request.user.is_staff:
+            return redirect(User.create_admin_login_url(reverse("admin-ong")))
+
+        all_users = User.objects.order_by("-date_joined").all()
+        context["users"] = all_users
+
+        return render(request, self.template_name, context)
