@@ -4,8 +4,9 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import AbstractUser, UserManager
 from django.db import models
 from django.db.models.functions import Lower
-from django.utils.translation import gettext_lazy as _
+from django.urls import reverse
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 from donations.models import Ngo
 
@@ -105,3 +106,10 @@ class User(AbstractUser):
         self.validation_token = None
         if commit:
             self.save()
+
+    @staticmethod
+    def create_admin_login_url(next_url=""):
+        """
+        Create a link to the Django Admin login page with a custom "next" parameter
+        """
+        return "{}?next={}".format(reverse("admin:login"), next_url)

@@ -2,7 +2,7 @@
 {% extends "base.html" %}
 
 {% block header %}
-    {% include "admin/header.html" %}
+    {% include "admin2/header.html" %}
 {% endblock %}
 
 {% block content %}
@@ -13,7 +13,7 @@
             <p>ONG-uri: {{ stats_dict["ngos"] }}</p>
             <p>Formulare: {{ stats_dict["forms"] }}</p>
         </div>
-        {% for key, value in stats_dict['years'].iteritems()|reverse %}
+        {% for key, value in stats_dict['years'].items()|reverse %}
             <div class="col-xs-2">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -44,7 +44,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for key, value in stats_dict["counties"].iteritems()|sort %}
+                    {% for key, value in stats_dict["counties"].items()|sort %}
                         <tr>
                             <td>{{key}}</td>
                             <td>
