@@ -2,8 +2,11 @@ import logging
 from copy import deepcopy
 from datetime import datetime
 from django.conf import settings
+from django.core.exceptions import PermissionDenied, BadRequest
+from django.core.mail import send_mail
 from django.urls import reverse
 from django.shortcuts import redirect, render
+from django.template.loader import render_to_string
 from django.http import Http404
 from django.utils import timezone
 
@@ -157,7 +160,47 @@ class AdminNgosList(BaseHandler):
 
 
 class SendCampaign(BaseHandler):
-    pass
+    template_name = "admin2/campaign.html"
+
+    def get(self, request, *args, **kwargs):
+        context = {}
+
+        if not request.user.is_staff:
+            return redirect(User.create_admin_login_url(reverse("admin-campanii")))
+
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        if not request.user.is_staff:
+            raise PermissionDenied()
+
+        subject = request.POST.get("subiect")
+        emails = [s.strip() for s in request.POST.get("emails", "").split(",")]
+
+        if not subject or not emails:
+            raise BadRequest()
+
+        sender_address = "Andrei Onel <contact@donezsi.eu>"
+
+        html_template = "email/campaigns/first/index-inline.html"
+        txt_template = "email/campaigns/first/index-text.txt"
+
+        template_values = {}
+
+        html_body = render_to_string(html_template, template_values)
+        body = render_to_string(txt_template, template_values)
+
+        for email in emails:
+            user_address = email
+            send_mail(
+                from_email=sender_address,
+                recipient_list=[user_address],
+                subject=subject,
+                html_message=html_body,
+                message=body,
+            )
+
+        return redirect(reverse("admin-campanii"))
 
 
 class UserAccounts(BaseHandler):
