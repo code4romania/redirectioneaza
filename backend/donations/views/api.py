@@ -23,7 +23,7 @@ class GetNgoForms(AccountHandler):
         raise NotImplementedError("GetNgoForms not implemented yet")
 
 
-@method_decorator(csrf_exempt, name='dispatch')
+@method_decorator(csrf_exempt, name="dispatch")
 class GetUploadUrl(AccountHandler):
     def get(self, request, *args, **kwargs):
         raise NotImplementedError("GetUploadUrl not implemented yet")
