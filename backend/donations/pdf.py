@@ -1,21 +1,19 @@
-import os
-from io import StringIO
 import base64
+import os
 import tempfile
-
-from io import BytesIO
 from datetime import datetime
+from io import BytesIO, StringIO
+from typing import Dict
 
-from pypdf import PdfWriter, PdfReader
-from reportlab.pdfgen import canvas
-from reportlab.lib.utils import ImageReader
-from reportlab.lib.pagesizes import A4
+from pypdf import PdfReader, PdfWriter
 from reportlab.graphics import renderPDF
-
+from reportlab.lib.pagesizes import A4
+from reportlab.lib.utils import ImageReader
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.pdfgen import canvas
+from reportlab.pdfgen.canvas import Canvas
 from svglib.svglib import svg2rlg
-
 
 abs_path = os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir))
 # TODO: we might need to rethink this; we should not hardcode the path to static_extras
@@ -26,8 +24,8 @@ default_font_size = 15
 form_image_path = "/static/images/formular-2021.jpg"
 
 
-def format_ngo_account(ngo_account):
-    # remove white spaces from account
+def format_ngo_account(ngo_account: str):
+    # remove spaces from the bank account number
     ngo_account = ngo_account.replace(" ", "")
 
     account = ""
@@ -39,7 +37,7 @@ def format_ngo_account(ngo_account):
     return account
 
 
-def add_donor_data(c, person):
+def add_donor_data(c: Canvas, person: Dict):
     donor_block_x = 681
 
     # the first name
@@ -77,7 +75,7 @@ def add_donor_data(c, person):
     c.drawString(67, third_row_x, street)
     c.setFontSize(default_font_size)
 
-    # numar
+    # număr
     if len(person["number"]) > 5:
         c.setFontSize(8)
     elif len(person["number"]) > 3:
@@ -105,7 +103,7 @@ def add_donor_data(c, person):
     # apartament
     c.drawString(185, fourth_row_x, person["ap"])
 
-    # judet
+    # județ
     if len(person["county"]) <= 12:
         c.setFontSize(12)
     else:
@@ -179,7 +177,7 @@ def add_ngo_data(c, ong):
         c.drawString(146, start_ong_y - 108, ong.get("percent"))
 
 
-def create_pdf(person={}, ong={}):
+def create_pdf(person: Dict, ong: Dict):
     """method used to create the pdf
 
     person: dict with the person's data
@@ -205,14 +203,14 @@ def create_pdf(person={}, ong={}):
         account
     """
 
-    # packet = StringIO.StringIO()
+    # packet = StringIO()
     # we could also use StringIO
     packet = tempfile.TemporaryFile(mode="w+b")
 
-    c = canvas.Canvas(packet, A4)
+    c: Canvas = canvas.Canvas(packet, A4)
     width, height = A4
 
-    # add the image as background
+    # add the image as a background
     background = ImageReader(abs_path + form_image_path)
     c.drawImage(background, 0, 0, width=width, height=height)
 
@@ -243,7 +241,7 @@ def create_pdf(person={}, ong={}):
 
 
 def add_signature(pdf, image):
-    pdf_string = StringIO.StringIO(pdf)
+    pdf_string = StringIO(pdf)
     existing_pdf = PdfReader(pdf_string)
 
     packet = tempfile.TemporaryFile(mode="w+b")
@@ -261,13 +259,13 @@ def add_signature(pdf, image):
     # make this a svg2rlg object
     drawing = svg2rlg(byte_image)
 
-    # we used to use width for scaling down but we move to height
+    # we used to use width for scaling down, but we move to height
     # new_width = 90
 
     new_height = 30
     scaled_down = new_height / drawing.height
 
-    # we want to scale the image down and stil keep it's aspect ratio
+    # we want to scale the image down and stil keep its aspect ratio
     # the image might have dimensions of 750 x 200
     drawing.scale(scaled_down, scaled_down)
 
@@ -279,17 +277,17 @@ def add_signature(pdf, image):
 
     new_pdf = PdfReader(packet)
 
-    page = existing_pdf.getPage(0)
-    page.mergePage(new_pdf.getPage(0))
+    page = existing_pdf.pages[0]
+    page.merge_page(new_pdf.pages[0])
 
     output = PdfWriter()
-    output.addPage(page)
+    output.add_page(page)
 
-    outputStream = tempfile.TemporaryFile(mode="w+b")
-    output.write(outputStream)
+    output_stream = tempfile.TemporaryFile(mode="w+b")
+    output.write(output_stream)
 
-    outputStream.seek(0)
+    output_stream.seek(0)
 
     packet.close()
 
-    return outputStream
+    return output_stream
