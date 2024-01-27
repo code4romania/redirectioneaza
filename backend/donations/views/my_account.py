@@ -48,6 +48,8 @@ class MyAccountHandler(AccountHandler):
         for donor in donors:
             index = donor.date_created.year
             if index in years:
+                if index not in grouped_donors:
+                    grouped_donors[index] = []
                 grouped_donors[index].append(donor)
 
         context = {
