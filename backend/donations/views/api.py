@@ -10,7 +10,7 @@ from django.http import JsonResponse
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 
-from ..models import Ngo
+from ..models.main import Ngo
 from ..models.jobs import Job
 from .base import BaseHandler, AccountHandler
 

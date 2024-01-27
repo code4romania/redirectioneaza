@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Ngo, Donor
+from .models.main import Ngo, Donor
 from django.utils.translation import gettext_lazy as _
 
 

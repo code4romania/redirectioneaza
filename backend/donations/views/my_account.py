@@ -9,7 +9,7 @@ from django.utils import timezone
 from django.utils.decorators import method_decorator
 
 from .base import AccountHandler
-from ..models import Donor, Ngo
+from ..models.main import Donor, Ngo
 
 
 class MyAccountDetailsHandler(AccountHandler):

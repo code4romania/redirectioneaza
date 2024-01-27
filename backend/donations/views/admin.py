@@ -12,7 +12,7 @@ from django.utils import timezone
 
 from users.models import User
 from .base import BaseHandler
-from ..models import Ngo, Donor
+from ..models.main import Ngo, Donor
 
 
 logger = logging.getLogger(__name__)

@@ -11,7 +11,7 @@ from django.urls import reverse
 from django.utils import timezone
 
 from .base import BaseHandler
-from ..models import Donor, Ngo
+from ..models.main import Donor, Ngo
 from ..pdf import create_pdf
 
 

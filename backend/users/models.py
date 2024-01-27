@@ -8,7 +8,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from donations.models import Ngo
+from donations.models.main import Ngo
 
 
 class CustomUserManager(UserManager):

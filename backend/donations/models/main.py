@@ -27,14 +27,20 @@ def year_directory_path(subdir, instance, filename) -> str:
     return "{0}/{1}/{2}/{3}".format(subdir, timestamp.date().year, instance.pk, filename)
 
 
-def ngo_identifier_validator(value):
-    valid_identifier_sample: str = "asociatia-de-exemplu"
+def ngo_slug_validator(value):
+    valid_slug_sample: str = "asociatia-de-exemplu"
     error_message = _("%(value)s is not a valid identifier. The identifier must look like %(sample)s") % {
         "value": value,
-        "sample": valid_identifier_sample,
+        "sample": valid_slug_sample,
     }
 
     if not value.islower():
+        raise ValidationError(error_message)
+
+
+def ngo_id_number_validator(value):
+    error_message = _("The ID number must be 8 digits long")
+    if len(value) != 8:
         raise ValidationError(error_message)
 
 
@@ -48,7 +54,7 @@ class Ngo(models.Model):
         max_length=100,
         db_index=True,
         unique=True,
-        validators=[ngo_identifier_validator],
+        validators=[ngo_slug_validator],
     )
 
     name = models.CharField(verbose_name=_("Name"), blank=False, null=False, max_length=100, db_index=True)
@@ -85,6 +91,7 @@ class Ngo(models.Model):
         blank=False,
         null=False,
         unique=True,
+        validators=[ngo_id_number_validator],
     )
 
     address = models.TextField(verbose_name=_("address"), blank=True, null=False, default="")

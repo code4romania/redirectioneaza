@@ -3,7 +3,7 @@ from django.conf import settings
 from django.urls import reverse
 
 from .base import BaseHandler
-from ..models import Ngo
+from ..models.main import Ngo
 
 
 class HomePage(BaseHandler):

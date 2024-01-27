@@ -7,7 +7,7 @@ from django.db import IntegrityError
 from faker import Faker
 from localflavor.ro.ro_counties import COUNTIES_CHOICES
 
-from donations.models import Ngo
+from donations.models.main import Ngo
 
 fake = Faker("ro_RO")
 

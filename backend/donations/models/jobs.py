@@ -6,6 +6,12 @@ from .main import Ngo
 from users.models import User
 
 
+class JobStatusChoices(models.TextChoices):
+    NEW = "new", _("New")
+    ERROR = "error", _("Error")
+    DONE = "done", _("Done")
+
+
 class Job(models.Model):
     """Keep track for download jobs"""
 
@@ -15,8 +21,8 @@ class Job(models.Model):
         verbose_name=_("status"),
         blank=False,
         null=False,
-        default="new",
-        choices=("new", "error", "done"),
+        default=JobStatusChoices.NEW,
+        choices=JobStatusChoices.choices,
         max_length=5,
         db_index=True,
     )
