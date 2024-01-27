@@ -2,7 +2,7 @@
 URL configuration for the redirectioneaza project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/4.2/topics/http/urls/
+    https:/docs.djangoproject.com/en/4.2/topics/http/urls/
 Examples:
 Function views
     1. Add an import:  from my_app import views
@@ -61,60 +61,60 @@ urlpatterns = (
         path("ong/", ForNgoHandler.as_view(), name="ngo"),
         path("pentru-ong-uri/", RedirectView.as_view(pattern_name="ngo", permanent=True)),
         # backup in case of old urls. to be removed
-        path("asociatii", NgoListHandler.as_view()),
+        path("asociatii/", NgoListHandler.as_view()),
         path("termeni/", TermsHandler.as_view(), name="terms"),
         path("TERMENI/", RedirectView.as_view(pattern_name="terms", permanent=True)),
         path("nota-de-informare/", NoteHandler.as_view(), name="note"),
         path("politica/", PolicyHandler.as_view()),
         path("despre/", AboutHandler.as_view()),
         # account management
-        path("cont-nou", SignupHandler.as_view()),
-        path("login", LoginHandler.as_view(), name="login"),
-        path("logout", LogoutHandler.as_view(), name="logout"),
-        path("forgot", ForgotPasswordHandler.as_view(), name="forgot"),
+        path("cont-nou/", SignupHandler.as_view()),
+        path("login/", LoginHandler.as_view(), name="login"),
+        path("logout/", LogoutHandler.as_view(), name="logout"),
+        path("forgot/", ForgotPasswordHandler.as_view(), name="forgot"),
         # verification url: used for signup, and reset password
         path(
-            "verify/<str:verification_type>/<int:user_id>-<uuid:signup_token>",
+            "verify/<str:verification_type>/<int:user_id>-<uuid:signup_token>/",
             VerificationHandler.as_view(),
-            name="verification",
+            name="verification/",
         ),
-        path("password", SetPasswordHandler.as_view()),
+        path("password/", SetPasswordHandler.as_view()),
         # my account
-        path("contul-meu", MyAccountHandler.as_view(), name="contul-meu"),
-        path("asociatia", NgoDetailsHandler.as_view(), name="asociatia"),
-        path("date-cont", MyAccountDetailsHandler.as_view(), name="date-contul-meu"),
+        path("contul-meu/", MyAccountHandler.as_view(), name="contul-meu"),
+        path("asociatia/", NgoDetailsHandler.as_view(), name="asociatia"),
+        path("date-cont/", MyAccountDetailsHandler.as_view(), name="date-contul-meu"),
         # APIs
-        path("api/ngo/check-url/<ngo_url>", CheckNgoUrl.as_view(), name="api-ngo-check-url"),
-        path("api/ngos", NgosApi.as_view(), name="api-ngos"),
+        path("api/ngo/check-url/<ngo_url>/", CheckNgoUrl.as_view(), name="api-ngo-check-url"),
+        path("api/ngos/", NgosApi.as_view(), name="api-ngos"),
         #
         #
         # TODO: all the URLs until END_OF_TODO need to be implemented
         #
-        path("webhook", Webhook.as_view(), name="webhook"),
-        path("api/ngo/upload-url", GetUploadUrl.as_view(), name="api-ngo-upload-url"),  # TODO
-        path("api/ngo/form/<ngo_url>", GetNgoForm.as_view(), name="api-ngo-form-url"),
-        path("api/ngo/forms/download", GetNgoForms.as_view(), name="api-ngo-forms"),
+        path("webhook/", Webhook.as_view(), name="webhook"),
+        path("api/ngo/upload-url/", GetUploadUrl.as_view(), name="api-ngo-upload-url"),  # TODO
+        path("api/ngo/form/<ngo_url>/", GetNgoForm.as_view(), name="api-ngo-form-url"),
+        path("api/ngo/forms/download/", GetNgoForms.as_view(), name="api-ngo-forms"),
         # Cron routes
-        path("cron/stats", Stats.as_view()),
-        path("cron/ngos/remove-form", NgoRemoveForms.as_view(), name="ngo-remove-form"),
-        path("cron/ngos/export", NgoExport.as_view()),
-        path("cron/export/custom", CustomExport.as_view()),
+        path("cron/stats/", Stats.as_view()),
+        path("cron/ngos/remove-form/", NgoRemoveForms.as_view(), name="ngo-remove-form"),
+        path("cron/ngos/export/", NgoExport.as_view()),
+        path("cron/export/custom/", CustomExport.as_view()),
         #
         # END_OF_TODO
         #
         # Django Admin
         path("admin/django/", django_admin.site.urls),
         # ADMIN HANDLERS
-        path("admin/campanii", SendCampaign.as_view(), name="admin-campanii"),
-        path("admin/ong-nou", AdminNewNgoHandler.as_view(), name="admin-ong-nou"),
-        path("admin/conturi", UserAccounts.as_view(), name="admin-users"),
-        path("admin/organizatii", AdminNgosList.as_view(), name="admin-ngos"),
-        path("admin/<ngo_url>", AdminNgoHandler.as_view(), name="admin-ong"),
+        path("admin/campanii/", SendCampaign.as_view(), name="admin-campanii"),
+        path("admin/ong-nou/", AdminNewNgoHandler.as_view(), name="admin-ong-nou"),
+        path("admin/conturi/", UserAccounts.as_view(), name="admin-users"),
+        path("admin/organizatii/", AdminNgosList.as_view(), name="admin-ngos"),
+        path("admin/<ngo_url>/", AdminNgoHandler.as_view(), name="admin-ong"),
         path("admin/", AdminHome.as_view(), name="admin-index"),  # name was "admin"
         # must always be the last set of urls
-        re_path(r"^(?P<ngo_url>[\w-]+)/doilasuta", RedirectView.as_view(pattern_name="twopercent", permanent=True)),
-        re_path(r"^(?P<ngo_url>[\w-]+)/semnatura", FormSignature.as_view(), name="ngo-twopercent-signature"),
-        re_path(r"^(?P<ngo_url>[\w-]+)/succes", DonationSucces.as_view(), name="ngo-twopercent-success"),
+        re_path(r"^(?P<ngo_url>[\w-]+)/doilasuta/", RedirectView.as_view(pattern_name="twopercent", permanent=True)),
+        re_path(r"^(?P<ngo_url>[\w-]+)/semnatura/", FormSignature.as_view(), name="ngo-twopercent-signature"),
+        re_path(r"^(?P<ngo_url>[\w-]+)/succes/", DonationSucces.as_view(), name="ngo-twopercent-success"),
         re_path(r"^(?P<ngo_url>[\w-]+)/$", TwoPercentHandler.as_view(), name="twopercent"),
     ]
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
