@@ -1,0 +1,342 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-27 11:24+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?"
+"2:1));\n"
+#: donations/admin.py:23 donations/models/jobs.py:18
+#: donations/models/main.py:156 donations/models/main.py:185 users/models.py:65
+msgid "NGO"
+msgstr ""
+
+#: donations/admin.py:27
+msgid "Identity"
+msgstr ""
+
+#: donations/admin.py:31
+msgid "Info"
+msgstr ""
+
+#: donations/admin.py:35
+msgid "File"
+msgstr ""
+
+#: donations/admin.py:39
+msgid "Date"
+msgstr ""
+
+#: donations/forms.py:9
+msgid "Strada"
+msgstr ""
+
+#: donations/forms.py:10
+msgid "Număr"
+msgstr ""
+
+#: donations/forms.py:11
+msgid "Bloc"
+msgstr ""
+
+#: donations/forms.py:12
+msgid "Scara"
+msgstr ""
+
+#: donations/forms.py:13
+msgid "Etaj"
+msgstr ""
+
+#: donations/forms.py:14
+msgid "Apartament"
+msgstr ""
+
+#: donations/forms.py:15
+msgid "Terms"
+msgstr ""
+
+#: donations/models/jobs.py:10
+msgid "New"
+msgstr ""
+
+#: donations/models/jobs.py:11
+msgid "Error"
+msgstr ""
+
+#: donations/models/jobs.py:12
+msgid "Done"
+msgstr ""
+
+#: donations/models/jobs.py:19
+msgid "owner"
+msgstr ""
+
+#: donations/models/jobs.py:21
+msgid "status"
+msgstr ""
+
+#: donations/models/jobs.py:29
+msgid "URL"
+msgstr ""
+
+#: donations/models/jobs.py:30 donations/models/main.py:152
+#: donations/models/main.py:251
+msgid "date created"
+msgstr ""
+
+#: donations/models/main.py:32
+#, python-format
+msgid ""
+"%(value)s is not a valid identifier. The identifier must look like %(sample)s"
+msgstr ""
+
+#: donations/models/main.py:42
+msgid "The ID number must be 8 digits long"
+msgstr ""
+
+#: donations/models/main.py:51
+msgid "slug"
+msgstr ""
+
+#: donations/models/main.py:60
+msgid "Name"
+msgstr ""
+
+#: donations/models/main.py:61
+msgid "description"
+msgstr ""
+
+#: donations/models/main.py:64
+msgid "logo url"
+msgstr ""
+
+#: donations/models/main.py:66
+msgid "logo"
+msgstr ""
+
+#: donations/models/main.py:74
+msgid "image url"
+msgstr ""
+
+#: donations/models/main.py:76
+msgid "image"
+msgstr ""
+
+#: donations/models/main.py:84
+msgid "bank account"
+msgstr ""
+
+#: donations/models/main.py:88
+msgid "registration number"
+msgstr ""
+
+#: donations/models/main.py:97
+msgid "address"
+msgstr ""
+
+#: donations/models/main.py:99 donations/models/main.py:202
+msgid "county"
+msgstr ""
+
+#: donations/models/main.py:107
+msgid "active region"
+msgstr ""
+
+#: donations/models/main.py:116 donations/models/main.py:211
+msgid "telephone"
+msgstr ""
+
+#: donations/models/main.py:118 donations/models/main.py:212
+msgid "email"
+msgstr ""
+
+#: donations/models/main.py:119
+msgid "website"
+msgstr ""
+
+#: donations/models/main.py:120
+msgid "other emails"
+msgstr ""
+
+#: donations/models/main.py:123 users/models.py:73
+msgid "is verified"
+msgstr ""
+
+#: donations/models/main.py:127
+msgid "has special status"
+msgstr ""
+
+#: donations/models/main.py:131
+msgid "is accepting forms"
+msgstr ""
+
+#: donations/models/main.py:134 partners/models.py:11
+msgid "is active"
+msgstr ""
+
+#: donations/models/main.py:138
+msgid "form url"
+msgstr ""
+
+#: donations/models/main.py:145
+msgid "form with ngo data"
+msgstr ""
+
+#: donations/models/main.py:153
+msgid "date updated"
+msgstr ""
+
+#: donations/models/main.py:157 partners/models.py:12
+msgid "NGOs"
+msgstr ""
+
+#: donations/models/main.py:181
+msgid "wage"
+msgstr ""
+
+#: donations/models/main.py:182
+msgid "pension"
+msgstr ""
+
+#: donations/models/main.py:187
+msgid "first name"
+msgstr ""
+
+#: donations/models/main.py:188
+msgid "last name"
+msgstr ""
+
+#: donations/models/main.py:189
+msgid "initials"
+msgstr ""
+
+#: donations/models/main.py:191
+msgid "CNP"
+msgstr ""
+
+#: donations/models/main.py:194
+msgid "city"
+msgstr ""
+
+#: donations/models/main.py:216
+msgid "anonymous"
+msgstr ""
+
+#: donations/models/main.py:219
+msgid "If the user would like the ngo to see the donation"
+msgstr ""
+
+#: donations/models/main.py:224
+msgid "income type"
+msgstr ""
+
+#: donations/models/main.py:233
+msgid "two years"
+msgstr ""
+
+#: donations/models/main.py:235
+msgid "If the user wants to donate for 2 years"
+msgstr ""
+
+#: donations/models/main.py:238
+msgid "Geo IP"
+msgstr ""
+
+#: donations/models/main.py:240
+msgid "PDF URL"
+msgstr ""
+
+#: donations/models/main.py:241
+msgid "filename"
+msgstr ""
+
+#: donations/models/main.py:242
+msgid "has signed"
+msgstr ""
+
+#: donations/models/main.py:245
+msgid "PDF file"
+msgstr ""
+
+#: donations/models/main.py:254
+msgid "donor"
+msgstr ""
+
+#: donations/models/main.py:255
+msgid "donors"
+msgstr ""
+
+#: donations/views/account_management.py:33
+msgid "Câmpul email nu poate fi gol."
+msgstr ""
+
+#: donations/views/account_management.py:54
+msgid "Dacă adresa de email este validă, vei primi un email cu instrucțiuni."
+msgstr ""
+
+#: donations/views/account_management.py:76
+msgid "Resetare parolă redirectioneaza.ro"
+msgstr ""
+
+#: donations/views/account_management.py:258
+msgid "Confirmare cont redirectioneaza.ro"
+msgstr ""
+
+#: partners/models.py:9
+msgid "name"
+msgstr ""
+
+#: partners/models.py:10
+msgid "subdomain"
+msgstr ""
+
+#: partners/models.py:15
+msgid "Partner"
+msgstr ""
+
+#: partners/models.py:16
+msgid "Partners"
+msgstr ""
+
+#: redirectioneaza/common/messaging.py:31
+msgid "Invalid email send method. Must be 'async' or 'sync'."
+msgstr ""
+
+#: users/models.py:35
+msgid "Superuser must have is_staff=True."
+msgstr ""
+
+#: users/models.py:37
+msgid "Superuser must have is_superuser=True."
+msgstr ""
+
+#: users/models.py:51
+msgid "username"
+msgstr ""
+
+#: users/models.py:54
+msgid "We do not use this field"
+msgstr ""
+
+#: users/models.py:61
+msgid "email address"
+msgstr ""
+
+#: users/models.py:75
+msgid "validation token"
+msgstr ""
+
+#: users/models.py:77
+msgid "validation token timestamp"
+msgstr ""
