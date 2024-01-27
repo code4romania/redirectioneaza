@@ -6,7 +6,7 @@ import tempfile
 from io import BytesIO
 from datetime import datetime
 
-from pypdf import PdfFileWriter, PdfFileReader
+from pypdf import PdfWriter, PdfReader
 from reportlab.pdfgen import canvas
 from reportlab.lib.utils import ImageReader
 from reportlab.lib.pagesizes import A4
@@ -244,7 +244,7 @@ def create_pdf(person={}, ong={}):
 
 def add_signature(pdf, image):
     pdf_string = StringIO.StringIO(pdf)
-    existing_pdf = PdfFileReader(pdf_string)
+    existing_pdf = PdfReader(pdf_string)
 
     packet = tempfile.TemporaryFile(mode="w+b")
 
@@ -277,12 +277,12 @@ def add_signature(pdf, image):
     c.save()
     packet.seek(0)
 
-    new_pdf = PdfFileReader(packet)
+    new_pdf = PdfReader(packet)
 
     page = existing_pdf.getPage(0)
     page.mergePage(new_pdf.getPage(0))
 
-    output = PdfFileWriter()
+    output = PdfWriter()
     output.addPage(page)
 
     outputStream = tempfile.TemporaryFile(mode="w+b")

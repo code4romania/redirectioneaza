@@ -1,9 +1,9 @@
 pip-tools~= 7.3.0
 
 # formatting & linting
-black~=23.12.1
-ruff~=0.1.9
+black~=24.1.0
+ruff~=0.1.14
 
-faker~=22.2.0
+faker~=22.5.1
 
 -r requirements.txt
