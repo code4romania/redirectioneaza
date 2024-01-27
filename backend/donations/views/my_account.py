@@ -3,8 +3,8 @@ from collections import OrderedDict
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q, QuerySet
-from django.shortcuts import render
-from django.urls import reverse_lazy
+from django.shortcuts import redirect, render
+from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 
@@ -67,9 +67,14 @@ class NgoDetailsHandler(AccountHandler):
 
     @method_decorator(login_required(login_url=reverse_lazy("login")))
     def get(self, request, *args, **kwargs):
+        user = request.user
+
+        if user.is_superuser:
+            return redirect(reverse("admin-ngos"))
+
         context = {
-            "user": request.user,
-            "ngo": request.user.ngo if request.user.ngo else None,
+            "user": user,
+            "ngo": user.ngo if user.ngo else None,
             "counties": settings.FORM_COUNTIES,
         }
 
@@ -79,7 +84,12 @@ class NgoDetailsHandler(AccountHandler):
     def post(self, request, *args, **kwargs):
         post = request.POST
 
-        ngo: Ngo = request.user.ngo
+        user = request.user
+
+        if user.is_superuser:
+            return redirect(reverse("admin-ngos"))
+
+        ngo: Ngo = user.ngo
 
         is_new_ngo = False
         if not ngo:
@@ -113,12 +123,12 @@ class NgoDetailsHandler(AccountHandler):
         ngo.save()
 
         if is_new_ngo:
-            request.user.ngo = ngo
-            request.user.save()
+            user.ngo = ngo
+            user.save()
 
         context = {
-            "user": request.user,
-            "ngo": request.user.ngo if request.user.ngo else None,
+            "user": user,
+            "ngo": user.ngo if user.ngo else None,
             "counties": settings.FORM_COUNTIES,
         }
 

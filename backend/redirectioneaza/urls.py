@@ -62,12 +62,12 @@ urlpatterns = (
         path("ong/", ForNgoHandler.as_view(), name="ngo"),
         path("pentru-ong-uri/", RedirectView.as_view(pattern_name="ngo", permanent=True)),
         # backup in case of old urls. to be removed
-        path("asociatii/", NgoListHandler.as_view()),
+        path("asociatii/", NgoListHandler.as_view(), name="associations"),
         path("termeni/", TermsHandler.as_view(), name="terms"),
         path("TERMENI/", RedirectView.as_view(pattern_name="terms", permanent=True)),
         path("nota-de-informare/", NoteHandler.as_view(), name="note"),
-        path("politica/", PolicyHandler.as_view()),
-        path("despre/", AboutHandler.as_view()),
+        path("politica/", PolicyHandler.as_view(), name="policy"),
+        path("despre/", AboutHandler.as_view(), name="about"),
         # account management
         path("cont-nou/", SignupHandler.as_view()),
         path("login/", LoginHandler.as_view(), name="login"),
@@ -79,10 +79,10 @@ urlpatterns = (
             VerificationHandler.as_view(),
             name="verification",
         ),
-        path("password/", SetPasswordHandler.as_view()),
+        path("password/", SetPasswordHandler.as_view(), name="password"),
         # my account
         path("contul-meu/", MyAccountHandler.as_view(), name="contul-meu"),
-        path("asociatia/", NgoDetailsHandler.as_view(), name="asociatia"),
+        path("asociatia/", NgoDetailsHandler.as_view(), name="association"),
         path("date-cont/", MyAccountDetailsHandler.as_view(), name="date-contul-meu"),
         # APIs
         path("api/ngo/check-url/<ngo_url>/", CheckNgoUrl.as_view(), name="api-ngo-check-url"),
@@ -96,10 +96,10 @@ urlpatterns = (
         path("api/ngo/form/<ngo_url>/", GetNgoForm.as_view(), name="api-ngo-form-url"),
         path("api/ngo/forms/download/", GetNgoForms.as_view(), name="api-ngo-forms"),
         # Cron routes
-        path("cron/stats/", Stats.as_view()),
-        path("cron/ngos/remove-form/", NgoRemoveForms.as_view(), name="ngo-remove-form"),
-        path("cron/ngos/export/", NgoExport.as_view()),
-        path("cron/export/custom/", CustomExport.as_view()),
+        path("cron/stats/", Stats.as_view(), name="cron-stats"),
+        path("cron/ngos/remove-form/", NgoRemoveForms.as_view(), name="cron-ngo-remove-form"),
+        path("cron/ngos/export/", NgoExport.as_view(), name="cron-ngo-export"),
+        path("cron/export/custom/", CustomExport.as_view(), name="cron-custom-export"),
         #
         # END_OF_TODO
         #

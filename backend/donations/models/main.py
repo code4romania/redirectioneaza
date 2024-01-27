@@ -163,12 +163,6 @@ class Ngo(models.Model):
     def __str__(self):
         return f"{self.name}"
 
-    def save(self, *args, **kwargs):
-        # Force the form_url (which acts as an NGO identifier) to lowercase
-        if self.form_url:
-            self.form_url = self.form_url.lower().strip()
-        return super().save(*args, **kwargs)
-
     def get_full_form_url(self):
         if self.form_url:
             return "https://{}/{}".format(settings.APEX_DOMAIN, self.form_url)

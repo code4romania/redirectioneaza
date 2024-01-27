@@ -89,6 +89,8 @@ class LoginHandler(AccountHandler):
 
         # if the user is logged in just redirect
         if request.user.is_authenticated:
+            if request.user.is_superuser:
+                return redirect(reverse("admin-index"))
             return redirect(reverse("contul-meu"))
 
         return render(request, self.template_name, context)
