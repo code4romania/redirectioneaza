@@ -18,7 +18,8 @@ from svglib.svglib import svg2rlg
 
 
 abs_path = os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir))
-font_path = abs_path + "/static/font/opensans.ttf"
+# TODO: we might need to rethink this; we should not hardcode the path to static_extras
+font_path = abs_path + "/static_extras/font/opensans.ttf"
 pdfmetrics.registerFont(TTFont("OpenSans", font_path))
 
 default_font_size = 15
