@@ -28,7 +28,7 @@
                         <td>{{ "{0}/{1}/{2}".format(user.date_joined.day, user.date_joined.month, user.date_joined.year) }}</td>
                         <td class="{{ 'success' if user.ngo }}">
                             {% if user.ngo %}
-                                <a href="/{{ user.ngo.slug }}" target="_blank">da</a>
+                                <a href="/{{ user.ngo.slug }}/" target="_blank">da</a>
                             {% else %}
                                 nu
                             {% endif %}

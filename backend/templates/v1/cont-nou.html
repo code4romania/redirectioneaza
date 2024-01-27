@@ -22,7 +22,7 @@
 
     <div id="login-container" class="row">
         <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
-            <form class="form form-horizontal" action="/cont-nou" role="form" method="post">
+            <form class="form form-horizontal" action="/cont-nou/" role="form" method="post">
                 {{ csrf_input }}
                 <fieldset>
                     <legend>Cont nou</legend>
@@ -32,29 +32,29 @@
                         </div>
                         <div class="col-xs-6">
                             <input class="form-control" type="text" name="prenume" placeholder="Prenume" required />
-                        </div>  
+                        </div>
                     </div>
                     <div class="form-group">
                         <div class="col-xs-12">
                             <input class="form-control" type="email" name="email" placeholder="Email" required />
-                        </div> 
+                        </div>
                     </div>
                     <div class="form-group">
                         <div class="col-xs-12">
                             <input class="form-control" type="password" name="parola" placeholder="Parola" required />
-                        </div> 
+                        </div>
                     </div>
                     <div class="form-group">
                         <div class="col-xs-12 checkbox">
                             <label class="" for="agree">
                                 <input type="checkbox" name="agree" id="agree" required />
-                                Sunt de acord cu <a href="/termeni">Termenii aplicației</a>.
+                                Sunt de acord cu <a href="/termeni/">Termenii aplicației</a>.
                             </label>
-                        </div> 
+                        </div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-12">
-                            <a href="/login" class="btn btn-link pull-right">Am deja un cont</a>
+                            <a href="/login/" class="btn btn-link pull-right">Am deja un cont</a>
                             <button type="submit" class="btn btn-primary">Trimite</button>
                         </div>
                     </div>
@@ -64,7 +64,7 @@
     </div>
 
     <div class="g-recaptcha" data-sitekey="{{ captcha_public_key }}" data-size="invisible" data-callback="onSubmit"></div>
-    
+
 </div>
 
 {% endblock %}

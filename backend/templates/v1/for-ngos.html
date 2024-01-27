@@ -38,7 +38,7 @@
             <p>Totul este <strong>gratuit</strong>.</p>
         </div>
         <div class="col-sm-6">
-            <form class="form form-horizontal" action="/cont-nou" role="form" method="post">
+            <form class="form form-horizontal" action="/cont-nou/" role="form" method="post">
                 {{ csrf_input }}
                 <fieldset>
                     <div class="form-group">
@@ -47,25 +47,25 @@
                         </div>
                         <div class="col-xs-12 col-sm-6 second-form-row">
                             <input class="form-control" type="text" name="prenume" placeholder="Prenume" required />
-                        </div>  
+                        </div>
                     </div>
                     <div class="form-group">
                         <div class="col-xs-12">
                             <input class="form-control" type="email" name="email" placeholder="Email" required />
-                        </div> 
+                        </div>
                     </div>
                     <div class="form-group">
                         <div class="col-xs-12">
                             <input class="form-control" type="password" name="parola" placeholder="Parola" required />
-                        </div> 
+                        </div>
                     </div>
                     <div class="form-group">
                         <div class="col-xs-12 checkbox">
                             <label class="" for="agree">
                                 <input type="checkbox" name="agree" id="agree" required />
-                                Sunt de acord cu <a href="/termeni">Termenii aplicației</a>.
+                                Sunt de acord cu <a href="/termeni/">Termenii aplicației</a>.
                             </label>
-                        </div> 
+                        </div>
                     </div>
                     <div class="form-group margin-top">
                         <div class="col-sm-12">
@@ -77,14 +77,14 @@
 
         </div>
     </div>
-    
+
     <div class="g-recaptcha" data-sitekey="{{ captcha_public_key }}" data-size="invisible" data-callback="onSubmit"></div>
-    
+
 </div>
 
 {% endblock %}
 
 {% block scripts %}
     <script type="text/javascript" src="{{ static('/js/login.js') }}"></script>
-    
+
 {% endblock %}

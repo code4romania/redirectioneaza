@@ -21,7 +21,7 @@
 
     <div id="login-container" class="row">
         <div class="col-xs-12 col-sm-8 col-sm-offset-2" id="login">
-            <form id='login-form' class="form form-horizontal" action="/login" role="form" method="post">
+            <form id='login-form' class="form form-horizontal" action="/login/" role="form" method="post">
                 {{ csrf_input }}
                 <fieldset>
                     <legend>Login</legend>
@@ -39,8 +39,8 @@
                         <div class="col-sm-12">
                             <button type="submit" class="btn btn-primary">Trimite</button>
 
-                            <a href="/forgot" class="btn btn-link pull-right">Am uitat parola</a>
-                            <a href="/cont-nou" class="btn btn-link pull-right">Vreau un cont nou</a>
+                            <a href="/forgot/" class="btn btn-link pull-right">Am uitat parola</a>
+                            <a href="/cont-nou/" class="btn btn-link pull-right">Vreau un cont nou</a>
                         </div>
                     </div>
                 </fieldset>

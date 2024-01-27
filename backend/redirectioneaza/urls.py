@@ -76,7 +76,7 @@ urlpatterns = (
         path(
             "verify/<str:verification_type>/<int:user_id>-<uuid:signup_token>/",
             VerificationHandler.as_view(),
-            name="verification/",
+            name="verification",
         ),
         path("password/", SetPasswordHandler.as_view()),
         # my account
