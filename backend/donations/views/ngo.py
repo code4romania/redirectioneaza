@@ -68,10 +68,14 @@ class FormSignature(BaseHandler):
             ngo = None
 
         context["ngo"] = ngo
+        context["title"] = u"Donație - semnătura"
         return context
 
     def get(self, request, ngo_url):
         context = self.get_context_data(ngo_url)
+
+        if not request.session.get("signature_required", False):
+            return redirect( reverse("twopercent", kwargs={"ngo_url": ngo_url}) )
 
         return render(self.request, self.template_name, context)
 
