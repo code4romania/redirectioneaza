@@ -12,7 +12,7 @@
             </div>
             <div class="media-body">
                 <h1>
-                    <a href="/{{ ngo.slug }}/">
+                    <a href="{{ url('twopercent', kwargs={'ngo_url': ngo.slug}) }}">
                         <span itemprop="name" >{{ ngo.name }}</span>
                     </a>
                 </h1>

@@ -24,7 +24,7 @@
                     <tr>
                         <td>{{ loop.index }}</td>
                         <td>
-                            <a href="/admin/{{ ngo.slug }}/">{{ ngo.name }}</a>
+                            <a href="{{ url('admin-ong', kwargs={'ngo_url': ngo.slug}) }}">{{ ngo.name }}</a>
                         </td>
                         <td>
                             {{ ngo.email or '' }}
