@@ -15,16 +15,26 @@ def select_public_storage():
     return storages["public"]
 
 
-def ngo_directory_path(subdir, instance, filename) -> str:
-    ngo_code: str = hashlib.sha1(f"ngo-{instance.pk}-{settings.SECRET_KEY}".encode()).hexdigest()
+def _id_code(prefix: str, id: int) -> str:
+    return hashlib.sha1(f"{prefix}-{id}-{settings.SECRET_KEY}".encode()).hexdigest()[:10]
 
+
+def ngo_directory_path(subdir, instance, filename) -> str:
     # file will be uploaded to MEDIA_ROOT/ngo-<id>-<hash>/<subdir>/<filename>
-    return "ngo-{0}-{1}/{2}/{3}".format(instance.pk, ngo_code[:10], subdir, filename)
+    return "ngo-{0}-{1}/{2}/{3}".format(instance.pk, _id_code("ngo", instance.pk), subdir, filename)
 
 
 def year_directory_path(subdir, instance, filename) -> str:
     timestamp = timezone.now()
-    return "{0}/{1}/{2}/{3}".format(subdir, timestamp.date().year, instance.pk, filename)
+    return "{0}/ngo-{1}-{2}/{3}/{4}_{5}_{6}".format(
+        timestamp.date().year,
+        instance.ngo.pk,
+        _id_code("ngo", instance.pk),
+        subdir,
+        instance.pk,
+        _id_code("donor", instance.pk),
+        filename,
+    )
 
 
 def ngo_slug_validator(value):
@@ -239,7 +249,7 @@ class Donor(models.Model):
         verbose_name=_("PDF file"),
         blank=True,
         null=False,
-        upload_to=partial(year_directory_path, "documents"),
+        upload_to=partial(year_directory_path, "forms"),
     )
 
     date_created = models.DateTimeField(verbose_name=_("date created"), db_index=True, auto_now_add=timezone.now)

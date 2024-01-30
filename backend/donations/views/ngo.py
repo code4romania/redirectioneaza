@@ -1,6 +1,5 @@
 import re
 from datetime import date
-from hashlib import sha1
 from urllib.parse import urlparse
 
 from django.conf import settings
@@ -12,7 +11,7 @@ from django.utils import timezone
 
 from .base import BaseHandler
 from ..models.main import Donor, Ngo
-from ..pdf import create_pdf
+from ..pdf import create_pdf, add_signature
 
 
 class DonationSucces(BaseHandler):
@@ -58,29 +57,75 @@ class DonationSucces(BaseHandler):
 class FormSignature(BaseHandler):
     template_name = "signature.html"
 
-    def get_context_data(self, ngo_url, **kwargs):
-        context = super().get_context_data(**kwargs)
-
+    def get_ngo_and_donor(self, request, ngo_url):
         ngo_url = ngo_url.lower().strip()
         try:
             ngo = Ngo.objects.get(slug=ngo_url)
         except Ngo.DoesNotExist:
-            ngo = None
+            raise Http404
 
-        context["ngo"] = ngo
-        context["title"] = u"Donație - semnătura"
-        return context
+        try:
+            donor_id = int(request.session.get("donor_id", 0))
+        except ValueError:
+            donor_id = 0
+
+        if not donor_id:
+            return False
+
+        try:
+            donor = Donor.objects.get(id=donor_id)
+        except Donor.DoesNotExist:
+            request.session.pop("donor_id", None)
+            return False
+
+        self.ngo = ngo
+        self.donor = donor
+        return True
 
     def get(self, request, ngo_url):
-        context = self.get_context_data(ngo_url)
+        if not self.get_ngo_and_donor(request, ngo_url):
+            return redirect(reverse("twopercent", kwargs={"ngo_url": ngo_url}))
 
         if not request.session.get("signature_required", False):
-            return redirect( reverse("twopercent", kwargs={"ngo_url": ngo_url}) )
+            return redirect(reverse("twopercent", kwargs={"ngo_url": ngo_url}))
+
+        context = {
+            "ngo": self.ngo,
+            "title": "Donație - semnătura",
+            "donor": self.donor,
+        }
 
         return render(self.request, self.template_name, context)
 
     def post(self, request, ngo_url):
-        # context = self.get_context_data(ngo_url)
+        if not self.get_ngo_and_donor(request, ngo_url):
+            return redirect(reverse("twopercent", kwargs={"ngo_url": ngo_url}))
+
+        signature_image = request.POST.get("signature", None)
+
+        if not signature_image:
+            return redirect(reverse("ngo-twopercent-signature", kwargs={"ngo_url": ngo_url}))
+
+        # add the image to the PDF
+        with self.donor.pdf_file.open("rb") as pdf:
+            new_pdf = add_signature(pdf.read(), signature_image)
+
+        # delete the unsigned pdf
+        self.donor.pdf_file.delete()
+        self.donor.pdf_file = None
+
+        self.donor.pdf_file.save("declaratia_completata.pdf", File(new_pdf))
+        new_pdf.close()
+
+        # # TODO: Send email
+        # self.send_email("signed-form", self.donor)
+        # self.send_email("ngo-signed-form", self.donor, self.ngo)
+
+        request.session.pop("signature_required", None)
+        self.donor.has_signed = True
+        # TODO: Get rid of pdf_url
+        self.donor.pdf_url = self.donor.pdf_file.url
+        self.donor.save()
 
         return redirect(reverse("ngo-twopercent-success", kwargs={"ngo_url": ngo_url}))
 
@@ -261,19 +306,7 @@ class TwoPercentHandler(BaseHandler):
         #     self.return_error(errors)
         #     return
 
-        # TODO
-        # the user's folder name, it's just his md5 hashed db id
-        # user_folder = security.hash_password('123', "md5")
-        user_folder = "123123"
-
-        # a way to create unique file names
-        # get the local time in iso format
-        # run that through SHA1 hash
-        # output a hex string
-        filename = "{0}/{1}/{2}.pdf".format(
-            settings.USER_FORMS, str(user_folder), sha1(timezone.now().isoformat().encode("utf8")).hexdigest()
-        )
-
+        filename = "filled_form.pdf"
         pdf = create_pdf(donor_dict, ngo_data)
 
         # create the donor and save it

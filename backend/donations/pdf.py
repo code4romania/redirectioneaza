@@ -2,7 +2,7 @@ import base64
 import os
 import tempfile
 from datetime import datetime
-from io import BytesIO, StringIO
+from io import BytesIO
 from typing import Dict
 
 from pypdf import PdfReader, PdfWriter
@@ -241,7 +241,7 @@ def create_pdf(person: Dict, ong: Dict):
 
 
 def add_signature(pdf, image):
-    pdf_string = StringIO(pdf)
+    pdf_string = BytesIO(pdf)
     existing_pdf = PdfReader(pdf_string)
 
     packet = tempfile.TemporaryFile(mode="w+b")
