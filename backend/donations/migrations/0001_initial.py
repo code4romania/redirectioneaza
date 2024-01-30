@@ -67,7 +67,7 @@ class Migration(migrations.Migration):
                     "pdf_file",
                     models.FileField(
                         blank=True,
-                        upload_to=functools.partial(donations.models.main.year_directory_path, *("documents",), **{}),
+                        upload_to=functools.partial(donations.models.main.year_ngo_donor_directory_path, *("documents",), **{}),
                         verbose_name="PDF file",
                     ),
                 ),

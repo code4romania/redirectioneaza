@@ -24,12 +24,12 @@ def ngo_directory_path(subdir, instance, filename) -> str:
     return "ngo-{0}-{1}/{2}/{3}".format(instance.pk, _id_code("ngo", instance.pk), subdir, filename)
 
 
-def year_directory_path(subdir, instance, filename) -> str:
+def year_ngo_donor_directory_path(subdir, instance, filename) -> str:
     timestamp = timezone.now()
     return "{0}/ngo-{1}-{2}/{3}/{4}_{5}_{6}".format(
         timestamp.date().year,
-        instance.ngo.pk,
-        _id_code("ngo", instance.pk),
+        instance.ngo.pk if instance.ngo else 0,
+        _id_code("ngo", instance.ngo.pk if instance.ngo else 0),
         subdir,
         instance.pk,
         _id_code("donor", instance.pk),
@@ -249,7 +249,7 @@ class Donor(models.Model):
         verbose_name=_("PDF file"),
         blank=True,
         null=False,
-        upload_to=partial(year_directory_path, "forms"),
+        upload_to=partial(year_ngo_donor_directory_path, "forms"),
     )
 
     date_created = models.DateTimeField(verbose_name=_("date created"), db_index=True, auto_now_add=timezone.now)
