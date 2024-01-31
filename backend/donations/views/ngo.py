@@ -114,7 +114,7 @@ class FormSignature(BaseHandler):
         self.donor.pdf_file.delete()
         self.donor.pdf_file = None
 
-        self.donor.pdf_file.save("declaratia_completata.pdf", File(new_pdf))
+        self.donor.pdf_file.save("declaratie_semnata.pdf", File(new_pdf))
         new_pdf.close()
 
         # # TODO: Send email
@@ -306,9 +306,6 @@ class TwoPercentHandler(BaseHandler):
         #     self.return_error(errors)
         #     return
 
-        filename = "filled_form.pdf"
-        pdf = create_pdf(donor_dict, ngo_data)
-
         # create the donor and save it
         donor = Donor(
             first_name=donor_dict["first_name"],
@@ -324,11 +321,12 @@ class TwoPercentHandler(BaseHandler):
             # make a request to get geo ip data for this user
             # geoip = self.get_geoip_data(),
             ngo=ngo,
-            filename=filename,
+            # TODO: 'filename' is unused
         )
         donor.save()
 
-        donor.pdf_file.save(filename, File(pdf))
+        pdf = create_pdf(donor_dict, ngo_data)
+        donor.pdf_file.save("declaratie_nesemnata.pdf", File(pdf))
 
         # close the file after it has been uploaded
         pdf.close()

@@ -19,12 +19,27 @@ def hash_id_secret(prefix: str, id: int) -> str:
     return hashlib.sha1(f"{prefix}-{id}-{settings.SECRET_KEY}".encode()).hexdigest()[:10]
 
 
-def ngo_directory_path(subdir, instance, filename) -> str:
-    # file will be uploaded to MEDIA_ROOT/ngo-<id>-<hash>/<subdir>/<filename>
+def ngo_directory_path(subdir: str, instance: "Ngo", filename: str) -> str:
+    """
+    The file will be uploaded to MEDIA_ROOT/<subdir>/ngo-<id>-<hash>/<filename>
+    """
     return "{0}/ngo-{1}-{2}/{3}".format(subdir, instance.pk, hash_id_secret("ngo", instance.pk), filename)
 
 
-def year_ngo_donor_directory_path(subdir, instance, filename) -> str:
+def year_ngo_directory_path(subdir: str, instance: "Ngo", filename: str) -> str:
+    """
+    The file will be uploaded to MEDIA_ROOT/<subdir>/<year>/ngo-<id>-<hash>/<filename>
+    """
+    timestamp = timezone.now()
+    return "{0}/{1}/ngo-{2}-{3}/{4}".format(
+        subdir, timestamp.date().year, instance.pk, hash_id_secret("ngo", instance.pk), filename
+    )
+
+
+def year_ngo_donor_directory_path(subdir: str, instance: "Donor", filename: str) -> str:
+    """
+    The file will be uploaded to MEDIA_ROOT/<subdir>/<year>/ngo-<ngo.id>-<ngo.hash>/<id>_<hash>_<filename>
+    """
     timestamp = timezone.now()
     return "{0}/{1}/ngo-{2}-{3}/{4}_{5}_{6}".format(
         subdir,
@@ -156,7 +171,7 @@ class Ngo(models.Model):
         blank=True,
         null=False,
         storage=select_public_storage,
-        upload_to=partial(ngo_directory_path, "prefilled_forms"),
+        upload_to=partial(year_ngo_directory_path, "ngo-forms"),
     )
 
     date_created = models.DateTimeField(verbose_name=_("date created"), db_index=True, auto_now_add=timezone.now)
@@ -174,8 +189,10 @@ class Ngo(models.Model):
         return f"{self.name}"
 
     def get_full_form_url(self):
-        if self.form_url:
-            return "https://{}/{}".format(settings.APEX_DOMAIN, self.form_url)
+        if self.prefilled_form:
+            return self.prefilled_form.url
+        elif self.form_url:
+            return self.form_url
         else:
             return ""
 
@@ -249,7 +266,7 @@ class Donor(models.Model):
         verbose_name=_("PDF file"),
         blank=True,
         null=False,
-        upload_to=partial(year_ngo_donor_directory_path, "forms"),
+        upload_to=partial(year_ngo_donor_directory_path, "donation-forms"),
     )
 
     date_created = models.DateTimeField(verbose_name=_("date created"), db_index=True, auto_now_add=timezone.now)

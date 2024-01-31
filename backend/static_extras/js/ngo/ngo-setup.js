@@ -2,7 +2,7 @@ $(function () {
     var uploadLogo = $("#upload-logo");
     var displayLogo = $("#display-logo");
 
-    var aws_api_url = '/api/ngo/upload-url';
+    var aws_api_url = '/api/ngo/upload-url/';
     var photoLogoClass = "fa-picture-o";
     var loadingLogoClass = "fa-spinner fa-pulse";
 
