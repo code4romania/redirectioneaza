@@ -3,6 +3,7 @@ import logging
 import operator
 from datetime import datetime
 
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
 from django.utils import timezone
 
@@ -18,6 +19,9 @@ logger = logging.getLogger(__name__)
 
 class Stats(Handler):
     def get(self, request):
+        if not request.user.is_superuser:
+            raise PermissionDenied()
+
         now = timezone.now()
         start_of_year = datetime(now.year, 1, 1, 0, 0)
         # TODO: use aggregations for counting the totals in one step
@@ -47,6 +51,9 @@ class Stats(Handler):
 
 class CustomExport(Handler):
     def get(self, request):
+        if not request.user.is_superuser:
+            raise PermissionDenied()
+
         current_year = timezone.now().year
         start_arg = request.GET.get("start")
         end_arg = request.GET.get("end")
@@ -108,6 +115,9 @@ class CustomExport(Handler):
 
 class NgoExport(Handler):
     def get(self, request):
+        if not request.user.is_superuser:
+            raise PermissionDenied()
+
         fields = (
             "id",
             "name",
@@ -135,6 +145,10 @@ class NgoExport(Handler):
 
 class NgoRemoveForms(Handler):
     def get(self, request):
+        if not request.user.is_superuser:
+            raise PermissionDenied()
+
+        total_removed = 0
 
         # get all the ngos
         ngos = Ngo.objects.all()
@@ -146,5 +160,6 @@ class NgoRemoveForms(Handler):
         for ngo in ngos:
             ngo.form_url = ""
             ngo.prefilled_form.delete()
+            total_removed += 1
 
-        return HttpResponse("ok")
+        return HttpResponse("Removed {} form files".format(total_removed))
