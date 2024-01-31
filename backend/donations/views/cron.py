@@ -46,7 +46,64 @@ class Stats(Handler):
 
 
 class CustomExport(Handler):
-    pass
+    def get(self, request):
+        current_year = timezone.now().year
+        start_arg = request.GET.get("start")
+        end_arg = request.GET.get("end")
+
+        if not start_arg or not end_arg:
+            return HttpResponse("Missing start and end from URL. Format: ?start=23-1&end=19-5")
+
+        start_arg = start_arg.split("-")
+        end_arg = end_arg.split("-")
+        query_start = datetime(current_year, int(start_arg[1]), int(start_arg[0]), 0, 0, 59)
+        query_end = datetime(current_year, int(end_arg[1]), int(end_arg[0]), 23, 59, 59)
+
+        donors = (
+            Donor.objects.filter(date_created__gte=query_start, date_created__lte=query_end).select_related("ngo").all()
+        )
+
+        fields = (
+            "id",
+            "last_name",
+            "first_name",
+            "email",
+            "has_signed",
+            "pdf_file",
+            "ngo__name",
+            "ngo__email",
+            "ngo__is_accepting_forms",
+        )
+
+        logger.info("Found {} donations".format(len(donors)))
+
+        response = HttpResponse(
+            content_type="text/csv",
+            headers={"Content-Disposition": 'attachment; filename="export_donor.csv"'},
+        )
+
+        writer = csv.writer(response, quoting=csv.QUOTE_ALL)
+        writer.writerow(fields)
+
+        for donor in donors:
+            if donor.ngo:
+                writer.writerow(
+                    [
+                        donor.id,
+                        donor.first_name,
+                        donor.last_name,
+                        donor.email,
+                        donor.has_signed,
+                        donor.pdf_file.url if donor.pdf_file else donor.pdf_url,
+                        donor.ngo.name,
+                        donor.ngo.email,
+                        donor.ngo.is_accepting_forms,
+                    ]
+                )
+            else:
+                logger.warn("Could not find ngo for donation, ID: {}".format(donor.id))
+
+        return response
 
 
 class NgoExport(Handler):
@@ -64,7 +121,7 @@ class NgoExport(Handler):
 
         response = HttpResponse(
             content_type="text/csv",
-            headers={"Content-Disposition": 'attachment; filename="ngo_export.csv"'},
+            headers={"Content-Disposition": 'attachment; filename="export_ngo.csv"'},
         )
 
         writer = csv.writer(response, quoting=csv.QUOTE_ALL)
