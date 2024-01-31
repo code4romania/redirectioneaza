@@ -115,7 +115,7 @@
             <div class="form-group">
                 <div class="col-xs-12">
                     <label for="ong-activ" class="col-xs-3">Activ:</label>
-                    <input type="checkbox" id="ong-activ" name="ong-activ" {{ "checked" if ngo.active }} />
+                    <input type="checkbox" id="ong-activ" name="ong-activ" {{ "checked" if ngo.is_active }} />
                 </div>
                 <div class="col-xs-12">
                     <label for="ong-verificat" class="col-xs-3">Verificat:</label>
@@ -131,10 +131,10 @@
                                 <p>Cont asociat:</p>
                             </div>
                             <div class="panel-body">
-                                <p>Nume: {{ "{0} {1}".decode("utf-8").format(owner.first_name, owner.last_name) }}</p>
+                                <p>Nume: {{ "{0} {1}".format(owner.first_name, owner.last_name) }}</p>
                                 <p>Email: {{ owner.email }}</p>
                                 <p>Verificat: {{ owner.is_verified }}</p>
-                                <p>Creat la: {{ owner.created.strftime("%d/%m/%Y") }}</p>
+                                <p>Creat la: {{ owner.date_joined.strftime("%d/%m/%Y") }}</p>
                             </div>
                         </div>
                     </div>

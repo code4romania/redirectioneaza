@@ -7,6 +7,8 @@ from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.utils.decorators import method_decorator
+from django.core.exceptions import PermissionDenied
+from django.http import Http404
 
 from .base import AccountHandler
 from ..models.main import Donor, Ngo
@@ -72,7 +74,11 @@ class NgoDetailsHandler(AccountHandler):
         if user.is_superuser:
             return redirect(reverse("admin-ngos"))
 
+        if not user.is_authenticated or not user.ngo:
+            return redirect(reverse("contul-meu"))
+
         context = {
+            "title": "Date asociație",
             "user": user,
             "ngo": user.ngo if user.ngo else None,
             "counties": settings.FORM_COUNTIES,
@@ -83,11 +89,18 @@ class NgoDetailsHandler(AccountHandler):
     @method_decorator(login_required(login_url=reverse_lazy("login")))
     def post(self, request, *args, **kwargs):
         post = request.POST
-
         user = request.user
 
+        if not user.is_authenticated:
+            raise PermissionDenied()
+
         if user.is_superuser:
-            return redirect(reverse("admin-ngos"))
+            ngo_url = post.get("old-ong-url", "")
+
+            try:
+                user.ngo = Ngo.objects.get(slug=ngo_url)
+            except Ngo.DoesNotExist:
+                raise Http404()
 
         ngo: Ngo = user.ngo
 
@@ -116,16 +129,72 @@ class NgoDetailsHandler(AccountHandler):
 
         ngo.other_emails = ""
 
+        if request.user.is_superuser:
+            ngo.is_verified = post.get("ong-verificat") == "on"
+            ngo.is_active = post.get("ong-activ") == "on"
+
+        ## TODO: more admin changes
+
+        #     # if we want to change the url
+        #     if ong_url != ngo.key.id():
+
+        #         is_ngo_url_available = check_ngo_url(ong_url)
+        #         if is_ngo_url_available == False:
+        #             self.template_values["errors"] = url_taken
+        #             self.render()
+        #             return
+
+        #         new_key = Key(NgoEntity, ong_url)
+
+        #         # replace all the donors key
+        #         donors = Donor.query(Donor.ngo == ngo.key).fetch()
+        #         if donors:
+        #             for donor in donors:
+        #                 donor.ngo = new_key
+        #                 donor.put()
+
+        #         # replace the users key
+        #         ngos_user = User.query(Donor.ngo == ngo.key).get()
+        #         if ngos_user:
+        #             ngos_user.ngo = new_key
+        #             ngos_user.put()
+
+        #         # copy the old model
+        #         new_ngo = ngo
+        #         # delete the old model
+        #         ngo.key.delete()
+        #         # add a new key
+        #         new_ngo.key = new_key
+
+        #         ngo = new_ngo
+
+        #     if new_owner:
+        #         new_owner = User.query(User.email == new_owner).get()
+        #         if new_owner:
+        #             # delete the associtation between the old account and the NGO
+        #             old_user = User.query(User.ngo == ngo.key).get()
+        #             old_user.ngo = None
+        #             new_owner.ngo = ngo.key
+
+        #             old_user.put()
+        #             new_owner.put()
+        #         else:
+        #             self.template_values["errors"] = no_new_owner
+        #             self.render()
+        #             return
+
         ngo.save()
 
         if is_new_ngo:
             user.ngo = ngo
             user.save()
+            if request.user.is_superuser:
+                return redirect(reverse("admin-ong", kwargs={"ngo_url": user.ngo.slug}))
+            else:
+                return redirect(reverse("contul-meu"))
 
-        context = {
-            "user": user,
-            "ngo": user.ngo if user.ngo else None,
-            "counties": settings.FORM_COUNTIES,
-        }
-
-        return render(request, self.template_name, context)
+        else:
+            if request.user.is_superuser:
+                return redirect(reverse("admin-ong", kwargs={"ngo_url": user.ngo.slug}))
+            else:
+                return redirect(reverse("association"))

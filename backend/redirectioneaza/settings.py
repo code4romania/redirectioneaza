@@ -209,6 +209,10 @@ TEMPLATES = [
         "APP_DIRS": False,
         "OPTIONS": {
             "environment": "redirectioneaza.jinja2.environment",
+            "context_processors": [
+                "partners.context_processors.custom_subdomain",
+                "users.context_processors.is_admin",
+            ],
         },
     },
 ]
