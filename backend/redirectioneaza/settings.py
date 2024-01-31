@@ -54,7 +54,8 @@ env = environ.Env(
     CORS_ALLOWED_ORIGINS=(list, []),
     CORS_ALLOW_ALL_ORIGINS=(bool, False),
     # zipping settings
-    ZIPPY_URL=(str, "zippy:8000"),
+    ZIP_ENDPOINT=(str, "zippy:8000"),
+    ZIP_SECRET=(str, ""),
     # email settings
     EMAIL_SEND_METHOD=(str, "async"),
     EMAIL_BACKEND=(str, "django.core.mail.backends.console.EmailBackend"),
@@ -446,5 +447,5 @@ CAPTCHA_POST_PARAM = env.str("CAPTCHA_POST_PARAM")
 
 CAPTCHA_ENABLED = True if CAPTCHA_PUBLIC_KEY else False
 
-
-USER_FORMS = "documents"
+ZIP_ENDPOINT = env.str("ZIP_ENDPOINT")
+ZIP_SECRET = env.str("ZIP_SECRET")

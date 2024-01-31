@@ -1,18 +1,22 @@
 import json
 import logging
 
+from urllib.request import Request, urlopen
+from datetime import datetime, date
+
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied, BadRequest
 from django.core.files import File
 from django.http import HttpResponse, JsonResponse, Http404
 from django.shortcuts import redirect
-from django.urls import reverse
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
+from django.utils import timezone
+from django.views.decorators.csrf import csrf_exempt
 
-from ..models.main import Ngo
-from ..models.jobs import Job
+from ..models.main import Ngo, Donor, ngo_directory_path, hash_id_secret
+from ..models.jobs import Job, JobStatusChoices
 from ..pdf import create_pdf
 from .base import BaseHandler, AccountHandler
 
@@ -93,30 +97,91 @@ class GetNgoForm(BaseHandler):
 
 
 class GetNgoForms(AccountHandler):
-    def get(self, request, *args, **kwargs):
-        raise NotImplementedError("GetNgoForms not implemented yet")
+    def post(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect(reverse("login"))
+
+        ngo = request.user.ngo
+        if not ngo:
+            return redirect(reverse("contul-meu"))
+
+        DONATION_LIMIT = date(timezone.now().year, 5, 25)
+
+        now = timezone.now()
+        start_of_year = datetime(now.year, 1, 1, 0, 0)
+
+        if now.date() > DONATION_LIMIT:
+            return redirect(reverse("contul-meu"))
+
+        # get all the forms that have been completed since the start of the year
+        # and they are also signed
+        donations = Donor.objects.filter(ngo=ngo, date_created__gte=start_of_year, has_signed=True).all()
+
+        # extract only the urls from the array of models
+        urls = [u.pdf_file.url if u.pdf_file else u.pdf_url for u in donations if u.has_signed]
+
+        # if no forms
+        if len(urls) == 0:
+            logging.warn("Could not find any signed forms for this ngo: {}".format(ngo.id))
+            return redirect(reverse("contul-meu"))
+
+        # create job
+        job = Job(
+            ngo=ngo,
+            owner=request.user,
+        )
+        job.save()
+
+        export_destination = ngo_directory_path(
+            "exports", ngo, "export_{}_{}.zip".format(job.id, hash_id_secret(timezone.now(), job.id))
+        )
+
+        # make request
+        params = {
+            "passphrase": settings.ZIP_SECRET,
+            "urls": urls,
+            "path": export_destination,
+            "webhook": {
+                "url": "https://{}{}".format(settings.APEX_DOMAIN, reverse("webhook")),
+                "data": {"jobId": job.id},
+            },
+        }
+
+        request = Request(url=settings.ZIP_ENDPOINT, data=params, headers={"Content-type": "application/json"})
+
+        try:
+            httpresp = urlopen(request)
+            response = json.decode(httpresp.read())
+            logging.info(response)
+            httpresp.close()
+        except Exception as e:
+            logging.exception(e)
+            # if job failed to start remotely
+            job.status = JobStatusChoices.ERROR
+            job.save()
+        finally:
+            return redirect(reverse("contul-meu"))
 
 
 @method_decorator(login_required(login_url=reverse_lazy("login")), name="dispatch")
+@method_decorator(csrf_exempt, name="dispatch")
 class GetUploadUrl(AccountHandler):
     def post(self, request, *args, **kwargs):
-        files = request.FILES
-        if len(files) != 1:
+        logo_file = request.FILES.get("files")
+        if not logo_file:
             raise BadRequest()
 
         ngo = request.user.ngo
         if not ngo:
-            raise BadRequest()
-            # # TODO: should we create the NGO here?
-            # ngo = Ngo.objects.create()
-            # ngo.save()
-            # request.user.ngo = ngo
-            # request.user.save()
+            ngo = Ngo.objects.create()
+            ngo.save()
+            request.user.ngo = ngo
+            request.user.save()
 
-        ngo.logo = files[0]
+        ngo.logo = logo_file
         ngo.save()
 
-        self.return_json({"file_urls": [ngo.logo.url]})
+        return JsonResponse({"file_urls": [ngo.logo.url]})
 
 
 class Webhook(BaseHandler):
