@@ -1,21 +1,43 @@
+from datetime import datetime
+
 from django.shortcuts import redirect, render
 from django.conf import settings
 from django.urls import reverse
+from django.utils import timezone
 
 from .base import BaseHandler
-from ..models.main import Ngo
+from ..models.main import Ngo, Donor
 
 
 class HomePage(BaseHandler):
     template_name = "index.html"
 
     def get(self, request, *args, **kwargs):
+        now = timezone.now()
+
         # TODO: the search isn't working
         context = {
+            "title": "redirectioneaza.ro",
             "limit": settings.DONATIONS_LIMIT,
             "DEFAULT_NGO_LOGO": settings.DEFAULT_NGO_LOGO,
-            "ngos": Ngo.objects.filter(is_active=True).order_by("name"),
+            "current_year": now.year,
         }
+
+        if request.partner:
+            context.update(
+                {
+                    "company_name": request.partner.name,
+                    "custom_header": request.partner.has_custom_header,
+                    "custom_note": request.partner.has_custom_note,
+                    "ngos": request.partner.ngos.filter(is_active=True).order_by("name"),
+                }
+            )
+        else:
+            context["stats"] = {
+                "ngos": Ngo.objects.count(),
+                "forms": Donor.objects.filter(date_created__gte=datetime(now.year, 1, 1)).count(),
+            }
+            context["ngos"] = Ngo.objects.filter(is_active=True).order_by("name")
 
         return render(request, self.template_name, context)
 

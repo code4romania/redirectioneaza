@@ -69,6 +69,11 @@ def ngo_id_number_validator(value):
         raise ValidationError(error_message)
 
 
+class ActiveManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(is_active=True)
+
+
 class Ngo(models.Model):
     # DEFAULT_NGO_LOGO = "https://storage.googleapis.com/redirectioneaza/logo_bw.png"
 
@@ -175,6 +180,9 @@ class Ngo(models.Model):
 
     date_created = models.DateTimeField(verbose_name=_("date created"), db_index=True, auto_now_add=timezone.now)
     date_updated = models.DateTimeField(verbose_name=_("date updated"), db_index=True, auto_now=timezone.now)
+
+    objects = models.Manager()
+    active = ActiveManager()
 
     class Meta:
         verbose_name = _("NGO")

@@ -197,6 +197,8 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "partners.context_processors.custom_subdomain",
+                "users.context_processors.is_admin",
             ],
         },
     },
@@ -207,6 +209,10 @@ TEMPLATES = [
         "APP_DIRS": False,
         "OPTIONS": {
             "environment": "redirectioneaza.jinja2.environment",
+            "context_processors": [
+                "partners.context_processors.custom_subdomain",
+                "users.context_processors.is_admin",
+            ],
         },
     },
 ]
