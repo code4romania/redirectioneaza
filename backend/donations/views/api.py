@@ -1,17 +1,19 @@
 import json
-
 import logging
-from django.urls import reverse_lazy
-from django.contrib.auth.decorators import login_required
+
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied, BadRequest
-from django.http import HttpResponse
-from django.http import JsonResponse
+from django.core.files import File
+from django.http import HttpResponse, JsonResponse, Http404
+from django.shortcuts import redirect
 from django.urls import reverse
+from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 
 from ..models.main import Ngo
 from ..models.jobs import Job
+from ..pdf import create_pdf
 from .base import BaseHandler, AccountHandler
 
 
@@ -51,8 +53,43 @@ class NgosApi(BaseHandler):
 
 
 class GetNgoForm(BaseHandler):
-    def get(self, request, *args, **kwargs):
-        raise NotImplementedError("GetNgoForm not implemented yet")
+    def get(self, request, ngo_url, *args, **kwargs):
+        try:
+            ngo = Ngo.objects.get(slug=ngo_url)
+        except Ngo.DoesNotExist:
+            raise Http404()
+
+        # if we have an form created for this ngo, return the url
+        if ngo.prefilled_form:
+            return redirect(ngo.prefilled_form.url)
+
+        # else, create a new one and save it for future use
+        ngo_dict = {
+            "name": ngo.name,
+            "cif": ngo.registration_number,
+            "account": ngo.bank_account.upper(),
+            # do not add any checkmark on this form regarding the number of years
+            "years_checkmark": False,
+            # "two_years": False,
+            "special_status": ngo.has_special_status,
+        }
+        donor = {
+            # we assume that ngos are looking for people with income from wages
+            "income": "wage"
+        }
+        pdf = create_pdf(donor, ngo_dict)
+
+        # filename = "Formular 2% - {0}.pdf".format(ngo.name)
+        filename = "Formular_donatie.pdf"
+        ngo.prefilled_form.save(filename, File(pdf))
+
+        # close the file after it has been uploaded
+        pdf.close()
+
+        ngo.form_url = ngo.prefilled_form.url
+        ngo.save()
+
+        return redirect(ngo.prefilled_form.url)
 
 
 class GetNgoForms(AccountHandler):

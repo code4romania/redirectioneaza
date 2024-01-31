@@ -139,12 +139,12 @@ class NgoRemoveForms(Handler):
         # get all the ngos
         ngos = Ngo.objects.all()
 
-        logger.info("Removing form_url and custom_form from {0} ngos.".format(len(ngos)))
+        logger.info("Removing form_url and prefilled_form from {0} ngos.".format(len(ngos)))
 
         # loop through them and remove the form_url
         # this will force an update on it when downloaded again
         for ngo in ngos:
             ngo.form_url = ""
-            ngo.custom_form.delete()
+            ngo.prefilled_form.delete()
 
         return HttpResponse("ok")

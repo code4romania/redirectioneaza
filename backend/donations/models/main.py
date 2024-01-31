@@ -21,16 +21,16 @@ def _id_code(prefix: str, id: int) -> str:
 
 def ngo_directory_path(subdir, instance, filename) -> str:
     # file will be uploaded to MEDIA_ROOT/ngo-<id>-<hash>/<subdir>/<filename>
-    return "ngo-{0}-{1}/{2}/{3}".format(instance.pk, _id_code("ngo", instance.pk), subdir, filename)
+    return "{0}/ngo-{1}-{2}/{3}".format(subdir, instance.pk, _id_code("ngo", instance.pk), filename)
 
 
 def year_ngo_donor_directory_path(subdir, instance, filename) -> str:
     timestamp = timezone.now()
-    return "{0}/ngo-{1}-{2}/{3}/{4}_{5}_{6}".format(
+    return "{0}/{1}/ngo-{2}-{3}/{4}_{5}_{6}".format(
+        subdir,
         timestamp.date().year,
         instance.ngo.pk if instance.ngo else 0,
         _id_code("ngo", instance.ngo.pk if instance.ngo else 0),
-        subdir,
         instance.pk,
         _id_code("donor", instance.pk),
         filename,
@@ -151,12 +151,12 @@ class Ngo(models.Model):
         null=False,
         max_length=255,
     )
-    custom_form = models.FileField(
-        verbose_name=_("form with ngo data"),
+    prefilled_form = models.FileField(
+        verbose_name=_("form with prefilled ngo data"),
         blank=True,
         null=False,
         storage=select_public_storage,
-        upload_to=partial(ngo_directory_path, "forms"),
+        upload_to=partial(ngo_directory_path, "prefilled_forms"),
     )
 
     date_created = models.DateTimeField(verbose_name=_("date created"), db_index=True, auto_now_add=timezone.now)
