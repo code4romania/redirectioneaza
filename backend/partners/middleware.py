@@ -56,7 +56,7 @@ class PartnerDomainMiddleware:
             partner = None
         else:
             try:
-                partner = Partner.objects.get(subdomain=subdomain)
+                partner = Partner.active.get(subdomain=subdomain)
             except Partner.DoesNotExist:
                 partner = None
 

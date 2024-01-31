@@ -5,4 +5,9 @@ from .models import Partner
 
 @admin.register(Partner)
 class PartnerAdmin(admin.ModelAdmin):
-    pass
+    list_display = (
+        "subdomain",
+        "name",
+        "is_active",
+    )
+    list_filter = ("is_active", "date_updated")
