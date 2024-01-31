@@ -12,6 +12,7 @@ from django.utils.translation import gettext_lazy as _
 
 from redirectioneaza.common.messaging import send_email
 from .base import AccountHandler
+from .captcha import validate_captcha
 
 logger = logging.getLogger(__name__)
 
@@ -33,15 +34,9 @@ class ForgotPasswordHandler(AccountHandler):
             context["errors"] = _("Câmpul email nu poate fi gol.")
             return render(request, self.template_name, context)
 
-        ## TODO: Fix captcha
-        # captcha_response = submit(post.get(CAPTCHA_POST_PARAM), CAPTCHA_PRIVATE_KEY, post.remote_addr)
-        #
-        # # if the captcha is not valid return
-        # if not captcha_response.is_valid:
-        #     context["errors"] = _(
-        #         "Se pare că a fost o problemă cu verificarea reCAPTCHA. Te rugăm să încerci din nou."
-        #     )
-        #     return render(request, self.template_name, context)
+        if not validate_captcha(request):
+            context["errors"] = _("Se pare că a fost o problemă cu verificarea reCAPTCHA.")
+            return render(request, self.template_name, context)
 
         try:
             user = self.user_model.objects.get(email=email)
@@ -109,15 +104,9 @@ class LoginHandler(AccountHandler):
             context["errors"] = "Câmpul parola nu poate fi gol."
             return render(request, self.template_name, context)
 
-        ## TODO: Fix captcha
-        # captcha_response = submit(post.get(CAPTCHA_POST_PARAM), CAPTCHA_PRIVATE_KEY, post.remote_addr)
-
-        # # if the captcha is not valid return
-        # if not captcha_response.is_valid:
-        #     context["errors"] = (
-        #         "Se pare că a fost o problemă cu verificarea reCAPTCHA." + "Te rugăm să încerci din nou."
-        #     )
-        #     return render(request, self.template_name, context)
+        if not validate_captcha(request):
+            context["errors"] = "Se pare că a fost o problemă cu verificarea reCAPTCHA."
+            return render(request, self.template_name, context)
 
         user = authenticate(email=email, password=password)
         if user is not None:
@@ -207,13 +196,9 @@ class SignupHandler(AccountHandler):
             context["errors"] = "Câmpul parola nu poate fi gol."
             return render(request, self.template_name, context)
 
-        # TODO: fix captcha
-        # captcha_response = submit(post.get(CAPTCHA_POST_PARAM), CAPTCHA_PRIVATE_KEY, post.remote_addr)
-
-        # # if the captcha is not valid return
-        # if not captcha_response.is_valid:
-        #     context["errors"] = "Se pare că a fost o problemă cu verificarea reCAPTCHA. Te rugăm să încerci din nou."
-        #     return render(request, self.template_name, context)
+        if not validate_captcha(request):
+            context["errors"] = "Se pare că a fost o problemă cu verificarea reCAPTCHA."
+            return render(request, self.template_name, context)
 
         user = self.user_model.objects.create_user(
             email=email,

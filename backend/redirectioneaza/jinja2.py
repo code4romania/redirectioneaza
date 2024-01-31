@@ -18,7 +18,7 @@ def environment(**options):
             "language": "ro",
             "base_url": "/",
             "month_limit": settings.DONATIONS_LIMIT_MONTH_NAME,
-            "captcha_public_key": settings.CAPTCHA_PUBLIC_KEY,
+            "captcha_public_key": settings.RECAPTCHA_PUBLIC_KEY,
             "errors": None,
         }
     )

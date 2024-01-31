@@ -12,6 +12,7 @@ from django.utils.translation import gettext as _
 
 from redirectioneaza.common.messaging import send_email
 from .base import BaseHandler
+from .captcha import validate_captcha
 from ..models.main import Donor, Ngo
 from ..pdf import add_signature, create_pdf
 
@@ -239,6 +240,10 @@ class TwoPercentHandler(BaseHandler):
         # if we have an ajax request, just return an answer
         is_ajax = post.get("ajax", False)
 
+        if not validate_captcha(request):
+            errors["fields"].append("captcha")
+            return self.return_error(request, ngo, errors, is_ajax)
+
         def get_post_value(arg, add_to_error_list=True):
             value = post.get(arg)
 
@@ -318,15 +323,9 @@ class TwoPercentHandler(BaseHandler):
         if len(errors["fields"]):
             return self.return_error(request, ngo, errors, is_ajax)
 
-        # TODO: Captcha check
-        # captcha_response = submit(post.get(CAPTCHA_POST_PARAM), CAPTCHA_PRIVATE_KEY, self.request.remote_addr)
-
-        # # if the captcha is not valid return
-        # if not captcha_response.is_valid:
-
-        #     errors["fields"].append("codul captcha")
-        #     self.return_error(errors)
-        #     return
+        if not validate_captcha(request):
+            errors["fields"].append("captcha")
+            return self.return_error(request, ngo, errors, is_ajax)
 
         # create the donor and save it
         donor = Donor(

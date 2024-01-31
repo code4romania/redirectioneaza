@@ -36,6 +36,7 @@ django==4.2.9
     #   django-localflavor
     #   django-picklefield
     #   django-q2
+    #   django-recaptcha
     #   django-storages
     #   sentry-sdk
 django-appconf==1.0.6
@@ -49,6 +50,8 @@ django-localflavor==4.0
 django-picklefield==3.1
     # via django-q2
 django-q2==1.6.1
+    # via -r requirements.in
+django-recaptcha==4.0.0
     # via -r requirements.in
 django-storages==1.14.2
     # via
