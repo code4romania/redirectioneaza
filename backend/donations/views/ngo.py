@@ -176,8 +176,6 @@ class TwoPercentHandler(BaseHandler):
             request.session.pop("has_cnp")
             # also we can use request.session.clear(), but it might delete the logged-in user's session
 
-        # make sure the ngo shows a logo
-        ngo.logo_url = ngo.logo_url if ngo.logo_url else settings.DEFAULT_NGO_LOGO
         context = {
             "title": ngo.name,
             "ngo": ngo,
@@ -390,8 +388,6 @@ class TwoPercentHandler(BaseHandler):
         if is_ajax:
             return JsonResponse(errors)
 
-        # make sure the ngo shows a logo
-        ngo.logo = ngo.logo if ngo.logo else settings.DEFAULT_NGO_LOGO
         context = {
             "title": ngo.name,
             "ngo": ngo,

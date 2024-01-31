@@ -95,7 +95,6 @@ class Ngo(models.Model):
         upload_to=partial(ngo_directory_path, "logos"),
     )
 
-    # originally: image_url
     image_url = models.URLField(verbose_name=_("image url"), blank=True, null=False, default="")
     image = models.ImageField(
         verbose_name=_("image"),
