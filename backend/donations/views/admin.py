@@ -1,19 +1,19 @@
 import logging
 from copy import deepcopy
 from datetime import datetime
+
 from django.conf import settings
-from django.core.exceptions import PermissionDenied, BadRequest
-from django.core.mail import send_mail
+from django.core.exceptions import BadRequest, PermissionDenied
 from django.http import Http404
 from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils import timezone
 
+from redirectioneaza.common.messaging import send_email
 from users.models import User
 from .base import BaseHandler
-from ..models.main import Ngo, Donor
-
+from ..models.main import Donor, Ngo
 
 logger = logging.getLogger(__name__)
 
@@ -180,25 +180,21 @@ class SendCampaign(BaseHandler):
         if not subject or not emails:
             raise BadRequest()
 
-        sender_address = "Andrei Onel <contact@donezsi.eu>"
-
         html_template = "email/campaigns/first/index-inline.html"
         txt_template = "email/campaigns/first/index-text.txt"
 
         template_values = {}
 
         html_body = render_to_string(html_template, template_values)
-        body = render_to_string(txt_template, template_values)
+        text_body = render_to_string(txt_template, template_values)
 
-        for email in emails:
-            user_address = email
-            send_mail(
-                from_email=sender_address,
-                recipient_list=[user_address],
-                subject=subject,
-                html_message=html_body,
-                message=body,
-            )
+        send_email(
+            subject=subject,
+            to_emails=emails,
+            text_template=text_body,
+            html_template=html_body,
+            context=template_values,
+        )
 
         return redirect(reverse("admin-campanii"))
 
