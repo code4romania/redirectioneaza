@@ -1,9 +1,10 @@
+import csv
 import logging
 import operator
 from datetime import datetime
 
-from django.utils import timezone
 from django.http import HttpResponse
+from django.utils import timezone
 
 from donations.models.main import Donor, Ngo
 from .base import Handler
@@ -49,7 +50,30 @@ class CustomExport(Handler):
 
 
 class NgoExport(Handler):
-    pass
+    def get(self, request):
+        fields = (
+            "id",
+            "name",
+            "registration_number",
+            "county",
+            "active_region",
+            "email",
+            "website",
+            "address",
+        )
+
+        response = HttpResponse(
+            content_type="text/csv",
+            headers={"Content-Disposition": 'attachment; filename="ngo_export.csv"'},
+        )
+
+        writer = csv.writer(response, quoting=csv.QUOTE_ALL)
+        writer.writerow(fields)
+
+        for ngo in Ngo.objects.all().values(*fields):
+            writer.writerow([ngo[field_name] for field_name in fields])
+
+        return response
 
 
 class NgoRemoveForms(Handler):
