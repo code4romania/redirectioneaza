@@ -2,7 +2,7 @@ import json
 import logging
 
 from urllib.request import Request, urlopen
-from datetime import datetime
+from datetime import datetime, date
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
@@ -104,10 +104,12 @@ class GetNgoForms(AccountHandler):
         if not ngo:
             return redirect(reverse("contul-meu"))
 
+        DONATION_LIMIT = date(timezone.now().year, 5, 25)
+
         now = timezone.now()
         start_of_year = datetime(now.year, 1, 1, 0, 0)
 
-        if now.date() > settings.DONATION_LIMIT:
+        if now.date() > DONATION_LIMIT:
             return redirect(reverse("contul-meu"))
 
         # get all the forms that have been completed since the start of the year
@@ -129,23 +131,20 @@ class GetNgoForms(AccountHandler):
         )
         job.save()
 
-        export_folder = ngo_directory_path(
+        export_destination = ngo_directory_path(
             "exports", ngo, "export_{}_{}.zip".format(job.id, hash_id_secret(timezone.now(), job.id))
         )
 
         # make request
-        params = json.encode(
-            {
-                "passphrase": settings.ZIP_SECRET,
-                "urls": urls,
-                "path": "exports/{}/export-{}.zip".format(export_folder, job.id),
-                "webhook": {
-                    "url": "https://{}{}".format(settings.APEX_DOMAIN, reverse("webhook")),
-                    "data": {"jobId": job.id},
-                },
-            }
-        )
-        print(params)
+        params = {
+            "passphrase": settings.ZIP_SECRET,
+            "urls": urls,
+            "path": export_destination,
+            "webhook": {
+                "url": "https://{}{}".format(settings.APEX_DOMAIN, reverse("webhook")),
+                "data": {"jobId": job.id},
+            },
+        }
 
         request = Request(url=settings.ZIP_ENDPOINT, data=params, headers={"Content-type": "application/json"})
 
