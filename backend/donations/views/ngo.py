@@ -8,10 +8,12 @@ from django.http import Http404, JsonResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.translation import gettext as _
 
+from redirectioneaza.common.messaging import send_email
 from .base import BaseHandler
 from ..models.main import Donor, Ngo
-from ..pdf import create_pdf, add_signature
+from ..pdf import add_signature, create_pdf
 
 
 class DonationSucces(BaseHandler):
@@ -29,9 +31,11 @@ class DonationSucces(BaseHandler):
         context["ngo"] = ngo
         return context
 
-    def get(self, request, ngo_url):
+    def get(self, request, *args, **kwargs):
+        ngo_url = kwargs.get("ngo_url", None)
+
         context = self.get_context_data(ngo_url)
-        DONATION_LIMIT = date(timezone.now().year, 5, 25)
+        donation_limit = date(timezone.now().year, 5, 25)
 
         try:
             donor = Donor.objects.get(pk=request.session.get("donor_id", 0))
@@ -40,7 +44,7 @@ class DonationSucces(BaseHandler):
         context["donor"] = donor
 
         context["title"] = "Donație - succes"
-        context["limit"] = DONATION_LIMIT
+        context["limit"] = donation_limit
 
         # county = self.donor.county.lower()
         # context["anaf"] = ANAF_OFFICES.get(county, None)
@@ -56,6 +60,11 @@ class DonationSucces(BaseHandler):
 
 class FormSignature(BaseHandler):
     template_name = "signature.html"
+
+    def __init__(self, **kwargs):
+        super().__init__(kwargs)
+        self.ngo = None
+        self.donor = None
 
     def get_ngo_and_donor(self, request, ngo_url):
         ngo_url = ngo_url.lower().strip()
@@ -82,7 +91,9 @@ class FormSignature(BaseHandler):
         self.donor = donor
         return True
 
-    def get(self, request, ngo_url):
+    def get(self, request, *args, **kwargs):
+        ngo_url = kwargs.get("ngo_url", None)
+
         if not self.get_ngo_and_donor(request, ngo_url):
             return redirect(reverse("twopercent", kwargs={"ngo_url": ngo_url}))
 
@@ -117,12 +128,24 @@ class FormSignature(BaseHandler):
         self.donor.pdf_file.save("declaratie_semnata.pdf", File(new_pdf))
         new_pdf.close()
 
-        # # TODO: Send email
-        # self.send_email("signed-form", self.donor)
-        # self.send_email("ngo-signed-form", self.donor, self.ngo)
+        send_email(
+            subject=_("Formularul tău de redirecționare"),
+            to_emails=[self.donor.email],
+            text_template="email/signed-form/signed_form.html",
+            html_template="email/signed-form/signed_form_text.txt",
+            context={"form_url": self.donor.pdf_file.url},
+        )
+        send_email(
+            subject=_("Un nou formular de redirecționare"),
+            to_emails=[self.ngo.email],
+            text_template="email/ngo-signed-form/signed_form.html",
+            html_template="email/ngo-signed-form/signed_form_text.txt",
+            context={"form_url": self.donor.pdf_file.url},
+        )
 
         request.session.pop("signature_required", None)
         self.donor.has_signed = True
+
         # TODO: Get rid of pdf_url
         self.donor.pdf_url = self.donor.pdf_file.url
         self.donor.save()
@@ -133,7 +156,9 @@ class FormSignature(BaseHandler):
 class TwoPercentHandler(BaseHandler):
     template_name = "twopercent.html"
 
-    def get(self, request, ngo_url):
+    def get(self, request, *args, **kwargs):
+        ngo_url = kwargs.get("ngo_url", None)
+
         try:
             ngo = Ngo.objects.get(slug=ngo_url)
         except Ngo.DoesNotExist:
@@ -149,27 +174,30 @@ class TwoPercentHandler(BaseHandler):
 
         if "has_cnp" in request.session:
             request.session.pop("has_cnp")
-            # also we can use request.session.clear(), but it might delete the logged in user's session
+            # also we can use request.session.clear(), but it might delete the logged-in user's session
 
-        context = {}
-        context["title"] = ngo.name
         # make sure the ngo shows a logo
         ngo.logo_url = ngo.logo_url if ngo.logo_url else settings.DEFAULT_NGO_LOGO
-        context["ngo"] = ngo
-        context["counties"] = settings.LIST_OF_COUNTIES
-        context["limit"] = settings.DONATIONS_LIMIT
+        context = {
+            "title": ngo.name,
+            "ngo": ngo,
+            "counties": settings.LIST_OF_COUNTIES,
+            "limit": settings.DONATIONS_LIMIT,
+            "ngo_website_description": "",
+            "ngo_website": "",
+        }
 
         # the ngo website
         ngo_website = ngo.website if ngo.website else None
         if ngo_website:
-            # try and parse the the url to see if it's valid
+            # try and parse the url to see if it's valid
             try:
                 url_dict = urlparse(ngo_website)
 
                 if not url_dict.scheme:
                     url_dict = url_dict._replace(scheme="http")
 
-                # if we have a netloc, than the url is valid
+                # if we have a netloc, then the url is valid
                 # use the netloc as the website name
                 if url_dict.netloc:
                     context["ngo_website_description"] = url_dict.netloc
@@ -218,7 +246,7 @@ class TwoPercentHandler(BaseHandler):
 
             # if we received a value
             if value:
-                # it should only contains alpha numeric, spaces and dash
+                # it should only contain alphanumeric, spaces and dash
                 if re.match(r"^[\w\s.\-ăîâșț]+$", value, flags=re.I | re.UNICODE) is not None:
                     # additional validation
                     if arg == "cnp" and len(value) != 13:
@@ -244,28 +272,24 @@ class TwoPercentHandler(BaseHandler):
 
             return ""
 
-        donor_dict = {}
-
-        # the donor's data
-        donor_dict["first_name"] = get_post_value("nume").title()
-        donor_dict["last_name"] = get_post_value("prenume").title()
-        donor_dict["father"] = get_post_value("tatal").title()
-        donor_dict["cnp"] = get_post_value("cnp", False)
-
-        donor_dict["email"] = get_post_value("email").lower()
-        donor_dict["tel"] = get_post_value("tel", False)
-
-        donor_dict["street"] = get_post_value("strada").title()
-        donor_dict["number"] = get_post_value("numar", False)
-
-        # optional data
-        donor_dict["bl"] = get_post_value("bloc", False)
-        donor_dict["sc"] = get_post_value("scara", False)
-        donor_dict["et"] = get_post_value("etaj", False)
-        donor_dict["ap"] = get_post_value("ap", False)
-
-        donor_dict["city"] = get_post_value("localitate").title()
-        donor_dict["county"] = get_post_value("judet")
+        donor_dict = {
+            # the donor's data
+            "first_name": get_post_value("nume").title(),
+            "last_name": get_post_value("prenume").title(),
+            "father": get_post_value("tatal").title(),
+            "cnp": get_post_value("cnp", False),
+            "email": get_post_value("email").lower(),
+            "tel": get_post_value("tel", False),
+            "street": get_post_value("strada").title(),
+            "number": get_post_value("numar", False),
+            # optional data
+            "bl": get_post_value("bloc", False),
+            "sc": get_post_value("scara", False),
+            "et": get_post_value("etaj", False),
+            "ap": get_post_value("ap", False),
+            "city": get_post_value("localitate").title(),
+            "county": get_post_value("judet"),
+        }
 
         # if the user wants to redirect for 2 years
         two_years = post.get("two-years") == "on"
@@ -296,7 +320,7 @@ class TwoPercentHandler(BaseHandler):
         if len(errors["fields"]):
             return self.return_error(request, ngo, errors, is_ajax)
 
-        ## TODO: Captcha check
+        # TODO: Captcha check
         # captcha_response = submit(post.get(CAPTCHA_POST_PARAM), CAPTCHA_PRIVATE_KEY, self.request.remote_addr)
 
         # # if the captcha is not valid return
@@ -317,7 +341,7 @@ class TwoPercentHandler(BaseHandler):
             is_anonymous=donor_dict["anonymous"],
             two_years=two_years,
             income_type=donor_dict["income"],
-            ## TODO:
+            # TODO:
             # make a request to get geo ip data for this user
             # geoip = self.get_geoip_data(),
             ngo=ngo,
@@ -341,9 +365,15 @@ class TwoPercentHandler(BaseHandler):
         request.session["signature_required"] = signature_required
 
         # TODO: Send the email
-        # if not signature_required:
-        #     # send and email to the donor with a link to the PDF file
-        #     self.send_email("twopercent-form", donor, ngo)
+        if not signature_required:
+            # send and email to the donor with a link to the PDF file
+            send_email(
+                subject=_("Formularul tău de redirecționare"),
+                to_emails=[donor.email],
+                text_template="email/twopercent-form/twopercent_form.html",
+                html_template="email/twopercent-form/twopercent_form_text.txt",
+                context={"name": donor.first_name, "form_url": donor.pdf_file.url, "ngo": ngo},
+            )
 
         url = reverse("ngo-twopercent-success", kwargs={"ngo_url": ngo_url})
         if signature_required:
@@ -360,15 +390,15 @@ class TwoPercentHandler(BaseHandler):
         if is_ajax:
             return JsonResponse(errors)
 
-        context = {}
-        context["title"] = ngo.name
         # make sure the ngo shows a logo
         ngo.logo = ngo.logo if ngo.logo else settings.DEFAULT_NGO_LOGO
-        context["ngo"] = ngo
-        context["counties"] = settings.LIST_OF_COUNTIES
-        context["limit"] = settings.DONATIONS_LIMIT
-
-        context["errors"] = errors
+        context = {
+            "title": ngo.name,
+            "ngo": ngo,
+            "counties": settings.LIST_OF_COUNTIES,
+            "limit": settings.DONATIONS_LIMIT,
+            "errors": errors,
+        }
 
         now = timezone.now()
         can_donate = not now.date() > settings.DONATIONS_LIMIT
