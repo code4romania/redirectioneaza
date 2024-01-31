@@ -116,10 +116,6 @@ class NgoDetailsHandler(AccountHandler):
 
         ngo.other_emails = ""
 
-        # TODO: implement the image upload
-        ngo.logo_url = post.get("ong-logo-url", "")
-        ngo.image_url = post.get("ong-logo")
-
         ngo.save()
 
         if is_new_ngo:
