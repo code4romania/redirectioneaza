@@ -6,7 +6,6 @@ from django.conf import settings
 from django.core.exceptions import BadRequest, PermissionDenied
 from django.http import Http404
 from django.shortcuts import redirect, render
-from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils import timezone
 
@@ -116,8 +115,8 @@ class AdminNewNgoHandler(BaseHandler):
 class AdminNgoHandler(BaseHandler):
     template_name = "admin2/ngo.html"
 
-    def get(self, request, ngo_url, *args, **kwargs):
-        context = {}
+    def get(self, request, *args, **kwargs):
+        ngo_url = kwargs.get("ngo_url")
 
         if not request.user.is_staff:
             return redirect(User.create_admin_login_url(reverse("admin-ong")))
@@ -127,16 +126,17 @@ class AdminNgoHandler(BaseHandler):
         except Ngo.DoesNotExist:
             return Http404
 
-        context["ngo_upload_url"] = reverse("api-ngo-upload-url")
-        context["counties"] = settings.LIST_OF_COUNTIES
-        context["ngo"] = ngo
+        context = {
+            "ngo_upload_url": reverse("api-ngo-upload-url"),
+            "counties": settings.LIST_OF_COUNTIES,
+            "ngo": ngo,
+            "other_emails": ", ".join(str(x) for x in ngo.other_emails) if ngo.other_emails else "",
+        }
 
         try:
             context["owner"] = ngo.users.get()
         except User.DoesNotExist:
             context["owner"] = None
-
-        context["other_emails"] = ", ".join(str(x) for x in ngo.other_emails) if ngo.other_emails else ""
 
         # render a response
         return render(request, self.template_name, context)
@@ -183,17 +183,12 @@ class SendCampaign(BaseHandler):
         html_template = "email/campaigns/first/index-inline.html"
         txt_template = "email/campaigns/first/index-text.txt"
 
-        template_values = {}
-
-        html_body = render_to_string(html_template, template_values)
-        text_body = render_to_string(txt_template, template_values)
-
         send_email(
             subject=subject,
             to_emails=emails,
-            text_template=text_body,
-            html_template=html_body,
-            context=template_values,
+            text_template=txt_template,
+            html_template=html_template,
+            context={},
         )
 
         return redirect(reverse("admin-campanii"))
