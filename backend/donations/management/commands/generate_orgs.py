@@ -77,7 +77,7 @@ MOCK_NGO_NAMES = {
         "Protecția Sănătății Respiratorii",
         "Protecția Victimelor Violenței",
         "Pădurea Vieții",
-        "Renașterea Satească",
+        "Renașterea Sătească",
         "Salvarea Animalelor",
         "Salvați Flora și Fauna",
         "Salvați Vieți",
@@ -119,9 +119,21 @@ class Command(BaseCommand):
             help="How many organizations to create",
             default=10,
         )
+        parser.add_argument(
+            "--valid",
+            action="store_true",
+            help="Generate only valid, active organizations",
+        )
+        parser.add_argument(
+            "--user_only",
+            action="store_true",
+            help="Generate only users with no organization",
+        )
 
     def handle(self, *args, **options):
         total_organizations = options["total_orgs"]
+        create_valid = options.get("valid", None)
+        create_user_only = options.get("user_only", None)
 
         organizations: List[Dict[str, Any]] = []
         generated_organization_names: List[str] = []
@@ -169,7 +181,7 @@ class Command(BaseCommand):
                 continue
 
             should_not_have_ngo = random.choice(range(0, 6)) == 3
-            if should_not_have_ngo:
+            if create_user_only or not create_valid and should_not_have_ngo:
                 continue
 
             organization_details = {
@@ -185,6 +197,7 @@ class Command(BaseCommand):
                 "phone": fake.phone_number(),
                 "email": random.choice([owner_email, fake.email()]),
                 "website": fake.url(),
+                "is_active": create_valid or random.choice([True, False]),
             }
             try:
                 org = Ngo.objects.create(**organization_details)
