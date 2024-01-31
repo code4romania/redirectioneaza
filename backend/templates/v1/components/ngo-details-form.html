@@ -10,17 +10,17 @@
         </div>
         <div class="form-group">
             <div class="col-xs-4 text-center">
-                <div id="upload-logo" class="{{ 'hidden' if ngo.logo_url }}">
+                <div id="upload-logo" class="{{ 'hidden' if ngo.logo }}">
                     <label for="ong-logo">
                         <i class="glyphicon glyphicon-picture upload-file-icon"></i>
                         <p>Logo-ul asociației</p>
                     </label>
                     <input type="file" id="ong-logo" class="hidden" accept="image/*" name="ong-logo" />
                 </div>
-                <div id="display-logo" class="text-center {{ 'hidden' if not ngo.logo_url }}">
-                    <img id="ngo-logo" src="{{ ngo.logo_url if ngo }}" class="img-responsive center-block" />
+                <div id="display-logo" class="text-center {{ 'hidden' if not ngo.logo }}">
+                    <img id="ngo-logo" src="{{ ngo.logo.url if ngo }}" class="img-responsive center-block" />
                     <span id="delete-ngo-logo" class="text-danger">Șterge</span>
-                    <input type="hidden" id="ong-logo-url" name="ong-logo-url" value="{{ ngo.logo_url if ngo }}" />
+                    <input type="hidden" id="ong-logo-url" name="ong-logo-url" value="{{ ngo.logo.url if ngo.logo }}" />
                 </div>
             </div>
             <div class="col-xs-8">

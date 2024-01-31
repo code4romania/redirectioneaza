@@ -13,6 +13,7 @@ from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils import timezone
+from django.views.decorators.csrf import csrf_exempt
 
 from ..models.main import Ngo, Donor, ngo_directory_path, hash_id_secret
 from ..models.jobs import Job, JobStatusChoices
@@ -163,25 +164,24 @@ class GetNgoForms(AccountHandler):
 
 
 @method_decorator(login_required(login_url=reverse_lazy("login")), name="dispatch")
+@method_decorator(csrf_exempt, name="dispatch")
 class GetUploadUrl(AccountHandler):
     def post(self, request, *args, **kwargs):
-        files = request.FILES
-        if len(files) != 1:
+        logo_file = request.FILES.get("files")
+        if not logo_file:
             raise BadRequest()
 
         ngo = request.user.ngo
         if not ngo:
-            raise BadRequest()
-            # # TODO: should we create the NGO here?
-            # ngo = Ngo.objects.create()
-            # ngo.save()
-            # request.user.ngo = ngo
-            # request.user.save()
+            ngo = Ngo.objects.create()
+            ngo.save()
+            request.user.ngo = ngo
+            request.user.save()
 
-        ngo.logo = files[0]
+        ngo.logo = logo_file
         ngo.save()
 
-        self.return_json({"file_urls": [ngo.logo.url]})
+        return JsonResponse({"file_urls": [ngo.logo.url]})
 
 
 class Webhook(BaseHandler):

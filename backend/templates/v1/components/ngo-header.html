@@ -6,8 +6,8 @@
     <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6">
         <div class="media ngo-details" itemscope itemtype ="http://schema.org/NGO" >
             <div class="media-left">
-                {% if ngo.logo_url %}
-                    <img class="media-object" itemprop="logo" src="{{ ngo.logo_url }}" />
+                {% if ngo.logo %}
+                    <img class="media-object" itemprop="logo" src="{{ ngo.logo.url }}" />
                 {% endif %}
             </div>
             <div class="media-body">
