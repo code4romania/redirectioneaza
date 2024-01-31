@@ -32,9 +32,7 @@ class DonationSucces(BaseHandler):
         context["ngo"] = ngo
         return context
 
-    def get(self, request, *args, **kwargs):
-        ngo_url = kwargs.get("ngo_url", None)
-
+    def get(self, request, ngo_url, *args, **kwargs):
         context = self.get_context_data(ngo_url)
         donation_limit = date(timezone.now().year, 5, 25)
 
@@ -92,9 +90,7 @@ class FormSignature(BaseHandler):
         self.donor = donor
         return True
 
-    def get(self, request, *args, **kwargs):
-        ngo_url = kwargs.get("ngo_url", None)
-
+    def get(self, request, ngo_url, *args, **kwargs):
         if not self.get_ngo_and_donor(request, ngo_url):
             return redirect(reverse("twopercent", kwargs={"ngo_url": ngo_url}))
 
@@ -157,9 +153,7 @@ class FormSignature(BaseHandler):
 class TwoPercentHandler(BaseHandler):
     template_name = "twopercent.html"
 
-    def get(self, request, *args, **kwargs):
-        ngo_url = kwargs.get("ngo_url", None)
-
+    def get(self, request, ngo_url, *args, **kwargs):
         try:
             ngo = Ngo.objects.get(slug=ngo_url)
         except Ngo.DoesNotExist:
@@ -321,10 +315,6 @@ class TwoPercentHandler(BaseHandler):
         }
 
         if len(errors["fields"]):
-            return self.return_error(request, ngo, errors, is_ajax)
-
-        if not validate_captcha(request):
-            errors["fields"].append("captcha")
             return self.return_error(request, ngo, errors, is_ajax)
 
         # create the donor and save it

@@ -27,11 +27,11 @@
                 <fieldset>
                     <legend>Cont nou</legend>
                     <div class="form-group">
-                        <div class="col-xs-6">
-                            <input class="form-control" type="text" name="nume" placeholder="Nume" required />
+                        <div class="col-xs-12 col-sm-6">
+                            <input class="form-control" type="text" name="last_name" placeholder="Nume" required />
                         </div>
-                        <div class="col-xs-6">
-                            <input class="form-control" type="text" name="prenume" placeholder="Prenume" required />
+                        <div class="col-xs-12 col-sm-6 second-form-row">
+                            <input class="form-control" type="text" name="first_name" placeholder="Prenume" required />
                         </div>
                     </div>
                     <div class="form-group">
@@ -41,7 +41,12 @@
                     </div>
                     <div class="form-group">
                         <div class="col-xs-12">
-                            <input class="form-control" type="password" name="parola" placeholder="Parola" required />
+                            <input class="form-control" type="password" name="password" placeholder="Parola" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <input class="form-control" type="password" name="password_confirm" placeholder="Confirmă parola" required />
                         </div>
                     </div>
                     <div class="form-group">
@@ -70,5 +75,5 @@
 {% endblock %}
 
 {% block scripts %}
-    <script type="text/javascript" src="/js/login.js"></script>
+    <script type="text/javascript" src="{{ static('/js/login.js') }}"></script>
 {% endblock %}
