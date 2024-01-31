@@ -15,13 +15,13 @@ def select_public_storage():
     return storages["public"]
 
 
-def _id_code(prefix: str, id: int) -> str:
+def hash_id_secret(prefix: str, id: int) -> str:
     return hashlib.sha1(f"{prefix}-{id}-{settings.SECRET_KEY}".encode()).hexdigest()[:10]
 
 
 def ngo_directory_path(subdir, instance, filename) -> str:
     # file will be uploaded to MEDIA_ROOT/ngo-<id>-<hash>/<subdir>/<filename>
-    return "{0}/ngo-{1}-{2}/{3}".format(subdir, instance.pk, _id_code("ngo", instance.pk), filename)
+    return "{0}/ngo-{1}-{2}/{3}".format(subdir, instance.pk, hash_id_secret("ngo", instance.pk), filename)
 
 
 def year_ngo_donor_directory_path(subdir, instance, filename) -> str:
@@ -30,9 +30,9 @@ def year_ngo_donor_directory_path(subdir, instance, filename) -> str:
         subdir,
         timestamp.date().year,
         instance.ngo.pk if instance.ngo else 0,
-        _id_code("ngo", instance.ngo.pk if instance.ngo else 0),
+        hash_id_secret("ngo", instance.ngo.pk if instance.ngo else 0),
         instance.pk,
-        _id_code("donor", instance.pk),
+        hash_id_secret("donor", instance.pk),
         filename,
     )
 
