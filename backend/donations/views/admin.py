@@ -68,8 +68,8 @@ class AdminHome(BaseHandler):
         donations = Donor.objects.filter(date_created__gte=from_date).all()
 
         stats = deepcopy(stats_dict)
-        stats["ngos"] = len(ngos) + stats_dict["ngos"]
-        stats["forms"] = len(donations) + stats_dict["forms"]
+        stats["ngos"] = ngos.count() + stats_dict["ngos"]
+        stats["forms"] = donations.count() + stats_dict["forms"]
 
         self.add_data(stats, ngos, donations)
 
