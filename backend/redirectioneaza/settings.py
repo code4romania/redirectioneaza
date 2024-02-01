@@ -125,14 +125,16 @@ IS_CONTAINERIZED = env.bool("IS_CONTAINERIZED")
 VERSION = env.str("VERSION", "edge")
 REVISION = env.str("REVISION", "develop")
 
-VERSION_SUFFIX = f"redirect@{VERSION}+{REVISION}"
-
-
 if IS_CONTAINERIZED and VERSION == "edge" and REVISION == "develop":
     version_file = "/var/www/redirect/.version"
     if os.path.exists(version_file):
         with open(version_file) as f:
             VERSION, REVISION = f.read().strip().split("+")
+
+REVISION = REVISION[:7]
+
+VERSION_SUFFIX = f"redirect@{VERSION}+{REVISION}"
+
 
 # Sentry
 if env.str("SENTRY_DSN"):
