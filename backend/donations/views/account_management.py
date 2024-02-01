@@ -12,8 +12,7 @@ from django.utils.translation import gettext_lazy as _
 
 from redirectioneaza.common.messaging import send_email
 from .base import AccountHandler
-from .captcha import validate_captcha
-from ..forms.account import LoginForm, RegisterForm
+from ..forms.account import ForgotPasswordForm, LoginForm, RegisterForm, ResetPasswordForm
 
 logger = logging.getLogger(__name__)
 
@@ -27,20 +26,14 @@ class ForgotPasswordHandler(AccountHandler):
 
     def post(self, request, *args, **kwargs):
         context = {}
-        post = self.request.POST
 
-        email = post.get("email")
-
-        if not email:
-            context["errors"] = _("Câmpul email nu poate fi gol.")
-            return render(request, self.template_name, context)
-
-        if not validate_captcha(request):
-            context["errors"] = _("Se pare că a fost o problemă cu verificarea reCAPTCHA.")
+        form = ForgotPasswordForm(request.POST)
+        if not form.is_valid():
+            context["errors"] = form.errors
             return render(request, self.template_name, context)
 
         try:
-            user = self.user_model.objects.get(email=email)
+            user = self.user_model.objects.get(email=form.cleaned_data["email"].lower().strip())
         except self.user_model.DoesNotExist:
             user = None
 
@@ -92,9 +85,6 @@ class LoginHandler(AccountHandler):
         return render(request, self.template_name, context)
 
     def post(self, request: HttpRequest):
-        email = request.POST.get("email", "").lower().strip()
-        password = request.POST.get("parola", "")
-
         context = {}
 
         form = LoginForm(request.POST)
@@ -102,15 +92,19 @@ class LoginHandler(AccountHandler):
             context["errors"] = form.errors
             return render(request, self.template_name, context)
 
+        email = form.cleaned_data["email"].lower().strip()
+        password = form.cleaned_data["password"]
+
         user = authenticate(email=email, password=password)
         if user is not None:
             login(request, user)
             return redirect(reverse("contul-meu"))
-        else:
-            logger.warning("Invalid email or password: {0}".format(email))
-            context["email"] = email
-            context["errors"] = "Se pare că această combinație de email și parolă este incorectă."
-            return render(request, self.template_name, context)
+
+        logger.warning("Invalid email or password: {0}".format(email))
+        context["email"] = email
+        context["errors"] = "Se pare că această combinație de email și parolă este incorectă."
+
+        return render(request, self.template_name, context)
 
 
 class LogoutHandler(AccountHandler):
@@ -124,21 +118,10 @@ class SetPasswordHandler(AccountHandler):
 
     def post(self, request, *args, **kwargs):
         context = {}
-        post = self.request.POST
 
-        password = post.get("parola")
-        password_confirm = post.get("confirma-parola")
-
-        if not password:
-            context["errors"] = "Câmpul parola nu poate fi gol."
-            return render(request, self.template_name, context)
-
-        if not password_confirm:
-            context["errors"] = "Câmpul parola confirmare nu poate fi gol."
-            return render(request, self.template_name, context)
-
-        if password != password_confirm:
-            context["errors"] = "Parolele nu se potrivesc."
+        form = ResetPasswordForm(request.POST)
+        if not form.is_valid():
+            context["errors"] = form.errors
             return render(request, self.template_name, context)
 
         user = request.user
@@ -147,7 +130,7 @@ class SetPasswordHandler(AccountHandler):
             logger.warning("Invalid user")
             return redirect(reverse("login"))
 
-        user.set_password(password)
+        user.set_password(form.cleaned_data["password"])
         user.clear_token(commit=False)
         user.save()
 
@@ -256,7 +239,8 @@ class VerificationHandler(AccountHandler):
             logger.info('Could not find any user with id "%s" signup token "%s"', user_id, signup_token)
             raise Http404
         else:
-            user.clear_token()
+            # user.clear_token()
+            pass
 
         login(request, user)
 
