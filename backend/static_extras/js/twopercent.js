@@ -71,7 +71,6 @@ $(function () {
      */
     // copyright https://github.com/cristian-datu/CNP
     function validCNP( p_cnp ) {
-        return true;
         var i=0 , year=0 , hashResult=0 , cnp=[] , hashTable=[2,7,9,1,4,6,3,5,8,2,7,9];
         if( p_cnp.length !== 13 ) { return false; }
         for( i=0 ; i<13 ; i++ ) {
