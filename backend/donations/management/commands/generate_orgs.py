@@ -144,7 +144,7 @@ class Command(BaseCommand):
 
         consecutive_identical_names: int = 0
         while len(organizations) < total_organizations:
-            county = COUNTIES_CHOICES[random.randint(0, len(COUNTIES_CHOICES) - 1)][0]
+            county = COUNTIES_CHOICES[random.randint(0, len(COUNTIES_CHOICES) - 1)][1]
             address = fake.street_address()
 
             type_ = MOCK_NGO_NAMES["types"][random.randint(0, len(MOCK_NGO_NAMES["types"]) - 1)]
@@ -164,7 +164,7 @@ class Command(BaseCommand):
             consecutive_identical_names = 0
             generated_organization_names.append(name)
 
-            clean_name = name.lower().replace('"', "").replace(".", "").replace(",", "")
+            clean_name = name.lower().replace('"', "").replace(".", "").replace(",", "").replace("/", "")
             kebab_case_name = "-".join(clean_name.split(" "))
             owner_email = fake.email()
 
@@ -190,7 +190,7 @@ class Command(BaseCommand):
                 "description": fake.paragraph(nb_sentences=3, variable_nb_sentences=True),
                 "logo_url": "https://storage.googleapis.com/redirectioneaza/logo_bw.png",
                 "bank_account": fake.iban(),
-                "registration_number": fake.ssn(),
+                "registration_number": fake.ssn()[:8],
                 "address": address,
                 "county": county,
                 "active_region": county,
@@ -209,5 +209,6 @@ class Command(BaseCommand):
             organizations.append(org)
 
             owner.ngo = org
+            owner.save()
 
         self.stdout.write(self.style.SUCCESS(f"Successfully created {len(organizations)} organization(s)."))

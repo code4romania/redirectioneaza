@@ -1,13 +1,15 @@
 from collections import OrderedDict
 
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
+from django.core.validators import validate_email
 from django.db.models import Q, QuerySet
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.utils.decorators import method_decorator
-from django.core.exceptions import PermissionDenied
+from django.core.exceptions import PermissionDenied, ValidationError
 from django.http import Http404
 
 from .base import AccountHandler
@@ -133,55 +135,11 @@ class NgoDetailsHandler(AccountHandler):
             ngo.is_verified = post.get("ong-verificat") == "on"
             ngo.is_active = post.get("ong-activ") == "on"
 
-        ## TODO: more admin changes
+        if new_ngo_owner := post.get("new-ngo-owner"):
+            change_owner_result = self.change_ngo_owner(ngo, new_ngo_owner)
 
-        #     # if we want to change the url
-        #     if ong_url != ngo.key.id():
-
-        #         is_ngo_url_available = check_ngo_url(ong_url)
-        #         if is_ngo_url_available == False:
-        #             self.template_values["errors"] = url_taken
-        #             self.render()
-        #             return
-
-        #         new_key = Key(NgoEntity, ong_url)
-
-        #         # replace all the donors key
-        #         donors = Donor.query(Donor.ngo == ngo.key).fetch()
-        #         if donors:
-        #             for donor in donors:
-        #                 donor.ngo = new_key
-        #                 donor.put()
-
-        #         # replace the users key
-        #         ngos_user = User.query(Donor.ngo == ngo.key).get()
-        #         if ngos_user:
-        #             ngos_user.ngo = new_key
-        #             ngos_user.put()
-
-        #         # copy the old model
-        #         new_ngo = ngo
-        #         # delete the old model
-        #         ngo.key.delete()
-        #         # add a new key
-        #         new_ngo.key = new_key
-
-        #         ngo = new_ngo
-
-        #     if new_owner:
-        #         new_owner = User.query(User.email == new_owner).get()
-        #         if new_owner:
-        #             # delete the associtation between the old account and the NGO
-        #             old_user = User.query(User.ngo == ngo.key).get()
-        #             old_user.ngo = None
-        #             new_owner.ngo = ngo.key
-
-        #             old_user.put()
-        #             new_owner.put()
-        #         else:
-        #             self.template_values["errors"] = no_new_owner
-        #             self.render()
-        #             return
+            if "error" in change_owner_result:
+                return redirect(reverse("admin-ong", kwargs={"ngo_url": user.ngo.slug}))
 
         ngo.save()
 
@@ -198,3 +156,28 @@ class NgoDetailsHandler(AccountHandler):
                 return redirect(reverse("admin-ong", kwargs={"ngo_url": user.ngo.slug}))
             else:
                 return redirect(reverse("association"))
+
+    @staticmethod
+    def change_ngo_owner(ngo, new_ngo_owner):
+        try:
+            validate_email(new_ngo_owner)
+        except ValidationError:
+            return {"error": "Invalid email"}
+
+        user_model = get_user_model()
+        try:
+            new_owner = user_model.objects.get(email=new_ngo_owner)
+        except user_model.DoesNotExist:
+            return {"error": "No user with this email"}
+
+        if new_owner.ngo:
+            return {"error": "This user already has an NGO"}
+
+        old_user = user_model.objects.get(ngo=ngo)
+        old_user.ngo = None
+        new_owner.ngo = ngo
+
+        old_user.save()
+        new_owner.save()
+
+        return {"success": "Owner changed successfully"}

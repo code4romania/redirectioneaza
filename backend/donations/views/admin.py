@@ -117,7 +117,7 @@ class AdminNgoHandler(BaseHandler):
 
     def get(self, request, ngo_url, *args, **kwargs):
         if not request.user.is_staff:
-            return redirect(User.create_admin_login_url(reverse("admin-ong")))
+            return redirect(User.create_admin_login_url(reverse("login")))
 
         try:
             ngo = Ngo.objects.get(slug=ngo_url)
