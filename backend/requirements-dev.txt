@@ -55,6 +55,7 @@ django==4.2.9
     #   django-localflavor
     #   django-picklefield
     #   django-q2
+    #   django-recaptcha
     #   django-storages
 django-appconf==1.0.6
     # via
@@ -71,6 +72,8 @@ django-picklefield==3.1
     #   -r requirements.txt
     #   django-q2
 django-q2==1.6.1
+    # via -r requirements.txt
+django-recaptcha==4.0.0
     # via -r requirements.txt
 django-storages==1.14.2
     # via -r requirements.txt

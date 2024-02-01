@@ -115,9 +115,7 @@ class AdminNewNgoHandler(BaseHandler):
 class AdminNgoHandler(BaseHandler):
     template_name = "admin2/ngo.html"
 
-    def get(self, request, *args, **kwargs):
-        ngo_url = kwargs.get("ngo_url")
-
+    def get(self, request, ngo_url, *args, **kwargs):
         if not request.user.is_staff:
             return redirect(User.create_admin_login_url(reverse("admin-ong")))
 

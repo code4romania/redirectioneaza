@@ -4,7 +4,7 @@ import uuid
 from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
-from django.http import Http404
+from django.http import Http404, HttpRequest
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils import timezone
@@ -12,6 +12,7 @@ from django.utils.translation import gettext_lazy as _
 
 from redirectioneaza.common.messaging import send_email
 from .base import AccountHandler
+from ..forms.account import ForgotPasswordForm, LoginForm, RegisterForm, ResetPasswordForm
 
 logger = logging.getLogger(__name__)
 
@@ -25,26 +26,14 @@ class ForgotPasswordHandler(AccountHandler):
 
     def post(self, request, *args, **kwargs):
         context = {}
-        post = self.request.POST
 
-        email = post.get("email")
-
-        if not email:
-            context["errors"] = _("Câmpul email nu poate fi gol.")
+        form = ForgotPasswordForm(request.POST)
+        if not form.is_valid():
+            context["errors"] = form.errors
             return render(request, self.template_name, context)
 
-        ## TODO: Fix captcha
-        # captcha_response = submit(post.get(CAPTCHA_POST_PARAM), CAPTCHA_PRIVATE_KEY, post.remote_addr)
-        #
-        # # if the captcha is not valid return
-        # if not captcha_response.is_valid:
-        #     context["errors"] = _(
-        #         "Se pare că a fost o problemă cu verificarea reCAPTCHA. Te rugăm să încerci din nou."
-        #     )
-        #     return render(request, self.template_name, context)
-
         try:
-            user = self.user_model.objects.get(email=email)
+            user = self.user_model.objects.get(email=form.cleaned_data["email"].lower().strip())
         except self.user_model.DoesNotExist:
             user = None
 
@@ -95,39 +84,27 @@ class LoginHandler(AccountHandler):
 
         return render(request, self.template_name, context)
 
-    def post(self, request):
-        email = request.POST.get("email", "").lower().strip()
-        password = request.POST.get("parola", "")
-
+    def post(self, request: HttpRequest):
         context = {}
 
-        if not email:
-            context["errors"] = "Câmpul email nu poate fi gol."
+        form = LoginForm(request.POST)
+        if not form.is_valid():
+            context["errors"] = form.errors
             return render(request, self.template_name, context)
 
-        if not password:
-            context["errors"] = "Câmpul parola nu poate fi gol."
-            return render(request, self.template_name, context)
-
-        ## TODO: Fix captcha
-        # captcha_response = submit(post.get(CAPTCHA_POST_PARAM), CAPTCHA_PRIVATE_KEY, post.remote_addr)
-
-        # # if the captcha is not valid return
-        # if not captcha_response.is_valid:
-        #     context["errors"] = (
-        #         "Se pare că a fost o problemă cu verificarea reCAPTCHA." + "Te rugăm să încerci din nou."
-        #     )
-        #     return render(request, self.template_name, context)
+        email = form.cleaned_data["email"].lower().strip()
+        password = form.cleaned_data["password"]
 
         user = authenticate(email=email, password=password)
         if user is not None:
             login(request, user)
             return redirect(reverse("contul-meu"))
-        else:
-            logger.warning("Invalid email or password: {0}".format(email))
-            context["email"] = email
-            context["errors"] = "Se pare că această combinație de email și parolă este incorectă."
-            return render(request, self.template_name, context)
+
+        logger.warning("Invalid email or password: {0}".format(email))
+        context["email"] = email
+        context["errors"] = "Se pare că această combinație de email și parolă este incorectă."
+
+        return render(request, self.template_name, context)
 
 
 class LogoutHandler(AccountHandler):
@@ -141,21 +118,10 @@ class SetPasswordHandler(AccountHandler):
 
     def post(self, request, *args, **kwargs):
         context = {}
-        post = self.request.POST
 
-        password = post.get("parola")
-        password_confirm = post.get("confirma-parola")
-
-        if not password:
-            context["errors"] = "Câmpul parola nu poate fi gol."
-            return render(request, self.template_name, context)
-
-        if not password_confirm:
-            context["errors"] = "Câmpul parola confirmare nu poate fi gol."
-            return render(request, self.template_name, context)
-
-        if password != password_confirm:
-            context["errors"] = "Parolele nu se potrivesc."
+        form = ResetPasswordForm(request.POST)
+        if not form.is_valid():
+            context["errors"] = form.errors
             return render(request, self.template_name, context)
 
         user = request.user
@@ -164,7 +130,7 @@ class SetPasswordHandler(AccountHandler):
             logger.warning("Invalid user")
             return redirect(reverse("login"))
 
-        user.set_password(password)
+        user.set_password(form.cleaned_data["password"])
         user.clear_token(commit=False)
         user.save()
 
@@ -182,48 +148,26 @@ class SignupHandler(AccountHandler):
 
     def post(self, request, *args, **kwargs):
         context = {}
-        post = self.request.POST
 
-        # TODO: Create a sign up form with validations
-        first_name = post.get("nume")
-        last_name = post.get("prenume")
-
-        email = post.get("email", "").lower().strip()
-        password = post.get("parola")
-
-        if not first_name:
-            context["errors"] = "Câmpul nume nu poate fi gol."
+        form = RegisterForm(request.POST)
+        if not form.is_valid():
+            context["errors"] = form.errors
             return render(request, self.template_name, context)
 
-        if not last_name:
-            context["errors"] = "Câmpul prenume nu poate fi gol."
-            return render(request, self.template_name, context)
+        first_name = form.cleaned_data["first_name"]
+        last_name = form.cleaned_data["last_name"]
+        email = form.cleaned_data["email"].lower().strip()
 
-        if not email:
-            context["errors"] = "Câmpul email nu poate fi gol."
-            return render(request, self.template_name, context)
-
-        if not password:
-            context["errors"] = "Câmpul parola nu poate fi gol."
-            return render(request, self.template_name, context)
-
-        # TODO: fix captcha
-        # captcha_response = submit(post.get(CAPTCHA_POST_PARAM), CAPTCHA_PRIVATE_KEY, post.remote_addr)
-
-        # # if the captcha is not valid return
-        # if not captcha_response.is_valid:
-        #     context["errors"] = "Se pare că a fost o problemă cu verificarea reCAPTCHA. Te rugăm să încerci din nou."
-        #     return render(request, self.template_name, context)
-
-        user = self.user_model.objects.create_user(
-            email=email,
+        user = self.user_model(
             first_name=first_name,
             last_name=last_name,
-            password=password,
+            email=email,
             is_verified=False,
             validation_token=uuid.uuid4(),
             token_timestamp=timezone.now(),
         )
+
+        user.set_password(form.cleaned_data["password"])
 
         try:
             user.save()
@@ -295,7 +239,8 @@ class VerificationHandler(AccountHandler):
             logger.info('Could not find any user with id "%s" signup token "%s"', user_id, signup_token)
             raise Http404
         else:
-            user.clear_token()
+            # user.clear_token()
+            pass
 
         login(request, user)
 

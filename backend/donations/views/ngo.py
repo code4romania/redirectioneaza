@@ -12,6 +12,7 @@ from django.utils.translation import gettext as _
 
 from redirectioneaza.common.messaging import send_email
 from .base import BaseHandler
+from .captcha import validate_captcha
 from ..models.main import Donor, Ngo
 from ..pdf import add_signature, create_pdf
 
@@ -31,9 +32,7 @@ class DonationSucces(BaseHandler):
         context["ngo"] = ngo
         return context
 
-    def get(self, request, *args, **kwargs):
-        ngo_url = kwargs.get("ngo_url", None)
-
+    def get(self, request, ngo_url, *args, **kwargs):
         context = self.get_context_data(ngo_url)
         donation_limit = date(timezone.now().year, 5, 25)
 
@@ -91,9 +90,7 @@ class FormSignature(BaseHandler):
         self.donor = donor
         return True
 
-    def get(self, request, *args, **kwargs):
-        ngo_url = kwargs.get("ngo_url", None)
-
+    def get(self, request, ngo_url, *args, **kwargs):
         if not self.get_ngo_and_donor(request, ngo_url):
             return redirect(reverse("twopercent", kwargs={"ngo_url": ngo_url}))
 
@@ -156,9 +153,7 @@ class FormSignature(BaseHandler):
 class TwoPercentHandler(BaseHandler):
     template_name = "twopercent.html"
 
-    def get(self, request, *args, **kwargs):
-        ngo_url = kwargs.get("ngo_url", None)
-
+    def get(self, request, ngo_url, *args, **kwargs):
         try:
             ngo = Ngo.objects.get(slug=ngo_url)
         except Ngo.DoesNotExist:
@@ -239,6 +234,10 @@ class TwoPercentHandler(BaseHandler):
         # if we have an ajax request, just return an answer
         is_ajax = post.get("ajax", False)
 
+        if not validate_captcha(request):
+            errors["fields"].append("captcha")
+            return self.return_error(request, ngo, errors, is_ajax)
+
         def get_post_value(arg, add_to_error_list=True):
             value = post.get(arg)
 
@@ -317,16 +316,6 @@ class TwoPercentHandler(BaseHandler):
 
         if len(errors["fields"]):
             return self.return_error(request, ngo, errors, is_ajax)
-
-        # TODO: Captcha check
-        # captcha_response = submit(post.get(CAPTCHA_POST_PARAM), CAPTCHA_PRIVATE_KEY, self.request.remote_addr)
-
-        # # if the captcha is not valid return
-        # if not captcha_response.is_valid:
-
-        #     errors["fields"].append("codul captcha")
-        #     self.return_error(errors)
-        #     return
 
         # create the donor and save it
         donor = Donor(
