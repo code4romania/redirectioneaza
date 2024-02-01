@@ -234,6 +234,7 @@ class Donor(models.Model):
         max_length=100,
         db_index=True,
     )
+    address = models.JSONField(verbose_name=_("address"), blank=True, null=False, default=dict)
 
     # originally: tel
     phone = models.CharField(verbose_name=_("telephone"), blank=True, null=False, default="", max_length=30)
