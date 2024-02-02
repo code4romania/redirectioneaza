@@ -29,8 +29,6 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        donoric = Donor.objects.get(id=111)
-
         total_donations = options["total_donations"]
         target_org = options.get("org", None)
         self.stdout.write(f"Generating {total_donations} donations")
@@ -52,20 +50,22 @@ class Command(BaseCommand):
                 first_name=fake.first_name(),
                 last_name=fake.last_name(),
                 initial=random.choice(string.ascii_uppercase),
-                cnp=fake.ssn(),
                 email=fake.email(),
                 phone=fake.phone_number(),
-                address={
+                city=fake.city(),
+                county=COUNTIES_CHOICES[random.randint(0, len(COUNTIES_CHOICES) - 1)][1],
+                income_type="wage",
+            )
+            donor.set_cnp(fake.ssn())
+            donor.set_address(
+                {
                     "street": fake.street_address(),
                     "number": fake.building_number(),
                     "bl": random.choice(["", random.randint(1, 20)]),
                     "sc": random.choice(["", random.choice(string.ascii_uppercase)]),
                     "et": random.choice(["", random.randint(1, 20)]),
                     "ap": random.choice(["", random.randint(1, 200)]),
-                },
-                city=fake.city(),
-                county=COUNTIES_CHOICES[random.randint(0, len(COUNTIES_CHOICES) - 1)][1],
-                income_type="wage",
+                }
             )
 
             donor.save()

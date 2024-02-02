@@ -1,6 +1,5 @@
 django~=4.2.9,<5.0
 django-environ~=0.11.2
-django-cryptography~=1.1
 
 # captcha
 django-recaptcha==4.0.0
@@ -13,10 +12,10 @@ croniter~=2.0.1  # optional requirement for django-q2
 
 # MySQL database
 pymysql~=1.1.0
-cryptography~=42.0.1
+cryptography==42.0.2
 
 # Sentry
-sentry-sdk[django]~=1.39.2
+sentry-sdk[django]==1.40.0
 
 # Jinja2
 jinja2~=3.1.3
@@ -37,5 +36,8 @@ django-localflavor~=4.0.0
 
 # pdf creation
 reportlab~=4.0.9
-pypdf~=4.0.0
+pypdf==4.0.1
 svglib~=1.5.1
+
+# requests
+requests==2.31.0

@@ -1,4 +1,5 @@
 import hashlib
+import json
 from functools import partial
 
 from django.conf import settings
@@ -8,7 +9,6 @@ from django.db import models
 from django.db.models.functions import Lower
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-from django_cryptography.fields import encrypt
 
 
 def select_public_storage():
@@ -216,7 +216,7 @@ class Donor(models.Model):
     last_name = models.CharField(verbose_name=_("last name"), blank=True, null=False, default="", max_length=100)
     initial = models.CharField(verbose_name=_("initials"), blank=True, null=False, default="", max_length=5)
 
-    cnp = encrypt(models.CharField(verbose_name=_("CNP"), blank=True, null=False, default="", max_length=13))
+    encrypted_cnp = models.TextField(verbose_name=_("CNP"), blank=True, null=False, default="")
 
     city = models.CharField(
         verbose_name=_("city"),
@@ -234,7 +234,7 @@ class Donor(models.Model):
         max_length=100,
         db_index=True,
     )
-    address = models.JSONField(verbose_name=_("address"), blank=True, null=False, default=dict)
+    encrypted_address = models.TextField(verbose_name=_("address"), blank=True, null=False, default="")
 
     # originally: tel
     phone = models.CharField(verbose_name=_("telephone"), blank=True, null=False, default="", max_length=30)
@@ -285,3 +285,23 @@ class Donor(models.Model):
 
     def __str__(self):
         return f"{self.ngo} {self.date_created} {self.email}"
+
+    def set_cnp(self, cnp: str):
+        self.encrypted_cnp = settings.FERNET_OBJECT.encrypt(cnp.encode()).decode()
+
+    def get_cnp(self) -> str:
+        return self.decrypt_cnp(self.encrypted_cnp)
+
+    def set_address(self, address: dict):
+        self.encrypted_address = settings.FERNET_OBJECT.encrypt(str(address).encode()).decode()
+
+    def get_address(self) -> dict:
+        return self.decrypt_address(self.encrypted_address)
+
+    @staticmethod
+    def decrypt_cnp(cnp: str) -> str:
+        return settings.FERNET_OBJECT.decrypt(cnp.encode()).decode()
+
+    @staticmethod
+    def decrypt_address(address):
+        return json.loads(settings.FERNET_OBJECT.decrypt(address.encode()).decode())
