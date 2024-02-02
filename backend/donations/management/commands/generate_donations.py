@@ -1,6 +1,6 @@
 import random
 import string
-from typing import Any, Dict, List
+from typing import List
 
 from django.core.management import BaseCommand
 from faker import Faker
