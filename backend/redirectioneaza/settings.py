@@ -11,12 +11,14 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 import os
+from base64 import urlsafe_b64encode
 from copy import deepcopy
 from datetime import date, datetime
 from pathlib import Path
 
 import environ
 import sentry_sdk
+from cryptography.fernet import Fernet
 from django.utils import timezone
 from localflavor.ro.ro_counties import COUNTIES_CHOICES
 
@@ -461,3 +463,10 @@ if DEBUG or not RECAPTCHA_ENABLED:
 
 ZIP_ENDPOINT = env.str("ZIP_ENDPOINT")
 ZIP_SECRET = env.str("ZIP_SECRET")
+
+
+# encryption
+ECNRYPT_KEY = env.str("ECNRYPT_KEY")
+if len(ECNRYPT_KEY) != 32:
+    raise Exception("ECNRYPT_KEY must be exactly 32 characters long")
+FERNET_OBJECT = Fernet(urlsafe_b64encode(ECNRYPT_KEY.encode("utf-8")))

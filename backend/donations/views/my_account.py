@@ -4,6 +4,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.core.validators import validate_email
+from django.db import transaction
 from django.db.models import Q, QuerySet
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
@@ -56,12 +57,18 @@ class MyAccountHandler(AccountHandler):
                     grouped_donors[index] = []
                 grouped_donors[index].append(donor)
 
+        now = timezone.now()
+        can_donate = not now.date() > settings.DONATIONS_LIMIT
+
         context = {
             "user": request.user,
             "limit": settings.DONATIONS_LIMIT,
             "ngo": user_ngo,
             "donors": grouped_donors,
             "counties": settings.FORM_COUNTIES,
+            "can_donate": can_donate,
+            "has_signed_form": user_ngo.is_accepting_forms,
+            "current_year": timezone.now().year,
         }
         return render(request, self.template_name, context)
 
@@ -158,6 +165,7 @@ class NgoDetailsHandler(AccountHandler):
                 return redirect(reverse("association"))
 
     @staticmethod
+    @transaction.atomic
     def change_ngo_owner(ngo, new_ngo_owner):
         try:
             validate_email(new_ngo_owner)

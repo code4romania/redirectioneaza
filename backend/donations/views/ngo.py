@@ -321,27 +321,33 @@ class TwoPercentHandler(BaseHandler):
         donor = Donor(
             first_name=donor_dict["first_name"],
             last_name=donor_dict["last_name"],
+            initial=donor_dict["father"],
             city=donor_dict["city"],
             county=donor_dict["county"],
-            address={
-                "street": donor_dict["street"],
-                "number": donor_dict["number"],
-                "bl": donor_dict["bl"],
-                "sc": donor_dict["sc"],
-                "et": donor_dict["et"],
-                "ap": donor_dict["ap"],
-            },
-            email=donor_dict["email"],
             phone=donor_dict["tel"],
+            email=donor_dict["email"],
             is_anonymous=donor_dict["anonymous"],
-            two_years=two_years,
             income_type=donor_dict["income"],
+            two_years=two_years,
             # TODO:
             # make a request to get geo ip data for this user
             # geoip = self.get_geoip_data(),
             ngo=ngo,
             # TODO: 'filename' is unused
         )
+
+        donor.set_cnp(donor_dict["cnp"])
+        donor.set_address(
+            {
+                "street": donor_dict["street"],
+                "number": donor_dict["number"],
+                "bl": donor_dict["bl"],
+                "sc": donor_dict["sc"],
+                "et": donor_dict["et"],
+                "ap": donor_dict["ap"],
+            }
+        )
+
         donor.save()
 
         pdf = create_pdf(donor_dict, ngo_data)
