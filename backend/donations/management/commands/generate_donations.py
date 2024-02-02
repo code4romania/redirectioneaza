@@ -33,7 +33,6 @@ class Command(BaseCommand):
         target_org = options.get("org", None)
         self.stdout.write(f"Generating {total_donations} donations")
 
-        # create a list of all the NGOs
         if not target_org:
             ngos = list(Ngo.objects.filter(is_active=True))
         else:
@@ -68,13 +67,9 @@ class Command(BaseCommand):
                 }
             )
 
-            donor.save()
-            # generate a random donation
             generated_donations.append(donor)
 
-        # write to the database
         self.stdout.write(self.style.SUCCESS("Writing to the database..."))
-
-        # Donor.objects.bulk_create(generated_donations, batch_size=10)
+        Donor.objects.bulk_create(generated_donations, batch_size=10)
 
         self.stdout.write(self.style.SUCCESS("Done!"))
