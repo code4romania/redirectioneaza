@@ -19,6 +19,12 @@ stop-mysql:                       ## stops the mysql dev project
 drop-mysql:                       ## stops the mysql dev project
 	docker compose --profile mysql down -v -t 60
 
+stop-psql:                       ## stops the psql dev project
+	docker compose --profile psql down -t 60
+
+drop-psql:                       ## stops the psql dev project
+	docker compose --profile psql down -v -t 60
+
 stop-prod:                        ## stops the mysql dev project
 	docker compose -f docker-compose.prod.yml down -t 60
 
@@ -38,6 +44,12 @@ up-mysql:                         ## run the project with mysql
 upd-mysql:                        ## run the project with mysql in detached mode
 	docker compose --profile mysql up -d --build
 
+up-psql:                         ## run the project with psql
+	docker compose --profile psql up --build
+
+upd-psql:                        ## run the project with psql in detached mode
+	docker compose --profile psql up -d --build
+
 up-prod:                         ## run the project with mysql
 	docker compose -f docker-compose.prod.yml up --build
 
@@ -45,22 +57,22 @@ upd-prod:                        ## run the project with mysql in detached mode
 	docker compose -f docker-compose.prod.yml up -d --build
 
 ### Using the SQLite database
-run-sqlite: stop-mysql up-sqlite      ## run the project with sqlite and stop the mysql project beforehand
-rund-sqlite: stop-mysql upd-sqlite    ## run the project with sqlite in detached mode and stop the mysql project beforehand
-redo-sqlite: drop-sqlite up-sqlite    ## delete the db and rerun the project with sqlite
-redod-sqlite: drop-sqlite upd-sqlite  ## delete the db and rerun the project with sqlite in detached mode
+run-sqlite: stop-psql stop-mysql up-sqlite   ## run the project with sqlite and stop the mysql project beforehand
+rund-sqlite: stop-psql stop-mysql upd-sqlite ## run the project with sqlite in detached mode and stop the mysql project beforehand
+redo-sqlite: drop-sqlite up-sqlite           ## delete the db and rerun the project with sqlite
+redod-sqlite: drop-sqlite upd-sqlite         ## delete the db and rerun the project with sqlite in detached mode
 
 ### Using the MySQL database
-run-mysql: stop-sqlite up-mysql    ## run the project with mysql and stop the sqlite project beforehand
-rund-mysql: stop-sqlite upd-mysql  ## run the project with mysql in detached mode and stop the sqlite project beforehand
-redo-mysql: drop-mysql up-mysql    ## delete the db and rerun the project with mysql
-redod-mysql: drop-mysql upd-mysql  ## delete the db and rerun the project with mysql in detached mode
+run-mysql: stop-psql stop-sqlite up-mysql    ## run the project with mysql and stop the sqlite project beforehand
+rund-mysql: stop-psql stop-sqlite upd-mysql  ## run the project with mysql in detached mode and stop the sqlite project beforehand
+redo-mysql: drop-mysql up-mysql              ## delete the db and rerun the project with mysql
+redod-mysql: drop-mysql upd-mysql            ## delete the db and rerun the project with mysql in detached mode
 
-### With an image built for production
-run-prod: up-prod                 ## run the project with production settings
-rund-prod: upd-prod               ## run the project with production settings in detached mode
-redo-prod: drop-prod up-prod      ## delete the db and rerun the project with mysql
-redod-prod: drop-prod upd-prod    ## delete the db and rerun the project with mysql in detached mode
+### Using the PostgreSQL database
+run-psql: stop-mysql stop-sqlite up-psql      ## run the project with psql and stop the mysql project beforehand
+rund-psql: stop-mysql stop-sqlite upd-psql    ## run the project with psql in detached mode and stop the mysql project beforehand
+redo-psql: drop-psql up-psql                  ## delete the db and rerun the project with psql
+redod-psql: drop-psql upd-psql                ## delete the db and rerun the project with psql in detached mode
 
 ### Other run options
 run: run-sqlite                   ## set the default run command to sqlite
@@ -68,9 +80,9 @@ redo: redo-sqlite                 ## set the default redo command to sqlite
 rund: rund-sqlite                 ## set the default run command to sqlite
 redod: redod-sqlite               ## set the default redo command to sqlite
 
-stop: stop-sqlite stop-mysql stop-prod ## stop all running projects
+stop: stop-sqlite stop-mysql stop-psql stop-prod ## stop all running projects
 
-drop: drop-sqlite drop-mysql drop-prod ## drop all databases
+drop: drop-sqlite drop-mysql drop-psql drop-prod ## drop all databases
 
 
 ## [Monitoring the containers]
@@ -137,6 +149,7 @@ requirements-update:              ## run pip compile and rebuild the requirement
 ## [Clean-up]
 clean-docker:                     ## stop docker containers and remove orphaned images and volumes
 	docker compose --profile mysql down -t 60
+	docker compose --profile psql down -t 60
 	docker compose --profile sqlite3 down -t 60
 	docker compose -f docker-compose.prod.yml down -t 60
 	docker system prune -f

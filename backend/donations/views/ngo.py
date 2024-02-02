@@ -61,7 +61,7 @@ class FormSignature(BaseHandler):
     template_name = "signature.html"
 
     def __init__(self, **kwargs):
-        super().__init__(kwargs)
+        super().__init__(**kwargs)
         self.ngo = None
         self.donor = None
 

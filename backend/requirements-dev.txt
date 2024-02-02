@@ -121,6 +121,8 @@ platformdirs==4.1.0
     # via black
 psutil==5.9.8
     # via -r requirements.txt
+psycopg2-binary==2.9.9
+    # via -r requirements.txt
 pycparser==2.21
     # via
     #   -r requirements.txt

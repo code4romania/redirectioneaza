@@ -77,6 +77,8 @@ pillow==10.2.0
     # via reportlab
 psutil==5.9.8
     # via -r requirements.in
+psycopg2-binary==2.9.9
+    # via -r requirements.in
 pycparser==2.21
     # via cffi
 pymysql==1.1.0

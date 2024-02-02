@@ -227,23 +227,28 @@ WSGI_APPLICATION = "redirectioneaza.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+DATABASE_ENGINE = env("DATABASE_ENGINE")
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.abspath(os.path.join(BASE_DIR, ".db_sqlite", "db.sqlite3")),
-    }
+REMOTE_DATABASE_ENGINES = {
+    "mysql": "django.db.backends.mysql",
+    "psql": "django.db.backends.postgresql",
 }
-
-if env.str("DATABASE_ENGINE") == "mysql":
+if DATABASE_ENGINE in REMOTE_DATABASE_ENGINES.keys():
     DATABASES = {
         "default": {
-            "ENGINE": "django.db.backends.mysql",
-            "NAME": env.str("DATABASE_NAME"),
-            "USER": env.str("DATABASE_USER"),
-            "PASSWORD": env.str("DATABASE_PASSWORD"),
-            "HOST": env.str("DATABASE_HOST"),
-            "PORT": env.str("DATABASE_PORT"),
+            "ENGINE": REMOTE_DATABASE_ENGINES[DATABASE_ENGINE],
+            "NAME": env("DATABASE_NAME"),
+            "USER": env("DATABASE_USER"),
+            "PASSWORD": env("DATABASE_PASSWORD"),
+            "HOST": env("DATABASE_HOST"),
+            "PORT": env("DATABASE_PORT"),
+        }
+    }
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": os.path.abspath(os.path.join(BASE_DIR, ".db_sqlite", "db.sqlite3")),
         }
     }
 
@@ -421,6 +426,7 @@ DEFAULT_NGO_LOGO = env.str("DEFAULT_NGO_LOGO")
 LIST_OF_COUNTIES = [county[1] for county in COUNTIES_CHOICES]
 FORM_COUNTIES = deepcopy(LIST_OF_COUNTIES)
 FORM_COUNTIES.pop(LIST_OF_COUNTIES.index("București"))
+FORM_COUNTIES.insert(0, "Național")
 CONTACT_EMAIL_ADDRESS = env.str("CONTACT_EMAIL_ADDRESS")
 
 # Django Q2

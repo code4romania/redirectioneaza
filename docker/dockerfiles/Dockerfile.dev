@@ -11,7 +11,6 @@ ENV RUN_COLLECT_STATIC=False
 ENV RUN_CREATE_SUPER_USER=True
 ENV RUN_CREATE_ADMIN=True
 ENV RUN_SEED_GROUPS=True
-# ENV ENABLE_DJANGO_ADMIN=False
 
 ENV IS_CONTAINERIZED=True
 
@@ -21,7 +20,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y --no-install-recommends \
-        nginx gcc xz-utils gettext python3 python3-pip python3-venv python3-dev git
+        nginx gcc xz-utils gettext python3 python3-pip python3-venv python3-dev git postgresql-client libpq-dev && \
+    apt-get clean
 
 
 ARG S6_OVERLAY_VERSION=3.1.2.1

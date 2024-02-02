@@ -20,8 +20,22 @@ services:
     container_name: redirect_dev
     environment:
       - "DATABASE_ENGINE=mysql"
+      - "DATABASE_HOST=redirect_mysql"
+      - "DATABASE_PORT=3306"
     depends_on:
-      - db
+      - db_mysql_dev
+
+  webapp_psql:
+    profiles: [ "psql" ]
+    extends:
+      service: redirect_dev_base
+    container_name: redirect_dev
+    environment:
+      - "DATABASE_ENGINE=psql"
+      - "DATABASE_HOST=redirect_psql"
+      - "DATABASE_PORT=5432"
+    depends_on:
+      - db_psql_dev
 
   redirect_dev_base:
     profiles: [ "_base" ]
@@ -36,6 +50,8 @@ services:
       - ./backend:/var/www/redirect/backend
     environment:
       - "ENVIRONMENT=development"
+    env_file:
+      - .env
     ports:
       - "${WEBAPP_PORT:-8080}:8000"
 
@@ -55,14 +71,24 @@ services:
     ports:
       - "${API_PORT:-8123}:80"
 
-  db:
+  db_mysql_dev:
     profiles: [ "mysql" ]
     extends:
       file: dkcp.base.yml
-      service: db_base
-    container_name: redirect_mysql_dev
+      service: db_base_mysql
+    container_name: redirect_mysql
     volumes:
       - ./docker/init-mysql:/docker-entrypoint-initdb.d
 
+  db_psql_dev:
+    profiles: [ "psql" ]
+    extends:
+      file: dkcp.base.yml
+      service: db_base_psql
+    container_name: redirect_psql
+    volumes:
+      - ./docker/init-psql:/docker-entrypoint-initdb.d
+
 volumes:
   redirect_mysql:
+  redirect_psql:

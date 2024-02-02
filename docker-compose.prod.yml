@@ -15,6 +15,7 @@ services:
       - ./backend/media:/var/www/redirect/backend/media
     environment:
       - "ENVIRONMENT=production"
+      - "DATABASE_ENGINE=psql"
     ports:
       - "${WEBAPP_PORT:-8080}:80"
     depends_on:
@@ -35,7 +36,8 @@ services:
   db:
     extends:
       file: dkcp.base.yml
-      service: db_base
+      service: db_base_psql
+    container_name: redirect_psql
 
 volumes:
-  redirect_mysql:
+  redirect_psql:
