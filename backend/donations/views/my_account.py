@@ -11,7 +11,7 @@ from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.core.exceptions import PermissionDenied, ValidationError
-from django.http import Http404
+from django.http import Http404, HttpRequest
 
 from .base import AccountHandler
 from ..models.main import Donor, Ngo
@@ -43,7 +43,7 @@ class MyAccountHandler(AccountHandler):
     template_name = "ngo/my-account.html"
 
     @method_decorator(login_required(login_url=reverse_lazy("login")))
-    def get(self, request, *args, **kwargs):
+    def get(self, request: HttpRequest, *args, **kwargs):
         user_ngo: Ngo = request.user.ngo if request.user.ngo else None
         donors: QuerySet[Donor] = Donor.objects.filter(Q(ngo=user_ngo)).order_by("-date_created")
 
@@ -60,6 +60,9 @@ class MyAccountHandler(AccountHandler):
         now = timezone.now()
         can_donate = not now.date() > settings.DONATIONS_LIMIT
 
+        ngo_url = (
+            request.build_absolute_uri(reverse("twopercent", kwargs={"ngo_url": user_ngo.slug})) if user_ngo else ""
+        )
         context = {
             "user": request.user,
             "limit": settings.DONATIONS_LIMIT,
@@ -67,8 +70,9 @@ class MyAccountHandler(AccountHandler):
             "donors": grouped_donors,
             "counties": settings.FORM_COUNTIES,
             "can_donate": can_donate,
-            "has_signed_form": user_ngo.is_accepting_forms,
+            "has_signed_form": user_ngo.is_accepting_forms if user_ngo else False,
             "current_year": timezone.now().year,
+            "ngo_url": ngo_url,
         }
         return render(request, self.template_name, context)
 
