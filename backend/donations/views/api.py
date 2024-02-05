@@ -1,25 +1,25 @@
 import json
 import logging
-
-from urllib.request import Request, urlopen
-from datetime import datetime, date
+from datetime import date
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
-from django.core.exceptions import PermissionDenied, BadRequest
+from django.core.exceptions import BadRequest, PermissionDenied
 from django.core.files import File
-from django.http import HttpResponse, JsonResponse, Http404
+from django.core.management import call_command
+from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
-from django.utils.decorators import method_decorator
 from django.utils import timezone
+from django.utils.decorators import method_decorator
+from django.utils.translation import gettext as _
 from django.views.decorators.csrf import csrf_exempt
 
-from ..models.main import Ngo, Donor, ngo_directory_path, hash_id_secret
+from redirectioneaza.common.messaging import send_email
+from .base import AccountHandler, BaseHandler
 from ..models.jobs import Job, JobStatusChoices
+from ..models.main import Ngo
 from ..pdf import create_pdf
-from .base import BaseHandler, AccountHandler
-
 
 logger = logging.getLogger(__name__)
 
@@ -107,60 +107,20 @@ class GetNgoForms(AccountHandler):
 
         DONATION_LIMIT = date(timezone.now().year, 5, 25)
 
-        now = timezone.now()
-        start_of_year = datetime(now.year, 1, 1, 0, 0)
-
-        if now.date() > DONATION_LIMIT:
+        if timezone.now().date() > DONATION_LIMIT:
             return redirect(reverse("contul-meu"))
 
-        # get all the forms that have been completed since the start of the year
-        # and they are also signed
-        donations = Donor.objects.filter(ngo=ngo, date_created__gte=start_of_year, has_signed=True).all()
-
-        # extract only the urls from the array of models
-        urls = [u.pdf_file.url if u.pdf_file else u.pdf_url for u in donations if u.has_signed]
-
-        # if no forms
-        if len(urls) == 0:
-            logging.warn("Could not find any signed forms for this ngo: {}".format(ngo.id))
-            return redirect(reverse("contul-meu"))
-
-        # create job
-        job = Job(
-            ngo=ngo,
-            owner=request.user,
-        )
-        job.save()
-
-        export_destination = ngo_directory_path(
-            "exports", ngo, "export_{}_{}.zip".format(job.id, hash_id_secret(timezone.now(), job.id))
-        )
-
-        # make request
-        params = {
-            "passphrase": settings.ZIP_SECRET,
-            "urls": urls,
-            "path": export_destination,
-            "webhook": {
-                "url": "https://{}{}".format(settings.APEX_DOMAIN, reverse("webhook")),
-                "data": {"jobId": job.id},
-            },
-        }
-
-        request = Request(url=settings.ZIP_ENDPOINT, data=params, headers={"Content-type": "application/json"})
+        new_job: Job = Job(ngo=ngo, owner=request.user)
+        new_job.save()
 
         try:
-            httpresp = urlopen(request)
-            response = json.decode(httpresp.read())
-            logging.info(response)
-            httpresp.close()
+            call_command("download_donations", new_job.id, "--run")
         except Exception as e:
-            logging.exception(e)
-            # if job failed to start remotely
-            job.status = JobStatusChoices.ERROR
-            job.save()
-        finally:
-            return redirect(reverse("contul-meu"))
+            logging.error(e)
+            new_job.status = JobStatusChoices.ERROR
+            new_job.save()
+
+        return redirect(reverse("contul-meu"))
 
 
 @method_decorator(login_required(login_url=reverse_lazy("login")), name="dispatch")
@@ -215,8 +175,10 @@ class Webhook(BaseHandler):
 
         job.save()
 
-        # TODO:
-        # send email
-        # self.send_dynamic_email(
-        #     template_id="d-312ab0a4221944e3ac728ae08c504a7c", email=job.owner.email, data={"link": url}
-        # )
+        send_email(
+            subject=_("Exportul de formulare este gata"),
+            to_emails=[job.owner.email],
+            text_template="emails/zipped_forms/zipped_forms.txt",
+            html_template="emails/zipped_forms/zipped_forms.html",
+            context={"link": url},
+        )

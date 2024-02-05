@@ -54,6 +54,9 @@ class Command(BaseCommand):
                 city=fake.city(),
                 county=COUNTIES_CHOICES[random.randint(0, len(COUNTIES_CHOICES) - 1)][1],
                 income_type="wage",
+                has_signed=random.choice([True, False]),
+                two_years=random.choice([True, False]),
+                pdf_url="https://storage.googleapis.com/redirectioneaza/logo_bw.png",
             )
             donor.set_cnp(fake.ssn())
             donor.set_address(
