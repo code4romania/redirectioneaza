@@ -196,10 +196,8 @@ class Ngo(models.Model):
         return f"{self.name}"
 
     def get_full_form_url(self):
-        if self.prefilled_form:
-            return self.prefilled_form.url
-        elif self.form_url:
-            return self.form_url
+        if self.slug:
+            return f"redirectioneaza.ro/{self.slug}"
         else:
             return ""
 
