@@ -63,7 +63,9 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y --no-install-recommends \
-        nginx gcc xz-utils gettext
+        nginx gcc xz-utils gettext \
+        openjdk-17-jre-headless
+
 
 # configure process manager
 ARG S6_OVERLAY_VERSION=3.1.2.1
