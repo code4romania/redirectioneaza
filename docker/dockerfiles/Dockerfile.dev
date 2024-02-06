@@ -21,7 +21,7 @@ RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y --no-install-recommends \
         nginx gcc xz-utils gettext python3 python3-pip python3-venv python3-dev git postgresql-client libpq-dev \
-        openjdk-17-jre-headless && \
+        openjdk-17-jre-headless unzip && \
     apt-get clean
 
 
@@ -56,6 +56,19 @@ RUN python3 -m pip install --upgrade pip setuptools && \
 # install the frontend libraries:
 RUN npm install -g npm bower && \
     bower install --allow-root --config.interactive=false
+
+# add the DUK Integrator
+WORKDIR /var/www/dukintegrator/
+
+ADD https://static.anaf.ro/static/DUKIntegrator/dist_javaInclus20200203.zip /tmp/duki/
+ADD https://static.anaf.ro/static/10/Anaf/Declaratii_R/AplicatiiDec/D230_10042023.zip /tmp/d230/
+
+RUN unzip /tmp/duki/dist_javaInclus20200203.zip -d /var/www/dukintegrator/ && \
+    unzip /tmp/d230/D230_10042023.zip -d /var/www/dukintegrator/dist/lib && \
+    rm -rf /tmp/duki && \
+    rm -rf /tmp/d230 && \
+    rm -rf /var/www/dukintegrator/dist/jre6
+
 
 USER root
 

@@ -41,6 +41,27 @@ COPY ./backend/requirements.txt .
 RUN python3 -m pip install --upgrade pip setuptools && \
     python3 -m pip install -r ./requirements.txt
 
+
+FROM debian:bookworm-slim as dukintegrator
+
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y --no-install-recommends \
+        unzip && \
+    apt-get clean
+
+WORKDIR /var/www/dukintegrator/
+
+ADD https://static.anaf.ro/static/DUKIntegrator/dist_javaInclus20200203.zip /tmp/duki/
+ADD https://static.anaf.ro/static/10/Anaf/Declaratii_R/AplicatiiDec/D230_10042023.zip /tmp/d230/
+
+RUN unzip /tmp/duki/dist_javaInclus20200203.zip -d /var/www/dukintegrator/ && \
+    unzip /tmp/d230/D230_10042023.zip -d /var/www/dukintegrator/dist/lib/ && \
+    rm -rf /tmp/duki && \
+    rm -rf /tmp/d230 && \
+    rm -rf /var/www/dukintegrator/dist/jre6
+
+
 FROM python:3.11.7-slim-bookworm
 
 ENV PYTHONUNBUFFERED=1
@@ -90,6 +111,8 @@ COPY --from=backend "${VIRTUAL_ENV}" "${VIRTUAL_ENV}"
 COPY ./backend/ /var/www/redirect/backend/
 
 COPY --from=frontend /home/builduser/redirect/build/bower_components/ /var/www/redirect/backend/bower_components/
+
+COPY --from=dukintegrator /var/www/dukintegrator/ /var/www/dukintegrator/
 
 # activate the virtualenv:
 RUN . "${VIRTUAL_ENV}/bin/activate"
