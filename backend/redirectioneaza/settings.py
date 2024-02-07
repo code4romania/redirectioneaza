@@ -245,10 +245,14 @@ if DATABASE_ENGINE in REMOTE_DATABASE_ENGINES.keys():
         }
     }
 else:
+    # create a sqlite database in the .db_sqlite directory
+    sqlite_path = os.path.join(BASE_DIR, ".db_sqlite", "db.sqlite3")
+
+    file = open(sqlite_path, "w+")
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
-            "NAME": os.path.abspath(os.path.join(BASE_DIR, ".db_sqlite", "db.sqlite3")),
+            "NAME": os.path.abspath(sqlite_path),
         }
     }
 
@@ -472,7 +476,7 @@ ZIP_SECRET = env.str("ZIP_SECRET")
 
 
 # encryption
-ECNRYPT_KEY = env.str("ECNRYPT_KEY")
-if len(ECNRYPT_KEY) != 32:
-    raise Exception("ECNRYPT_KEY must be exactly 32 characters long")
-FERNET_OBJECT = Fernet(urlsafe_b64encode(ECNRYPT_KEY.encode("utf-8")))
+ENCRYPT_KEY = env.str("ENCRYPT_KEY", "%INVALID%")
+if len(ENCRYPT_KEY) != 32 or ENCRYPT_KEY == "%INVALID%":
+    raise Exception("ENCRYPT_KEY must be exactly 32 characters long")
+FERNET_OBJECT = Fernet(urlsafe_b64encode(ENCRYPT_KEY.encode("utf-8")))
