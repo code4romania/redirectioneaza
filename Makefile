@@ -74,6 +74,12 @@ rund-psql: stop-mysql stop-sqlite upd-psql    ## run the project with psql in de
 redo-psql: drop-psql up-psql                  ## delete the db and rerun the project with psql
 redod-psql: drop-psql upd-psql                ## delete the db and rerun the project with psql in detached mode
 
+### Using the production environment
+run-prod: stop-mysql stop-sqlite stop-psql up-prod   ## run the project with mysql and stop the sqlite project beforehand
+rund-prod: stop-mysql stop-sqlite stop-psql upd-prod ## run the project with mysql in detached mode and stop the sqlite project beforehand
+redo-prod: drop-prod up-prod                         ## delete the db and rerun the project with mysql
+redod-prod: drop-prod upd-prod                       ## delete the db and rerun the project with mysql in detached mode
+
 ### Other run options
 run: run-sqlite                   ## set the default run command to sqlite
 redo: redo-sqlite                 ## set the default redo command to sqlite
