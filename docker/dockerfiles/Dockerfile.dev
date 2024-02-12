@@ -67,7 +67,9 @@ RUN unzip /tmp/duki/dist_javaInclus20200203.zip -d /var/www/dukintegrator/ && \
     unzip /tmp/d230/D230_10042023.zip -d /var/www/dukintegrator/dist/lib && \
     rm -rf /tmp/duki && \
     rm -rf /tmp/d230 && \
-    rm -rf /var/www/dukintegrator/dist/jre6
+    rm -rf /var/www/dukintegrator/dist/jre6 \
+
+COPY ./docker/xml/ /var/www/dukintegrator/dist/xml/
 
 
 USER root
