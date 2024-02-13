@@ -3,16 +3,17 @@ from collections import OrderedDict
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied, ValidationError
 from django.core.validators import validate_email
 from django.db import transaction
 from django.db.models import Q, QuerySet
+from django.http import Http404, HttpRequest
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.utils.decorators import method_decorator
-from django.core.exceptions import PermissionDenied, ValidationError
-from django.http import Http404, HttpRequest
 
+from users.models import User
 from .base import AccountHandler
 from ..models.main import Donor, Ngo
 
@@ -44,7 +45,9 @@ class MyAccountHandler(AccountHandler):
 
     @method_decorator(login_required(login_url=reverse_lazy("login")))
     def get(self, request: HttpRequest, *args, **kwargs):
-        user_ngo: Ngo = request.user.ngo if request.user.ngo else None
+        user: User = request.user
+
+        user_ngo: Ngo = user.ngo if user.ngo else None
         donors: QuerySet[Donor] = Donor.objects.filter(Q(ngo=user_ngo)).order_by("-date_created")
 
         years = range(timezone.now().year, settings.START_YEAR, -1)
@@ -64,7 +67,7 @@ class MyAccountHandler(AccountHandler):
             request.build_absolute_uri(reverse("twopercent", kwargs={"ngo_url": user_ngo.slug})) if user_ngo else ""
         )
         context = {
-            "user": request.user,
+            "user": user,
             "limit": settings.DONATIONS_LIMIT,
             "ngo": user_ngo,
             "donors": grouped_donors,
