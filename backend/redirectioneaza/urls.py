@@ -75,7 +75,7 @@ urlpatterns = (
         path("forgot/", ForgotPasswordHandler.as_view(), name="forgot"),
         # verification url: used for signup, and reset password
         path(
-            "verify/<str:verification_type>/<int:user_id>-<uuid:signup_token>/",
+            "verify/<str:verification_type>/<uuid:user_id>-<uuid:signup_token>/",
             VerificationHandler.as_view(),
             name="verification",
         ),
