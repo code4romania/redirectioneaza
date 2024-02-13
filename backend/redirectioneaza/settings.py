@@ -246,9 +246,13 @@ if DATABASE_ENGINE in REMOTE_DATABASE_ENGINES.keys():
     }
 else:
     # create a sqlite database in the .db_sqlite directory
-    sqlite_path = os.path.join(BASE_DIR, ".db_sqlite", "db.sqlite3")
+    sqlite_path = Path(os.path.join(BASE_DIR, ".db_sqlite", "db.sqlite3"))
 
-    file = open(sqlite_path, "w+")
+    if not sqlite_path.exists():
+        sqlite_path.parent.mkdir(parents=True, exist_ok=True)
+        with sqlite_path.open("w") as f:
+            pass
+
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
