@@ -12,6 +12,7 @@ class Command(CommonCreateUserCommand):
 
     def handle(self, *args, **kwargs):
         kwargs["last_name"] = "Super"
+        kwargs["first_name"] = "User"
 
         self._create_user(
             admin_email=settings.DJANGO_ADMIN_EMAIL,
@@ -19,7 +20,7 @@ class Command(CommonCreateUserCommand):
             is_superuser=True,
             is_staff=True,
             first_name=kwargs.get("first_name", ""),
-            last_name="Super",
+            last_name=kwargs.get("last_name", ""),
         )
         logger.info("Super admin created successfully")
 
