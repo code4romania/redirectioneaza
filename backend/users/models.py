@@ -45,7 +45,7 @@ class User(AbstractUser):
     instead of the username
     """
 
-    id = models.UUIDField(primary_key=True, unique=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(verbose_name="ID", primary_key=True, unique=True, default=uuid.uuid4, editable=False)
 
     # We ignore the "username" field because the authentication
     # will be done by email + password
