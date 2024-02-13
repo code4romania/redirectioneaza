@@ -98,6 +98,9 @@ class LoginHandler(AccountHandler):
         user = authenticate(email=email, password=password)
         if user is not None:
             login(request, user)
+            if user.is_superuser:
+                return redirect(reverse("admin-index"))
+
             return redirect(reverse("contul-meu"))
 
         logger.warning("Invalid email or password: {0}".format(email))
