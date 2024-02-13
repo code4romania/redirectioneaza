@@ -8,7 +8,7 @@ asgiref==3.7.2
     # via
     #   -r requirements.txt
     #   django
-black==24.1.0
+black==24.2.0
     # via -r requirements-dev.in
 blessed==1.20.0
     # via -r requirements.txt
@@ -50,7 +50,7 @@ cssselect2==0.7.0
     # via
     #   -r requirements.txt
     #   svglib
-django==4.2.9
+django==4.2.10
     # via
     #   -r requirements.txt
     #   django-localflavor
@@ -72,7 +72,7 @@ django-recaptcha==4.0.0
     # via -r requirements.txt
 django-storages==1.14.2
     # via -r requirements.txt
-faker==22.5.1
+faker==23.1.0
     # via -r requirements-dev.in
 gevent==23.9.1
     # via -r requirements.txt
@@ -153,19 +153,19 @@ pytz==2023.3.post1
     # via
     #   -r requirements.txt
     #   croniter
-reportlab==4.0.9
+reportlab==4.1.0
     # via
     #   -r requirements.txt
     #   svglib
 requests==2.31.0
     # via -r requirements.txt
-ruff==0.1.14
+ruff==0.2.1
     # via -r requirements-dev.in
 s3transfer==0.10.0
     # via
     #   -r requirements.txt
     #   boto3
-sentry-sdk==1.40.0
+sentry-sdk==1.40.3
     # via -r requirements.txt
 six==1.16.0
     # via
