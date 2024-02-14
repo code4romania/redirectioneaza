@@ -18,7 +18,7 @@ pymysql~=1.1.0
 psycopg2-binary~=2.9.9
 
 # Sentry
-sentry-sdk[django]==1.40.3
+sentry-sdk[django]~=1.40.4
 
 # Jinja2
 jinja2~=3.1.3
