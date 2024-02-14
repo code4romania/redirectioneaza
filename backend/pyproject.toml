@@ -1,19 +1,6 @@
 [tool.ruff]
 # Enable the following rules
 # More info: https://docs.astral.sh/ruff/rules/
-select = [
-    "DJ",   # Flake8-Django - https://docs.astral.sh/ruff/rules/#flake8-django-dj
-    "E",    # Pycodestyle errors - https://docs.astral.sh/ruff/rules/#error-e
-    "W",    # Pycodestyle warnings - https://docs.astral.sh/ruff/rules/#warning-w
-    "F",    # Pyflakes - https://docs.astral.sh/ruff/rules/#pyflakes-f
-    "T10",  # Debugger - https://docs.astral.sh/ruff/rules/#flake8-debugger-t10
-    "T20",  # Remove print/pprint statements - https://docs.astral.sh/ruff/rules/#flake8-print-t20
-]
-ignore = []
-
-# Allow autofix for all enabled rules (when `--fix`) is provided.
-fixable = ["A", "B", "C", "D", "E", "F", "G", "I", "N", "Q", "S", "T", "W", "ANN", "ARG", "BLE", "COM", "DJ", "DTZ", "EM", "ERA", "EXE", "FBT", "ICN", "INP", "ISC", "NPY", "PD", "PGH", "PIE", "PL", "PT", "PTH", "PYI", "RET", "RSE", "RUF", "SIM", "SLF", "TCH", "TID", "TRY", "UP", "YTT"]
-unfixable = []
 
 # Exclude a variety of commonly ignored directories.
 exclude = [
@@ -46,18 +33,36 @@ exclude = [
 # Same as Black.
 line-length = 120
 
-# Allow unused variables when underscore-prefixed.
-dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
-
 # Assume Python 3.11.
 target-version = "py311"
 
-[tool.ruff.mccabe]
+
+[lint]
+# Allow unused variables when underscore-prefixed.
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+ignore = []
+
+select = [
+    "DJ",   # Flake8-Django - https://docs.astral.sh/ruff/rules/#flake8-django-dj
+    "E",    # Pycodestyle errors - https://docs.astral.sh/ruff/rules/#error-e
+    "W",    # Pycodestyle warnings - https://docs.astral.sh/ruff/rules/#warning-w
+    "F",    # Pyflakes - https://docs.astral.sh/ruff/rules/#pyflakes-f
+    "T10",  # Debugger - https://docs.astral.sh/ruff/rules/#flake8-debugger-t10
+    "T20",  # Remove print/pprint statements - https://docs.astral.sh/ruff/rules/#flake8-print-t20
+]
+# Allow autofix for all enabled rules (when `--fix`) is provided.
+fixable = ["A", "B", "C", "D", "E", "F", "G", "I", "N", "Q", "S", "T", "W", "ANN", "ARG", "BLE", "COM", "DJ", "DTZ", "EM", "ERA", "EXE", "FBT", "ICN", "INP", "ISC", "NPY", "PD", "PGH", "PIE", "PL", "PT", "PTH", "PYI", "RET", "RSE", "RUF", "SIM", "SLF", "TCH", "TID", "TRY", "UP", "YTT"]
+unfixable = []
+
+
+[tool.ruff.lint.mccabe]
 # Unlike Flake8, default to a complexity level of 10.
 max-complexity = 10
 
-[tool.ruff.extend-per-file-ignores]
+
+[tool.ruff.lint.extend-per-file-ignores]
 "_appengine_legacy/**" = ["A", "B", "C", "D", "E", "F", "G", "I", "N", "Q", "S", "T", "W", "ANN", "ARG", "BLE", "COM", "DJ", "DTZ", "EM", "ERA", "EXE", "FBT", "ICN", "INP", "ISC", "NPY", "PD", "PGH", "PIE", "PL", "PT", "PTH", "PYI", "RET", "RSE", "RUF", "SIM", "SLF", "TCH", "TID", "TRY", "UP", "YTT"]
+
 
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "redirectioneaza.test_settings"
@@ -72,6 +77,7 @@ python_files = [
 filterwarnings = [
     "ignore:The django.utils.baseconv module is deprecated."
 ]
+
 
 [tool.black]
 line-length = 120
