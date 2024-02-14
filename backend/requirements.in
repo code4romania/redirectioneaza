@@ -1,11 +1,11 @@
-django~=4.2.10,<5.0
+django~=4.2.10
 django-environ~=0.11.2
 
 # captcha
-django-recaptcha==4.0.0
+django-recaptcha~=4.0.0
 
 # encrypting data
-cryptography==42.0.2
+cryptography~=42.0.2
 
 # django-q
 django-q2~=1.6.1
@@ -39,8 +39,8 @@ django-localflavor~=4.0.0
 
 # pdf creation
 reportlab~=4.1.0
-pypdf==4.0.1
+pypdf~=4.0.1
 svglib~=1.5.1
 
 # requests
-requests==2.31.0
+requests~=2.31.0
