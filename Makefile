@@ -131,14 +131,14 @@ bash:                             ## start a bash shell
 ## [Requirements management]
 requirements-build:               ## run pip compile and add requirements from the *.in files
 	docker exec redirect_dev sh -c " \
-		cd ./backend \
+		cd ./backend && \
 		pip-compile --strip-extras --resolver=backtracking -o requirements.txt requirements.in && \
 		pip-compile --strip-extras --resolver=backtracking -o requirements-dev.txt requirements-dev.in \
 	"
 
 requirements-update:              ## run pip compile and rebuild the requirements files
 	docker exec redirect_dev sh -c " \
-		cd ./backend \
+		cd ./backend && \
 		pip-compile --strip-extras --resolver=backtracking -r -U -o requirements.txt requirements.in && \
 		pip-compile --strip-extras --resolver=backtracking -r -U -o requirements-dev.txt requirements-dev.in && \
 		chmod a+r requirements.txt && \
