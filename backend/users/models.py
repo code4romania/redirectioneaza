@@ -78,6 +78,9 @@ class User(AbstractUser):
 
     token_timestamp = models.DateTimeField(verbose_name=_("validation token timestamp"), blank=True, null=True)
 
+    date_created = models.DateTimeField(verbose_name=_("date created"), auto_now_add=True)
+    date_updated = models.DateTimeField(verbose_name=_("date updated"), auto_now=True)
+
     objects = CustomUserManager()
 
     USERNAME_FIELD = "email"
