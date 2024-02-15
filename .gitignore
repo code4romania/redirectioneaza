@@ -1,3 +1,7 @@
+local_tools/*
+!local_tools/main.py
+!local_tools/requirements.txt
+
 *.pyc
 
 bower_components/
