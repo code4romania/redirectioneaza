@@ -72,6 +72,9 @@ env = environ.Env(
     NO_REPLY_EMAIL=(str, "no-reply@redirectioneaza.ro"),
     # django-q2 settings
     BACKGROUND_WORKERS_COUNT=(int, 1),
+    IMPORT_METHOD=(str, "async"),
+    IMPORT_USE_BATCHES=(bool, True),
+    IMPORT_BATCH_SIZE=(int, 100),
     # recaptcha settings
     CAPTCHA_PUBLIC_KEY=(str, ""),
     CAPTCHA_PRIVATE_KEY=(str, ""),
@@ -170,6 +173,7 @@ INSTALLED_APPS = [
     "donations",
     "partners",
     "users",
+    "importer",
 ]
 
 if not env.bool("USE_S3"):
@@ -459,7 +463,9 @@ Q_CLUSTER = {
     "guard_cycle": 3,
     "catch_up": False,
 }
-
+IMPORT_METHOD = env.str("IMPORT_METHOD")
+IMPORT_USE_BATCHES = env.bool("IMPORT_USE_BATCHES")
+IMPORT_BATCH_SIZE = env.int("IMPORT_BATCH_SIZE")
 
 # reCAPTCHA
 

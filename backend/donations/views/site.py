@@ -24,20 +24,22 @@ class HomePage(BaseHandler):
         }
 
         if request.partner:
+            ngo_queryset = request.partner.ngos
             context.update(
                 {
                     "company_name": request.partner.name,
                     "custom_header": request.partner.has_custom_header,
                     "custom_note": request.partner.has_custom_note,
-                    "ngos": request.partner.ngos.filter(is_active=True).order_by("name"),
                 }
             )
         else:
+            ngo_queryset = Ngo.objects
             context["stats"] = {
                 "ngos": Ngo.objects.count(),
                 "forms": Donor.objects.filter(date_created__gte=datetime(now.year, 1, 1)).count(),
             }
-            context["ngos"] = Ngo.objects.filter(is_active=True).order_by("name")
+
+        context["ngos"] = ngo_queryset.filter(is_active=True).order_by("-date_created")[0:4]
 
         return render(request, self.template_name, context)
 

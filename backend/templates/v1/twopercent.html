@@ -6,6 +6,9 @@
     {% if ngo.logo %}
         <meta property="og:image" content="{{ ngo.logo.url }}" />
         <meta property="og:image:secure_url" content="{{ ngo.logo.url }}" />
+    {% elif ngo.logo_url %}
+        <meta property="og:image" content="{{ ngo.logo_url }}" />
+        <meta property="og:image:secure_url" content="{{ ngo.logo_url }}" />
     {% endif %}
 
     <meta property="og:type" content="website" />
@@ -15,8 +18,8 @@
 {% endblock %}
 
 {# error messages, also found in the js file twopercent.js #}
-{% set server_error = "Se pare că am întampinat o eroare pe server. Vă rugam incercați din nou." %}
-{% set fields_error = "Se pare că urmatoarele date sunt invalide: " %}
+{% set server_error = "Se pare că am întâmpinat o eroare pe server. Vă rugam încercați din nou." %}
+{% set fields_error = "Se pare că următoarele date sunt invalide: " %}
 
 {% block content %}
 
