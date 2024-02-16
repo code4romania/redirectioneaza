@@ -7,6 +7,7 @@ class ImportModelTypeChoices(models.TextChoices):
     USER = "users.User", "User"
     NGO = "donations.Ngo", "Ngo"
     DONOR = "donations.Donor", "Donor"
+    PARTNER = "partners.Partner", "Partner"
 
 
 class ImportStatusChoices(models.TextChoices):

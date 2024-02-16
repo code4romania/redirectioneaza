@@ -1,7 +1,7 @@
 import csv
 import logging
 from datetime import datetime
-from typing import Dict, List
+from typing import Any, Dict, List, Optional, Union
 
 from django.apps import apps as django_apps
 from django.conf import settings
@@ -22,6 +22,19 @@ def parse_imported_date(date_str: str):
     return datetime_obj_with_tz
 
 
+def ngo_slugs_to_ids(ngo_slugs: str) -> List[int]:
+    ngo_slugs = ngo_slugs.split(",")
+    ngo_ids = []
+
+    for slug in ngo_slugs:
+        try:
+            ngo_ids.append(Ngo.objects.get(slug=slug).id)
+        except Ngo.DoesNotExist:
+            logger.warning(f"NGO with slug {slug} not found")
+
+    return ngo_ids
+
+
 IMPORT_DETAILS = {
     # TODO: The old "logo" field should be saved to the new "logo_url" field
     ImportModelTypeChoices.NGO.value: {
@@ -34,6 +47,7 @@ IMPORT_DETAILS = {
             "bank_account": lambda x: x.replace(" ", ""),
             "address": lambda x: x.strip(),
         },
+        "fields_post": {},
     },
     ImportModelTypeChoices.USER.value: {
         "default_header": "old_password,is_verified,last_name,first_name,ngo_slug,date_updated,date_created,email",
@@ -41,6 +55,7 @@ IMPORT_DETAILS = {
             "date_created": parse_imported_date,
             "date_updated": parse_imported_date,
         },
+        "fields_post": {},
     },
     ImportModelTypeChoices.DONOR.value: {
         "default_header": (
@@ -49,6 +64,15 @@ IMPORT_DETAILS = {
         ),
         "fields_mapping": {
             "date_created": parse_imported_date,
+        },
+        "fields_post": {},
+    },
+    ImportModelTypeChoices.PARTNER.value: {
+        "default_header": "subdomain,name,has_custom_header,has_custom_note,ngo_slugs",
+        "fields_mapping": {},
+        "fields_post": {
+            "identifier": "subdomain",
+            "fields": {"ngos": ngo_slugs_to_ids},
         },
     },
 }
@@ -72,7 +96,7 @@ def process_import_task(import_id):
     return import_obj
 
 
-def run_import(import_obj):
+def run_import(import_obj: ImportJob):
     raw_data: List[Dict] = extract_data_from_csv(import_obj)
 
     import_model_name = ImportModelTypeChoices(import_obj.import_type).value
@@ -81,21 +105,31 @@ def run_import(import_obj):
     import_data = process_raw_data(import_obj, import_model, raw_data)
 
     logger.info(
-        f"Importing {len(import_data)} rows into {import_model_name} "
+        f"Importing {len(import_data['processed_data'])} rows into {import_model_name} "
         f"with a batch size of {settings.IMPORT_BATCH_SIZE}"
     )
 
-    import_data_into_db(import_data, import_model)
+    import_data_into_db(import_obj, import_data, import_model)
 
     import_obj.status = ImportStatusChoices.DONE
     import_obj.save()
 
 
-def import_data_into_db(import_data, import_model):
+def import_data_into_db(import_obj: ImportJob, import_data: Dict[str, Union[List[Dict], Dict]], import_model):
     batch_number = 0
     items_imported = 0
-    for i in range(0, len(import_data), settings.IMPORT_BATCH_SIZE):
-        import_batch = import_data[i : i + settings.IMPORT_BATCH_SIZE]
+
+    post_import_details = IMPORT_DETAILS[import_obj.import_type]["fields_post"]
+    post_data_identifier = post_import_details.get("identifier", None)
+
+    existing_items: List[Any] = []
+    if post_data := import_data.get("post_data"):
+        existing_items = list(import_model.objects.all().values_list(post_data_identifier, flat=True))
+
+    processed_data = import_data["processed_data"]
+
+    for i in range(0, len(processed_data), settings.IMPORT_BATCH_SIZE):
+        import_batch = processed_data[i : i + settings.IMPORT_BATCH_SIZE]
         try:
             batch_ = [import_model(**item) for item in import_batch]
             import_model.objects.bulk_create(batch_)
@@ -117,20 +151,47 @@ def import_data_into_db(import_data, import_model):
 
         batch_number += 1
 
+    if post_data:
+        for identifier, data in post_data.items():
+            if identifier in existing_items:
+                continue
+            else:
+                obj = import_model.objects.get(**{post_data_identifier: identifier})
+
+            for field, value in data.items():
+                field_processor: Optional[callable] = post_import_details["fields"][field]
+
+                if field_processor:
+                    value = field_processor(value)
+
+                getattr(obj, field).add(*value)
+
+            obj.save()
+
     logger.info(f"Imported {items_imported} items into {import_model}")
 
 
-def process_raw_data(import_obj: ImportJob, import_model: ModelBase, raw_data: List[Dict]) -> List[Dict]:
+def process_raw_data(
+    import_obj: ImportJob, import_model: ModelBase, raw_data: List[Dict]
+) -> Dict[str, Union[List[Dict], Dict]]:
     logger.info(
         f"Importing {len(raw_data)} rows into {import_model} " f"with a batch size of {settings.IMPORT_BATCH_SIZE}"
     )
+
+    field_details = IMPORT_DETAILS[import_obj.import_type]
+
+    post_data = {}
+    post_data_identifier = field_details["fields_post"].get("identifier", None)
 
     processed_data: List[Dict] = []
     for index, raw_item in enumerate(raw_data):
         item = {}
         for field, value in raw_item.items():
-            if field in IMPORT_DETAILS[import_obj.import_type]["fields_mapping"]:
-                value = IMPORT_DETAILS[import_obj.import_type]["fields_mapping"][field](value)
+            if field in field_details.get("fields_post", {}).get("fields", {}).keys():
+                post_data[item[post_data_identifier]] = {field: value}
+                continue
+            elif field in field_details["fields_mapping"]:
+                value = field_details["fields_mapping"][field](value)
             elif field == "ngo_slug":
                 if not value:
                     continue
@@ -148,7 +209,7 @@ def process_raw_data(import_obj: ImportJob, import_model: ModelBase, raw_data: L
 
         processed_data.append(item)
 
-    return processed_data
+    return {"processed_data": processed_data, "post_data": post_data}
 
 
 def extract_data_from_csv(import_obj) -> List[Dict]:

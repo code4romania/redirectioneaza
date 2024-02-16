@@ -12,7 +12,7 @@ class Partner(models.Model):
     is_active = models.BooleanField(verbose_name=_("is active"), db_index=True, default=True)
     has_custom_header = models.BooleanField(verbose_name=_("has custom header"), default=False)
     has_custom_note = models.BooleanField(verbose_name=_("has custom note"), default=False)
-    ngos = models.ManyToManyField(verbose_name=_("NGOs"), to=Ngo, blank=True)
+    ngos = models.ManyToManyField(verbose_name=_("NGOs"), to=Ngo, blank=True, related_name="partners")
     date_created = models.DateTimeField(verbose_name=_("date created"), auto_now_add=timezone.now, editable=False)
     date_updated = models.DateTimeField(verbose_name=_("date updated"), auto_now=timezone.now, editable=False)
 
