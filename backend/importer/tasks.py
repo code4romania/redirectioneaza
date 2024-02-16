@@ -23,10 +23,11 @@ def parse_imported_date(date_str: str):
 
 
 IMPORT_DETAILS = {
+    # TODO: The old "logo" field should be saved to the new "logo_url" field
     ImportModelTypeChoices.NGO.value: {
         "default_header": (
             "slug,has_special_status,description,name,bank_account,registration_number,address,county,"
-            "active_region,phone,website,email,is_verified,date_created,is_active,logo,is_accepting_forms"
+            "active_region,phone,website,email,is_verified,date_created,is_active,logo_url,is_accepting_forms"
         ),
         "fields_mapping": {
             "date_created": parse_imported_date,
