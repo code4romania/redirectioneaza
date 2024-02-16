@@ -186,6 +186,8 @@ module "ecs_redirectioneaza" {
 
   allowed_secrets = [
     aws_secretsmanager_secret.app_secret_key.arn,
+    aws_secretsmanager_secret.app_encrypt_key.arn,
+    aws_secretsmanager_secret.app_old_session_key.arn,
     aws_secretsmanager_secret.seed_admin.arn,
     aws_secretsmanager_secret.sentry_dsn.arn,
     aws_secretsmanager_secret.recaptcha.arn,
