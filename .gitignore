@@ -2,6 +2,12 @@ local_tools/*
 !local_tools/main.py
 !local_tools/requirements.txt
 
+# env files
+.env
+.env.*
+!.env.example
+
+
 *.pyc
 
 bower_components/
@@ -250,7 +256,6 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
 .venv
 env/
 venv/
