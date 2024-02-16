@@ -163,11 +163,11 @@ module "ecs_redirectioneaza" {
       valueFrom = "${aws_secretsmanager_secret.rds.arn}:port::"
     },
     {
-      name      = "SEED_ADMIN_EMAIL"
+      name      = "DJANGO_ADMIN_EMAIL"
       valueFrom = "${aws_secretsmanager_secret.seed_admin.arn}:email::"
     },
     {
-      name      = "SEED_ADMIN_PASSWORD"
+      name      = "DJANGO_ADMIN_PASSWORD"
       valueFrom = "${aws_secretsmanager_secret.seed_admin.arn}:password::"
     },
     {
