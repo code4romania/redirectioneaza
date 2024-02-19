@@ -21,6 +21,8 @@ data "aws_iam_policy_document" "ecs_task" {
     resources = [
       module.s3_public.arn,
       "${module.s3_public.arn}/*",
+      module.s3_static.arn,
+      "${module.s3_static.arn}/*",
       module.s3_private.arn,
       "${module.s3_private.arn}/*"
     ]
@@ -62,8 +64,11 @@ data "aws_iam_policy_document" "ecs_task_assume" {
 
 data "aws_iam_policy_document" "s3_cloudfront_public" {
   statement {
-    actions   = ["s3:GetObject"]
-    resources = ["${module.s3_public.arn}/*"]
+    actions = ["s3:GetObject"]
+    resources = [
+      "${module.s3_public.arn}/*",
+      "${module.s3_static.arn}/*",
+    ]
 
     principals {
       type        = "Service"
