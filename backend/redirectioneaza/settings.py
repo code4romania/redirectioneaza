@@ -40,6 +40,7 @@ env = environ.Env(
     ENVIRONMENT=(str, "production"),
     DATA_UPLOAD_MAX_NUMBER_FIELDS=(int, 1000),
     OLD_SESSION_KEY=(str, ""),
+    LOG_LEVEL=(str, "INFO"),
     # db settings
     DATABASE_ENGINE=(str, "sqlite3"),
     DATABASE_NAME=(str, "default"),
@@ -173,6 +174,26 @@ if env.str("SENTRY_DSN"):
         environment=ENVIRONMENT,
         release=VERSION_SUFFIX,
     )
+
+
+# Logging
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "level": env.str("LOG_LEVEL"),
+            "class": "logging.StreamHandler",
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console"],
+            "level": env.str("LOG_LEVEL"),
+        },
+    },
+}
 
 # Application definition
 
