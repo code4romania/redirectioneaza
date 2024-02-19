@@ -1,6 +1,7 @@
-from django.db import models
-from django.utils.translation import gettext_lazy as _
 from django_q.tasks import async_task
+from django.db import models
+from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 
 class ImportModelTypeChoices(models.TextChoices):
@@ -26,7 +27,7 @@ class ImportJob(models.Model):
     has_header = models.BooleanField(_("Has header"), blank=False, null=False, default=True)
     csv_file = models.FileField(_("File"), upload_to="imports/")
 
-    uploaded_at = models.DateTimeField(_("Uploaded at"), auto_now_add=True)
+    uploaded_at = models.DateTimeField(_("Uploaded at"), auto_now_add=timezone.now)
 
     def process_import(self):
         import_id = self.id
