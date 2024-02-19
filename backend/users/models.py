@@ -86,6 +86,8 @@ class User(AbstractUser):
     date_created = models.DateTimeField(verbose_name=_("date created"), auto_now_add=timezone.now, db_index=True)
     date_updated = models.DateTimeField(verbose_name=_("date updated"), auto_now=timezone.now, db_index=True)
 
+    old_id = models.CharField(verbose_name=_("old ID"), max_length=64, blank=True, null=True, db_index=True)
+
     objects = CustomUserManager()
 
     USERNAME_FIELD = "email"

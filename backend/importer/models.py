@@ -9,6 +9,7 @@ class ImportModelTypeChoices(models.TextChoices):
     NGO = "donations.Ngo", "Ngo"
     DONOR = "donations.Donor", "Donor"
     PARTNER = "partners.Partner", "Partner"
+    JOB = "donations.Job", "Job"
 
 
 class ImportStatusChoices(models.TextChoices):

@@ -162,6 +162,14 @@ IMPORT_DETAILS = {
             "fields": {"ngos": ngo_slugs_to_ids},
         },
     },
+    ImportModelTypeChoices.JOB.value: {
+        "default_header": "date_created,ngo_slug,owner_id,status,url",
+        "fields_mapping": {
+            "date_created": parse_imported_date,
+        },
+        # TODO: create an import branch to allow one-by-one import of ite
+        "fields_post": {},
+    },
 }
 
 
