@@ -233,9 +233,10 @@ class SignupHandler(AccountHandler):
 
 
 class VerificationHandler(AccountHandler):
-    """handler used to:
-    verify new account
-    reset user password
+    """
+    handler used to:
+        v - verify new account
+        p - reset user password
     """
 
     template_name = "parola-noua.html"
