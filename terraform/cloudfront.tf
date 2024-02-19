@@ -18,8 +18,9 @@ resource "aws_cloudfront_distribution" "main" {
   }
 
   origin {
-    domain_name = module.s3_public.bucket_regional_domain_name
-    origin_id   = module.s3_public.id
+    domain_name              = module.s3_public.bucket_regional_domain_name
+    origin_access_control_id = aws_cloudfront_origin_access_control.oac.id
+    origin_id                = module.s3_public.id
   }
 
   # S3 public

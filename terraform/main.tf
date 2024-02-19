@@ -88,6 +88,10 @@ module "ecs_redirectioneaza" {
       value = module.s3_public.bucket
     },
     {
+      name  = "AWS_S3_PUBLIC_ACL"
+      value = "private"
+    },
+    {
       name  = "AWS_REGION_NAME"
       value = var.region
     },
@@ -189,11 +193,6 @@ module "ecs_redirectioneaza" {
 
 module "s3_public" {
   source = "./modules/s3"
-
-  block_public_acls       = false
-  block_public_policy     = false
-  ignore_public_acls      = false
-  restrict_public_buckets = false
 
   name   = "${local.namespace}-public"
   policy = data.aws_iam_policy_document.s3_cloudfront_public.json
