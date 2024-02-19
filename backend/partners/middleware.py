@@ -75,11 +75,18 @@ class PartnerDomainMiddleware:
         # Code to be executed for each request/response after
         # the view is called.
 
-        logger.info(
-            "Response status %s for domain %s corresponding to partner %s",
-            response.status_code,
-            request.get_host(),
-            request.partner or "None",
-        )
+        if hasattr(response, "status_code"):
+            logger.info(
+                "Response status %s for domain %s corresponding to partner %s",
+                response.status_code,
+                request.get_host(),
+                request.partner or "None",
+            )
+        else:
+            logger.info(
+                "Response for domain %s corresponding to partner %s",
+                request.get_host(),
+                request.partner or "None",
+            )
 
         return response
