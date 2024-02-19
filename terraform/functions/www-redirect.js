@@ -6,13 +6,13 @@ function handler(event) {
     }
   }
 
-  if (!event.request.headers.host.value.startsWith('www.')) {
+  if (event.request.headers.host.value.startsWith('www.')) {
     return {
       statusCode: 301,
       statusDescription: 'Moved Permanently',
       headers: {
         location: {
-          value: `https://www.${event.request.headers.host.value}${event.request.uri}`,
+          value: `https://${event.request.headers.host.value.replace('www.', '')}${event.request.uri}`,
         },
       },
     }

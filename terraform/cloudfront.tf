@@ -160,7 +160,7 @@ resource "aws_cloudfront_origin_access_control" "oac" {
 resource "aws_cloudfront_function" "www_redirect" {
   name    = "${local.namespace}-www-redirect"
   runtime = "cloudfront-js-1.0"
-  comment = "Redirects ${var.domain_name} to www.${var.domain_name}"
+  comment = "Redirects www.${var.domain_name} to ${var.domain_name}"
   publish = true
   code    = file("${path.module}/functions/www-redirect.js")
 }

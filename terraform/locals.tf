@@ -7,7 +7,7 @@ locals {
 
   domains = [
     var.domain_name,
-    "www.${var.domain_name}",
+    "*.${var.domain_name}",
   ]
 
   ecs = {
