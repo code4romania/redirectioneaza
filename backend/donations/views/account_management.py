@@ -107,8 +107,8 @@ class LoginHandler(AccountHandler):
             user_model = get_user_model()
             try:
                 user = user_model.objects.get(
-                    models.Q(email=email) & (
-                        models.Q(old_password__isnull=False) | models.Q(old_password="")))
+                    models.Q(email=email) & (models.Q(old_password__isnull=False) | models.Q(old_password=""))
+                )
             except user_model.DoesNotExist:
                 user = None
 
