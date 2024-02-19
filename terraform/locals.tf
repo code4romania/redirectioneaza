@@ -1,7 +1,7 @@
 locals {
   namespace  = "redirectioneaza-${var.env}"
-  image_repo = "ghrc.io/code4romania/redirectioneaza"
-  image_tag  = "2.0.0"
+  image_repo = data.aws_ecr_repository.this.repository_url
+  image_tag  = "2.0.0-rc.1"
 
   availability_zone = data.aws_availability_zones.current.names[0]
 
