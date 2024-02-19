@@ -114,6 +114,9 @@ class User(AbstractUser):
         if commit:
             self.save()
 
+    def check_old_password(self, password: str = ""):
+        return False
+
     @staticmethod
     def create_admin_login_url(next_url=""):
         """
