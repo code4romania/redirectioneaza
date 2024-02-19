@@ -41,6 +41,9 @@ env = environ.Env(
     DATA_UPLOAD_MAX_NUMBER_FIELDS=(int, 1000),
     OLD_SESSION_KEY=(str, ""),
     LOG_LEVEL=(str, "INFO"),
+    # proxy headers
+    USE_PROXY_FORWARDED_HOST=(bool, False),
+    PROXY_SSL_HEADER=(str, "HTTP_CLOUDFRONT_FORWARDED_PROTO"),
     # db settings
     DATABASE_ENGINE=(str, "sqlite3"),
     DATABASE_NAME=(str, "default"),
@@ -126,6 +129,11 @@ DEBUG = env.bool("DEBUG")
 ENVIRONMENT = env.str("ENVIRONMENT")
 
 DATA_UPLOAD_MAX_NUMBER_FIELDS = env.int("DATA_UPLOAD_MAX_NUMBER_FIELDS")
+
+# Proxy HOST & Scheme headers
+USE_X_FORWARDED_HOST = env.bool("USE_PROXY_FORWARDED_HOST", False)
+if proxy_ssl_header_name := env.str("PROXY_SSL_HEADER", ""):
+    SECURE_PROXY_SSL_HEADER = (proxy_ssl_header_name, "https")
 
 # superuser/admin seed data
 DJANGO_ADMIN_PASSWORD = env.str("DJANGO_ADMIN_PASSWORD", None)
