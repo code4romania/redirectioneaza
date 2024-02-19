@@ -22,43 +22,56 @@ resource "aws_cloudfront_distribution" "main" {
     origin_id   = module.s3_public.id
   }
 
-  # Media
-  ordered_cache_behavior {
-    path_pattern             = "/media/*"
-    allowed_methods          = ["GET", "HEAD", "OPTIONS"]
-    cached_methods           = ["GET", "HEAD", "OPTIONS"]
-    target_origin_id         = module.s3_public.id
-    cache_policy_id          = "658327ea-f89d-4fab-a63d-7e88639e58f6" #Managed-CachingOptimized
-    origin_request_policy_id = "88a5eaf4-2fd4-4709-b370-b4c650ea3fcf" #Managed-CORS-S3Origin
-    viewer_protocol_policy   = "redirect-to-https"
-    compress                 = true
+  # S3 public
+  dynamic "ordered_cache_behavior" {
+    for_each = [
+      "admin",
+      "bower_components",
+      "css",
+      "font",
+      "images",
+      "js",
+      "media",
+    ]
 
-    function_association {
-      event_type   = "viewer-request"
-      function_arn = aws_cloudfront_function.www_redirect.arn
+    content {
+      path_pattern     = "/${ordered_cache_behavior.value}/*"
+      allowed_methods  = ["GET", "HEAD", "OPTIONS"]
+      cached_methods   = ["GET", "HEAD", "OPTIONS"]
+      target_origin_id = module.s3_public.id
+
+      cache_policy_id            = "658327ea-f89d-4fab-a63d-7e88639e58f6" #Managed-CachingOptimized
+      origin_request_policy_id   = "88a5eaf4-2fd4-4709-b370-b4c650ea3fcf" #Managed-CORS-S3Origin
+      response_headers_policy_id = "eaab4381-ed33-4a86-88ca-d9558dc6cd63" #Managed-CORS-with-preflight-and-SecurityHeadersPolicy
+      viewer_protocol_policy     = "redirect-to-https"
+      compress                   = true
+
+      function_association {
+        event_type   = "viewer-request"
+        function_arn = aws_cloudfront_function.www_redirect.arn
+      }
     }
   }
 
   # Logged in container
   dynamic "ordered_cache_behavior" {
     for_each = [
-      "applicants",
-      "dashboard",
-      "organizations",
-      "projects",
-      "staff",
+      "api",
+      "cron",
+      "verify",
       "admin",
     ]
 
     content {
-      path_pattern             = "/${ordered_cache_behavior.value}/*"
-      allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
-      cached_methods           = ["GET", "HEAD", "OPTIONS"]
-      target_origin_id         = aws_lb.main.dns_name
-      cache_policy_id          = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad" #Managed-CachingDisabled
-      origin_request_policy_id = aws_cloudfront_origin_request_policy.default.id
-      viewer_protocol_policy   = "redirect-to-https"
-      compress                 = true
+      path_pattern               = "/${ordered_cache_behavior.value}/*"
+      allowed_methods            = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
+      cached_methods             = ["GET", "HEAD", "OPTIONS"]
+      target_origin_id           = aws_lb.main.dns_name
+      cache_policy_id            = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad" #Managed-CachingDisabled
+      origin_request_policy_id   = "33f36d7e-f396-46d9-90e0-52428a34d9dc" #Managed-AllViewerAndCloudFrontHeaders-2022-06
+      response_headers_policy_id = "67f7725c-6f97-4210-82d7-5512b31e9d03" #Managed-SecurityHeadersPolicy
+      viewer_protocol_policy     = "redirect-to-https"
+      compress                   = true
 
       function_association {
         event_type   = "viewer-request"
@@ -69,13 +82,14 @@ resource "aws_cloudfront_distribution" "main" {
 
   # Public Container
   default_cache_behavior {
-    allowed_methods          = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
-    cached_methods           = ["GET", "HEAD", "OPTIONS"]
-    target_origin_id         = aws_lb.main.dns_name
-    cache_policy_id          = aws_cloudfront_cache_policy.default.id
-    origin_request_policy_id = aws_cloudfront_origin_request_policy.default.id
-    viewer_protocol_policy   = "redirect-to-https"
-    compress                 = true
+    allowed_methods            = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
+    cached_methods             = ["GET", "HEAD", "OPTIONS"]
+    target_origin_id           = aws_lb.main.dns_name
+    cache_policy_id            = aws_cloudfront_cache_policy.default.id
+    origin_request_policy_id   = "33f36d7e-f396-46d9-90e0-52428a34d9dc" #Managed-AllViewerAndCloudFrontHeaders-2022-06
+    response_headers_policy_id = "67f7725c-6f97-4210-82d7-5512b31e9d03" #Managed-SecurityHeadersPolicy
+    viewer_protocol_policy     = "redirect-to-https"
+    compress                   = true
 
     function_association {
       event_type   = "viewer-request"
@@ -124,28 +138,6 @@ resource "aws_cloudfront_cache_policy" "default" {
     query_strings_config {
       query_string_behavior = "all"
     }
-  }
-}
-
-resource "aws_cloudfront_origin_request_policy" "default" {
-  name = "${local.namespace}-origin-request-policy"
-
-  cookies_config {
-    cookie_behavior = "all"
-  }
-
-  headers_config {
-    header_behavior = "allViewerAndWhitelistCloudFront"
-
-    headers {
-      items = [
-        "CloudFront-Forwarded-Proto",
-      ]
-    }
-  }
-
-  query_strings_config {
-    query_string_behavior = "all"
   }
 }
 
