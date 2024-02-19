@@ -17,5 +17,6 @@ jobs:
     with:
       image_name: redirectioneaza
       region: eu-west-1
+      dockerfile: ./docker/dockerfiles/Dockerfile
     secrets:
       role_to_assume: ${{ secrets.ROLE_TO_ASSUME }}
