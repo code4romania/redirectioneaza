@@ -47,6 +47,9 @@ class MyAccountHandler(AccountHandler):
     def get(self, request: HttpRequest, *args, **kwargs):
         user: User = request.user
 
+        if user.is_superuser:
+            return redirect(reverse("admin-ngos"))
+
         user_ngo: Ngo = user.ngo if user.ngo else None
         donors: QuerySet[Donor] = Donor.objects.filter(Q(ngo=user_ngo)).order_by("-date_created")
 
