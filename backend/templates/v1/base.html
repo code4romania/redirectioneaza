@@ -7,10 +7,10 @@
 
         <title>{{ title }}</title>
 
-        <link rel="apple-touch-icon" sizes="180x180" href="{{ static('/images/favicon/apple-touch-icon.png') }}">
-        <link rel="icon" type="image/png" sizes="32x32" href="{{ static('/images/favicon/favicon-32x32.png') }}">
-        <link rel="icon" type="image/png" sizes="16x16" href="{{ static('/images/favicon/favicon-16x16.png') }}">
-        <link rel="manifest" href="{{ static('/images/favicon/site.webmanifest') }}">
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ static('images/favicon/apple-touch-icon.png') }}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ static('images/favicon/favicon-32x32.png') }}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ static('images/favicon/favicon-16x16.png') }}">
+        <link rel="manifest" href="{{ static('images/favicon/site.webmanifest') }}">
 
         <meta name="msapplication-TileColor" content="#da532c">
         <meta name="theme-color" content="#ffffff">
@@ -36,7 +36,7 @@
                     async: false
                 }
             </script>
-            <link rel="stylesheet/less" type="text/css" href="{{ static('/css/main.less') }}">
+            <link rel="stylesheet/less" type="text/css" href="{{ static('css/main.less') }}">
 
             {# block used to add new less #}
             {% block less %}
@@ -44,7 +44,7 @@
 
             <script src="{{ static('bower_components/less/dist/less.js') }}"></script>
         {% else %}
-            <link rel="stylesheet" type="text/css" href="{{ static('/css/main.css') }}">
+            <link rel="stylesheet" type="text/css" href="{{ static('css/main.css') }}">
 
         {% endif %}
 
