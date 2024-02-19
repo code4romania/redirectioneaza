@@ -62,12 +62,6 @@ variable "create_iam_service_linked_role" {
   default     = true
 }
 
-variable "receive_email" {
-  description = "Email address used to receive emails from the application."
-  type        = string
-  default     = "infrastructure@code4.ro"
-}
-
 variable "enable_execute_command" {
   description = "Enable aws ecs execute_command"
   type        = bool

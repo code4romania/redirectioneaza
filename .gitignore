@@ -7,7 +7,6 @@ local_tools/*
 .env.*
 !.env.example
 
-
 *.pyc
 
 bower_components/
@@ -420,3 +419,5 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+.infracost

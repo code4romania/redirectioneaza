@@ -21,8 +21,8 @@ data "aws_iam_policy_document" "ecs_task" {
     resources = [
       module.s3_public.arn,
       "${module.s3_public.arn}/*",
-#      module.s3_static.arn,
-#      "${module.s3_static.arn}/*",
+      #      module.s3_static.arn,
+      #      "${module.s3_static.arn}/*",
       module.s3_private.arn,
       "${module.s3_private.arn}/*"
     ]
@@ -96,23 +96,6 @@ data "aws_iam_policy_document" "s3_cloudfront_public" {
 #    }
 #  }
 #}
-data "aws_iam_policy_document" "s3_cloudfront_private" {
-  statement {
-    actions   = ["s3:GetObject"]
-    resources = ["${module.s3_private.arn}/*"]
-
-    principals {
-      type        = "Service"
-      identifiers = ["cloudfront.amazonaws.com"]
-    }
-
-    condition {
-      test     = "StringEquals"
-      variable = "AWS:SourceArn"
-      values   = [aws_cloudfront_distribution.main.arn]
-    }
-  }
-}
 
 resource "aws_iam_role" "ecs_task_role" {
   name               = "${local.namespace}-ecs-task-role"

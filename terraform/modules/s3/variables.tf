@@ -36,4 +36,5 @@ variable "restrict_public_buckets" {
 variable "policy" {
   description = "(Optional) A valid bucket policy JSON document."
   type        = string
+  default     = null
 }

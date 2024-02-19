@@ -87,10 +87,14 @@ module "ecs_redirectioneaza" {
       name  = "AWS_S3_STORAGE_PUBLIC_BUCKET_NAME"
       value = module.s3_public.bucket
     },
-#    {
-#      name  = "AWS_S3_STORAGE_PUBLIC_BUCKET_NAME"
-#      value = module.s3_static.bucket
-#    },
+    #    {
+    #      name  = "AWS_S3_STORAGE_PUBLIC_BUCKET_NAME"
+    #      value = module.s3_static.bucket
+    #    },
+    {
+      name  = "AWS_S3_PUBLIC_ACL"
+      value = "private"
+    },
     {
       name  = "AWS_REGION_NAME"
       value = var.region
@@ -102,10 +106,6 @@ module "ecs_redirectioneaza" {
     {
       name  = "DEFAULT_FROM_EMAIL"
       value = "no-reply@${var.domain_name}"
-    },
-    {
-      name  = "DEFAULT_RECEIVE_EMAIL"
-      value = var.receive_email
     },
     {
       name  = "SENTRY_TRACES_SAMPLE_RATE"
@@ -132,11 +132,11 @@ module "ecs_redirectioneaza" {
     },
     {
       name      = "ENCRYPT_KEY"
-      valueFrom = aws_secretsmanager_secret.app_secret_key.arn
+      valueFrom = aws_secretsmanager_secret.app_encrypt_key.arn
     },
     {
       name      = "OLD_SESSION_KEY"
-      valueFrom = aws_secretsmanager_secret.app_secret_key.arn
+      valueFrom = aws_secretsmanager_secret.app_old_session_key.arn
     },
     {
       name      = "DATABASE_ENGINE"
@@ -210,11 +210,6 @@ module "ecs_redirectioneaza" {
 module "s3_public" {
   source = "./modules/s3"
 
-  block_public_acls       = false
-  block_public_policy     = false
-  ignore_public_acls      = false
-  restrict_public_buckets = false
-
   name   = "${local.namespace}-public"
   policy = data.aws_iam_policy_document.s3_cloudfront_public.json
 }
@@ -233,8 +228,7 @@ resource "aws_s3_bucket_cors_configuration" "s3_public" {
 module "s3_private" {
   source = "./modules/s3"
 
-  name   = "${local.namespace}-private"
-  policy = data.aws_iam_policy_document.s3_cloudfront_private.json
+  name = "${local.namespace}-private"
 }
 
 resource "aws_secretsmanager_secret" "app_secret_key" {
