@@ -141,6 +141,28 @@ resource "aws_cloudfront_cache_policy" "default" {
   }
 }
 
+resource "aws_cloudfront_origin_request_policy" "default" {
+  name = "${local.namespace}-origin-request-policy"
+
+  cookies_config {
+    cookie_behavior = "all"
+  }
+
+  headers_config {
+    header_behavior = "allViewerAndWhitelistCloudFront"
+
+    headers {
+      items = [
+        "CloudFront-Forwarded-Proto",
+      ]
+    }
+  }
+
+  query_strings_config {
+    query_string_behavior = "all"
+  }
+}
+
 resource "aws_cloudfront_origin_access_control" "oac" {
   name                              = module.s3_public.id
   description                       = ""
