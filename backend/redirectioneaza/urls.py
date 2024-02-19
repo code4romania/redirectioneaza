@@ -88,9 +88,6 @@ urlpatterns = (
         path("api/ngo/check-url/<ngo_url>/", CheckNgoUrl.as_view(), name="api-ngo-check-url"),
         path("api/ngos/", NgosApi.as_view(), name="api-ngos"),
         #
-        #
-        # TODO: all the URLs until END_OF_TODO need to be implemented
-        #
         path("webhook/", Webhook.as_view(), name="webhook"),
         path("api/ngo/upload-url/", GetUploadUrl.as_view(), name="api-ngo-upload-url"),  # TODO
         path("api/ngo/form/<ngo_url>/", GetNgoForm.as_view(), name="api-ngo-form-url"),
@@ -100,8 +97,6 @@ urlpatterns = (
         path("cron/ngos/remove-form/", NgoRemoveForms.as_view(), name="cron-ngo-remove-form"),
         path("cron/ngos/export/", NgoExport.as_view(), name="cron-ngo-export"),
         path("cron/export/custom/", CustomExport.as_view(), name="cron-custom-export"),
-        #
-        # END_OF_TODO
         #
         # Django Admin
         path("admin/django/", django_admin.site.urls),
