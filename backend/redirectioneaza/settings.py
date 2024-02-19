@@ -272,7 +272,7 @@ DATABASE_ENGINE = env("DATABASE_ENGINE")
 
 REMOTE_DATABASE_ENGINES = {
     "mysql": "django.db.backends.mysql",
-    "psql": "django.db.backends.postgresql",
+    "postgres": "django.db.backends.postgresql",
 }
 if DATABASE_ENGINE in REMOTE_DATABASE_ENGINES.keys():
     DATABASES = {
