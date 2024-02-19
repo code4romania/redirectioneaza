@@ -38,6 +38,7 @@ env = environ.Env(
     # Django settings
     DEBUG=(bool, False),
     ENVIRONMENT=(str, "production"),
+    DATA_UPLOAD_MAX_NUMBER_FIELDS=(int, 1000),
     # db settings
     DATABASE_ENGINE=(str, "sqlite3"),
     DATABASE_NAME=(str, "default"),
@@ -116,6 +117,8 @@ SECRET_KEY = env.str("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production
 DEBUG = env.bool("DEBUG")
 ENVIRONMENT = env.str("ENVIRONMENT")
+
+DATA_UPLOAD_MAX_NUMBER_FIELDS = env.int("DATA_UPLOAD_MAX_NUMBER_FIELDS")
 
 # superuser/admin seed data
 DJANGO_ADMIN_PASSWORD = env.str("DJANGO_ADMIN_PASSWORD", None)
