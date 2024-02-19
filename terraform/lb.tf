@@ -5,23 +5,6 @@ resource "aws_lb" "main" {
   security_groups    = [aws_security_group.lb.id]
 }
 
-# resource "aws_lb_listener" "https" {
-#   # certificate_arn   = aws_acm_certificate.main.arn
-#   load_balancer_arn = aws_lb.main.id
-#   port              = 443
-#   protocol          = "HTTPS"
-
-#   default_action {
-#     type = "fixed-response"
-
-#     fixed_response {
-#       content_type = "text/plain"
-#       message_body = "OK"
-#       status_code  = "200"
-#     }
-#   }
-# }
-
 resource "aws_lb_listener" "http" {
   load_balancer_arn = aws_lb.main.id
   port              = 80
@@ -36,16 +19,6 @@ resource "aws_lb_listener" "http" {
       status_code  = "200"
     }
   }
-
-  # default_action {
-  #   type = "redirect"
-
-  #   redirect {
-  #     port        = "443"
-  #     protocol    = "HTTPS"
-  #     status_code = "HTTP_301"
-  #   }
-  # }
 }
 
 resource "aws_security_group" "lb" {

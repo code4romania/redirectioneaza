@@ -87,10 +87,6 @@ module "ecs_redirectioneaza" {
       name  = "AWS_S3_STORAGE_PUBLIC_BUCKET_NAME"
       value = module.s3_public.bucket
     },
-    #    {
-    #      name  = "AWS_S3_STORAGE_PUBLIC_BUCKET_NAME"
-    #      value = module.s3_static.bucket
-    #    },
     {
       name  = "AWS_S3_PUBLIC_ACL"
       value = "private"
@@ -194,18 +190,6 @@ module "ecs_redirectioneaza" {
     aws_secretsmanager_secret.rds.arn,
   ]
 }
-
-#module "s3_static" {
-#  source = "./modules/s3"
-#
-#  block_public_acls       = false
-#  block_public_policy     = false
-#  ignore_public_acls      = false
-#  restrict_public_buckets = false
-#
-#  name   = "${local.namespace}-static"
-#  policy = data.aws_iam_policy_document.s3_cloudfront_static.json
-#}
 
 module "s3_public" {
   source = "./modules/s3"

@@ -22,28 +22,6 @@ resource "aws_cloudfront_distribution" "main" {
     origin_id   = module.s3_public.id
   }
 
-#  origin {
-#    domain_name = module.s3_static.bucket_regional_domain_name
-#    origin_id   = module.s3_static.id
-#  }
-
-#  # Static
-#  ordered_cache_behavior {
-#    path_pattern             = "/static/*"
-#    allowed_methods          = ["GET", "HEAD", "OPTIONS"]
-#    cached_methods           = ["GET", "HEAD", "OPTIONS"]
-#    target_origin_id         = module.s3_static.id
-#    cache_policy_id          = "658327ea-f89d-4fab-a63d-7e88639e58f6" #Managed-CachingOptimized
-#    origin_request_policy_id = "88a5eaf4-2fd4-4709-b370-b4c650ea3fcf" #Managed-CORS-S3Origin
-#    viewer_protocol_policy   = "redirect-to-https"
-#    compress                 = true
-#
-#    function_association {
-#      event_type   = "viewer-request"
-#      function_arn = aws_cloudfront_function.www_redirect.arn
-#    }
-#  }
-
   # Media
   ordered_cache_behavior {
     path_pattern             = "/media/*"
