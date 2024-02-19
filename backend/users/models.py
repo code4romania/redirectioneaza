@@ -117,7 +117,7 @@ class User(AbstractUser):
         if commit:
             self.save()
 
-    def old_hash_password(password, method, salt=None, pepper=None):
+    def old_hash_password(self, password, method, salt=None, pepper=None):
         """
         Implement the old password hashing algorithm from webapp2
         """
