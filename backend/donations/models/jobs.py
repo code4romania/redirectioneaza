@@ -6,6 +6,14 @@ from .main import Ngo
 from users.models import User
 
 
+class JobError(Exception):
+    pass
+
+
+class JobDownloadError(JobError):
+    pass
+
+
 class JobStatusChoices(models.TextChoices):
     NEW = "new", _("New")
     ERROR = "error", _("Error")
