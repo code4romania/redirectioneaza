@@ -222,7 +222,7 @@ module "s3_static" {
   source = "./modules/s3"
 
   name   = "${local.namespace}-static"
-  policy = data.aws_iam_policy_document.s3_cloudfront_public.json
+  policy = data.aws_iam_policy_document.s3_cloudfront_static.json
 }
 
 module "s3_private" {

@@ -64,11 +64,25 @@ data "aws_iam_policy_document" "ecs_task_assume" {
 
 data "aws_iam_policy_document" "s3_cloudfront_public" {
   statement {
-    actions = ["s3:GetObject"]
-    resources = [
-      "${module.s3_public.arn}/*",
-      "${module.s3_static.arn}/*",
-    ]
+    actions   = ["s3:GetObject"]
+    resources = ["${module.s3_public.arn}/*"]
+
+    principals {
+      type        = "Service"
+      identifiers = ["cloudfront.amazonaws.com"]
+    }
+
+    condition {
+      test     = "StringEquals"
+      variable = "AWS:SourceArn"
+      values   = [aws_cloudfront_distribution.main.arn]
+    }
+  }
+}
+data "aws_iam_policy_document" "s3_cloudfront_static" {
+  statement {
+    actions   = ["s3:GetObject"]
+    resources = ["${module.s3_static.arn}/*"]
 
     principals {
       type        = "Service"
