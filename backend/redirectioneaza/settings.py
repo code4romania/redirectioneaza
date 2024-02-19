@@ -38,6 +38,7 @@ env = environ.Env(
     # Django settings
     DEBUG=(bool, False),
     ENVIRONMENT=(str, "production"),
+    DATA_UPLOAD_MAX_NUMBER_FIELDS=(int, 1000),
     # db settings
     DATABASE_ENGINE=(str, "sqlite3"),
     DATABASE_NAME=(str, "default"),
@@ -67,9 +68,9 @@ env = environ.Env(
     EMAIL_HOST_PASSWORD=(str, ""),
     EMAIL_USE_TLS=(str, ""),
     EMAIL_FAIL_SILENTLY=(bool, False),
-    CONTACT_EMAIL_ADDRESS=(str, "contact@redirectioneaza.ro"),
-    DEFAULT_FROM_EMAIL=(str, "no-reply@redirectioneaza.ro"),
-    NO_REPLY_EMAIL=(str, "no-reply@redirectioneaza.ro"),
+    CONTACT_EMAIL_ADDRESS=(str, "redirectioneaza@code4.ro"),
+    DEFAULT_FROM_EMAIL=(str, "no-reply@code4.ro"),
+    NO_REPLY_EMAIL=(str, "no-reply@code4.ro"),
     # django-q2 settings
     BACKGROUND_WORKERS_COUNT=(int, 1),
     IMPORT_METHOD=(str, "async"),
@@ -82,15 +83,24 @@ env = environ.Env(
     CAPTCHA_VERIFY_URL=(str, "https://www.google.com/recaptcha/api/siteverify"),
     CAPTCHA_POST_PARAM=(str, "g-recaptcha-response"),
     # aws settings
-    USE_S3=(bool, False),
-    AWS_STORAGE_DEFAULT_BUCKET_NAME=(str, ""),
-    AWS_STORAGE_PUBLIC_BUCKET_NAME=(str, ""),
-    AWS_STORAGE_PRIVATE_BUCKET_NAME=(str, ""),
-    AWS_DEFAULT_ACL=(str, ""),
-    AWS_PUBLIC_ACL=(str, ""),
-    AWS_PRIVATE_ACL=(str, ""),
     AWS_REGION_NAME=(str, ""),
+    # S3
+    USE_S3=(bool, False),
     AWS_S3_REGION_NAME=(str, ""),
+    AWS_S3_STORAGE_DEFAULT_BUCKET_NAME=(str, ""),
+    AWS_S3_STORAGE_PUBLIC_BUCKET_NAME=(str, ""),
+    AWS_S3_DEFAULT_ACL=(str, "private"),
+    AWS_S3_PUBLIC_ACL=(str, ""),
+    AWS_S3_DEFAULT_PREFIX=(str, ""),
+    AWS_S3_PUBLIC_PREFIX=(str, ""),
+    AWS_S3_DEFAULT_CUSTOM_DOMAIN=(str, ""),
+    AWS_S3_PUBLIC_CUSTOM_DOMAIN=(str, ""),
+    # SES
+    AWS_SES_REGION_NAME=(str, ""),
+    AWS_SES_USE_V2=(bool, True),
+    AWS_SES_CONFIGURATION_SET_NAME=(str, None),
+    AWS_SES_AUTO_THROTTLE=(float, 0.5),
+    AWS_SES_REGION_ENDPOINT=(str, ""),
     # sentry
     SENTRY_DSN=(str, ""),
     SENTRY_TRACES_SAMPLE_RATE=(float, 0),
@@ -107,6 +117,8 @@ SECRET_KEY = env.str("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production
 DEBUG = env.bool("DEBUG")
 ENVIRONMENT = env.str("ENVIRONMENT")
+
+DATA_UPLOAD_MAX_NUMBER_FIELDS = env.int("DATA_UPLOAD_MAX_NUMBER_FIELDS")
 
 # superuser/admin seed data
 DJANGO_ADMIN_PASSWORD = env.str("DJANGO_ADMIN_PASSWORD", None)
@@ -308,6 +320,27 @@ EMAIL_USE_TLS = env.bool("EMAIL_USE_TLS")
 
 EMAIL_FAIL_SILENTLY = env.bool("EMAIL_FAIL_SILENTLY")
 
+if EMAIL_BACKEND == "django_ses.SESBackend":
+    AWS_SES_CONFIGURATION_SET_NAME = env.str("AWS_SES_CONFIGURATION_SET_NAME")
+
+    AWS_SES_AUTO_THROTTLE = env.float("AWS_SES_AUTO_THROTTLE", default=0.5)
+    AWS_SES_REGION_NAME = env.str("AWS_SES_REGION_NAME") if env("AWS_SES_REGION_NAME") else env("AWS_REGION_NAME")
+    AWS_SES_REGION_ENDPOINT = env.str("AWS_SES_REGION_ENDPOINT", default=f"email.{AWS_SES_REGION_NAME}.amazonaws.com")
+
+    AWS_SES_FROM_EMAIL = DEFAULT_FROM_EMAIL
+
+    USE_SES_V2 = env.bool("AWS_SES_USE_V2", default=True)
+
+    if aws_access_key := env("AWS_ACCESS_KEY_ID", default=None):
+        AWS_ACCESS_KEY_ID = aws_access_key
+        AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
+else:
+    EMAIL_HOST = env.str("EMAIL_HOST")
+    EMAIL_PORT = env.str("EMAIL_PORT")
+    EMAIL_HOST_USER = env.str("EMAIL_HOST_USER")
+    EMAIL_HOST_PASSWORD = env.str("EMAIL_HOST_PASSWORD")
+    EMAIL_USE_TLS = env.bool("EMAIL_USE_TLS")
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
@@ -355,31 +388,35 @@ if env.bool("USE_S3"):
 
     # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html
     default_storage_options = {
-        "bucket_name": (env.str("AWS_STORAGE_DEFAULT_BUCKET_NAME")),
-        "default_acl": (env.str("AWS_DEFAULT_ACL")),
+        "bucket_name": (env.str("AWS_S3_STORAGE_DEFAULT_BUCKET_NAME")),
+        "default_acl": (env.str("AWS_S3_DEFAULT_ACL")),
         "region_name": env.str("AWS_S3_REGION_NAME") or env.str("AWS_REGION_NAME"),
         "object_parameters": {"CacheControl": "max-age=86400"},
         "file_overwrite": False,
     }
 
+    # Authentication, if not using IAM roles
     if aws_session_profile := env.str("AWS_S3_SESSION_PROFILE", default=None):
         default_storage_options["session_profile"] = aws_session_profile
     elif aws_access_key := env.str("AWS_ACCESS_KEY_ID", default=None):
         default_storage_options["access_key"] = aws_access_key
         default_storage_options["secret_key"] = env.str("AWS_SECRET_ACCESS_KEY")
 
-    private_storage_options = deepcopy(default_storage_options)
-    if private_acl := env.str("AWS_PRIVATE_ACL"):
-        private_storage_options["default_acl"] = private_acl
-    if bucket_name := env.str("AWS_STORAGE_PRIVATE_BUCKET_NAME"):
-        private_storage_options["bucket_name"] = bucket_name
+    # Additional default configurations
+    if default_prefix := env.str("AWS_S3_DEFAULT_PREFIX", default=None):
+        default_storage_options["location"] = default_prefix
+    if custom_domain := env.str("AWS_S3_DEFAULT_CUSTOM_DOMAIN", default=None):
+        public_storage_options["custom_domain"] = custom_domain
 
+    # Public storage options
     public_storage_options = deepcopy(default_storage_options)
-    if public_acl := env.str("AWS_PUBLIC_ACL"):
+    if public_acl := env.str("AWS_S3_PUBLIC_ACL"):
         public_storage_options["default_acl"] = public_acl
-    if public_bucket_name := env.str("AWS_STORAGE_PUBLIC_BUCKET_NAME"):
+    if public_bucket_name := env.str("AWS_S3_STORAGE_PUBLIC_BUCKET_NAME"):
         public_storage_options["bucket_name"] = public_bucket_name
-    if custom_domain := env.str("AWS_S3_CUSTOM_DOMAIN", default=None):
+    if public_prefix := env.str("AWS_S3_PUBLIC_PREFIX", default=None):
+        public_storage_options["location"] = public_prefix
+    if custom_domain := env.str("AWS_S3_PUBLIC_CUSTOM_DOMAIN", default=None):
         public_storage_options["custom_domain"] = custom_domain
 
 

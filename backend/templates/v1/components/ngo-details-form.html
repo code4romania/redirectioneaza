@@ -18,7 +18,11 @@
                     <input type="file" id="ong-logo" class="hidden" accept="image/*" name="ong-logo" />
                 </div>
                 <div id="display-logo" class="text-center {{ 'hidden' if not ngo.logo }}">
-                    <img id="ngo-logo" src="{{ ngo.logo.url if ngo and ngo.logo }}" class="img-responsive center-block" />
+                    {% if ngo.logo %}
+                        <img id="ngo-logo" src="{{ ngo.logo.url }}" class="img-responsive center-block" />
+                    {% elif ngo.logo_url %}
+                        <img id="ngo-logo" src="{{ ngo.logo_url }}" class="img-responsive center-block" />
+                    {% endif %}
                     <span id="delete-ngo-logo" class="text-danger">Șterge</span>
                     <input type="hidden" id="ong-logo-url" name="ong-logo-url" value="{{ ngo.logo.url if ngo and ngo.logo }}" />
                 </div>

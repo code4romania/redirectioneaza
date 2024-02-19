@@ -24,15 +24,21 @@
             <div class="col-xs-6 col-sm-4 col-md-3">
                 <div class="ong-panel panel panel-default">
                     <a href="{{ ngo.slug }}">
-                        {% set logo = ngo.logo.url if ngo and ngo.logo else DEFAULT_NGO_LOGO %}
+                        {% if ngo and ngo.logo %}
+                            {% set logo = ngo.logo.url %}
+                        {% elif ngo and ngo.logo_url %}
+                            {% set logo = ngo.logo_url %}
+                        {% else %}
+                            {% set logo = DEFAULT_NGO_LOGO %}
+                        {% endif %}
                         <div class="ong-logo">
                             <img src="{{ logo }}" class="img-responsive center-block" alt="{{ ngo.name }} logo" />
                         </div>
                         <div class="panel-heading">{{ ngo.name }}</div>
                     </a>
-                  <div class="panel-body">
-                    {{ " ".join(ngo.description.split()[:11]) + " ..." }}
-                  </div>
+                    <div class="panel-body">
+                        {{ " ".join(ngo.description.split()[:11]) + " ..." }}
+                    </div>
                 </div>
             </div>
         {% endfor %}

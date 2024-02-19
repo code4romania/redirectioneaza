@@ -76,6 +76,7 @@ class MyAccountHandler(AccountHandler):
             "has_signed_form": user_ngo.is_accepting_forms if user_ngo else False,
             "current_year": timezone.now().year,
             "ngo_url": ngo_url,
+            "DEFAULT_NGO_LOGO": settings.DEFAULT_NGO_LOGO,
         }
         return render(request, self.template_name, context)
 
@@ -98,6 +99,7 @@ class NgoDetailsHandler(AccountHandler):
             "user": user,
             "ngo": user.ngo if user.ngo else None,
             "counties": settings.FORM_COUNTIES,
+            "DEFAULT_NGO_LOGO": settings.DEFAULT_NGO_LOGO,
         }
 
         return render(request, self.template_name, context)
