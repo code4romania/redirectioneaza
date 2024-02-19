@@ -45,6 +45,10 @@ class PartnerDomainMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
+        if request.path == "/health/":
+            logger.debug("Skipping healthcheck")
+            return self.get_response(request)
+
         logger.debug("Request host %s", request.get_host())
         try:
             subdomain = PartnerDomainMiddleware.extract_subdomain(request.get_host(), settings.APEX_DOMAIN)
