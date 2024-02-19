@@ -39,6 +39,7 @@ env = environ.Env(
     DEBUG=(bool, False),
     ENVIRONMENT=(str, "production"),
     DATA_UPLOAD_MAX_NUMBER_FIELDS=(int, 1000),
+    OLD_SESSION_KEY=(str, ""),
     # db settings
     DATABASE_ENGINE=(str, "sqlite3"),
     DATABASE_NAME=(str, "default"),
@@ -113,6 +114,7 @@ env = environ.Env(
 
 # SECURITY WARNING: keep the secret key used in production secret
 SECRET_KEY = env.str("SECRET_KEY")
+OLD_SESSION_KEY = env.str("OLD_SESSION_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production
 DEBUG = env.bool("DEBUG")
