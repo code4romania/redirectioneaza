@@ -15,7 +15,6 @@ is_enabled() {
     return 1
 }
 
-
 cd "${BACKEND_ROOT:-/var/www/redirect/backend}" || exit 1
 
 echo "Waiting for the database to be ready"

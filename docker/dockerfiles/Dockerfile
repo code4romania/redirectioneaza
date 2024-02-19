@@ -27,7 +27,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y --no-install-recommends \
-        gettext && \
+    gettext && \
     python3 -m pip install --upgrade pip setuptools cython
 
 # Python virtualenv paths
@@ -52,7 +52,7 @@ ENV LOG_LEVEL=INFO
 ENV RUN_MIGRATIONS=True
 ENV RUN_COMPILE_MESSAGES=True
 ENV RUN_COLLECT_STATIC=True
-ENV RUN_CREATE_ADMIN=True
+ENV RUN_CREATE_SUPER_USER=True
 ENV RUN_SEED_GROUPS=True
 # ENV ENABLE_DJANGO_ADMIN=False
 
@@ -64,7 +64,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y --no-install-recommends \
-        nginx gcc xz-utils gettext
+    nginx gcc xz-utils gettext
 
 # configure process manager
 ARG S6_OVERLAY_VERSION=3.1.2.1
