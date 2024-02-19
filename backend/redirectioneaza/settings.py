@@ -177,6 +177,8 @@ if env.str("SENTRY_DSN"):
 
 
 # Logging
+DJANGO_LOG_LEVEL = env.str("LOG_LEVEL").upper()
+
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -187,10 +189,9 @@ LOGGING = {
     },
     "root": {
         "handlers": ["console"],
-        "level": env.str("LOG_LEVEL"),
+        "level": DJANGO_LOG_LEVEL,
     },
 }
-DJANGO_LOG_LEVEL = env.str("LOG_LEVEL")
 
 # Application definition
 
