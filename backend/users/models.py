@@ -129,7 +129,7 @@ class User(AbstractUser):
             return None
 
         if salt:
-            h = hmac.new(salt.encode("utf8"), password, method)
+            h = hmac.new(salt.encode("utf8"), password.encode("utf8"), method)
         else:
             h = method(password)
 
