@@ -3,7 +3,7 @@ import uuid
 
 from django.conf import settings
 from django.contrib.auth import authenticate, login, logout, get_user_model
-from django.db import IntegrityError, models
+from django.db import IntegrityError
 from django.http import Http404, HttpRequest
 from django.shortcuts import redirect, render
 from django.urls import reverse
@@ -106,13 +106,11 @@ class LoginHandler(AccountHandler):
             # Check the old password authentication and migrate it to the new method
             user_model = get_user_model()
             try:
-                user = user_model.objects.get(
-                    models.Q(email=email) & (models.Q(old_password__isnull=False) | models.Q(old_password=""))
-                )
+                user = user_model.objects.get(email=email)
             except user_model.DoesNotExist:
                 user = None
 
-            if user.check_old_password(password):
+            if user and user.check_old_password(password):
                 user.set_password(password)
                 user.save()
                 login(request, user)

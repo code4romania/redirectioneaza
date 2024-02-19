@@ -1,3 +1,5 @@
+import hmac
+import hashlib
 import uuid
 
 from django.contrib.auth.hashers import make_password
@@ -114,8 +116,41 @@ class User(AbstractUser):
         if commit:
             self.save()
 
+    def old_hash_password(password, method, salt=None, pepper=None):
+        """
+        Implement the old password hashing algorithm from webapp2
+        """
+        if method == "plain":
+            return password
+
+        method = getattr(hashlib, method, None)
+        if not method:
+            return None
+
+        if salt:
+            h = hmac.new(salt, password, method)
+        else:
+            h = method(password)
+
+        if pepper:
+            h = hmac.new(pepper, h.hexdigest(), method)
+
+        return h.hexdigest()
+
     def check_old_password(self, password: str = ""):
-        return False
+        """
+        Validate the user password input based on the old webapp2 algorithm
+        """
+        if not password:
+            return False
+
+        if not self.old_password or self.old_password.count("$") < 2:
+            return False
+
+        pepper = ""  # TODO
+        hashval, method, salt = self.old_password.split("$", 2)
+
+        return self.old_hash_password(password, method, salt, pepper) == hashval
 
     @staticmethod
     def create_admin_login_url(next_url=""):
