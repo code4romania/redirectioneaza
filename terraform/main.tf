@@ -212,7 +212,8 @@ resource "aws_s3_bucket_cors_configuration" "s3_public" {
 module "s3_private" {
   source = "./modules/s3"
 
-  name = "${local.namespace}-private"
+  name   = "${local.namespace}-private"
+  policy = data.aws_iam_policy_document.s3_cloudfront_private.json
 }
 
 resource "aws_secretsmanager_secret" "app_secret_key" {
