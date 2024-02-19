@@ -22,22 +22,22 @@ def _import_logos(batch_size=50):
         .filter(Q(logo="") | Q(logo__isnull=True))
         .all()[:batch_size]
     ):
-        logger.debug("Processing %s", ngo.name)
+        logger.debug("Processing logo for %s", ngo.name)
 
         if not ngo.logo_url.startswith("http"):
-            logger.debug("skipped for %s: Logo URL does not start with http", ngo.name)
+            logger.debug("Skipped logo for %s: Logo URL does not start with http", ngo.name)
             continue
 
         r = requests.get(ngo.logo_url)
         if r.status_code != 200:
-            logger.debug("request status = %s", r.status_code)
+            logger.debug("Logo file request status = %s", r.status_code)
 
         ext = mimetypes.guess_extension(r.headers["content-type"])
         with tempfile.TemporaryFile() as fp:
             fp.write(r.content)
             fp.seek(0)
             ngo.logo.save(f"logo{ext}", File(fp))
-            logger.debug("new logo: %s", ngo.logo)
+            logger.debug("New logo file: %s", ngo.logo)
 
 
 class Command(BaseCommand):
