@@ -20,7 +20,7 @@ module "ecs_redirectioneaza" {
   lb_listener_arn         = aws_lb_listener.http.arn
   lb_hosts                = local.domains
   lb_health_check_enabled = true
-  lb_path                 = "/"
+  lb_path                 = "/health/"
 
   container_memory_soft_limit = 512
   container_memory_hard_limit = 768
@@ -57,7 +57,7 @@ module "ecs_redirectioneaza" {
     },
     {
       name  = "LOG_LEVEL"
-      value = "debug"
+      value = "INFO"
     },
     {
       name  = "ENABLE_DJANGO_ADMIN"
