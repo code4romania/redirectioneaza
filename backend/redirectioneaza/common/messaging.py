@@ -72,6 +72,9 @@ def send_emails(
 
             headers = {}
 
+            if hasattr(settings, "AWS_SES_CONFIGURATION_SET_NAME"):
+                headers["X-SES-CONFIGURATION-SET"] = settings.AWS_SES_CONFIGURATION_SET_NAME
+
             msg = EmailMultiAlternatives(subject, text_body, from_email, [email], headers=headers)
             msg.attach_alternative(html_content, "text/html")
 
