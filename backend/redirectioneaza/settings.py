@@ -90,12 +90,16 @@ env = environ.Env(
     AWS_S3_REGION_NAME=(str, ""),
     AWS_S3_STORAGE_DEFAULT_BUCKET_NAME=(str, ""),
     AWS_S3_STORAGE_PUBLIC_BUCKET_NAME=(str, ""),
+    AWS_S3_STORAGE_STATIC_BUCKET_NAME=(str, ""),
     AWS_S3_DEFAULT_ACL=(str, "private"),
     AWS_S3_PUBLIC_ACL=(str, ""),
+    AWS_S3_STATIC_ACL=(str, ""),
     AWS_S3_DEFAULT_PREFIX=(str, ""),
     AWS_S3_PUBLIC_PREFIX=(str, ""),
+    AWS_S3_STATIC_PREFIX=(str, ""),
     AWS_S3_DEFAULT_CUSTOM_DOMAIN=(str, ""),
     AWS_S3_PUBLIC_CUSTOM_DOMAIN=(str, ""),
+    AWS_S3_STATIC_CUSTOM_DOMAIN=(str, ""),
     # SES
     AWS_SES_REGION_NAME=(str, ""),
     AWS_SES_USE_V2=(bool, True),
@@ -360,14 +364,14 @@ LOCALE_PATHS = (os.path.join(BASE_DIR, "locale"),)
 # Media & Static files storage
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-public_static_location = "static"
+static_static_location = "static"
 public_media_location = "media"
 private_media_location = "media"
 
 static_storage = "whitenoise.storage.CompressedStaticFilesStorage"
 media_storage = "django.core.files.storage.FileSystemStorage"
 
-STATIC_URL = f"{public_static_location}/"
+STATIC_URL = f"{static_static_location}/"
 MEDIA_URL = f"{public_media_location}/"
 
 STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR, "static"))
@@ -381,8 +385,9 @@ STATICFILES_DIRS = [
 ]
 
 default_storage_options = {}
+
 public_storage_options = {}
-private_storage_options = {}
+static_storage_options = {}
 
 if env.bool("USE_S3"):
     media_storage = "storages.backends.s3boto3.S3Boto3Storage"
@@ -421,6 +426,16 @@ if env.bool("USE_S3"):
     if custom_domain := env.str("AWS_S3_PUBLIC_CUSTOM_DOMAIN", default=None):
         public_storage_options["custom_domain"] = custom_domain
 
+    static_storage_options = deepcopy(public_storage_options)
+    if static_acl := env.str("AWS_S3_STATIC_ACL"):
+        static_storage_options["default_acl"] = static_acl
+    if static_bucket_name := env.str("AWS_S3_STORAGE_STATIC_BUCKET_NAME"):
+        static_storage_options["bucket_name"] = static_bucket_name
+    if static_prefix := env.str("AWS_S3_STATIC_PREFIX", default=None):
+        static_storage_options["location"] = static_prefix
+    if custom_domain := env.str("AWS_S3_STATIC_CUSTOM_DOMAIN", default=None):
+        static_storage_options["custom_domain"] = custom_domain
+
 
 STORAGES = {
     "default": {
@@ -435,8 +450,8 @@ STORAGES = {
     },
     "staticfiles": {
         "BACKEND": static_storage,
-        "LOCATION": public_static_location,
-        "OPTIONS": public_storage_options,
+        "LOCATION": static_static_location,
+        "OPTIONS": static_storage_options,
     },
 }
 
