@@ -81,13 +81,13 @@ class Ngo(models.Model):
         verbose_name=_("slug"),
         blank=False,
         null=False,
-        max_length=100,
+        max_length=150,
         db_index=True,
         unique=True,
         validators=[ngo_slug_validator],
     )
 
-    name = models.CharField(verbose_name=_("Name"), blank=False, null=False, max_length=100, db_index=True)
+    name = models.CharField(verbose_name=_("Name"), blank=False, null=False, max_length=200, db_index=True)
     description = models.TextField(verbose_name=_("description"))
 
     # originally: logo
