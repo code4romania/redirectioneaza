@@ -72,6 +72,15 @@ resource "aws_cloudfront_distribution" "main" {
       "cron",
       "verify",
       "admin",
+      "login",
+      "ong",
+      "password",
+      "forgot",
+      "doilasuta",
+      "semnatura",
+      "contul-meu",
+      "date-cont",
+      "asociatia",
     ]
 
     content {
