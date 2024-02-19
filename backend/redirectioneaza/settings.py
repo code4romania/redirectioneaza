@@ -177,21 +177,17 @@ if env.str("SENTRY_DSN"):
 
 
 # Logging
-
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
     "handlers": {
         "console": {
-            "level": env.str("LOG_LEVEL"),
             "class": "logging.StreamHandler",
         },
     },
-    "loggers": {
-        "django": {
-            "handlers": ["console"],
-            "level": env.str("LOG_LEVEL"),
-        },
+    "root": {
+        "handlers": ["console"],
+        "level": env.str("LOG_LEVEL"),
     },
 }
 
