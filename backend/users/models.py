@@ -129,12 +129,12 @@ class User(AbstractUser):
             return None
 
         if salt:
-            h = hmac.new(salt.encode("utf8"), password.encode("utf8"), method)
+            h = hmac.new(salt.encode("utf8"), password, method)
         else:
             h = method(password)
 
         if pepper:
-            h = hmac.new(pepper, h.hexdigest(), method)
+            h = hmac.new(pepper.encode("utf8"), h.hexdigest().encode("utf8"), method)
 
         return h.hexdigest()
 
