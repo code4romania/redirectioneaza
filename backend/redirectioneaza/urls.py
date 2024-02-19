@@ -49,6 +49,7 @@ from donations.views.site import (
     NoteHandler,
     PolicyHandler,
     TermsHandler,
+    HealthCheckHandler,
 )
 
 
@@ -61,6 +62,7 @@ urlpatterns = (
         path("", HomePage.as_view(), name="home"),
         path("ong/", ForNgoHandler.as_view(), name="ngo"),
         path("pentru-ong-uri/", RedirectView.as_view(pattern_name="ngo", permanent=True)),
+        path("health/", HealthCheckHandler.as_view(), name="health-check"),
         # backup in case of old urls. to be removed
         path("asociatii/", NgoListHandler.as_view(), name="associations"),
         path("termeni/", TermsHandler.as_view(), name="terms"),

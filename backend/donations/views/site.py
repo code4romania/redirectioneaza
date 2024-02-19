@@ -1,7 +1,8 @@
 from datetime import datetime
 
-from django.shortcuts import redirect, render
 from django.conf import settings
+from django.http import HttpResponse
+from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils import timezone
 
@@ -100,3 +101,8 @@ class TermsHandler(BaseHandler):
     def get(self, request, *args, **kwargs):
         context = {"title": "Termeni și condiții"}
         return render(request, self.template_name, context)
+
+
+class HealthCheckHandler(BaseHandler):
+    def get(self, request, *args, **kwargs):
+        return HttpResponse("OK")
