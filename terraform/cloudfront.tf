@@ -25,7 +25,7 @@ resource "aws_cloudfront_distribution" "main" {
   # S3 public
   dynamic "ordered_cache_behavior" {
     for_each = [
-      "admin",
+      # "admin",
       "bower_components",
       "css",
       "font",
