@@ -194,6 +194,8 @@ module "ecs_redirectioneaza" {
 module "s3_public" {
   source = "./modules/s3"
 
+  block_public_policy = false
+
   name   = "${local.namespace}-public"
   policy = data.aws_iam_policy_document.s3_cloudfront_public.json
 }
