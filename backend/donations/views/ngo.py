@@ -174,7 +174,7 @@ class TwoPercentHandler(BaseHandler):
         context = {
             "title": ngo.name,
             "ngo": ngo,
-            "counties": settings.LIST_OF_COUNTIES,
+            "counties": settings.FORM_COUNTIES,
             "limit": settings.DONATIONS_LIMIT,
             "ngo_website_description": "",
             "ngo_website": "",
@@ -394,7 +394,7 @@ class TwoPercentHandler(BaseHandler):
         context = {
             "title": ngo.name,
             "ngo": ngo,
-            "counties": settings.LIST_OF_COUNTIES,
+            "counties": settings.FORM_COUNTIES,
             "limit": settings.DONATIONS_LIMIT,
             "errors": errors,
         }
