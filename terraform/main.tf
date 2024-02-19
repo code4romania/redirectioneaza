@@ -56,6 +56,10 @@ module "ecs_redirectioneaza" {
       value = tostring(false)
     },
     {
+      name  = "LOG_LEVEL"
+      value = "debug"
+    },
+    {
       name  = "ENABLE_DJANGO_ADMIN"
       value = tostring(true)
     },
@@ -77,7 +81,11 @@ module "ecs_redirectioneaza" {
     },
     {
       name  = "AWS_S3_PUBLIC_CUSTOM_DOMAIN"
-      value = "www.${var.domain_name}"
+      value = var.domain_name
+    },
+    {
+      name  = "AWS_S3_STATIC_CUSTOM_DOMAIN"
+      value = var.domain_name
     },
     {
       name  = "AWS_S3_STORAGE_DEFAULT_BUCKET_NAME"
@@ -88,8 +96,20 @@ module "ecs_redirectioneaza" {
       value = module.s3_public.bucket
     },
     {
+      name  = "AWS_S3_STORAGE_STATIC_BUCKET_NAME"
+      value = module.s3_static.bucket
+    },
+    {
       name  = "AWS_S3_PUBLIC_ACL"
       value = "private"
+    },
+    {
+      name  = "AWS_S3_STATIC_ACL"
+      value = "private"
+    },
+    {
+      name  = "AWS_S3_STATIC_PREFIX"
+      value = "static"
     },
     {
       name  = "AWS_REGION_NAME"
@@ -198,15 +218,11 @@ module "s3_public" {
   policy = data.aws_iam_policy_document.s3_cloudfront_public.json
 }
 
-resource "aws_s3_bucket_cors_configuration" "s3_public" {
-  bucket = module.s3_public.bucket
+module "s3_static" {
+  source = "./modules/s3"
 
-  cors_rule {
-    allowed_methods = ["GET"]
-    allowed_origins = ["https://www.${var.domain_name}"]
-    expose_headers  = ["ETag"]
-    max_age_seconds = 86400
-  }
+  name   = "${local.namespace}-static"
+  policy = data.aws_iam_policy_document.s3_cloudfront_public.json
 }
 
 module "s3_private" {
