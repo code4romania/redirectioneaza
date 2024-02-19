@@ -31,7 +31,7 @@ services:
       service: redirect_dev_base
     container_name: redirect_dev
     environment:
-      - "DATABASE_ENGINE=psql"
+      - "DATABASE_ENGINE=postgres"
       - "DATABASE_HOST=redirect_psql"
       - "DATABASE_PORT=5432"
     depends_on:

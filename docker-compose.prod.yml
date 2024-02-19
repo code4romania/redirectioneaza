@@ -15,7 +15,7 @@ services:
       - ./backend/media:/var/www/redirect/backend/media
     environment:
       - "ENVIRONMENT=production"
-      - "DATABASE_ENGINE=psql"
+      - "DATABASE_ENGINE=postgres"
     ports:
       - "${WEBAPP_PORT:-8080}:80"
     depends_on:
