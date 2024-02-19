@@ -27,7 +27,7 @@ class Job(models.Model):
         db_index=True,
     )
 
-    zip = models.FileField(verbose_name=_("ZIP"), upload_to="donations", blank=True, null=True)
+    zip = models.FileField(verbose_name=_("ZIP"), upload_to="donation-zips/%Y/%m/%d/", blank=True, null=True)
 
     date_created = models.DateTimeField(verbose_name=_("date created"), db_index=True, auto_now_add=timezone.now)
     date_finished = models.DateTimeField(verbose_name=_("date finished"), db_index=True, blank=True, null=True)
