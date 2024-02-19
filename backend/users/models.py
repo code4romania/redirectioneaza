@@ -2,6 +2,7 @@ import hmac
 import hashlib
 import uuid
 
+from django.conf import settings
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import AbstractUser, UserManager
 from django.db import models
@@ -147,7 +148,7 @@ class User(AbstractUser):
         if not self.old_password or self.old_password.count("$") < 2:
             return False
 
-        pepper = ""  # TODO
+        pepper = settings.OLD_SESSION_KEY
         hashval, method, salt = self.old_password.split("$", 2)
 
         return self.old_hash_password(password, method, salt, pepper) == hashval
