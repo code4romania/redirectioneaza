@@ -18,7 +18,7 @@ module "ecs_redirectioneaza" {
   lb_zone_id              = aws_lb.main.zone_id
   lb_vpc_id               = aws_vpc.main.id
   lb_listener_arn         = aws_lb_listener.http.arn
-  lb_hosts                = ["www.${var.domain_name}"]
+  lb_hosts                = local.domains
   lb_health_check_enabled = true
   lb_path                 = "/"
 

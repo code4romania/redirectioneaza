@@ -1,7 +1,7 @@
 resource "aws_lb" "main" {
   name               = "${local.namespace}-lb"
   load_balancer_type = "application"
-  subnets            = aws_subnet.public.*.id
+  subnets            = [aws_subnet.public.0.id]
   security_groups    = [aws_security_group.lb.id]
 }
 
