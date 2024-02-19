@@ -72,6 +72,7 @@ class NgoListHandler(BaseHandler):
         context = {
             "title": "Toate ONG-urile",
             "ngos": Ngo.objects.filter(is_active=True).order_by("name"),
+            "DEFAULT_NGO_LOGO": settings.DEFAULT_NGO_LOGO,
         }
 
         return render(request, self.template_name, context)
