@@ -190,6 +190,7 @@ LOGGING = {
         "level": env.str("LOG_LEVEL"),
     },
 }
+DJANGO_LOG_LEVEL = env.str("LOG_LEVEL")
 
 # Application definition
 
