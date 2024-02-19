@@ -1,20 +1,21 @@
-name: Build and push image to registry
-
 on:
   push:
     branches:
-      - main
+      - 'main'
     tags:
-      - v*
+      - 'v*'
+    paths:
+      - 'backend/**'
+      - 'docker/**'
+
+name: Build Docker image
 
 jobs:
   build:
-    uses: code4romania/.github/.github/workflows/build-push-image.yml@main
+    name: Build Docker image
+    uses: code4romania/.github/.github/workflows/build-push-image-ecr.yml@main
     with:
-      images: ghcr.io/code4romania/redirectioneaza
-      registry: ghcr.io
-      context: ./
-      dockerfile: ./docker/dockerfiles/Dockerfile
+      image_name: redirectioneaza
+      region: eu-west-1
     secrets:
-      username: ${{ github.actor }}
-      token: ${{ secrets.GITHUB_TOKEN }}
+      role_to_assume: ${{ secrets.ROLE_TO_ASSUME }}
