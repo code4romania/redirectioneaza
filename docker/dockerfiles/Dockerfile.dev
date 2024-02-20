@@ -1,4 +1,4 @@
-FROM node:18.17.1-bookworm-slim
+FROM node:18.19.1-bookworm-slim
 
 ENV PYTHONUNBUFFERED=1
 
