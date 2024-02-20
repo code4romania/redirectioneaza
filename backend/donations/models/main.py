@@ -208,7 +208,7 @@ class Donor(models.Model):
         ("pension", _("pension")),
     )
 
-    ngo = models.ForeignKey(Ngo, verbose_name=_("NGO"), on_delete=models.CASCADE, db_index=True)
+    ngo = models.ForeignKey(Ngo, verbose_name=_("NGO"), on_delete=models.SET_NULL, db_index=True, null=True)
 
     first_name = models.CharField(verbose_name=_("first name"), blank=True, null=False, default="", max_length=100)
     last_name = models.CharField(verbose_name=_("last name"), blank=True, null=False, default="", max_length=100)

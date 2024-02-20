@@ -1,5 +1,6 @@
 from django.contrib import admin
 
+from redirectioneaza.common.admin import HasNgoFilter
 from .models.main import Ngo, Donor
 from django.utils.translation import gettext_lazy as _
 
@@ -24,7 +25,11 @@ class NgoAdmin(admin.ModelAdmin):
     fieldsets = (
         (
             _("NGO"),
-            {"fields": ("slug", "name", "registration_number", "description", "logo_url", "is_verified", "is_active")},
+            {"fields": ("slug", "name", "registration_number", "description", "is_verified", "is_active")},
+        ),
+        (
+            _("Logo"),
+            {"fields": ("logo", "logo_url")},
         ),
         (
             _("Contact"),
@@ -45,7 +50,7 @@ class NgoAdmin(admin.ModelAdmin):
 class DonorAdmin(admin.ModelAdmin):
     list_display = ("id", "email", "first_name", "last_name", "ngo")
     list_display_links = ("email",)
-    list_filter = ("date_created",)
+    list_filter = ("date_created", HasNgoFilter, "is_anonymous", "income_type", "two_years")
 
     exclude = ("personal_identifier", "address")
 
