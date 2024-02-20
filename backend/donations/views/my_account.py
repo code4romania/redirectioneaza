@@ -74,7 +74,7 @@ class MyAccountHandler(AccountHandler):
             "limit": settings.DONATIONS_LIMIT,
             "ngo": user_ngo,
             "donors": grouped_donors,
-            "counties": settings.FORM_COUNTIES,
+            "counties": settings.FORM_COUNTIES_NATIONAL,
             "can_donate": can_donate,
             "has_signed_form": user_ngo.is_accepting_forms if user_ngo else False,
             "current_year": timezone.now().year,
@@ -101,7 +101,7 @@ class NgoDetailsHandler(AccountHandler):
             "title": "Date asociație",
             "user": user,
             "ngo": user.ngo if user.ngo else None,
-            "counties": settings.FORM_COUNTIES,
+            "counties": settings.FORM_COUNTIES_NATIONAL,
             "DEFAULT_NGO_LOGO": settings.DEFAULT_NGO_LOGO,
         }
 
