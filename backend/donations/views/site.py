@@ -106,4 +106,3 @@ class TermsHandler(BaseHandler):
 class HealthCheckHandler(BaseHandler):
     def get(self, request, *args, **kwargs):
         return HttpResponse(str(request.headers))
-    
