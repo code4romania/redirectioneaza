@@ -120,7 +120,6 @@ def ngo_slugs_to_ids(ngo_slugs: str) -> List[int]:
 
 
 IMPORT_DETAILS = {
-    # TODO: The old "logo" field should be saved to the new "logo_url" field
     ImportModelTypeChoices.NGO.value: {
         "default_header": (
             "slug,has_special_status,description,name,bank_account,registration_number,address,county,"
@@ -133,14 +132,21 @@ IMPORT_DETAILS = {
             "county": map_county,
             "active_region": map_county,
         },
+        "ignore_fields": [],
         "fields_post": {},
     },
     ImportModelTypeChoices.USER.value: {
-        "default_header": "old_password,is_verified,last_name,first_name,ngo_slug,date_updated,date_created,email",
+        "default_header": (
+            "old_password,is_verified,last_name,first_name,ngo_slug,date_updated,date_created,email,old_id"
+        ),
         "fields_mapping": {
             "date_created": parse_imported_date,
             "date_updated": parse_imported_date,
+            "first_name": lambda x: x[:150],
+            "last_name": lambda x: x[:150],
+            "email": lambda x: x[:150],
         },
+        "ignore_fields": ["old_id"],
         "fields_post": {},
     },
     ImportModelTypeChoices.DONOR.value: {
@@ -152,11 +158,13 @@ IMPORT_DETAILS = {
             "date_created": parse_imported_date,
             "county": map_county,
         },
+        "ignore_fields": [],
         "fields_post": {},
     },
     ImportModelTypeChoices.PARTNER.value: {
         "default_header": "subdomain,name,has_custom_header,has_custom_note,ngo_slugs",
         "fields_mapping": {},
+        "ignore_fields": [],
         "fields_post": {
             "identifier": "subdomain",
             "fields": {"ngos": ngo_slugs_to_ids},
@@ -189,6 +197,8 @@ def run_import(import_obj: ImportJob):
     import_model_name = ImportModelTypeChoices(import_obj.import_type).value
     import_model = django_apps.get_model(import_model_name)
 
+    logger.info(f"Processing {len(raw_data)} rows for {import_model_name}")
+
     import_data = process_raw_data(import_obj, import_model, raw_data)
 
     logger.info(
@@ -205,6 +215,7 @@ def run_import(import_obj: ImportJob):
 def import_data_into_db(import_obj: ImportJob, import_data: Dict[str, Union[List[Dict], Dict]], import_model):
     batch_number = 0
     items_imported = 0
+    items_successfully_imported = 0
 
     post_import_details = IMPORT_DETAILS[import_obj.import_type]["fields_post"]
     post_data_identifier = post_import_details.get("identifier", None)
@@ -222,17 +233,25 @@ def import_data_into_db(import_obj: ImportJob, import_data: Dict[str, Union[List
             import_model.objects.bulk_create(batch_)
 
             items_imported += len(import_batch)
-            logger.info(f"Batch {batch_number} imported")
+            items_successfully_imported += len(import_batch)
+            logger.info(f"Batch {batch_number + 1} imported")
         except IntegrityError:
-            logger.warning(f"Error importing batch {batch_number}:, retrying with single items")
+            logger.warning(f"Error importing batch {batch_number + 1}:, retrying with single items")
 
             for item in import_batch:
                 try:
                     items_imported += 1
 
                     import_model.objects.create(**item)
-                except IntegrityError as e:
-                    logger.exception(f"Error importing item #{items_imported + 1} {item}: {e}")
+                    items_successfully_imported += 1
+                except IntegrityError:
+                    logger.exception(f"Error importing item #{items_imported + 1} {item}")
+                    if import_obj.import_type == ImportModelTypeChoices.USER.value:
+                        existing_item = import_model.objects.get(email=item["email"])
+                        if not existing_item.ngo:
+                            existing_item.delete()
+                            import_model.objects.create(**item)
+                            items_successfully_imported += 1
                 except Exception as e:
                     logger.exception(f"Error importing item #{items_imported + 1} {item}: {e}")
 
@@ -256,6 +275,7 @@ def import_data_into_db(import_obj: ImportJob, import_data: Dict[str, Union[List
             obj.save()
 
     logger.info(f"Imported {items_imported} items into {import_model}")
+    logger.info(f"Successfully imported {items_successfully_imported + 1} items into {import_model}")
 
 
 def process_raw_data(
@@ -267,6 +287,8 @@ def process_raw_data(
 
     field_details = IMPORT_DETAILS[import_obj.import_type]
 
+    ngos_slug_ids: Dict = dict(Ngo.objects.all().values_list("slug", "id"))
+
     post_data = {}
     post_data_identifier = field_details["fields_post"].get("identifier", None)
 
@@ -274,7 +296,9 @@ def process_raw_data(
     for index, raw_item in enumerate(raw_data):
         item = {}
         for field, value in raw_item.items():
-            if field in field_details.get("fields_post", {}).get("fields", {}).keys():
+            if field in field_details["ignore_fields"]:
+                continue
+            elif field in field_details.get("fields_post", {}).get("fields", {}).keys():
                 post_data[item[post_data_identifier]] = {field: value}
                 continue
             elif field in field_details["fields_mapping"]:
@@ -283,9 +307,8 @@ def process_raw_data(
                 if not value:
                     continue
 
-                try:
-                    ngo_id = Ngo.objects.get(slug=value).id
-                except Ngo.DoesNotExist:
+                ngo_id = ngos_slug_ids.get(value)
+                if not ngo_id:
                     logger.warning(f"NGO with slug {value} not found at row {index + 1}")
                     continue
 
