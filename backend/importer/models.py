@@ -1,7 +1,7 @@
-from django_q.tasks import async_task
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from django_q.tasks import async_task
 
 
 class ImportModelTypeChoices(models.TextChoices):
