@@ -10,3 +10,4 @@ class UserAdmin(admin.ModelAdmin):
         "email",
     )
     list_display_links = ("email",)
+    list_filter = ("is_active", "is_staff", "is_superuser")
