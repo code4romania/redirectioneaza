@@ -48,7 +48,7 @@ class NgoAdmin(admin.ModelAdmin):
 
 @admin.register(Donor)
 class DonorAdmin(admin.ModelAdmin):
-    list_display = ("id", "email", "first_name", "last_name", "ngo")
+    list_display = ("id", "email", "first_name", "last_name", "ngo", "date_created")
     list_display_links = ("email",)
     list_filter = ("date_created", HasNgoFilter, "is_anonymous", "income_type", "two_years")
 
