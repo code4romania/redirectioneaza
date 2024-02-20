@@ -421,3 +421,7 @@ dist
 .pnp.*
 
 .infracost
+
+
+# GeoLite city database
+*/GeoLite2-City/*

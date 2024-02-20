@@ -571,3 +571,7 @@ ENCRYPT_KEY = env.str("ENCRYPT_KEY", "%INVALID%")
 if len(ENCRYPT_KEY) != 32 or ENCRYPT_KEY == "%INVALID%":
     raise Exception("ENCRYPT_KEY must be exactly 32 characters long")
 FERNET_OBJECT = Fernet(urlsafe_b64encode(ENCRYPT_KEY.encode("utf-8")))
+
+
+# GeoIP city database
+GEOIP_DATABASE_PATH = "/var/www/redirect/backend/GeoLite2-City/GeoLite2-City.mmdb"
