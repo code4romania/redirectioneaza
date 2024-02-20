@@ -1,5 +1,5 @@
 local_tools/*
-!local_tools/main.py
+!local_tools/export.py
 !local_tools/requirements.txt
 
 # env files

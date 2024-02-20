@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
 ROOT = Path(__file__).resolve().parent
-CREDENTIALS_PATH = Path(os.path.join(ROOT, "redirectioneaza-87ec85963232.json"))
+CREDENTIALS_PATH = Path(os.path.join(ROOT, "creds.json"))
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = str(CREDENTIALS_PATH)
 
 KINDS = {
@@ -20,7 +20,7 @@ KINDS = {
         "name": "NgoEntity",
         "order": "-date_created",
         "limit": 200,
-        "iterations": 2,
+        "iterations": -1,
         "webapp_to_django": {
             "key.name": "slug",
             "special_status": "has_special_status",
@@ -44,8 +44,8 @@ KINDS = {
     "donor": {
         "name": "Donor",
         "order": "-date_created",
-        "limit": 200,
-        "iterations": 2,
+        "limit": 1000,
+        "iterations": 77,
         "webapp_to_django": {
             "anonymous": "is_anonymous",
             "city": "city",
@@ -63,37 +63,66 @@ KINDS = {
             "tel": "phone",
             "two_years": "two_years",
         },
+        "filter": {
+            "field": "ngo",
+            "operator": "is_not",
+        },
     },
-    "user": {
+    "user_w_slug": {
         "name": "User",
         "order": "-created",
         "limit": 400,
-        "iterations": 2,
+        "iterations": -1,
         "webapp_to_django": {
             "password": "old_password",
-            # "auth_ids": "",
             "verified": "is_verified",
-            "first_name": "last_name",
-            "last_name": "first_name",
+            "first_name.strip()": "last_name",
+            "last_name.strip()": "first_name",
             "ngo.name": "ngo_slug",
             "updated.timestamp()": "date_updated",
             "created.timestamp()": "date_created",
-            "email.lower()": "email",
+            "email.strip().lower()": "email",
+            "key.id": "old_id",
+        },
+        "filter": {
+            "field": "ngo",
+            "operator": "is",
         },
     },
-    # "job": {
-    #     "name": "Job",
-    #     "order": "-date_created",
-    #     "limit": 50,
-    #     "iterations": -1,
-    #     "webapp_to_django": {
-    #         "ngo": "ngo_id",
-    #         "status": "status",
-    #         "date_created.timestamp()": "date_created",
-    #         "url": "url",
-    #         "owner": "owner_id",
-    #     },
-    # },
+    "user_wo_slug": {
+        "name": "User",
+        "order": "-created",
+        "limit": 400,
+        "iterations": -1,
+        "webapp_to_django": {
+            "password": "old_password",
+            "verified": "is_verified",
+            "first_name.strip()": "last_name",
+            "last_name.strip()": "first_name",
+            "ngo.name": "ngo_slug",
+            "updated.timestamp()": "date_updated",
+            "created.timestamp()": "date_created",
+            "email.strip().lower()": "email",
+            "key.id": "old_id",
+        },
+        "filter": {
+            "field": "ngo",
+            "operator": "is_not",
+        },
+    },
+    "job": {
+        "name": "Job",
+        "order": "-date_created",
+        "limit": 400,
+        "iterations": -1,
+        "webapp_to_django": {
+            "date_created.timestamp()": "date_created",
+            "ngo.name": "ngo_slug",
+            "owner.id": "owner_id",
+            "status": "status",
+            "url": "url",
+        },
+    },
 }
 
 
@@ -103,6 +132,14 @@ def write_query_data_to_csv(csv_name, current_kind, items):
 
         for item in items:
             new_row: List[Any] = []
+            if current_kind.get("filter"):
+                if current_kind["filter"]["operator"] == "is":
+                    if item[current_kind["filter"]["field"]] is None:
+                        continue
+                elif current_kind["filter"]["operator"] == "is_not":
+                    if item[current_kind["filter"]["field"]] is not None:
+                        continue
+
             for composed_parameter in current_kind["webapp_to_django"].keys():
                 split_parameters = composed_parameter.split(".")
 
@@ -183,8 +220,10 @@ def create_kind_csv_file(csv_name, current_kind):
 def main():
     enabled_kinds = [
         # "ngo_entity",
-        # "donor",
-        "user",
+        "donor",
+        # "user_w_slug",
+        # "user_wo_slug",
+        # "job",
     ]
 
     start = time.time()
