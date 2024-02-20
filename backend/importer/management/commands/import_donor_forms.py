@@ -17,18 +17,19 @@ logger = logging.getLogger(__name__)
 
 def _import_donor_forms(batch_size=50):
     """
-    Download an reupload the donation form files one by one
+    Download and re-upload the donation form files one by one
     """
+    donor: Donor
     for donor in (
         Donor.objects.exclude(Q(pdf_url__isnull=True) | Q(pdf_url=""))
         .filter(Q(pdf_file="") | Q(pdf_file__isnull=True))
         .all()
         .order_by("-date_created")[:batch_size]
     ):
-        logger.debug("Processing donation: %s", donor.name)
+        logger.debug("Processing donation: %s", donor.first_name)
 
         if not donor.pdf_url.startswith("http"):
-            logger.debug("Skipped form %s: PDF URL does not start with http", donor.name)
+            logger.debug("Skipped form %s: PDF URL does not start with http", donor.first_name)
             continue
 
         r = requests.get(donor.pdf_url)
@@ -46,13 +47,15 @@ def _import_donor_forms(batch_size=50):
             donor.set_cnp(extract_data(page, DATA_ZONES["cnp"]))
             donor.initial = extract_data(page, DATA_ZONES["father"])
 
-            # print("Street Name =", extract_data(page, DATA_ZONES["street_name"]))
-            # print("Street Number =", extract_data(page, DATA_ZONES["street_number"]))
-            # print("BL =", extract_data(page, DATA_ZONES["street_bl"]))
-            # print("SC =", extract_data(page, DATA_ZONES["street_sc"]))
-            # print("ET =", extract_data(page, DATA_ZONES["street_et"]))
-            # print("AP =", extract_data(page, DATA_ZONES["street_ap"]))
-            # print("Percent =", extract_data(page, DATA_ZONES["percent"]))
+            address = {
+                "street_name": extract_data(page, DATA_ZONES["street_name"]),
+                "street_number": extract_data(page, DATA_ZONES["street_number"]),
+                "bl": extract_data(page, DATA_ZONES["street_bl"]),
+                "sc": extract_data(page, DATA_ZONES["street_sc"]),
+                "et": extract_data(page, DATA_ZONES["street_et"]),
+                "ap": extract_data(page, DATA_ZONES["street_ap"]),
+            }
+            donor.set_address(address)
 
             logger.debug("New form file: %s", donor.pdf_file)
             donor.save()

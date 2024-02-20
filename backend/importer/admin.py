@@ -17,7 +17,7 @@ class ImportAdmin(admin.ModelAdmin):
 
     fieldsets = ((None, {"fields": ("import_type", "csv_file", "has_header")}),)
 
-    actions = ("process_import", "transfer_logos")
+    actions = ("process_import", "transfer_logos", "transfer_donor_forms")
 
     @admin.action(description=_("Process the selected import jobs"))
     def process_import(self, request, queryset: QuerySet[ImportJob]):

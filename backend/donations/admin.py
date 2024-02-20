@@ -54,6 +54,8 @@ class DonorAdmin(admin.ModelAdmin):
 
     exclude = ("personal_identifier", "address")
 
+    readonly_fields = ("date_created",)
+
     fieldsets = (
         (
             _("NGO"),
@@ -69,11 +71,10 @@ class DonorAdmin(admin.ModelAdmin):
         ),
         (
             _("File"),
-            {"fields": ("pdf_url", "filename", "has_signed")},
+            {"fields": ("pdf_url", "filename", "has_signed", "pdf_file")},
         ),
         (
             _("Date"),
             {"fields": ("date_created",)},
         ),
     )
-    readonly_fields = ("date_created",)

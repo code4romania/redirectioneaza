@@ -1,5 +1,7 @@
 import json
 import logging
+import random
+import string
 
 from urllib.request import Request, urlopen
 from datetime import datetime, date
@@ -173,7 +175,8 @@ class GetUploadUrl(AccountHandler):
 
         ngo = request.user.ngo
         if not ngo:
-            ngo = Ngo.objects.create()
+            ngo = Ngo()
+            ngo.slug = "".join(random.choices(string.ascii_lowercase + "-", k=8))
             ngo.save()
             request.user.ngo = ngo
             request.user.save()
