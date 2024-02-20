@@ -18,6 +18,7 @@ class ImportAdmin(admin.ModelAdmin):
 
     actions = ("process_import",)
 
+    @admin.action(description=_("Process the selected import jobs"))
     def process_import(self, request, queryset: QuerySet[ImportJob]):
         import_obj: ImportJob
         for import_obj in queryset:

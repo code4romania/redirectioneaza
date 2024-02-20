@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-20 13:02+0200\n"
+"POT-Creation-Date: 2024-02-20 19:47+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,32 +18,36 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?"
 "2:1));\n"
 
-#: donations/admin.py:26 donations/admin.py:54 donations/models/jobs.py:18
+#: donations/admin.py:27 donations/admin.py:59 donations/models/jobs.py:18
 #: donations/models/main.py:188 donations/models/main.py:211 users/models.py:70
 msgid "NGO"
 msgstr "ONG"
 
-#: donations/admin.py:30
+#: donations/admin.py:31
+msgid "Logo"
+msgstr "Logo"
+
+#: donations/admin.py:35
 msgid "Contact"
 msgstr "Contact"
 
-#: donations/admin.py:34
+#: donations/admin.py:39
 msgid "Bank"
 msgstr "Detalii bancare"
 
-#: donations/admin.py:38 donations/admin.py:70
+#: donations/admin.py:43 donations/admin.py:75
 msgid "Date"
 msgstr "Data"
 
-#: donations/admin.py:58
+#: donations/admin.py:63
 msgid "Identity"
 msgstr "Identitate"
 
-#: donations/admin.py:62
+#: donations/admin.py:67
 msgid "Info"
 msgstr "Info"
 
-#: donations/admin.py:66 importer/models.py:28
+#: donations/admin.py:71 importer/models.py:28
 msgid "File"
 msgstr "Fișier"
 
@@ -321,17 +325,37 @@ msgstr "Resetare parolă redirectioneaza.ro"
 msgid "Confirmare cont redirectioneaza.ro"
 msgstr "Confirmare cont redirectioneaza.ro"
 
-#: donations/views/ngo.py:135 donations/views/ngo.py:401
+#: donations/views/ngo.py:134 donations/views/ngo.py:389
 msgid "Formularul tău de redirecționare"
 msgstr "Your redirection form"
 
-#: donations/views/ngo.py:142
+#: donations/views/ngo.py:141
 msgid "Un nou formular de redirecționare"
 msgstr "A new redirection form"
 
-#: importer/admin.py:29
+#: importer/admin.py:22
+msgid "Process the selected import jobs"
+msgstr "Procesează job-urile de import selectate"
+
+#: importer/admin.py:31
 msgid "The import has been processed."
 msgstr "Importul a fost procesat."
+
+#: importer/admin.py:33
+msgid "Schedule the transfer of logos to the current storage"
+msgstr "Programează transferul logourilor în stocarea curentă"
+
+#: importer/admin.py:37
+msgid "The logos have been transferred."
+msgstr "Logourile au fost transferate."
+
+#: importer/admin.py:39
+msgid "Schedule the transfer of donor forms to the current storage"
+msgstr "Programează transferul formularelor de donare în stocarea curentă"
+
+#: importer/admin.py:43
+msgid "The donor forms have been transferred."
+msgstr "Formularele de donare au fost transferate."
 
 #: importer/models.py:15
 msgid "Pending"
