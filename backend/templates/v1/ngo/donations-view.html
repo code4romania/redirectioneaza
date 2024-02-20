@@ -1,9 +1,9 @@
 
 
-    
+
 <div id="donation-table" class="col-xs-12 col-md-8 col-md-offset-2">
     <p>Mai jos găsești o listă cu toate persoanele care au completat formularul de redirecționare:</p>
-    
+
     {% for key, value in donors.items() %}
 
         {% if value or key == current_year %}
@@ -23,8 +23,10 @@
                                 Organizația ta nu a primit niciun formular semnat digital încă, prin urmare nu poți descărca formularele.
                             </div>
                         {% endif %}
-                        <button id="download-button" class="btn" type="submit" 
-                            {% if not has_signed_form or not can_donate %}disabled{% endif %}>
+                        <button id="download-button" class="btn" type="submit"
+                            {% if not has_signed_form or not can_donate %}disabled{% endif %} 
+                            disabled
+                        >
                             Descarcă formularele
                         </button>
                     </form>
@@ -85,10 +87,10 @@
                                 <td>{{ loop.length - loop.index + 1 }}</td>
                                 <td>{{ donation.first_name + " " + donation.last_name }}</td>
                                 <td>{{ donation.city }}, <span class="text-muted">{{ donation.county }}</span></td>
-                                
+
                                 {% if donation.anonymous != True %}
                                     <td>{{ donation.email if donation.email }}</td>
-                                    <td>{{ donation.tel if donation.tel }}</td>    
+                                    <td>{{ donation.tel if donation.tel }}</td>
                                 {% else %}
                                     <td colspan="2" class="text-center text-muted">
                                         Aceasta persoana a ales <br>
