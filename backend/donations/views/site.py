@@ -105,4 +105,4 @@ class TermsHandler(BaseHandler):
 
 class HealthCheckHandler(BaseHandler):
     def get(self, request, *args, **kwargs):
-        return HttpResponse("OK")
+        return HttpResponse(request.headers)
