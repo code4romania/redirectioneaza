@@ -1,7 +1,9 @@
+import logging
 import re
 from datetime import date
 from urllib.parse import urlparse
 
+import geoip2
 from django.conf import settings
 from django.core.files import File
 from django.http import Http404, JsonResponse
@@ -9,12 +11,16 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext as _
+from ipware import get_client_ip
 
 from redirectioneaza.common.messaging import send_email
 from .base import BaseHandler
 from .captcha import validate_captcha
 from ..models.main import Donor, Ngo
 from ..pdf import add_signature, create_pdf
+
+
+logger = logging.getLogger(__name__)
 
 
 class DonationSucces(BaseHandler):
@@ -347,6 +353,29 @@ class TwoPercentHandler(BaseHandler):
                 "ap": donor_dict["ap"],
             }
         )
+
+        donor.geoip = {}
+        if settings.GEOIP_DATABASE_PATH:
+            client_ip, _is_routable = get_client_ip(request)
+            try:
+                with geoip2.database.Reader(settings.GEOIP_DATABASE_PATH) as geodb:
+                    try:
+                        geodata = geodb.city(client_ip)
+                    except geoip2.errors.AddressNotFoundError:
+                        geodata = None
+                        logger.warning("Cannot find GeoIP data for client IP address %s", client_ip)
+            except FileNotFoundError:
+                geodata = None
+                logger.error("Cannot find the GeoIP database file %s", settings.GEOIP_DATABASE_PATH)
+
+            if geodata:
+                donor.geoip = {
+                    "ip_address": client_ip,
+                    "country": geodata.country.iso_code if geodata.country else "",
+                    "region": geodata.subdivisions[0].iso_code if geodata.subdivisions else "",
+                    "lat_long": f"{geodata.location.latitude},{geodata.location.longitude}" if geodata.location else "",
+                    "city": geodata.city.name if geodata.city else "",
+                }
 
         donor.save()
 
