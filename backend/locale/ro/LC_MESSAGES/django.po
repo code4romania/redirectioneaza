@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-01 11:48+0200\n"
+"POT-Creation-Date: 2024-02-20 13:02+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,26 +18,34 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?"
 "2:1));\n"
 
-#: donations/admin.py:23 donations/models/jobs.py:18
-#: donations/models/main.py:188 donations/models/main.py:213 users/models.py:65
+#: donations/admin.py:26 donations/admin.py:54 donations/models/jobs.py:18
+#: donations/models/main.py:188 donations/models/main.py:211 users/models.py:70
 msgid "NGO"
 msgstr "ONG"
 
-#: donations/admin.py:27
+#: donations/admin.py:30
+msgid "Contact"
+msgstr "Contact"
+
+#: donations/admin.py:34
+msgid "Bank"
+msgstr "Detalii bancare"
+
+#: donations/admin.py:38 donations/admin.py:70
+msgid "Date"
+msgstr "Data"
+
+#: donations/admin.py:58
 msgid "Identity"
 msgstr "Identitate"
 
-#: donations/admin.py:31
+#: donations/admin.py:62
 msgid "Info"
 msgstr "Info"
 
-#: donations/admin.py:35
+#: donations/admin.py:66 importer/models.py:28
 msgid "File"
 msgstr "Fișier"
-
-#: donations/admin.py:39
-msgid "Date"
-msgstr "Data"
 
 #: donations/forms/account.py:18 donations/forms/account.py:56
 #: donations/forms/account.py:69
@@ -92,11 +100,11 @@ msgstr "Termeni"
 msgid "New"
 msgstr "Nou"
 
-#: donations/models/jobs.py:11
+#: donations/models/jobs.py:11 importer/models.py:18
 msgid "Error"
 msgstr "Eroare"
 
-#: donations/models/jobs.py:12
+#: donations/models/jobs.py:12 importer/models.py:17
 msgid "Done"
 msgstr "Gata"
 
@@ -113,7 +121,7 @@ msgid "URL"
 msgstr "URL"
 
 #: donations/models/jobs.py:30 donations/models/main.py:181
-#: donations/models/main.py:279 partners/models.py:16
+#: donations/models/main.py:278 partners/models.py:16 users/models.py:86
 msgid "date created"
 msgstr "data creării"
 
@@ -122,7 +130,8 @@ msgstr "data creării"
 msgid ""
 "%(value)s is not a valid identifier. The identifier must look like %(sample)s"
 msgstr ""
-"%(value)s nu este un identificator valid. Identificatorul trebuie să arate %(sample)s"
+"%(value)s nu este un identificator valid. Identificatorul trebuie să arate "
+"%(sample)s"
 
 #: donations/models/main.py:67
 msgid "The ID number must be 8 digits long"
@@ -164,11 +173,11 @@ msgstr "cont bancar"
 msgid "registration number"
 msgstr "număr de înregistrare"
 
-#: donations/models/main.py:126
+#: donations/models/main.py:126 donations/models/main.py:235
 msgid "address"
 msgstr "adresă"
 
-#: donations/models/main.py:128 donations/models/main.py:230
+#: donations/models/main.py:128 donations/models/main.py:228
 msgid "county"
 msgstr "județ"
 
@@ -176,11 +185,11 @@ msgstr "județ"
 msgid "active region"
 msgstr "regiune activă"
 
-#: donations/models/main.py:145 donations/models/main.py:239
+#: donations/models/main.py:145 donations/models/main.py:238
 msgid "telephone"
 msgstr "telefon"
 
-#: donations/models/main.py:147 donations/models/main.py:240
+#: donations/models/main.py:147 donations/models/main.py:239
 msgid "email"
 msgstr "email"
 
@@ -192,7 +201,7 @@ msgstr "website"
 msgid "other emails"
 msgstr "alte emailuri"
 
-#: donations/models/main.py:152 users/models.py:73
+#: donations/models/main.py:152 users/models.py:78
 msgid "is verified"
 msgstr "este verificat"
 
@@ -216,7 +225,7 @@ msgstr "url formular"
 msgid "form with prefilled ngo data"
 msgstr "formular cu datele ONG-ului completate"
 
-#: donations/models/main.py:182 partners/models.py:17
+#: donations/models/main.py:182 partners/models.py:17 users/models.py:87
 msgid "date updated"
 msgstr "data actualizării"
 
@@ -224,79 +233,79 @@ msgstr "data actualizării"
 msgid "NGOs"
 msgstr "ONG-uri"
 
-#: donations/models/main.py:209
+#: donations/models/main.py:207
 msgid "wage"
 msgstr "salariu"
 
-#: donations/models/main.py:210
+#: donations/models/main.py:208
 msgid "pension"
 msgstr "pensie"
 
-#: donations/models/main.py:215
+#: donations/models/main.py:213
 msgid "first name"
 msgstr "prenume"
 
-#: donations/models/main.py:216
+#: donations/models/main.py:214
 msgid "last name"
 msgstr "nume"
 
-#: donations/models/main.py:217
+#: donations/models/main.py:215
 msgid "initials"
 msgstr "inițiale"
 
-#: donations/models/main.py:219
+#: donations/models/main.py:217
 msgid "CNP"
 msgstr "CNP"
 
-#: donations/models/main.py:222
+#: donations/models/main.py:220
 msgid "city"
 msgstr "oraș"
 
-#: donations/models/main.py:244
+#: donations/models/main.py:243
 msgid "anonymous"
 msgstr "anonim"
 
-#: donations/models/main.py:247
+#: donations/models/main.py:246
 msgid "If the user would like the ngo to see the donation"
 msgstr "Dacă utilizatorul dorește ca ONG-ul să vadă donația"
 
-#: donations/models/main.py:252
+#: donations/models/main.py:251
 msgid "income type"
 msgstr "tip venit"
 
-#: donations/models/main.py:261
+#: donations/models/main.py:260
 msgid "two years"
 msgstr "doi ani"
 
-#: donations/models/main.py:263
+#: donations/models/main.py:262
 msgid "If the user wants to donate for 2 years"
 msgstr "Dacă utilizatorul dorește să doneze pentru 2 ani"
 
-#: donations/models/main.py:266
+#: donations/models/main.py:265
 msgid "Geo IP"
 msgstr "Geo IP"
 
-#: donations/models/main.py:268
+#: donations/models/main.py:267
 msgid "PDF URL"
 msgstr "URL PDF"
 
-#: donations/models/main.py:269
+#: donations/models/main.py:268
 msgid "filename"
 msgstr "nume fișier"
 
-#: donations/models/main.py:270
+#: donations/models/main.py:269
 msgid "has signed"
 msgstr "a semnat"
 
-#: donations/models/main.py:273
+#: donations/models/main.py:272
 msgid "PDF file"
 msgstr "fișier PDF"
 
-#: donations/models/main.py:282
+#: donations/models/main.py:281
 msgid "donor"
 msgstr "donator"
 
-#: donations/models/main.py:283
+#: donations/models/main.py:282
 msgid "donors"
 msgstr "donatori"
 
@@ -308,17 +317,53 @@ msgstr "Dacă adresa de email este validă, vei primi un email cu instrucțiuni.
 msgid "Resetare parolă redirectioneaza.ro"
 msgstr "Resetare parolă redirectioneaza.ro"
 
-#: donations/views/account_management.py:204
+#: donations/views/account_management.py:222
 msgid "Confirmare cont redirectioneaza.ro"
 msgstr "Confirmare cont redirectioneaza.ro"
 
-#: donations/views/ngo.py:129 donations/views/ngo.py:358
+#: donations/views/ngo.py:135 donations/views/ngo.py:401
 msgid "Formularul tău de redirecționare"
 msgstr "Your redirection form"
 
-#: donations/views/ngo.py:136
+#: donations/views/ngo.py:142
 msgid "Un nou formular de redirecționare"
 msgstr "A new redirection form"
+
+#: importer/admin.py:29
+msgid "The import has been processed."
+msgstr "Importul a fost procesat."
+
+#: importer/models.py:15
+msgid "Pending"
+msgstr "În așteptare"
+
+#: importer/models.py:16
+msgid "Processing"
+msgstr "Procesare"
+
+#: importer/models.py:22
+msgid "Import type"
+msgstr "Tip import"
+
+#: importer/models.py:24
+msgid "Status"
+msgstr "Stare"
+
+#: importer/models.py:27
+msgid "Has header"
+msgstr "Are antet"
+
+#: importer/models.py:30
+msgid "Uploaded at"
+msgstr "Încărcat la"
+
+#: importer/models.py:38
+msgid "Import"
+msgstr "Import"
+
+#: importer/models.py:39
+msgid "Imports"
+msgstr "Importuri"
 
 #: partners/models.py:10
 msgid "name"
@@ -348,30 +393,34 @@ msgstr "Parteneri"
 msgid "Invalid email send method. Must be 'async' or 'sync'."
 msgstr "Metoda de trimitere email invalidă. Trebuie să fie 'async' sau 'sync'."
 
-#: users/models.py:35
+#: users/models.py:38
 msgid "Superuser must have is_staff=True."
 msgstr "Super-utilizatorul trebuie să aibă is_staff=True."
 
-#: users/models.py:37
+#: users/models.py:40
 msgid "Superuser must have is_superuser=True."
 msgstr "Super-utilizatorul trebuie să aibă is_superuser=True."
 
-#: users/models.py:51
+#: users/models.py:56
 msgid "username"
 msgstr "username"
 
-#: users/models.py:54
+#: users/models.py:59
 msgid "We do not use this field"
 msgstr "Nu folosim acest câmp"
 
-#: users/models.py:61
+#: users/models.py:66
 msgid "email address"
 msgstr "adresă de email"
 
-#: users/models.py:75
+#: users/models.py:80
 msgid "validation token"
 msgstr "token de validare"
 
-#: users/models.py:77
+#: users/models.py:82
 msgid "validation token timestamp"
 msgstr "dată token de validare"
+
+#: users/models.py:84
+msgid "old password"
+msgstr "parolă veche"
