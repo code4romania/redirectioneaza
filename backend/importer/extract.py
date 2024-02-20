@@ -13,7 +13,7 @@ from pypdf import PdfReader
 Zone = namedtuple("Zone", ["start_y", "start_x", "end_x"])
 
 
-data_zones = {
+DATA_ZONES = {
     "cnp": Zone(671, 336, 0),
     "father": Zone(681, 300, 336),
     "street_name": Zone(636, 67, 289),
@@ -51,16 +51,16 @@ if __name__ == "__main__":
     reader = PdfReader(BytesIO(pdf_file.read()))
     page = reader.pages[0]
 
-    print("CNP =", extract_data(page, data_zones["cnp"]))
-    print("Father =", extract_data(page, data_zones["father"]))
+    print("CNP =", extract_data(page, DATA_ZONES["cnp"]))
+    print("Father =", extract_data(page, DATA_ZONES["father"]))
 
-    print("Street Name =", extract_data(page, data_zones["street_name"]))
-    print("Street Number =", extract_data(page, data_zones["street_number"]))
-    print("BL =", extract_data(page, data_zones["street_bl"]))
-    print("SC =", extract_data(page, data_zones["street_sc"]))
-    print("ET =", extract_data(page, data_zones["street_et"]))
-    print("AP =", extract_data(page, data_zones["street_ap"]))
+    print("Street Name =", extract_data(page, DATA_ZONES["street_name"]))
+    print("Street Number =", extract_data(page, DATA_ZONES["street_number"]))
+    print("BL =", extract_data(page, DATA_ZONES["street_bl"]))
+    print("SC =", extract_data(page, DATA_ZONES["street_sc"]))
+    print("ET =", extract_data(page, DATA_ZONES["street_et"]))
+    print("AP =", extract_data(page, DATA_ZONES["street_ap"]))
 
-    print("Percent =", extract_data(page, data_zones["percent"]))
+    print("Percent =", extract_data(page, DATA_ZONES["percent"]))
 
     pdf_file.close()
