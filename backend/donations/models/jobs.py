@@ -6,6 +6,14 @@ from .main import Ngo
 from users.models import User
 
 
+class JobError(Exception):
+    pass
+
+
+class JobDownloadError(JobError):
+    pass
+
+
 class JobStatusChoices(models.TextChoices):
     NEW = "new", _("New")
     ERROR = "error", _("Error")
@@ -13,7 +21,7 @@ class JobStatusChoices(models.TextChoices):
 
 
 class Job(models.Model):
-    """Keep track for download jobs"""
+    """Keep track of download jobs"""
 
     ngo = models.ForeignKey(Ngo, verbose_name=_("NGO"), on_delete=models.CASCADE, db_index=True)
     owner = models.ForeignKey(User, verbose_name=_("owner"), on_delete=models.CASCADE, db_index=True)
@@ -26,8 +34,17 @@ class Job(models.Model):
         max_length=5,
         db_index=True,
     )
-    url = models.URLField(verbose_name=_("URL"), blank=True, null=False, default="", max_length=255)
+
+    zip = models.FileField(verbose_name=_("ZIP"), upload_to="donation-zips/%Y/%m/%d/", blank=True, null=True)
+
     date_created = models.DateTimeField(verbose_name=_("date created"), db_index=True, auto_now_add=timezone.now)
+    date_finished = models.DateTimeField(verbose_name=_("date finished"), db_index=True, blank=True, null=True)
 
     def __str__(self):
         return f"{self.owner} {self.ngo} {self.status}"
+
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        if self.status == JobStatusChoices.DONE and not self.date_finished:
+            self.date_finished = timezone.now()
+
+        super().save(force_insert, force_update, using, update_fields)
