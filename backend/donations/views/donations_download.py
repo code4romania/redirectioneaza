@@ -24,8 +24,12 @@ def download_donations_job(job_id: int = 0):
         return
 
     ngo: Ngo = job.ngo
-    # TODO: Shouldn't we download only donations from the current year? Or the current+previous year?
-    donations: QuerySet[Donor] = Donor.objects.filter(ngo=ngo, has_signed=True).all()
+    ts = timezone.now()
+    donations: QuerySet[Donor] = Donor.objects.filter(
+        ngo=ngo,
+        has_signed=True,
+        date_created__gte=datetime(year=ts.year, month=1, day=1, hour=0, minute=0, second=0, tzinfo=ts.tzinfo),
+    ).all()
 
     try:
         zip_byte_stream: io.BytesIO = _package_donations(donations, job, ngo)
