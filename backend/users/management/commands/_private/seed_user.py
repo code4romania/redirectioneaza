@@ -56,7 +56,6 @@ class CommonCreateUserCommand(BaseCommand):
             is_active=True,
             is_superuser=is_superuser,
             is_staff=is_staff,
-            date_created=timezone.now(),
         )
         user.set_password(password)
 
