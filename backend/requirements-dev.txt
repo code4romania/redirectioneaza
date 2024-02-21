@@ -46,7 +46,7 @@ click==8.1.7
     #   pip-tools
 croniter==2.0.1
     # via -r requirements.txt
-cryptography==42.0.3
+cryptography==42.0.4
     # via -r requirements.txt
 cssselect2==0.7.0
     # via
