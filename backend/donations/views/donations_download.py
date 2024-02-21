@@ -24,6 +24,7 @@ def download_donations_job(job_id: int = 0):
         return
 
     ngo: Ngo = job.ngo
+    # TODO: Shouldn't we download only donations from the current year? Or the current+previous year?
     donations: QuerySet[Donor] = Donor.objects.filter(ngo=ngo, has_signed=True).all()
 
     try:
