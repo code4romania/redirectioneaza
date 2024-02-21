@@ -65,6 +65,10 @@ def ngo_slug_validator(value):
 
 def ngo_id_number_validator(value):
     error_message = _("The ID number must be 8 digits long")
+    if value.startswith("RO"):
+        if len(value) != 10:
+            raise ValidationError(error_message)
+
     if len(value) != 8:
         raise ValidationError(error_message)
 
