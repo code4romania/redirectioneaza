@@ -1,26 +1,29 @@
 import io
 import logging
+from datetime import datetime
 from zipfile import ZipFile
 
 import requests
 from django.db.models import QuerySet
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from donations.models.jobs import Job, JobStatusChoices, JobDownloadError
 from donations.models.main import Donor, Ngo
 from redirectioneaza.common.messaging import send_email
 
+
 logger = logging.getLogger(__name__)
 
 
-def download_donations_job(job_id: int):
-    if not Job.objects.filter(id=job_id).exists():
-        logger.error(f"Job with ID {job_id} does not exist")
+def download_donations_job(job_id: int = 0):
+    try:
+        job: Job = Job.objects.select_related("ngo").get(id=job_id)
+    except Job.DoesNotExist:
+        logger.error("Job with ID %d does not exist", job_id)
         return
 
-    job: Job = Job.objects.get(id=job_id)
     ngo: Ngo = job.ngo
-
     donations: QuerySet[Donor] = Donor.objects.filter(ngo=ngo, has_signed=True).all()
 
     try:
@@ -29,54 +32,62 @@ def download_donations_job(job_id: int):
         job.status = JobStatusChoices.DONE
         job.save()
     except Exception as e:
-        logger.error(f"Error while processing job {job_id}: {e}")
+        logger.error("Error processing job %d: %s", job_id, e)
         job.status = JobStatusChoices.ERROR
         job.save()
         return
 
-    # TODO: is there anything left over to delete?
-
     _announce_done(job)
 
 
-def _package_donations(donations, job, ngo) -> io.BytesIO:
+def _package_donations(donations: QuerySet[Donor], job: Job, ngo: Ngo) -> io.BytesIO:
     zip_byte_stream = io.BytesIO()
-    with ZipFile(zip_byte_stream, mode="w") as zip_archive:
-        for donation in donations:
-            source_url: str  # The URL to the filled-in form file
 
-            # The pdf_file property has priority over the old pdf_url one
+    with ZipFile(zip_byte_stream, mode="w", compresslevel=1) as zip_archive:
+        logger.info("Processing %d donations for '%s'", len(donations), ngo.name)
+        for donation in donations:
+            source_url: str  # Current donation's PDF file URL
+
+            # The 'pdf_file' property has priority over the old 'pdf_url' one
             if donation.pdf_file:
                 source_url = donation.pdf_file.url
             elif donation.pdf_url:
                 source_url = donation.pdf_url
-                logger.info(f"Downloading {donation.pdf_url}")
             else:
                 source_url = ""
 
-            try:
-                pdf_content: bytes = _download_file(source_url)
-            except JobDownloadError:
-                # TODO: Handle the pdf download error. Maybe postpone the entire job?
-                logger.warn(f"Could not download {source_url}")
+            if not source_url:
+                logger.info("Donation #%d has no PDF URL", donation.id)
+                continue
             else:
-                with zip_archive.open(donation.pdf_file.name, "w") as archive_file:
-                    archive_file.write(pdf_content)
+                logger.info("Donation #%d PDF URL: '%s'", donation.id, source_url)
 
-    # TODO: remove the files from the filesystem at the end
+            retries_left = 2
+            while retries_left > 0:
+                try:
+                    pdf_content: bytes = _download_file(source_url)
+                except JobDownloadError:
+                    retries_left -= 1
+                    logger.error("Could not download '%s'. Retries left %d.", source_url, retries_left)
+                except Exception as e:
+                    retries_left = 0
+                    logger.error("Could not download '%s'. Exception %s", source_url, e)
+                else:
+                    retries_left = 0
+                    donation_timestamp = donation.date_created or timezone.now()
+                    filename = datetime.strftime(donation_timestamp, "%Y%m%d_%H%M") + f"__{donation.id}.pdf"
+                    with zip_archive.open(filename, "w") as archive_file:
+                        archive_file.write(pdf_content)
 
     return zip_byte_stream
 
 
-def _download_file(pdf_url: str) -> bytes:
-    if not pdf_url:
-        raise ValueError("pdf_url is empty")
+def _download_file(source_url: str) -> bytes:
+    if not source_url:
+        raise ValueError("source_url is empty")
 
-    # TODO: Should google URLs be treated differently than AWS ones?
-    # if "googleapis" in pdf_url:
-    #     return requests.get(pdf_url).content
+    response = requests.get(source_url, stream=True).content
 
-    response = requests.get(pdf_url, stream=True).content
     if response.status_code != 200:
         raise JobDownloadError
     else:
