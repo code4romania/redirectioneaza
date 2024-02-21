@@ -4,6 +4,7 @@ from datetime import datetime
 from zipfile import ZipFile
 
 import requests
+from django.conf import settings
 from django.db.models import QuerySet
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
@@ -33,7 +34,7 @@ def download_donations_job(job_id: int = 0):
 
     try:
         zip_byte_stream: io.BytesIO = _package_donations(donations, job, ngo)
-        job.zip.save(f"{ngo.name}.zip", zip_byte_stream.getvalue(), save=False)
+        job.zip.save(f"{ngo.name}.zip", zip_byte_stream, save=False)
         job.status = JobStatusChoices.DONE
         job.save()
     except Exception as e:
@@ -88,15 +89,20 @@ def _package_donations(donations: QuerySet[Donor], job: Job, ngo: Ngo) -> io.Byt
 
 
 def _download_file(source_url: str) -> bytes:
+    if not source_url.startswith("https://"):
+        media_root = "/".join(settings.MEDIA_ROOT.split("/")[:-1])
+        with open(media_root + source_url, "rb") as f:
+            return f.read()
+
     if not source_url:
         raise ValueError("source_url is empty")
 
-    response = requests.get(source_url, stream=True).content
+    response = requests.get(source_url, stream=True)
 
     if response.status_code != 200:
         raise JobDownloadError
     else:
-        return response
+        return response.content
 
 
 def _announce_done(job: Job):

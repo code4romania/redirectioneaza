@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from redirectioneaza.common.admin import HasNgoFilter
+from .models.jobs import Job
 from .models.main import Ngo, Donor
 from django.utils.translation import gettext_lazy as _
 
@@ -72,6 +73,34 @@ class DonorAdmin(admin.ModelAdmin):
         (
             _("File"),
             {"fields": ("pdf_url", "filename", "has_signed", "pdf_file")},
+        ),
+        (
+            _("Date"),
+            {"fields": ("date_created",)},
+        ),
+    )
+
+
+@admin.register(Job)
+class JobAdmin(admin.ModelAdmin):
+    list_display = ("id", "ngo", "status", "date_created")
+    list_display_links = ("id", "ngo")
+    list_filter = ("date_created", "status")
+
+    readonly_fields = ("date_created",)
+
+    fieldsets = (
+        (
+            _("NGO"),
+            {"fields": ("ngo",)},
+        ),
+        (
+            _("Status"),
+            {"fields": ("status",)},
+        ),
+        (
+            _("File"),
+            {"fields": ("zip",)},
         ),
         (
             _("Date"),

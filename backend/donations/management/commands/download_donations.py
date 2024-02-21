@@ -1,6 +1,6 @@
 from django.core.management import BaseCommand
-from django.utils import timezone
 from django_q.models import Schedule
+from django_q.tasks import async_task
 from faker import Faker
 
 from donations.views.donations_download import download_donations_job
@@ -53,11 +53,5 @@ class Command(BaseCommand):
             self.stdout.write(self.style.ERROR("Multiple schedules found. Deleting and creating one."))
         except Schedule.DoesNotExist:
             pass
-        Schedule.objects.get_or_create(
-            name=task_id,
-            func="donations.views.donations_download.download_donations_job",
-            schedule_type=Schedule.CRON,
-            cron="*/15 * * * *",
-            repeats=-1,
-            next_run=timezone.now(),
-        )
+
+        async_task("donations.views.donations_download.download_donations_job", job_id)

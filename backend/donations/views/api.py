@@ -116,7 +116,7 @@ class GetNgoForms(AccountHandler):
         new_job.save()
 
         try:
-            call_command("download_donations", new_job.id, "--run")
+            call_command("download_donations", new_job.id)
         except Exception as e:
             logging.error(e)
             new_job.status = JobStatusChoices.ERROR
