@@ -41,6 +41,7 @@ env = environ.Env(
     DATA_UPLOAD_MAX_NUMBER_FIELDS=(int, 1000),
     OLD_SESSION_KEY=(str, ""),
     LOG_LEVEL=(str, "INFO"),
+    ENABLE_CACHE=(bool, True),
     # proxy headers
     USE_PROXY_FORWARDED_HOST=(bool, False),
     PROXY_SSL_HEADER=(str, "HTTP_CLOUDFRONT_FORWARDED_PROTO"),
@@ -315,6 +316,27 @@ CACHES = {
         "LOCATION": "redirect_cache_default",
     }
 }
+
+CACHE_TIMEOUT_SMALL = 60 * 60
+CACHE_TIMEOUT_MEDIUM = 60 * 60 * 24
+CACHE_TIMEOUT_LARGE = 60 * 60 * 24 * 7
+CACHE_TIMEOUT_EXTRA_LARGE = 60 * 60 * 24 * 30
+
+ENABLE_CACHE = env.bool("ENABLE_CACHE", default=not DEBUG)
+if ENABLE_CACHE:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.db.DatabaseCache",
+            "LOCATION": "factory_cache_default",
+            "TIMEOUT": 600,  # default cache timeout in seconds
+        }
+    }
+else:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.dummy.DummyCache",
+        }
+    }
 
 
 AUTH_USER_MODEL = "users.User"

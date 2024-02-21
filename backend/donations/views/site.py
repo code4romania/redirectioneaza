@@ -1,3 +1,4 @@
+import random
 from datetime import datetime
 
 from django.conf import settings
@@ -6,12 +7,18 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils import timezone
 
+from redirectioneaza.common.cache import cache_decorator
 from .base import BaseHandler
 from ..models.main import Ngo, Donor
 
 
 class HomePage(BaseHandler):
     template_name = "index.html"
+
+    @staticmethod
+    @cache_decorator(cache_key_prefix="ALL_NGO_IDS", timeout=settings.CACHE_TIMEOUT_MEDIUM)
+    def _get_list_of_ngo_ids() -> list:
+        return list(Ngo.active.values_list("id", flat=True))
 
     def get(self, request, *args, **kwargs):
         now = timezone.now()
@@ -40,7 +47,8 @@ class HomePage(BaseHandler):
                 "forms": Donor.objects.filter(date_created__gte=datetime(now.year, 1, 1)).count(),
             }
 
-        context["ngos"] = ngo_queryset.filter(is_active=True).order_by("-date_created")[0:4]
+        all_ngo_ids = self._get_list_of_ngo_ids()
+        context["ngos"] = ngo_queryset.filter(id__in=random.sample(all_ngo_ids, 4))
 
         return render(request, self.template_name, context)
 
