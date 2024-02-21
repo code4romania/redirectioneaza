@@ -1,10 +1,10 @@
 import csv
 import logging
 import os
-import time
 from pathlib import Path
 from typing import Any, List
 
+import time
 from google.cloud import datastore
 from google.cloud.datastore import Client as DsClient, Entity, Query
 
@@ -44,15 +44,14 @@ KINDS = {
     "donor": {
         "name": "Donor",
         "order": "-date_created",
-        "limit": 1000,
-        "iterations": 77,
+        "limit": 10000,
+        "iterations": -1,
         "webapp_to_django": {
             "anonymous": "is_anonymous",
             "city": "city",
             "county": "county",
             "date_created.timestamp()": "date_created",
             "email.lower()": "email",
-            "filename": "filename",
             "first_name": "first_name",
             "geoip": "geoip",
             "has_signed": "has_signed",
@@ -63,9 +62,17 @@ KINDS = {
             "tel": "phone",
             "two_years": "two_years",
         },
-        "filter": {
-            "field": "ngo",
-            "operator": "is_not",
+        "default_values": {
+            "has_signed": False,
+            "two_years": False,
+            "anonymous": True,
+            "geoip": {},
+            "income": "wage",
+        },
+        "hard_stop": {
+            "output_field": "date_created.timestamp()",
+            "operator": "<",
+            "value": 0,
         },
     },
     "user_w_slug": {
@@ -144,9 +151,16 @@ def write_query_data_to_csv(csv_name, current_kind, items):
                 split_parameters = composed_parameter.split(".")
 
                 try:
-                    value = item[split_parameters[0]]
-                except KeyError:
-                    value = getattr(item, split_parameters[0])
+                    try:
+                        value = item[split_parameters[0]]
+                    except KeyError:
+                        value = getattr(item, split_parameters[0])
+                except AttributeError:
+                    if "default_values" in current_kind and split_parameters[0] not in current_kind["default_values"]:
+                        raise KeyError(
+                            f"Key '{split_parameters[0]}' not found in item {item} and no default value provided."
+                        )
+                    value = current_kind["default_values"][split_parameters[0]]
 
                 if value is None:
                     new_row.append("")
@@ -159,11 +173,22 @@ def write_query_data_to_csv(csv_name, current_kind, items):
                     else:
                         value = getattr(value, parameter)
 
+                if "hard_stop" in current_kind and composed_parameter == current_kind["hard_stop"]["output_field"]:
+                    compare_value = current_kind["hard_stop"]["value"]
+                    if eval(f"{value} {current_kind['hard_stop']['operator']} {compare_value}"):
+                        logger.info(
+                            f"Hard stop condition met for {composed_parameter} with comparison:"
+                            f"[ {value} {current_kind['hard_stop']['operator']} {compare_value} ]"
+                        )
+                        return False
+
                 new_row.append(value)
 
             writer.writerow(new_row)
 
     logger.info(f"–– Added the items to {csv_name}")
+
+    return True
 
 
 def query_for_kind(kind_data, limit, offset) -> List[Entity]:
@@ -199,7 +224,10 @@ def retrieve_data(csv_name, kind_data):
         items = query_for_kind(kind_data, limit, offset)
         num_items += len(items)
 
-        write_query_data_to_csv(csv_name, kind_data, items)
+        should_continue = write_query_data_to_csv(csv_name, kind_data, items)
+
+        if not should_continue:
+            break
 
         if len(items) < limit:
             logger.info(f"–– Retrieved {num_items} items of type {kind_data['name']} after {runs + 1} runs.")
