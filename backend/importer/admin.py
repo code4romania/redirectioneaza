@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 from django_q.tasks import async_task
 
 from .models import ImportJob
-from .tasks import process_import_task
+from .tasks.processor import process_import_task
 
 
 @admin.register(ImportJob)

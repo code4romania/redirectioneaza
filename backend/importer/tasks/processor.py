@@ -10,7 +10,7 @@ from django.db.models.base import ModelBase
 from django.utils.timezone import make_aware
 
 from donations.models.main import Ngo
-from .models import ImportJob, ImportModelTypeChoices, ImportStatusChoices
+from importer.models import ImportJob, ImportModelTypeChoices, ImportStatusChoices
 
 logger = logging.getLogger(__name__)
 
