@@ -80,7 +80,7 @@ class NgoListHandler(BaseHandler):
         # TODO: add pagination
         context = {
             "title": "Toate ONG-urile",
-            "ngos": Ngo.objects.filter(is_active=True).order_by("name"),
+            "ngos": Ngo.active.order_by("name"),
             "DEFAULT_NGO_LOGO": settings.DEFAULT_NGO_LOGO,
         }
 

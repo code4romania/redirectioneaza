@@ -28,7 +28,7 @@ logger = logging.getLogger(__name__)
 
 class CheckNgoUrl(AccountHandler):
     def get(self, request, ngo_url, *args, **kwargs):
-        # if we don't receive an ngo url or it's not a logged in user or not and admin
+        # if we don't receive an NGO url or it's not a logged in user or not and admin
         if not ngo_url or not request.user and not request.user.is_staff:
             raise PermissionDenied()
 
@@ -41,10 +41,13 @@ class CheckNgoUrl(AccountHandler):
 class NgosApi(BaseHandler):
     def get(self, request, *args, **kwargs):
         # get all the visible ngos
-        ngos = Ngo.objects.filter(is_active=True).all()
+        ngos = Ngo.active.all()
 
         response = []
         for ngo in ngos:
+            if not ngo.slug:
+                continue
+
             response.append(
                 {
                     "name": ngo.name,

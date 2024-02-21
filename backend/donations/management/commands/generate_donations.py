@@ -34,7 +34,7 @@ class Command(BaseCommand):
         self.stdout.write(f"Generating {total_donations} donations")
 
         if not target_org:
-            ngos = list(Ngo.objects.filter(is_active=True))
+            ngos = list(Ngo.active.all())
         else:
             ngos = [Ngo.objects.get(id=target_org)]
 
