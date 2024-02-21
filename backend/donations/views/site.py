@@ -23,7 +23,6 @@ class HomePage(BaseHandler):
     def get(self, request, *args, **kwargs):
         now = timezone.now()
 
-        # TODO: the search isn't working
         context = {
             "title": "redirectioneaza.ro",
             "limit": settings.DONATIONS_LIMIT,
@@ -41,10 +40,11 @@ class HomePage(BaseHandler):
                 }
             )
         else:
-            ngo_queryset = Ngo.objects
+            ngo_queryset = Ngo.active
+            start_of_year = datetime(now.year, 1, 1, 0, 0, 0, tzinfo=now.tzinfo)
             context["stats"] = {
-                "ngos": Ngo.objects.count(),
-                "forms": Donor.objects.filter(date_created__gte=datetime(now.year, 1, 1)).count(),
+                "ngos": ngo_queryset.count(),
+                "forms": Donor.objects.filter(date_created__gte=start_of_year).count(),
             }
 
         all_ngo_ids = self._get_list_of_ngo_ids()

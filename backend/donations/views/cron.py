@@ -23,7 +23,7 @@ class Stats(Handler):
             raise PermissionDenied()
 
         now = timezone.now()
-        start_of_year = datetime(now.year, 1, 1, 0, 0)
+        start_of_year = datetime(now.year, 1, 1, 0, 0, 0, tzinfo=now.tzinfo)
         # TODO: use aggregations for counting the totals in one step
         donations = Donor.objects.filter(date_created__gte=start_of_year).values("ngo_id", "has_signed")
 
@@ -61,10 +61,12 @@ class CustomExport(Handler):
         if not start_arg or not end_arg:
             return HttpResponse("Missing start and end from URL. Format: ?start=23-1&end=19-5")
 
+        current_timezone = timezone.now().tzinfo
+
         start_arg = start_arg.split("-")
         end_arg = end_arg.split("-")
-        query_start = datetime(current_year, int(start_arg[1]), int(start_arg[0]), 0, 0, 59)
-        query_end = datetime(current_year, int(end_arg[1]), int(end_arg[0]), 23, 59, 59)
+        query_start = datetime(current_year, int(start_arg[1]), int(start_arg[0]), 0, 0, 59, tzinfo=current_timezone)
+        query_end = datetime(current_year, int(end_arg[1]), int(end_arg[0]), 23, 59, 59, tzinfo=current_timezone)
 
         donors = (
             Donor.objects.filter(date_created__gte=query_start, date_created__lte=query_end).select_related("ngo").all()

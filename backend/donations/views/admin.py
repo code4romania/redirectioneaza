@@ -32,7 +32,7 @@ class AdminHome(BaseHandler):
         context["title"] = "Admin"
         now = timezone.now()
 
-        from_date = datetime(now.year, 1, 1, 0, 0)
+        from_date = datetime(now.year, 1, 1, 0, 0, 0, tzinfo=now.tzinfo)
 
         # if we don't have any data
         if stats_dict["init"] is False:
