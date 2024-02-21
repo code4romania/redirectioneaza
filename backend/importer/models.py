@@ -32,7 +32,7 @@ class ImportJob(models.Model):
     def process_import(self):
         import_id = self.id
 
-        async_task("importer.tasks.process_import_task", import_id)
+        async_task("importer.tasks.processor.process_import_task", import_id)
 
     class Meta:
         verbose_name = _("Import")

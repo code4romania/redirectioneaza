@@ -24,7 +24,7 @@ class ImportAdmin(admin.ModelAdmin):
         import_obj: ImportJob
         for import_obj in queryset:
             if settings.IMPORT_METHOD == "async":
-                async_task("importer.tasks.process_import_task", import_obj.id)
+                async_task("importer.tasks.processor.process_import_task", import_obj.id)
             else:
                 process_import_task(import_obj.id)
 
