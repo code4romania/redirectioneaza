@@ -94,6 +94,7 @@ env = environ.Env(
     # S3
     USE_S3=(bool, False),
     AWS_S3_REGION_NAME=(str, ""),
+    AWS_S3_SIGNATURE_VERSION=(str, "s3v4"),
     AWS_S3_STORAGE_DEFAULT_BUCKET_NAME=(str, ""),
     AWS_S3_STORAGE_PUBLIC_BUCKET_NAME=(str, ""),
     AWS_S3_STORAGE_STATIC_BUCKET_NAME=(str, ""),
@@ -446,11 +447,12 @@ if env.bool("USE_S3"):
 
     # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html
     default_storage_options = {
-        "bucket_name": (env.str("AWS_S3_STORAGE_DEFAULT_BUCKET_NAME")),
-        "default_acl": (env.str("AWS_S3_DEFAULT_ACL")),
+        "bucket_name": env.str("AWS_S3_STORAGE_DEFAULT_BUCKET_NAME"),
+        "default_acl": env.str("AWS_S3_DEFAULT_ACL"),
         "region_name": env.str("AWS_S3_REGION_NAME") or env.str("AWS_REGION_NAME"),
         "object_parameters": {"CacheControl": "max-age=86400"},
         "file_overwrite": False,
+        "signature_version": env.str("AWS_S3_SIGNATURE_VERSION"),
     }
 
     # Authentication, if not using IAM roles
