@@ -13,8 +13,10 @@ from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 
+from redirectioneaza.common.cache import cache_decorator
 from users.models import User
 from .base import AccountHandler
+from ..models.jobs import JobStatusChoices
 from ..models.main import Donor, Ngo
 
 
@@ -43,6 +45,19 @@ class MyAccountDetailsHandler(AccountHandler):
 class MyAccountHandler(AccountHandler):
     template_name = "ngo/my-account.html"
 
+    @staticmethod
+    @cache_decorator(cache_key_prefix="DONORS_BY_DONATION_YEAR", timeout=settings.CACHE_TIMEOUT_TINY)
+    def _get_donors_by_donation_year(ngo: Ngo) -> OrderedDict:
+        donors_grouped_by_year = OrderedDict()
+
+        for donor in Donor.objects.filter(ngo=ngo).order_by("-date_created"):
+            donation_year = donor.date_created.year
+            if donation_year not in donors_grouped_by_year:
+                donors_grouped_by_year[donation_year] = []
+            donors_grouped_by_year[donation_year].append(donor)
+
+        return donors_grouped_by_year
+
     @method_decorator(login_required(login_url=reverse_lazy("login")))
     def get(self, request: HttpRequest, *args, **kwargs):
         user: User = request.user
@@ -51,17 +66,8 @@ class MyAccountHandler(AccountHandler):
             return redirect(reverse("admin-ngos"))
 
         user_ngo: Ngo = user.ngo if user.ngo else None
-        donors: QuerySet[Donor] = Donor.objects.filter(Q(ngo=user_ngo)).order_by("-date_created")
 
-        years = range(timezone.now().year, settings.START_YEAR, -1)
-
-        grouped_donors = OrderedDict()
-        for donor in donors:
-            index = donor.date_created.year
-            if index in years:
-                if index not in grouped_donors:
-                    grouped_donors[index] = []
-                grouped_donors[index].append(donor)
+        grouped_donors = self._get_donors_by_donation_year(ngo=user_ngo)
 
         now = timezone.now()
         can_donate = not now.date() > settings.DONATIONS_LIMIT
@@ -69,18 +75,40 @@ class MyAccountHandler(AccountHandler):
         ngo_url = (
             request.build_absolute_uri(reverse("twopercent", kwargs={"ngo_url": user_ngo.slug})) if user_ngo else ""
         )
+
+        ngo_jobs = user_ngo.jobs.all()[:10] if user_ngo else None
+
+        last_job_was_recent = False
+        if ngo_jobs:
+            last_job_date = ngo_jobs[0].date_created
+            last_job_status = ngo_jobs[0].status
+
+            if last_job_status != JobStatusChoices.ERROR:
+                timedelta = timezone.timedelta(hours=12)
+            else:
+                timedelta = timezone.timedelta(minutes=30)
+
+            if last_job_date > now - timedelta:
+                last_job_was_recent = True
+
+        has_signed_form = user_ngo.is_accepting_forms if user_ngo else False
+        disable_download = settings.ENABLE_FORMS_DOWNLOAD and (
+            not has_signed_form or not can_donate or last_job_was_recent
+        )
+
         context = {
             "user": user,
+            "jobs": ngo_jobs,
             "limit": settings.DONATIONS_LIMIT,
             "ngo": user_ngo,
             "donors": grouped_donors,
             "counties": settings.FORM_COUNTIES_NATIONAL,
-            "can_donate": can_donate,
-            "has_signed_form": user_ngo.is_accepting_forms if user_ngo else False,
-            "current_year": timezone.now().year,
+            "disable_download": disable_download,
+            "current_year": now.year,
             "ngo_url": ngo_url,
             "DEFAULT_NGO_LOGO": settings.DEFAULT_NGO_LOGO,
         }
+
         return render(request, self.template_name, context)
 
 

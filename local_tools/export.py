@@ -71,7 +71,7 @@ KINDS = {
         },
         "hard_stop": {
             "output_field": "date_created.timestamp()",
-            "operator": "<",
+            "operator": "<=",
             "value": 0,
         },
     },

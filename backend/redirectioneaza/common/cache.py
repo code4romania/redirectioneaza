@@ -5,7 +5,9 @@ from django.core.cache import cache
 def cache_decorator(cache_key_prefix: str, timeout: int):
     def decorator(func):
         def wrapper(*args, **kwargs):
-            cache_key = f"{cache_key_prefix}_{func.__name__}"
+            args_kwargs_key = str(args) + str(kwargs)
+            cache_key = f"{cache_key_prefix}_{func.__name__}__{args_kwargs_key}"
+
             if settings.ENABLE_CACHE:
                 sentinel = object()
                 cached_value = cache.get(cache_key, sentinel)

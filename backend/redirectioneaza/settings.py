@@ -42,6 +42,7 @@ env = environ.Env(
     OLD_SESSION_KEY=(str, ""),
     LOG_LEVEL=(str, "INFO"),
     ENABLE_CACHE=(bool, True),
+    ENABLE_FORMS_DOWNLOAD=(bool, True),
     # proxy headers
     USE_PROXY_FORWARDED_HOST=(bool, False),
     PROXY_SSL_HEADER=(str, "HTTP_CLOUDFRONT_FORWARDED_PROTO"),
@@ -591,6 +592,7 @@ if DEBUG or not RECAPTCHA_ENABLED:
 
 ZIP_ENDPOINT = env.str("ZIP_ENDPOINT")
 ZIP_SECRET = env.str("ZIP_SECRET")
+ENABLE_FORMS_DOWNLOAD = env.bool("ENABLE_FORMS_DOWNLOAD", True)
 
 
 # encryption

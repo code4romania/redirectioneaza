@@ -23,8 +23,20 @@ class JobStatusChoices(models.TextChoices):
 class Job(models.Model):
     """Keep track of download jobs"""
 
-    ngo = models.ForeignKey(Ngo, verbose_name=_("NGO"), on_delete=models.CASCADE, db_index=True)
-    owner = models.ForeignKey(User, verbose_name=_("owner"), on_delete=models.CASCADE, db_index=True)
+    ngo = models.ForeignKey(
+        Ngo,
+        verbose_name=_("NGO"),
+        on_delete=models.CASCADE,
+        db_index=True,
+        related_name="jobs",
+    )
+    owner = models.ForeignKey(
+        User,
+        verbose_name=_("owner"),
+        on_delete=models.CASCADE,
+        db_index=True,
+        related_name="jobs",
+    )
     status = models.CharField(
         verbose_name=_("status"),
         blank=False,
@@ -48,3 +60,10 @@ class Job(models.Model):
             self.date_finished = timezone.now()
 
         super().save(force_insert, force_update, using, update_fields)
+
+    class Meta:
+        verbose_name = _("job")
+        verbose_name_plural = _("jobs")
+
+        ordering = ["-date_created"]
+        get_latest_by = "date_created"
