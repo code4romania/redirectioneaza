@@ -48,7 +48,7 @@ class HomePage(BaseHandler):
                 "forms": Donor.objects.filter(date_created__gte=start_of_year).count(),
             }
 
-        context["ngos"] = self._get_random_ngos(ngo_queryset, num_ngos=4)
+        context["ngos"] = self._get_random_ngos(ngo_queryset, num_ngos=min(4, ngo_queryset.count()))
 
         return render(request, self.template_name, context)
 
