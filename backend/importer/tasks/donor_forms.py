@@ -45,8 +45,8 @@ def import_donor_forms(batch_size=50):
             donor.initial = extract_data(page, DATA_ZONES["father"])
 
             address = {
-                "street_name": extract_data(page, DATA_ZONES["street_name"]),
-                "street_number": extract_data(page, DATA_ZONES["street_number"]),
+                "str": extract_data(page, DATA_ZONES["street_name"]),
+                "nr": extract_data(page, DATA_ZONES["street_number"]),
                 "bl": extract_data(page, DATA_ZONES["street_bl"]),
                 "sc": extract_data(page, DATA_ZONES["street_sc"]),
                 "et": extract_data(page, DATA_ZONES["street_et"]),
