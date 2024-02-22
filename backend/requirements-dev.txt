@@ -12,11 +12,11 @@ black==24.2.0
     # via -r requirements-dev.in
 blessed==1.20.0
     # via -r requirements.txt
-boto3==1.34.45
+boto3==1.34.47
     # via
     #   -r requirements.txt
     #   django-ses
-botocore==1.34.45
+botocore==1.34.47
     # via
     #   -r requirements.txt
     #   boto3
@@ -46,7 +46,7 @@ click==8.1.7
     #   pip-tools
 croniter==2.0.1
     # via -r requirements.txt
-cryptography==42.0.3
+cryptography==42.0.4
     # via -r requirements.txt
 cssselect2==0.7.0
     # via

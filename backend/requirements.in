@@ -1,12 +1,12 @@
 django~=4.2.10
 django-environ~=0.11.2
-django-ipware~=6.0.4 
+django-ipware~=6.0.4
 
 # captcha
 django-recaptcha~=4.0.0
 
 # encrypting data
-cryptography~=42.0.3
+cryptography~=42.0.4
 
 # django-q
 django-q2~=1.6.1
