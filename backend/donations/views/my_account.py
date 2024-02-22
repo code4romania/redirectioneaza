@@ -6,7 +6,6 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied, ValidationError
 from django.core.validators import validate_email
 from django.db import transaction
-from django.db.models import Q, QuerySet
 from django.http import Http404, HttpRequest
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
@@ -50,11 +49,16 @@ class MyAccountHandler(AccountHandler):
     def _get_donors_by_donation_year(ngo: Ngo) -> OrderedDict:
         donors_grouped_by_year = OrderedDict()
 
+        count_per_year = {}
         for donor in Donor.objects.filter(ngo=ngo).order_by("-date_created"):
             donation_year = donor.date_created.year
+            if count_per_year.get(donation_year, 0) > 10:
+                continue
             if donation_year not in donors_grouped_by_year:
+                count_per_year[donation_year] = 0
                 donors_grouped_by_year[donation_year] = []
             donors_grouped_by_year[donation_year].append(donor)
+            count_per_year[donation_year] += 1
 
         return donors_grouped_by_year
 
@@ -104,6 +108,7 @@ class MyAccountHandler(AccountHandler):
             "donors": grouped_donors,
             "counties": settings.FORM_COUNTIES_NATIONAL,
             "disable_download": disable_download,
+            "has_signed_form": has_signed_form,
             "current_year": now.year,
             "ngo_url": ngo_url,
             "DEFAULT_NGO_LOGO": settings.DEFAULT_NGO_LOGO,
