@@ -1,12 +1,13 @@
+import logging
+
+import time
 from django.core.management import BaseCommand
 from django_q.models import Schedule
 from django_q.tasks import async_task
-from faker import Faker
 
 from donations.views.donations_download import download_donations_job
 
-fake = Faker("ro_RO")
-
+logger = logging.getLogger(__name__)
 
 TASK_PREFIX = "DOWNLOAD-DONATIONS-TASK"
 
@@ -33,7 +34,14 @@ class Command(BaseCommand):
             self.stdout.write(self.style.SUCCESS(f"Running download for job with ID #{job_id}."))
 
             success_message: str = f"ran download task for job with ID #{job_id}."
+            start = time.time()
+
             download_donations_job(job_id)
+
+            end = time.time()
+            result = end - start
+
+            logger.info(f"Download took {result} seconds.")
         else:
             self.stdout.write(self.style.SUCCESS("Setting up download task for job with ID #{job_id}."))
 

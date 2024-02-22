@@ -20,7 +20,16 @@
                         {{ csrf_input }}
                         {% if not has_signed_form %}
                             <div class="alert alert-info">
-                                Organizația ta nu a primit niciun formular semnat digital încă, prin urmare nu poți descărca formularele.
+                                Nu ați activat primirea electronică de formulare.
+                                Pentru a activa această funcționalitate, selectați opțiunea
+                                <b>"Doresc sa primesc formularele completate pe email"</b>
+                                din secțiunea de setări a organizației.
+                            </div>
+                        {% endif %}
+                        {% if has_signed_form and disable_download %}
+                            <div class="alert alert-info">
+                                Descărcarea de formulare este momentan blocată pentru organizația ta.
+                                Descărcarea de formulare este limitată la una singură la fiecare 12 ore.
                             </div>
                         {% endif %}
                         <button id="download-button" class="btn" type="submit"
@@ -55,8 +64,8 @@
                                             {% endif %}
                                         </td>
                                         <td>
-                                            {% if job.url %}
-                                                <a href="{{ job.url }}">Descarca</a>
+                                            {% if job.zip %}
+                                                <a href="{{ job.zip.url }}">Descarcă</a>
                                             {% else %}
                                                 -
                                             {% endif %}

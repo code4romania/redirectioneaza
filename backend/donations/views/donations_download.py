@@ -3,7 +3,7 @@ import logging
 import tempfile
 from datetime import datetime
 from pathlib import Path
-from zipfile import ZipFile
+from zipfile import ZIP_DEFLATED, ZipFile
 
 import requests
 from django.conf import settings
@@ -52,12 +52,13 @@ def download_donations_job(job_id: int = 0):
             return
 
     else:
-        with tempfile.TemporaryDirectory() as tmpdirname:
+        with tempfile.TemporaryDirectory(prefix=f"rdr_zip_{job_id:06d}_") as tmpdirname:
             logger.info("Created temporary directory '%s'", tmpdirname)
             try:
                 zip_path = _package_donations(tmpdirname, donations, job, ngo)
-                with open(zip_path) as f:
-                    job.zip.save(f"{ngo.name}.zip", File(f), save=False)
+                file_name = f"{ngo.id:04f}_{ngo.name}.zip"
+                with open(zip_path, "rb") as f:
+                    job.zip.save(file_name, File(f), save=False)
                 job.status = JobStatusChoices.DONE
                 job.save()
             except Exception as e:
@@ -88,36 +89,43 @@ def _get_pdf_url(donation: Donor) -> str:
 
 def _package_donations(tmpdirname: str, donations: QuerySet[Donor], job: Job, ngo: Ngo):
     logger.info("Processing %d donations for '%s'", len(donations), ngo.name)
-    pdf_paths = []
-    for donation in donations:
-        source_url = _get_pdf_url(donation)
 
-        if not source_url:
-            continue
-
-        donation_timestamp = donation.date_created or timezone.now()
-        filename = datetime.strftime(donation_timestamp, "%Y%m%d_%H%M") + f"__{donation.id}.pdf"
-        destination_path = Path(tmpdirname) / filename
-
-        retries_left = 2
-        while retries_left > 0:
-            try:
-                _download_file(destination_path, source_url)
-            except JobDownloadError:
-                retries_left -= 1
-                logger.error("Could not download '%s'. Retries left %d.", source_url, retries_left)
-            except Exception as e:
-                retries_left = 0
-                logger.error("Could not download '%s'. Exception %s", source_url, e)
-            else:
-                pdf_paths.append(destination_path)
-                retries_left = 0
-
-    zip_name = datetime.strftime(donation_timestamp, "%Y%m%d_%H%M") + f"__{ngo.id}.zip"
+    zip_timestamp = timezone.now()
+    zip_name = datetime.strftime(zip_timestamp, "%Y%m%d_%H%M") + f"__{ngo.id}.zip"
     zip_path = Path(tmpdirname) / zip_name
-    with ZipFile(zip_path, mode="w", compresslevel=1) as zip_archive:
-        for pdf_path in pdf_paths:
-            zip_archive.write(pdf_path)
+
+    zip_64_flag = len(donations) > 4000
+
+    zipped_files: int = 0
+    with ZipFile(zip_path, mode="w", compression=ZIP_DEFLATED, compresslevel=9) as zip_archive:
+        for donation in donations:
+            source_url = _get_pdf_url(donation)
+
+            if not source_url:
+                continue
+
+            donation_timestamp = donation.date_created or timezone.now()
+            filename = datetime.strftime(donation_timestamp, "%Y%m%d_%H%M") + f"__{donation.id}.pdf"
+            destination_path = Path(tmpdirname) / filename
+
+            retries_left = 2
+            while retries_left > 0:
+                try:
+                    file_data = _download_file(destination_path, source_url)
+                except JobDownloadError:
+                    retries_left -= 1
+                    logger.error("Could not download '%s'. Retries left %d.", source_url, retries_left)
+                except Exception as e:
+                    retries_left = 0
+                    logger.error("Could not download '%s'. Exception %s", source_url, e)
+                else:
+                    with zip_archive.open(filename, mode="w", force_zip64=zip_64_flag) as handler:
+                        handler.write(file_data)
+
+                    zipped_files += 1
+                    retries_left = 0
+
+    logger.info("Creating ZIP file for %d donations", zipped_files)
 
     return zip_path
 
@@ -127,6 +135,9 @@ def _download_file(destination_path, source_url: str):
         media_root = "/".join(settings.MEDIA_ROOT.split("/")[:-1])
         with open(media_root + source_url, "rb") as f:
             return f.read()
+        #     with open(destination_path, "wb") as w:
+        #         w.write(f.read())
+        # return
 
     if not source_url:
         raise ValueError("source_url is empty")
@@ -136,8 +147,9 @@ def _download_file(destination_path, source_url: str):
     if response.status_code != 200:
         raise JobDownloadError
 
-    with open(destination_path, "wb") as f:
-        f.write(response.content)
+    return response.content
+    # with open(destination_path, "wb") as w:
+    #     w.write(response.content)
 
 
 def _memory_package_donations(donations: QuerySet[Donor], job: Job, ngo: Ngo) -> io.BytesIO:
