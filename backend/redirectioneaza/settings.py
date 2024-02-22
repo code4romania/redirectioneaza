@@ -95,6 +95,7 @@ env = environ.Env(
     USE_S3=(bool, False),
     AWS_S3_REGION_NAME=(str, ""),
     AWS_S3_SIGNATURE_VERSION=(str, "s3v4"),
+    AWS_S3_ADDRESSING_STYLE=(str, "virtual"),
     AWS_S3_STORAGE_DEFAULT_BUCKET_NAME=(str, ""),
     AWS_S3_STORAGE_PUBLIC_BUCKET_NAME=(str, ""),
     AWS_S3_STORAGE_STATIC_BUCKET_NAME=(str, ""),
@@ -453,6 +454,7 @@ if env.bool("USE_S3"):
         "object_parameters": {"CacheControl": "max-age=86400"},
         "file_overwrite": False,
         "signature_version": env.str("AWS_S3_SIGNATURE_VERSION"),
+        "addressing_style": env.str("AWS_S3_ADDRESSING_STYLE"),
     }
 
     # Authentication, if not using IAM roles
