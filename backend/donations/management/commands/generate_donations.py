@@ -59,15 +59,13 @@ class Command(BaseCommand):
                 pdf_url="https://storage.googleapis.com/redirectioneaza/logo_bw.png",
             )
             donor.set_cnp(fake.ssn())
-            donor.set_address(
-                {
-                    "street": fake.street_address(),
-                    "number": fake.building_number(),
-                    "bl": random.choice(["", random.randint(1, 20)]),
-                    "sc": random.choice(["", random.choice(string.ascii_uppercase)]),
-                    "et": random.choice(["", random.randint(1, 20)]),
-                    "ap": random.choice(["", random.randint(1, 200)]),
-                }
+            donor.set_address_helper(
+                street_name=fake.street_name(),
+                street_number=fake.building_number(),
+                street_bl=random.choice(["", random.randint(1, 20)]),
+                street_sc=random.choice(["", random.choice(string.ascii_uppercase)]),
+                street_et=random.choice(["", random.randint(1, 20)]),
+                street_ap=random.choice(["", random.randint(1, 200)]),
             )
 
             generated_donations.append(donor)

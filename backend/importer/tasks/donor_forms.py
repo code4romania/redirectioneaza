@@ -44,15 +44,14 @@ def import_donor_forms(batch_size=50):
             donor.set_cnp(extract_data(page, DATA_ZONES["cnp"]))
             donor.initial = extract_data(page, DATA_ZONES["father"])
 
-            address = {
-                "str": extract_data(page, DATA_ZONES["street_name"]),
-                "nr": extract_data(page, DATA_ZONES["street_number"]),
-                "bl": extract_data(page, DATA_ZONES["street_bl"]),
-                "sc": extract_data(page, DATA_ZONES["street_sc"]),
-                "et": extract_data(page, DATA_ZONES["street_et"]),
-                "ap": extract_data(page, DATA_ZONES["street_ap"]),
-            }
-            donor.set_address(address)
+            donor.set_address_helper(
+                street_name=extract_data(page, DATA_ZONES["street_name"]),
+                street_number=extract_data(page, DATA_ZONES["street_number"]),
+                street_bl=extract_data(page, DATA_ZONES["street_bl"]),
+                street_sc=extract_data(page, DATA_ZONES["street_sc"]),
+                street_et=extract_data(page, DATA_ZONES["street_et"]),
+                street_ap=extract_data(page, DATA_ZONES["street_ap"]),
+            )
 
             logger.debug("New form file: %s", donor.pdf_file)
             donor.save()

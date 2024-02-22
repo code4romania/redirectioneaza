@@ -334,23 +334,17 @@ class TwoPercentHandler(BaseHandler):
             is_anonymous=donor_dict["anonymous"],
             income_type=donor_dict["income"],
             two_years=two_years,
-            # TODO:
-            # make a request to get geo ip data for this user
-            # geoip = self.get_geoip_data(),
             ngo=ngo,
-            # TODO: 'filename' is unused
         )
 
         donor.set_cnp(donor_dict["cnp"])
-        donor.set_address(
-            {
-                "street": donor_dict["street"],
-                "number": donor_dict["number"],
-                "bl": donor_dict["bl"],
-                "sc": donor_dict["sc"],
-                "et": donor_dict["et"],
-                "ap": donor_dict["ap"],
-            }
+        donor.set_address_helper(
+            street_name=donor_dict["street"],
+            street_number=donor_dict["number"],
+            street_bl=donor_dict["bl"],
+            street_sc=donor_dict["sc"],
+            street_et=donor_dict["et"],
+            street_ap=donor_dict["ap"],
         )
 
         client_ip, _is_routable = get_client_ip(request)

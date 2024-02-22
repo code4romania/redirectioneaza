@@ -3,12 +3,18 @@ import json
 from functools import partial
 
 from django.conf import settings
+from django.core.cache import cache
 from django.core.exceptions import ValidationError
 from django.core.files.storage import storages
 from django.db import models
 from django.db.models.functions import Lower
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+
+
+ALL_NGOS_CACHE_KEY = "ALL_NGOS"
+ALL_NGO_IDS_CACHE_KEY = "ALL_NGO_IDS"
+FRONTPAGE_NGOS_KEY = "FRONTPAGE_NGOS"
 
 
 def select_public_storage():
@@ -188,6 +194,13 @@ class Ngo(models.Model):
     objects = models.Manager()
     active = ActiveManager()
 
+    def save(self, *args, **kwargs):
+        if self.id is None and settings.ENABLE_CACHE:
+            cache.delete_many(keys=cache.keys(f"{ALL_NGOS_CACHE_KEY}*"))
+
+        self.slug = self.slug.lower()
+        super().save(*args, **kwargs)
+
     class Meta:
         verbose_name = _("NGO")
         verbose_name_plural = _("NGOs")
@@ -294,7 +307,32 @@ class Donor(models.Model):
     def get_cnp(self) -> str:
         return self.decrypt_cnp(self.encrypted_cnp)
 
-    def set_address(self, address: dict):
+    def set_address_helper(
+        self,
+        street_name: str,
+        street_number: str,
+        street_bl: str = "",
+        street_sc: str = "",
+        street_et: str = "",
+        street_ap: str = "",
+    ):
+        address = {
+            "str": street_name,
+            "nr": street_number,
+        }
+
+        if street_bl:
+            address["bl"] = street_bl
+        if street_sc:
+            address["sc"] = street_sc
+        if street_et:
+            address["et"] = street_et
+        if street_ap:
+            address["ap"] = street_ap
+
+        self._set_address(address)
+
+    def _set_address(self, address: dict):
         self.encrypted_address = settings.FERNET_OBJECT.encrypt(str(address).encode()).decode()
 
     def get_address(self) -> dict:

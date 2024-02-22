@@ -2,6 +2,7 @@ import random
 from datetime import datetime
 
 from django.conf import settings
+from django.db.models import QuerySet
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
@@ -9,14 +10,14 @@ from django.utils import timezone
 
 from redirectioneaza.common.cache import cache_decorator
 from .base import BaseHandler
-from ..models.main import Ngo, Donor
+from ..models.main import ALL_NGOS_CACHE_KEY, ALL_NGO_IDS_CACHE_KEY, FRONTPAGE_NGOS_KEY, Ngo, Donor
 
 
 class HomePage(BaseHandler):
     template_name = "index.html"
 
     @staticmethod
-    @cache_decorator(cache_key_prefix="ALL_NGO_IDS", timeout=settings.CACHE_TIMEOUT_MEDIUM)
+    @cache_decorator(cache_key_prefix=ALL_NGO_IDS_CACHE_KEY, timeout=settings.CACHE_TIMEOUT_MEDIUM)
     def _get_list_of_ngo_ids() -> list:
         return list(Ngo.active.values_list("id", flat=True))
 
@@ -31,7 +32,7 @@ class HomePage(BaseHandler):
         }
 
         if request.partner:
-            ngo_queryset = request.partner.ngos
+            ngo_queryset = request.partner.FRONTPAGE_NGOS_KEY
             context.update(
                 {
                     "company_name": request.partner.name,
@@ -47,10 +48,14 @@ class HomePage(BaseHandler):
                 "forms": Donor.objects.filter(date_created__gte=start_of_year).count(),
             }
 
-        all_ngo_ids = self._get_list_of_ngo_ids()
-        context["ngos"] = ngo_queryset.filter(id__in=random.sample(all_ngo_ids, 4))
+        context["ngos"] = self._get_random_ngos(ngo_queryset, num_ngos=4)
 
         return render(request, self.template_name, context)
+
+    @cache_decorator(cache_key_prefix=FRONTPAGE_NGOS_KEY, timeout=settings.CACHE_TIMEOUT_TINY)
+    def _get_random_ngos(self, ngo_queryset: QuerySet, num_ngos: int):
+        all_ngo_ids = self._get_list_of_ngo_ids()
+        return ngo_queryset.filter(id__in=random.sample(all_ngo_ids, num_ngos))
 
 
 class AboutHandler(BaseHandler):
@@ -75,12 +80,17 @@ class ForNgoHandler(BaseHandler):
 class NgoListHandler(BaseHandler):
     template_name = "all-ngos.html"
 
+    @staticmethod
+    @cache_decorator(cache_key_prefix=ALL_NGOS_CACHE_KEY, timeout=settings.CACHE_TIMEOUT_SMALL)
+    def _get_all_ngos() -> list:
+        return Ngo.active.order_by("name")
+
     def get(self, request, *args, **kwargs):
         # TODO: the search isn't working
         # TODO: add pagination
         context = {
             "title": "Toate ONG-urile",
-            "ngos": Ngo.active.order_by("name"),
+            "ngos": self._get_all_ngos(),
             "DEFAULT_NGO_LOGO": settings.DEFAULT_NGO_LOGO,
         }
 

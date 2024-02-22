@@ -17,10 +17,11 @@ from django.utils.decorators import method_decorator
 from django.utils.translation import gettext as _
 from django.views.decorators.csrf import csrf_exempt
 
+from redirectioneaza.common.cache import cache_decorator
 from redirectioneaza.common.messaging import send_email
 from .base import AccountHandler, BaseHandler
 from ..models.jobs import Job, JobStatusChoices
-from ..models.main import Ngo
+from ..models.main import ALL_NGOS_CACHE_KEY, Ngo
 from ..pdf import create_pdf
 
 logger = logging.getLogger(__name__)
@@ -39,9 +40,14 @@ class CheckNgoUrl(AccountHandler):
 
 
 class NgosApi(BaseHandler):
+    @staticmethod
+    @cache_decorator(cache_key_prefix=ALL_NGOS_CACHE_KEY, timeout=settings.CACHE_TIMEOUT_SMALL)
+    def _get_all_ngos() -> list:
+        return Ngo.active.order_by("name")
+
     def get(self, request, *args, **kwargs):
         # get all the visible ngos
-        ngos = Ngo.active.all()
+        ngos = self._get_all_ngos()
 
         response = []
         for ngo in ngos:
