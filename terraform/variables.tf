@@ -15,6 +15,17 @@ variable "region" {
   default     = "eu-central-1"
 }
 
+variable "donations_limit" {
+  description = "The final date for donations"
+  type        = string
+}
+
+variable "donations_limit_to_current_year" {
+  description = "The final date for donations will be set to use the current year"
+  type        = bool
+  default     = true
+}
+
 variable "domain_name" {
   description = "Domain name used by the application. Must belong to the Route 53 zone defined in `route_53_zone_id`."
   type        = string

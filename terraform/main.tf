@@ -76,6 +76,14 @@ module "ecs_redirectioneaza" {
       value = "HTTP_CLOUDFRONT_FORWARDED_PROTO"
     },
     {
+      name  = "DONATIONS_LIMIT_DATE"
+      value = var.donations_limit
+    },
+    {
+      name  = "DONATIONS_LIMIT_TO_CURRENT_YEAR"
+      value = var.donations_limit_to_current_year
+    },
+    {
       name  = "APEX_DOMAIN"
       value = var.domain_name
     },
