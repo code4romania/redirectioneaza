@@ -1,2 +1,0 @@
-Integrate with Bower JS.
-For now I just manually moved the resulting artefacts in this dir.
