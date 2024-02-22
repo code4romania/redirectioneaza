@@ -39,7 +39,12 @@ from donations.views.admin import (
 )
 from donations.views.api import CheckNgoUrl, GetNgoForm, GetNgoForms, GetUploadUrl, NgosApi, Webhook
 from donations.views.cron import CustomExport, NgoExport, NgoRemoveForms, Stats
-from donations.views.my_account import MyAccountDetailsHandler, MyAccountHandler, NgoDetailsHandler
+from donations.views.my_account import (
+    MyAccountDetailsHandler,
+    MyAccountHandler,
+    NgoDetailsHandler,
+    ArchiveDownloadLinkHandler,
+)
 from donations.views.ngo import DonationSucces, FormSignature, TwoPercentHandler
 from donations.views.site import (
     AboutHandler,
@@ -108,6 +113,7 @@ urlpatterns = (
         path("admin/conturi/", UserAccounts.as_view(), name="admin-users"),
         path("admin/organizatii/", AdminNgosList.as_view(), name="admin-ngos"),
         path("admin/<ngo_url>/", AdminNgoHandler.as_view(), name="admin-ong"),
+        path("admin/download/<job_id>/", ArchiveDownloadLinkHandler.as_view(), name="admin-download-link"),
         path("admin/", AdminHome.as_view(), name="admin-index"),  # name was "admin"
         # must always be the last set of urls
         re_path(r"^(?P<ngo_url>[\w-]+)/doilasuta/", RedirectView.as_view(pattern_name="twopercent", permanent=True)),

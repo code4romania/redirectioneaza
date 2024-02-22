@@ -8,6 +8,7 @@ import requests
 from django.conf import settings
 from django.core.files import File
 from django.db.models import QuerySet
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
@@ -138,5 +139,5 @@ def _announce_done(job: Job):
         to_emails=[job.ngo.email],
         text_template="email/zipped_forms/zipped_forms.txt",
         html_template="email/zipped_forms/zipped_forms.html",
-        context={"link": job.zip.url},
+        context={"link": reverse("admin-download-link", kwargs={"job_id": job.id})},
     )

@@ -65,7 +65,7 @@
                                         </td>
                                         <td>
                                             {% if job.zip %}
-                                                <a href="{{ job.zip.url }}">Descarcă</a>
+                                                <a href="{{ url('admin-download-link', kwargs={'job_id': job.id}) }}">Descarcă</a>
                                             {% else %}
                                                 -
                                             {% endif %}
