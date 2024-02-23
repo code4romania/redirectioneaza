@@ -124,7 +124,7 @@ resource "aws_cloudfront_distribution" "main" {
     allowed_methods            = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
     cached_methods             = ["GET", "HEAD", "OPTIONS"]
     target_origin_id           = aws_lb.main.dns_name
-    cache_policy_id            = "658327ea-f89d-4fab-a63d-7e88639e58f6" #Managed-CachingOptimized
+    cache_policy_id            = aws_cloudfront_cache_policy.default.id
     origin_request_policy_id   = "33f36d7e-f396-46d9-90e0-52428a34d9dc" #Managed-AllViewerAndCloudFrontHeaders-2022-06
     response_headers_policy_id = "67f7725c-6f97-4210-82d7-5512b31e9d03" #Managed-SecurityHeadersPolicy
     viewer_protocol_policy     = "redirect-to-https"
@@ -152,15 +152,15 @@ resource "aws_cloudfront_distribution" "main" {
 resource "aws_cloudfront_cache_policy" "default" {
   name        = "${local.namespace}-cache-policy"
   min_ttl     = 1
-  default_ttl = 5
-  max_ttl     = 3600
+  default_ttl = 60
+  max_ttl     = 300
 
   parameters_in_cache_key_and_forwarded_to_origin {
     enable_accept_encoding_brotli = true
     enable_accept_encoding_gzip   = true
 
     cookies_config {
-      cookie_behavior = "all"
+      cookie_behavior = "none"
     }
 
     headers_config {
@@ -169,13 +169,12 @@ resource "aws_cloudfront_cache_policy" "default" {
       headers {
         items = [
           "Host",
-          "X-Requested-With",
         ]
       }
     }
 
     query_strings_config {
-      query_string_behavior = "all"
+      query_string_behavior = "none"
     }
   }
 }
