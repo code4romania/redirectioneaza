@@ -32,7 +32,7 @@ class HomePage(BaseHandler):
         }
 
         if request.partner:
-            ngo_queryset = request.partner.FRONTPAGE_NGOS_KEY
+            ngo_queryset = request.partner.ngos
             context.update(
                 {
                     "company_name": request.partner.name,
