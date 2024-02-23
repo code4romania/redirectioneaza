@@ -83,7 +83,7 @@ class User(AbstractUser):
 
     old_password = models.CharField(verbose_name=_("old password"), max_length=128, blank=True, null=True)
 
-    date_created = models.DateTimeField(verbose_name=_("date created"), auto_now_add=timezone.now, db_index=True)
+    date_created = models.DateTimeField(verbose_name=_("date created"), db_index=True)
     date_updated = models.DateTimeField(verbose_name=_("date updated"), auto_now=timezone.now, db_index=True)
 
     objects = CustomUserManager()
