@@ -1,6 +1,6 @@
 Îți mulțumim că ai ales să îți redirecționezi o parte din impozitul pe venit!
 
-Formularul tău a fost trimis organizației. Îl poți vedea aici: {{ form_url }}.
+Formularul tău a fost trimis organizației. Îl poți vedea aici: https://redirectioneaza.ro{{ form_url }}.
 
 Împreună suntem mai buni, mai puternici și mai curajosi. Împreună putem aduce o schimbare în bine în societatea noastră, de aceea avem nevoie de cât mai mulți oameni ca tine. Dacă vrei să susții organizația mai departe, spune și prietenilor tăi să intre pe redirecționează.ro
 

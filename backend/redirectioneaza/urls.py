@@ -45,7 +45,7 @@ from donations.views.my_account import (
     NgoDetailsHandler,
     ArchiveDownloadLinkHandler,
 )
-from donations.views.ngo import DonationSucces, FormSignature, TwoPercentHandler
+from donations.views.ngo import DonationSucces, FormSignature, TwoPercentHandler, OwnFormDownloadLinkHandler
 from donations.views.site import (
     AboutHandler,
     ForNgoHandler,
@@ -68,6 +68,11 @@ urlpatterns = (
         path("ong/", ForNgoHandler.as_view(), name="ngo"),
         path("pentru-ong-uri/", RedirectView.as_view(pattern_name="ngo", permanent=True)),
         path("health/", HealthCheckHandler.as_view(), name="health-check"),
+        path(
+            "download/<donor_date_str>/<donor_id>/<donor_hash>/",
+            OwnFormDownloadLinkHandler.as_view(),
+            name="donor-download-link",
+        ),
         # backup in case of old urls. to be removed
         path("asociatii/", NgoListHandler.as_view(), name="associations"),
         path("termeni/", TermsHandler.as_view(), name="terms"),
