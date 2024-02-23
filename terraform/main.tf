@@ -23,7 +23,7 @@ module "ecs_redirectioneaza" {
   lb_path                 = "/health/"
 
   container_memory_soft_limit = 1536
-  container_memory_hard_limit = 3072
+  container_memory_hard_limit = 2048
 
   log_group_name                 = module.ecs_cluster.log_group_name
   service_discovery_namespace_id = module.ecs_cluster.service_discovery_namespace_id
@@ -62,6 +62,10 @@ module "ecs_redirectioneaza" {
     {
       name  = "ENABLE_DJANGO_ADMIN"
       value = tostring(true)
+    },
+    {
+      name  = "ENABLE_CACHE"
+      value = tostring(false)
     },
     {
       name  = "USE_S3"
