@@ -148,7 +148,7 @@ class AdminNgosList(BaseHandler):
         context = {}
 
         if not request.user.is_staff:
-            return redirect(User.create_admin_login_url(reverse("admin-ong")))
+            return redirect(User.create_admin_login_url(reverse("admin-ngos")))
 
         context["title"] = "Admin"
         ngos = Ngo.objects.all()
