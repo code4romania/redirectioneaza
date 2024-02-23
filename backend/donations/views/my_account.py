@@ -82,8 +82,6 @@ class MyAccountHandler(AccountHandler):
         count_per_year = {}
         for donor in Donor.objects.filter(ngo=ngo).order_by("-date_created"):
             donation_year = donor.date_created.year
-            if count_per_year.get(donation_year, 0) > 10:
-                continue
             if donation_year not in donors_grouped_by_year:
                 count_per_year[donation_year] = 0
                 donors_grouped_by_year[donation_year] = []
