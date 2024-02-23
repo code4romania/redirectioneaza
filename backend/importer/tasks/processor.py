@@ -3,6 +3,7 @@ import logging
 from datetime import datetime
 from typing import Any, Dict, List, Optional, TypedDict, Union
 
+import requests
 from django.apps import apps as django_apps
 from django.conf import settings
 from django.db import IntegrityError
@@ -363,18 +364,22 @@ def process_raw_data(
     return {"processed_data": processed_data, "post_data": post_data}
 
 
-def extract_data_from_csv(import_obj) -> List[Dict]:
+def extract_data_from_csv(import_obj: ImportJob) -> List[Dict]:
     import_data: List[Dict] = []
-    with open(import_obj.csv_file.path, "r") as f:
-        reader = csv.reader(f)
-        if import_obj.has_header:
-            header = next(reader)
-        else:
-            default_header = IMPORT_DETAILS[import_obj.import_type]["default_header"]
-            header = default_header.split(",")
 
-        for row in reader:
-            import_data.append(dict(zip(header, row)))
+    url: str = import_obj.csv_file.url
+
+    csv_content = requests.get(url, stream=True).content
+    reader = csv.reader(csv_content.decode("utf-8").splitlines(), delimiter=",")
+
+    if import_obj.has_header:
+        header = next(reader)
+    else:
+        default_header: str = IMPORT_DETAILS[import_obj.import_type]["default_header"]
+        header = default_header.split(",")
+
+    for row in reader:
+        import_data.append(dict(zip(header, row)))
 
     logger.info(f"Extracted {len(import_data)} rows from {import_obj.csv_file.path}")
 
