@@ -14,7 +14,7 @@ from .base import Handler
 logger = logging.getLogger(__name__)
 
 
-# TODO: The cron URLs should not be accessible by the public
+# These CRON endpoints are only accessible by the Django Admin
 
 
 class Stats(Handler):
