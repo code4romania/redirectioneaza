@@ -172,7 +172,6 @@ IMPORT_DETAILS: Dict[str, ImporterType] = {
             "county": map_county,
             "active_region": map_county,
             "bank_account": clean_bank_account,
-            "registration_number": clean_registration,
         },
         "ignore_fields": [],
         "fields_post": {},
