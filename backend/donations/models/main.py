@@ -189,7 +189,7 @@ class Ngo(models.Model):
         upload_to=partial(year_ngo_directory_path, "ngo-forms"),
     )
 
-    date_created = models.DateTimeField(verbose_name=_("date created"), db_index=True)
+    date_created = models.DateTimeField(verbose_name=_("date created"), db_index=True, auto_now_add=timezone.now)
     date_updated = models.DateTimeField(verbose_name=_("date updated"), db_index=True, auto_now=timezone.now)
 
     objects = models.Manager()
@@ -293,7 +293,7 @@ class Donor(models.Model):
         upload_to=partial(year_ngo_donor_directory_path, "donation-forms"),
     )
 
-    date_created = models.DateTimeField(verbose_name=_("date created"), db_index=True)
+    date_created = models.DateTimeField(verbose_name=_("date created"), db_index=True, auto_now_add=timezone.now)
 
     class Meta:
         verbose_name = _("donor")
