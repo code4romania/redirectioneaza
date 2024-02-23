@@ -72,10 +72,6 @@ module "ecs_redirectioneaza" {
       value = "HTTP_CLOUDFRONT_FORWARDED_PROTO"
     },
     {
-      name  = "PROXY_SSL_HEADER"
-      value = "HTTP_CLOUDFRONT_FORWARDED_PROTO"
-    },
-    {
       name  = "APEX_DOMAIN"
       value = var.domain_name
     },
