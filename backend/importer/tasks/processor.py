@@ -381,6 +381,6 @@ def extract_data_from_csv(import_obj: ImportJob) -> List[Dict]:
     for row in reader:
         import_data.append(dict(zip(header, row)))
 
-    logger.info(f"Extracted {len(import_data)} rows from {import_obj.csv_file.path}")
+    logger.info(f"Extracted {len(import_data)} rows from {import_obj.csv_file}")
 
     return import_data
