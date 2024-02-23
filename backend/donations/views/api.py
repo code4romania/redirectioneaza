@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import BadRequest, PermissionDenied
 from django.core.files import File
 from django.core.management import call_command
-from django.http import Http404, HttpResponse, JsonResponse
+from django.http import Http404, HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
@@ -28,15 +28,47 @@ logger = logging.getLogger(__name__)
 
 
 class CheckNgoUrl(AccountHandler):
+    block_list = (
+        "",
+        "admin",
+        "api",
+        "asociatia",
+        "asociatii",
+        "cont-nou",
+        "contul-meu",
+        "cron",
+        "date-cont",
+        "despre",
+        "donatie",
+        "download",
+        "forgot",
+        "health",
+        "login",
+        "logout",
+        "media",
+        "ngos",
+        "nota-de-informare",
+        "ong",
+        "password",
+        "pentru-ong-uri",
+        "politica",
+        "static",
+        "termeni",
+        "verify",
+    )
+
     def get(self, request, ngo_url, *args, **kwargs):
-        # if we don't receive an NGO url or it's not a logged in user or not and admin
+        # if we don't receive an NGO url, or it's not a logged-in user or not and admin
         if not ngo_url or not request.user and not request.user.is_staff:
             raise PermissionDenied()
 
-        if not Ngo.objects.filter(slug=ngo_url).count():
-            return HttpResponse()
-        else:
-            raise BadRequest()
+        if ngo_url.lower() in self.block_list:
+            return HttpResponseBadRequest()
+
+        if Ngo.objects.filter(slug=ngo_url.lower()).count():
+            return HttpResponseBadRequest()
+
+        return HttpResponse()
 
 
 class NgosApi(BaseHandler):
