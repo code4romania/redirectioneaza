@@ -38,6 +38,7 @@ class HomePage(BaseHandler):
                     "company_name": request.partner.name,
                     "custom_header": request.partner.has_custom_header,
                     "custom_note": request.partner.has_custom_note,
+                    "ngos": ngo_queryset.all(),
                 }
             )
         else:
@@ -48,7 +49,7 @@ class HomePage(BaseHandler):
                 "forms": Donor.objects.filter(date_created__gte=start_of_year).count(),
             }
 
-        context["ngos"] = self._get_random_ngos(ngo_queryset, num_ngos=min(4, ngo_queryset.count()))
+            context["ngos"] = self._get_random_ngos(ngo_queryset, num_ngos=min(4, ngo_queryset.count()))
 
         return render(request, self.template_name, context)
 
