@@ -68,25 +68,25 @@ resource "aws_cloudfront_distribution" "main" {
   # Logged in container
   dynamic "ordered_cache_behavior" {
     for_each = [
-      "api",
-      "cron",
-      "verify",
-      "admin",
-      "login",
-      "ong",
-      "password",
-      "forgot",
-      "doilasuta",
-      "semnatura",
-      "contul-meu",
-      "date-cont",
-      "asociatia",
+      "/api/*",
+      "/cron/*",
+      "/verify/*",
+      "/admin/*",
+      "/login/*",
+      "/ong/*",
+      "/password/*",
+      "/forgot/*",
+      "/contul-meu/*",
+      "/date-cont/*",
+      "/asociatia/*",
+      "/*/semnatura/",
+      "/*/succes/",
     ]
 
     content {
-      path_pattern               = "/${ordered_cache_behavior.value}/*"
+      path_pattern               = ordered_cache_behavior.value
       allowed_methods            = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
-      cached_methods             = ["GET", "HEAD", "OPTIONS"]
+      cached_methods             = []
       target_origin_id           = aws_lb.main.dns_name
       cache_policy_id            = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad" #Managed-CachingDisabled
       origin_request_policy_id   = "33f36d7e-f396-46d9-90e0-52428a34d9dc" #Managed-AllViewerAndCloudFrontHeaders-2022-06
