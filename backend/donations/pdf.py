@@ -212,7 +212,7 @@ def create_pdf(person: Dict, ong: Dict):
 
     # add the image as a background
 
-    background = ImageReader(abs_path + form_image_path)
+    background = ImageReader(form_image_path)
     c.drawImage(background, 0, 0, width=width, height=height)
 
     c.setFont("OpenSans", default_font_size)
