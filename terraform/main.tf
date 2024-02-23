@@ -151,10 +151,6 @@ module "ecs_redirectioneaza" {
       valueFrom = aws_secretsmanager_secret.app_encrypt_key.arn
     },
     {
-      name      = "OLD_SESSION_KEY"
-      valueFrom = aws_secretsmanager_secret.app_old_session_key.arn
-    },
-    {
       name      = "DATABASE_ENGINE"
       valueFrom = "${aws_secretsmanager_secret.rds.arn}:engine::"
     },
@@ -203,7 +199,6 @@ module "ecs_redirectioneaza" {
   allowed_secrets = [
     aws_secretsmanager_secret.app_secret_key.arn,
     aws_secretsmanager_secret.app_encrypt_key.arn,
-    aws_secretsmanager_secret.app_old_session_key.arn,
     aws_secretsmanager_secret.seed_admin.arn,
     aws_secretsmanager_secret.sentry_dsn.arn,
     aws_secretsmanager_secret.recaptcha.arn,
@@ -248,15 +243,6 @@ resource "aws_secretsmanager_secret" "app_encrypt_key" {
 resource "aws_secretsmanager_secret_version" "app_encrypt_key" {
   secret_id     = aws_secretsmanager_secret.app_encrypt_key.id
   secret_string = random_password.app_encrypt_key.result
-}
-
-resource "aws_secretsmanager_secret" "app_old_session_key" {
-  name = "${local.namespace}-old_session_key-${random_string.secrets_suffix.result}"
-}
-
-resource "aws_secretsmanager_secret_version" "app_old_session_key" {
-  secret_id     = aws_secretsmanager_secret.app_old_session_key.id
-  secret_string = var.old_session_key
 }
 
 resource "aws_secretsmanager_secret" "sentry_dsn" {

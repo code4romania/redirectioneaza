@@ -39,12 +39,6 @@ variable "seed_admin_password" {
   type        = string
 }
 
-variable "old_session_key" {
-  description = "Old session key"
-  type        = string
-  default     = null
-}
-
 variable "sentry_dsn" {
   description = "Sentry DSN"
   type        = string
