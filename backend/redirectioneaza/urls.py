@@ -37,10 +37,15 @@ from donations.views.admin import (
     SendCampaign,
     UserAccounts,
 )
-from donations.views.api import CheckNgoUrl, GetNgoForm, GetNgoForms, GetUploadUrl, NgosApi, Webhook
+from donations.views.api import CheckNgoUrl, GetNgoForm, GetNgoForms, GetUploadUrl, NgosApi
 from donations.views.cron import CustomExport, NgoExport, NgoRemoveForms, Stats
-from donations.views.my_account import MyAccountDetailsHandler, MyAccountHandler, NgoDetailsHandler
-from donations.views.ngo import DonationSucces, FormSignature, TwoPercentHandler
+from donations.views.my_account import (
+    MyAccountDetailsHandler,
+    MyAccountHandler,
+    NgoDetailsHandler,
+    ArchiveDownloadLinkHandler,
+)
+from donations.views.ngo import DonationSucces, FormSignature, TwoPercentHandler, OwnFormDownloadLinkHandler
 from donations.views.site import (
     AboutHandler,
     ForNgoHandler,
@@ -63,6 +68,11 @@ urlpatterns = (
         path("ong/", ForNgoHandler.as_view(), name="ngo"),
         path("pentru-ong-uri/", RedirectView.as_view(pattern_name="ngo", permanent=True)),
         path("health/", HealthCheckHandler.as_view(), name="health-check"),
+        path(
+            "download/<donor_date_str>/<donor_id>/<donor_hash>/",
+            OwnFormDownloadLinkHandler.as_view(),
+            name="donor-download-link",
+        ),
         # backup in case of old urls. to be removed
         path("asociatii/", NgoListHandler.as_view(), name="associations"),
         path("termeni/", TermsHandler.as_view(), name="terms"),
@@ -90,7 +100,7 @@ urlpatterns = (
         path("api/ngo/check-url/<ngo_url>/", CheckNgoUrl.as_view(), name="api-ngo-check-url"),
         path("api/ngos/", NgosApi.as_view(), name="api-ngos"),
         #
-        path("webhook/", Webhook.as_view(), name="webhook"),
+        # path("webhook/", Webhook.as_view(), name="webhook"),  # TODO: Do we still need this?
         path("api/ngo/upload-url/", GetUploadUrl.as_view(), name="api-ngo-upload-url"),  # TODO
         path("api/ngo/form/<ngo_url>/", GetNgoForm.as_view(), name="api-ngo-form-url"),
         path("api/ngo/forms/download/", GetNgoForms.as_view(), name="api-ngo-forms"),
@@ -108,6 +118,7 @@ urlpatterns = (
         path("admin/conturi/", UserAccounts.as_view(), name="admin-users"),
         path("admin/organizatii/", AdminNgosList.as_view(), name="admin-ngos"),
         path("admin/<ngo_url>/", AdminNgoHandler.as_view(), name="admin-ong"),
+        path("admin/download/<job_id>/", ArchiveDownloadLinkHandler.as_view(), name="admin-download-link"),
         path("admin/", AdminHome.as_view(), name="admin-index"),  # name was "admin"
         # must always be the last set of urls
         re_path(r"^(?P<ngo_url>[\w-]+)/doilasuta/", RedirectView.as_view(pattern_name="twopercent", permanent=True)),

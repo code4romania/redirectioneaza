@@ -1,5 +1,6 @@
 import hashlib
 import json
+from datetime import datetime
 from functools import partial
 
 from django.conf import settings
@@ -8,6 +9,7 @@ from django.core.exceptions import ValidationError
 from django.core.files.storage import storages
 from django.db import models
 from django.db.models.functions import Lower
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
@@ -336,6 +338,32 @@ class Donor(models.Model):
 
     def get_address(self) -> dict:
         return self.decrypt_address(self.encrypted_address)
+
+    @property
+    def donation_hash(self):
+        if not self.pk:
+            raise ValueError
+        return hash_id_secret("donor", self.pk)
+
+    @property
+    def date_str(self):
+        if not self.date_created:
+            raise ValueError
+        return datetime.strftime(self.date_created, "%Y%m%d")
+
+    @property
+    def form_url(self):
+        if not self.pk:
+            raise ValueError
+
+        return reverse(
+            "donor-download-link",
+            kwargs={
+                "donor_date_str": self.date_str,
+                "donor_id": self.id,
+                "donor_hash": self.donation_hash,
+            },
+        )
 
     @staticmethod
     def decrypt_cnp(cnp: str) -> str:

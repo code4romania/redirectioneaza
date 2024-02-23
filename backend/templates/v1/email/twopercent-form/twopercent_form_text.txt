@@ -1,7 +1,7 @@
 Îți mulțumim că ai ales să îți redirecționezi o parte din impozitul pe venit!
 
 Descarcă formularul completat de tine
-{{ form_url }}
+https://redirectioneaza.ro{{ form_url }}
 
 {% if ngo.is_accepting_forms %}
 Mai departe, va trebui să printezi și să semnezi acest formular. Apoi, ai următoarele opțiuni:

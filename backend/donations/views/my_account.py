@@ -15,7 +15,7 @@ from django.utils.decorators import method_decorator
 from redirectioneaza.common.cache import cache_decorator
 from users.models import User
 from .base import AccountHandler
-from ..models.jobs import JobStatusChoices
+from ..models.jobs import Job, JobStatusChoices
 from ..models.main import Donor, Ngo
 
 
@@ -39,6 +39,36 @@ class MyAccountDetailsHandler(AccountHandler):
         context = {"user": request.user}
 
         return render(request, self.template_name, context)
+
+
+class ArchiveDownloadLinkHandler(AccountHandler):
+    @method_decorator(login_required(login_url=reverse_lazy("login")))
+    def get(self, request: HttpRequest, job_id, *args, **kwargs):
+        user: User = request.user
+
+        if user.is_superuser:
+            # The admin can always get the download link
+            try:
+                job = Job.objects.get(pk=job_id)
+            except Job.DoesNotExist:
+                raise Http404
+
+        elif not user.ngo:
+            # Users without NGOs don't have any download links anyway
+            raise Http404
+
+        else:
+            # Check that the asked job belongs to the current user
+            try:
+                job = Job.objects.get(pk=job_id, ngo=user.ngo, owner=user)
+            except Job.DoesNotExist:
+                raise Http404
+
+        # Check that the job has a zip file
+        if not job.zip:
+            raise Http404
+
+        return redirect(job.zip.url)
 
 
 class MyAccountHandler(AccountHandler):

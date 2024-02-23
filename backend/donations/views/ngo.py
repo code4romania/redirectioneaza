@@ -1,6 +1,6 @@
 import logging
 import re
-from datetime import date
+from datetime import date, timedelta, datetime
 from urllib.parse import urlparse
 
 from django.conf import settings
@@ -135,14 +135,14 @@ class FormSignature(BaseHandler):
             to_emails=[self.donor.email],
             text_template="email/signed-form/signed_form.html",
             html_template="email/signed-form/signed_form_text.txt",
-            context={"form_url": self.donor.pdf_file.url},
+            context={"form_url": self.donor.form_url},
         )
         send_email(
             subject=_("Un nou formular de redirecționare"),
             to_emails=[self.ngo.email],
             text_template="email/ngo-signed-form/signed_form.html",
             html_template="email/ngo-signed-form/signed_form_text.txt",
-            context={"form_url": self.donor.pdf_file.url},
+            context={"form_url": self.donor.form_url},
         )
 
         request.session.pop("signature_required", None)
@@ -384,7 +384,11 @@ class TwoPercentHandler(BaseHandler):
                 to_emails=[donor.email],
                 text_template="email/twopercent-form/twopercent_form.html",
                 html_template="email/twopercent-form/twopercent_form_text.txt",
-                context={"name": donor.first_name, "form_url": donor.pdf_file.url, "ngo": ngo},
+                context={
+                    "name": donor.first_name,
+                    "form_url": donor.form_url,
+                    "ngo": ngo,
+                },
             )
 
         url = reverse("ngo-twopercent-success", kwargs={"ngo_url": ngo_url})
@@ -420,3 +424,33 @@ class TwoPercentHandler(BaseHandler):
 
         # render a response
         return render(request, self.template_name, context)
+
+
+class OwnFormDownloadLinkHandler(BaseHandler):
+    def get(self, request, donor_date_str, donor_id, donor_hash, *args, **kwargs):
+        # Don't allow downloading donation forms older than this
+        cutoff_date = timezone.now() - timedelta(days=365)
+        try:
+            donor = Donor.objects.get(pk=donor_id, date_created__gte=cutoff_date)
+        except Donor.DoesNotExist:
+            raise Http404
+        else:
+            failed = False
+
+        # Compare the donation date with the date string
+        date_created_str = datetime.strftime(donor.date_created, "%Y%m%d")
+        if date_created_str != donor_date_str:
+            failed = True
+
+        # Check the security hash
+        if donor_hash != donor.donation_hash:
+            failed = True
+
+        # Check that the job has a zip file
+        if not donor.pdf_file:
+            failed = True
+
+        if failed:
+            raise Http404
+
+        return redirect(donor.pdf_file.url)
