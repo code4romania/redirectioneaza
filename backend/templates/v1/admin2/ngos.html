@@ -14,26 +14,24 @@
                 <th>Nume ONG</th>
                 <th>Email</th>
                 <th>Județ</th>
-                {# <th>Cont asociat</th> #}
-                {# <th>Nr. donații</th> #}
             </tr>
         </thead>
         <tbody>
             {% if ngos %}
-                {% for ngo in ngos %}
+                {% for ngo in ngos if ngo.slug %}
                     <tr>
-                        <td>{{ loop.index }}</td>
+                        <td>
+                            {{ loop.index }}
+                        </td>
                         <td>
                             <a href="{{ url('admin-ong', kwargs={'ngo_url': ngo.slug}) }}">{{ ngo.name }}</a>
                         </td>
                         <td>
                             {{ ngo.email or '' }}
                         </td>
-                        <td>{{ ngo.county }}</td>
-                        {# <td class="{{ 'success' if ngo.account_attached }}">
-                            {{ ngo.account_attached }}
-                        </td> #}
-                        {# <td>{{ ngo.number_of_donations }}</td> #}
+                        <td>
+                            {{ ngo.county }}
+                        </td>
                     </tr>
                 {% endfor %}
             {% else %}
