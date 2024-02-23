@@ -67,8 +67,6 @@
         <div class="form-group choose-url-group">
             <div class="col-xs-12">
                 <div>Poți alege un url personalizat pentru asociația ta:</div>
-                <p class="text-muted">(acesta nu va mai putea fi schimbat ulterior)</p>
-                {# this div is only used to contain the two and to add the has-warning class #}
                 <div>
                     <label for="ong-url" class="control-label">redirectioneaza.ro/</label>
                     <input id="ong-url" class="form-control" type="text" name="ong-url" placeholder="url-ul asociației" value="{{ ngo.slug if ngo }}" required maxlength="150" {{ "readonly" if not is_admin and ngo.key  }} />
