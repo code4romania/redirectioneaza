@@ -50,7 +50,7 @@ resource "aws_route53_record" "mail_from_spf" {
   name    = "mail.${aws_sesv2_email_identity.main.email_identity}"
   type    = "TXT"
   ttl     = "300"
-  records = ["v=spf1 include:amazonses.com ~all"]
+  records = ["v=spf1 include:amazonses.com include:_spf.google.com include:sendgrid.net ~all"]
 }
 
 
