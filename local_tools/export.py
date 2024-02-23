@@ -247,10 +247,10 @@ def create_kind_csv_file(csv_name, current_kind):
 
 def main():
     enabled_kinds = [
-        # "ngo_entity",
-        "donor",
-        # "user_w_slug",
-        # "user_wo_slug",
+        "ngo_entity",
+        "user_w_slug",
+        "user_wo_slug",
+        # "donor",
         # "job",
     ]
 
