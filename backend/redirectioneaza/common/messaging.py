@@ -70,12 +70,7 @@ def send_emails(
                 settings.DEFAULT_FROM_EMAIL if hasattr(settings, "DEFAULT_FROM_EMAIL") else settings.NO_REPLY_EMAIL
             )
 
-            headers = {}
-
-            if hasattr(settings, "AWS_SES_CONFIGURATION_SET_NAME"):
-                headers["X-SES-CONFIGURATION-SET"] = settings.AWS_SES_CONFIGURATION_SET_NAME
-
-            msg = EmailMultiAlternatives(subject, text_body, from_email, [email], headers=headers)
+            msg = EmailMultiAlternatives(subject, text_body, from_email, [email])
             msg.attach_alternative(html_content, "text/html")
 
             msg.send(fail_silently=False)
