@@ -21,7 +21,7 @@ font_path = abs_path + "/static_extras/font/opensans.ttf"
 pdfmetrics.registerFont(TTFont("OpenSans", font_path))
 
 default_font_size = 15
-form_image_path = "/static/images/formular-2021.jpg"
+form_image_path = abs_path + "/static_extras/images/formular-2021.jpg"
 
 
 def format_ngo_account(ngo_account: str):
@@ -211,6 +211,7 @@ def create_pdf(person: Dict, ong: Dict):
     width, height = A4
 
     # add the image as a background
+
     background = ImageReader(abs_path + form_image_path)
     c.drawImage(background, 0, 0, width=width, height=height)
 
