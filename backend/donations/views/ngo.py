@@ -148,8 +148,6 @@ class FormSignature(BaseHandler):
         request.session.pop("signature_required", None)
         self.donor.has_signed = True
 
-        # TODO: Get rid of pdf_url
-        self.donor.pdf_url = self.donor.pdf_file.url
         self.donor.save()
 
         return redirect(reverse("ngo-twopercent-success", kwargs={"ngo_url": ngo_url}))
@@ -367,8 +365,6 @@ class TwoPercentHandler(BaseHandler):
         # close the file after it has been uploaded
         pdf.close()
 
-        # TODO: Get rid of pdf_url
-        donor.pdf_url = donor.pdf_file.url
         donor.save()
 
         # set the donor id in cookie
