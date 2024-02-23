@@ -37,7 +37,7 @@ from donations.views.admin import (
     SendCampaign,
     UserAccounts,
 )
-from donations.views.api import CheckNgoUrl, GetNgoForm, GetNgoForms, GetUploadUrl, NgosApi, Webhook
+from donations.views.api import CheckNgoUrl, GetNgoForm, GetNgoForms, GetUploadUrl, NgosApi
 from donations.views.cron import CustomExport, NgoExport, NgoRemoveForms, Stats
 from donations.views.my_account import (
     MyAccountDetailsHandler,
@@ -95,7 +95,7 @@ urlpatterns = (
         path("api/ngo/check-url/<ngo_url>/", CheckNgoUrl.as_view(), name="api-ngo-check-url"),
         path("api/ngos/", NgosApi.as_view(), name="api-ngos"),
         #
-        path("webhook/", Webhook.as_view(), name="webhook"),
+        # path("webhook/", Webhook.as_view(), name="webhook"),  # TODO: Do we still need this?
         path("api/ngo/upload-url/", GetUploadUrl.as_view(), name="api-ngo-upload-url"),  # TODO
         path("api/ngo/form/<ngo_url>/", GetNgoForm.as_view(), name="api-ngo-form-url"),
         path("api/ngo/forms/download/", GetNgoForms.as_view(), name="api-ngo-forms"),
