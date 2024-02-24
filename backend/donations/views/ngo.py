@@ -256,7 +256,7 @@ class TwoPercentHandler(BaseHandler):
             return self.return_error(request, ngo, errors, is_ajax)
 
         def get_post_value(arg, add_to_error_list=True):
-            value = post.get(arg)
+            value = post.get(arg, "").strip()
 
             # if we received a value
             if value:
