@@ -5,8 +5,12 @@ from django.core.cache import cache
 def cache_decorator(cache_key_prefix: str, timeout: int):
     def decorator(func):
         def wrapper(*args, **kwargs):
-            args_kwargs_key = str(args) + str(kwargs)
-            cache_key = f"{cache_key_prefix}_{func.__name__}__{args_kwargs_key}"
+            cache_suffix = (
+                hash(f"{func.__name__}__{str(args)}_{str(kwargs)}")
+                .to_bytes(length=8, byteorder="big", signed=True)
+                .hex()
+            )
+            cache_key: str = f"{cache_key_prefix}__{cache_suffix}"
 
             if settings.ENABLE_CACHE:
                 sentinel = object()
