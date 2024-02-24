@@ -41,19 +41,21 @@ ENV VIRTUAL_ENV=/opt/venv
 RUN python3 -m venv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
-# copy the backend source code:
-COPY ./backend/ /var/www/redirect/backend/
 WORKDIR /var/www/redirect/backend/
 
-RUN rm -rf ./_appengine_legacy
-
 # install the backend libraries:
+COPY ./backend/pyproject.toml ./backend/requirements-dev.txt /var/www/redirect/backend/
 RUN python3 -m pip install --upgrade pip setuptools && \
     python3 -m pip install -r ./requirements-dev.txt
 
 # install the frontend libraries:
+COPY ./backend/package.json ./backend/bower.json /var/www/redirect/backend/
 RUN npm install -g npm bower && \
     bower install --allow-root --config.interactive=false
+
+# copy the backend source code:
+COPY ./backend/ /var/www/redirect/backend/
+RUN rm -rf ./_appengine_legacy
 
 USER root
 

@@ -1,1 +1,7 @@
 _appengine_legacy
+
+.db_sqlite/*
+
+media
+static
+bower_components
