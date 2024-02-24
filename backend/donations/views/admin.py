@@ -4,7 +4,7 @@ from datetime import datetime
 
 from django.conf import settings
 from django.core.exceptions import BadRequest, PermissionDenied
-from django.db.models import Count, QuerySet
+from django.db.models import Count
 from django.http import Http404
 from django.shortcuts import redirect, render
 from django.urls import reverse
