@@ -55,22 +55,6 @@ services:
     ports:
       - "${WEBAPP_PORT:-8080}:8000"
 
-  zippy:
-    profiles: [ "_base", "zippy" ]
-    extends:
-      file: dkcp.base.yml
-      service: zippy_base
-    container_name: zippy_dev
-    build:
-      context: ./zipper
-      dockerfile: Dockerfile.dev
-      args:
-        ENVIRONMENT: "development"
-    volumes:
-      - ./zipper/creds/:/creds/
-    ports:
-      - "${API_PORT:-8123}:80"
-
   db_mysql_dev:
     profiles: [ "mysql" ]
     extends:

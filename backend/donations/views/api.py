@@ -1,4 +1,3 @@
-import json
 import logging
 import random
 import string
@@ -14,11 +13,9 @@ from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.utils.decorators import method_decorator
-from django.utils.translation import gettext as _
 from django.views.decorators.csrf import csrf_exempt
 
 from redirectioneaza.common.cache import cache_decorator
-from redirectioneaza.common.messaging import send_email
 from .base import AccountHandler, BaseHandler
 from ..models.jobs import Job, JobStatusChoices
 from ..models.main import ALL_NGOS_CACHE_KEY, Ngo
@@ -191,43 +188,3 @@ class GetUploadUrl(AccountHandler):
         ngo.save()
 
         return JsonResponse({"file_urls": [ngo.logo.url]})
-
-
-class Webhook(BaseHandler):
-    def post(self, request, *args, **kwargs):
-        body = json.decode(request.body)
-
-        data = body.get("data", {})
-        job_id = body.get("jobId")
-        error = body.get("error")
-        url = body.get("url")
-
-        if not job_id:
-            logger.error("Did not receive jobId argument")
-            raise BadRequest()
-
-        # mark the job as done
-        try:
-            job = Job.objects.get(id=job_id)
-        except Job.DoesNotExist:
-            logger.error("Received an webhook. Could not find job with id {}".format(data.get("jobId")))
-            raise BadRequest()
-
-        if job.status == "done":
-            logger.warning("Job with id {} is already done. Duplicate webhook".format(job.id))
-
-        if url:
-            job.url = url
-            job.status = "done"
-        elif error:
-            job.status = "error"
-
-        job.save()
-
-        send_email(
-            subject=_("Exportul de formulare este gata"),
-            to_emails=[job.owner.email],
-            text_template="emails/zipped_forms/zipped_forms.txt",
-            html_template="emails/zipped_forms/zipped_forms.html",
-            context={"link": url},
-        )

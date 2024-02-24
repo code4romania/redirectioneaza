@@ -64,9 +64,6 @@ env = environ.Env(
     ALLOWED_HOSTS=(list, ["*"]),
     CORS_ALLOWED_ORIGINS=(list, []),
     CORS_ALLOW_ALL_ORIGINS=(bool, False),
-    # zipping settings
-    ZIP_ENDPOINT=(str, "zippy:8000"),
-    ZIP_SECRET=(str, ""),
     # email settings
     EMAIL_SEND_METHOD=(str, "async"),
     EMAIL_BACKEND=(str, "django.core.mail.backends.console.EmailBackend"),
@@ -595,8 +592,6 @@ RECAPTCHA_ENABLED = True if RECAPTCHA_PUBLIC_KEY else False
 if DEBUG or not RECAPTCHA_ENABLED:
     SILENCED_SYSTEM_CHECKS = ["django_recaptcha.recaptcha_test_key_error"]
 
-ZIP_ENDPOINT = env.str("ZIP_ENDPOINT")
-ZIP_SECRET = env.str("ZIP_SECRET")
 ENABLE_FORMS_DOWNLOAD = env.bool("ENABLE_FORMS_DOWNLOAD", True)
 
 

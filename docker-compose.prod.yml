@@ -21,18 +21,6 @@ services:
     depends_on:
       - db
 
-  zippy:
-    container_name: zippy_prod
-    build:
-      context: ./zipper
-      dockerfile: Dockerfile
-      args:
-        ENVIRONMENT: "production"
-    volumes:
-      - ./creds/:/creds/
-    ports:
-      - "${API_PORT:-8123}:80"
-
   db:
     extends:
       file: dkcp.base.yml

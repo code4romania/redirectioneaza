@@ -10,14 +10,6 @@ services:
       - "PYTHONUNBUFFERED=1"
     restart: on-failure
 
-  zippy_base:
-    container_name: zippy
-    env_file:
-      - .env
-    environment:
-      - "PYTHONUNBUFFERED=1"
-    restart: on-failure
-
   db_base_mysql:
     image: mysql:8.2.0
     restart: always
