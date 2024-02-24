@@ -1,10 +1,10 @@
 Buna!
 
-Un nou supererou a decis să redirecționeze parte din impozitul pe venit către organizația ta. 
+Un nou supererou a decis să redirecționeze parte din impozitul pe venit către organizația ta.
 Ai la linkul de mai jos formularul completat de el pe care va trebui să îl depui la ANAF. Dacă ai nevoie de ajutor, ne găsești pe facebook pe pagina ONGHub sau pe email la redirectioneaza@code4.ro.
 
 Link:
-https://redirectionaza.ro{{ form_url }}
+https://redirectioneaza.ro{{ form_url }}
 
 Îți mulțumim!
 
