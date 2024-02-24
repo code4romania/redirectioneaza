@@ -235,7 +235,7 @@ class NgoDetailsHandler(AccountHandler):
             if not reg_num_query.count():
                 ngo.save()
             else:
-                reg_num_errors = f'CIF "{ngo.registration_number}" este utilizat deja'
+                reg_num_errors = f'CIF "{ngo.registration_number}" este înregistrat deja'
 
         if reg_num_errors:
             context = {
