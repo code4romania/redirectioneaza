@@ -197,7 +197,7 @@ class Ngo(models.Model):
 
     def save(self, *args, **kwargs):
         if self.id is None and settings.ENABLE_CACHE:
-            cache.delete_many(keys=cache.keys(f"{ALL_NGOS_CACHE_KEY}*"))
+            cache.delete(ALL_NGOS_CACHE_KEY)
 
         self.slug = self.slug.lower()
         super().save(*args, **kwargs)

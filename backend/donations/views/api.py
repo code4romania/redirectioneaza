@@ -70,7 +70,7 @@ class CheckNgoUrl(AccountHandler):
 
 class NgosApi(BaseHandler):
     @staticmethod
-    @cache_decorator(cache_key_prefix=ALL_NGOS_CACHE_KEY, timeout=settings.CACHE_TIMEOUT_SMALL)
+    @cache_decorator(timeout=settings.CACHE_TIMEOUT_SMALL, cache_key=ALL_NGOS_CACHE_KEY)
     def _get_all_ngos() -> list:
         return Ngo.active.order_by("name")
 

@@ -75,7 +75,7 @@ class MyAccountHandler(AccountHandler):
     template_name = "ngo/my-account.html"
 
     @staticmethod
-    @cache_decorator(cache_key_prefix="DONORS_BY_DONATION_YEAR", timeout=settings.CACHE_TIMEOUT_TINY)
+    @cache_decorator(timeout=settings.CACHE_TIMEOUT_TINY, cache_key_prefix="DONORS_BY_DONATION_YEAR")
     def _get_donors_by_donation_year(ngo: Ngo) -> OrderedDict:
         donors_grouped_by_year = OrderedDict()
 
