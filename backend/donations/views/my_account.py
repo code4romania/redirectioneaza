@@ -205,7 +205,7 @@ class NgoDetailsHandler(AccountHandler):
         ngo.active_region = post.get("ong-activitate", "").strip()
         ngo.slug = post.get("ong-url", "").strip().lower()
         ngo.registration_number = (
-            post.get("ong-cif", "").upper().replace(" ", "").replace("<", "").replace(">", "")[:10]
+            post.get("ong-cif", "").upper().replace(" ", "").replace("<", "").replace(">", "")[:20]
         )
         ngo.bank_account = post.get("ong-cont", "").strip().upper()
         ngo.has_special_status = True if post.get("special-status") == "on" else False
@@ -230,7 +230,7 @@ class NgoDetailsHandler(AccountHandler):
             reg_num_query = reg_num_query.exclude(pk=ngo.pk)
 
         # TODO: Add more registration number validations
-        if len(ngo.registration_number) < 8:
+        if len(ngo.registration_number) < 8 or len(ngo.registration_number) > 10:
             reg_num_errors = f'CIF "{ngo.registration_number}" pare incorect'
 
         if not reg_num_errors:
