@@ -110,6 +110,7 @@ urlpatterns = (
         path("cron/ngos/export/", NgoExport.as_view(), name="cron-ngo-export"),
         path("cron/export/custom/", CustomExport.as_view(), name="cron-custom-export"),
         #
+        path("admin/django/login/", RedirectView.as_view(pattern_name="login", permanent=True)),
         # Django Admin
         path("admin/django/", django_admin.site.urls),
         # ADMIN HANDLERS
