@@ -106,7 +106,7 @@ class GetNgoForm(BaseHandler):
         except Ngo.DoesNotExist:
             raise Http404()
 
-        # if we have an form created for this ngo, return the url
+        # if we have a form created for this ngo, return the url
         if ngo.prefilled_form:
             return redirect(ngo.prefilled_form.url)
 
@@ -128,7 +128,12 @@ class GetNgoForm(BaseHandler):
 
         # filename = "Formular 2% - {0}.pdf".format(ngo.name)
         filename = "Formular_donatie.pdf"
-        ngo.prefilled_form.save(filename, File(pdf))
+        try:
+            ngo.prefilled_form.save(filename, File(pdf))
+        except AttributeError:
+            # if the form file didn't reach the storage yet, redirect the user back to the download page
+            pdf.close()
+            return redirect(reverse("api-ngo-form-url", kwargs={"ngo_url": ngo_url}))
 
         # close the file after it has been uploaded
         pdf.close()
