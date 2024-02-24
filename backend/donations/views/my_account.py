@@ -195,17 +195,17 @@ class NgoDetailsHandler(AccountHandler):
             ngo.is_verified = False
             ngo.is_active = True
 
-        ngo.name = post.get("ong-nume")
-        ngo.description = post.get("ong-descriere")
-        ngo.phone = post.get("ong-tel")
-        ngo.email = post.get("ong-email")
-        ngo.website = post.get("ong-website")
-        ngo.address = post.get("ong-adresa")
-        ngo.county = post.get("ong-judet")
-        ngo.active_region = post.get("ong-activitate")
-        ngo.slug = post.get("ong-url").lower()
-        ngo.registration_number = post.get("ong-cif")
-        ngo.bank_account = post.get("ong-cont")
+        ngo.name = post.get("ong-nume", "").strip()
+        ngo.description = post.get("ong-descriere", "").strip()
+        ngo.phone = post.get("ong-tel", "").strip()
+        ngo.email = post.get("ong-email", "").strip()
+        ngo.website = post.get("ong-website", "").strip()
+        ngo.address = post.get("ong-adresa", "").strip()
+        ngo.county = post.get("ong-judet", "").strip()
+        ngo.active_region = post.get("ong-activitate", "").strip()
+        ngo.slug = post.get("ong-url", "").strip().lower()
+        ngo.registration_number = post.get("ong-cif", "").upper().replace(" ", "")[:10]
+        ngo.bank_account = post.get("ong-cont", "").strip().upper()
         ngo.has_special_status = True if post.get("special-status") == "on" else False
         ngo.is_accepting_forms = True if post.get("accepts-forms") == "on" else False
 
@@ -221,7 +221,32 @@ class NgoDetailsHandler(AccountHandler):
             if "error" in change_owner_result:
                 return redirect(reverse("admin-ong", kwargs={"ngo_url": user.ngo.slug}))
 
-        ngo.save()
+        # Check that the registration number is not used by another NGO
+        reg_num_errors = ""
+        reg_num_query = Ngo.objects.filter(registration_number=ngo.registration_number)
+        if ngo.pk:
+            reg_num_query = reg_num_query.exclude(pk=ngo.pk)
+
+        # TODO: Add more registration number validations
+        if len(ngo.registration_number) < 8:
+            reg_num_errors = f'CIF "{ngo.registration_number}" pare incorect'
+
+        if not reg_num_errors:
+            if not reg_num_query.count():
+                ngo.save()
+            else:
+                reg_num_errors = f'CIF "{ngo.registration_number}" este utilizat deja'
+
+        if reg_num_errors:
+            context = {
+                "title": "Date asociație",
+                "user": user,
+                "ngo": ngo,  # send back the unsaved NGO data
+                "counties": settings.FORM_COUNTIES_NATIONAL,
+                "DEFAULT_NGO_LOGO": settings.DEFAULT_NGO_LOGO,
+                "errors": reg_num_errors,
+            }
+            return render(request, self.template_name, context)
 
         if is_new_ngo:
             user.ngo = ngo
