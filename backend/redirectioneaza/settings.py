@@ -311,26 +311,19 @@ else:
         }
     }
 
-CACHES = {
-    "default": {
-        "BACKEND": "django.core.cache.backends.db.DatabaseCache",
-        "LOCATION": "redirect_cache_default",
-    }
-}
-
-CACHE_TIMEOUT_TINY = 60
+CACHE_TIMEOUT_TINY = 60 * 3
 CACHE_TIMEOUT_SMALL = 60 * 60
 CACHE_TIMEOUT_MEDIUM = 60 * 60 * 24
 CACHE_TIMEOUT_LARGE = 60 * 60 * 24 * 7
 CACHE_TIMEOUT_EXTRA_LARGE = 60 * 60 * 24 * 30
 
-ENABLE_CACHE = env.bool("ENABLE_CACHE", default=not DEBUG)
+ENABLE_CACHE = env.bool("ENABLE_CACHE")
 if ENABLE_CACHE:
     CACHES = {
         "default": {
             "BACKEND": "django.core.cache.backends.db.DatabaseCache",
-            "LOCATION": "factory_cache_default",
-            "TIMEOUT": 600,  # default cache timeout in seconds
+            "LOCATION": "redirect_cache_default",
+            "TIMEOUT": CACHE_TIMEOUT_SMALL,  # default cache timeout in seconds
         }
     }
 else:
@@ -555,9 +548,8 @@ CONTACT_EMAIL_ADDRESS = env.str("CONTACT_EMAIL_ADDRESS")
 # Django Q2
 # https://django-q2.readthedocs.io/en/stable/brokers.html
 
-
 Q_CLUSTER = {
-    "name": "factory",
+    "name": "redirect",
     "workers": env.int("BACKGROUND_WORKERS_COUNT"),
     "recycle": 100,
     "timeout": 900,  # A task must finish in less than 15 minutes
@@ -574,6 +566,7 @@ Q_CLUSTER = {
     "guard_cycle": 3,
     "catch_up": False,
 }
+
 IMPORT_METHOD = env.str("IMPORT_METHOD")
 IMPORT_USE_BATCHES = env.bool("IMPORT_USE_BATCHES")
 IMPORT_BATCH_SIZE = env.int("IMPORT_BATCH_SIZE")
