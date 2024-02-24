@@ -4,6 +4,7 @@ from datetime import datetime
 
 from django.conf import settings
 from django.core.exceptions import BadRequest, PermissionDenied
+from django.db.models import Count, QuerySet
 from django.http import Http404
 from django.shortcuts import redirect, render
 from django.urls import reverse
@@ -57,7 +58,7 @@ class AdminHome(BaseHandler):
                     "forms": 0,
                 }
 
-            self.add_data(stats_dict, ngos, donations)
+            self.add_data(stats_dict)
 
             stats_dict["init"] = True
 
@@ -69,26 +70,40 @@ class AdminHome(BaseHandler):
         stats["ngos"] = ngos.count() + stats_dict["ngos"]
         stats["forms"] = donations.count() + stats_dict["forms"]
 
-        self.add_data(stats, ngos, donations)
+        self.add_data(stats)
 
         context["stats_dict"] = stats
 
         # render a response
         return render(request, self.template_name, context)
 
-    def add_data(self, obj, ngos, donations):
-        for ngo in ngos:
-            if ngo.date_created.year in obj["years"]:
-                obj["years"][ngo.date_created.year]["ngos"] += 1
+    def add_data(self, obj):
+        ngos_by_year = {
+            year_stas["date_created__year"]: year_stas["count"]
+            for year_stas in Ngo.active.values("date_created__year").annotate(count=Count("id"))
+        }
+        donations_by_year = {
+            year_stas["date_created__year"]: year_stas["count"]
+            for year_stas in Donor.objects.values("date_created__year").annotate(count=Count("id"))
+        }
 
-            if ngo.county:
-                obj["counties"][ngo.county]["ngos"] += 1
+        ngos_by_county = {
+            county_stats["county"]: county_stats["count"]
+            for county_stats in Ngo.active.values("county").annotate(count=Count("id"))
+        }
+        donations_by_county = {
+            county_stats["county"]: county_stats["count"]
+            for county_stats in Donor.objects.values("county").annotate(count=Count("id"))
+        }
 
-        for donation in donations:
-            if donation.date_created.year in obj["years"]:
-                obj["years"][donation.date_created.year]["forms"] += 1
-
-            obj["counties"][donation.county]["forms"] += 1
+        obj["years"] = {
+            year: {"ngos": ngos_by_year.get(year, 0), "forms": donations_by_year.get(year, 0)}
+            for year in range(settings.START_YEAR, timezone.now().year + 1)
+        }
+        obj["counties"] = {
+            county: {"ngos": ngos_by_county.get(county, 0), "forms": donations_by_county.get(county, 0)}
+            for county in settings.LIST_OF_COUNTIES + ["1", "2", "3", "4", "5", "6", "RO"]
+        }
 
 
 class AdminNewNgoHandler(BaseHandler):
