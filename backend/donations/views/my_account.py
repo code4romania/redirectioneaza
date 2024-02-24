@@ -204,7 +204,9 @@ class NgoDetailsHandler(AccountHandler):
         ngo.county = post.get("ong-judet", "").strip()
         ngo.active_region = post.get("ong-activitate", "").strip()
         ngo.slug = post.get("ong-url", "").strip().lower()
-        ngo.registration_number = post.get("ong-cif", "").upper().replace(" ", "")[:10]
+        ngo.registration_number = (
+            post.get("ong-cif", "").upper().replace(" ", "").replace("<", "").replace(">", "")[:10]
+        )
         ngo.bank_account = post.get("ong-cont", "").strip().upper()
         ngo.has_special_status = True if post.get("special-status") == "on" else False
         ngo.is_accepting_forms = True if post.get("accepts-forms") == "on" else False
