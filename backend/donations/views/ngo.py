@@ -1,6 +1,6 @@
 import logging
 import re
-from datetime import date, timedelta, datetime
+from datetime import date, datetime, timedelta
 from urllib.parse import urlparse
 
 from django.conf import settings
@@ -17,7 +17,6 @@ from .base import BaseHandler
 from .captcha import validate_captcha
 from ..models.main import Donor, Ngo
 from ..pdf import add_signature, create_pdf
-
 
 logger = logging.getLogger(__name__)
 
@@ -119,15 +118,30 @@ class FormSignature(BaseHandler):
         if not signature_image:
             return redirect(reverse("ngo-twopercent-signature", kwargs={"ngo_url": ngo_url}))
 
-        # add the image to the PDF
-        with self.donor.pdf_file.open("rb") as pdf:
-            new_pdf = add_signature(pdf.read(), signature_image)
+        # add the image to the PDF, retry if the file does not exist
+        retries: int = 3
+        while retries > 0:
+            try:
+                with self.donor.pdf_file.open("rb") as pdf:
+                    new_pdf = add_signature(pdf.read(), signature_image)
+            except ValueError as e:
+                retries -= 1
+                logger.warning("ValueError adding signature to PDF: %s", e)
+            except FileNotFoundError as e:
+                retries -= 1
+                logger.warning("FileNotFoundError adding signature to PDF: %s", e)
+            else:
+                break
+        else:
+            logger.error("Error adding signature to PDF: %s", "File not found")
+
+            return redirect(reverse("ngo-twopercent-signature", kwargs={"ngo_url": ngo_url}))
 
         # delete the unsigned pdf
         self.donor.pdf_file.delete()
         self.donor.pdf_file = None
 
-        self.donor.pdf_file.save("declaratie_semnata.pdf", File(new_pdf))
+        self.donor.pdf_file = new_pdf
         new_pdf.close()
 
         send_email(
