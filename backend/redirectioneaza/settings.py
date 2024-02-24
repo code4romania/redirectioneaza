@@ -43,6 +43,7 @@ env = environ.Env(
     LOG_LEVEL=(str, "INFO"),
     ENABLE_CACHE=(bool, True),
     ENABLE_FORMS_DOWNLOAD=(bool, True),
+    IS_CONTAINERIZED=(bool, False),
     # proxy headers
     USE_PROXY_FORWARDED_HOST=(bool, False),
     PROXY_SSL_HEADER=(str, "HTTP_CLOUDFRONT_FORWARDED_PROTO"),
