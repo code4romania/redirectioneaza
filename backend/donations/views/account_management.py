@@ -65,7 +65,7 @@ class ForgotPasswordHandler(AccountHandler):
             subject=_("Resetare parolă redirectioneaza.ro"),
             to_emails=[user.email],
             text_template="email/reset/reset_password.txt",
-            html_template="email/reset/reset_password.txt",
+            html_template="email/reset/reset_password.html",
             context=template_context,
         )
 

@@ -147,15 +147,15 @@ class FormSignature(BaseHandler):
         send_email(
             subject=_("Formularul tău de redirecționare"),
             to_emails=[self.donor.email],
-            text_template="email/signed-form/signed_form.html",
-            html_template="email/signed-form/signed_form_text.txt",
+            html_template="email/signed-form/signed_form.html",
+            text_template="email/signed-form/signed_form_text.txt",
             context={"form_url": self.donor.form_url},
         )
         send_email(
             subject=_("Un nou formular de redirecționare"),
             to_emails=[self.ngo.email],
-            text_template="email/ngo-signed-form/signed_form.html",
-            html_template="email/ngo-signed-form/signed_form_text.txt",
+            html_template="email/ngo-signed-form/signed_form.html",
+            text_template="email/ngo-signed-form/signed_form_text.txt",
             context={"form_url": self.donor.form_url},
         )
 
@@ -392,8 +392,8 @@ class TwoPercentHandler(BaseHandler):
             send_email(
                 subject=_("Formularul tău de redirecționare"),
                 to_emails=[donor.email],
-                text_template="email/twopercent-form/twopercent_form.html",
-                html_template="email/twopercent-form/twopercent_form_text.txt",
+                html_template="email/twopercent-form/twopercent_form.html",
+                text_template="email/twopercent-form/twopercent_form_text.txt",
                 context={
                     "name": donor.first_name,
                     "form_url": donor.form_url,
