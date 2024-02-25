@@ -196,11 +196,13 @@ class Ngo(models.Model):
     active = ActiveManager()
 
     def save(self, *args, **kwargs):
-        if self.id is None and settings.ENABLE_CACHE:
-            cache.delete(ALL_NGOS_CACHE_KEY)
-
+        is_new = self.id is None
         self.slug = self.slug.lower()
+
         super().save(*args, **kwargs)
+
+        if is_new and settings.ENABLE_CACHE:
+            cache.delete(ALL_NGOS_CACHE_KEY)
 
     class Meta:
         verbose_name = _("NGO")
