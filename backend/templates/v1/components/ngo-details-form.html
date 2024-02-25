@@ -10,6 +10,7 @@
         </div>
         <div class="form-group">
             <div class="col-xs-4 text-center">
+                {% if ngo.registration_number %}
                 <div id="upload-logo" class="{{ 'hidden' if ngo.logo }}">
                     <label for="ong-logo">
                         <i class="glyphicon glyphicon-picture upload-file-icon"></i>
@@ -26,6 +27,7 @@
                     <span id="delete-ngo-logo" class="text-danger">Șterge</span>
                     <input type="hidden" id="ong-logo-url" name="ong-logo-url" value="{{ ngo.logo.url if ngo and ngo.logo }}" />
                 </div>
+                {% endif %}
             </div>
             <div class="col-xs-8">
                 <textarea class="form-control" name="ong-descriere" placeholder="O scurta descriere" rows="3" required >{{ ngo.description if ngo }}</textarea>
