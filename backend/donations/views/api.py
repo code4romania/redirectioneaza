@@ -142,6 +142,9 @@ class GetNgoForm(BaseHandler):
 
 
 class GetNgoForms(AccountHandler):
+    def get(self, request, *args, **kwargs):
+        raise Http404
+
     def post(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             return redirect(reverse("login"))
@@ -171,6 +174,9 @@ class GetNgoForms(AccountHandler):
 @method_decorator(login_required(login_url=reverse_lazy("login")), name="dispatch")
 @method_decorator(csrf_exempt, name="dispatch")
 class GetUploadUrl(AccountHandler):
+    def get(self, request, *args, **kwargs):
+        raise Http404
+
     def post(self, request, *args, **kwargs):
         logo_file = request.FILES.get("files")
         if not logo_file:
