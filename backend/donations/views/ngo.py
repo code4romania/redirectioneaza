@@ -141,7 +141,7 @@ class FormSignature(BaseHandler):
         self.donor.pdf_file.delete()
         self.donor.pdf_file = None
 
-        self.donor.pdf_file = new_pdf
+        self.donor.pdf_file.save("declaratie_semnata.pdf", File(new_pdf))
         new_pdf.close()
 
         send_email(
