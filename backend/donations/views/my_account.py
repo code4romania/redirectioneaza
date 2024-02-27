@@ -253,16 +253,11 @@ class NgoDetailsHandler(AccountHandler):
         if is_new_ngo:
             user.ngo = ngo
             user.save()
-            if request.user.is_superuser:
-                return redirect(reverse("admin-ong", kwargs={"ngo_url": user.ngo.slug}))
-            else:
-                return redirect(reverse("contul-meu"))
 
+        if request.user.is_superuser:
+            return redirect(reverse("admin-ong", kwargs={"ngo_url": user.ngo.slug}))
         else:
-            if request.user.is_superuser:
-                return redirect(reverse("admin-ong", kwargs={"ngo_url": user.ngo.slug}))
-            else:
-                return redirect(reverse("association"))
+            return redirect(reverse("association"))
 
     @staticmethod
     @transaction.atomic
