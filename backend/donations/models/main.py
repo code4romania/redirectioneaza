@@ -157,6 +157,7 @@ class Ngo(models.Model):
 
     email = models.EmailField(verbose_name=_("email"), blank=True, null=False, default="", db_index=True)
     website = models.URLField(verbose_name=_("website"), blank=True, null=False, default="")
+    # TODO: this seems unused
     other_emails = models.TextField(verbose_name=_("other emails"), blank=True, null=False, default="")
 
     # originally: verified

@@ -165,7 +165,14 @@ class Command(BaseCommand):
             generated_organization_names.append(name)
 
             clean_name = name.lower().replace('"', "").replace(".", "").replace(",", "").replace("/", "")
-            kebab_case_name = "-".join(clean_name.split(" "))
+            kebab_case_name = (
+                "-".join(clean_name.split(" "))
+                .replace("ă", "a")
+                .replace("â", "a")
+                .replace("ș", "s")
+                .replace("ț", "t")
+                .replace("î", "i")
+            )
             owner_email = fake.email()
 
             try:
