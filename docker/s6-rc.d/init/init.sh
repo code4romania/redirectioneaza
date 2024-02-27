@@ -52,6 +52,12 @@ if is_enabled "${RUN_CREATE_SUPER_USER:-False}"; then
         --last_name "${DJANGO_ADMIN_LAST_NAME}"
 fi
 
+if is_enabled "${RUN_SEED_GROUPS:-False}"; then
+    echo "Running the test user seed script"
+
+    python3 manage.py seed_groups
+fi
+
 # Start the session clean-up schedule
 echo "Starting the session clean-up schedule that runs around 5:30 AM every day"
 python3 manage.py schedule_session_cleanup
