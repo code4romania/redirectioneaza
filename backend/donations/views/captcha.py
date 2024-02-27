@@ -8,6 +8,9 @@ def validate_captcha(request):
     """
     Validates the captcha
     """
+    if not settings.RECAPTCHA_ENABLED:
+        return True
+
     if request.method != "POST":
         return False
 

@@ -44,6 +44,7 @@ env = environ.Env(
     ENABLE_CACHE=(bool, True),
     ENABLE_FORMS_DOWNLOAD=(bool, True),
     IS_CONTAINERIZED=(bool, False),
+    RECAPTCHA_ENABLED=(bool, True),
     # proxy headers
     USE_PROXY_FORWARDED_HOST=(bool, False),
     PROXY_SSL_HEADER=(str, "HTTP_CLOUDFRONT_FORWARDED_PROTO"),
@@ -580,7 +581,7 @@ RECAPTCHA_REQUIRED_SCORE = env.float("CAPTCHA_REQUIRED_SCORE")
 RECAPTCHA_VERIFY_URL = env.str("CAPTCHA_VERIFY_URL")
 RECAPTCHA_POST_PARAM = env.str("CAPTCHA_POST_PARAM")
 
-RECAPTCHA_ENABLED = True if RECAPTCHA_PUBLIC_KEY else False
+RECAPTCHA_ENABLED = env.bool("RECAPTCHA_ENABLED", True if RECAPTCHA_PUBLIC_KEY else False)
 
 if DEBUG or not RECAPTCHA_ENABLED:
     SILENCED_SYSTEM_CHECKS = ["django_recaptcha.recaptcha_test_key_error"]
