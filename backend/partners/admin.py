@@ -19,10 +19,22 @@ class PartnerAdmin(admin.ModelAdmin):
         "name",
         "is_active",
     )
-    list_filter = ("is_active", "date_updated")
+    list_filter = (
+        "is_active",
+        "date_updated",
+        "has_custom_header",
+        "has_custom_note",
+    )
+    search_fields = (
+        "subdomain",
+        "name",
+    )
 
     inlines = (NgoPartnerInline,)
-    readonly_fields = ("date_created", "date_updated")
+    readonly_fields = (
+        "date_created",
+        "date_updated",
+    )
 
     fieldsets = (
         (
