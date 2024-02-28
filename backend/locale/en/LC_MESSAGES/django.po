@@ -1,0 +1,498 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-02-28 17:15+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: donations/admin.py:15
+msgid "Has owner"
+msgstr "Has owner"
+
+#: donations/admin.py:19
+msgid "Yes"
+msgstr "Yes"
+
+#: donations/admin.py:19
+msgid "No"
+msgstr "No"
+
+#: donations/admin.py:50 donations/admin.py:84 donations/admin.py:116
+#: donations/models/jobs.py:28 donations/models/main.py:209
+#: donations/models/main.py:232 partners/admin.py:11 users/models.py:70
+msgid "NGO"
+msgstr "NGO"
+
+#: donations/admin.py:54
+msgid "Logo"
+msgstr "Logo"
+
+#: donations/admin.py:58
+msgid "Contact"
+msgstr "Contact"
+
+#: donations/admin.py:62
+msgid "Bank"
+msgstr "Bank"
+
+#: donations/admin.py:66 donations/admin.py:100 donations/admin.py:128
+msgid "Date"
+msgstr "Date"
+
+#: donations/admin.py:88
+msgid "Identity"
+msgstr "Identity"
+
+#: donations/admin.py:92
+msgid "Info"
+msgstr "Info"
+
+#: donations/admin.py:96 donations/admin.py:124 importer/models.py:28
+msgid "File"
+msgstr "File"
+
+#: donations/admin.py:120 importer/models.py:24
+msgid "Status"
+msgstr "Status"
+
+#: donations/forms/account.py:18 donations/forms/account.py:56
+#: donations/forms/account.py:69
+msgid "Email is required"
+msgstr "Email is required"
+
+#: donations/forms/account.py:24 donations/forms/common.py:31
+msgid "Password is required"
+msgstr "Password is required"
+
+#: donations/forms/account.py:44
+msgid "First name is required"
+msgstr "First name is required"
+
+#: donations/forms/account.py:50
+msgid "Last name is required"
+msgstr "Last name is required"
+
+#: donations/forms/common.py:39
+msgid "Passwords do not match"
+msgstr "Passwords do not match"
+
+#: donations/forms/donation.py:9
+msgid "Strada"
+msgstr "Strada"
+
+#: donations/forms/donation.py:10
+msgid "Număr"
+msgstr "Număr"
+
+#: donations/forms/donation.py:11
+msgid "Bloc"
+msgstr "Bloc"
+
+#: donations/forms/donation.py:12
+msgid "Scara"
+msgstr "Scara"
+
+#: donations/forms/donation.py:13
+msgid "Etaj"
+msgstr "Etaj"
+
+#: donations/forms/donation.py:14
+msgid "Apartament"
+msgstr "Apartament"
+
+#: donations/forms/donation.py:15
+msgid "Terms"
+msgstr "Terms"
+
+#: donations/models/jobs.py:18
+msgid "New"
+msgstr "New"
+
+#: donations/models/jobs.py:19 importer/models.py:18
+msgid "Error"
+msgstr "Error"
+
+#: donations/models/jobs.py:20 importer/models.py:17
+msgid "Done"
+msgstr "Done"
+
+#: donations/models/jobs.py:35
+msgid "owner"
+msgstr "owner"
+
+#: donations/models/jobs.py:41
+msgid "status"
+msgstr "status"
+
+#: donations/models/jobs.py:50
+msgid "ZIP"
+msgstr "ZIP"
+
+#: donations/models/jobs.py:52 donations/models/main.py:193
+#: donations/models/main.py:299 partners/models.py:16 users/models.py:86
+msgid "date created"
+msgstr "date created"
+
+#: donations/models/jobs.py:53
+msgid "date finished"
+msgstr "date finished"
+
+#: donations/models/jobs.py:65
+msgid "job"
+msgstr "job"
+
+#: donations/models/jobs.py:66
+msgid "jobs"
+msgstr "jobs"
+
+#: donations/models/main.py:65
+#, python-format
+msgid "%(value)s is not a valid identifier. The identifier must look like %(sample)s"
+msgstr "%(value)s is not a valid identifier. The identifier must look like %(sample)s"
+
+#: donations/models/main.py:75
+msgid "The ID number must be 8 digits long"
+msgstr "The ID number must be 8 digits long"
+
+#: donations/models/main.py:92
+msgid "slug"
+msgstr "slug"
+
+#: donations/models/main.py:101
+msgid "Name"
+msgstr "Name"
+
+#: donations/models/main.py:102
+msgid "description"
+msgstr "description"
+
+#: donations/models/main.py:105
+msgid "logo url"
+msgstr "logo url"
+
+#: donations/models/main.py:107
+msgid "logo"
+msgstr "logo"
+
+#: donations/models/main.py:114
+msgid "image url"
+msgstr "image url"
+
+#: donations/models/main.py:116
+msgid "image"
+msgstr "image"
+
+#: donations/models/main.py:124
+msgid "bank account"
+msgstr "bank account"
+
+#: donations/models/main.py:128
+msgid "registration number"
+msgstr "registration number"
+
+#: donations/models/main.py:137 donations/models/main.py:256
+msgid "address"
+msgstr "address"
+
+#: donations/models/main.py:139 donations/models/main.py:249
+msgid "county"
+msgstr "county"
+
+#: donations/models/main.py:147
+msgid "active region"
+msgstr "active region"
+
+#: donations/models/main.py:156 donations/models/main.py:259
+msgid "telephone"
+msgstr "telephone"
+
+#: donations/models/main.py:158 donations/models/main.py:260
+msgid "email"
+msgstr "email"
+
+#: donations/models/main.py:159
+msgid "website"
+msgstr "website"
+
+#: donations/models/main.py:161
+msgid "other emails"
+msgstr "other emails"
+
+#: donations/models/main.py:164 users/models.py:78
+msgid "is verified"
+msgstr "is verified"
+
+#: donations/models/main.py:168
+msgid "has special status"
+msgstr "has special status"
+
+#: donations/models/main.py:172
+msgid "is accepting forms"
+msgstr "is accepting forms"
+
+#: donations/models/main.py:175 partners/models.py:12
+msgid "is active"
+msgstr "is active"
+
+#: donations/models/main.py:179
+msgid "form url"
+msgstr "form url"
+
+#: donations/models/main.py:186
+msgid "form with prefilled ngo data"
+msgstr "form with prefilled ngo data"
+
+#: donations/models/main.py:194 partners/models.py:17 users/models.py:87
+msgid "date updated"
+msgstr "date updated"
+
+#: donations/models/main.py:210 partners/admin.py:12 partners/models.py:15
+msgid "NGOs"
+msgstr "NGOs"
+
+#: donations/models/main.py:228
+msgid "wage"
+msgstr "wage"
+
+#: donations/models/main.py:229
+msgid "pension"
+msgstr "pension"
+
+#: donations/models/main.py:234
+msgid "first name"
+msgstr "first name"
+
+#: donations/models/main.py:235
+msgid "last name"
+msgstr "last name"
+
+#: donations/models/main.py:236
+msgid "initials"
+msgstr "initials"
+
+#: donations/models/main.py:238
+msgid "CNP"
+msgstr "CNP"
+
+#: donations/models/main.py:241
+msgid "city"
+msgstr "city"
+
+#: donations/models/main.py:264
+msgid "anonymous"
+msgstr "anonymous"
+
+#: donations/models/main.py:267
+msgid "If the user would like the ngo to see the donation"
+msgstr "If the user would like the ngo to see the donation"
+
+#: donations/models/main.py:272
+msgid "income type"
+msgstr "income type"
+
+#: donations/models/main.py:281
+msgid "two years"
+msgstr "two years"
+
+#: donations/models/main.py:283
+msgid "If the user wants to donate for 2 years"
+msgstr "If the user wants to donate for 2 years"
+
+#: donations/models/main.py:286
+msgid "Geo IP"
+msgstr "Geo IP"
+
+#: donations/models/main.py:288
+msgid "PDF URL"
+msgstr "PDF URL"
+
+#: donations/models/main.py:289
+msgid "filename"
+msgstr "filename"
+
+#: donations/models/main.py:290
+msgid "has signed"
+msgstr "has signed"
+
+#: donations/models/main.py:293
+msgid "PDF file"
+msgstr "PDF file"
+
+#: donations/models/main.py:302
+msgid "donor"
+msgstr "donor"
+
+#: donations/models/main.py:303
+msgid "donors"
+msgstr "donors"
+
+#: donations/views/account_management.py:43
+msgid "Dacă adresa de email este validă, vei primi un email cu instrucțiuni."
+msgstr "Dacă adresa de email este validă, vei primi un email cu instrucțiuni."
+
+#: donations/views/account_management.py:65
+msgid "Resetare parolă redirectioneaza.ro"
+msgstr "Resetare parolă redirectioneaza.ro"
+
+#: donations/views/account_management.py:223
+msgid "Confirmare cont redirectioneaza.ro"
+msgstr "Confirmare cont redirectioneaza.ro"
+
+#: donations/views/donations_download.py:136
+msgid "Documents ready for download"
+msgstr "Documents ready for download"
+
+#: donations/views/my_account.py:233
+msgid "The URL is already used"
+msgstr "The URL is already used"
+
+#: donations/views/my_account.py:291
+msgid "The IBAN number must have 24 characters"
+msgstr "The IBAN number must have 24 characters"
+
+#: donations/views/my_account.py:294
+msgid "The IBAN number must contain only letters and digits"
+msgstr "The IBAN number must contain only letters and digits"
+
+#: donations/views/my_account.py:297
+msgid "The IBAN number must start with 'RO'"
+msgstr "The IBAN number must start with 'RO'"
+
+#: donations/views/ngo.py:148 donations/views/ngo.py:393
+msgid "Formularul tău de redirecționare"
+msgstr "Formularul tău de redirecționare"
+
+#: donations/views/ngo.py:155
+msgid "Un nou formular de redirecționare"
+msgstr "Un nou formular de redirecționare"
+
+#: importer/admin.py:22
+msgid "Process the selected import jobs"
+msgstr "Process the selected import jobs"
+
+#: importer/admin.py:31
+msgid "The import has been processed."
+msgstr "The import has been processed."
+
+#: importer/admin.py:33
+msgid "Schedule the transfer of logos to the current storage"
+msgstr "Schedule the transfer of logos to the current storage"
+
+#: importer/admin.py:37
+msgid "The logos have been transferred."
+msgstr "The logos have been transferred."
+
+#: importer/admin.py:39
+msgid "Schedule the transfer of donor forms to the current storage"
+msgstr "Schedule the transfer of donor forms to the current storage"
+
+#: importer/admin.py:43
+msgid "The donor forms have been transferred."
+msgstr "The donor forms have been transferred."
+
+#: importer/models.py:15
+msgid "Pending"
+msgstr "Pending"
+
+#: importer/models.py:16
+msgid "Processing"
+msgstr "Processing"
+
+#: importer/models.py:22
+msgid "Import type"
+msgstr "Import type"
+
+#: importer/models.py:27
+msgid "Has header"
+msgstr "Has header"
+
+#: importer/models.py:30
+msgid "Uploaded at"
+msgstr "Uploaded at"
+
+#: importer/models.py:38
+msgid "Import"
+msgstr "Import"
+
+#: importer/models.py:39
+msgid "Imports"
+msgstr "Imports"
+
+#: partners/admin.py:41 partners/models.py:23
+msgid "Partner"
+msgstr "Partner"
+
+#: partners/admin.py:50
+msgid "Options"
+msgstr "Options"
+
+#: partners/admin.py:60
+msgid "Metadata"
+msgstr "Metadata"
+
+#: partners/models.py:10
+msgid "name"
+msgstr "name"
+
+#: partners/models.py:11
+msgid "subdomain"
+msgstr "subdomain"
+
+#: partners/models.py:13
+msgid "has custom header"
+msgstr "has custom header"
+
+#: partners/models.py:14
+msgid "has custom note"
+msgstr "has custom note"
+
+#: partners/models.py:24
+msgid "Partners"
+msgstr "Partners"
+
+#: redirectioneaza/common/messaging.py:31
+msgid "Invalid email send method. Must be 'async' or 'sync'."
+msgstr "Invalid email send method. Must be 'async' or 'sync'."
+
+#: users/models.py:38
+msgid "Superuser must have is_staff=True."
+msgstr "Superuser must have is_staff=True."
+
+#: users/models.py:40
+msgid "Superuser must have is_superuser=True."
+msgstr "Superuser must have is_superuser=True."
+
+#: users/models.py:56
+msgid "username"
+msgstr "username"
+
+#: users/models.py:59
+msgid "We do not use this field"
+msgstr "We do not use this field"
+
+#: users/models.py:66
+msgid "email address"
+msgstr "email address"
+
+#: users/models.py:80
+msgid "validation token"
+msgstr "validation token"
+
+#: users/models.py:82
+msgid "validation token timestamp"
+msgstr "validation token timestamp"
+
+#: users/models.py:84
+msgid "old password"
+msgstr "old password"
