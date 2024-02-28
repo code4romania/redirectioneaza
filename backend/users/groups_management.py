@@ -21,6 +21,7 @@ USER_GROUPS = {
             "partners.change_partner",
             "partners.delete_partner",
             "partners.view_partner",
+            "users.can_view_old_dashboard",
         ),
     },
 }

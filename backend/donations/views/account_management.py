@@ -78,7 +78,7 @@ class LoginHandler(AccountHandler):
 
         # if the user is logged in just redirect
         if request.user.is_authenticated:
-            if request.user.is_superuser:
+            if request.user.has_perm("users.can_view_old_dashboard"):
                 return redirect(reverse("admin-index"))
             return redirect(reverse("contul-meu"))
 
@@ -98,7 +98,7 @@ class LoginHandler(AccountHandler):
         user = authenticate(email=email, password=password)
         if user is not None:
             login(request, user)
-            if user.is_superuser:
+            if user.has_perm("users.can_view_old_dashboard"):
                 return redirect(reverse("admin-index"))
 
             return redirect(reverse("contul-meu"))
@@ -114,7 +114,7 @@ class LoginHandler(AccountHandler):
                 user.set_password(password)
                 user.save()
                 login(request, user)
-                if user.is_superuser:
+                if user.has_perm("users.can_view_old_dashboard"):
                     return redirect(reverse("admin-index"))
                 return redirect(reverse("contul-meu"))
 
