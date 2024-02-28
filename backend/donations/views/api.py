@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 
 
 class CheckNgoUrl(AccountHandler):
-    block_list = (
+    ngo_url_block_list = (
         "",
         "admin",
         "api",
@@ -55,14 +55,21 @@ class CheckNgoUrl(AccountHandler):
     )
 
     def get(self, request, ngo_url, *args, **kwargs):
-        # if we don't receive an NGO url, or it's not a logged-in user or not and admin
-        if not ngo_url or not request.user and not request.user.is_staff:
+        return self.validate_ngo_slug(request.user, ngo_url)
+
+    @classmethod
+    def validate_ngo_slug(cls, user, slug):
+        if not slug or not user and not user.is_staff:
             raise PermissionDenied()
 
-        if ngo_url.lower() in self.block_list:
+        if slug.lower() in cls.ngo_url_block_list:
             return HttpResponseBadRequest()
 
-        if Ngo.objects.filter(slug=ngo_url.lower()).count():
+        ngo_queryset = Ngo.objects
+        if user.ngo:
+            ngo_queryset = ngo_queryset.exclude(id=user.ngo.id)
+
+        if ngo_queryset.filter(slug=slug.lower()).count():
             return HttpResponseBadRequest()
 
         return HttpResponse()

@@ -1,4 +1,5 @@
 from collections import OrderedDict
+from typing import List, Optional
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -6,17 +7,20 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied, ValidationError
 from django.core.validators import validate_email
 from django.db import transaction
-from django.http import Http404, HttpRequest
+from django.db.models import QuerySet
+from django.http import Http404, HttpRequest, HttpResponseBadRequest
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.utils.decorators import method_decorator
+from django.utils.translation import gettext_lazy as _
 
 from redirectioneaza.common.cache import cache_decorator
 from users.models import User
+from .api import CheckNgoUrl
 from .base import AccountHandler
 from ..models.jobs import Job, JobStatusChoices
-from ..models.main import Donor, Ngo
+from ..models.main import Donor, Ngo, ngo_id_number_validator
 
 
 class MyAccountDetailsHandler(AccountHandler):
@@ -195,6 +199,18 @@ class NgoDetailsHandler(AccountHandler):
             ngo.is_verified = False
             ngo.is_active = True
 
+        registration_number = post.get("ong-cif", "").upper().replace(" ", "").replace("<", "").replace(">", "")[:20]
+        registration_number_errors: str = self._validate_registration_number(ngo, registration_number)
+        ngo.registration_number = registration_number
+
+        bank_account = post.get("ong-cont", "").strip().upper().replace(" ", "").replace("<", "").replace(">", "")[:34]
+        bank_account_errors: str = self._validate_iban_number(bank_account)
+        ngo.bank_account = bank_account
+
+        ngo_slug = post.get("ong-url", "").strip().lower()
+        ngo_slug_errors = CheckNgoUrl.validate_ngo_slug(user, ngo_slug)
+        ngo.slug = ngo_slug
+
         ngo.name = post.get("ong-nume", "").strip()
         ngo.description = post.get("ong-descriere", "").strip()
         ngo.phone = post.get("ong-tel", "").strip()
@@ -203,13 +219,29 @@ class NgoDetailsHandler(AccountHandler):
         ngo.address = post.get("ong-adresa", "").strip()
         ngo.county = post.get("ong-judet", "").strip()
         ngo.active_region = post.get("ong-activitate", "").strip()
-        ngo.slug = post.get("ong-url", "").strip().lower()
-        ngo.registration_number = (
-            post.get("ong-cif", "").upper().replace(" ", "").replace("<", "").replace(">", "")[:20]
-        )
-        ngo.bank_account = post.get("ong-cont", "").strip().upper()
         ngo.has_special_status = True if post.get("special-status") == "on" else False
         ngo.is_accepting_forms = True if post.get("accepts-forms") == "on" else False
+
+        errors: List[str] = []
+        if registration_number_errors:
+            errors.append(registration_number_errors)
+
+        if bank_account_errors:
+            errors.append(bank_account_errors)
+
+        if isinstance(ngo_slug_errors, HttpResponseBadRequest):
+            errors.append(_("The URL is already used"))
+
+        if errors:
+            context = {
+                "title": "Date asociație",
+                "user": user,
+                "ngo": ngo,  # send back the unsaved NGO data
+                "counties": settings.FORM_COUNTIES_NATIONAL,
+                "DEFAULT_NGO_LOGO": settings.DEFAULT_NGO_LOGO,
+                "errors": errors,
+            }
+            return render(request, self.template_name, context)
 
         ngo.other_emails = ""
 
@@ -223,32 +255,7 @@ class NgoDetailsHandler(AccountHandler):
             if "error" in change_owner_result:
                 return redirect(reverse("admin-ong", kwargs={"ngo_url": user.ngo.slug}))
 
-        # Check that the registration number is not used by another NGO
-        reg_num_errors = ""
-        reg_num_query = Ngo.objects.filter(registration_number=ngo.registration_number)
-        if ngo.pk:
-            reg_num_query = reg_num_query.exclude(pk=ngo.pk)
-
-        # TODO: Add more registration number validations
-        if len(ngo.registration_number) < 8 or len(ngo.registration_number) > 10:
-            reg_num_errors = f'CIF "{ngo.registration_number}" pare incorect'
-
-        if not reg_num_errors:
-            if not reg_num_query.count():
-                ngo.save()
-            else:
-                reg_num_errors = f'CIF "{ngo.registration_number}" este înregistrat deja'
-
-        if reg_num_errors:
-            context = {
-                "title": "Date asociație",
-                "user": user,
-                "ngo": ngo,  # send back the unsaved NGO data
-                "counties": settings.FORM_COUNTIES_NATIONAL,
-                "DEFAULT_NGO_LOGO": settings.DEFAULT_NGO_LOGO,
-                "errors": reg_num_errors,
-            }
-            return render(request, self.template_name, context)
+        ngo.save()
 
         if is_new_ngo:
             user.ngo = ngo
@@ -256,8 +263,40 @@ class NgoDetailsHandler(AccountHandler):
 
         if request.user.is_superuser:
             return redirect(reverse("admin-ong", kwargs={"ngo_url": user.ngo.slug}))
-        else:
-            return redirect(reverse("association"))
+
+        return redirect(reverse("association"))
+
+    @staticmethod
+    def _validate_registration_number(ngo, registration_number) -> Optional[str]:
+        try:
+            ngo_id_number_validator(registration_number)
+        except ValidationError:
+            return f'CIF "{registration_number}" pare incorect'
+
+        reg_num_query: QuerySet[Ngo] = Ngo.objects.filter(registration_number=registration_number)
+        if ngo.pk:
+            reg_num_query = reg_num_query.exclude(pk=ngo.pk)
+
+        if reg_num_query.count():
+            return f'CIF "{registration_number}" este înregistrat deja'
+
+        return ""
+
+    @staticmethod
+    def _validate_iban_number(bank_account) -> Optional[str]:
+        if not bank_account:
+            return None
+
+        if len(bank_account) != 24:
+            return _("The IBAN number must have 24 characters")
+
+        if not bank_account.isalnum():
+            return _("The IBAN number must contain only letters and digits")
+
+        if not bank_account.startswith("RO"):
+            return _("The IBAN number must start with 'RO'")
+
+        return None
 
     @staticmethod
     @transaction.atomic
