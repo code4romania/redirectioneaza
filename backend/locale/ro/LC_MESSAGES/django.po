@@ -8,15 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-28 15:53+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2024-02-28 15:45+0000\n"
+"Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
+"Language-Team: Romanian <https://translate.commitglobal.org/projects/"
+"act4good/core/ro/>\n"
+"Language: ro\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?"
-"2:1));\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
+"20)) ? 1 : 2;\n"
+"X-Generator: Weblate 5.3.1\n"
 
 #: donations/admin.py:15
 msgid "Has owner"
@@ -152,7 +154,7 @@ msgstr "data terminării"
 
 #: donations/models/jobs.py:65
 msgid "job"
-msgstr "job"
+msgstr "sarcină"
 
 #: donations/models/jobs.py:66
 msgid "jobs"
@@ -480,7 +482,7 @@ msgstr "Super-utilizatorul trebuie să aibă is_superuser=True."
 
 #: users/models.py:56
 msgid "username"
-msgstr "username"
+msgstr "nume utilizator"
 
 #: users/models.py:59
 msgid "We do not use this field"
