@@ -95,7 +95,7 @@ class User(AbstractUser):
         constraints = [
             models.UniqueConstraint(Lower("email"), name="email_unique"),
         ]
-        permissions = []
+        permissions = (("can_view_old_dashboard", "Can view the old dashboard"),)
 
     def refresh_token(self, commit=True):
         self.token_timestamp = timezone.now()

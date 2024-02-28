@@ -50,7 +50,7 @@ class ArchiveDownloadLinkHandler(AccountHandler):
     def get(self, request: HttpRequest, job_id, *args, **kwargs):
         user: User = request.user
 
-        if user.is_superuser:
+        if user.has_perm("users.can_view_old_dashboard"):
             # The admin can always get the download link
             try:
                 job = Job.objects.get(pk=job_id)
@@ -98,7 +98,7 @@ class MyAccountHandler(AccountHandler):
     def get(self, request: HttpRequest, *args, **kwargs):
         user: User = request.user
 
-        if user.is_superuser:
+        if user.has_perm("users.can_view_old_dashboard"):
             return redirect(reverse("admin-ngos"))
 
         user_ngo: Ngo = user.ngo if user.ngo else None
@@ -156,7 +156,7 @@ class NgoDetailsHandler(AccountHandler):
     def get(self, request, *args, **kwargs):
         user = request.user
 
-        if user.is_superuser:
+        if user.has_perm("users.can_view_old_dashboard"):
             return redirect(reverse("admin-ngos"))
 
         if not user.is_authenticated or not user.ngo:
@@ -180,7 +180,7 @@ class NgoDetailsHandler(AccountHandler):
         if not user.is_authenticated:
             raise PermissionDenied()
 
-        if user.is_superuser:
+        if user.has_perm("users.can_view_old_dashboard"):
             ngo_url = post.get("old-ong-url", "")
 
             try:
@@ -245,7 +245,7 @@ class NgoDetailsHandler(AccountHandler):
 
         ngo.other_emails = ""
 
-        if request.user.is_superuser:
+        if request.user.has_perm("users.can_view_old_dashboard"):
             ngo.is_verified = post.get("ong-verificat") == "on"
             ngo.is_active = post.get("ong-activ") == "on"
 
@@ -261,7 +261,7 @@ class NgoDetailsHandler(AccountHandler):
             user.ngo = ngo
             user.save()
 
-        if request.user.is_superuser:
+        if request.user.has_perm("users.can_view_old_dashboard"):
             return redirect(reverse("admin-ong", kwargs={"ngo_url": user.ngo.slug}))
 
         return redirect(reverse("association"))

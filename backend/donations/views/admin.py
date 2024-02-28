@@ -27,7 +27,7 @@ class AdminHome(BaseHandler):
     def get(self, request, *args, **kwargs):
         context = {}
 
-        if not request.user.is_staff:
+        if not request.user.has_perm("users.can_view_old_dashboard"):
             return redirect(User.create_admin_login_url(reverse("admin-index")))
 
         context["title"] = "Admin"
@@ -112,7 +112,7 @@ class AdminNewNgoHandler(BaseHandler):
     def get(self, request, *args, **kwargs):
         context = {}
 
-        if not request.user.is_staff:
+        if not request.user.has_perm("users.can_view_old_dashboard"):
             return redirect(User.create_admin_login_url(reverse("admin-ong-nou")))
 
         context["ngo_upload_url"] = reverse("api-ngo-upload-url")
@@ -130,7 +130,7 @@ class AdminNgoHandler(BaseHandler):
     template_name = "admin2/ngo.html"
 
     def get(self, request, ngo_url, *args, **kwargs):
-        if not request.user.is_staff:
+        if not request.user.has_perm("users.can_view_old_dashboard"):
             return redirect(User.create_admin_login_url(reverse("login")))
 
         try:
@@ -162,7 +162,7 @@ class AdminNgosList(BaseHandler):
     def get(self, request, *args, **kwargs):
         context = {}
 
-        if not request.user.is_staff:
+        if not request.user.has_perm("users.can_view_old_dashboard"):
             return redirect(User.create_admin_login_url(reverse("admin-ngos")))
 
         context["title"] = "Admin"
@@ -179,13 +179,13 @@ class SendCampaign(BaseHandler):
     def get(self, request, *args, **kwargs):
         context = {}
 
-        if not request.user.is_staff:
+        if not request.user.has_perm("users.can_view_old_dashboard"):
             return redirect(User.create_admin_login_url(reverse("admin-campanii")))
 
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        if not request.user.is_staff:
+        if not request.user.has_perm("users.can_view_old_dashboard"):
             raise PermissionDenied()
 
         subject = request.POST.get("subiect")
@@ -214,7 +214,7 @@ class UserAccounts(BaseHandler):
     def get(self, request, *args, **kwargs):
         context = {}
 
-        if not request.user.is_staff:
+        if not request.user.has_perm("users.can_view_old_dashboard"):
             return redirect(User.create_admin_login_url(reverse("admin-ong")))
 
         all_users = User.objects.order_by("-date_joined").all()
