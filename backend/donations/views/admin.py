@@ -136,7 +136,7 @@ class AdminNgoHandler(BaseHandler):
         try:
             ngo = Ngo.objects.get(slug=ngo_url)
         except Ngo.DoesNotExist:
-            return Http404
+            raise Http404
 
         context = {
             "ngo_upload_url": reverse("api-ngo-upload-url"),
