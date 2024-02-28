@@ -1,6 +1,4 @@
 import logging
-import random
-import string
 from datetime import date
 
 from django.conf import settings
