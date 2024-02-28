@@ -8,14 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-28 17:15+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2024-02-28 15:45+0000\n"
+"Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
+"Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
+"core/en/>\n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.3.1\n"
+
 #: donations/admin.py:15
 msgid "Has owner"
 msgstr "Has owner"
@@ -89,27 +92,27 @@ msgstr "Passwords do not match"
 
 #: donations/forms/donation.py:9
 msgid "Strada"
-msgstr "Strada"
+msgstr "Street"
 
 #: donations/forms/donation.py:10
 msgid "Număr"
-msgstr "Număr"
+msgstr "Number"
 
 #: donations/forms/donation.py:11
 msgid "Bloc"
-msgstr "Bloc"
+msgstr "Building"
 
 #: donations/forms/donation.py:12
 msgid "Scara"
-msgstr "Scara"
+msgstr "Entrance"
 
 #: donations/forms/donation.py:13
 msgid "Etaj"
-msgstr "Etaj"
+msgstr "Floor"
 
 #: donations/forms/donation.py:14
 msgid "Apartament"
-msgstr "Apartament"
+msgstr "Appartment"
 
 #: donations/forms/donation.py:15
 msgid "Terms"
@@ -339,15 +342,16 @@ msgstr "donors"
 
 #: donations/views/account_management.py:43
 msgid "Dacă adresa de email este validă, vei primi un email cu instrucțiuni."
-msgstr "Dacă adresa de email este validă, vei primi un email cu instrucțiuni."
+msgstr ""
+"If the email address is valid, you will receive an email with instructions."
 
 #: donations/views/account_management.py:65
 msgid "Resetare parolă redirectioneaza.ro"
-msgstr "Resetare parolă redirectioneaza.ro"
+msgstr "Reset site password"
 
 #: donations/views/account_management.py:223
 msgid "Confirmare cont redirectioneaza.ro"
-msgstr "Confirmare cont redirectioneaza.ro"
+msgstr "Confirm account"
 
 #: donations/views/donations_download.py:136
 msgid "Documents ready for download"
