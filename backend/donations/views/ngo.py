@@ -182,10 +182,10 @@ class TwoPercentHandler(BaseHandler):
 
         # if we still have a cookie from an old session, remove it
         if "donor_id" in request.session:
-            request.session.pop("donor_id")
+            request.session.pop("donor_id", None)
 
         if "has_cnp" in request.session:
-            request.session.pop("has_cnp")
+            request.session.pop("has_cnp", None)
             # also we can use request.session.clear(), but it might delete the logged-in user's session
 
         context = {

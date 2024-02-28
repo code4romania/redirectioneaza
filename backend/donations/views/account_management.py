@@ -170,7 +170,7 @@ class SignupHandler(AccountHandler):
         form = RegisterForm(request.POST)
         if not form.is_valid():
             context["errors"] = form.errors
-            context["errors"].pop("__all__")
+            context["errors"].pop("__all__", None)
             return render(request, self.template_name, context)
 
         first_name = form.cleaned_data["first_name"]
