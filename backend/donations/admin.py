@@ -11,7 +11,7 @@ class NgoPartnerInline(admin.TabularInline):
     extra = 1
 
 
-class HadOwnerFilter(admin.SimpleListFilter):
+class HasOwnerFilter(admin.SimpleListFilter):
     title = _("Has owner")
     parameter_name = "has_owner"
 
@@ -33,7 +33,8 @@ class NgoAdmin(admin.ModelAdmin):
         "date_created",
         "is_verified",
         "is_active",
-        HadOwnerFilter,
+        "partners",
+        HasOwnerFilter,
         "county",
         "active_region",
     )
