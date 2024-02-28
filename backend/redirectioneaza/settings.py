@@ -539,7 +539,10 @@ DEFAULT_NGO_LOGO = env.str("DEFAULT_NGO_LOGO")
 LIST_OF_COUNTIES = [county[1] for county in COUNTIES_CHOICES]
 
 FORM_COUNTIES = deepcopy(LIST_OF_COUNTIES)
-FORM_COUNTIES.pop(LIST_OF_COUNTIES.index("București"), None)
+try:
+    FORM_COUNTIES.pop(LIST_OF_COUNTIES.index("București"))
+except IndexError:
+    pass
 
 FORM_COUNTIES_NATIONAL = deepcopy(FORM_COUNTIES)
 FORM_COUNTIES_NATIONAL.insert(0, "Național")
