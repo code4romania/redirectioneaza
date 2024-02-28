@@ -187,15 +187,13 @@ class GetUploadUrl(AccountHandler):
     def post(self, request, *args, **kwargs):
         logo_file = request.FILES.get("files")
         if not logo_file:
-            raise BadRequest()
+            logger.warning("No logo file uploaded for the NGO logo upload")
+            raise BadRequest
 
         ngo = request.user.ngo
         if not ngo:
-            ngo = Ngo()
-            ngo.slug = "".join(random.choices(string.ascii_lowercase + "-", k=8))
-            ngo.save()
-            request.user.ngo = ngo
-            request.user.save()
+            logger.warning("No NGO selected for the NGO logo upload")
+            raise BadRequest
 
         ngo.logo = logo_file
         ngo.save()
