@@ -7,8 +7,8 @@ module "ecs_redirectioneaza" {
 
   name         = local.namespace
   cluster_name = module.ecs_cluster.cluster_name
-  min_capacity = 2
-  max_capacity = 4
+  min_capacity = 4
+  max_capacity = 8
 
   image_repo = local.image_repo
   image_tag  = local.image_tag
@@ -22,8 +22,8 @@ module "ecs_redirectioneaza" {
   lb_health_check_enabled = true
   lb_path                 = "/health/"
 
-  container_memory_soft_limit = 1536
-  container_memory_hard_limit = 2048
+  container_memory_soft_limit = 768
+  container_memory_hard_limit = 1024
 
   log_group_name                 = module.ecs_cluster.log_group_name
   service_discovery_namespace_id = module.ecs_cluster.service_discovery_namespace_id
