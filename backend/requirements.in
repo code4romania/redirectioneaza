@@ -6,7 +6,7 @@ django-ipware~=6.0.4
 django-recaptcha~=4.0.0
 
 # encrypting data
-cryptography~=42.0.4
+cryptography~=42.0.5
 
 # django-q
 django-q2~=1.6.1
@@ -20,9 +20,6 @@ django-ses~=3.5.2
 # database
 pymysql~=1.1.0
 psycopg2-binary~=2.9.9
-
-# Sentry
-sentry-sdk[django]~=1.40.4
 
 # Jinja2
 jinja2~=3.1.3
@@ -45,3 +42,6 @@ svglib~=1.5.1
 
 # requests
 requests~=2.31.0
+
+# Sentry
+sentry-sdk[django]~=1.40.6
