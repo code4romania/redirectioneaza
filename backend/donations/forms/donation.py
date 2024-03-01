@@ -6,12 +6,12 @@ from donations.models.main import Donor
 
 
 class DonorInputForm(forms.ModelForm):
-    street = forms.CharField(max_length=100, label=_("Strada"))
-    street_number = forms.CharField(max_length=10, label=_("Număr"))
-    block = forms.CharField(max_length=10, label=_("Bloc"), required=False)
-    entrance = forms.CharField(max_length=10, label=_("Scara"), required=False)
-    floor = forms.CharField(max_length=10, label=_("Etaj"), required=False)
-    apartment = forms.CharField(max_length=10, label=_("Apartament"), required=False)
+    street = forms.CharField(max_length=100, label=_("Street"))
+    street_number = forms.CharField(max_length=10, label=_("Number"))
+    block = forms.CharField(max_length=10, label=_("Building"), required=False)
+    entrance = forms.CharField(max_length=10, label=_("Entrance"), required=False)
+    floor = forms.CharField(max_length=10, label=_("Floor"), required=False)
+    apartment = forms.CharField(max_length=10, label=_("Apartment"), required=False)
     terms = forms.BooleanField(label=_("Terms"), required=True)
 
     ngo_id = forms.IntegerField(widget=forms.HiddenInput(), required=False)

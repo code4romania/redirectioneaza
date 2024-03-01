@@ -91,28 +91,28 @@ msgid "Passwords do not match"
 msgstr "Passwords do not match"
 
 #: donations/forms/donation.py:9
-msgid "Strada"
+msgid "Street"
 msgstr "Street"
 
 #: donations/forms/donation.py:10
-msgid "Număr"
+msgid "Number"
 msgstr "Number"
 
 #: donations/forms/donation.py:11
-msgid "Bloc"
+msgid "Building"
 msgstr "Building"
 
 #: donations/forms/donation.py:12
-msgid "Scara"
+msgid "Entrance"
 msgstr "Entrance"
 
 #: donations/forms/donation.py:13
-msgid "Etaj"
+msgid "Floor"
 msgstr "Floor"
 
 #: donations/forms/donation.py:14
-msgid "Apartament"
-msgstr "Appartment"
+msgid "Apartment"
+msgstr "Apartment"
 
 #: donations/forms/donation.py:15
 msgid "Terms"
@@ -341,17 +341,17 @@ msgid "donors"
 msgstr "donors"
 
 #: donations/views/account_management.py:43
-msgid "Dacă adresa de email este validă, vei primi un email cu instrucțiuni."
+msgid "If the email address is valid, you will receive an email with instructions."
 msgstr ""
 "If the email address is valid, you will receive an email with instructions."
 
 #: donations/views/account_management.py:65
-msgid "Resetare parolă redirectioneaza.ro"
+msgid "Reset redirectioneaza.ro password"
 msgstr "Reset site password"
 
 #: donations/views/account_management.py:223
-msgid "Confirmare cont redirectioneaza.ro"
-msgstr "Confirm account"
+msgid "Welcome to redirectioneaza.ro"
+msgstr "Confirm redirectioneaza.ro account"
 
 #: donations/views/donations_download.py:136
 msgid "Documents ready for download"

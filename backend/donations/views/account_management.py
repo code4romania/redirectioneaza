@@ -40,7 +40,7 @@ class ForgotPasswordHandler(AccountHandler):
         if user:
             self._send_password_reset_email(user)
 
-        context["found"] = _("Dacă adresa de email este validă, vei primi un email cu instrucțiuni.")
+        context["found"] = _("If the email address is valid, you will receive an email with instructions.")
 
         return render(request, self.template_name, context)
 
@@ -62,7 +62,7 @@ class ForgotPasswordHandler(AccountHandler):
             "contact_mail": settings.CONTACT_EMAIL_ADDRESS,
         }
         send_email(
-            subject=_("Resetare parolă redirectioneaza.ro"),
+            subject=_("Reset redirectioneaza.ro password"),
             to_emails=[user.email],
             text_template="email/reset/reset_password.txt",
             html_template="email/reset/reset_password.html",
@@ -220,7 +220,7 @@ class SignupHandler(AccountHandler):
         }
 
         send_email(
-            subject=_("Confirmare cont redirectioneaza.ro"),
+            subject=_("Welcome to redirectioneaza.ro"),
             to_emails=[user.email],
             text_template="email/signup/signup_text.txt",
             html_template="email/signup/signup_inline.html",
