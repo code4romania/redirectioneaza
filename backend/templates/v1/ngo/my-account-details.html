@@ -1,46 +1,49 @@
 {% extends "base.html" %}
 
 {% block header %}
-    {% include "ngo/account-header.html" %}
+    {% include "header_picker.html" %}
 {% endblock %}
 
 {% block content %}
-<div class="container">
+    <div class="container">
 
-    <div class="row">
-        {% if errors %}
-            <div class="col-xs-12 col-md-6 col-md-offset-3">
-                <div class="alert alert-dismissible alert-danger">
-                    <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong>Oops!</strong> {{ errors }}
+        <div class="row">
+            {% if errors %}
+                <div class="col-xs-12 col-md-6 col-md-offset-3">
+                    <div class="alert alert-dismissible alert-danger">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>Oops!</strong> {{ errors }}
+                    </div>
                 </div>
-            </div>
-        {% endif %}
-    </div>
+            {% endif %}
+        </div>
 
-    <div class="row">
-        <div class="col-xs-8 col-xs-offset-2 col-sm-6 col-sm-offset-3 col-lg-4 col-lg-offset-4">
-            <form class="form-horizontal" action="/date-cont/" role="form" method="post">
-                {{ csrf_input }}
-                <fieldset>
-                    <legend>Datele contului tău</legend>
-                    <div class="form-group">
-                        <div class="col-xs-6">
-                            <input class="form-control" type="text" name="nume" value="{{ user.last_name }}" placeholder="Nume" required />
+        <div class="row">
+            <div class="col-xs-8 col-xs-offset-2 col-sm-6 col-sm-offset-3 col-lg-4 col-lg-offset-4">
+                <form class="form-horizontal" action="/date-cont/" role="form" method="post">
+                    {{ csrf_input }}
+                    <fieldset>
+                        <legend>Datele contului tău</legend>
+                        <div class="form-group">
+                            <div class="col-xs-6">
+                                <input class="form-control" type="text" name="nume" value="{{ user.last_name }}"
+                                       placeholder="Nume" required/>
+                            </div>
+                            <div class="col-xs-6">
+                                <input class="form-control" type="text" name="prenume" value="{{ user.first_name }}"
+                                       placeholder="Prenume" required/>
+                            </div>
                         </div>
-                        <div class="col-xs-6">
-                            <input class="form-control" type="text" name="prenume" value="{{ user.first_name }}" placeholder="Prenume" required />
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <input class="form-control" type="email" value="{{ user.email }}" placeholder="Email"
+                                       readonly/>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-xs-12">
-                            <input class="form-control" type="email" value="{{ user.email }}" placeholder="Email" readonly />
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary pull-right">Salvează</button>
-                </fieldset>
-            </form>
+                        <button type="submit" class="btn btn-primary pull-right">Salvează</button>
+                    </fieldset>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 {% endblock %}

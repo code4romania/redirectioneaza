@@ -1,52 +1,43 @@
 <nav class="navbar navbar-default">
     <div class="container">
         <div class="navbar-header">
-            {% if not custom_subdomain %}
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#header-menu">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            {% endif %}
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#header-menu">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
             <a class="navbar-brand" href="/">
-                <img src="{{ static('images/logo-smaller.png') }}" alt="Redirectioneaza logo" width="90px;" />
+                <img src="{{ static('images/logo-smaller.png') }}" alt="Redirectioneaza logo" width="90px;"/>
             </a>
         </div>
 
-        {% if not custom_subdomain %}
-            <div id="header-menu" class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li><a href="{{ url('associations') }}">Asociații</a></li>
-                    <li><a href="{{ url('ngo') }}">Înregistrează ONG</a></li>
-                    <li><a href="{{ url('about') }}">Despre</a></li>
-                    <li><a href="{{ url('login') }}">Log In</a></li>
+        <div id="header-menu" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="{{ url('associations') }}">Asociații</a></li>
+                <li><a href="{{ url('ngo') }}">Înregistrează ONG</a></li>
+                <li><a href="{{ url('about') }}">Despre</a></li>
+                <li><a href="{{ url('login') }}">Log In</a></li>
+            </ul>
+            <div id="sponsor-container">
+                <p class="text-center text-link">
+                    Proiect susținut de:
+                </p>
+                <ul class="list-unstyled">
+                    <li>
+                        <a href="http://www.patriabank.ro" target="_blank">
+                            <img src="{{ static('images/logo-patria-bank.svg') }}" class="img-responsive"
+                                 alt="Logo Patria bank">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.globalworth.com" target="_blank">
+                            <img src="{{ static('images/logo-globalworth.svg') }}" class="img-responsive second"
+                                 alt="Logo globalworth">
+                        </a>
+                    </li>
                 </ul>
-                <div id="sponsor-container">
-                    <p class="text-center text-link">
-                        Proiect susținut de:
-                    </p>
-                    <ul class="list-unstyled">
-                        <li>
-                            <a href="http://www.patriabank.ro" target="_blank">
-                                <img src="{{ static('images/logo-patria-bank.svg') }}" class="img-responsive" alt="Logo Patria bank">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.globalworth.com" target="_blank">
-                                <img src="{{ static('images/logo-globalworth.svg') }}" class="img-responsive second" alt="Logo globalworth">
-                            </a>
-                        </li>
-                    </ul>
-                </div>
             </div>
-        {% endif %}
-        {#
-        <div id="creator-container">
-            <p>Aplicație realizată de</p>
-            <a href="https://code4.ro/" target="_blank">
-                <img src="{{ static('images/code4-header-logo.png') }}">
-            </a>
-        </div> #}
+        </div>
     </div>
 </nav>
