@@ -16,7 +16,7 @@
                         <i class="glyphicon glyphicon-picture upload-file-icon"></i>
                         <p>Logo-ul asociației</p>
                     </label>
-                    <input type="file" id="ong-logo" class="hidden" accept="image/*" name="ong-logo" />
+                    <input type="file" id="ong-logo" class="hidden" accept="image/png, image/jpeg" name="ong-logo" />
                 </div>
                 <div id="display-logo" class="text-center {{ 'hidden' if not ngo.logo }}">
                     {% if ngo.logo %}
