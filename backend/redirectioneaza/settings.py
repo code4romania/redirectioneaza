@@ -117,6 +117,8 @@ env = environ.Env(
     SENTRY_DSN=(str, ""),
     SENTRY_TRACES_SAMPLE_RATE=(float, 0),
     SENTRY_PROFILES_SAMPLE_RATE=(float, 0),
+    # google analytics:
+    GOOGLE_ANALYTICS_ID=(str, ""),
 )
 
 
@@ -599,5 +601,4 @@ if len(ENCRYPT_KEY) != 32 or ENCRYPT_KEY == "%INVALID%":
 FERNET_OBJECT = Fernet(urlsafe_b64encode(ENCRYPT_KEY.encode("utf-8")))
 
 
-# GeoIP city database
-GEOIP_DATABASE_PATH = "/var/www/redirect/backend/GeoLite2-City/GeoLite2-City.mmdb"
+GOOGLE_ANALYTICS_ID = env.str("GOOGLE_ANALYTICS_ID")

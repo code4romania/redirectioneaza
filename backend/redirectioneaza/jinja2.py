@@ -14,6 +14,7 @@ def environment(**options):
             "bower_components": settings.DEV_DEPENDECIES_LOCATION,
             "DEV": settings.ENVIRONMENT == "development",
             "PRODUCTION": settings.ENVIRONMENT == "production",
+            "GOOGLE_ANALYTICS_ID": settings.GOOGLE_ANALYTICS_ID,
             "title": settings.TITLE,
             "language": "ro",
             "base_url": "/",
