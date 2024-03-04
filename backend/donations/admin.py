@@ -43,7 +43,7 @@ class NgoAdmin(admin.ModelAdmin):
 
     inlines = (NgoPartnerInline,)
 
-    readonly_fields = ("date_created",)
+    readonly_fields = ("date_created", "date_updated")
 
     fieldsets = (
         (
@@ -64,7 +64,7 @@ class NgoAdmin(admin.ModelAdmin):
         ),
         (
             _("Date"),
-            {"fields": ("date_created",)},
+            {"fields": ("date_created", "date_updated")},
         ),
     )
 
