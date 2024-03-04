@@ -47,9 +47,9 @@ resource "aws_cloudfront_distribution" "main" {
     }
   }
 
-  # Media
+  # Logos
   ordered_cache_behavior {
-    path_pattern               = "/media/*"
+    path_pattern               = "/logos/*"
     allowed_methods            = ["GET", "HEAD", "OPTIONS"]
     cached_methods             = ["GET", "HEAD", "OPTIONS"]
     target_origin_id           = module.s3_public.id
