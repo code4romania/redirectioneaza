@@ -1,3 +1,5 @@
+import csv
+import io
 import logging
 import tempfile
 from datetime import datetime
@@ -82,7 +84,19 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], ngo: Ngo):
     zip_64_flag = len(donations) > 4000
 
     zipped_files: int = 0
+
     with ZipFile(zip_path, mode="w", compression=ZIP_DEFLATED, compresslevel=1) as zip_archive:
+        csv_output = io.StringIO()
+        csv_writer = csv.writer(csv_output, quoting=csv.QUOTE_ALL)
+        csv_writer.writerow([
+            "last name",
+            "first name",
+            "initial",
+            "CNP",
+            # "full address",
+            "filename",
+        ])
+
         for donation in donations:
             source_url = _get_pdf_url(donation)
 
@@ -108,6 +122,20 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], ngo: Ngo):
 
                     zipped_files += 1
                     retries_left = 0
+
+                    csv_writer.writerow([
+                        donation.last_name,
+                        donation.first_name,
+                        donation.initial,
+                        donation.get_cnp(),
+                        # donation.get_address(),
+                        filename,
+                    ])
+
+        # Attach a CSV file with all donor data
+        logger.info("Attaching the CSV to the ZIP")
+        with zip_archive.open("index.csv", mode="w", force_zip64=zip_64_flag) as handler:
+            handler.write(csv_output.getvalue().encode())
 
     logger.info("Creating ZIP file for %d donations", zipped_files)
 
