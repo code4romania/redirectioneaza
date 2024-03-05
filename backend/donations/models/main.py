@@ -375,5 +375,4 @@ class Donor(models.Model):
 
     @staticmethod
     def decrypt_address(address):
-        return settings.FERNET_OBJECT.decrypt(address.encode()).decode()
         return json.loads(settings.FERNET_OBJECT.decrypt(address.encode()).decode())
