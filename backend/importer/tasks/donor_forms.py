@@ -3,26 +3,33 @@ import tempfile
 
 import requests
 from django.core.files import File
-from django.db.models import Q
+from django.db.models import Q, QuerySet
 from pypdf import PdfReader
 
-from donations.models.main import Donor
+from donations.models.main import Donor, Ngo
 from ..extract import DATA_ZONES, extract_data
 
 logger = logging.getLogger(__name__)
 
 
-def import_donor_forms(batch_size=50):
+def import_donor_forms(batch_size=50, filter_by_ngo_slug: str = None):
     """
     Download and re-upload the donation form files one by one
     """
-    donor: Donor
-    for donor in (
+    donations_query: QuerySet[Donor] = (
         Donor.objects.exclude(Q(pdf_url__isnull=True) | Q(pdf_url=""))
         .filter(Q(pdf_file="") | Q(pdf_file__isnull=True))
         .all()
-        .order_by("-date_created")[:batch_size]
-    ):
+        .order_by("-date_created")
+    )
+
+    if filter_by_ngo_slug:
+        target_ngo: Ngo = Ngo.objects.get(slug=filter_by_ngo_slug)
+
+        donations_query = donations_query.filter(ngo=target_ngo)
+
+    donor: Donor
+    for donor in donations_query[:batch_size]:
         logger.debug("Processing donation: %s", donor.first_name)
 
         if not donor.pdf_url.startswith("http"):
