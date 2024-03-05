@@ -361,6 +361,7 @@ class Donor(models.Model):
         self._set_address(address)
 
     def _set_address(self, address: dict):
+        # TODO use: json.dumps(address).encode()
         self.encrypted_address = settings.FERNET_OBJECT.encrypt(str(address).encode()).decode()
 
     def get_address(self) -> dict:
