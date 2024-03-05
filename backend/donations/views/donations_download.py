@@ -88,14 +88,16 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], ngo: Ngo):
     with ZipFile(zip_path, mode="w", compression=ZIP_DEFLATED, compresslevel=1) as zip_archive:
         csv_output = io.StringIO()
         csv_writer = csv.writer(csv_output, quoting=csv.QUOTE_ALL)
-        csv_writer.writerow([
-            "last name",
-            "first name",
-            "initial",
-            "CNP",
-            # "full address",
-            "filename",
-        ])
+        csv_writer.writerow(
+            [
+                "last name",
+                "first name",
+                "initial",
+                "CNP",
+                # "full address",
+                "filename",
+            ]
+        )
 
         for donation in donations:
             source_url = _get_pdf_url(donation)
@@ -123,14 +125,16 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], ngo: Ngo):
                     zipped_files += 1
                     retries_left = 0
 
-                    csv_writer.writerow([
-                        donation.last_name,
-                        donation.first_name,
-                        donation.initial,
-                        donation.get_cnp(),
-                        # donation.get_address(),
-                        filename,
-                    ])
+                    csv_writer.writerow(
+                        [
+                            donation.last_name,
+                            donation.first_name,
+                            donation.initial,
+                            donation.get_cnp(),
+                            # donation.get_address(),
+                            filename,
+                        ]
+                    )
 
         # Attach a CSV file with all donor data
         logger.info("Attaching the CSV to the ZIP")
