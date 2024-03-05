@@ -1,9 +1,9 @@
 from django.contrib import admin
+from django.utils.translation import gettext_lazy as _
 
 from redirectioneaza.common.admin import HasNgoFilter
 from .models.jobs import Job
-from .models.main import Ngo, Donor
-from django.utils.translation import gettext_lazy as _
+from .models.main import Donor, Ngo
 
 
 class NgoPartnerInline(admin.TabularInline):
@@ -48,7 +48,11 @@ class NgoAdmin(admin.ModelAdmin):
     fieldsets = (
         (
             _("NGO"),
-            {"fields": ("slug", "name", "registration_number", "description", "is_verified", "is_active")},
+            {"fields": ("slug", "name", "registration_number", "description")},
+        ),
+        (
+            _("Authenticity"),
+            {"fields": ("is_verified", "is_active")},
         ),
         (
             _("Logo"),
@@ -59,14 +63,18 @@ class NgoAdmin(admin.ModelAdmin):
             {"fields": ("address", "county", "active_region", "phone", "website", "email")},
         ),
         (
-            _("Bank"),
-            {"fields": ("bank_account",)},
+            _("Details"),
+            {"fields": ("bank_account", "prefilled_form")},
         ),
         (
             _("Date"),
             {"fields": ("date_created", "date_updated")},
         ),
     )
+
+    @admin.display(description=_("Users"))
+    def get_users(self, obj):
+        return ", ".join([user.email for user in obj.users.all()])
 
 
 @admin.register(Donor)
