@@ -2,11 +2,13 @@ import random
 import string
 from typing import List
 
+from django.core.files import File
 from django.core.management import BaseCommand
 from faker import Faker
 from localflavor.ro.ro_counties import COUNTIES_CHOICES
 
 from donations.models.main import Donor, Ngo
+from donations.pdf import create_pdf
 
 fake = Faker("ro_RO")
 
@@ -42,6 +44,16 @@ class Command(BaseCommand):
         while len(generated_donations) < total_donations:
             # pick a random NGO
             ngo = ngos[random.randint(0, len(ngos) - 1)]
+            cnp = fake.ssn()
+
+            address = {
+                "street_name": fake.street_name(),
+                "street_number": fake.building_number(),
+                "street_bl": random.choice(["", random.randint(1, 20)]),
+                "street_sc": random.choice(["", random.choice(string.ascii_uppercase)]),
+                "street_et": random.choice(["", random.randint(1, 20)]),
+                "street_ap": random.choice(["", random.randint(1, 200)]),
+            }
 
             # generate a random donor
             donor = Donor(
@@ -58,15 +70,42 @@ class Command(BaseCommand):
                 two_years=random.choice([True, False]),
                 pdf_url="https://storage.googleapis.com/redirectioneaza/logo_bw.png",
             )
-            donor.set_cnp(fake.ssn())
-            donor.set_address_helper(
-                street_name=fake.street_name(),
-                street_number=fake.building_number(),
-                street_bl=random.choice(["", random.randint(1, 20)]),
-                street_sc=random.choice(["", random.choice(string.ascii_uppercase)]),
-                street_et=random.choice(["", random.randint(1, 20)]),
-                street_ap=random.choice(["", random.randint(1, 200)]),
-            )
+            donor.set_cnp(cnp)
+            donor.set_address_helper(**address)
+
+            address_dict = {
+                "street": str(address["street_name"]),
+                "number": str(address["street_number"]),
+                "bl": str(address["street_bl"]),
+                "sc": str(address["street_sc"]),
+                "et": str(address["street_et"]),
+                "ap": str(address["street_ap"]),
+            }
+            donor_dict = {
+                "first_name": donor.first_name,
+                "last_name": donor.last_name,
+                "father": donor.initial,
+                "email": donor.email,
+                "tel": donor.phone,
+                "city": donor.city,
+                "county": donor.county,
+                "cnp": cnp,
+                "income_type": donor.income_type,
+                "has_signed": donor.has_signed,
+                "two_years": donor.two_years,
+                "pdf_url": donor.pdf_url,
+            }
+            donor_dict.update(address_dict)
+
+            ngo_dict = {
+                "name": ngo.name,
+                "cif": ngo.registration_number,
+                "account": ngo.bank_account.upper(),
+                "years_checkmark": False,
+                "special_status": ngo.has_special_status,
+            }
+
+            donor.pdf_file = File(create_pdf(donor_dict, ngo_dict))
 
             generated_donations.append(donor)
 
