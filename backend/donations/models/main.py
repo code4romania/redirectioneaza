@@ -2,6 +2,7 @@ import hashlib
 import json
 from datetime import datetime
 from functools import partial
+from typing import List, Tuple
 
 from django.conf import settings
 from django.core.cache import cache
@@ -12,7 +13,6 @@ from django.db.models.functions import Lower
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-
 
 ALL_NGOS_CACHE_KEY = "ALL_NGOS"
 ALL_NGO_IDS_CACHE_KEY = "ALL_NGO_IDS"
@@ -72,12 +72,36 @@ def ngo_slug_validator(value):
 
 
 def ngo_id_number_validator(value):
-    error_message = _("The ID number must be 8 digits long")
+    acceptable_characters: str = "RO0123456789"
+    cif = "".join([char for char in value.upper() if char in acceptable_characters])
+
     if value.startswith("RO"):
-        if len(value) != 10:
-            raise ValidationError(error_message)
-    elif len(value) != 8:
-        raise ValidationError(error_message)
+        cif = value[2:]
+
+    if not cif.isdigit():
+        raise ValidationError(_("The ID number must contain only digits"))
+
+    if 2 > len(cif) > 10:
+        raise ValidationError(_("The ID number must be between 2 and 10 digits long"))
+
+    control_key: str = "753217532"
+
+    reversed_key: List[int] = [int(digit) for digit in control_key[::-1]]
+    reversed_cif: List[int] = [int(digit) for digit in cif[::-1]]
+
+    cif_control_digit: int = reversed_cif.pop(0)
+
+    cif_key_pairs: Tuple[Tuple[int, int], ...] = tuple(
+        cif_digit * key_digit for cif_digit, key_digit in zip(reversed_cif, reversed_key)
+    )
+    control_result: int = sum(cif_key_pairs) * 10 % 11
+
+    if control_result == cif_control_digit:
+        return
+    elif control_result == 10 and cif_control_digit == 0:
+        return
+
+    raise ValidationError(_("The ID number is not valid"))
 
 
 class ActiveManager(models.Manager):
