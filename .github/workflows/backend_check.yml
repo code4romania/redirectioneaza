@@ -93,12 +93,28 @@ jobs:
   tests:
     name: Run backend tests
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16.1
+        env:
+          POSTGRES_DB: redirect
+          POSTGRES_USER: user
+          POSTGRES_PASSWORD: password
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
     steps:
     - name: Check out Git repository
       uses: actions/checkout@v3
 
     - name: Set up Python 3.11
-      uses: actions/setup-python@v5s
+      uses: actions/setup-python@v5
       with:
         python-version: 3.11
         cache: 'pip'
@@ -111,9 +127,15 @@ jobs:
         ./backend/manage.py compilemessages
         cp ./.env.example ./.env.test
 
+
     - name: Run tests
       env:
         ENV_FILE_NAME: .env.test
+        DATABASE_NAME: redirect
+        DATABASE_USER: user
+        DATABASE_PASSWORD: password
+        DATABASE_HOST: postgres
+        DATABASE_PORT: 5432
       run: |
         cd ./backend
         pytest -Wd --cov --cov-report=xml --cov-report=term-missing --cov-fail-under=5 -n auto
