@@ -8,11 +8,11 @@ asgiref==3.7.2
     # via django
 blessed==1.20.0
     # via -r requirements.in
-boto3==1.34.53
+boto3==1.34.57
     # via
     #   django-ses
     #   django-storages
-botocore==1.34.53
+botocore==1.34.57
     # via
     #   boto3
     #   s3transfer
@@ -32,7 +32,7 @@ cryptography==42.0.5
     # via -r requirements.in
 cssselect2==0.7.0
     # via svglib
-django==4.2.10
+django==4.2.11
     # via
     #   -r requirements.in
     #   django-localflavor
@@ -50,7 +50,7 @@ django-localflavor==4.0
     # via -r requirements.in
 django-picklefield==3.1
     # via django-q2
-django-q2==1.6.1
+django-q2==1.6.2
     # via -r requirements.in
 django-recaptcha==4.0.0
     # via -r requirements.in
@@ -90,7 +90,7 @@ pymysql==1.1.0
     # via -r requirements.in
 pypdf==4.0.2
     # via -r requirements.in
-python-dateutil==2.9.0
+python-dateutil==2.9.0.post0
     # via
     #   botocore
     #   croniter
