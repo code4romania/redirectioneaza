@@ -420,7 +420,8 @@ msgstr "apartament"
 
 #: donations/views/donations_download.py:144
 msgid "The address is not available yet. This field will be available soon."
-msgstr "Adresa nu este încă disponibilă. Acest câmp va fi disponibil în curând."
+msgstr ""
+"Adresa nu este încă disponibilă. Acest câmp va fi disponibil în curând."
 
 #: donations/views/donations_download.py:184
 msgid "Documents ready for download"
