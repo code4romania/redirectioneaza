@@ -73,8 +73,7 @@ def ngo_slug_validator(value):
 
 
 def ngo_id_number_validator(value):
-    acceptable_characters: str = "RO0123456789"
-    cif = "".join([char for char in value.upper() if char in acceptable_characters])
+    cif = "".join([char for char in value.upper() if char.isalnum()])
 
     if value.startswith("RO"):
         cif = value[2:]
@@ -82,7 +81,7 @@ def ngo_id_number_validator(value):
     if not cif.isdigit():
         raise ValidationError(_("The ID number must contain only digits"))
 
-    if 2 > len(cif) > 10:
+    if 2 > len(cif) or len(cif) > 10:
         raise ValidationError(_("The ID number must be between 2 and 10 digits long"))
 
     control_key: str = "753217532"
@@ -331,7 +330,7 @@ class Donor(models.Model):
         return f"{self.ngo} {self.date_created} {self.email}"
 
     def set_cnp(self, cnp: str):
-        self.encrypted_cnp = settings.FERNET_OBJECT.encrypt(cnp.encode()).decode()
+        self.encrypted_cnp = self.encrypt_cnp(cnp)
 
     def get_cnp(self) -> str:
         if not self.encrypted_cnp:
@@ -365,8 +364,7 @@ class Donor(models.Model):
         self._set_address(address)
 
     def _set_address(self, address: dict):
-        json_address: str = json.dumps(address)
-        self.encrypted_address = settings.FERNET_OBJECT.encrypt(json_address.encode()).decode()
+        self.encrypted_address = self.encrypt_address(address)
 
     def get_address(self) -> Dict:
         return self.decrypt_address(self.encrypted_address)
@@ -398,8 +396,16 @@ class Donor(models.Model):
         )
 
     @staticmethod
+    def encrypt_cnp(cnp: str):
+        return settings.FERNET_OBJECT.encrypt(cnp.encode()).decode()
+
+    @staticmethod
     def decrypt_cnp(cnp: str) -> str:
         return settings.FERNET_OBJECT.decrypt(cnp.encode()).decode()
+
+    @staticmethod
+    def encrypt_address(address: Dict):
+        return settings.FERNET_OBJECT.encrypt(json.dumps(address).encode()).decode()
 
     @staticmethod
     def decrypt_address(address) -> Dict:

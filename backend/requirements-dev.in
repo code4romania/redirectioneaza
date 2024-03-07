@@ -7,3 +7,4 @@ ruff~=0.2.1
 faker~=23.3.0
 
 -r requirements.txt
+-r requirements-test.txt

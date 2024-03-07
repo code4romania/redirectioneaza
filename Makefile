@@ -133,6 +133,7 @@ requirements-build:               ## run pip compile and add requirements from t
 	docker exec redirect_dev sh -c " \
 		cd ./backend && \
 		pip-compile --strip-extras --resolver=backtracking -o requirements.txt requirements.in && \
+		pip-compile --strip-extras --resolver=backtracking -o requirements-test.txt requirements-test.in && \
 		pip-compile --strip-extras --resolver=backtracking -o requirements-dev.txt requirements-dev.in \
 	"
 
@@ -140,6 +141,7 @@ requirements-update:              ## run pip compile and rebuild the requirement
 	docker exec redirect_dev sh -c " \
 		cd ./backend && \
 		pip-compile --strip-extras --resolver=backtracking -r -U -o requirements.txt requirements.in && \
+		pip-compile --strip-extras --resolver=backtracking -r -U -o requirements-test.txt requirements-test.in && \
 		pip-compile --strip-extras --resolver=backtracking -r -U -o requirements-dev.txt requirements-dev.in && \
 		chmod a+r requirements.txt && \
 		chmod a+r requirements-dev.txt \

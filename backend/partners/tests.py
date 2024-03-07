@@ -1,24 +1,21 @@
-from django.test import TestCase
+import pytest
 
-from .middleware import PartnerDomainMiddleware, InvalidSubdomain
+from .middleware import InvalidSubdomain, PartnerDomainMiddleware
 
 
-class PartnerDomainMiddlewareTestCase(TestCase):
-    def setUp(self):
-        self.apex = "example.com"
+@pytest.mark.parametrize(
+    "apex, subdomain, expected",
+    [
+        ("example.com", "test1.example.com", "test1"),
+        ("example.com", "TesT1.exaMpLe.com", "test1"),
+        ("example.com", "exAmple.com", ""),
+    ],
+)
+def test_partner_domain_middleware_extraction(apex, subdomain, expected):
+    subdomain = PartnerDomainMiddleware.extract_subdomain(subdomain, apex)
+    assert subdomain == expected
 
-    def test_subdomain(self):
-        # Test standard subdomain extraction
-        subdom1 = PartnerDomainMiddleware.extract_subdomain("test1.example.com", self.apex)
-        self.assertEqual(subdom1, "test1")
 
-        # Test various capitalization subdomain extraction
-        subdom2 = PartnerDomainMiddleware.extract_subdomain("TesT1.exaMpLe.com", self.apex)
-        self.assertEqual(subdom2, "test1")
-
-        # Test apex domain
-        subdom3 = PartnerDomainMiddleware.extract_subdomain("exAmple.com", self.apex)
-        self.assertEqual(subdom3, "")
-
-        # Test invalid subdomain
-        self.assertRaises(InvalidSubdomain, PartnerDomainMiddleware.extract_subdomain, "test1.example.ORG", self.apex)
+def test_invalid_subdomain():
+    with pytest.raises(InvalidSubdomain):
+        PartnerDomainMiddleware.extract_subdomain("test1.example.ORG", "example.com")

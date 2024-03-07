@@ -1,0 +1,3 @@
+pytest~=8.0.2
+
+pytest-django~=4.8.0
