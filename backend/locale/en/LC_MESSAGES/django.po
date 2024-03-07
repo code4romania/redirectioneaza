@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-07 11:20+0200\n"
+"POT-Creation-Date: 2024-03-07 12:44+0200\n"
 "PO-Revision-Date: 2024-02-28 15:45+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -461,36 +461,48 @@ msgstr "Formularul tău de redirecționare"
 msgid "Un nou formular de redirecționare"
 msgstr "Un nou formular de redirecționare"
 
-#: importer/admin.py:22
+#: importer/admin.py:28
 msgid "Process the selected import jobs"
 msgstr "Process the selected import jobs"
 
-#: importer/admin.py:31
+#: importer/admin.py:37
 msgid "The import has been processed."
 msgstr "The import has been processed."
 
-#: importer/admin.py:33
+#: importer/admin.py:39
 msgid "Schedule the transfer of logos to the current storage"
 msgstr "Schedule the transfer of logos to the current storage"
 
-#: importer/admin.py:37
+#: importer/admin.py:43
 msgid "The logos have been transferred."
 msgstr "The logos have been transferred."
 
-#: importer/admin.py:39
+#: importer/admin.py:45
 msgid "Schedule the transfer of donor forms to the current storage"
 msgstr "Schedule the transfer of donor forms to the current storage"
 
-#: importer/admin.py:43 importer/admin.py:49
+#: importer/admin.py:49 importer/admin.py:55
 msgid "The donor forms have been transferred."
 msgstr "The donor forms have been transferred."
 
-#: importer/admin.py:45
+#: importer/admin.py:51
 #, fuzzy
 #| msgid "Schedule the transfer of donor forms to the current storage"
 msgid ""
 "Schedule the transfer of Code4Romania donor forms to the current storage"
 msgstr "Schedule the transfer of donor forms to the current storage"
+
+#: importer/admin.py:57
+#, fuzzy
+#| msgid "Schedule the transfer of donor forms to the current storage"
+msgid "Schedule the repair of addresses for donors"
+msgstr "Schedule the transfer of donor forms to the current storage"
+
+#: importer/admin.py:61
+#, fuzzy
+#| msgid "The import has been processed."
+msgid "The address repair task has been scheduled."
+msgstr "The import has been processed."
 
 #: importer/models.py:15
 msgid "Pending"

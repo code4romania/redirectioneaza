@@ -17,7 +17,13 @@ class ImportAdmin(admin.ModelAdmin):
 
     fieldsets = ((None, {"fields": ("import_type", "csv_file", "has_header")}),)
 
-    actions = ("process_import", "transfer_logos", "transfer_donor_forms", "transfer_code4_donor_forms")
+    actions = (
+        "process_import",
+        "transfer_logos",
+        "transfer_donor_forms",
+        "transfer_code4_donor_forms",
+        "repair_addresses",
+    )
 
     @admin.action(description=_("Process the selected import jobs"))
     def process_import(self, request, queryset: QuerySet[ImportJob]):
@@ -47,3 +53,9 @@ class ImportAdmin(admin.ModelAdmin):
         call_command("import_code4_donor_forms")
 
         self.message_user(request, _("The donor forms have been transferred."))
+
+    @admin.action(description=_("Schedule the repair of addresses for donors"))
+    def repair_addresses(self, request, queryset: QuerySet[ImportJob]):
+        call_command("repair_donor_addresses", "--schedule")
+
+        self.message_user(request, _("The address repair task has been scheduled."))
