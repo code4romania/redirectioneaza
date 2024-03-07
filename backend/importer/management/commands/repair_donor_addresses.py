@@ -23,11 +23,12 @@ class Command(BaseCommand):
             type=int,
             help="The number of donors to process in a single task",
             required=False,
+            default=1000,
         )
 
     def handle(self, *args, **options):
         should_schedule = options.get("schedule", False)
-        batch_size = options.get("batch_size", 1000)
+        batch_size = options.get("batch_size")
 
         if should_schedule:
             schedule(
