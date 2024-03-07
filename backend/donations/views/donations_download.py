@@ -107,6 +107,7 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], ngo: Ngo):
             ]
         )
 
+        donation: Donor
         for donation in donations:
             source_url = _get_pdf_url(donation)
 

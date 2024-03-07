@@ -334,6 +334,9 @@ class Donor(models.Model):
         self.encrypted_cnp = settings.FERNET_OBJECT.encrypt(cnp.encode()).decode()
 
     def get_cnp(self) -> str:
+        if not self.encrypted_cnp:
+            return ""
+
         return self.decrypt_cnp(self.encrypted_cnp)
 
     def set_address_helper(
