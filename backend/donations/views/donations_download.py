@@ -90,12 +90,20 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], ngo: Ngo):
         csv_writer = csv.writer(csv_output, quoting=csv.QUOTE_ALL)
         csv_writer.writerow(
             [
-                "last name",
-                "first name",
-                "initial",
-                "CNP",
-                # "full address",
-                "filename",
+                _("last name"),
+                _("first name"),
+                _("initial"),
+                _("CNP"),
+                _("county"),
+                _("city"),
+                _("full address"),
+                _("street name"),
+                _("street number"),
+                _("building"),
+                _("entrance"),
+                _("floor"),
+                _("apartment"),
+                _("filename"),
             ]
         )
 
@@ -131,7 +139,15 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], ngo: Ngo):
                             donation.first_name,
                             donation.initial,
                             donation.get_cnp(),
-                            # donation.get_address(),
+                            donation.county,
+                            donation.city,
+                            _("The address is not available yet. This field will be available soon."),
+                            "-",
+                            "-",
+                            "-",
+                            "-",
+                            "-",
+                            "-",
                             filename,
                         ]
                     )
