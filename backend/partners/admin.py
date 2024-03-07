@@ -11,6 +11,8 @@ class NgoPartnerInline(admin.TabularInline):
     verbose_name = _("NGO")
     verbose_name_plural = _("NGOs")
 
+    autocomplete_fields = ("ngo",)
+
 
 @admin.register(Partner)
 class PartnerAdmin(admin.ModelAdmin):

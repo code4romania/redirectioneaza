@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-07 12:44+0200\n"
+"POT-Creation-Date: 2024-03-07 13:19+0200\n"
 "PO-Revision-Date: 2024-03-01 15:42+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -20,61 +20,73 @@ msgstr ""
 "20)) ? 1 : 2;\n"
 "X-Generator: Weblate 5.3.1\n"
 
-#: donations/admin.py:15
+#: donations/admin.py:28
+msgid "Link"
+msgstr "Link"
+
+#: donations/admin.py:32 donations/admin.py:44
+msgid "User"
+msgstr "Utilizator"
+
+#: donations/admin.py:36 users/admin.py:37
+msgid "Permissions"
+msgstr "Permisiuni"
+
+#: donations/admin.py:51
 msgid "Has owner"
 msgstr "Are utilizator"
 
-#: donations/admin.py:19
+#: donations/admin.py:55
 msgid "Yes"
 msgstr "Da"
 
-#: donations/admin.py:19
+#: donations/admin.py:55
 msgid "No"
 msgstr "Nu"
 
-#: donations/admin.py:50 donations/admin.py:92 donations/admin.py:124
+#: donations/admin.py:88 donations/admin.py:131 donations/admin.py:167
 #: donations/models/jobs.py:28 donations/models/main.py:234
 #: donations/models/main.py:257 partners/admin.py:11 users/models.py:70
 msgid "NGO"
 msgstr "ONG"
 
-#: donations/admin.py:54
-msgid "Authenticity"
-msgstr "Autenticitate"
+#: donations/admin.py:92
+msgid "Activity"
+msgstr "Activitate"
 
-#: donations/admin.py:58
+#: donations/admin.py:96
 msgid "Logo"
 msgstr "Logo"
 
-#: donations/admin.py:62
+#: donations/admin.py:100
 msgid "Contact"
 msgstr "Contact"
 
-#: donations/admin.py:66
+#: donations/admin.py:104
 msgid "Details"
 msgstr "Detalii"
 
-#: donations/admin.py:70 donations/admin.py:108 donations/admin.py:136
+#: donations/admin.py:108 donations/admin.py:147 donations/admin.py:179
 msgid "Date"
 msgstr "Data"
 
-#: donations/admin.py:75
+#: donations/admin.py:113
 msgid "Users"
 msgstr "Utilizatori"
 
-#: donations/admin.py:96
+#: donations/admin.py:135
 msgid "Identity"
 msgstr "Identitate"
 
-#: donations/admin.py:100
+#: donations/admin.py:139
 msgid "Info"
 msgstr "Info"
 
-#: donations/admin.py:104 donations/admin.py:132 importer/models.py:28
+#: donations/admin.py:143 donations/admin.py:175 importer/models.py:28
 msgid "File"
 msgstr "Fișier"
 
-#: donations/admin.py:128 importer/models.py:24
+#: donations/admin.py:171 importer/models.py:24
 msgid "Status"
 msgstr "Stare"
 
@@ -506,15 +518,15 @@ msgstr "Import"
 msgid "Imports"
 msgstr "Importuri"
 
-#: partners/admin.py:41 partners/models.py:23
+#: partners/admin.py:43 partners/models.py:23
 msgid "Partner"
 msgstr "Partener"
 
-#: partners/admin.py:50
+#: partners/admin.py:52
 msgid "Options"
 msgstr "Opțiuni"
 
-#: partners/admin.py:60
+#: partners/admin.py:62
 msgid "Metadata"
 msgstr "Metadate"
 
@@ -541,6 +553,10 @@ msgstr "Parteneri"
 #: redirectioneaza/common/messaging.py:31
 msgid "Invalid email send method. Must be 'async' or 'sync'."
 msgstr "Metoda de trimitere email invalidă. Trebuie să fie 'async' sau 'sync'."
+
+#: users/admin.py:46
+msgid "Important dates"
+msgstr "Date importante"
 
 #: users/models.py:38
 msgid "Superuser must have is_staff=True."
@@ -573,6 +589,9 @@ msgstr "dată token de validare"
 #: users/models.py:84
 msgid "old password"
 msgstr "parolă veche"
+
+#~ msgid "Authenticity"
+#~ msgstr "Autenticitate"
 
 #~ msgid "Bank"
 #~ msgstr "Detalii bancare"

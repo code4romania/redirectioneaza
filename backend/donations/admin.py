@@ -1,14 +1,50 @@
 from django.contrib import admin
+from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 
 from redirectioneaza.common.admin import HasNgoFilter
 from .models.jobs import Job
 from .models.main import Donor, Ngo
+from users.models import User
 
 
 class NgoPartnerInline(admin.TabularInline):
+    # noinspection PyUnresolvedReferences
     model = Ngo.partners.through
     extra = 1
+
+    autocomplete_fields = ("partner",)
+
+
+class NgoUserInline(admin.StackedInline):
+    # noinspection PyUnresolvedReferences
+    model = User
+    extra = 0
+
+    readonly_fields = ("link_to_user",)
+
+    fieldsets = (
+        (
+            _("Link"),
+            {"fields": ("link_to_user",)},
+        ),
+        (
+            _("User"),
+            {"fields": ("email", "first_name", "last_name")},
+        ),
+        (
+            _("Permissions"),
+            {"fields": ("is_active", "is_staff", "is_superuser")},
+        ),
+    )
+
+    def has_add_permission(self, request, obj):
+        return False
+
+    @admin.display(description=_("User"))
+    def link_to_user(self, obj: User):
+        # TODO: use reverse for this
+        return format_html(f'<a href="/admin/django/users/user/{obj.id}/change/">{obj.email}</a>')
 
 
 class HasOwnerFilter(admin.SimpleListFilter):
@@ -33,15 +69,17 @@ class NgoAdmin(admin.ModelAdmin):
         "date_created",
         "is_verified",
         "is_active",
+        "is_accepting_forms",
         "partners",
         HasOwnerFilter,
         "county",
         "active_region",
     )
+    list_per_page = 30
 
-    search_fields = ("name", "registration_number", "slug")
+    search_fields = ("name", "registration_number", "slug", "description")
 
-    inlines = (NgoPartnerInline,)
+    inlines = (NgoPartnerInline, NgoUserInline)
 
     readonly_fields = ("date_created", "date_updated")
 
@@ -51,8 +89,8 @@ class NgoAdmin(admin.ModelAdmin):
             {"fields": ("slug", "name", "registration_number", "description")},
         ),
         (
-            _("Authenticity"),
-            {"fields": ("is_verified", "is_active")},
+            _("Activity"),
+            {"fields": ("is_verified", "is_active", "is_accepting_forms", "has_special_status")},
         ),
         (
             _("Logo"),
@@ -86,6 +124,7 @@ class DonorAdmin(admin.ModelAdmin):
     exclude = ("personal_identifier", "address")
 
     readonly_fields = ("date_created",)
+    autocomplete_fields = ("ngo",)
 
     fieldsets = (
         (
@@ -110,6 +149,9 @@ class DonorAdmin(admin.ModelAdmin):
         ),
     )
 
+    def has_change_permission(self, request, obj=None):
+        return False
+
 
 @admin.register(Job)
 class JobAdmin(admin.ModelAdmin):
@@ -118,6 +160,7 @@ class JobAdmin(admin.ModelAdmin):
     list_filter = ("date_created", "status")
 
     readonly_fields = ("date_created",)
+    autocomplete_fields = ("ngo",)
 
     fieldsets = (
         (
