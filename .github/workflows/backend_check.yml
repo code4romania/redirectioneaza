@@ -139,5 +139,5 @@ jobs:
         DATABASE_PORT: 5432
       run: |
         cd ./backend
-        pytest -Wd --cov --cov-report=xml --cov-report=term-missing --cov-fail-under=5 -n auto
+        pytest -Wd --cov --cov-report=xml --cov-report=term-missing --cov-fail-under=60 -n auto
 
