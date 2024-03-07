@@ -2,7 +2,7 @@ import hashlib
 import json
 from datetime import datetime
 from functools import partial
-from typing import List, Tuple
+from typing import Dict, List, Tuple
 
 from django.conf import settings
 from django.core.cache import cache
@@ -23,8 +23,9 @@ def select_public_storage():
     return storages["public"]
 
 
-def hash_id_secret(prefix: str, id: int) -> str:
-    return hashlib.sha1(f"{prefix}-{id}-{settings.SECRET_KEY}".encode()).hexdigest()[:10]
+def hash_id_secret(prefix: str, pk: int) -> str:
+    # noinspection InsecureHash
+    return hashlib.sha1(f"{prefix}-{pk}-{settings.SECRET_KEY}".encode()).hexdigest()[:10]
 
 
 def ngo_directory_path(subdir: str, instance: "Ngo", filename: str) -> str:
@@ -361,10 +362,10 @@ class Donor(models.Model):
         self._set_address(address)
 
     def _set_address(self, address: dict):
-        # TODO use: json.dumps(address).encode()
-        self.encrypted_address = settings.FERNET_OBJECT.encrypt(str(address).encode()).decode()
+        json_address: str = json.dumps(address)
+        self.encrypted_address = settings.FERNET_OBJECT.encrypt(json_address.encode()).decode()
 
-    def get_address(self) -> dict:
+    def get_address(self) -> Dict:
         return self.decrypt_address(self.encrypted_address)
 
     @property
@@ -398,5 +399,5 @@ class Donor(models.Model):
         return settings.FERNET_OBJECT.decrypt(cnp.encode()).decode()
 
     @staticmethod
-    def decrypt_address(address):
+    def decrypt_address(address) -> Dict:
         return json.loads(settings.FERNET_OBJECT.decrypt(address.encode()).decode())
