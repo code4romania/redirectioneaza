@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-03-07 13:19+0200\n"
-"PO-Revision-Date: 2024-03-01 15:42+0000\n"
+"PO-Revision-Date: 2024-03-07 11:27+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
 "act4good/core/ro/>\n"
@@ -420,8 +420,7 @@ msgstr "apartament"
 
 #: donations/views/donations_download.py:144
 msgid "The address is not available yet. This field will be available soon."
-msgstr ""
-"Adresa nu este încă disponibilă. Acest câmp va fi disponibil în curând."
+msgstr "Adresa nu este încă disponibilă. Acest câmp va fi disponibil în curând."
 
 #: donations/views/donations_download.py:184
 msgid "Documents ready for download"
