@@ -396,17 +396,23 @@ class Donor(models.Model):
         )
 
     @staticmethod
-    def encrypt_cnp(cnp: str):
+    def encrypt_cnp(cnp: str) -> str:
         return settings.FERNET_OBJECT.encrypt(cnp.encode()).decode()
 
     @staticmethod
     def decrypt_cnp(cnp: str) -> str:
+        if not cnp:
+            return cnp
+
         return settings.FERNET_OBJECT.decrypt(cnp.encode()).decode()
 
     @staticmethod
-    def encrypt_address(address: Dict):
+    def encrypt_address(address: Dict) -> str:
         return settings.FERNET_OBJECT.encrypt(json.dumps(address).encode()).decode()
 
     @staticmethod
-    def decrypt_address(address) -> Dict:
+    def decrypt_address(address: str) -> Dict:
+        if not address:
+            return {}
+
         return json.loads(settings.FERNET_OBJECT.decrypt(address.encode()).decode())
