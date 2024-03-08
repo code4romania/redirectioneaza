@@ -555,7 +555,7 @@ FORM_COUNTIES_NATIONAL.insert(0, "Național")
 CONTACT_EMAIL_ADDRESS = env.str("CONTACT_EMAIL_ADDRESS")
 
 # Django Q2
-# https://django-q2.readthedocs.io/en/stable/brokers.html
+# https://django-q2.readthedocs.io/en/stable/configure.html#configuration
 
 Q_CLUSTER = {
     "name": "redirect",

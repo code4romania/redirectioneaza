@@ -8,6 +8,7 @@ from django.db.models import QuerySet
 from django_q.tasks import async_task
 
 from donations.models.main import Donor
+from importer.tasks.utils import batch
 
 logger = logging.getLogger(__name__)
 
@@ -17,15 +18,9 @@ def repair_addresses_task(batch_size: int = 1000) -> None:
         Donor.objects.exclude(encrypted_address="").values_list("pk", flat=True).order_by("pk")
     )
 
-    for donor_ids in _batch(target_donor_ids, batch_size):
+    for donor_ids in batch(target_donor_ids, batch_size):
         logger.info("Starting task for the following list of donors: %s", len(donor_ids))
         async_task(repair_address_batch, donor_ids)
-
-
-def _batch(iterable, batch_size=1) -> iter:
-    batch_length: int = len(iterable)
-    for index in range(0, batch_length, batch_size):
-        yield iterable[index : min(index + batch_size, batch_length)]
 
 
 def repair_address_batch(ids: list) -> None:
