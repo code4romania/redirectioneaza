@@ -14,12 +14,7 @@ logger = logging.getLogger(__name__)
 
 def repair_addresses_task(batch_size: int = 1000) -> None:
     target_donor_ids: QuerySet[int] = (
-        Donor.objects.exclude(
-            encrypted_address="",
-            encrypted_address__isnull=True,
-        )
-        .values_list("pk", flat=True)
-        .order_by("pk")
+        Donor.objects.exclude(encrypted_address="").values_list("pk", flat=True).order_by("pk")
     )
 
     for donor_ids in _batch(target_donor_ids, batch_size):
