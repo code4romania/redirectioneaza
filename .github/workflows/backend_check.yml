@@ -24,9 +24,11 @@ on:
       - '.github/workflows/backend_check.yml'
 
 jobs:
+
   formatting_with_black:
     name: Run Black formatting check
     runs-on: ubuntu-latest
+
     steps:
     - name: Check out Git repository
       uses: actions/checkout@v4
@@ -48,6 +50,7 @@ jobs:
   linting_with_ruff:
     name: Run Ruff linting check
     runs-on: ubuntu-latest
+
     steps:
     - name: Check out Git repository
       uses: actions/checkout@v4
@@ -69,6 +72,7 @@ jobs:
   checking_migrations:
     name: Check for migrations
     runs-on: ubuntu-latest
+
     steps:
     - name: Check out Git repository
       uses: actions/checkout@v4
@@ -89,3 +93,50 @@ jobs:
         . ./.env.example
         python ./backend/manage.py makemigrations --check --dry-run
         set +a
+
+  tests:
+    name: Run backend tests
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16.1
+        env:
+          POSTGRES_DB: redirect
+          POSTGRES_USER: user
+          POSTGRES_PASSWORD: password
+        ports:
+          - 5432:5432
+
+    steps:
+    - name: Check out Git repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v5
+      with:
+        python-version: 3.11
+        cache: 'pip'
+
+    - name: Install dependencies
+      env:
+        ENV_FILE_NAME: .env.test
+      run: |
+        cp ./.env.example ./.env.test
+        python -m pip install --upgrade pip
+        pip install -r ./backend/requirements-dev.txt
+        sudo apt-get install gettext
+        ./backend/manage.py compilemessages
+
+    - name: Run tests
+      env:
+        ENV_FILE_NAME: .env.test
+        DATABASE_NAME: redirect
+        DATABASE_USER: user
+        DATABASE_PASSWORD: password
+        DATABASE_HOST: postgres
+        DATABASE_PORT: 5432
+      run: |
+        cd ./backend
+        python3 manage.py wait_for_db
+        pytest -Wd --cov --cov-report=xml --cov-report=term-missing --cov-fail-under=60 -n auto
