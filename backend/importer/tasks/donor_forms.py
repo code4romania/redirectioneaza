@@ -64,22 +64,6 @@ def import_donor_forms_task(batch_size: int = 50, run_async: bool = False, dry_r
 def execute_import(index, processed_form_ids: List[int], run_async: bool, dry_run):
     logger.info("Scheduling a new task for %d donors from %d NGOs", len(processed_form_ids), index + 1)
 
-    executed_tasks = Task.objects.filter(func=f"{__name__}.{import_donor_forms.__name__}").values_list("kwargs")
-
-    parsed_ids: List[int] = []
-    for task in executed_tasks:
-        parsed_ids.extend(task.get("kwargs", {}).get("ids", []) or [])
-
-    if set(processed_form_ids).issubset(set(parsed_ids)):
-        error_message = f"Donor forms with the following IDs have already been processed: {processed_form_ids}"
-        logger.error(error_message)
-
-        if settings.ENABLE_SENTRY:
-            capture_message(error_message, level="error")
-
-        if not dry_run:
-            return
-
     if run_async:
         async_task(import_donor_forms, kwargs={"ids": processed_form_ids, "dry_run": dry_run})
     else:
