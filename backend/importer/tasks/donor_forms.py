@@ -6,7 +6,6 @@ import requests
 from django.conf import settings
 from django.core.files import File
 from django.db.models import Count, Q, QuerySet
-from django_q.models import Task
 from django_q.tasks import async_task
 from pypdf import PdfReader
 from requests import Response
