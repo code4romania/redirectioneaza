@@ -6,6 +6,7 @@ import requests
 from django.conf import settings
 from django.core.files import File
 from django.db.models import Count, Q, QuerySet
+from django_q.models import Task
 from django_q.tasks import async_task
 from pypdf import PdfReader
 from requests import Response
@@ -17,7 +18,7 @@ from ..extract import DATA_ZONES, extract_data
 logger = logging.getLogger(__name__)
 
 
-def import_donor_forms_task(batch_size: int = 50, run_async: bool = False):
+def import_donor_forms_task(batch_size: int = 50, run_async: bool = False, dry_run: bool = False):
     logger.info("Starting a new donor form import task")
 
     ngos_by_number_of_donors: QuerySet[Ngo] = (
@@ -38,7 +39,8 @@ def import_donor_forms_task(batch_size: int = 50, run_async: bool = False):
 
     logger.info("Found %d NGOs with donors", ngos_by_number_of_donors.count())
 
-    processed_forms: List[int] = []
+    index: int = 0
+    processed_form_ids: List[int] = []
     for index, ngo in enumerate(ngos_by_number_of_donors):
         donor_forms_for_ngo: List[int] = (
             Donor.objects.filter(ngo=ngo, pdf_file="", has_signed=True, date_created__gte="2022-12-31")
@@ -46,22 +48,45 @@ def import_donor_forms_task(batch_size: int = 50, run_async: bool = False):
             .values_list("pk", flat=True)[: batch_size + 1]
         )
 
-        processed_forms.extend(donor_forms_for_ngo)
+        processed_form_ids.extend(donor_forms_for_ngo)
 
-        if len(processed_forms) > batch_size:
-            logger.info("Scheduling a new task for %d donors from %d NGOs", len(processed_forms), index + 1)
-
-            if run_async:
-                async_task(import_donor_forms, processed_forms)
-            else:
-                import_donor_forms(processed_forms)
+        if len(processed_form_ids) > batch_size:
+            execute_import(index, processed_form_ids, run_async, dry_run)
 
             break
+    else:
+        if index:
+            execute_import(index, processed_form_ids, run_async, dry_run)
 
     return
 
 
-def import_donor_forms(ids: List[int]):
+def execute_import(index, processed_form_ids: List[int], run_async: bool, dry_run):
+    logger.info("Scheduling a new task for %d donors from %d NGOs", len(processed_form_ids), index + 1)
+
+    executed_tasks = Task.objects.filter(func=f"{__name__}.{import_donor_forms.__name__}").values_list("kwargs")
+
+    parsed_ids: List[int] = []
+    for task in executed_tasks:
+        parsed_ids.extend(task.get("kwargs", {}).get("ids", []) or [])
+
+    if set(processed_form_ids).issubset(set(parsed_ids)):
+        error_message = f"Donor forms with the following IDs have already been processed: {processed_form_ids}"
+        logger.error(error_message)
+
+        if settings.ENABLE_SENTRY:
+            capture_message(error_message, level="error")
+
+        if not dry_run:
+            return
+
+    if run_async:
+        async_task(import_donor_forms, kwargs={"ids": processed_form_ids, "dry_run": dry_run})
+    else:
+        import_donor_forms(processed_form_ids, dry_run)
+
+
+def import_donor_forms(ids: List[int], dry_run: bool):
     """
     Download and re-upload the donation form files one by one
     """
@@ -69,8 +94,12 @@ def import_donor_forms(ids: List[int]):
 
     logger.info("Found %s donors to import", target_donors.count())
 
+    attempted_donors: int = 0
+    transferred_donors: int = 0
+
     donor: Donor
-    for donor in target_donors:
+    for attempted_donors, donor in enumerate(target_donors):
+
         logger.debug("Processing donation: %s", donor.first_name)
 
         if not donor.pdf_url.startswith("http"):
@@ -113,4 +142,18 @@ def import_donor_forms(ids: List[int]):
 
             logger.debug("New form file: %s", donor.pdf_file)
 
-            donor.save()
+            if not dry_run:
+                donor.save()
+            else:
+                logger.info("Dry run: not saving the donor form")
+
+            transferred_donors += 1
+
+    if transferred_donors:
+        logger.info("Transferred %d out of %d donors", transferred_donors, attempted_donors + 1)
+    else:
+        error_message = f"No donors were transferred for the following list of {attempted_donors + 1} IDs: {ids}"
+        logger.error(error_message)
+
+        if settings.ENABLE_SENTRY:
+            capture_message(error_message, level="error")

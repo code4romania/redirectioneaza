@@ -13,6 +13,11 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument(
+            "--dry_run",
+            action="store_true",
+            help="Run the import without saving the files",
+        )
+        parser.add_argument(
             "--schedule",
             action="store_true",
             help="Schedule the import for later",
@@ -26,12 +31,13 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
+        dry_run = options.get("dry_run", False)
         should_schedule = options.get("schedule", False)
         batch_size = options.get("batch_size")
 
         kwargs = {"batch_size": batch_size, "run_async": True}
 
-        if should_schedule:
+        if should_schedule and not dry_run:
             Schedule.objects.create(
                 func=f"{import_donor_forms_task.__module__}.{import_donor_forms_task.__name__}",
                 kwargs=kwargs,
@@ -42,6 +48,7 @@ class Command(BaseCommand):
             self.stdout.write(self.style.SUCCESS("Donor forms import scheduled"))
         else:
             kwargs["run_async"] = False
+            kwargs["dry_run"] = dry_run
 
             import_donor_forms_task(**kwargs)
 

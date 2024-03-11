@@ -20,6 +20,7 @@ class ImportAdmin(admin.ModelAdmin):
     actions = (
         "process_import",
         "transfer_logos",
+        "transfer_donor_forms_dry_run",
         "transfer_donor_forms",
         "transfer_donor_forms_schedule",
     )
@@ -40,6 +41,12 @@ class ImportAdmin(admin.ModelAdmin):
         call_command("import_logos", "--schedule")
 
         self.message_user(request, _("The logos have been transferred."))
+
+    @admin.action(description=_("Transfer of donor forms to the current storage (dry run)"))
+    def transfer_donor_forms_dry_run(self, request, queryset: QuerySet[ImportJob]):
+        call_command("import_donor_forms", "--batch_size=50", "--dry_run")
+
+        self.message_user(request, _("The donor forms have been transferred."))
 
     @admin.action(description=_("Transfer of donor forms to the current storage"))
     def transfer_donor_forms(self, request, queryset: QuerySet[ImportJob]):
