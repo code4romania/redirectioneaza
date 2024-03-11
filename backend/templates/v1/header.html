@@ -10,7 +10,7 @@
                 </button>
             {% endif %}
             <a class="navbar-brand" href="/">
-                <img src="{{ static('images/logo-smaller.png') }}" alt="Redirectioneaza logo" width="90px;" />
+                <img src="{{ static('images/logo-smaller.png') }}" alt="Redirectioneaza logo" width="90px;"/>
             </a>
         </div>
 
@@ -22,31 +22,7 @@
                     <li><a href="{{ url('about') }}">Despre</a></li>
                     <li><a href="{{ url('login') }}">Log In</a></li>
                 </ul>
-                <div id="sponsor-container">
-                    <p class="text-center text-link">
-                        Proiect susținut de:
-                    </p>
-                    <ul class="list-unstyled">
-                        <li>
-                            <a href="http://www.patriabank.ro" target="_blank">
-                                <img src="{{ static('images/logo-patria-bank.svg') }}" class="img-responsive" alt="Logo Patria bank">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.globalworth.com" target="_blank">
-                                <img src="{{ static('images/logo-globalworth.svg') }}" class="img-responsive second" alt="Logo globalworth">
-                            </a>
-                        </li>
-                    </ul>
-                </div>
             </div>
         {% endif %}
-        {#
-        <div id="creator-container">
-            <p>Aplicație realizată de</p>
-            <a href="https://code4.ro/" target="_blank">
-                <img src="{{ static('images/code4-header-logo.png') }}">
-            </a>
-        </div> #}
     </div>
 </nav>
