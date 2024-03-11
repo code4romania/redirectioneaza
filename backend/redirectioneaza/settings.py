@@ -59,7 +59,7 @@ env = environ.Env(
     DATABASE_PORT=(str, "3306"),
     # site settings
     APEX_DOMAIN=(str, "redirectioneaza.ro"),
-    SITE_TITLE=(str, "redirectioneaza 3,5%"),
+    SITE_TITLE=(str, "redirectioneaza.ro"),
     DONATIONS_LIMIT_DATE=(str, "2016-05-25"),
     DONATIONS_LIMIT_TO_CURRENT_YEAR=(bool, True),
     DEFAULT_NGO_LOGO=(str, "https://storage.googleapis.com/redirectioneaza/logo_bw.png"),
