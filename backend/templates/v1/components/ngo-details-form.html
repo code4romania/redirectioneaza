@@ -1,8 +1,8 @@
 
-<form id="ong-details-form" class="form form-horizontal" action="/asociatia/" role="form" method="post">
+<form id="ong-details-form" class="form form-horizontal" action="/organizatia/" role="form" method="post">
     {{ csrf_input }}
     <fieldset>
-        <legend>Datele asociației:</legend>
+        <legend>Datele organizației:</legend>
         <div class="form-group">
             <div class="col-xs-12">
                 <input class="form-control" type="text" id="ong-nume" name="ong-nume" placeholder="Numele Asociației" value="{{ ngo.name if ngo }}" required maxlength="150" />
@@ -14,7 +14,7 @@
                 <div id="upload-logo" class="{{ 'hidden' if ngo.logo }}">
                     <label for="ong-logo">
                         <i class="glyphicon glyphicon-picture upload-file-icon"></i>
-                        <p>Logo-ul asociației</p>
+                        <p>Logo-ul organizației</p>
                     </label>
                     <input type="file" id="ong-logo" class="hidden" accept="image/png, image/jpeg" name="ong-logo" />
                 </div>
@@ -68,10 +68,10 @@
         </div>
         <div class="form-group choose-url-group">
             <div class="col-xs-12">
-                <div>Poți alege un url personalizat pentru asociația ta:</div>
+                <div>Poți alege un url personalizat pentru organizația ta:</div>
                 <div>
                     <label for="ong-url" class="control-label">redirectioneaza.ro/</label>
-                    <input id="ong-url" class="form-control" type="text" name="ong-url" placeholder="url-ul asociației" value="{{ ngo.slug if ngo }}" required maxlength="150" {{ "readonly" if not is_admin and ngo.key  }} />
+                    <input id="ong-url" class="form-control" type="text" name="ong-url" placeholder="url-ul organizației" value="{{ ngo.slug if ngo }}" required maxlength="150" {{ "readonly" if not is_admin and ngo.key  }} />
                 </div>
             </div>
         </div>

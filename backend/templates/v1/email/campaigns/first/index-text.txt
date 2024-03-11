@@ -7,7 +7,7 @@ Citeste mai multe - https://www.redirectioneaza.ro
 
 Cum funcționează:
 1. Un donator completează un formular simplu
-2. Datele sale împreună cu cele ale asociației sunt folosite pentru a crea și popula un fisier PDF
+2. Datele sale împreună cu cele ale organizației sunt folosite pentru a crea și popula un fisier PDF
 3. Cel ce doneaza poate apoi printa și expedia formularul către ANAF
 4. Asociatia va putea avea o listă cu cei care au donat
 
