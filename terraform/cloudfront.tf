@@ -97,6 +97,7 @@ resource "aws_cloudfront_distribution" "main" {
       "/contul-meu/*",
       "/date-cont/*",
       "/asociatia/*",
+      "/organizatia/*",
       "/*/semnatura/",
       "/*/succes/",
     ]

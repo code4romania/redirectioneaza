@@ -62,7 +62,7 @@ def year_ngo_donor_directory_path(subdir: str, instance: "Donor", filename: str)
 
 
 def ngo_slug_validator(value):
-    valid_slug_sample: str = "asociatia-de-exemplu"
+    valid_slug_sample: str = "organizatia-de-exemplu"
     error_message = _("%(value)s is not a valid identifier. The identifier must look like %(sample)s") % {
         "value": value,
         "sample": valid_slug_sample,

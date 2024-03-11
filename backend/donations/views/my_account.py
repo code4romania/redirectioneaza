@@ -163,7 +163,7 @@ class NgoDetailsHandler(AccountHandler):
             return redirect(reverse("contul-meu"))
 
         context = {
-            "title": "Date asociație",
+            "title": "Date organizație",
             "user": user,
             "ngo": user.ngo if user.ngo else None,
             "counties": settings.FORM_COUNTIES_NATIONAL,
@@ -234,7 +234,7 @@ class NgoDetailsHandler(AccountHandler):
 
         if errors:
             context = {
-                "title": "Date asociație",
+                "title": "Date organizație",
                 "user": user,
                 "ngo": ngo,  # send back the unsaved NGO data
                 "counties": settings.FORM_COUNTIES_NATIONAL,
@@ -264,7 +264,7 @@ class NgoDetailsHandler(AccountHandler):
         if request.user.has_perm("users.can_view_old_dashboard"):
             return redirect(reverse("admin-ong", kwargs={"ngo_url": user.ngo.slug}))
 
-        return redirect(reverse("association"))
+        return redirect(reverse("organization"))
 
     @staticmethod
     def _validate_registration_number(ngo, registration_number) -> Optional[str]:

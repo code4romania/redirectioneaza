@@ -72,7 +72,8 @@ urlpatterns = (
             name="donor-download-link",
         ),
         # backup in case of old urls. to be removed
-        path("asociatii/", NgoListHandler.as_view(), name="associations"),
+        path("organizatii/", NgoListHandler.as_view(), name="organizations"),
+        path("asociatii/", RedirectView.as_view(pattern_name="organizations", permanent=True)),
         path("termeni/", TermsHandler.as_view(), name="terms"),
         path("TERMENI/", RedirectView.as_view(pattern_name="terms", permanent=True)),
         path("nota-de-informare/", NoteHandler.as_view(), name="note"),
@@ -92,7 +93,8 @@ urlpatterns = (
         path("password/", SetPasswordHandler.as_view(), name="password"),
         # my account
         path("contul-meu/", MyAccountHandler.as_view(), name="contul-meu"),
-        path("asociatia/", NgoDetailsHandler.as_view(), name="association"),
+        path("organizatia/", NgoDetailsHandler.as_view(), name="organization"),
+        path("asociatia/", RedirectView.as_view(pattern_name="organization", permanent=True)),
         path("date-cont/", MyAccountDetailsHandler.as_view(), name="date-contul-meu"),
         # APIs
         path("api/ngo/check-url/<ngo_url>/", CheckNgoUrl.as_view(), name="api-ngo-check-url"),
