@@ -21,6 +21,7 @@ class ImportAdmin(admin.ModelAdmin):
         "process_import",
         "transfer_logos",
         "transfer_donor_forms",
+        "transfer_donor_forms_schedule",
     )
 
     @admin.action(description=_("Process the selected import jobs"))
@@ -40,8 +41,14 @@ class ImportAdmin(admin.ModelAdmin):
 
         self.message_user(request, _("The logos have been transferred."))
 
-    @admin.action(description=_("Schedule the transfer of donor forms to the current storage"))
+    @admin.action(description=_("Transfer of donor forms to the current storage"))
     def transfer_donor_forms(self, request, queryset: QuerySet[ImportJob]):
-        call_command("import_donor_forms", "--schedule", "--batch_size=50")
+        call_command("import_donor_forms", "--batch_size=50")
 
         self.message_user(request, _("The donor forms have been transferred."))
+
+    @admin.action(description=_("Schedule the transfer of donor forms to the current storage"))
+    def transfer_donor_forms_schedule(self, request, queryset: QuerySet[ImportJob]):
+        call_command("import_donor_forms", "--batch_size=50", "--schedule")
+
+        self.message_user(request, _("The donor forms have been scheduled for transfer."))

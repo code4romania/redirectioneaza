@@ -3,11 +3,13 @@ import tempfile
 from typing import List
 
 import requests
+from django.conf import settings
 from django.core.files import File
 from django.db.models import Count, Q, QuerySet
 from django_q.tasks import async_task
 from pypdf import PdfReader
 from requests import Response
+from sentry_sdk import capture_message
 
 from donations.models.main import Donor, Ngo
 from ..extract import DATA_ZONES, extract_data
@@ -15,7 +17,7 @@ from ..extract import DATA_ZONES, extract_data
 logger = logging.getLogger(__name__)
 
 
-def import_donor_forms_task(batch_size: int = 50):
+def import_donor_forms_task(batch_size: int = 50, run_async: bool = False):
     logger.info("Starting a new donor form import task")
 
     ngos_by_number_of_donors: QuerySet[Ngo] = (
@@ -49,7 +51,11 @@ def import_donor_forms_task(batch_size: int = 50):
         if len(processed_forms) > batch_size:
             logger.info("Scheduling a new task for %d donors from %d NGOs", len(processed_forms), index + 1)
 
-            async_task(import_donor_forms, processed_forms)
+            if run_async:
+                async_task(import_donor_forms, processed_forms)
+            else:
+                import_donor_forms(processed_forms)
+
             break
 
     return
@@ -73,7 +79,12 @@ def import_donor_forms(ids: List[int]):
 
         r: Response = requests.get(donor.pdf_url)
         if r.status_code != 200:
-            logger.debug("Donation form request status: %s", r.status_code)
+            error_message = f"Donation form request status: {r.status_code} for donor {donor.pk}"
+            logger.warning(error_message)
+
+            if settings.ENABLE_SENTRY:
+                capture_message(error_message, level="error")
+
             continue
 
         with tempfile.TemporaryFile() as fp:

@@ -177,7 +177,8 @@ VERSION_SUFFIX = f"redirect@{VERSION}+{REVISION}"
 
 
 # Sentry
-if env.str("SENTRY_DSN"):
+ENABLE_SENTRY = True if env.str("SENTRY_DSN") else False
+if ENABLE_SENTRY:
     sentry_sdk.init(
         dsn=env.str("SENTRY_DSN"),
         # Set traces_sample_rate to 1.0 to capture 100%

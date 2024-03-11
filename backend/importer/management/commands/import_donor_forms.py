@@ -29,19 +29,20 @@ class Command(BaseCommand):
         should_schedule = options.get("schedule", False)
         batch_size = options.get("batch_size")
 
-        kwargs = {"batch_size": batch_size}
+        kwargs = {"batch_size": batch_size, "run_async": True}
 
         if should_schedule:
             Schedule.objects.create(
-                func="importer.tasks.donor_forms.import_donor_forms_task",
+                func=f"{import_donor_forms_task.__module__}.{import_donor_forms_task.__name__}",
                 kwargs=kwargs,
                 schedule_type=Schedule.MINUTES,
                 minutes=5,
                 name="CREATE_DONOR_FORMS_IMPORT_TASKS",
             )
             self.stdout.write(self.style.SUCCESS("Donor forms import scheduled"))
-            return
+        else:
+            kwargs["run_async"] = False
 
-        import_donor_forms_task(batch_size=batch_size)
+            import_donor_forms_task(**kwargs)
 
         self.stdout.write(self.style.SUCCESS("Donor forms import done"))
