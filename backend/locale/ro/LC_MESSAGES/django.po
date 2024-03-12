@@ -82,7 +82,7 @@ msgstr "Data"
 
 #: backend/donations/admin.py:120
 msgid "Open the NGO donor list"
-msgstr ""
+msgstr "Deschide lista de donatori pentru acest ONG"
 
 #: backend/donations/admin.py:151
 msgid "Identity"

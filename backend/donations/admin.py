@@ -65,7 +65,7 @@ class HasOwnerFilter(admin.SimpleListFilter):
 @admin.register(Ngo)
 class NgoAdmin(admin.ModelAdmin):
     list_display = ("id", "slug", "registration_number", "name")
-    list_display_links = ("registration_number", "name")
+    list_display_links = ("id", "slug", "registration_number", "name")
     list_filter = (
         "date_created",
         "is_verified",
@@ -127,7 +127,7 @@ class NgoAdmin(admin.ModelAdmin):
 @admin.register(Donor)
 class DonorAdmin(admin.ModelAdmin):
     list_display = ("id", "email", "first_name", "last_name", "ngo", "date_created")
-    list_display_links = ("email",)
+    list_display_links = ("id", "email", "first_name", "last_name")
     list_filter = (
         "date_created",
         HasNgoFilter,
