@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 
@@ -43,8 +44,8 @@ class NgoUserInline(admin.StackedInline):
 
     @admin.display(description=_("User"))
     def link_to_user(self, obj: User):
-        # TODO: use reverse for this
-        return format_html(f'<a href="/admin/django/users/user/{obj.id}/change/">{obj.email}</a>')
+        link_url = reverse("admin:users_user_change", args=(obj.pk,))
+        return format_html(f'<a href="{link_url}">{obj.email}</a>')
 
 
 class HasOwnerFilter(admin.SimpleListFilter):
@@ -81,7 +82,7 @@ class NgoAdmin(admin.ModelAdmin):
 
     inlines = (NgoPartnerInline, NgoUserInline)
 
-    readonly_fields = ("date_created", "date_updated")
+    readonly_fields = ("date_created", "date_updated", "get_donations_link")
 
     fieldsets = (
         (
@@ -105,14 +106,22 @@ class NgoAdmin(admin.ModelAdmin):
             {"fields": ("bank_account", "prefilled_form")},
         ),
         (
+            _("Donations"),
+            {"fields": ("get_donations_link",)},
+        ),
+        (
             _("Date"),
             {"fields": ("date_created", "date_updated")},
         ),
     )
 
-    @admin.display(description=_("Users"))
-    def get_users(self, obj):
-        return ", ".join([user.email for user in obj.users.all()])
+    @admin.display(description=_("Donations"))
+    def get_donations_link(self, obj: Ngo):
+        link_name = _("View list")
+        link_url = reverse("admin:donations_donor_changelist")
+        return format_html(
+            f'<a data-popup="yes" id="ngo_donor_list" class="related-widget-wrapper-link" href="{link_url}?ngo_id={obj.id}&_popup=1" target="_blank">{link_name}</a>'
+        )
 
 
 @admin.register(Donor)
