@@ -64,7 +64,7 @@ def execute_import(index, processed_form_ids: List[int], run_async: bool, dry_ru
     logger.info("Scheduling a new task for %d donors from %d NGOs", len(processed_form_ids), index + 1)
 
     if run_async:
-        async_task(import_donor_forms, kwargs={"ids": processed_form_ids, "dry_run": dry_run})
+        async_task(import_donor_forms, ids=processed_form_ids, dry_run=dry_run)
     else:
         import_donor_forms(processed_form_ids, dry_run)
 
