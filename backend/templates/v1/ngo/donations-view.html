@@ -2,7 +2,27 @@
 
 
 <div id="donation-table" class="col-xs-12 col-md-8 col-md-offset-2">
-    <p>Mai jos găsești o listă cu toate persoanele care au completat formularul de redirecționare:</p>
+    <p>
+        Mai jos găsești o listă cu toate persoanele care au completat declarația de redirecționare.
+        Unii contribuabili au semnat online declarațiile, iar alții au ales să le semneze pe hârtie și să le trimită personal.
+    </p>
+    {% if not has_signed_form %}
+        <div class="alert alert-info">
+            Dacă doriți să descărcați declarațiile semnate online, activați opțiunea
+            <b>"Doresc sa primesc declarațiile completate pe email"</b>
+            din secțiunea de setări a organizației.
+        </div>
+    {% endif %}
+
+    {% if donor_metadata["total_signed"] and has_signed_form %}
+    <p>
+        {% if donor_metadata["total_signed"] == 1 %}
+            Folosind butonul de mai jos, puteți descărca declarația semnată online pentru anul curent.
+        {% else %}
+            Folosind butonul de mai jos, puteți descărca cele {{ donor_metadata["total_signed"] }} declarații semnate online pentru anul curent.
+        {% endif %}
+        </p>
+    {% endif %}
 
     {% for key, value in donors.items() %}
 
@@ -13,29 +33,31 @@
                 {% if key == current_year and ngo.is_accepting_forms and value %}
                     {% if job_in_progress %}
                         <div class="alert alert-info">
-                            <strong>Atenție!</strong> Exportul datelor este în desfășurare. La finalizarea procesului vei primi un email cu un link de descărcare a tuturor formularelor care au fost semnate electronic. Dacă nu ai primit email, apasă butonul de refresh în această pagină și vei putea descărca arhiva direct de aici din platforma.
+                            <strong>Atenție!</strong>
+                            Exportul datelor este în desfășurare. La finalizarea procesului vei primi un email cu un link de descărcare a tuturor declarațiilor care au fost semnate online.
+                            Dacă nu ai primit email, apasă butonul de refresh în această pagină și vei putea descărca arhiva direct de aici din platforma.
                         </div>
                     {% endif %}
                     <form action="{{ url('api-ngo-forms') }}" method="post">
                         {{ csrf_input }}
                         {% if not has_signed_form %}
                             <div class="alert alert-info">
-                                Nu ați activat primirea electronică de formulare.
+                                Nu ați activat primirea electronică de declarații.
                                 Pentru a activa această funcționalitate, selectați opțiunea
-                                <b>"Doresc sa primesc formularele completate pe email"</b>
+                                <b>"Doresc sa primesc declarațiile completate pe email"</b>
                                 din secțiunea de setări a organizației.
                             </div>
                         {% endif %}
                         {% if has_signed_form and disable_download %}
                             <div class="alert alert-info">
-                                Descărcarea de formulare este momentan blocată pentru organizația ta.
-                                Descărcarea de formulare este limitată la una singură la fiecare 12 ore.
+                                Descărcarea de declarații este momentan blocată pentru organizația ta.
+                                Descărcarea de declarații este limitată la una singură la fiecare 12 ore.
                             </div>
                         {% endif %}
                         <button id="download-button" class="btn" type="submit"
-                            {% if disable_download %}disabled{% endif %} 
+                            {% if disable_download %}disabled{% endif %}
                         >
-                            Descarcă formularele
+                            Descarcă declarațiile semnate
                         </button>
                     </form>
 
@@ -83,6 +105,7 @@
                     <tr>
                         <th>#</th>
                         <th>Nume</th>
+                        <th>Semnat</th>
                         <th>Oraș, <span class="text-muted">Județ</span></th>
                         <th>Email</th>
                         <th>Telefon</th>
@@ -94,9 +117,10 @@
                             <tr>
                                 <td>{{ loop.length - loop.index + 1 }}</td>
                                 <td>{{ donation.first_name + " " + donation.last_name }}</td>
+                                <td>{{ "Da" if donation.has_signed else "Nu" }}</td>
                                 <td>{{ donation.city }}, <span class="text-muted">{{ donation.county }}</span></td>
 
-                                {% if donation.anonymous != True %}
+                                {% if donation.is_anonymous != True %}
                                     <td>{{ donation.email if donation.email }}</td>
                                     <td>{{ donation.tel if donation.tel }}</td>
                                 {% else %}

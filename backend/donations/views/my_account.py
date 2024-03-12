@@ -104,6 +104,11 @@ class MyAccountHandler(AccountHandler):
         user_ngo: Ngo = user.ngo if user.ngo else None
 
         grouped_donors = self._get_donors_by_donation_year(ngo=user_ngo)
+        donors_metadata = {
+            "total": sum(len(donors) for donors in grouped_donors.values()),
+            "total_signed": sum(1 for donors in grouped_donors.values() if donors),
+            "years": list(grouped_donors.keys()),
+        }
 
         now = timezone.now()
         can_donate = not now.date() > settings.DONATIONS_LIMIT
@@ -138,6 +143,7 @@ class MyAccountHandler(AccountHandler):
             "limit": settings.DONATIONS_LIMIT,
             "ngo": user_ngo,
             "donors": grouped_donors,
+            "donor_metadata": donors_metadata,
             "counties": settings.FORM_COUNTIES_NATIONAL,
             "disable_download": disable_download,
             "has_signed_form": has_signed_form,
