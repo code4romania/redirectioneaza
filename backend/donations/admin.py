@@ -86,6 +86,10 @@ class NgoAdmin(admin.ModelAdmin):
 
     fieldsets = (
         (
+            _("Donations"),
+            {"fields": ("get_donations_link",)},
+        ),
+        (
             _("NGO"),
             {"fields": ("slug", "name", "registration_number", "description")},
         ),
@@ -106,10 +110,6 @@ class NgoAdmin(admin.ModelAdmin):
             {"fields": ("bank_account", "prefilled_form")},
         ),
         (
-            _("Donations"),
-            {"fields": ("get_donations_link",)},
-        ),
-        (
             _("Date"),
             {"fields": ("date_created", "date_updated")},
         ),
@@ -117,7 +117,7 @@ class NgoAdmin(admin.ModelAdmin):
 
     @admin.display(description=_("Donations"))
     def get_donations_link(self, obj: Ngo):
-        link_name = _("View list")
+        link_name = _("Open the NGO donor list")
         link_url = reverse("admin:donations_donor_changelist")
         return format_html(
             f'<a data-popup="yes" id="ngo_donor_list" class="related-widget-wrapper-link" href="{link_url}?ngo_id={obj.id}&_popup=1" target="_blank">{link_name}</a>'
