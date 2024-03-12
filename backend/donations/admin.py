@@ -22,19 +22,19 @@ class NgoUserInline(admin.StackedInline):
     model = User
     extra = 0
 
-    readonly_fields = ("link_to_user",)
+    readonly_fields = ("link_to_user", "email", "first_name", "last_name", "is_active", "is_staff", "is_superuser")
 
     fieldsets = (
         (
-            _("Link"),
+            _("User Link"),
             {"fields": ("link_to_user",)},
         ),
         (
-            _("User"),
+            _("User Details"),
             {"fields": ("email", "first_name", "last_name")},
         ),
         (
-            _("Permissions"),
+            _("User Permissions"),
             {"fields": ("is_active", "is_staff", "is_superuser")},
         ),
     )

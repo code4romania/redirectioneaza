@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-11 11:46+0200\n"
+"POT-Creation-Date: 2024-03-12 12:57+0200\n"
 "PO-Revision-Date: 2024-03-07 11:27+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -20,167 +20,179 @@ msgstr ""
 "20)) ? 1 : 2;\n"
 "X-Generator: Weblate 5.3.1\n"
 
-#: donations/admin.py:28
-msgid "Link"
-msgstr "Link"
+#: backend/donations/admin.py:29
+msgid "User Link"
+msgstr "Link utilizator"
 
-#: donations/admin.py:32 donations/admin.py:44
+#: backend/donations/admin.py:33
+msgid "User Details"
+msgstr "Detalii utilizator"
+
+#: backend/donations/admin.py:37
+msgid "User Permissions"
+msgstr "Permisiuni utilizator"
+
+#: backend/donations/admin.py:45
 msgid "User"
 msgstr "Utilizator"
 
-#: donations/admin.py:36 users/admin.py:37
-msgid "Permissions"
-msgstr "Permisiuni"
-
-#: donations/admin.py:51
+#: backend/donations/admin.py:52
 msgid "Has owner"
 msgstr "Are utilizator"
 
-#: donations/admin.py:55
+#: backend/donations/admin.py:56
 msgid "Yes"
 msgstr "Da"
 
-#: donations/admin.py:55
+#: backend/donations/admin.py:56
 msgid "No"
 msgstr "Nu"
 
-#: donations/admin.py:88 donations/admin.py:131 donations/admin.py:167
-#: donations/models/jobs.py:28 donations/models/main.py:233
-#: donations/models/main.py:256 partners/admin.py:11 users/models.py:70
+#: backend/donations/admin.py:89 backend/donations/admin.py:118
+msgid "Donations"
+msgstr "Donații"
+
+#: backend/donations/admin.py:93 backend/donations/admin.py:147
+#: backend/donations/admin.py:183 backend/donations/models/jobs.py:28
+#: backend/donations/models/main.py:233 backend/donations/models/main.py:256
+#: backend/partners/admin.py:11 backend/users/models.py:70
 msgid "NGO"
 msgstr "ONG"
 
-#: donations/admin.py:92
+#: backend/donations/admin.py:97
 msgid "Activity"
 msgstr "Activitate"
 
-#: donations/admin.py:96
+#: backend/donations/admin.py:101
 msgid "Logo"
 msgstr "Logo"
 
-#: donations/admin.py:100
+#: backend/donations/admin.py:105
 msgid "Contact"
 msgstr "Contact"
 
-#: donations/admin.py:104
+#: backend/donations/admin.py:109
 msgid "Details"
 msgstr "Detalii"
 
-#: donations/admin.py:108 donations/admin.py:147 donations/admin.py:179
+#: backend/donations/admin.py:113 backend/donations/admin.py:163
+#: backend/donations/admin.py:195
 msgid "Date"
 msgstr "Data"
 
-#: donations/admin.py:113
-msgid "Users"
-msgstr "Utilizatori"
+#: backend/donations/admin.py:120
+msgid "Open the NGO donor list"
+msgstr ""
 
-#: donations/admin.py:135
+#: backend/donations/admin.py:151
 msgid "Identity"
 msgstr "Identitate"
 
-#: donations/admin.py:139
+#: backend/donations/admin.py:155
 msgid "Info"
 msgstr "Info"
 
-#: donations/admin.py:143 donations/admin.py:175 importer/models.py:28
+#: backend/donations/admin.py:159 backend/donations/admin.py:191
+#: backend/importer/models.py:28
 msgid "File"
 msgstr "Fișier"
 
-#: donations/admin.py:171 importer/models.py:24
+#: backend/donations/admin.py:187 backend/importer/models.py:24
 msgid "Status"
 msgstr "Stare"
 
-#: donations/forms/account.py:18 donations/forms/account.py:56
-#: donations/forms/account.py:69
+#: backend/donations/forms/account.py:18 backend/donations/forms/account.py:56
+#: backend/donations/forms/account.py:69
 msgid "Email is required"
 msgstr "Adresa de email este obligatorie"
 
-#: donations/forms/account.py:24 donations/forms/common.py:31
+#: backend/donations/forms/account.py:24 backend/donations/forms/common.py:31
 msgid "Password is required"
 msgstr "Parola este obligatorie"
 
-#: donations/forms/account.py:44
+#: backend/donations/forms/account.py:44
 msgid "First name is required"
 msgstr "Prenumele este obligatoriu"
 
-#: donations/forms/account.py:50
+#: backend/donations/forms/account.py:50
 msgid "Last name is required"
 msgstr "Numele este obligatoriu"
 
-#: donations/forms/common.py:39
+#: backend/donations/forms/common.py:39
 msgid "Passwords do not match"
 msgstr "Parolele nu se potrivesc"
 
-#: donations/forms/donation.py:9
+#: backend/donations/forms/donation.py:9
 msgid "Street"
 msgstr "Strada"
 
-#: donations/forms/donation.py:10
+#: backend/donations/forms/donation.py:10
 msgid "Number"
 msgstr "Număr"
 
-#: donations/forms/donation.py:11
+#: backend/donations/forms/donation.py:11
 msgid "Building"
 msgstr "Bloc"
 
-#: donations/forms/donation.py:12
+#: backend/donations/forms/donation.py:12
 msgid "Entrance"
 msgstr "Scara"
 
-#: donations/forms/donation.py:13
+#: backend/donations/forms/donation.py:13
 msgid "Floor"
 msgstr "Etaj"
 
-#: donations/forms/donation.py:14
+#: backend/donations/forms/donation.py:14
 msgid "Apartment"
 msgstr "Apartament"
 
-#: donations/forms/donation.py:15
+#: backend/donations/forms/donation.py:15
 msgid "Terms"
 msgstr "Termeni"
 
-#: donations/models/jobs.py:18
+#: backend/donations/models/jobs.py:18
 msgid "New"
 msgstr "Nou"
 
-#: donations/models/jobs.py:19 importer/models.py:18
+#: backend/donations/models/jobs.py:19 backend/importer/models.py:18
 msgid "Error"
 msgstr "Eroare"
 
-#: donations/models/jobs.py:20 importer/models.py:17
+#: backend/donations/models/jobs.py:20 backend/importer/models.py:17
 msgid "Done"
 msgstr "Gata"
 
-#: donations/models/jobs.py:35
+#: backend/donations/models/jobs.py:35
 msgid "owner"
 msgstr "utilizator"
 
-#: donations/models/jobs.py:41
+#: backend/donations/models/jobs.py:41
 msgid "status"
 msgstr "stare"
 
-#: donations/models/jobs.py:50
+#: backend/donations/models/jobs.py:50
 msgid "ZIP"
 msgstr "Arhivă"
 
-#: donations/models/jobs.py:52 donations/models/main.py:217
-#: donations/models/main.py:323 partners/models.py:16 users/models.py:86
+#: backend/donations/models/jobs.py:52 backend/donations/models/main.py:217
+#: backend/donations/models/main.py:323 backend/partners/models.py:16
+#: backend/users/models.py:86
 msgid "date created"
 msgstr "data creării"
 
-#: donations/models/jobs.py:53
+#: backend/donations/models/jobs.py:53
 msgid "date finished"
 msgstr "data terminării"
 
-#: donations/models/jobs.py:65
+#: backend/donations/models/jobs.py:65
 msgid "job"
 msgstr "sarcină"
 
-#: donations/models/jobs.py:66
+#: backend/donations/models/jobs.py:66
 msgid "jobs"
 msgstr "joburi"
 
-#: donations/models/main.py:66
+#: backend/donations/models/main.py:66
 #, python-format
 msgid ""
 "%(value)s is not a valid identifier. The identifier must look like %(sample)s"
@@ -188,418 +200,412 @@ msgstr ""
 "%(value)s nu este un identificator valid. Identificatorul trebuie să arate "
 "%(sample)s"
 
-#: donations/models/main.py:82
+#: backend/donations/models/main.py:82
 msgid "The ID number must contain only digits"
 msgstr "Numărul de identificare trebuie să conțină doar cifre"
 
-#: donations/models/main.py:85
+#: backend/donations/models/main.py:85
 msgid "The ID number must be between 2 and 10 digits long"
 msgstr "Numărul de identificare trebuie să aibă între 2 și 10 cifre"
 
-#: donations/models/main.py:104
+#: backend/donations/models/main.py:104
 msgid "The ID number is not valid"
 msgstr "Numărul de identificare nu este valid"
 
-#: donations/models/main.py:116
+#: backend/donations/models/main.py:116
 msgid "slug"
 msgstr "adresă"
 
-#: donations/models/main.py:125
+#: backend/donations/models/main.py:125
 msgid "Name"
 msgstr "Nume"
 
-#: donations/models/main.py:126
+#: backend/donations/models/main.py:126
 msgid "description"
 msgstr "descriere"
 
-#: donations/models/main.py:129
+#: backend/donations/models/main.py:129
 msgid "logo url"
 msgstr "url logo"
 
-#: donations/models/main.py:131
+#: backend/donations/models/main.py:131
 msgid "logo"
 msgstr "logo"
 
-#: donations/models/main.py:138
+#: backend/donations/models/main.py:138
 msgid "image url"
 msgstr "url imagine"
 
-#: donations/models/main.py:140
+#: backend/donations/models/main.py:140
 msgid "image"
 msgstr "imagine"
 
-#: donations/models/main.py:148
+#: backend/donations/models/main.py:148
 msgid "bank account"
 msgstr "cont bancar"
 
-#: donations/models/main.py:152
+#: backend/donations/models/main.py:152
 msgid "registration number"
 msgstr "număr de înregistrare"
 
-#: donations/models/main.py:161 donations/models/main.py:280
+#: backend/donations/models/main.py:161 backend/donations/models/main.py:280
 msgid "address"
 msgstr "adresă"
 
-#: donations/models/main.py:163 donations/models/main.py:273
-#: donations/views/donations_download.py:97
+#: backend/donations/models/main.py:163 backend/donations/models/main.py:273
+#: backend/donations/views/donations_download.py:97
 msgid "county"
 msgstr "județ"
 
-#: donations/models/main.py:171
+#: backend/donations/models/main.py:171
 msgid "active region"
 msgstr "regiune activă"
 
-#: donations/models/main.py:180 donations/models/main.py:283
+#: backend/donations/models/main.py:180 backend/donations/models/main.py:283
 msgid "telephone"
 msgstr "telefon"
 
-#: donations/models/main.py:182 donations/models/main.py:284
+#: backend/donations/models/main.py:182 backend/donations/models/main.py:284
 msgid "email"
 msgstr "email"
 
-#: donations/models/main.py:183
+#: backend/donations/models/main.py:183
 msgid "website"
 msgstr "website"
 
-#: donations/models/main.py:185
+#: backend/donations/models/main.py:185
 msgid "other emails"
 msgstr "alte emailuri"
 
-#: donations/models/main.py:188 users/models.py:78
+#: backend/donations/models/main.py:188 backend/users/models.py:78
 msgid "is verified"
 msgstr "este verificat"
 
-#: donations/models/main.py:192
+#: backend/donations/models/main.py:192
 msgid "has special status"
 msgstr "are statut special"
 
-#: donations/models/main.py:196
+#: backend/donations/models/main.py:196
 msgid "is accepting forms"
 msgstr "acceptă formulare"
 
-#: donations/models/main.py:199 partners/models.py:12
+#: backend/donations/models/main.py:199 backend/partners/models.py:12
 msgid "is active"
 msgstr "este activ"
 
-#: donations/models/main.py:203
+#: backend/donations/models/main.py:203
 msgid "form url"
 msgstr "url formular"
 
-#: donations/models/main.py:210
+#: backend/donations/models/main.py:210
 msgid "form with prefilled ngo data"
 msgstr "formular cu datele ONG-ului completate"
 
-#: donations/models/main.py:218 partners/models.py:17 users/models.py:87
+#: backend/donations/models/main.py:218 backend/partners/models.py:17
+#: backend/users/models.py:87
 msgid "date updated"
 msgstr "data actualizării"
 
-#: donations/models/main.py:234 partners/admin.py:12 partners/models.py:15
+#: backend/donations/models/main.py:234 backend/partners/admin.py:12
+#: backend/partners/models.py:15
 msgid "NGOs"
 msgstr "ONG-uri"
 
-#: donations/models/main.py:252
+#: backend/donations/models/main.py:252
 msgid "wage"
 msgstr "salariu"
 
-#: donations/models/main.py:253
+#: backend/donations/models/main.py:253
 msgid "pension"
 msgstr "pensie"
 
-#: donations/models/main.py:258 donations/views/donations_download.py:94
+#: backend/donations/models/main.py:258
+#: backend/donations/views/donations_download.py:94
 msgid "first name"
 msgstr "prenume"
 
-#: donations/models/main.py:259 donations/views/donations_download.py:93
+#: backend/donations/models/main.py:259
+#: backend/donations/views/donations_download.py:93
 msgid "last name"
 msgstr "nume"
 
-#: donations/models/main.py:260
+#: backend/donations/models/main.py:260
 msgid "initials"
 msgstr "inițiale"
 
-#: donations/models/main.py:262 donations/views/donations_download.py:96
+#: backend/donations/models/main.py:262
+#: backend/donations/views/donations_download.py:96
 msgid "CNP"
 msgstr "CNP"
 
-#: donations/models/main.py:265 donations/views/donations_download.py:98
+#: backend/donations/models/main.py:265
+#: backend/donations/views/donations_download.py:98
 msgid "city"
 msgstr "oraș"
 
-#: donations/models/main.py:288
+#: backend/donations/models/main.py:288
 msgid "anonymous"
 msgstr "anonim"
 
-#: donations/models/main.py:291
+#: backend/donations/models/main.py:291
 msgid "If the user would like the ngo to see the donation"
 msgstr "Dacă utilizatorul dorește ca ONG-ul să vadă donația"
 
-#: donations/models/main.py:296
+#: backend/donations/models/main.py:296
 msgid "income type"
 msgstr "tip venit"
 
-#: donations/models/main.py:305
+#: backend/donations/models/main.py:305
 msgid "two years"
 msgstr "doi ani"
 
-#: donations/models/main.py:307
+#: backend/donations/models/main.py:307
 msgid "If the user wants to donate for 2 years"
 msgstr "Dacă utilizatorul dorește să doneze pentru 2 ani"
 
-#: donations/models/main.py:310
+#: backend/donations/models/main.py:310
 msgid "Geo IP"
 msgstr "Geo IP"
 
-#: donations/models/main.py:312
+#: backend/donations/models/main.py:312
 msgid "PDF URL"
 msgstr "URL PDF"
 
-#: donations/models/main.py:313 donations/views/donations_download.py:106
+#: backend/donations/models/main.py:313
+#: backend/donations/views/donations_download.py:106
 msgid "filename"
 msgstr "nume fișier"
 
-#: donations/models/main.py:314
+#: backend/donations/models/main.py:314
 msgid "has signed"
 msgstr "a semnat"
 
-#: donations/models/main.py:317
+#: backend/donations/models/main.py:317
 msgid "PDF file"
 msgstr "fișier PDF"
 
-#: donations/models/main.py:326
+#: backend/donations/models/main.py:326
 msgid "donor"
 msgstr "donator"
 
-#: donations/models/main.py:327
+#: backend/donations/models/main.py:327
 msgid "donors"
 msgstr "donatori"
 
-#: donations/views/account_management.py:43
+#: backend/donations/views/account_management.py:43
 msgid ""
 "If the email address is valid, you will receive an email with instructions."
 msgstr "Dacă adresa de email este validă, vei primi un email cu instrucțiuni."
 
-#: donations/views/account_management.py:65
+#: backend/donations/views/account_management.py:65
 msgid "Reset redirectioneaza.ro password"
 msgstr "Resetare parolă redirectioneaza.ro"
 
-#: donations/views/account_management.py:223
+#: backend/donations/views/account_management.py:223
 msgid "Welcome to redirectioneaza.ro"
 msgstr "Confirmare cont redirectioneaza.ro"
 
-#: donations/views/donations_download.py:95
+#: backend/donations/views/donations_download.py:95
 msgid "initial"
 msgstr "inițială"
 
-#: donations/views/donations_download.py:99
+#: backend/donations/views/donations_download.py:99
 msgid "full address"
 msgstr "adresă completă"
 
-#: donations/views/donations_download.py:100
+#: backend/donations/views/donations_download.py:100
 msgid "street name"
 msgstr "strada"
 
-#: donations/views/donations_download.py:101
+#: backend/donations/views/donations_download.py:101
 msgid "street number"
 msgstr "număr"
 
-#: donations/views/donations_download.py:102
+#: backend/donations/views/donations_download.py:102
 msgid "building"
 msgstr "bloc"
 
-#: donations/views/donations_download.py:103
+#: backend/donations/views/donations_download.py:103
 msgid "entrance"
 msgstr "scara"
 
-#: donations/views/donations_download.py:104
+#: backend/donations/views/donations_download.py:104
 msgid "floor"
 msgstr "etaj"
 
-#: donations/views/donations_download.py:105
+#: backend/donations/views/donations_download.py:105
 msgid "apartment"
 msgstr "apartament"
 
-#: donations/views/donations_download.py:145
+#: backend/donations/views/donations_download.py:145
 msgid "The address is not available yet. This field will be available soon."
 msgstr ""
 "Adresa nu este încă disponibilă. Acest câmp va fi disponibil în curând."
 
-#: donations/views/donations_download.py:185
+#: backend/donations/views/donations_download.py:185
 msgid "Documents ready for download"
 msgstr "Documentele sunt gata pentru descărcare"
 
-#: donations/views/my_account.py:233
+#: backend/donations/views/my_account.py:239
 msgid "The URL is already used"
 msgstr "URL-ul este deja folosit"
 
-#: donations/views/my_account.py:291
+#: backend/donations/views/my_account.py:297
 msgid "The IBAN number must have 24 characters"
 msgstr "IBAN-ul trebuie să aibă 24 de cifre"
 
-#: donations/views/my_account.py:294
+#: backend/donations/views/my_account.py:300
 msgid "The IBAN number must contain only letters and digits"
 msgstr "IBAN-ul trebuie să conțină doar litere și cifre"
 
-#: donations/views/my_account.py:297
+#: backend/donations/views/my_account.py:303
 msgid "The IBAN number must start with 'RO'"
 msgstr "IBAN-ul trebuie să înceapă cu 'RO'"
 
-#: donations/views/ngo.py:148 donations/views/ngo.py:393
+#: backend/donations/views/ngo.py:148 backend/donations/views/ngo.py:393
 msgid "Formularul tău de redirecționare"
 msgstr "Your redirection form"
 
-#: donations/views/ngo.py:155
+#: backend/donations/views/ngo.py:155
 msgid "Un nou formular de redirecționare"
 msgstr "A new redirection form"
 
-#: importer/admin.py:27
+#: backend/importer/admin.py:28
 msgid "Process the selected import jobs"
 msgstr "Procesează job-urile de import selectate"
 
-#: importer/admin.py:36
+#: backend/importer/admin.py:37
 msgid "The import has been processed."
 msgstr "Importul a fost procesat."
 
-#: importer/admin.py:38
+#: backend/importer/admin.py:39
 msgid "Schedule the transfer of logos to the current storage"
 msgstr "Programează transferul logourilor în stocarea curentă"
 
-#: importer/admin.py:42
+#: backend/importer/admin.py:43
 msgid "The logos have been transferred."
 msgstr "Logourile au fost transferate."
 
-#: importer/admin.py:44
-msgid "Transfer of donor forms to the current storage"
-msgstr "Transferă formularele de donare în stocarea curentă"
+#: backend/importer/admin.py:45
+msgid "Transfer of donor forms to the current storage (dry run)"
+msgstr "Transferă formularele de donare în stocarea curentă (rulare test)"
 
-#: importer/admin.py:48
+#: backend/importer/admin.py:49 backend/importer/admin.py:55
 msgid "The donor forms have been transferred."
 msgstr "Formularele de donare au fost transferate."
 
-#: importer/admin.py:50
+#: backend/importer/admin.py:51
+msgid "Transfer of donor forms to the current storage"
+msgstr "Transferă formularele de donare în stocarea curentă"
+
+#: backend/importer/admin.py:57
 msgid "Schedule the transfer of donor forms to the current storage"
 msgstr "Programează transferul formularelor de donare în stocarea curentă"
 
-#: importer/admin.py:54
+#: backend/importer/admin.py:61
 msgid "The donor forms have been scheduled for transfer."
 msgstr "Transferul formularelor de donare a fost programat."
 
-#: importer/models.py:15
+#: backend/importer/models.py:15
 msgid "Pending"
 msgstr "În așteptare"
 
-#: importer/models.py:16
+#: backend/importer/models.py:16
 msgid "Processing"
 msgstr "Procesare"
 
-#: importer/models.py:22
+#: backend/importer/models.py:22
 msgid "Import type"
 msgstr "Tip import"
 
-#: importer/models.py:27
+#: backend/importer/models.py:27
 msgid "Has header"
 msgstr "Are antet"
 
-#: importer/models.py:30
+#: backend/importer/models.py:30
 msgid "Uploaded at"
 msgstr "Încărcat la"
 
-#: importer/models.py:38
+#: backend/importer/models.py:38
 msgid "Import"
 msgstr "Import"
 
-#: importer/models.py:39
+#: backend/importer/models.py:39
 msgid "Imports"
 msgstr "Importuri"
 
-#: partners/admin.py:43 partners/models.py:23
+#: backend/partners/admin.py:43 backend/partners/models.py:23
 msgid "Partner"
 msgstr "Partener"
 
-#: partners/admin.py:52
+#: backend/partners/admin.py:52
 msgid "Options"
 msgstr "Opțiuni"
 
-#: partners/admin.py:62
+#: backend/partners/admin.py:62
 msgid "Metadata"
 msgstr "Metadate"
 
-#: partners/models.py:10
+#: backend/partners/models.py:10
 msgid "name"
 msgstr "nume"
 
-#: partners/models.py:11
+#: backend/partners/models.py:11
 msgid "subdomain"
 msgstr "subdomeniu"
 
-#: partners/models.py:13
+#: backend/partners/models.py:13
 msgid "has custom header"
 msgstr "are antet personalizat"
 
-#: partners/models.py:14
+#: backend/partners/models.py:14
 msgid "has custom note"
 msgstr "are notă personalizată"
 
-#: partners/models.py:24
+#: backend/partners/models.py:24
 msgid "Partners"
 msgstr "Parteneri"
 
-#: redirectioneaza/common/messaging.py:31
+#: backend/redirectioneaza/common/messaging.py:31
 msgid "Invalid email send method. Must be 'async' or 'sync'."
 msgstr "Metoda de trimitere email invalidă. Trebuie să fie 'async' sau 'sync'."
 
-#: users/admin.py:46
+#: backend/users/admin.py:37
+msgid "Permissions"
+msgstr "Permisiuni"
+
+#: backend/users/admin.py:46
 msgid "Important dates"
 msgstr "Date importante"
 
-#: users/models.py:38
+#: backend/users/models.py:38
 msgid "Superuser must have is_staff=True."
 msgstr "Super-utilizatorul trebuie să aibă is_staff=True."
 
-#: users/models.py:40
+#: backend/users/models.py:40
 msgid "Superuser must have is_superuser=True."
 msgstr "Super-utilizatorul trebuie să aibă is_superuser=True."
 
-#: users/models.py:56
+#: backend/users/models.py:56
 msgid "username"
 msgstr "nume utilizator"
 
-#: users/models.py:59
+#: backend/users/models.py:59
 msgid "We do not use this field"
 msgstr "Nu folosim acest câmp"
 
-#: users/models.py:66
+#: backend/users/models.py:66
 msgid "email address"
 msgstr "adresă de email"
 
-#: users/models.py:80
+#: backend/users/models.py:80
 msgid "validation token"
 msgstr "token de validare"
 
-#: users/models.py:82
+#: backend/users/models.py:82
 msgid "validation token timestamp"
 msgstr "dată token de validare"
 
-#: users/models.py:84
+#: backend/users/models.py:84
 msgid "old password"
 msgstr "parolă veche"
-
-#~ msgid ""
-#~ "Schedule the transfer of Code4Romania donor forms to the current storage"
-#~ msgstr ""
-#~ "Programează transferul formularelor de donare Code4Romania în stocarea "
-#~ "curentă"
-
-#~ msgid "Schedule the repair of addresses for donors"
-#~ msgstr "Programează repararea adreselor pentru donatori"
-
-#~ msgid "The address repair task has been scheduled."
-#~ msgstr "Sarcina de reparare a adreselor a fost programată."
-
-#~ msgid "Authenticity"
-#~ msgstr "Autenticitate"
-
-#~ msgid "Bank"
-#~ msgstr "Detalii bancare"
-
-#~ msgid "URL"
-#~ msgstr "URL"
