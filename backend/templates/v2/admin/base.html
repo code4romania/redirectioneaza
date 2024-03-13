@@ -1,0 +1,90 @@
+{% extends 'admin/base.html' %}
+
+{% block extrastyle %}{{ block.super }}
+<style>
+html[data-theme="light"],
+:root {
+    --primary: #9b8100;
+    --secondary: #c6a601;
+    --accent: #444;
+    --primary-fg: #fff;
+
+    --body-fg: #333;
+    --body-bg: #fff;
+    --body-quiet-color: #666;
+    --body-loud-color: #000;
+
+    --header-color: #DDD;
+    --header-branding-color: var(--accent);
+    --header-bg: var(--secondary);
+    --header-link-color: var(--primary-fg);
+
+    --breadcrumbs-fg: #DDD;
+    --breadcrumbs-link-fg: var(--body-bg);
+    --breadcrumbs-bg: var(--primary);
+
+    --link-fg: #666;
+    --link-hover-color: #111;
+    --link-selected-fg: #111;
+
+    --hairline-color: #e8e8e8;
+    --border-color: #ccc;
+
+    --error-fg: #ba2121;
+
+    --message-success-bg: #dfd;
+    --message-warning-bg: #ffc;
+    --message-error-bg: #ffefef;
+
+    --darkened-bg: #f8f8f8; /* A bit darker than --body-bg */
+    --selected-bg: #e4e4e4; /* E.g. selected table cells */
+    --selected-row: #ffc;
+
+    --button-fg: #fff;
+    --button-bg: var(--primary);
+    --button-hover-bg: #a68b01;
+    --default-button-bg: var(--secondary);
+    --default-button-hover-bg: #a68b01;
+    --close-button-bg: var(--secondary);
+    --close-button-hover-bg: #a68b01;
+    --delete-button-bg: #ba2121;
+    --delete-button-hover-bg: #a41515;
+
+    --object-tools-fg: var(--button-fg);
+    --object-tools-bg: var(--close-button-bg);
+    --object-tools-hover-bg: var(--close-button-hover-bg);
+}
+
+html[data-theme="dark"] {
+    --primary: #5d5126;
+    --primary-fg: #f7f7f7;
+
+    --body-fg: #eeeeee;
+    --body-bg: #121212;
+    --body-quiet-color: #e0e0e0;
+    --body-loud-color: #ffffff;
+
+    --breadcrumbs-link-fg: #e0e0e0;
+    --breadcrumbs-bg: var(--primary);
+
+    --link-fg: #fad281;
+    --link-hover-color: #f7a64a;
+    --link-selected-fg: #c6b36f;
+
+    --hairline-color: #272727;
+    --border-color: #353535;
+
+    --error-fg: #e35f5f;
+    --message-success-bg: #006b1b;
+    --message-warning-bg: #583305;
+    --message-error-bg: #570808;
+
+    --darkened-bg: #212121;
+    --selected-bg: #1b1b1b;
+    --selected-row: #3a2900;
+
+    --close-button-bg: #333333;
+    --close-button-hover-bg: #666666;
+}
+</style>
+{% endblock %}
