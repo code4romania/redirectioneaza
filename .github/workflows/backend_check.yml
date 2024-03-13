@@ -140,3 +140,24 @@ jobs:
         cd ./backend
         python3 manage.py wait_for_db
         pytest -Wd --cov --cov-report=xml --cov-report=term-missing --cov-fail-under=60 -n auto
+
+  codeql_analysis:
+    name: Analyze code using CodeQL
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'python' ]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
