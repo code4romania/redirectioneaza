@@ -6,9 +6,9 @@
 
 
 {% block content %}
-<div class="container">
-    <table class="table">
-        <thead>
+    <div class="container">
+        <table class="table">
+            <thead>
             <tr>
                 <th>#</th>
                 <th>Nume</th>
@@ -17,37 +17,42 @@
                 <th>ONG</th>
                 <th>Verificat</th>
             </tr>
-        </thead>
-        <tbody>
+            </thead>
+            <tbody>
             {% if users %}
                 {% for user in users %}
                     <tr>
                         <td>{{ loop.index }}</td>
+
                         <td>{{ user.first_name + " " + user.last_name }}</td>
+
                         <td>{{ user.email }}</td>
+
                         <td>{{ "{0}/{1}/{2}".format(user.date_joined.day, user.date_joined.month, user.date_joined.year) }}</td>
-                        <td class="{{ 'success' if user.ngo }}">
-                            {% if user.ngo %}
-                                <a href="/{{ user.ngo.slug }}/" target="_blank">da</a>
-                            {% else %}
-                                nu
-                            {% endif %}
-                        </td>
-                        <td class="{{ 'success' if user.is_verified == True }}">
-                            {{ "da" if user.is_verified == True else "nu" }}
-                        </td>
+
+                        {% if user.ngo and user.ngo.slug %}
+                            <td class="success"><a href="/{{ user.ngo.slug }}/" target="_blank">da</a></td>
+                        {% else %}
+                            <td>nu</td>
+                        {% endif %}
+
+                        {% if user.is_verified == True %}
+                            <td class="success">da</td>
+                        {% else %}
+                            <td>nu</td>
+                        {% endif %}
                     </tr>
                 {% endfor %}
             {% else %}
                 <tr>
                     <td colspan="6">
                         <p class="well well-lg text-center">
-                            Din pacate nu avem utilizatori inca.
+                            Din păcate nu avem utilizatori încă.
                         </p>
                     </td>
                 </tr>
             {% endif %}
-        </tbody>
-    </table>
-</div>
+            </tbody>
+        </table>
+    </div>
 {% endblock %}
