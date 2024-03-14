@@ -136,6 +136,7 @@ class DonorAdmin(admin.ModelAdmin):
         "two_years",
         "income_type",
     )
+    date_hierarchy = "date_created"
 
     exclude = ("personal_identifier", "address")
 
