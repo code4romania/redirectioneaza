@@ -33,7 +33,7 @@ def import_donor_forms_task(batch_size: int = 50, run_async: bool = False, dry_r
                 ),
             )
         )
-        .exclude(Q(number_of_donors=0) | Q(number_of_donors__gt=batch_size * 2))
+        .exclude(number_of_donors=0)
     )
 
     logger.info("Found %d NGOs with donors", ngos_by_number_of_donors.count())
