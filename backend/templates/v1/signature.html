@@ -23,7 +23,7 @@
                 </button>
                 </span>
                 <input id="signature-input" type="hidden" name="signature">
-                <button class="btn btn-primary btn-lg" type="submit">
+                <button id="signature-send" class="btn btn-primary btn-lg hidden" disabled="disabled" type="submit">
                     Trimite
                 </button>
             </form>
@@ -33,4 +33,15 @@
 
 {% block scripts %}
     <script type="text/javascript" src="{{ static('js/signature.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $signature_send_btn = $("#signature-send")
+            setTimeout(function() {
+                $signature_send_btn.removeClass("hidden");
+            }, 2000);
+            setTimeout(function() {
+                $signature_send_btn.removeAttr("disabled");
+            }, 3000);
+        });
+    </script>
 {% endblock %}
