@@ -464,11 +464,11 @@ msgstr "IBAN-ul trebuie să înceapă cu 'RO'"
 
 #: backend/donations/views/ngo.py:148 backend/donations/views/ngo.py:393
 msgid "Formularul tău de redirecționare"
-msgstr "Your redirection form"
+msgstr "Formularul tău de redirecționare"
 
 #: backend/donations/views/ngo.py:155
 msgid "Un nou formular de redirecționare"
-msgstr "A new redirection form"
+msgstr "Un nou formular de redirecționare"
 
 #: backend/importer/admin.py:28
 msgid "Process the selected import jobs"
