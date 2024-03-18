@@ -25,12 +25,7 @@ def import_donor_forms_task(batch_size: int = 50, run_async: bool = False, dry_r
         .annotate(
             number_of_donors=Count(
                 "donor",
-                filter=(
-                    ~Q(donor__pdf_url="")
-                    & Q(donor__pdf_file="")
-                    & Q(donor__has_signed=True)
-                    & Q(donor__date_created__gte="2022-12-31")
-                ),
+                filter=(~Q(donor__pdf_url="") & Q(donor__pdf_file="") & Q(donor__date_created__gte="2023-12-31")),
             )
         )
         .exclude(number_of_donors=0)
@@ -42,8 +37,8 @@ def import_donor_forms_task(batch_size: int = 50, run_async: bool = False, dry_r
     processed_form_ids: List[int] = []
     for index, ngo in enumerate(ngos_by_number_of_donors):
         donor_forms_for_ngo: List[int] = (
-            Donor.objects.filter(ngo=ngo, pdf_file="", has_signed=True, date_created__gte="2022-12-31")
-            .exclude(pdf_url="")
+            Donor.objects.exclude(pdf_url="")
+            .filter(ngo=ngo, pdf_file="", date_created__gte="2023-12-31")
             .values_list("pk", flat=True)[: batch_size + 1]
         )
 
