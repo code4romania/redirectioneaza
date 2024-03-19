@@ -1,0 +1,38 @@
+{% extends "email/base_email.html" %}
+
+{% block table_content %}
+
+    <tr>
+        <td class="content-block">
+            Un nou supererou a decis să redirecționeze parte din impozitul pe venit către
+            organizația ta.
+        </td>
+    </tr>
+    <tr>
+        <td class="content-block">
+            Ai la linkul de mai jos formularul completat de el pe care va trebui să îl depui
+            la ANAF. Dacă ai nevoie de ajutor, ne găsești pe facebook pe pagina ONGHub sau
+            pe email la <a href="mailto:redirectioneaza@code4.ro">redirectioneaza@code4.ro</a>.
+        </td>
+    </tr>
+    <tr>
+        <td class="content-block" itemprop="handler" itemscope>
+            <a href="https://redirectioneaza.ro{{ form_url }}" class="btn-primary" itemprop="url">
+                Descarcă formularul completat</a>
+        </td>
+    </tr>
+    <tr>
+        <td class="content-block">
+            Împreună suntem mai buni, mai puternici și mai curajoși. Împreună putem aduce o
+            schimbare în bine în societatea noastră, de aceea avem nevoie de cât mai mulți
+            oameni ca tine. Dacă vrei să susții organizația mai departe, spune și
+            prietenilor tăi să intre pe redirecționează.ro
+        </td>
+    </tr>
+    <tr>
+        <td class="content-block">
+            echipa redirectioneaza.ro
+        </td>
+    </tr>
+
+{% endblock %}
