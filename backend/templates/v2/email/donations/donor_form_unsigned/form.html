@@ -1,0 +1,101 @@
+{% extends "email/base_email.html" %}
+
+{% block table_content %}
+
+    <tr>
+        <td class="content-block">
+            Îți mulțumim că ai ales să îți redirecționezi o parte din impozitul pe venit!
+        </td>
+    </tr>
+    <tr>
+        <td class="content-block" itemprop="handler" itemscope>
+            <a href="https://redirectioneaza.ro{{ form_url }}" class="btn-primary" itemprop="url">
+                Descarcă formularul completat de tine</a>
+        </td>
+    </tr>
+
+    {% if ngo.is_accepting_forms %}
+
+        <tr>
+            <td class="content-block">
+                Mai departe, va trebui să printezi și să semnezi acest formular. Apoi, ai următoarele opțiuni:
+            </td>
+        </tr>
+        <tr>
+            <td class="content-block">
+                <ul>
+                    <li>
+                        Fie îl scanezi și îl trimiți pe e-mail ONG-ului si se ocupa ei de depunerea lui. Adresa de
+                        e-mail a ONG-ului este: {{ ngo.email }};
+                    </li>
+                    <li>
+                        Fie îl trimiți prin curier sau poștă la adresa ONG-ului și se ocupă ei de depunerea lui.
+                        Desigur, poți să înmânezi formularul în persoană ONG-ului, dacă e cazul.
+                    </li>
+
+                </ul>
+            </td>
+        </tr>
+
+    {% else %}
+
+        <tr>
+            <td class="content-block">
+                Mai departe, va trebui să printezi și să semnezi acest formular. Apoi, ai următoarea opțiune:
+            </td>
+        </tr>
+        <ul>
+            <li>
+                Îl trimiți prin curier sau poștă la adresa ONG-ului și se ocupă ei de depunerea lui. Desigur, poți să
+                înmânezi formularul în persoană ONG-ului, dacă e cazul.
+            </li>
+
+        </ul>
+
+    {% endif %}
+
+    <tr>
+        <td class="content-block">
+            <b>Datele organizației:</b>
+        </td>
+    </tr>
+    <tr>
+        <td class="content-block">
+            Nume: {{ ngo.name }}
+        </td>
+    </tr>
+    <tr>
+        <td class="content-block">
+            Adresa: {{ ngo.address }}
+        </td>
+    </tr>
+
+    {% if ngo.email %}
+        <tr>
+            <td class="content-block">
+                Email: {{ ngo.email }}
+            </td>
+        </tr>
+    {% endif %}
+    {% if ngo.tel %}
+        <tr>
+            <td class="content-block">
+                Telefon: {{ ngo.tel }}
+            </td>
+        </tr>
+    {% endif %}
+
+    <tr>
+        <td class="content-block">
+            Dacă vrei să fii un adevărat super-erou civic, descarcă formularul precompletat de pe pagina ONG-ului pe
+            care vrei să îl susții, printează-l în mai multe exemplare și transmite-l colegilor, prietenilor și familiei
+            și încurajează-i să redirecționeze.
+        </td>
+    </tr>
+    <tr>
+        <td class="content-block">
+            echipa redirectioneaza.ro
+        </td>
+    </tr>
+
+{% endblock %}

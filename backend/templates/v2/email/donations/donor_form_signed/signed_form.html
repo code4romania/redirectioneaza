@@ -1,0 +1,37 @@
+{% extends "email/base_email.html" %}
+
+{% block table_content %}
+
+    <tr>
+        <td class="content-block">
+            Îți mulțumim că ai ales să îți redirecționezi o parte din impozitul pe venit!
+        </td>
+    </tr>
+
+    <tr>
+        <td class="content-block">
+            Formularul tau a fost trimis organizației. Îl poți vedea aici:
+        </td>
+    </tr>
+
+    <tr>
+        <td class="content-block" itemprop="handler" itemscope>
+            <a href="https://redirectioneaza.ro{{ form_url }}" class="btn-primary" itemprop="url">
+                Descarcă formularul completat de tine
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <td class="content-block">
+            Împreună suntem mai buni, mai puternici și mai curajoși. Împreună putem aduce o schimbare în bine în
+            societatea noastră, de aceea avem nevoie de cât mai mulți oameni ca tine. Dacă vrei să susții organizația
+            mai departe, spune și prietenilor tăi să intre pe redirecționează.ro
+        </td>
+    </tr>
+    <tr>
+        <td class="content-block">
+            echipa redirectioneaza.ro
+        </td>
+    </tr>
+
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "email/base_email.html" %}
+
+{% block table_content %}
+
+    <tr>
+        <td class="content-block">
+            Salut {{ name }}
+        </td>
+    </tr>
+    <tr>
+        <td class="content-block">
+            Bine ai venit pe platforma <a href="{{ host }}">redirectioneaza.ro</a>.
+        </td>
+    </tr>
+    <tr>
+        <td class="content-block">
+            Pentru a-ți activa contul te rugăm să confirmi adresa de email apăsând butonul de mai jos.
+        </td>
+    </tr>
+    <tr>
+        <td class="content-block" itemprop="handler" itemscope>
+            <a href="{{ url }}" class="btn-primary" itemprop="url">
+                Confirmă adresa de email
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <td class="content-block">
+            echipa redirectioneaza.ro
+        </td>
+    </tr>
+
+{% endblock %}

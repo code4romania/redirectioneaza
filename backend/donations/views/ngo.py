@@ -386,7 +386,6 @@ class TwoPercentHandler(TemplateView):
         request.session["has_cnp"] = bool(donor_dict["cnp"])
         request.session["signature_required"] = signature_required
 
-        # TODO: Send the email
         if not signature_required:
             # send and email to the donor with a link to the PDF file
             send_email(
