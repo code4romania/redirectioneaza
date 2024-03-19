@@ -1,0 +1,40 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+
+    {% include "email/style_header.html" %}
+</head>
+
+<body>
+
+
+<table class="body-wrap">
+    <tr>
+        <td class="container">
+            <div class="content">
+                <table class="main" itemprop="action" itemscope>
+                    <tr>
+                        <td class="content-wrap">
+                            <meta itemprop="name" content="Confirm Email">
+                            <table>
+
+                                {% block table_content %}{% endblock %}
+
+                                {% block footer %}
+                                    {% include "email/footer.html" %}
+                                {% endblock %}
+
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>
+
+
+</body>
+
+</html>
