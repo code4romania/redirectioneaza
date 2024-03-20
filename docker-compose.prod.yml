@@ -1,13 +1,11 @@
-version: '3.9'
-name: redirect_multi
+name: redirect_prod
 
 services:
 
   webapp:
     extends:
-      file: dkcp.base.yml
+      file: docker-compose.base.yml
       service: redirect_base
-    container_name: redirect_prod
     build:
       context: .
       dockerfile: ./docker/dockerfiles/Dockerfile
@@ -23,9 +21,8 @@ services:
 
   db:
     extends:
-      file: dkcp.base.yml
+      file: docker-compose.base.yml
       service: db_base_psql
-    container_name: redirect_psql
 
 volumes:
   redirect_psql:

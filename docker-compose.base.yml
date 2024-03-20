@@ -1,9 +1,8 @@
-version: '3.9'
+name: redirect_base
 
 services:
 
   redirect_base:
-    container_name: redirect
     env_file:
       - .env
     environment:

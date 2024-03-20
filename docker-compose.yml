@@ -1,4 +1,3 @@
-version: '3.9'
 name: redirect_dev
 
 services:
@@ -7,7 +6,6 @@ services:
     profiles: [ "sqlite3" ]
     extends:
       service: redirect_dev_base
-    container_name: redirect_dev
     volumes:
       - ./backend/.db_sqlite:/var/www/redirect/backend/.db_sqlite
     environment:
@@ -17,7 +15,6 @@ services:
     profiles: [ "mysql" ]
     extends:
       service: redirect_dev_base
-    container_name: redirect_dev
     environment:
       - "DATABASE_ENGINE=mysql"
       - "DATABASE_HOST=redirect_mysql"
@@ -29,7 +26,6 @@ services:
     profiles: [ "psql" ]
     extends:
       service: redirect_dev_base
-    container_name: redirect_dev
     environment:
       - "DATABASE_ENGINE=postgres"
       - "DATABASE_HOST=redirect_psql"
@@ -40,9 +36,8 @@ services:
   redirect_dev_base:
     profiles: [ "_base" ]
     extends:
-      file: dkcp.base.yml
+      file: docker-compose.base.yml
       service: redirect_base
-    container_name: redirect_webapp_dev_base
     build:
       context: .
       dockerfile: ./docker/dockerfiles/Dockerfile.dev
@@ -58,18 +53,16 @@ services:
   db_mysql_dev:
     profiles: [ "mysql" ]
     extends:
-      file: dkcp.base.yml
+      file: docker-compose.base.yml
       service: db_base_mysql
-    container_name: redirect_mysql
     volumes:
       - ./docker/init-mysql:/docker-entrypoint-initdb.d
 
   db_psql_dev:
     profiles: [ "psql" ]
     extends:
-      file: dkcp.base.yml
+      file: docker-compose.base.yml
       service: db_base_psql
-    container_name: redirect_psql
     volumes:
       - ./docker/init-psql:/docker-entrypoint-initdb.d
 
