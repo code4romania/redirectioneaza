@@ -6,6 +6,7 @@ services:
     extends:
       file: docker-compose.base.yml
       service: redirect_base
+    container_name: redirect_prod
     build:
       context: .
       dockerfile: ./docker/dockerfiles/Dockerfile
@@ -23,6 +24,7 @@ services:
     extends:
       file: docker-compose.base.yml
       service: db_base_psql
+    container_name: redirect_psql
 
 volumes:
   redirect_psql:

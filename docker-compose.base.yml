@@ -2,18 +2,41 @@ name: redirect_base
 
 services:
 
+  redirect_dev_base:
+    extends:
+      file: docker-compose.base.yml
+      service: redirect_base
+    build:
+      context: .
+      dockerfile: ./docker/dockerfiles/Dockerfile.dev
+    volumes:
+      - ./backend:/var/www/redirect/backend
+    environment:
+      - "ENVIRONMENT=development"
+    env_file:
+      - .env
+    ports:
+      - "${WEBAPP_PORT:-8080}:8000"
+
+
   redirect_base:
+    container_name: redirect_dev
     env_file:
       - .env
     environment:
       - "PYTHONUNBUFFERED=1"
     restart: on-failure
 
-  db_base_mysql:
-    image: mysql:8.2.0
-    restart: always
+  db_base:
+    container_name: redirect_db_dev
     env_file:
       - .env
+    restart: always
+
+  db_base_mysql:
+    extends:
+      service: db_base
+    image: mysql:8.3
     volumes:
       - redirect_mysql:/var/lib/mysql
     environment:
@@ -25,10 +48,9 @@ services:
       - "${DATABASE_PORT:-3306}:3306"
 
   db_base_psql:
-    image: postgres:16.1
-    restart: always
-    env_file:
-      - .env
+    extends:
+      service: db_base
+    image: postgres:16.2
     volumes:
       - redirect_psql:/var/lib/postgresql/data
     environment:

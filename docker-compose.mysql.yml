@@ -1,0 +1,24 @@
+name: redirect_dev
+
+services:
+
+  webapp_mysql:
+    extends:
+      file: docker-compose.base.yml
+      service: redirect_dev_base
+    environment:
+      - "DATABASE_ENGINE=mysql"
+      - "DATABASE_HOST=redirect_mysql"
+      - "DATABASE_PORT=3306"
+    depends_on:
+      - db_mysql_dev
+
+  db_mysql_dev:
+    extends:
+      file: docker-compose.base.yml
+      service: db_base_mysql
+    volumes:
+      - ./docker/init-mysql:/docker-entrypoint-initdb.d
+
+volumes:
+  redirect_mysql:

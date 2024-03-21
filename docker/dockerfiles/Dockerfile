@@ -1,4 +1,7 @@
-FROM node:18.19.1-bookworm as frontend
+ARG NODE_VERSION=20.11.1
+ARG PYTHON_VERSION=3.11.8
+
+FROM node:${NODE_VERSION}-bookworm as frontend
 
 # set up a user and group for bower since it's not working as root
 ARG USER=builduser
@@ -20,7 +23,7 @@ COPY ./backend/package.json ./backend/package-lock.json ./backend/bower.json ./b
 RUN npm cache clean --force && npm ci && bower install
 
 
-FROM python:3.11.8-bookworm as backend
+FROM python:${PYTHON_VERSION}-bookworm as backend
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -41,7 +44,8 @@ COPY ./backend/requirements.txt .
 RUN python3 -m pip install --upgrade pip setuptools && \
     python3 -m pip install -r ./requirements.txt
 
-FROM python:3.11.7-slim-bookworm
+
+FROM python:${PYTHON_VERSION}-slim-bookworm
 
 ENV PYTHONUNBUFFERED=1
 

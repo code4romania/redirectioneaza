@@ -3,69 +3,10 @@ name: redirect_dev
 services:
 
   webapp_sqlite:
-    profiles: [ "sqlite3" ]
     extends:
+      file: docker-compose.base.yml
       service: redirect_dev_base
     volumes:
       - ./backend/.db_sqlite:/var/www/redirect/backend/.db_sqlite
     environment:
       - "DATABASE_ENGINE=sqlite3"
-
-  webapp_mysql:
-    profiles: [ "mysql" ]
-    extends:
-      service: redirect_dev_base
-    environment:
-      - "DATABASE_ENGINE=mysql"
-      - "DATABASE_HOST=redirect_mysql"
-      - "DATABASE_PORT=3306"
-    depends_on:
-      - db_mysql_dev
-
-  webapp_psql:
-    profiles: [ "psql" ]
-    extends:
-      service: redirect_dev_base
-    environment:
-      - "DATABASE_ENGINE=postgres"
-      - "DATABASE_HOST=redirect_psql"
-      - "DATABASE_PORT=5432"
-    depends_on:
-      - db_psql_dev
-
-  redirect_dev_base:
-    profiles: [ "_base" ]
-    extends:
-      file: docker-compose.base.yml
-      service: redirect_base
-    build:
-      context: .
-      dockerfile: ./docker/dockerfiles/Dockerfile.dev
-    volumes:
-      - ./backend:/var/www/redirect/backend
-    environment:
-      - "ENVIRONMENT=development"
-    env_file:
-      - .env
-    ports:
-      - "${WEBAPP_PORT:-8080}:8000"
-
-  db_mysql_dev:
-    profiles: [ "mysql" ]
-    extends:
-      file: docker-compose.base.yml
-      service: db_base_mysql
-    volumes:
-      - ./docker/init-mysql:/docker-entrypoint-initdb.d
-
-  db_psql_dev:
-    profiles: [ "psql" ]
-    extends:
-      file: docker-compose.base.yml
-      service: db_base_psql
-    volumes:
-      - ./docker/init-psql:/docker-entrypoint-initdb.d
-
-volumes:
-  redirect_mysql:
-  redirect_psql:

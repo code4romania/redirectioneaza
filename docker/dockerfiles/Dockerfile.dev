@@ -1,4 +1,6 @@
-FROM node:18.19.1-bookworm-slim
+ARG NODE_VERSION=20.11.1
+
+FROM node:${NODE_VERSION}-bookworm-slim
 
 ENV PYTHONUNBUFFERED=1
 
