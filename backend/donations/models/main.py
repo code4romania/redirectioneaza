@@ -1,5 +1,6 @@
 import hashlib
 import json
+import logging
 from datetime import datetime
 from functools import partial
 from typing import Dict, List, Tuple
@@ -17,6 +18,8 @@ from django.utils.translation import gettext_lazy as _
 ALL_NGOS_CACHE_KEY = "ALL_NGOS"
 ALL_NGO_IDS_CACHE_KEY = "ALL_NGO_IDS"
 FRONTPAGE_NGOS_KEY = "FRONTPAGE_NGOS"
+
+logger = logging.getLogger(__name__)
 
 
 def select_public_storage():
@@ -245,6 +248,28 @@ class Ngo(models.Model):
             return f"redirectioneaza.ro/{self.slug}"
         else:
             return ""
+
+    @staticmethod
+    def delete_prefilled_form(ngo_id):
+        try:
+            ngo = Ngo.objects.get(id=ngo_id)
+        except Ngo.DoesNotExist:
+            logging.info("NGO id %d does not exist for prefilled form deletion", ngo_id)
+            return
+
+        changed = False
+
+        if ngo.form_url:
+            ngo.form_url = ""
+            changed = True
+
+        if ngo.prefilled_form:
+            ngo.prefilled_form.delete(save=False)
+            changed = True
+
+        if changed:
+            ngo.save()
+            logging.info("Prefilled form deleted for NGO id %d", ngo_id)
 
 
 class Donor(models.Model):

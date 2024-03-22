@@ -14,6 +14,7 @@ from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
+from django_q.tasks import async_task
 
 from redirectioneaza.common.cache import cache_decorator
 from users.models import User
@@ -155,6 +156,10 @@ class MyAccountHandler(AccountHandler):
         return render(request, self.template_name, context)
 
 
+def delete_prefilled_form(ngo_id):
+    return Ngo.delete_prefilled_form(ngo_id)
+
+
 class NgoDetailsHandler(AccountHandler):
     template_name = "ngo/ngo-details.html"
 
@@ -262,6 +267,9 @@ class NgoDetailsHandler(AccountHandler):
                 return redirect(reverse("admin-ong", kwargs={"ngo_url": user.ngo.slug}))
 
         ngo.save()
+
+        # Delete the NGO's old prefilled form
+        async_task("donations.views.my_account.delete_prefilled_form", ngo.id)
 
         if is_new_ngo:
             user.ngo = ngo
