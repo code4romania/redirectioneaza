@@ -8,7 +8,7 @@ services:
       service: redirect_dev_base
     environment:
       - "DATABASE_ENGINE=postgres"
-      - "DATABASE_HOST=redirect_psql"
+      - "DATABASE_HOST=redirect_db_dev"
       - "DATABASE_PORT=5432"
     depends_on:
       - db_psql_dev
