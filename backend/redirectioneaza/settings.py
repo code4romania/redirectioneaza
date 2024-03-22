@@ -606,3 +606,6 @@ FERNET_OBJECT = Fernet(urlsafe_b64encode(ENCRYPT_KEY.encode("utf-8")))
 
 
 GOOGLE_ANALYTICS_ID = env.str("GOOGLE_ANALYTICS_ID")
+
+# Feature flags
+ENABLE_FLAG_CONTACT = env.bool("ENABLE_FLAG_CONTACT", False)

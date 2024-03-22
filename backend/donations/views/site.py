@@ -106,6 +106,14 @@ class NoteHandler(BaseHandler):
         return render(request, self.template_name, context)
 
 
+class ContactHandler(BaseHandler):
+    template_name = "contact.html"
+
+    def get(self, request, *args, **kwargs):
+        context = {"title": "FAQ"}
+        return render(request, self.template_name, context)
+
+
 class PolicyHandler(BaseHandler):
     template_name = "policy.html"
 
