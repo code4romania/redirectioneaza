@@ -8,7 +8,7 @@ services:
       service: redirect_dev_base
     environment:
       - "DATABASE_ENGINE=mysql"
-      - "DATABASE_HOST=redirect_mysql"
+      - "DATABASE_HOST=redirect_db_dev"
       - "DATABASE_PORT=3306"
     depends_on:
       - db_mysql_dev
