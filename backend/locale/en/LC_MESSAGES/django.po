@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-12 12:57+0200\n"
+"POT-Creation-Date: 2024-03-25 11:46+0200\n"
 "PO-Revision-Date: 2024-02-28 15:45+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -19,626 +19,647 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 5.3.1\n"
 
-#: backend/donations/admin.py:29
+#: donations/admin.py:29
 msgid "User Link"
 msgstr ""
 
-#: backend/donations/admin.py:33
+#: donations/admin.py:33
 #, fuzzy
 #| msgid "other emails"
 msgid "User Details"
 msgstr "other emails"
 
-#: backend/donations/admin.py:37
+#: donations/admin.py:37
 msgid "User Permissions"
 msgstr ""
 
-#: backend/donations/admin.py:45
+#: donations/admin.py:45
 msgid "User"
 msgstr ""
 
-#: backend/donations/admin.py:52
+#: donations/admin.py:52
 msgid "Has owner"
 msgstr "Has owner"
 
-#: backend/donations/admin.py:56
+#: donations/admin.py:56
 msgid "Yes"
 msgstr "Yes"
 
-#: backend/donations/admin.py:56
+#: donations/admin.py:56
 msgid "No"
 msgstr "No"
 
-#: backend/donations/admin.py:89 backend/donations/admin.py:118
+#: donations/admin.py:89 donations/admin.py:118
 #, fuzzy
 #| msgid "Options"
 msgid "Donations"
 msgstr "Options"
 
-#: backend/donations/admin.py:93 backend/donations/admin.py:147
-#: backend/donations/admin.py:183 backend/donations/models/jobs.py:28
-#: backend/donations/models/main.py:233 backend/donations/models/main.py:256
-#: backend/partners/admin.py:11 backend/users/models.py:70
+#: donations/admin.py:93 donations/admin.py:148 donations/admin.py:184
+#: donations/models/jobs.py:28 donations/models/main.py:233
+#: donations/models/main.py:256 partners/admin.py:11 users/models.py:70
 msgid "NGO"
 msgstr "NGO"
 
-#: backend/donations/admin.py:97
+#: donations/admin.py:97
 msgid "Activity"
 msgstr ""
 
-#: backend/donations/admin.py:101
+#: donations/admin.py:101
 msgid "Logo"
 msgstr "Logo"
 
-#: backend/donations/admin.py:105
+#: donations/admin.py:105
 msgid "Contact"
 msgstr "Contact"
 
-#: backend/donations/admin.py:109
+#: donations/admin.py:109
 msgid "Details"
 msgstr ""
 
-#: backend/donations/admin.py:113 backend/donations/admin.py:163
-#: backend/donations/admin.py:195
+#: donations/admin.py:113 donations/admin.py:164 donations/admin.py:196
 msgid "Date"
 msgstr "Date"
 
-#: backend/donations/admin.py:120
+#: donations/admin.py:120
 msgid "Open the NGO donor list"
 msgstr ""
 
-#: backend/donations/admin.py:151
+#: donations/admin.py:152
 msgid "Identity"
 msgstr "Identity"
 
-#: backend/donations/admin.py:155
+#: donations/admin.py:156
 msgid "Info"
 msgstr "Info"
 
-#: backend/donations/admin.py:159 backend/donations/admin.py:191
-#: backend/importer/models.py:28
+#: donations/admin.py:160 donations/admin.py:192 importer/models.py:28
 msgid "File"
 msgstr "File"
 
-#: backend/donations/admin.py:187 backend/importer/models.py:24
+#: donations/admin.py:188 importer/models.py:24
 msgid "Status"
 msgstr "Status"
 
-#: backend/donations/forms/account.py:18 backend/donations/forms/account.py:56
-#: backend/donations/forms/account.py:69
+#: donations/forms/account.py:18 donations/forms/account.py:56
+#: donations/forms/account.py:69
 msgid "Email is required"
 msgstr "Email is required"
 
-#: backend/donations/forms/account.py:24 backend/donations/forms/common.py:31
+#: donations/forms/account.py:24 donations/forms/common.py:31
 msgid "Password is required"
 msgstr "Password is required"
 
-#: backend/donations/forms/account.py:44
+#: donations/forms/account.py:44
 msgid "First name is required"
 msgstr "First name is required"
 
-#: backend/donations/forms/account.py:50
+#: donations/forms/account.py:50
 msgid "Last name is required"
 msgstr "Last name is required"
 
-#: backend/donations/forms/common.py:39
+#: donations/forms/common.py:39
 msgid "Passwords do not match"
 msgstr "Passwords do not match"
 
-#: backend/donations/forms/donation.py:9
+#: donations/forms/donation.py:9
 msgid "Street"
 msgstr "Street"
 
-#: backend/donations/forms/donation.py:10
+#: donations/forms/donation.py:10
 msgid "Number"
 msgstr "Number"
 
-#: backend/donations/forms/donation.py:11
+#: donations/forms/donation.py:11
 msgid "Building"
 msgstr "Building"
 
-#: backend/donations/forms/donation.py:12
+#: donations/forms/donation.py:12
 msgid "Entrance"
 msgstr "Entrance"
 
-#: backend/donations/forms/donation.py:13
+#: donations/forms/donation.py:13
 msgid "Floor"
 msgstr "Floor"
 
-#: backend/donations/forms/donation.py:14
+#: donations/forms/donation.py:14
 msgid "Apartment"
 msgstr "Apartment"
 
-#: backend/donations/forms/donation.py:15
+#: donations/forms/donation.py:15
 msgid "Terms"
 msgstr "Terms"
 
-#: backend/donations/models/jobs.py:18
+#: donations/models/jobs.py:18
 msgid "New"
 msgstr "New"
 
-#: backend/donations/models/jobs.py:19 backend/importer/models.py:18
+#: donations/models/jobs.py:19 importer/models.py:18
 msgid "Error"
 msgstr "Error"
 
-#: backend/donations/models/jobs.py:20 backend/importer/models.py:17
+#: donations/models/jobs.py:20 importer/models.py:17
 msgid "Done"
 msgstr "Done"
 
-#: backend/donations/models/jobs.py:35
+#: donations/models/jobs.py:35
 msgid "owner"
 msgstr "owner"
 
-#: backend/donations/models/jobs.py:41
+#: donations/models/jobs.py:41
 msgid "status"
 msgstr "status"
 
-#: backend/donations/models/jobs.py:50
+#: donations/models/jobs.py:50
 msgid "ZIP"
 msgstr "ZIP"
 
-#: backend/donations/models/jobs.py:52 backend/donations/models/main.py:217
-#: backend/donations/models/main.py:323 backend/partners/models.py:16
-#: backend/users/models.py:86
+#: donations/models/jobs.py:52 donations/models/main.py:217
+#: donations/models/main.py:323 partners/models.py:49 users/models.py:86
 msgid "date created"
 msgstr "date created"
 
-#: backend/donations/models/jobs.py:53
+#: donations/models/jobs.py:53
 msgid "date finished"
 msgstr "date finished"
 
-#: backend/donations/models/jobs.py:65
+#: donations/models/jobs.py:65
 msgid "job"
 msgstr "job"
 
-#: backend/donations/models/jobs.py:66
+#: donations/models/jobs.py:66
 msgid "jobs"
 msgstr "jobs"
 
-#: backend/donations/models/main.py:66
+#: donations/models/main.py:66
 #, python-format
 msgid ""
 "%(value)s is not a valid identifier. The identifier must look like %(sample)s"
 msgstr ""
 "%(value)s is not a valid identifier. The identifier must look like %(sample)s"
 
-#: backend/donations/models/main.py:82
+#: donations/models/main.py:82
 #, fuzzy
 #| msgid "The IBAN number must contain only letters and digits"
 msgid "The ID number must contain only digits"
 msgstr "The IBAN number must contain only letters and digits"
 
-#: backend/donations/models/main.py:85
+#: donations/models/main.py:85
 #, fuzzy
 #| msgid "The ID number must be 8 digits long"
 msgid "The ID number must be between 2 and 10 digits long"
 msgstr "The ID number must be 8 digits long"
 
-#: backend/donations/models/main.py:104
+#: donations/models/main.py:104
 #, fuzzy
 #| msgid "The ID number must be 8 digits long"
 msgid "The ID number is not valid"
 msgstr "The ID number must be 8 digits long"
 
-#: backend/donations/models/main.py:116
+#: donations/models/main.py:116
 msgid "slug"
 msgstr "slug"
 
-#: backend/donations/models/main.py:125
+#: donations/models/main.py:125
 msgid "Name"
 msgstr "Name"
 
-#: backend/donations/models/main.py:126
+#: donations/models/main.py:126
 msgid "description"
 msgstr "description"
 
-#: backend/donations/models/main.py:129
+#: donations/models/main.py:129
 msgid "logo url"
 msgstr "logo url"
 
-#: backend/donations/models/main.py:131
+#: donations/models/main.py:131
 msgid "logo"
 msgstr "logo"
 
-#: backend/donations/models/main.py:138
+#: donations/models/main.py:138
 msgid "image url"
 msgstr "image url"
 
-#: backend/donations/models/main.py:140
+#: donations/models/main.py:140
 msgid "image"
 msgstr "image"
 
-#: backend/donations/models/main.py:148
+#: donations/models/main.py:148
 msgid "bank account"
 msgstr "bank account"
 
-#: backend/donations/models/main.py:152
+#: donations/models/main.py:152
 msgid "registration number"
 msgstr "registration number"
 
-#: backend/donations/models/main.py:161 backend/donations/models/main.py:280
+#: donations/models/main.py:161 donations/models/main.py:280
 msgid "address"
 msgstr "address"
 
-#: backend/donations/models/main.py:163 backend/donations/models/main.py:273
-#: backend/donations/views/donations_download.py:97
+#: donations/models/main.py:163 donations/models/main.py:273
+#: donations/views/donations_download.py:97
 msgid "county"
 msgstr "county"
 
-#: backend/donations/models/main.py:171
+#: donations/models/main.py:171
 msgid "active region"
 msgstr "active region"
 
-#: backend/donations/models/main.py:180 backend/donations/models/main.py:283
+#: donations/models/main.py:180 donations/models/main.py:283
 msgid "telephone"
 msgstr "telephone"
 
-#: backend/donations/models/main.py:182 backend/donations/models/main.py:284
+#: donations/models/main.py:182 donations/models/main.py:284
 msgid "email"
 msgstr "email"
 
-#: backend/donations/models/main.py:183
+#: donations/models/main.py:183
 msgid "website"
 msgstr "website"
 
-#: backend/donations/models/main.py:185
+#: donations/models/main.py:185
 msgid "other emails"
 msgstr "other emails"
 
-#: backend/donations/models/main.py:188 backend/users/models.py:78
+#: donations/models/main.py:188 users/models.py:78
 msgid "is verified"
 msgstr "is verified"
 
-#: backend/donations/models/main.py:192
+#: donations/models/main.py:192
 msgid "has special status"
 msgstr "has special status"
 
-#: backend/donations/models/main.py:196
+#: donations/models/main.py:196
 msgid "is accepting forms"
 msgstr "is accepting forms"
 
-#: backend/donations/models/main.py:199 backend/partners/models.py:12
+#: donations/models/main.py:199 partners/models.py:33
 msgid "is active"
 msgstr "is active"
 
-#: backend/donations/models/main.py:203
+#: donations/models/main.py:203
 msgid "form url"
 msgstr "form url"
 
-#: backend/donations/models/main.py:210
+#: donations/models/main.py:210
 msgid "form with prefilled ngo data"
 msgstr "form with prefilled ngo data"
 
-#: backend/donations/models/main.py:218 backend/partners/models.py:17
-#: backend/users/models.py:87
+#: donations/models/main.py:218 partners/models.py:50 users/models.py:87
 msgid "date updated"
 msgstr "date updated"
 
-#: backend/donations/models/main.py:234 backend/partners/admin.py:12
-#: backend/partners/models.py:15
+#: donations/models/main.py:234 partners/admin.py:12 partners/models.py:47
 msgid "NGOs"
 msgstr "NGOs"
 
-#: backend/donations/models/main.py:252
+#: donations/models/main.py:252
 msgid "wage"
 msgstr "wage"
 
-#: backend/donations/models/main.py:253
+#: donations/models/main.py:253
 msgid "pension"
 msgstr "pension"
 
-#: backend/donations/models/main.py:258
-#: backend/donations/views/donations_download.py:94
+#: donations/models/main.py:258 donations/views/donations_download.py:94
 msgid "first name"
 msgstr "first name"
 
-#: backend/donations/models/main.py:259
-#: backend/donations/views/donations_download.py:93
+#: donations/models/main.py:259 donations/views/donations_download.py:93
 msgid "last name"
 msgstr "last name"
 
-#: backend/donations/models/main.py:260
+#: donations/models/main.py:260
 msgid "initials"
 msgstr "initials"
 
-#: backend/donations/models/main.py:262
-#: backend/donations/views/donations_download.py:96
+#: donations/models/main.py:262 donations/views/donations_download.py:96
 msgid "CNP"
 msgstr "CNP"
 
-#: backend/donations/models/main.py:265
-#: backend/donations/views/donations_download.py:98
+#: donations/models/main.py:265 donations/views/donations_download.py:98
 msgid "city"
 msgstr "city"
 
-#: backend/donations/models/main.py:288
+#: donations/models/main.py:288
 msgid "anonymous"
 msgstr "anonymous"
 
-#: backend/donations/models/main.py:291
+#: donations/models/main.py:291
 msgid "If the user would like the ngo to see the donation"
 msgstr "If the user would like the ngo to see the donation"
 
-#: backend/donations/models/main.py:296
+#: donations/models/main.py:296
 msgid "income type"
 msgstr "income type"
 
-#: backend/donations/models/main.py:305
+#: donations/models/main.py:305
 msgid "two years"
 msgstr "two years"
 
-#: backend/donations/models/main.py:307
+#: donations/models/main.py:307
 msgid "If the user wants to donate for 2 years"
 msgstr "If the user wants to donate for 2 years"
 
-#: backend/donations/models/main.py:310
+#: donations/models/main.py:310
 msgid "Geo IP"
 msgstr "Geo IP"
 
-#: backend/donations/models/main.py:312
+#: donations/models/main.py:312
 msgid "PDF URL"
 msgstr "PDF URL"
 
-#: backend/donations/models/main.py:313
-#: backend/donations/views/donations_download.py:106
+#: donations/models/main.py:313 donations/views/donations_download.py:106
 msgid "filename"
 msgstr "filename"
 
-#: backend/donations/models/main.py:314
+#: donations/models/main.py:314
 msgid "has signed"
 msgstr "has signed"
 
-#: backend/donations/models/main.py:317
+#: donations/models/main.py:317
 msgid "PDF file"
 msgstr "PDF file"
 
-#: backend/donations/models/main.py:326
+#: donations/models/main.py:326
 msgid "donor"
 msgstr "donor"
 
-#: backend/donations/models/main.py:327
+#: donations/models/main.py:327
 msgid "donors"
 msgstr "donors"
 
-#: backend/donations/views/account_management.py:43
+#: donations/views/account_management.py:43
 msgid ""
 "If the email address is valid, you will receive an email with instructions."
 msgstr ""
 "If the email address is valid, you will receive an email with instructions."
 
-#: backend/donations/views/account_management.py:65
+#: donations/views/account_management.py:65
 msgid "Reset redirectioneaza.ro password"
 msgstr "Reset site password"
 
-#: backend/donations/views/account_management.py:223
+#: donations/views/account_management.py:223
 msgid "Welcome to redirectioneaza.ro"
 msgstr "Confirm redirectioneaza.ro account"
 
-#: backend/donations/views/donations_download.py:95
+#: donations/views/donations_download.py:95
 #, fuzzy
 #| msgid "initials"
 msgid "initial"
 msgstr "initials"
 
-#: backend/donations/views/donations_download.py:99
+#: donations/views/donations_download.py:99
 #, fuzzy
 #| msgid "address"
 msgid "full address"
 msgstr "address"
 
-#: backend/donations/views/donations_download.py:100
+#: donations/views/donations_download.py:100
 #, fuzzy
 #| msgid "last name"
 msgid "street name"
 msgstr "last name"
 
-#: backend/donations/views/donations_download.py:101
+#: donations/views/donations_download.py:101
 #, fuzzy
 #| msgid "registration number"
 msgid "street number"
 msgstr "registration number"
 
-#: backend/donations/views/donations_download.py:102
+#: donations/views/donations_download.py:102
 #, fuzzy
 #| msgid "Building"
 msgid "building"
 msgstr "Building"
 
-#: backend/donations/views/donations_download.py:103
+#: donations/views/donations_download.py:103
 #, fuzzy
 #| msgid "Entrance"
 msgid "entrance"
 msgstr "Entrance"
 
-#: backend/donations/views/donations_download.py:104
+#: donations/views/donations_download.py:104
 #, fuzzy
 #| msgid "Floor"
 msgid "floor"
 msgstr "Floor"
 
-#: backend/donations/views/donations_download.py:105
+#: donations/views/donations_download.py:105
 #, fuzzy
 #| msgid "Apartment"
 msgid "apartment"
 msgstr "Apartment"
 
-#: backend/donations/views/donations_download.py:145
+#: donations/views/donations_download.py:145
 msgid "The address is not available yet. This field will be available soon."
 msgstr ""
 
-#: backend/donations/views/donations_download.py:185
+#: donations/views/donations_download.py:185
 msgid "Documents ready for download"
 msgstr "Documents ready for download"
 
-#: backend/donations/views/my_account.py:239
+#: donations/views/my_account.py:239
 msgid "The URL is already used"
 msgstr "The URL is already used"
 
-#: backend/donations/views/my_account.py:297
+#: donations/views/my_account.py:297
 msgid "The IBAN number must have 24 characters"
 msgstr "The IBAN number must have 24 characters"
 
-#: backend/donations/views/my_account.py:300
+#: donations/views/my_account.py:300
 msgid "The IBAN number must contain only letters and digits"
 msgstr "The IBAN number must contain only letters and digits"
 
-#: backend/donations/views/my_account.py:303
+#: donations/views/my_account.py:303
 msgid "The IBAN number must start with 'RO'"
 msgstr "The IBAN number must start with 'RO'"
 
-#: backend/donations/views/ngo.py:148 backend/donations/views/ngo.py:393
+#: donations/views/ngo.py:148 donations/views/ngo.py:393
 msgid "Formularul tău de redirecționare"
 msgstr "Formularul tău de redirecționare"
 
-#: backend/donations/views/ngo.py:155
+#: donations/views/ngo.py:155
 msgid "Un nou formular de redirecționare"
 msgstr "Un nou formular de redirecționare"
 
-#: backend/importer/admin.py:28
+#: importer/admin.py:28
 msgid "Process the selected import jobs"
 msgstr "Process the selected import jobs"
 
-#: backend/importer/admin.py:37
+#: importer/admin.py:37
 msgid "The import has been processed."
 msgstr "The import has been processed."
 
-#: backend/importer/admin.py:39
+#: importer/admin.py:39
 msgid "Schedule the transfer of logos to the current storage"
 msgstr "Schedule the transfer of logos to the current storage"
 
-#: backend/importer/admin.py:43
+#: importer/admin.py:43
 msgid "The logos have been transferred."
 msgstr "The logos have been transferred."
 
-#: backend/importer/admin.py:45
+#: importer/admin.py:45
 #, fuzzy
 #| msgid "Schedule the transfer of donor forms to the current storage"
 msgid "Transfer of donor forms to the current storage (dry run)"
 msgstr "Schedule the transfer of donor forms to the current storage"
 
-#: backend/importer/admin.py:49 backend/importer/admin.py:55
+#: importer/admin.py:49 importer/admin.py:55
 msgid "The donor forms have been transferred."
 msgstr "The donor forms have been transferred."
 
-#: backend/importer/admin.py:51
+#: importer/admin.py:51
 #, fuzzy
 #| msgid "Schedule the transfer of donor forms to the current storage"
 msgid "Transfer of donor forms to the current storage"
 msgstr "Schedule the transfer of donor forms to the current storage"
 
-#: backend/importer/admin.py:57
+#: importer/admin.py:57
 msgid "Schedule the transfer of donor forms to the current storage"
 msgstr "Schedule the transfer of donor forms to the current storage"
 
-#: backend/importer/admin.py:61
+#: importer/admin.py:61
 #, fuzzy
 #| msgid "The donor forms have been transferred."
 msgid "The donor forms have been scheduled for transfer."
 msgstr "The donor forms have been transferred."
 
-#: backend/importer/models.py:15
+#: importer/models.py:15
 msgid "Pending"
 msgstr "Pending"
 
-#: backend/importer/models.py:16
+#: importer/models.py:16
 msgid "Processing"
 msgstr "Processing"
 
-#: backend/importer/models.py:22
+#: importer/models.py:22
 msgid "Import type"
 msgstr "Import type"
 
-#: backend/importer/models.py:27
+#: importer/models.py:27
 msgid "Has header"
 msgstr "Has header"
 
-#: backend/importer/models.py:30
+#: importer/models.py:30
 msgid "Uploaded at"
 msgstr "Uploaded at"
 
-#: backend/importer/models.py:38
+#: importer/models.py:38
 msgid "Import"
 msgstr "Import"
 
-#: backend/importer/models.py:39
+#: importer/models.py:39
 msgid "Imports"
 msgstr "Imports"
 
-#: backend/partners/admin.py:43 backend/partners/models.py:23
+#: partners/admin.py:43 partners/models.py:56
 msgid "Partner"
 msgstr "Partner"
 
-#: backend/partners/admin.py:52
+#: partners/admin.py:52
 msgid "Options"
 msgstr "Options"
 
-#: backend/partners/admin.py:62
+#: partners/admin.py:63
 msgid "Metadata"
 msgstr "Metadata"
 
-#: backend/partners/models.py:10
+#: partners/models.py:11
+msgid "Alphabetical"
+msgstr ""
+
+#: partners/models.py:12
+msgid "Newest"
+msgstr ""
+
+#: partners/models.py:13
+msgid "Random"
+msgstr ""
+
+#: partners/models.py:18
 msgid "name"
 msgstr "name"
 
-#: backend/partners/models.py:11
+#: partners/models.py:25
 msgid "subdomain"
 msgstr "subdomain"
 
-#: backend/partners/models.py:13
+#: partners/models.py:38
 msgid "has custom header"
 msgstr "has custom header"
 
-#: backend/partners/models.py:14
+#: partners/models.py:39
 msgid "has custom note"
 msgstr "has custom note"
 
-#: backend/partners/models.py:24
+#: partners/models.py:41
+msgid "display ordering"
+msgstr ""
+
+#: partners/models.py:57
 msgid "Partners"
 msgstr "Partners"
 
-#: backend/redirectioneaza/common/messaging.py:31
+#: redirectioneaza/common/messaging.py:31
 msgid "Invalid email send method. Must be 'async' or 'sync'."
 msgstr "Invalid email send method. Must be 'async' or 'sync'."
 
-#: backend/users/admin.py:37
+#: redirectioneaza/common/validators.py:7
+msgid "This subdomain is reserved."
+msgstr ""
+
+#: redirectioneaza/common/validators.py:10
+msgid "Subdomain must contain only lowercase characters."
+msgstr ""
+
+#: redirectioneaza/common/validators.py:13
+msgid "Subdomain must contain only alphanumeric characters and '-' (hyphens)."
+msgstr ""
+
+#: redirectioneaza/common/validators.py:16
+msgid "Subdomain must have between 3 and 100 characters."
+msgstr ""
+
+#: users/admin.py:37
 msgid "Permissions"
 msgstr ""
 
-#: backend/users/admin.py:46
+#: users/admin.py:46
 #, fuzzy
 #| msgid "Import type"
 msgid "Important dates"
 msgstr "Import type"
 
-#: backend/users/models.py:38
+#: users/models.py:38
 msgid "Superuser must have is_staff=True."
 msgstr "Superuser must have is_staff=True."
 
-#: backend/users/models.py:40
+#: users/models.py:40
 msgid "Superuser must have is_superuser=True."
 msgstr "Superuser must have is_superuser=True."
 
-#: backend/users/models.py:56
+#: users/models.py:56
 msgid "username"
 msgstr "username"
 
-#: backend/users/models.py:59
+#: users/models.py:59
 msgid "We do not use this field"
 msgstr "We do not use this field"
 
-#: backend/users/models.py:66
+#: users/models.py:66
 msgid "email address"
 msgstr "email address"
 
-#: backend/users/models.py:80
+#: users/models.py:80
 msgid "validation token"
 msgstr "validation token"
 
-#: backend/users/models.py:82
+#: users/models.py:82
 msgid "validation token timestamp"
 msgstr "validation token timestamp"
 
-#: backend/users/models.py:84
+#: users/models.py:84
 msgid "old password"
 msgstr "old password"
 

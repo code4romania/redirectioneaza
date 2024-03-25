@@ -55,6 +55,7 @@ class PartnerAdmin(admin.ModelAdmin):
                     "is_active",
                     "has_custom_header",
                     "has_custom_note",
+                    "display_ordering",
                 )
             },
         ),

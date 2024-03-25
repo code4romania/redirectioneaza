@@ -8,6 +8,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils import timezone
 
+from partners.models import DisplayOrderingChoices
 from redirectioneaza.common.cache import cache_decorator
 from .base import BaseHandler
 from ..models.main import ALL_NGOS_CACHE_KEY, ALL_NGO_IDS_CACHE_KEY, FRONTPAGE_NGOS_KEY, Ngo, Donor
@@ -31,14 +32,22 @@ class HomePage(BaseHandler):
             "current_year": now.year,
         }
 
-        if request.partner:
-            ngo_queryset = request.partner.ngos
+        if partner := request.partner:
+            partner_ngos = partner.ngos.all()
+
+            if partner.display_ordering == DisplayOrderingChoices.ALPHABETICAL:
+                partner_ngos = partner_ngos.order_by("name")
+            elif partner.display_ordering == DisplayOrderingChoices.NEWEST:
+                partner_ngos = partner_ngos.order_by("-date_created")
+            elif partner.display_ordering == DisplayOrderingChoices.RANDOM:
+                random.shuffle(partner_ngos)
+
             context.update(
                 {
-                    "company_name": request.partner.name,
-                    "custom_header": request.partner.has_custom_header,
-                    "custom_note": request.partner.has_custom_note,
-                    "ngos": ngo_queryset.all(),
+                    "company_name": partner.name,
+                    "custom_header": partner.has_custom_header,
+                    "custom_note": partner.has_custom_note,
+                    "ngos": partner_ngos,
                 }
             )
         else:
