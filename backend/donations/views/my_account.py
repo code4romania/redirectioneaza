@@ -14,6 +14,7 @@ from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
+from django_q.tasks import async_task
 
 from redirectioneaza.common.cache import cache_decorator
 from users.models import User
@@ -155,6 +156,10 @@ class MyAccountHandler(AccountHandler):
         return render(request, self.template_name, context)
 
 
+def delete_prefilled_form(ngo_id):
+    return Ngo.delete_prefilled_form(ngo_id)
+
+
 class NgoDetailsHandler(AccountHandler):
     template_name = "ngo/ngo-details.html"
 
@@ -196,7 +201,9 @@ class NgoDetailsHandler(AccountHandler):
 
         ngo: Ngo = user.ngo
 
+        must_refresh_form = False
         is_new_ngo = False
+
         if not ngo:
             is_new_ngo = True
 
@@ -207,17 +214,25 @@ class NgoDetailsHandler(AccountHandler):
 
         registration_number = post.get("ong-cif", "").upper().replace(" ", "").replace("<", "").replace(">", "")[:20]
         registration_number_errors: str = self._validate_registration_number(ngo, registration_number)
-        ngo.registration_number = registration_number
+        if ngo.registration_number != registration_number:
+            ngo.registration_number = registration_number
+            must_refresh_form = True
 
         bank_account = post.get("ong-cont", "").strip().upper().replace(" ", "").replace("<", "").replace(">", "")[:34]
         bank_account_errors: str = self._validate_iban_number(bank_account)
-        ngo.bank_account = bank_account
+        if ngo.bank_account != bank_account:
+            ngo.bank_account = bank_account
+            must_refresh_form = True
 
         ngo_slug = post.get("ong-url", "").strip().lower()
         ngo_slug_errors = CheckNgoUrl.validate_ngo_slug(user, ngo_slug)
         ngo.slug = ngo_slug
 
-        ngo.name = post.get("ong-nume", "").strip()
+        ngo_name = post.get("ong-nume", "").strip()
+        if ngo.name != ngo_name:
+            ngo.name = ngo_name
+            must_refresh_form = True
+
         ngo.description = post.get("ong-descriere", "").strip()
         ngo.phone = post.get("ong-tel", "").strip()
         ngo.email = post.get("ong-email", "").strip()
@@ -262,6 +277,10 @@ class NgoDetailsHandler(AccountHandler):
                 return redirect(reverse("admin-ong", kwargs={"ngo_url": user.ngo.slug}))
 
         ngo.save()
+
+        # Delete the NGO's old prefilled form
+        if must_refresh_form:
+            async_task("donations.views.my_account.delete_prefilled_form", ngo.id)
 
         if is_new_ngo:
             user.ngo = ngo
