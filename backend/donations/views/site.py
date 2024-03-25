@@ -110,7 +110,7 @@ class ContactHandler(BaseHandler):
     template_name = "contact.html"
 
     def get(self, request, *args, **kwargs):
-        context = {"title": "FAQ"}
+        context = {"title": "Contact"}
         return render(request, self.template_name, context)
 
 
