@@ -1,6 +1,6 @@
 import pytest
 
-from .middleware import InvalidSubdomain, PartnerDomainMiddleware
+from ..middleware import InvalidSubdomain, PartnerDomainMiddleware
 
 
 @pytest.mark.parametrize(
