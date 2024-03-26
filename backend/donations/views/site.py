@@ -40,7 +40,7 @@ class HomePage(BaseHandler):
             elif partner.display_ordering == DisplayOrderingChoices.NEWEST:
                 partner_ngos = partner_ngos.order_by("-date_created")
             elif partner.display_ordering == DisplayOrderingChoices.RANDOM:
-                random.shuffle(partner_ngos)
+                random.shuffle(list(partner_ngos))
 
             context.update(
                 {
