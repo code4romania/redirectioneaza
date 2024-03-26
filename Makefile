@@ -74,6 +74,12 @@ rund-psql: stop-mysql stop-sqlite upd-psql       ## run the project with psql in
 redo-psql: drop-psql up-psql                     ## delete the db and rerun the project with psql
 redod-psql: drop-psql upd-psql                   ## delete the db and rerun the project with psql in detached mode
 
+### Using the Production configuration
+run-prod: up-prod                                ## run the project with prod and stop the mysql project beforehand
+rund-prod: upd-prod                              ## run the project with prod in detached mode and stop the mysql project beforehand
+redo-prod: drop-prod up-prod                     ## delete the db and rerun the project with prod
+redod-prod: drop-prod upd-prod                   ## delete the db and rerun the project with prod in detached mode
+
 ### Other run options
 run: run-sqlite                                  ## set the default run command to sqlite
 redo: redo-sqlite                                ## set the default redo command to sqlite
@@ -163,6 +169,7 @@ clean-extras:                                    ## remove test, coverage, file 
 	find ./backend -name '.ruff_cache' -delete
 	find ./backend -name '__pycache__' -delete
 	find ./backend -name 'htmlcov' -delete
+	find ./backend -name '.bower_components' -delete
 
 clean-db:                                        ## remove the database files
 	rm -rf ./backend/media ./backend/static ./frontend/dist
@@ -172,7 +179,7 @@ clean: clean-docker clean-extras clean-db        ## remove all build, test, cove
 
 ## [Project-specific operations]
 mock-data:                                       ## generate fake data
-	docker exec redirect_dev python3 -Wd ./backend/manage.py generate_editions 10 --just_one_active
-	docker exec redirect_dev python3 -Wd ./backend/manage.py generate_orgs 20 --active_edition
-	docker exec redirect_dev python3 -Wd ./backend/manage.py generate_jury_groups 4
-	docker exec redirect_dev python3 -Wd ./backend/manage.py generate_judges 16
+	docker exec redirect_dev python3 -Wd ./backend/manage.py generate_orgs 20
+	docker exec redirect_dev python3 -Wd ./backend/manage.py generate_orgs 50 --valid
+	docker exec redirect_dev python3 -Wd ./backend/manage.py generate_partners 5
+	docker exec redirect_dev python3 -Wd ./backend/manage.py generate_donations 100
