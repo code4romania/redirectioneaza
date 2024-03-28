@@ -1,83 +1,215 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <h3>Termeni și condiții de utilizare</h3>
-            
-            <p>
-                Termenii și Condițiile generale de utilizare stabilesc termenii și condițiile generale de utilizare a site-ului „redirectioneaza.ro”  de catre potențialii vizitatori sau beneficiari.
-            </p>
-            <p>
-                “Redirectioneaza.ro” (în continuare denumit „Site”, „Platforma”, „Redirectioneaza.ro”) este o platformă online dezvoltată de Asociația Code for Romania (denumită în continuare “Code for Romania”) care vine în sprijinul acțiunilor civice de redirecționare a până la 3.5% din impozitul anual pe veniturile din salarii și pensii, având ca obiectiv facilitarea relației dintre organizațiile non-guvernamentale sau fundațiile (în continuare denumite „ONG”) înființate în Romania pe de o parte și potentialele persoane care doresc să redirecționeze pana la 3.5% catre acestea, pe de alta parte.
-            </p>
-            <p>
-                Asociația Code for Romania este o persoană juridică, având sediul în Mun. București, Piata Alba Iulia nr. 7, bloc I6, etaj 1, ap. 6, înregistrată în registrul special, Partea A, sectiunea I 67/06.07.2016.
-            </p>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
 
-            <h4>
-                Obiectivul Site-ului
-            </h4>
-            <p>
-                Obiectivul Platformei este de a facilita colectarea formularelor de tip 230, formulare ce permit redirecționarea sumei reprezentând până la 3.5% din impozitul anual pe venit, precum și incurajarea cetățenilor să contribuie la colectarea acestora.
-            </p>
-            <ul class="list">
-                <li>
-                    Site-ul permite înregistrarea unui ONG pentru a crea un profil online prin care acesta se poate prezenta.
-                </li>
-                <li>
-                    De asemenea, Redirectioneaza.ro pune la dispoziția utilizatorului Platformei care dorește să redirecționeze până la 3.5% din impozitul pe venit, un formular care colectează datele personale ale acestuia. Pentru a afla condițiile în care datele cu caracter personal ale utilizatorilor platformei  care doresc să direcționeze până la 3.5% din impozitul pe venit, sunt utilizate de către Code for Romania, te rugăm să accesezi Nota de informare de <a href="{{ url('note') }}" target="_blank">aici</a>.
-                </li>
-                <li>
-                    Datele din acest formular sunt folosite pentru a completa documentul de tip 230, cu datele ONG-ului, dar și datele persoanei care redirecționează cei până la 3.5%.
-                </li>
-                <li>
-                    Astfel, odată completat formularul, platforma generează formularul tip 230 cu datele completate de tine, putând fi descărcat de pe Site automat (vezi <a href="https://static.anaf.ro/static/10/Anaf/formulare/230_OPANAF_15_2021.pdf" target="_blank">exemplu necompletat</a>).
-                </li>
-            </ul>
-            <p>
-                În cazul în care utilizatorul nu dorește ca formularul tip 230 să fie precompletat în baza formularului de pe Platformă, sau sa ii fie prelucrate datele cu caracter personal, poate alege sa redirectioneze cei pana la 3.5% din impozit descarcand si completand formularul tip 230 de pe site (vezi <a href="https://static.anaf.ro/static/10/Anaf/formulare/230_OPANAF_15_2021.pdf" target="_blank">exemplu necompletat</a>).
-            </p>
+                <h3>Termeni și condiții de utilizare</h3>
 
-            <h4>
-                Marcă și dreptul de autor
-            </h4>
-            <p>
-                Dreptul de autor pentru toate informațiile existente pe acest Site este deținut de Code for Romania. Nici un material de pe acest site nu poate fi reprodus parțial, integral sau modificat fără acordul expres exprimat de către Code for Romania, titularul acestui drept.
-            </p>
-            <ul class="list">
-                <li>
-                    Toate drepturile sunt rezervate.
-                </li>
-                <li>
-                    Este strict interzisă folosirea acestui Site în scopul distrugerii sau alterării lui, a conținutului sau a securității acestuia ori pentru discreditarea sau harțuirea Redirectioneaza.ro sau a Code for Romania.
-                </li>
-                <li>
-                    Code for Romania va aplica toate măsurile de securitate tehnică și organizatorică pentru protejarea datelor asupra cărora deține controlul împotriva oricărei situații de manipulare accidentală sau intenționată, pierdere, distrugere sau împotriva accesului unei persoane neautorizate.
-                </li>
-            </ul>
+                <p>
+                    Termenii și Condițiile generale de utilizare stabilesc termenii și condițiile generale de utilizare
+                    a site-ului „redirectioneaza.ro” de către potențialii vizitatori sau beneficiari.
+                </p>
+                <p>
+                    „Redirectioneaza.ro” (în continuare denumit „Site”, „Platforma”, „Redirectioneaza.ro”) este o
+                    platformă online dezvoltată de Asociația Code for Romania - Codează pentru România (denumită în
+                    continuare „Code for Romania”) care vine în sprijinul acțiunilor civice de redirecționare a până la
+                    3,5% din impozitul anual pe veniturile din salarii și pensii, având ca obiectiv facilitarea relației
+                    dintre organizațiile non-profit, neguvernamentale (în continuare denumite „organizații” sau „ONG”)
+                    înființate în Romania, pe de o parte, și potențialele persoane care doresc să redirecționeze până la
+                    3,5% către acestea, pe de altă parte.
+                </p>
+                <p>
+                    Asociația Code for Romania - Codează pentru România este o persoană juridică având sediul în
+                    București, Piața Alba Iulia nr. 7, bloc I6, etaj 1, ap. 6, înregistrată în Registrul special, Partea
+                    A, secțiunea I 67/06.07.2016, cu CIF 36317167.
+                </p>
 
-            <h4>
-                Modificări Termeni și Condiții generale de utilizare Site
-            </h4>
-            <p>
-                "Termenii și Condițiile generale de utilizare" constituie, în intregime, un acord încheiat între dumneavoastră și Code for Romania în privința utilizării Redirectioneaza.ro.
-            </p>
-            <p>
-                Code for Romania își rezervă dreptul de a revizui și aduce la zi "Termenii și Condițiile generale de utilizare" în orice moment, fără o anuntare sau o acceptare prealabilă a utilizatorilor.
-            </p>
-            <p>
-                Dacă aveți întrebări cu privire la informațiile cuprinse în această pagină vă rugăm să ne scrieți la adresa <a href="mailto:redirectioneaza@code4.ro">redirectioneaza@code4.ro</a>.
-            </p>
 
-            <h4>
-                Despre Code for Romania
-            </h4>
-            <p>
-                Code for Romania este o organizație neguvernamentală independentă, neafiliată politic si apolitica, înființată în anul 2016, al cărei scop este de a mobiliza tinerii profesioniști din domeniul IT să creeze instrumente digitale care ajută în soluționarea problemelor sociale. Code for Romania este înființata și funcționează în conformitate cu legea română, actul constitutiv și statutul său și <a href="https://code4.ro/codul-de-conduita/" target="_blank">codul de conduită</a>.
-            </p>
+                <h4>Obiectivul Site-ului</h4>
+
+                <p>
+                    Obiectivul Platformei este de a facilita colectarea Formularelor de tip 230, care permit
+                    redirecționarea sumelor reprezentând până la 3,5% din impozitul anual pe venit, precum și
+                    încurajarea cetățenilor să contribuie la colectarea acestora.
+                </p>
+                <ul class="list">
+                    <li>
+                        Site-ul permite înregistrarea unui ONG pentru crearea unui profil online prin care acesta se
+                        poate prezenta publicului larg.
+                    </li>
+                    <li>
+                        Redirectioneaza.ro pune la dispoziția utilizatorului care dorește să redirecționeze până la 3,5%
+                        din impozitul pe venit, un formular care colectează datele personale ale acestuia. Pentru a afla
+                        condițiile în care datele cu caracter personal ale utilizatorilor sunt utilizate de către Code
+                        for Romania, te rugăm să accesezi
+                        <a href="{{ url('note') }}">Nota de informare</a>.
+                    </li>
+                    <li>
+                        Datele din acest formular sunt folosite pentru completarea documentului de tip 230, cu datele
+                        ONG-ului, dar și datele persoanei care redirecționează cei până la 3,5% din impozitul pe venit.
+                    </li>
+                    <li>
+                        Astfel, odată completat formularul, platforma generează formularul tip 230 cu datele completate
+                        de contribuabil. Formularul poate fi descărcat de pe redirectioneaza.ro automat
+                        <a href="https://static.anaf.ro/static/10/Anaf/formulare/230_OPANAF_15_2021.pdf">(vezi exemplu
+                            necompletat)</a>.
+                    </li>
+                </ul>
+                <p>
+                    În cazul în care utilizatorul nu dorește ca formularul tip 230 să fie pre-completat în baza
+                    formularului de pe Platformă, sau sa îi fie prelucrate datele cu caracter personal, poate alege să
+                    redirecționeze cei până la 3,5% din impozit descărcând și completând formularul tip 230 de pe site
+                    <a href="https://static.anaf.ro/static/10/Anaf/formulare/230_OPANAF_15_2021.pdf">(vezi exemplu
+                        necompletat)</a>.
+                </p>
+
+
+                <h4>Marcă și dreptul de autor</h4>
+
+                <p>
+                    Dreptul de autor pentru toate informațiile existente pe acest Site este deținut de Code for Romania.
+                    Nici un material de pe acest site nu poate fi reprodus parțial, integral sau modificat fără acordul
+                    expres exprimat de către Code for Romania, titularul acestui drept.
+                </p>
+                <ul class="list">
+                    <li>
+                        Toate drepturile sunt rezervate.
+                    </li>
+                    <li>
+                        Este strict interzisă folosirea acestui Site în scopul distrugerii sau alterării lui, a
+                        conținutului sau a securității acestuia ori pentru discreditarea sau hărțuirea
+                        Redirectioneaza.ro sau a Code for Romania.
+                    </li>
+                    <li>
+                        Code for Romania va aplica toate măsurile de securitate tehnică și organizatorică pentru
+                        protejarea datelor asupra cărora deține controlul împotriva oricărei situații de manipulare
+                        accidentală sau intenționată, pierdere, distrugere sau împotriva accesului unei persoane
+                        neautorizate.
+                    </li>
+                </ul>
+
+
+                <h4>Drepturile și obligațiile organizațiilor</h4>
+
+                <ul class="list">
+                    <li>
+                        Prin înființarea și activitatea lor respectă
+                        <a href="https://legislatie.just.ro/Public/DetaliiDocument/170057"> OUG nr. 31/2002</a>
+                        privind interzicerea organizațiilor și simbolurilor cu caracter fascist, rasist sau xenofob și a
+                        promovării cultului persoanelor vinovate de săvârșirea unor infracțiuni contra păcii și
+                        omenirii.
+                    </li>
+                    <li>
+                        Prin activitatea lor nu susțin cauze de natură politică sau care discriminează pe considerente
+                        legate de etnie, rasă, sex, orientare sexuală, religie, capacități fizice sau psihice sau de
+                        apartenență la una sau mai multe categorii sociale sau economice.
+                    </li>
+                    <li>
+                        Prin activitatea lor respectă
+                        <a href="https://european-union.europa.eu/principles-countries-history/principles-and-values/aims-and-values_ro">
+                            valorile UE
+                        </a>,
+                        așa cum sunt definite prin intermediul Tratatului de la Lisabona și prin Carta drepturilor
+                        fundamentale UE: demnitate umană, libertate, democrație, egalitate, statul de drept și
+                        drepturile omului.
+                    </li>
+                    <li>
+                        Au luat la cunoștință și respectă
+                        <a href="https://www.code4.ro/ro/codul-de-conduita">codul de conduită al Code for Romania</a>
+                        și
+                        <a href="https://www.code4.ro/ro/politica-peas">Politica PEAS</a>.
+                    </li>
+                    <li>
+                        Au luat la cunoștință de
+                        <a href="{{ url('note') }}">Nota de informare</a>
+                        privind prelucrarea datelor cu caracter personal.
+                    </li>
+                    <li>
+                        Pot menționa contribuția Code for Romania prin intermediul platformei Redirectioneaza.ro în
+                        activitatea lor, acolo unde este cazul.
+                    </li>
+                </ul>
+
+
+                <h4>Drepturile și obligațiile utilizatorilor/contribuabililor</h4>
+
+                <ul class="list">
+                    <li>
+                        Să respecte termenii și condițiile prevăzute în „Termenii și Condițiile generale de utilizare”
+                        ale platformei.
+                    </li>
+                    <li>
+                        Să ia la cunoștință de
+                        <a href="{{ url('note') }}">Nota de informare</a>
+                        privind prelucrarea datelor cu caracter personal.
+                    </li>
+                    <li>
+                        Să ofere informații reale și să se asigure că toate informațiile completate în documentul /
+                        formularul 230 sunt corecte.
+                    </li>
+                    <li>
+                        Să ia la cunoștință că, odată depus formularul prin intermediul platformei, acesta nu mai poate
+                        fi retras din evidența/centralizarea organizației către care a decis să direcționeze 3,5% din
+                        impozit, centralizare pe care organizația o va transmite către organele fiscale (Agenția
+                        Națională de Administrare Fiscală).
+                    </li>
+                </ul>
+
+
+                <h4>Drepturile Code for Romania</h4>
+
+                <ul class="list">
+                    <li>
+                        Code for Romania își rezervă dreptul de a restricționa accesul la serviciile platformei
+                        Redirectioneaza.ro organizațiilor care nu respectă condițiile de mai sus.
+                    </li>
+                    <li>
+                        Code for Romania are dreptul să menționeze public asistența/facilitatea oferită organizației
+                        prin intermediul platformei Redirectioneaza.ro.
+                    </li>
+                    <li>
+                        Code for Romania are dreptul să trimită comunicări despre activitatea Platformei organizațiilor
+                        înregistrare pe Redirectioneaza.ro prin intermediul sistemului de newsletter sau prin direct
+                        mailing.
+                    </li>
+                    <li>
+                        Code for Romania are dreptul să promoveze pe canalele proprii de comunicare înscrierea
+                        organizației pe platforma Redirectioneaza.ro și facilitățile/rezultatele obținute de organizație
+                        în urma folosirii platformei.
+                    </li>
+                </ul>
+
+
+                <h4>Modificări Termeni și Condiții generale de utilizare Site</h4>
+
+                <p>
+                    „Termenii și Condițiile generale de utilizare" constituie, în întregime, un acord încheiat între
+                    dumneavoastră și Code for Romania în privința utilizării Redirectioneaza.ro.
+                </p>
+                <p>
+                    Code for Romania își rezervă dreptul de a revizui și aduce la zi „Termenii și Condițiile generale de
+                    utilizare" în orice moment, fără o anunțare sau o acceptare prealabilă a utilizatorilor.
+                </p>
+                <p>
+                    Dacă aveți întrebări cu privire la informațiile cuprinse în această pagină, vă rugăm să ne scrieți
+                    la adresa
+                    <a href="mailto:redirectioneaza@code4.ro">redirectioneaza@code4.ro</a>.
+                </p>
+
+                <h3>Despre Code for Romania</h3>
+
+                <p>
+                    Code for Romania este o organizație neguvernamentală independentă, neafiliată politic si apolitica,
+                    înființată în anul 2016, al cărei scop este de a mobiliza tinerii profesioniști din domeniul IT să
+                    creeze instrumente digitale care ajută în soluționarea problemelor sociale. Code for Romania este
+                    înființată și funcționează în conformitate cu legea română, actul constitutiv și statutul său și <a
+                        href="https://www.code4.ro/ro/codul-de-conduita">codul de conduită</a>.
+                </p>
+
+            </div>
         </div>
     </div>
-</div>
+
 {% endblock %}
