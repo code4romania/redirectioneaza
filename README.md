@@ -58,6 +58,28 @@ The project has been configured to work with the following databases:
 - [MySQL](https://www.mysql.com/)
 - [SQLite](https://www.sqlite.org/index.html)
 
+## Development
+
+### Compiling the CSS with less
+
+Go to the `backend/` folder and run the following commands:
+
+```bash
+nvm use --lts || nvm install --lts
+
+npm i -g less@2.7.3 less-plugin-clean-css@1.5.1
+
+cp -r bower_components/  static_extras/
+
+pushd static_extras/
+
+lessc css/main.less > css/main.css --clean-css="--s1 --advanced --compatibility=ie8"
+
+rm -rf bower_components/
+
+popd
+```
+
 ## Deployment
 
 ### With Docker
