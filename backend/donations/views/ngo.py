@@ -126,14 +126,14 @@ class FormSignature(BaseHandler):
                     new_pdf = add_signature(pdf.read(), signature_image)
             except ValueError as e:
                 retries -= 1
-                logger.warning("ValueError adding signature to PDF: %s", e)
+                logger.warning("ValueError adding signature to PDF: %s [for donation %d]", e, self.donor.pk)
             except FileNotFoundError as e:
                 retries -= 1
-                logger.warning("FileNotFoundError adding signature to PDF: %s", e)
+                logger.warning("FileNotFoundError adding signature to PDF: %s [for donation %d]", e, self.donor.pk)
             else:
                 break
         else:
-            logger.error("Error adding signature to PDF: %s", "File not found")
+            logger.error("Error adding signature to PDF: %s [for donation %d]", "File not found", self.donor.pk)
 
             return redirect(reverse("ngo-twopercent-signature", kwargs={"ngo_url": ngo_url}))
 
