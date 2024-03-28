@@ -19,7 +19,6 @@ from pathlib import Path
 import environ
 import sentry_sdk
 from cryptography.fernet import Fernet
-from django.templatetags.static import static
 from django.utils import timezone
 from localflavor.ro.ro_counties import COUNTIES_CHOICES
 
