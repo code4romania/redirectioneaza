@@ -9,7 +9,7 @@
 
 @brand-primary:         #FEF13D; // #4582EC;
 @brand-success:         #4CAF50; // #3FAD46;
-@brand-info:            #03A9F4; // #5bc0de;
+@brand-info: #007DB2; // #5bc0de;
 @brand-warning:         #FF9800; // #f0ad4e;
 @brand-danger:          #d9534f;
 
@@ -86,7 +86,8 @@
 @form-font-size:         16px;
 @form-margin-bottom:     40px;
 @input-normal-color:     @gray-light;
-@gray-text-color:        #8a8a8a;
+@gray-text-color: #6f6f6f;
+@gray-text-light-color: lighten(@gray-text-color, 10%);
 
 // general css
 
@@ -281,12 +282,12 @@ footer {
     color: @gray-text-color;
     font-size: 12px;
     margin: 50px 0 1em;
-    font-family: Source Code Pro,Courier New,Courier,monospace;
     font-weight: 400;
     letter-spacing: 2px;
 }
 
 .footer-links {
+    color: @gray-text-color;
     margin-bottom: 30px;
     & a {
         font-size: 14px;
@@ -298,13 +299,13 @@ footer {
 }
 
 .footer-brand {
-    opacity: .5;
+    opacity: .75;
     height: 30px;
     display: inline-block;
     width: auto;
 
     &:hover {
-      opacity: .8;
+        opacity: .8;
     }
 
     & img {
@@ -326,4 +327,8 @@ footer {
         -ms-user-select: none; /* Internet Explorer/Edge */
             user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome and Opera */
+}
+
+.btn-primary-contrast {
+    color: @brand-info;
 }
