@@ -1,4 +1,3 @@
-
 from django.http import HttpRequest
 from django.templatetags.static import static
 
