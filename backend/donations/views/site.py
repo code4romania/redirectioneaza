@@ -28,7 +28,6 @@ class HomePage(BaseHandler):
         context = {
             "title": "redirectioneaza.ro",
             "limit": settings.DONATIONS_LIMIT,
-            "DEFAULT_NGO_LOGO": settings.DEFAULT_NGO_LOGO,
             "current_year": now.year,
         }
 
@@ -101,7 +100,6 @@ class NgoListHandler(BaseHandler):
         context = {
             "title": "Toate ONG-urile",
             "ngos": self._get_all_ngos(),
-            "DEFAULT_NGO_LOGO": settings.DEFAULT_NGO_LOGO,
         }
 
         return render(request, self.template_name, context)
