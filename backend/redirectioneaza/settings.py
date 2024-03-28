@@ -19,6 +19,7 @@ from pathlib import Path
 import environ
 import sentry_sdk
 from cryptography.fernet import Fernet
+from django.templatetags.static import static
 from django.utils import timezone
 from localflavor.ro.ro_counties import COUNTIES_CHOICES
 
@@ -62,7 +63,6 @@ env = environ.Env(
     SITE_TITLE=(str, "redirectioneaza.ro"),
     DONATIONS_LIMIT_DATE=(str, "2016-05-25"),
     DONATIONS_LIMIT_TO_CURRENT_YEAR=(bool, True),
-    DEFAULT_NGO_LOGO=(str, "https://storage.googleapis.com/redirectioneaza/logo_bw.png"),
     # security settings
     ALLOWED_HOSTS=(list, ["*"]),
     CORS_ALLOWED_ORIGINS=(list, []),
@@ -262,6 +262,7 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "partners.context_processors.custom_subdomain",
                 "users.context_processors.is_admin",
+                "donations.context_processors.default_ngo_logo",
             ],
         },
     },
@@ -275,6 +276,7 @@ TEMPLATES = [
             "context_processors": [
                 "partners.context_processors.custom_subdomain",
                 "users.context_processors.is_admin",
+                "donations.context_processors.default_ngo_logo",
             ],
         },
     },
@@ -539,8 +541,6 @@ DONATIONS_LIMIT_MONTH_NAME = [
 ][DONATIONS_LIMIT.month - 1]
 
 START_YEAR = 2016
-
-DEFAULT_NGO_LOGO = env.str("DEFAULT_NGO_LOGO")
 
 LIST_OF_COUNTIES = [county[1] for county in COUNTIES_CHOICES]
 

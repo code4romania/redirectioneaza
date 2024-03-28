@@ -120,7 +120,6 @@ class AdminNewNgoHandler(BaseHandler):
         context["counties"] = settings.LIST_OF_COUNTIES
 
         context["ngo"] = {}
-        context["DEFAULT_NGO_LOGO"] = settings.DEFAULT_NGO_LOGO
 
         # render a response
         return render(request, self.template_name, context)
@@ -149,8 +148,6 @@ class AdminNgoHandler(BaseHandler):
             context["owner"] = ngo.users.get()
         except User.DoesNotExist:
             context["owner"] = None
-
-        context["DEFAULT_NGO_LOGO"] = settings.DEFAULT_NGO_LOGO
 
         # render a response
         return render(request, self.template_name, context)

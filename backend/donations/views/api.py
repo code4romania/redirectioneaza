@@ -95,7 +95,7 @@ class NgosApi(BaseHandler):
                 {
                     "name": ngo.name,
                     "url": reverse("twopercent", kwargs={"ngo_url": ngo.slug}),
-                    "logo": ngo.logo.url if ngo.logo else settings.DEFAULT_NGO_LOGO,
+                    "logo": ngo.logo.url if ngo.logo else None,
                     "active_region": ngo.active_region,
                     "description": ngo.description,
                 }

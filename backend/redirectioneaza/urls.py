@@ -75,7 +75,8 @@ urlpatterns = (
         # backup in case of old urls. to be removed
         path("organizatii/", NgoListHandler.as_view(), name="organizations"),
         path("asociatii/", RedirectView.as_view(pattern_name="organizations", permanent=True)),
-        path("termeni/", TermsHandler.as_view(), name="terms"),
+        path("termene-si-conditii/", TermsHandler.as_view(), name="terms"),
+        path("termeni/", RedirectView.as_view(pattern_name="terms", permanent=True)),
         path("TERMENI/", RedirectView.as_view(pattern_name="terms", permanent=True)),
         path("nota-de-informare/", NoteHandler.as_view(), name="note"),
         path("politica/", PolicyHandler.as_view(), name="policy"),

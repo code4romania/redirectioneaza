@@ -113,8 +113,6 @@ class ActiveManager(models.Manager):
 
 
 class Ngo(models.Model):
-    # DEFAULT_NGO_LOGO = "https://storage.googleapis.com/redirectioneaza/logo_bw.png"
-
     slug = models.SlugField(
         verbose_name=_("slug"),
         blank=False,

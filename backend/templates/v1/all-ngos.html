@@ -29,7 +29,7 @@
                         {% elif ngo and ngo.logo_url %}
                             {% set logo = ngo.logo_url %}
                         {% else %}
-                            {% set logo = DEFAULT_NGO_LOGO %}
+                            {% set logo = default_ngo_logo %}
                         {% endif %}
                         <div class="ong-logo">
                             <img src="{{ logo }}" class="img-responsive center-block" alt="{{ ngo.name }} logo" />

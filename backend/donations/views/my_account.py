@@ -150,7 +150,6 @@ class MyAccountHandler(AccountHandler):
             "has_signed_form": has_signed_form,
             "current_year": now.year,
             "ngo_url": ngo_url,
-            "DEFAULT_NGO_LOGO": settings.DEFAULT_NGO_LOGO,
         }
 
         return render(request, self.template_name, context)
@@ -178,7 +177,6 @@ class NgoDetailsHandler(AccountHandler):
             "user": user,
             "ngo": user.ngo if user.ngo else None,
             "counties": settings.FORM_COUNTIES_NATIONAL,
-            "DEFAULT_NGO_LOGO": settings.DEFAULT_NGO_LOGO,
         }
 
         return render(request, self.template_name, context)
@@ -259,7 +257,6 @@ class NgoDetailsHandler(AccountHandler):
                 "user": user,
                 "ngo": ngo,  # send back the unsaved NGO data
                 "counties": settings.FORM_COUNTIES_NATIONAL,
-                "DEFAULT_NGO_LOGO": settings.DEFAULT_NGO_LOGO,
                 "errors": errors,
             }
             return render(request, self.template_name, context)
