@@ -91,7 +91,7 @@ urlpatterns = (
             name="contact",
         ),
         # account management
-        path("cont-nou/", SignupHandler.as_view()),
+        path("cont-nou/", SignupHandler.as_view(), name="signup"),
         path("login/", LoginHandler.as_view(), name="login"),
         path("logout/", LogoutHandler.as_view(), name="logout"),
         path("forgot/", ForgotPasswordHandler.as_view(), name="forgot"),
@@ -111,7 +111,7 @@ urlpatterns = (
         path("api/ngo/check-url/<ngo_url>/", CheckNgoUrl.as_view(), name="api-ngo-check-url"),
         path("api/ngos/", NgosApi.as_view(), name="api-ngos"),
         #
-        path("api/ngo/upload-url/", GetUploadUrl.as_view(), name="api-ngo-upload-url"),  # TODO
+        path("api/ngo/upload-url/", GetUploadUrl.as_view(), name="api-ngo-upload-url"),
         path("api/ngo/form/<ngo_url>/", GetNgoForm.as_view(), name="api-ngo-form-url"),
         path("api/ngo/forms/download/", GetNgoForms.as_view(), name="api-ngo-forms"),
         # Cron routes

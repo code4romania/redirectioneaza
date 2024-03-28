@@ -31,7 +31,8 @@
                         <td>{{ "{0}/{1}/{2}".format(user.date_joined.day, user.date_joined.month, user.date_joined.year) }}</td>
 
                         {% if user.ngo and user.ngo.slug %}
-                            <td class="success"><a href="/{{ user.ngo.slug }}/" target="_blank">da</a></td>
+                            <td class="success"><a href="{{ url('twopercent', kwargs={'ngo_url':user.ngo.slug}) }}"
+                                                   target="_blank">da</a></td>
                         {% else %}
                             <td>nu</td>
                         {% endif %}
