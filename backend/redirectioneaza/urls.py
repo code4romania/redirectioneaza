@@ -22,12 +22,12 @@ from django.urls import path, re_path
 from django.views.generic import RedirectView
 
 from donations.views.account_management import (
-    ForgotPasswordHandler,
-    LoginHandler,
-    LogoutHandler,
-    SetPasswordHandler,
-    SignupHandler,
-    VerificationHandler,
+    ForgotPasswordView,
+    LoginView,
+    LogoutView,
+    SetPasswordView,
+    SignupView,
+    VerificationView,
 )
 from donations.views.admin import (
     AdminHome,
@@ -39,10 +39,10 @@ from donations.views.admin import (
 from donations.views.api import CheckNgoUrl, GetNgoForm, GetNgoForms, GetUploadUrl, NgosApi
 from donations.views.cron import CustomExport, NgoExport, NgoRemoveForms, Stats
 from donations.views.my_account import (
-    ArchiveDownloadLinkHandler,
-    MyAccountDetailsHandler,
-    MyAccountHandler,
-    NgoDetailsHandler,
+    ArchiveDownloadLinkView,
+    MyAccountDetailsView,
+    MyAccountView,
+    NgoDetailsView,
 )
 from donations.views.ngo import DonationSucces, FormSignature, OwnFormDownloadLinkHandler, TwoPercentHandler
 from donations.views.site import (
@@ -91,22 +91,22 @@ urlpatterns = (
             name="contact",
         ),
         # account management
-        path("cont-nou/", SignupHandler.as_view(), name="signup"),
-        path("login/", LoginHandler.as_view(), name="login"),
-        path("logout/", LogoutHandler.as_view(), name="logout"),
-        path("forgot/", ForgotPasswordHandler.as_view(), name="forgot"),
+        path("cont-nou/", SignupView.as_view(), name="signup"),
+        path("login/", LoginView.as_view(), name="login"),
+        path("logout/", LogoutView.as_view(), name="logout"),
+        path("forgot/", ForgotPasswordView.as_view(), name="forgot"),
         # verification url: used for signup, and reset password
         path(
             "verify/<str:verification_type>/<uuid:user_id>-<uuid:signup_token>/",
-            VerificationHandler.as_view(),
+            VerificationView.as_view(),
             name="verification",
         ),
-        path("password/", SetPasswordHandler.as_view(), name="password"),
+        path("password/", SetPasswordView.as_view(), name="password"),
         # my account
-        path("contul-meu/", MyAccountHandler.as_view(), name="contul-meu"),
-        path("organizatia/", NgoDetailsHandler.as_view(), name="organization"),
+        path("contul-meu/", MyAccountView.as_view(), name="contul-meu"),
+        path("organizatia/", NgoDetailsView.as_view(), name="organization"),
         path("asociatia/", RedirectView.as_view(pattern_name="organization", permanent=True)),
-        path("date-cont/", MyAccountDetailsHandler.as_view(), name="date-contul-meu"),
+        path("date-cont/", MyAccountDetailsView.as_view(), name="date-contul-meu"),
         # APIs
         path("api/ngo/check-url/<ngo_url>/", CheckNgoUrl.as_view(), name="api-ngo-check-url"),
         path("api/ngos/", NgosApi.as_view(), name="api-ngos"),
@@ -128,7 +128,7 @@ urlpatterns = (
         path("admin/conturi/", UserAccounts.as_view(), name="admin-users"),
         path("admin/organizatii/", AdminNgosList.as_view(), name="admin-ngos"),
         path("admin/<ngo_url>/", AdminNgoHandler.as_view(), name="admin-ong"),
-        path("admin/download/<job_id>/", ArchiveDownloadLinkHandler.as_view(), name="admin-download-link"),
+        path("admin/download/<job_id>/", ArchiveDownloadLinkView.as_view(), name="admin-download-link"),
         path("admin/", AdminHome.as_view(), name="admin-index"),  # name was "admin"
         # must always be the last set of urls
         re_path(r"^(?P<ngo_url>[\w-]+)/doilasuta/", RedirectView.as_view(pattern_name="twopercent", permanent=True)),

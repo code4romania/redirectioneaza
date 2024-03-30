@@ -12,9 +12,10 @@ from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
+from django.views.generic import TemplateView
 
 from redirectioneaza.common.cache import cache_decorator
-from .base import AccountHandler, BaseHandler
+from .base import BaseAccountView
 from ..models.jobs import Job, JobStatusChoices
 from ..models.main import ALL_NGOS_CACHE_KEY, Ngo
 from ..pdf import create_pdf
@@ -22,7 +23,7 @@ from ..pdf import create_pdf
 logger = logging.getLogger(__name__)
 
 
-class CheckNgoUrl(AccountHandler):
+class CheckNgoUrl(BaseAccountView):
     ngo_url_block_list = (
         "",
         "admin",
@@ -76,7 +77,7 @@ class CheckNgoUrl(AccountHandler):
         return HttpResponse()
 
 
-class NgosApi(BaseHandler):
+class NgosApi(TemplateView):
     @staticmethod
     @cache_decorator(timeout=settings.CACHE_TIMEOUT_SMALL, cache_key=ALL_NGOS_CACHE_KEY)
     def _get_all_ngos() -> list:
@@ -104,7 +105,7 @@ class NgosApi(BaseHandler):
         return JsonResponse(response, safe=False)
 
 
-class GetNgoForm(BaseHandler):
+class GetNgoForm(TemplateView):
     def get(self, request, ngo_url, *args, **kwargs):
         try:
             ngo = Ngo.objects.get(slug=ngo_url)
@@ -149,7 +150,7 @@ class GetNgoForm(BaseHandler):
         return redirect(ngo.prefilled_form.url)
 
 
-class GetNgoForms(AccountHandler):
+class GetNgoForms(BaseAccountView):
     def get(self, request, *args, **kwargs):
         raise Http404
 
@@ -181,7 +182,7 @@ class GetNgoForms(AccountHandler):
 
 @method_decorator(login_required(login_url=reverse_lazy("login")), name="dispatch")
 @method_decorator(csrf_exempt, name="dispatch")
-class GetUploadUrl(AccountHandler):
+class GetUploadUrl(BaseAccountView):
     def get(self, request, *args, **kwargs):
         raise Http404
 

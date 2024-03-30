@@ -9,10 +9,10 @@ from django.http import Http404
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils import timezone
+from django.views.generic import TemplateView
 
 from redirectioneaza.common.messaging import send_email
 from users.models import User
-from .base import BaseHandler
 from ..models.main import Donor, Ngo
 
 logger = logging.getLogger(__name__)
@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 stats_dict = {"init": False, "ngos": 0, "forms": 0, "years": {}, "counties": {}}
 
 
-class AdminHome(BaseHandler):
+class AdminHome(TemplateView):
     template_name = "admin2/index.html"
 
     def get(self, request, *args, **kwargs):
@@ -106,7 +106,7 @@ class AdminHome(BaseHandler):
         }
 
 
-class AdminNewNgoHandler(BaseHandler):
+class AdminNewNgoHandler(TemplateView):
     template_name = "admin2/ngo.html"
 
     def get(self, request, *args, **kwargs):
@@ -125,7 +125,7 @@ class AdminNewNgoHandler(BaseHandler):
         return render(request, self.template_name, context)
 
 
-class AdminNgoHandler(BaseHandler):
+class AdminNgoHandler(TemplateView):
     template_name = "admin2/ngo.html"
 
     def get(self, request, ngo_url, *args, **kwargs):
@@ -153,7 +153,7 @@ class AdminNgoHandler(BaseHandler):
         return render(request, self.template_name, context)
 
 
-class AdminNgosList(BaseHandler):
+class AdminNgosList(TemplateView):
     template_name = "admin2/ngos.html"
 
     def get(self, request, *args, **kwargs):
@@ -170,7 +170,7 @@ class AdminNgosList(BaseHandler):
         return render(request, self.template_name, context)
 
 
-class SendCampaign(BaseHandler):
+class SendCampaign(TemplateView):
     template_name = "admin2/campaign.html"
 
     def get(self, request, *args, **kwargs):
@@ -205,7 +205,7 @@ class SendCampaign(BaseHandler):
         return redirect(reverse("admin-campanii"))
 
 
-class UserAccounts(BaseHandler):
+class UserAccounts(TemplateView):
     template_name = "admin2/accounts.html"
 
     def get(self, request, *args, **kwargs):

@@ -7,14 +7,14 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils import timezone
+from django.views.generic import TemplateView
 
 from partners.models import DisplayOrderingChoices
 from redirectioneaza.common.cache import cache_decorator
-from .base import BaseHandler
-from ..models.main import ALL_NGOS_CACHE_KEY, ALL_NGO_IDS_CACHE_KEY, FRONTPAGE_NGOS_KEY, Ngo, Donor
+from ..models.main import ALL_NGOS_CACHE_KEY, ALL_NGO_IDS_CACHE_KEY, Donor, FRONTPAGE_NGOS_KEY, Ngo
 
 
-class HomePage(BaseHandler):
+class HomePage(TemplateView):
     template_name = "index.html"
 
     @staticmethod
@@ -67,7 +67,7 @@ class HomePage(BaseHandler):
         return ngo_queryset.filter(id__in=random.sample(all_ngo_ids, num_ngos))
 
 
-class AboutHandler(BaseHandler):
+class AboutHandler(TemplateView):
     template_name = "despre.html"
 
     def get(self, request, *args, **kwargs):
@@ -75,7 +75,7 @@ class AboutHandler(BaseHandler):
         return render(request, self.template_name, context)
 
 
-class ForNgoHandler(BaseHandler):
+class ForNgoHandler(TemplateView):
     template_name = "for-ngos.html"
 
     def get(self, request, *args, **kwargs):
@@ -86,7 +86,7 @@ class ForNgoHandler(BaseHandler):
         return render(request, self.template_name, context)
 
 
-class NgoListHandler(BaseHandler):
+class NgoListHandler(TemplateView):
     template_name = "all-ngos.html"
 
     @staticmethod
@@ -105,7 +105,7 @@ class NgoListHandler(BaseHandler):
         return render(request, self.template_name, context)
 
 
-class NoteHandler(BaseHandler):
+class NoteHandler(TemplateView):
     template_name = "note.html"
 
     def get(self, request, *args, **kwargs):
@@ -113,7 +113,7 @@ class NoteHandler(BaseHandler):
         return render(request, self.template_name, context)
 
 
-class ContactHandler(BaseHandler):
+class ContactHandler(TemplateView):
     template_name = "contact.html"
 
     def get(self, request, *args, **kwargs):
@@ -121,7 +121,7 @@ class ContactHandler(BaseHandler):
         return render(request, self.template_name, context)
 
 
-class PolicyHandler(BaseHandler):
+class PolicyHandler(TemplateView):
     template_name = "policy.html"
 
     def get(self, request, *args, **kwargs):
@@ -129,7 +129,7 @@ class PolicyHandler(BaseHandler):
         return render(request, self.template_name, context)
 
 
-class TermsHandler(BaseHandler):
+class TermsHandler(TemplateView):
     template_name = "terms.html"
 
     def get(self, request, *args, **kwargs):
@@ -137,7 +137,7 @@ class TermsHandler(BaseHandler):
         return render(request, self.template_name, context)
 
 
-class HealthCheckHandler(BaseHandler):
+class HealthCheckHandler(TemplateView):
     def get(self, request, *args, **kwargs):
         # return HttpResponse(str(request.headers))
         return HttpResponse("OK")

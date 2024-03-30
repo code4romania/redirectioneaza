@@ -19,12 +19,12 @@ from django_q.tasks import async_task
 from redirectioneaza.common.cache import cache_decorator
 from users.models import User
 from .api import CheckNgoUrl
-from .base import AccountHandler
+from .base import BaseAccountView
 from ..models.jobs import Job, JobStatusChoices
 from ..models.main import Donor, Ngo, ngo_id_number_validator
 
 
-class MyAccountDetailsHandler(AccountHandler):
+class MyAccountDetailsView(BaseAccountView):
     template_name = "ngo/my-account-details.html"
 
     @method_decorator(login_required(login_url=reverse_lazy("login")))
@@ -46,7 +46,7 @@ class MyAccountDetailsHandler(AccountHandler):
         return render(request, self.template_name, context)
 
 
-class ArchiveDownloadLinkHandler(AccountHandler):
+class ArchiveDownloadLinkView(BaseAccountView):
     @method_decorator(login_required(login_url=reverse_lazy("login")))
     def get(self, request: HttpRequest, job_id, *args, **kwargs):
         user: User = request.user
@@ -76,7 +76,7 @@ class ArchiveDownloadLinkHandler(AccountHandler):
         return redirect(job.zip.url)
 
 
-class MyAccountHandler(AccountHandler):
+class MyAccountView(BaseAccountView):
     template_name = "ngo/my-account.html"
 
     @staticmethod
@@ -159,7 +159,7 @@ def delete_prefilled_form(ngo_id):
     return Ngo.delete_prefilled_form(ngo_id)
 
 
-class NgoDetailsHandler(AccountHandler):
+class NgoDetailsView(BaseAccountView):
     template_name = "ngo/ngo-details.html"
 
     @method_decorator(login_required(login_url=reverse_lazy("login")))

@@ -6,10 +6,9 @@ from datetime import datetime
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
 from django.utils import timezone
+from django.views.generic import TemplateView
 
 from donations.models.main import Donor, Ngo
-from .base import Handler
-
 
 logger = logging.getLogger(__name__)
 
@@ -17,7 +16,7 @@ logger = logging.getLogger(__name__)
 # These CRON endpoints are only accessible by the Django Admin
 
 
-class Stats(Handler):
+class Stats(TemplateView):
     def get(self, request):
         if not request.user.is_superuser:
             raise PermissionDenied()
@@ -49,7 +48,7 @@ class Stats(Handler):
         return HttpResponse(res)
 
 
-class CustomExport(Handler):
+class CustomExport(TemplateView):
     def get(self, request):
         if not request.user.is_superuser:
             raise PermissionDenied()
@@ -115,7 +114,7 @@ class CustomExport(Handler):
         return response
 
 
-class NgoExport(Handler):
+class NgoExport(TemplateView):
     def get(self, request):
         if not request.user.is_superuser:
             raise PermissionDenied()
@@ -145,7 +144,7 @@ class NgoExport(Handler):
         return response
 
 
-class NgoRemoveForms(Handler):
+class NgoRemoveForms(TemplateView):
     def get(self, request):
         if not request.user.is_superuser:
             raise PermissionDenied()

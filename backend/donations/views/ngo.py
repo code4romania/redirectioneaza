@@ -10,10 +10,10 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext as _
+from django.views.generic import TemplateView
 from ipware import get_client_ip
 
 from redirectioneaza.common.messaging import send_email
-from .base import BaseHandler
 from .captcha import validate_captcha
 from ..models.main import Donor, Ngo
 from ..pdf import add_signature, create_pdf
@@ -21,7 +21,7 @@ from ..pdf import add_signature, create_pdf
 logger = logging.getLogger(__name__)
 
 
-class DonationSucces(BaseHandler):
+class DonationSucces(TemplateView):
     template_name = "succes.html"
 
     def get_context_data(self, ngo_url, **kwargs):
@@ -61,7 +61,7 @@ class DonationSucces(BaseHandler):
         return render(self.request, self.template_name, context)
 
 
-class FormSignature(BaseHandler):
+class FormSignature(TemplateView):
     template_name = "signature.html"
 
     def __init__(self, **kwargs):
@@ -167,7 +167,7 @@ class FormSignature(BaseHandler):
         return redirect(reverse("ngo-twopercent-success", kwargs={"ngo_url": ngo_url}))
 
 
-class TwoPercentHandler(BaseHandler):
+class TwoPercentHandler(TemplateView):
     template_name = "twopercent.html"
 
     def get(self, request, ngo_url, *args, **kwargs):
@@ -436,7 +436,7 @@ class TwoPercentHandler(BaseHandler):
         return render(request, self.template_name, context)
 
 
-class OwnFormDownloadLinkHandler(BaseHandler):
+class OwnFormDownloadLinkHandler(TemplateView):
     def get(self, request, donor_date_str, donor_id, donor_hash, *args, **kwargs):
         # Don't allow downloading donation forms older than this
         cutoff_date = timezone.now() - timedelta(days=365)

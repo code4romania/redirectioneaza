@@ -2,7 +2,7 @@ import logging
 import uuid
 
 from django.conf import settings
-from django.contrib.auth import authenticate, login, logout, get_user_model
+from django.contrib.auth import authenticate, get_user_model, login, logout
 from django.db import IntegrityError
 from django.http import Http404, HttpRequest
 from django.shortcuts import redirect, render
@@ -11,13 +11,13 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from redirectioneaza.common.messaging import send_email
-from .base import AccountHandler
+from .base import BaseAccountView
 from ..forms.account import ForgotPasswordForm, LoginForm, RegisterForm, ResetPasswordForm
 
 logger = logging.getLogger(__name__)
 
 
-class ForgotPasswordHandler(AccountHandler):
+class ForgotPasswordView(BaseAccountView):
     template_name = "resetare-parola.html"
 
     def get(self, request, *args, **kwargs):
@@ -70,7 +70,7 @@ class ForgotPasswordHandler(AccountHandler):
         )
 
 
-class LoginHandler(AccountHandler):
+class LoginView(BaseAccountView):
     template_name = "login.html"
 
     def get(self, request, *args, **kwargs):
@@ -125,13 +125,13 @@ class LoginHandler(AccountHandler):
         return render(request, self.template_name, context)
 
 
-class LogoutHandler(AccountHandler):
+class LogoutView(BaseAccountView):
     def get(self, request, *args, **kwargs):
         logout(request)
         return redirect("/")
 
 
-class SetPasswordHandler(AccountHandler):
+class SetPasswordView(BaseAccountView):
     template_name = "parola-noua.html"
 
     def post(self, request, *args, **kwargs):
@@ -157,7 +157,7 @@ class SetPasswordHandler(AccountHandler):
         return redirect(reverse("contul-meu"))
 
 
-class SignupHandler(AccountHandler):
+class SignupView(BaseAccountView):
     template_name = "cont-nou.html"
 
     def get(self, request, *args, **kwargs):
@@ -233,7 +233,7 @@ class SignupHandler(AccountHandler):
         return redirect(reverse("contul-meu"))
 
 
-class VerificationHandler(AccountHandler):
+class VerificationView(BaseAccountView):
     """
     handler used to:
         v - verify new account
