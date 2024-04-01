@@ -1,10 +1,8 @@
-
-
-
 <div id="donation-table" class="col-xs-12 col-md-8 col-md-offset-2">
     <p>
         Mai jos găsești o listă cu toate persoanele care au completat declarația de redirecționare.
-        Unii contribuabili au semnat online declarațiile, iar alții au ales să le semneze pe hârtie și să le trimită personal.
+        Unii contribuabili au semnat online declarațiile, iar alții au ales să le semneze pe hârtie și să le trimită
+        personal.
     </p>
     {% if not has_signed_form %}
         <div class="alert alert-info">
@@ -15,27 +13,34 @@
     {% endif %}
 
     {% if donor_metadata["total_signed"] and has_signed_form %}
-    <p>
-        {% if donor_metadata["total_signed"] == 1 %}
-            Folosind butonul de mai jos, puteți descărca declarația semnată online pentru anul curent.
-        {% else %}
-            Folosind butonul de mai jos, puteți descărca cele {{ donor_metadata["total_signed"] }} declarații semnate online pentru anul curent.
-        {% endif %}
+        <p>
+            {% if donor_metadata["total_signed"] == 1 %}
+                Folosind butonul de mai jos, puteți descărca declarația semnată online pentru anul curent.
+            {% else %}
+                Folosind butonul de mai jos, puteți descărca cele {{ donor_metadata["total_signed"] }} declarații
+                semnate online pentru anul curent.
+            {% endif %}
+            <br>
+            Deoarece operația de descărcare a declarațiilor poate dura mai mult timp, în funcție de numărul de donatori,
+            momentan puteți descărca o singură arhivă la fiecare {{ hours_between_retries }} ore.
+            
         </p>
     {% endif %}
 
     {% for key, value in donors.items() %}
 
         {% if value or key == current_year %}
-            <p>{{ key }}</p>
+            <p>Formulare din <strong>anul {{ key }}</strong></p>
 
             <div>
                 {% if key == current_year and ngo.is_accepting_forms and value %}
                     {% if job_in_progress %}
                         <div class="alert alert-info">
                             <strong>Atenție!</strong>
-                            Exportul datelor este în desfășurare. La finalizarea procesului vei primi un email cu un link de descărcare a tuturor declarațiilor care au fost semnate online.
-                            Dacă nu ai primit email, apasă butonul de refresh în această pagină și vei putea descărca arhiva direct de aici din platforma.
+                            Exportul datelor este în desfășurare. La finalizarea procesului vei primi un email cu un
+                            link de descărcare a tuturor declarațiilor care au fost semnate online.
+                            Dacă nu ai primit email, apasă butonul de refresh în această pagină și vei putea descărca
+                            arhiva direct de aici din platforma.
                         </div>
                     {% endif %}
                     <form action="{{ url('api-ngo-forms') }}" method="post">
@@ -44,18 +49,21 @@
                             <div class="alert alert-info">
                                 Nu ați activat primirea electronică de declarații.
                                 Pentru a activa această funcționalitate, selectați opțiunea
-                                <b>"Doresc sa primesc declarațiile completate pe email"</b>
+                                <strong>"Doresc sa primesc declarațiile completate pe email"</strong>
                                 din secțiunea de setări a organizației.
                             </div>
                         {% endif %}
                         {% if has_signed_form and disable_download %}
                             <div class="alert alert-info">
                                 Descărcarea de declarații este momentan blocată pentru organizația ta.
-                                Descărcarea de declarații este limitată la una singură la fiecare 12 ore.
+                                <br>
+                                Descărcarea de declarații este limitată la una singură la fiecare
+                                {{ hours_between_retries }}
+                                ore.
                             </div>
                         {% endif %}
                         <button id="download-button" class="btn" type="submit"
-                            {% if disable_download %}disabled{% endif %}
+                                {% if disable_download %}disabled{% endif %}
                         >
                             Descarcă declarațiile semnate
                         </button>
@@ -64,36 +72,36 @@
                     {% if jobs %}
                         <table class="table margin-top">
                             <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Data export</th>
-                                    <th>Status</th>
-                                    <th>Link download</th>
-                                </tr>
+                            <tr>
+                                <th>#</th>
+                                <th>Data export</th>
+                                <th>Status</th>
+                                <th>Link download</th>
+                            </tr>
                             </thead>
                             <tbody>
-                                {% for job in jobs %}
-                                    <tr>
-                                        <td>{{ loop.index }}</td>
-                                        <td>{{ job.date_created.strftime('%d-%m-%Y') }}</td>
-                                        <td>
-                                            {% if job.status == 'done' %}
-                                                Finalizat
-                                            {% elif job.status == 'new' %}
-                                                In curs
-                                            {% elif job.status == 'error' %}
-                                                Eroare
-                                            {% endif %}
-                                        </td>
-                                        <td>
-                                            {% if job.zip %}
-                                                <a href="{{ url('admin-download-link', kwargs={'job_id': job.id}) }}">Descarcă</a>
-                                            {% else %}
-                                                -
-                                            {% endif %}
-                                        </td>
-                                    </tr>
-                                {% endfor %}
+                            {% for job in jobs %}
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td>{{ job.date_created.strftime('%d-%m-%Y') }}</td>
+                                    <td>
+                                        {% if job.status == 'done' %}
+                                            Finalizat
+                                        {% elif job.status == 'new' %}
+                                            In curs
+                                        {% elif job.status == 'error' %}
+                                            Eroare
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if job.zip %}
+                                            <a href="{{ url('admin-download-link', kwargs={'job_id': job.id}) }}">Descarcă</a>
+                                        {% else %}
+                                            -
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
                             </tbody>
                         </table>
                     {% endif %}
@@ -102,44 +110,44 @@
 
             <table class="table margin-top">
                 <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Nume</th>
-                        <th>Semnat</th>
-                        <th>Oraș, <span class="text-muted">Județ</span></th>
-                        <th>Email</th>
-                        <th>Telefon</th>
-                    </tr>
+                <tr>
+                    <th>#</th>
+                    <th>Nume</th>
+                    <th>Semnat</th>
+                    <th>Oraș, <span class="text-muted">Județ</span></th>
+                    <th>Email</th>
+                    <th>Telefon</th>
+                </tr>
                 </thead>
                 <tbody>
-                    {% if value %}
-                        {% for donation in value %}
-                            <tr>
-                                <td>{{ loop.length - loop.index + 1 }}</td>
-                                <td>{{ donation.first_name + " " + donation.last_name }}</td>
-                                <td>{{ "Da" if donation.has_signed else "Nu" }}</td>
-                                <td>{{ donation.city }}, <span class="text-muted">{{ donation.county }}</span></td>
-
-                                {% if donation.is_anonymous != True %}
-                                    <td>{{ donation.email if donation.email }}</td>
-                                    <td>{{ donation.tel if donation.tel }}</td>
-                                {% else %}
-                                    <td colspan="2" class="text-center text-muted">
-                                        Aceasta persoana a ales <br>
-                                        să nu-și arate datele de contact.
-                                    </td>
-                                {% endif %}
-                            </tr>
-                        {% endfor %}
-                    {% else %}
+                {% if value %}
+                    {% for donation in value %}
                         <tr>
-                            <td colspan="5">
-                                <p class="well well-lg text-center">
-                                    Din păcate nu există nici un document completat pentru acest an.
-                                </p>
-                            </td>
+                            <td>{{ loop.length - loop.index + 1 }}</td>
+                            <td>{{ donation.first_name + " " + donation.last_name }}</td>
+                            <td>{{ "Da" if donation.has_signed else "Nu" }}</td>
+                            <td>{{ donation.city }}, <span class="text-muted">{{ donation.county }}</span></td>
+
+                            {% if donation.is_anonymous != True %}
+                                <td>{{ donation.email if donation.email }}</td>
+                                <td>{{ donation.tel if donation.tel }}</td>
+                            {% else %}
+                                <td colspan="2" class="text-center text-muted">
+                                    Aceasta persoana a ales <br>
+                                    să nu-și arate datele de contact.
+                                </td>
+                            {% endif %}
                         </tr>
-                    {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="5">
+                            <p class="well well-lg text-center">
+                                Din păcate nu există nici un document completat pentru acest an.
+                            </p>
+                        </td>
+                    </tr>
+                {% endif %}
                 </tbody>
             </table>
         {% endif %}

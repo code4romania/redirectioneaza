@@ -125,10 +125,9 @@ class MyAccountView(BaseAccountView):
             last_job_date = ngo_jobs[0].date_created
             last_job_status = ngo_jobs[0].status
 
+            timedelta = timezone.timedelta(0)
             if last_job_status != JobStatusChoices.ERROR:
-                timedelta = timezone.timedelta(hours=12)
-            else:
-                timedelta = timezone.timedelta(minutes=30)
+                timedelta = timezone.timedelta(hours=settings.TIMEDELTA_FORMS_DOWNLOAD_HOURS)
 
             if last_job_date > now - timedelta:
                 last_job_was_recent = True
@@ -147,6 +146,8 @@ class MyAccountView(BaseAccountView):
             "donor_metadata": donors_metadata,
             "counties": settings.FORM_COUNTIES_NATIONAL,
             "disable_download": disable_download,
+            "contact_email": settings.CONTACT_EMAIL_ADDRESS,
+            "hours_between_retries": settings.TIMEDELTA_FORMS_DOWNLOAD_HOURS,
             "has_signed_form": has_signed_form,
             "current_year": now.year,
             "ngo_url": ngo_url,

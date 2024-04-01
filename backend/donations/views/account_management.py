@@ -59,7 +59,7 @@ class ForgotPasswordView(BaseAccountView):
                     },
                 ),
             ),
-            "contact_mail": settings.CONTACT_EMAIL_ADDRESS,
+            "contact_email": settings.CONTACT_EMAIL_ADDRESS,
         }
         send_email(
             subject=_("Reset redirectioneaza.ro password"),

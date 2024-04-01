@@ -162,6 +162,16 @@ class GetNgoForms(BaseAccountView):
         if not ngo:
             return redirect(reverse("contul-meu"))
 
+        try:
+            latest_job: Job = Job.objects.filter(ngo=ngo).latest("date_created")
+
+            form_retry_threshold = timezone.now() - timezone.timedelta(hours=settings.TIMEDELTA_FORMS_DOWNLOAD_HOURS)
+            if latest_job.status != JobStatusChoices.ERROR and latest_job.date_created > form_retry_threshold:
+                return redirect(reverse("contul-meu"))
+
+        except Job.DoesNotExist:
+            pass
+
         DONATION_LIMIT = date(timezone.now().year, 5, 25)
 
         if timezone.now().date() > DONATION_LIMIT:

@@ -109,7 +109,10 @@ class NoteHandler(TemplateView):
     template_name = "note.html"
 
     def get(self, request, *args, **kwargs):
-        context = {"title": "Notă de informare"}
+        context = {
+            "title": "Notă de informare",
+            "contact_email": settings.CONTACT_EMAIL_ADDRESS,
+        }
         return render(request, self.template_name, context)
 
 
@@ -117,7 +120,10 @@ class ContactHandler(TemplateView):
     template_name = "contact.html"
 
     def get(self, request, *args, **kwargs):
-        context = {"title": "Contact"}
+        context = {
+            "title": "Contact",
+            "contact_email": settings.CONTACT_EMAIL_ADDRESS,
+        }
         return render(request, self.template_name, context)
 
 
@@ -133,7 +139,10 @@ class TermsHandler(TemplateView):
     template_name = "terms.html"
 
     def get(self, request, *args, **kwargs):
-        context = {"title": "Termeni și condiții"}
+        context = {
+            "title": "Termeni și condiții",
+            "contact_email": settings.CONTACT_EMAIL_ADDRESS,
+        }
         return render(request, self.template_name, context)
 
 
