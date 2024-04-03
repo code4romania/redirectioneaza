@@ -78,7 +78,7 @@ markupsafe==2.1.5
     # via jinja2
 packaging==24.0
     # via gunicorn
-pillow==10.2.0
+pillow==10.3.0
     # via reportlab
 psutil==5.9.8
     # via -r requirements.in
