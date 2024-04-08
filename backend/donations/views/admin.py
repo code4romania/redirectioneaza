@@ -4,7 +4,7 @@ from datetime import datetime
 
 from django.conf import settings
 from django.core.exceptions import BadRequest, PermissionDenied
-from django.db.models import Count
+from django.db.models import Count, Q
 from django.http import Http404
 from django.shortcuts import redirect, render
 from django.urls import reverse
@@ -185,6 +185,62 @@ class AdminNgosListByName(AdminNgosList):
 class AdminNgosListByForms(AdminNgosList):
     def _get_ngos(self):
         return super()._get_ngos().order_by("-forms_count")
+
+
+class AdminNgosListByFormsNow(AdminNgosList):
+    def _get_ngos(self):
+        return Ngo.objects.all().annotate(
+            forms_count=Count(
+                "donor",
+                filter=Q(
+                    date_created__gte=timezone.now().replace(
+                        year=datetime.date(timezone.now()).year,
+                        month=1,
+                        day=1,
+                        hour=0,
+                        minute=0,
+                        second=0,
+                        microsecond=0,
+                        tzinfo=timezone.now().tzinfo,
+                    ),
+                ),
+            )
+        )
+
+
+class AdminNgosListByFormsPrevious(AdminNgosList):
+    def _get_ngos(self):
+        return Ngo.objects.all().annotate(
+            forms_count=Count(
+                "donor",
+                filter=(
+                    Q(
+                        date_created__gte=timezone.now().replace(
+                            year=datetime.date(timezone.now()).year - 1,
+                            month=1,
+                            day=1,
+                            hour=0,
+                            minute=0,
+                            second=0,
+                            microsecond=0,
+                            tzinfo=timezone.now().tzinfo,
+                        )
+                    )
+                    & Q(
+                        date_created__lt=timezone.now().replace(
+                            year=datetime.date(timezone.now()).year - 1,
+                            month=12,
+                            day=31,
+                            hour=23,
+                            minute=59,
+                            second=59,
+                            microsecond=999999,
+                            tzinfo=timezone.now().tzinfo,
+                        )
+                    )
+                ),
+            ),
+        )
 
 
 class SendCampaign(TemplateView):

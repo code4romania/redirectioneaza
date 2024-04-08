@@ -35,6 +35,8 @@ from donations.views.admin import (
     AdminNgoHandler,
     AdminNgosListByDate,
     AdminNgosListByForms,
+    AdminNgosListByFormsNow,
+    AdminNgosListByFormsPrevious,
     AdminNgosListByName,
     UserAccounts,
 )
@@ -131,6 +133,8 @@ urlpatterns = (
         path("admin/orgs/date/", AdminNgosListByDate.as_view(), name="admin-ngos-by-date"),
         path("admin/orgs/name/", AdminNgosListByName.as_view(), name="admin-ngos-by-name"),
         path("admin/orgs/forms/", AdminNgosListByForms.as_view(), name="admin-ngos-by-forms"),
+        path("admin/orgs/forms-current/", AdminNgosListByFormsNow.as_view(), name="admin-ngos-by-forms-now"),
+        path("admin/orgs/forms-previous/", AdminNgosListByFormsPrevious.as_view(), name="admin-ngos-by-forms-prev"),
         path(
             "admin/organizatii/",
             RedirectView.as_view(pattern_name="admin-ngos-by-date", permanent=True),
