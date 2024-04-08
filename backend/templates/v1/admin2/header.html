@@ -16,19 +16,43 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li><a href="{{ url('admin-index') }}">Acasă</a></li>
+
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                         Organizații
                         <span class="caret"></span>
                     </a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="{{ url('admin-ngos-by-date') }}">Organizații după data creării</a></li>
-                        <li><a href="{{ url('admin-ngos-by-name') }}">Organizații alfabetic</a></li>
-                        <li><a href="{{ url('admin-ngos-by-forms') }}">Organizații după formulare</a></li>
-                        <li><a href="{{ url('admin-ngos-by-forms-now') }}">Organizații după formulare în anul curent</a>
+                    <ul class="dropdown-menu dropdown-menu-contrast" role="menu">
+                        <li class="dropdown-header">
+                            <strong>
+                                Sortare după:
+                            </strong>
                         </li>
-                        <li><a href="{{ url('admin-ngos-by-forms-prev') }}">Organizații după formulare în anul
-                            precedent</a></li>
+                        <li role="menuitem">
+                            <a href="{{ url('admin-ngos-by-date') }}">
+                                data creării
+                            </a>
+                        </li>
+                        <li role="menuitem">
+                            <a href="{{ url('admin-ngos-by-name') }}">
+                                alfabetic
+                            </a>
+                        </li>
+                        <li role="menuitem">
+                            <a href="{{ url('admin-ngos-by-forms') }}">
+                                numărul de formulare
+                            </a>
+                        </li>
+                        <li role="menuitem">
+                            <a href="{{ url('admin-ngos-by-forms-now') }}">
+                                numărul de formulare în anul curent
+                            </a>
+                        </li>
+                        <li role="menuitem">
+                            <a href="{{ url('admin-ngos-by-forms-prev') }}">
+                                numărul de formulare în anul precedent
+                            </a>
+                        </li>
                     </ul>
                 </li>
 
