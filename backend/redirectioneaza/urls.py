@@ -33,7 +33,9 @@ from donations.views.admin import (
     AdminHome,
     AdminNewNgoHandler,
     AdminNgoHandler,
-    AdminNgosList,
+    AdminNgosListByDate,
+    AdminNgosListByForms,
+    AdminNgosListByName,
     UserAccounts,
 )
 from donations.views.api import CheckNgoUrl, GetNgoForm, GetNgoForms, GetUploadUrl, NgosApi
@@ -126,7 +128,14 @@ urlpatterns = (
         # ADMIN HANDLERS
         path("admin/ong-nou/", AdminNewNgoHandler.as_view(), name="admin-ong-nou"),
         path("admin/conturi/", UserAccounts.as_view(), name="admin-users"),
-        path("admin/organizatii/", AdminNgosList.as_view(), name="admin-ngos"),
+        path("admin/organizatii/sorted/date/", AdminNgosListByDate.as_view(), name="admin-ngos-by-date"),
+        path("admin/organizatii/sorted/name/", AdminNgosListByName.as_view(), name="admin-ngos-by-name"),
+        path("admin/organizatii/sorted/formulare/", AdminNgosListByForms.as_view(), name="admin-ngos-by-forms"),
+        path(
+            "admin/organizatii/",
+            RedirectView.as_view(pattern_name="admin-ngos-by-date", permanent=True),
+            name="admin-ngos",
+        ),
         path("admin/<ngo_url>/", AdminNgoHandler.as_view(), name="admin-ong"),
         path("admin/download/<job_id>/", ArchiveDownloadLinkView.as_view(), name="admin-download-link"),
         path("admin/", AdminHome.as_view(), name="admin-index"),  # name was "admin"

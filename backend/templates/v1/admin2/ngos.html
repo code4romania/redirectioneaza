@@ -12,6 +12,8 @@
             <tr>
                 <th>#</th>
                 <th>Nume ONG</th>
+                <th>Activ</th>
+                <th>Declarații</th>
                 <th>Email</th>
                 <th>Județ</th>
             </tr>
@@ -25,6 +27,18 @@
                         </td>
                         <td>
                             <a href="{{ url('admin-ong', kwargs={'ngo_url': ngo.slug}) }}">{{ ngo.name }}</a>
+                        </td>
+                        <td>
+                            {% if ngo.is_active %}
+                                <a href="{{ url('twopercent', kwargs={'ngo_url':ngo.slug}) }}" target="_blank">
+                                    DA
+                                </a>
+                            {% else %}
+                                NU
+                            {% endif %}
+                        </td>
+                        <td>
+                            {{ ngo.forms_count }}
                         </td>
                         <td>
                             {{ ngo.email or '' }}

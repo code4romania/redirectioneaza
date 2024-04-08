@@ -1,7 +1,8 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -15,7 +16,18 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li><a href="{{ url('admin-index') }}">Acasă</a></li>
-                <li><a href="{{ url('admin-ngos') }}">Organizații</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        Organizații
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="{{ url('admin-ngos-by-date') }}">Organizații după data creării</a></li>
+                        <li><a href="{{ url('admin-ngos-by-name') }}">Organizații alfabetic</a></li>
+                        <li><a href="{{ url('admin-ngos-by-forms') }}">Organizații după formulare</a></li>
+                    </ul>
+                </li>
+
                 <li><a href="{{ url('admin-users') }}">Conturi</a></li>
                 {% if is_staff %}
                     <li><a href="{{ url('admin:index') }}">Admin avansat</a></li>
