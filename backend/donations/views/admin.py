@@ -163,11 +163,28 @@ class AdminNgosList(TemplateView):
             return redirect(User.create_admin_login_url(reverse("admin-ngos")))
 
         context["title"] = "Admin"
-        ngos = Ngo.objects.all()
-        context["ngos"] = ngos
+        context["ngos"] = self._get_ngos()
 
         # render a response
         return render(request, self.template_name, context)
+
+    def _get_ngos(self):
+        return Ngo.objects.all().annotate(forms_count=Count("donor"))
+
+
+class AdminNgosListByDate(AdminNgosList):
+    def _get_ngos(self):
+        return super()._get_ngos().order_by("-date_created")
+
+
+class AdminNgosListByName(AdminNgosList):
+    def _get_ngos(self):
+        return super()._get_ngos().order_by("name")
+
+
+class AdminNgosListByForms(AdminNgosList):
+    def _get_ngos(self):
+        return super()._get_ngos().order_by("-forms_count")
 
 
 class SendCampaign(TemplateView):
