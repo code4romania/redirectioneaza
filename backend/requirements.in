@@ -37,11 +37,11 @@ django-localflavor~=4.0.0
 
 # pdf creation
 reportlab~=4.1.0
-pypdf~=4.1.0
+pypdf~=4.2.0
 svglib~=1.5.1
 
 # requests
 requests~=2.31.0
 
 # Sentry
-sentry-sdk[django]~=1.42.0
+sentry-sdk[django]~=1.44.1
