@@ -4,6 +4,7 @@ import logging
 import tempfile
 from datetime import datetime
 from pathlib import Path
+from typing import Dict
 from zipfile import ZIP_DEFLATED, ZipFile
 
 import requests
@@ -134,6 +135,7 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], ngo: Ngo):
                     zipped_files += 1
                     retries_left = 0
 
+                    full_address: Dict = donation.get_address()
                     csv_writer.writerow(
                         [
                             donation.last_name,
@@ -142,13 +144,13 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], ngo: Ngo):
                             donation.get_cnp(),
                             donation.county,
                             donation.city,
-                            _("The address is not available yet. This field will be available soon."),
-                            "-",
-                            "-",
-                            "-",
-                            "-",
-                            "-",
-                            "-",
+                            donation.address_to_string(full_address),
+                            full_address.get("str", ""),
+                            full_address.get("nr", ""),
+                            full_address.get("bl", ""),
+                            full_address.get("sc", ""),
+                            full_address.get("et", ""),
+                            full_address.get("ap", ""),
                             filename,
                         ]
                     )

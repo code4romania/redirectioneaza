@@ -392,6 +392,31 @@ class Donor(models.Model):
     def get_address(self) -> Dict:
         return self.decrypt_address(self.encrypted_address)
 
+    def get_address_string(self) -> str:
+        address = self.get_address()
+        return self.address_to_string(address)
+
+    @staticmethod
+    def address_to_string(address: Dict) -> str:
+        street_name = address.get("str", "")
+        street_number = address.get("nr", "")
+        street_bl = address.get("bl", "")
+        street_sc = address.get("sc", "")
+        street_et = address.get("et", "")
+        street_ap = address.get("ap", "")
+
+        address_string = f"{street_name} {street_number}"
+        if street_bl:
+            address_string += f", bl. {street_bl}"
+        if street_sc:
+            address_string += f", sc. {street_sc}"
+        if street_et:
+            address_string += f", et. {street_et}"
+        if street_ap:
+            address_string += f", ap. {street_ap}"
+
+        return address_string
+
     @property
     def donation_hash(self):
         if not self.pk:
