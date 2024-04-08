@@ -128,9 +128,9 @@ urlpatterns = (
         # ADMIN HANDLERS
         path("admin/ong-nou/", AdminNewNgoHandler.as_view(), name="admin-ong-nou"),
         path("admin/conturi/", UserAccounts.as_view(), name="admin-users"),
-        path("admin/organizatii/sorted/date/", AdminNgosListByDate.as_view(), name="admin-ngos-by-date"),
-        path("admin/organizatii/sorted/name/", AdminNgosListByName.as_view(), name="admin-ngos-by-name"),
-        path("admin/organizatii/sorted/formulare/", AdminNgosListByForms.as_view(), name="admin-ngos-by-forms"),
+        path("admin/orgs/sorted/date/", AdminNgosListByDate.as_view(), name="admin-ngos-by-date"),
+        path("admin/orgs/sorted/name/", AdminNgosListByName.as_view(), name="admin-ngos-by-name"),
+        path("admin/orgs/sorted/forms/", AdminNgosListByForms.as_view(), name="admin-ngos-by-forms"),
         path(
             "admin/organizatii/",
             RedirectView.as_view(pattern_name="admin-ngos-by-date", permanent=True),
