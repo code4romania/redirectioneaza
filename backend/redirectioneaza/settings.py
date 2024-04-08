@@ -119,7 +119,7 @@ env = environ.Env(
     SENTRY_DSN=(str, ""),
     SENTRY_TRACES_SAMPLE_RATE=(float, 0),
     SENTRY_PROFILES_SAMPLE_RATE=(float, 0),
-    # google analytics:
+    # Google Analytics:
     GOOGLE_ANALYTICS_ID=(str, ""),
 )
 
