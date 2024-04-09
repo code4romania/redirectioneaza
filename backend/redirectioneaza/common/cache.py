@@ -2,7 +2,7 @@ from django.conf import settings
 from django.core.cache import cache
 
 
-def cache_decorator(timeout: int, cache_key: str = None, cache_key_prefix: str = None):
+def cache_decorator(*, timeout: int, cache_key: str = None, cache_key_prefix: str = None):
     def decorator(func):
         def wrapper(*args, **kwargs):
             if not cache_key and not cache_key_prefix:
