@@ -138,9 +138,11 @@ class DonorAdmin(admin.ModelAdmin):
     )
     date_hierarchy = "date_created"
 
+    search_fields = ("email", "ngo")
+
     exclude = ("personal_identifier", "address")
 
-    readonly_fields = ("date_created",)
+    readonly_fields = ("date_created", "get_form_url")
     autocomplete_fields = ("ngo",)
 
     fieldsets = (
@@ -158,7 +160,7 @@ class DonorAdmin(admin.ModelAdmin):
         ),
         (
             _("File"),
-            {"fields": ("pdf_url", "filename", "has_signed", "pdf_file")},
+            {"fields": ("has_signed", "pdf_file", "get_form_url")},
         ),
         (
             _("Date"),
@@ -168,6 +170,10 @@ class DonorAdmin(admin.ModelAdmin):
 
     def has_change_permission(self, request, obj=None):
         return False
+
+    @admin.display(description=_("Form"))
+    def get_form_url(self, obj: Donor):
+        return obj.form_url
 
 
 @admin.register(Job)
