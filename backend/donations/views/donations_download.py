@@ -154,7 +154,8 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], ngo: Ngo):
                         "cnp": donation.get_cnp(),
                         "county": donation.county,
                         "city": donation.city,
-                        "full_address": donation.address_to_string(full_address),
+                        "full_address": f"jud. {donation.county}, loc. {donation.city}, "
+                        + donation.address_to_string(full_address),
                         "str": full_address.get("str", ""),
                         "nr": full_address.get("nr", ""),
                         "bl": full_address.get("bl", ""),
