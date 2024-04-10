@@ -100,6 +100,7 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], ngo: Ngo):
                 _("first name"),
                 _("initial"),
                 _("CNP"),
+                _("duplicate"),
                 _("phone"),
                 _("email"),
                 _("county"),
@@ -117,6 +118,7 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], ngo: Ngo):
             ]
         )
 
+        cnp_idx: dict[str, int] = {}  # record a CNP first appearance 1-based-index in the donations data list
         donations_data: List[Dict] = []
         donation: Donor
 
@@ -150,6 +152,13 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], ngo: Ngo):
 
                     phone = "".join([c for c in donation.phone if c.isdigit()])
 
+                    donation_cnp = donation.get_cnp()
+                    if donation_cnp not in cnp_idx:
+                        cnp_idx[donation_cnp] = len(donations_data)
+                        duplicate_cnp_idx = 0
+                    else:
+                        duplicate_cnp_idx = cnp_idx[donation_cnp]
+
                     full_address: Dict = donation.get_address()
                     donations_data[-1] = {
                         "last_name": donation.last_name,
@@ -157,7 +166,8 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], ngo: Ngo):
                         "initial": donation.initial,
                         "phone": phone,
                         "email": donation.email,
-                        "cnp": donation.get_cnp(),
+                        "cnp": donation_cnp,
+                        "duplicate": duplicate_cnp_idx,
                         "county": donation.county,
                         "city": donation.city,
                         "full_address": f"jud. {donation.county}, loc. {donation.city}, "
@@ -179,6 +189,7 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], ngo: Ngo):
                             donations_data[-1]["first_name"],
                             donations_data[-1]["initial"],
                             donations_data[-1]["cnp"],
+                            donations_data[-1]["duplicate"],
                             donations_data[-1]["phone"],
                             donations_data[-1]["email"],
                             donations_data[-1]["county"],
@@ -219,7 +230,7 @@ def _generate_xmls(
 
     # Attach XML files with data for up to DONATIONS_XML_LIMIT_PER_FILE donors each
     logger.info("Attaching the XMLs to the ZIP")
-    for xml_idx in range(1, math.ceil(len(donations_data) / donations_per_file) + 1):
+    for xml_idx in range(1, math.ceil(len(donations_data) / donations_per_file) + 1):  # 1-based-index
         # The XML header content
         xml_str: str = """<?xml version="1.0" encoding="UTF-8"?>"""
         xml_str += f"""
@@ -261,10 +272,13 @@ def _generate_xmls(
                 </nrDataB>
             """
 
-        donation_idx = 0
+        donation_idx = 0  # 1-based-index
         for donation_data in donations_data[(xml_idx - 1) * donations_per_file : xml_idx * donations_per_file]:
-            donation_idx += 1
+            # skip donations which have a duplicate CNP
+            if donations_data["duplicate"]:
+                continue
 
+            donation_idx += 1
             donor_info = f"""
                         <nume>{donation_data["last_name"].upper()}</nume>
                         <init>{donation_data["initial"].upper()}</init>
