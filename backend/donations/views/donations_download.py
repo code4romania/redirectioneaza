@@ -1,6 +1,7 @@
 import csv
 import io
 import logging
+import math
 import tempfile
 from datetime import datetime
 from pathlib import Path
@@ -105,11 +106,17 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], ngo: Ngo):
                 _("floor"),
                 _("apartment"),
                 _("filename"),
+                _("date"),
+                _("duration"),
             ]
         )
 
+        donations_data: list[dict] = []
         donation: Donor
+
         for donation in donations:
+            donations_data.append({})
+
             source_url = _get_pdf_url(donation)
 
             if not source_url:
@@ -136,22 +143,45 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], ngo: Ngo):
                     retries_left = 0
 
                     full_address: Dict = donation.get_address()
+                    donations_data[-1] = {
+                        "last_name": donation.last_name,
+                        "first_name": donation.first_name,
+                        "initial": donation.initial,
+                        "phone": donation.phone,
+                        "email": donation.email,
+                        "cnp": donation.get_cnp(),
+                        "county": donation.county,
+                        "city": donation.city,
+                        "full_address": donation.address_to_string(full_address),
+                        "str": full_address.get("str", ""),
+                        "nr": full_address.get("nr", ""),
+                        "bl": full_address.get("bl", ""),
+                        "sc": full_address.get("sc", ""),
+                        "et": full_address.get("et", ""),
+                        "ap": full_address.get("ap", ""),
+                        "filename": filename,
+                        "date": donation.date_created,
+                        "duration": 2 if donation.two_years else 1,
+                    }
+
                     csv_writer.writerow(
                         [
-                            donation.last_name,
-                            donation.first_name,
-                            donation.initial,
-                            donation.get_cnp(),
-                            donation.county,
-                            donation.city,
-                            donation.address_to_string(full_address),
-                            full_address.get("str", ""),
-                            full_address.get("nr", ""),
-                            full_address.get("bl", ""),
-                            full_address.get("sc", ""),
-                            full_address.get("et", ""),
-                            full_address.get("ap", ""),
-                            filename,
+                            donations_data[-1]["last_name"],
+                            donations_data[-1]["first_name"],
+                            donations_data[-1]["initial"],
+                            donations_data[-1]["cnp"],
+                            donations_data[-1]["county"],
+                            donations_data[-1]["city"],
+                            donations_data[-1]["full_address"],
+                            donations_data[-1]["str"],
+                            donations_data[-1]["nr"],
+                            donations_data[-1]["bl"],
+                            donations_data[-1]["sc"],
+                            donations_data[-1]["et"],
+                            donations_data[-1]["ap"],
+                            donations_data[-1]["filename"],
+                            donations_data[-1]["date"],
+                            donations_data[-1]["duration"],
                         ]
                     )
 
@@ -159,6 +189,118 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], ngo: Ngo):
         logger.info("Attaching the CSV to the ZIP")
         with zip_archive.open("index.csv", mode="w", force_zip64=zip_64_flag) as handler:
             handler.write(csv_output.getvalue().encode())
+
+        # Attach XML files with data for up to 1000 donors each
+        logger.info("Attaching the XMLs to the ZIP")
+        for xml_idx in range(1, math.ceil(len(donations_data) / 1000) + 1):
+            # The XML header content
+            xml_str = f"""
+                <form1>
+                    <btnDoc>
+                        <btnSalt/>
+                        <btnWebService/>
+                        <info>
+                            <help xmlns:xfa="http://www.xfa.org/schema/xfa-data/1.0/" xfa:dataNode="dataGroup"/>
+                        </info>
+                    </btnDoc>
+                    <semnatura xmlns:xfa="http://www.xfa.org/schema/xfa-data/1.0/" xfa:dataNode="dataGroup"/>
+                    <Title xmlns:xfa="http://www.xfa.org/schema/xfa-data/1.0/" xfa:dataNode="dataGroup"/>
+                    <IdDoc>
+                        <universalCode>B230_A1.0.8</universalCode>
+                        <totalPlata_A/>
+                        <cif>{ngo.registration_number}</cif>
+                        <formValid>FORMULAR NEVALIDAT</formValid>
+                        <luna_r>12</luna_r>
+                        <d_rec>0</d_rec>
+                        <an_r>2023</an_r>
+                    </IdDoc>
+            """
+
+            donation_idx = 0
+            for donation_data in donations_data[(xml_idx - 1) * 1000 : xml_idx * 1000]:
+                donation_idx += 1
+                # The XML donation content
+                xml_str += f"""
+                    <contrib>
+                        <nrCrt>
+                            <nV>{donation_idx}</nV>
+                        </nrCrt>
+                        <idCnt>
+                            <nume>{donation_data["last_name"]}</nume>
+                            <init>{donation_data["initial"]}</init>
+                            <pren>{donation_data["first_name"]}</pren>
+                            <cif_c>{donation_data["cnp"]}</cif_c>
+                            <adresa>{donation_data["full_address"]}</adresa>
+                            <telefon>{donation_data["phone"]}</telefon>
+                            <fax/>
+                            <email>{donation_data["email"]}</email>
+                        </idCnt>
+                        <s15>
+                            <date>
+                                <nrCrt>
+                                    <nV>{donation_idx}</nV>
+                                </nrCrt>
+                                <optiuneSuma>
+                                    <slct>
+                                        <ent>1</ent>
+                                        <brs>0</brs>
+                                    </slct>
+                                </optiuneSuma>
+                                <brs>
+                                    <Gap xmlns:xfa="http://www.xfa.org/schema/xfa-data/1.0/" xfa:dataNode="dataGroup"/>
+                                    <idEnt>
+                                        <nrDataC>
+                                            <nrD/>
+                                            <dataD/>
+                                        </nrDataC>
+                                        <nrDataP>
+                                            <nrD/>
+                                            <dataD/>
+                                            <venitB/>
+                                        </nrDataP>
+                                    </idEnt>
+                                </brs>
+                                <ent>
+                                    <Gap xmlns:xfa="http://www.xfa.org/schema/xfa-data/1.0/" xfa:dataNode="dataGroup"/>
+                                    <idEnt>
+                                        <anDoi>{1 if donation_data["duration"] > 1 else 0}</anDoi>
+                                        <cifOJ>{ngo.registration_number}</cifOJ>
+                                        <denOJ>{ngo.name}</denOJ>
+                                        <ibanNp>{ngo.bank_account}</ibanNp>
+                                        <prc>3.50</prc>
+                                        <venitB/>
+                                    </idEnt>
+                                </ent>
+                            </date>
+                        </s15>
+                    </contrib>
+                """
+
+            # The XML footer content
+            xml_str += f"""
+                <footer>
+                    <imp>
+                        <bifaI>
+                            <rprI>0</rprI>
+                        </bifaI>
+                    </imp>
+                    <z_tipPersoana>Rad2</z_tipPersoana>
+                    <z_denEntitate>{ngo.name}</z_denEntitate>
+                    <z_cifEntitate>{ngo.registration_number}</z_cifEntitate>
+                    <z_ibanEntitate>{ngo.bank_account}</z_ibanEntitate>
+                    <nrDataB>
+                        <nrD>{xml_idx}</nrD>
+                        <dataD>{zip_timestamp.day:02}.{zip_timestamp.month:02}.{zip_timestamp.year}</dataD>
+                        <denD>{ngo.name}</denD>
+                        <cifD>{ngo.registration_number}</cifD>
+                        <adresaD>{ngo.address}</adresaD>
+                        <ibanD>{ngo.bank_account}</ibanD>
+                    </nrDataB>
+                </footer>
+            </form1>
+            """
+            with zip_archive.open(f"index_{xml_idx:04}.xml", mode="w", force_zip64=zip_64_flag) as handler:
+                handler.write(xml_str.encode())
 
     logger.info("Creating ZIP file for %d donations", zipped_files)
 
