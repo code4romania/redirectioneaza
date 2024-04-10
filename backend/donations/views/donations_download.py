@@ -200,6 +200,7 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], ngo: Ngo):
         for xml_idx in range(1, math.ceil(len(donations_data) / 1000) + 1):
             # The XML header content
             xml_str = f"""
+                <?xml version="1.0" encoding="UTF-8"?>
                 <form1>
                     <btnDoc>
                         <btnSalt/>
