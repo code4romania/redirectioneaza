@@ -63,6 +63,7 @@ env = environ.Env(
     SITE_TITLE=(str, "redirectioneaza.ro"),
     DONATIONS_LIMIT_DATE=(str, "2016-05-25"),
     DONATIONS_LIMIT_TO_CURRENT_YEAR=(bool, True),
+    DONATIONS_XML_LIMIT_PER_FILE=(int, 100),
     # security settings
     ALLOWED_HOSTS=(list, ["*"]),
     CORS_ALLOWED_ORIGINS=(list, []),
@@ -524,6 +525,8 @@ TITLE = env.str("SITE_TITLE")
 DONATIONS_LIMIT = datetime.strptime(env.str("DONATIONS_LIMIT_DATE"), "%Y-%m-%d").date()
 if env.bool("DONATIONS_LIMIT_TO_CURRENT_YEAR"):
     DONATIONS_LIMIT = date(timezone.now().year, DONATIONS_LIMIT.month, DONATIONS_LIMIT.day)
+
+DONATIONS_XML_LIMIT_PER_FILE = env.int("DONATIONS_XML_LIMIT_PER_FILE")
 
 DONATIONS_LIMIT_MONTH_NAME = [
     "Ianuarie",
