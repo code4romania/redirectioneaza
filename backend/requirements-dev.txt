@@ -4,7 +4,7 @@
 #
 #    pip-compile --output-file=requirements-dev.txt --strip-extras requirements-dev.in
 #
-asgiref==3.7.2
+asgiref==3.8.1
     # via
     #   -r requirements.txt
     #   django
@@ -12,16 +12,16 @@ black==24.3.0
     # via -r requirements-dev.in
 blessed==1.20.0
     # via -r requirements.txt
-boto3==1.34.65
+boto3==1.34.82
     # via
     #   -r requirements.txt
     #   django-ses
-botocore==1.34.65
+botocore==1.34.82
     # via
     #   -r requirements.txt
     #   boto3
     #   s3transfer
-build==1.1.1
+build==1.2.1
     # via pip-tools
 certifi==2024.2.2
     # via
@@ -69,7 +69,7 @@ django-ipware==6.0.4
     # via -r requirements.txt
 django-localflavor==4.0
     # via -r requirements.txt
-django-picklefield==3.1
+django-picklefield==3.2
     # via
     #   -r requirements.txt
     #   django-q2
@@ -81,9 +81,9 @@ django-ses==3.5.2
     # via -r requirements.txt
 django-storages==1.14.2
     # via -r requirements.txt
-execnet==2.0.2
+execnet==2.1.1
     # via pytest-xdist
-faker==24.3.0
+faker==24.8.0
     # via -r requirements-dev.in
 gevent==24.2.1
     # via -r requirements.txt
@@ -93,7 +93,7 @@ greenlet==3.0.3
     #   gevent
 gunicorn==21.2.0
     # via -r requirements.txt
-idna==3.6
+idna==3.7
     # via
     #   -r requirements.txt
     #   requests
@@ -106,7 +106,7 @@ jmespath==1.0.1
     #   -r requirements.txt
     #   boto3
     #   botocore
-lxml==5.1.0
+lxml==5.2.1
     # via
     #   -r requirements.txt
     #   svglib
@@ -125,7 +125,7 @@ packaging==24.0
     #   pytest
 pathspec==0.12.1
     # via black
-pillow==10.2.0
+pillow==10.3.0
     # via
     #   -r requirements.txt
     #   reportlab
@@ -139,13 +139,13 @@ psutil==5.9.8
     # via -r requirements.txt
 psycopg2-binary==2.9.9
     # via -r requirements.txt
-pycparser==2.21
+pycparser==2.22
     # via
     #   -r requirements.txt
     #   cffi
 pymysql==1.1.0
     # via -r requirements.txt
-pypdf==4.1.0
+pypdf==4.2.0
     # via -r requirements.txt
 pyproject-hooks==1.0.0
     # via
@@ -157,7 +157,7 @@ pytest==8.1.1
     #   pytest-cov
     #   pytest-django
     #   pytest-xdist
-pytest-cov==4.1.0
+pytest-cov==5.0.0
     # via -r requirements-dev.in
 pytest-django==4.8.0
     # via -r requirements-dev.in
@@ -188,13 +188,13 @@ reportlab==4.1.0
     #   svglib
 requests==2.31.0
     # via -r requirements.txt
-ruff==0.3.3
+ruff==0.3.5
     # via -r requirements-dev.in
 s3transfer==0.10.1
     # via
     #   -r requirements.txt
     #   boto3
-sentry-sdk==1.42.0
+sentry-sdk==1.45.0
     # via -r requirements.txt
 six==1.16.0
     # via
