@@ -96,6 +96,7 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], ngo: Ngo):
         csv_writer = csv.writer(csv_output, quoting=csv.QUOTE_ALL)
         csv_writer.writerow(
             [
+                _("no."),
                 _("last name"),
                 _("first name"),
                 _("initial"),
@@ -122,7 +123,7 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], ngo: Ngo):
         donations_data: List[Dict] = []
         donation: Donor
 
-        for donation in donations:
+        for index, donation in enumerate(donations):
             donations_data.append({})
 
             source_url = _get_pdf_url(donation)
@@ -185,6 +186,7 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], ngo: Ngo):
 
                     csv_writer.writerow(
                         [
+                            index + 1,
                             donations_data[-1]["last_name"],
                             donations_data[-1]["first_name"],
                             donations_data[-1]["initial"],
@@ -233,6 +235,8 @@ def _generate_xmls(
     for xml_idx in range(1, math.ceil(len(donations_data) / donations_per_file) + 1):  # 1-based-index
         # The XML header content
         xml_str: str = """<?xml version="1.0" encoding="UTF-8"?>"""
+
+        # The XML start and the body referring to the NGO's identification and the form's metadata
         xml_str += f"""
             <form1>
                 <btnDoc>
@@ -273,28 +277,13 @@ def _generate_xmls(
             """
 
         donation_idx = 0  # 1-based-index
-        for donation_data in donations_data[(xml_idx - 1) * donations_per_file : xml_idx * donations_per_file]:
+        donations_slice: List[Dict] = donations_data[(xml_idx - 1) * donations_per_file : xml_idx * donations_per_file]
+        for donation in donations_slice:
             # skip donations which have a duplicate CNP
-            if donations_data["duplicate"]:
+            if donation["duplicate"]:
                 continue
 
             donation_idx += 1
-            donor_info = f"""
-                        <nume>{donation_data["last_name"].upper()}</nume>
-                        <init>{donation_data["initial"].upper()}</init>
-                        <pren>{donation_data["first_name"].upper()}</pren>
-                        <cif_c>{donation_data["cnp"]}</cif_c>
-                        <adresa>{donation_data["full_address"].upper()}</adresa>
-                """
-            phone = f"<telefon>{donation_data['phone']}</telefon>" if donation_data["phone"] else "<telefon/>"
-            email = f"<email>{donation_data['email'].upper()}</email>" if donation_data["email"] else "<email/>"
-
-            donor_info += f"""
-                        {phone}
-                        <fax/>
-                        {email}
-
-                """
 
             # The XML donation content
             xml_str += f"""
@@ -302,7 +291,16 @@ def _generate_xmls(
                     <nrCrt>
                         <nV>{donation_idx}</nV>
                     </nrCrt>
-                    <idCnt>{donor_info}</idCnt>
+                    <idCnt>
+                        <nume>{donation["last_name"].upper()}</nume>
+                        <init>{donation["initial"].upper()}</init>
+                        <pren>{donation["first_name"].upper()}</pren>
+                        <cif_c>{donation["cnp"]}</cif_c>
+                        <adresa>{donation["full_address"].upper()}</adresa>
+                        <telefon>{donation['phone']}</telefon>
+                        <fax/>
+                        <email>{donation['email'].upper()}</email>
+                    </idCnt>
                     <s15>
                         <date>
                             <nrCrt>
@@ -331,7 +329,7 @@ def _generate_xmls(
                             <ent>
                                 <Gap xmlns:xfa="http://www.xfa.org/schema/xfa-data/1.0/" xfa:dataNode="dataGroup"/>
                                 <idEnt>
-                                    <anDoi>{donation_data["duration"]}</anDoi>
+                                    <anDoi>{donation["duration"]}</anDoi>
                                     <cifOJ>{ngo.registration_number}</cifOJ>
                                     <denOJ>{ngo.name}</denOJ>
                                     <ibanNp>{ngo.bank_account}</ibanNp>
@@ -342,7 +340,7 @@ def _generate_xmls(
                         </date>
                     </s15>
                 </contrib>
-                """
+            """
 
         xml_str += """</form1>"""
 
