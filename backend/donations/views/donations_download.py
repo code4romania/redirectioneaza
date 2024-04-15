@@ -44,7 +44,7 @@ def download_donations_job(job_id: int = 0):
         .all()
     )
 
-    file_name = datetime.strftime(timestamp, "%Y%m%d_%H%M") + f"__n{ngo.id:06d}.zip"
+    file_name = f"{datetime.strftime(timestamp, '%Y%m%d_%H%M')}__n{ngo.id:06d}.zip"
 
     with tempfile.TemporaryDirectory(prefix=f"rdr_zip_{job_id:06d}_") as tmp_dir_name:
         logger.info("Created temporary directory '%s'", tmp_dir_name)
@@ -60,24 +60,13 @@ def download_donations_job(job_id: int = 0):
             job.save()
             return
 
-    _announce_done(job)
-
-
-def _get_pdf_url(donation: Donor) -> str:
-    # The 'pdf_file' property has priority over the old 'pdf_url' one
-    if donation.pdf_file:
-        source_url = donation.pdf_file.url
-    elif donation.pdf_url:
-        source_url = donation.pdf_url
-    else:
-        source_url = ""
-
-    if not source_url:
-        logger.info("Donation #%d has no PDF URL", donation.id)
-    else:
-        logger.info("Donation #%d PDF URL: '%s'", donation.id, source_url)
-
-    return source_url
+    send_email(
+        subject=_("Documents ready for download"),
+        to_emails=[job.ngo.email],
+        text_template="email/zipped_forms/zipped_forms.txt",
+        html_template="email/zipped_forms/zipped_forms.html",
+        context={"link": reverse("admin-download-link", kwargs={"job_id": job.id})},
+    )
 
 
 def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], ngo: Ngo):
@@ -92,6 +81,69 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], ngo: Ngo):
     zipped_files: int = 0
 
     with ZipFile(zip_path, mode="w", compression=ZIP_DEFLATED, compresslevel=1) as zip_archive:
+        cnp_idx: dict[str, int] = {}  # record a CNP first appearance 1-based-index in the donations data list
+        donations_data: List[Dict] = []
+
+        donation_object: Donor
+        for donation_object in donations:
+            donations_data.append({})
+
+            source_url = _get_pdf_url(donation_object)
+
+            if not source_url:
+                continue
+
+            donation_timestamp = donation_object.date_created or timezone.now()
+            filename = datetime.strftime(donation_timestamp, "%Y%m%d_%H%M") + f"__d{donation_object.id:06d}.pdf"
+
+            retries_left = 2
+            while retries_left > 0:
+                try:
+                    file_data = _download_file(source_url)
+                except JobDownloadError:
+                    retries_left -= 1
+                    logger.error("Could not download '%s'. Retries left %d.", source_url, retries_left)
+                except Exception as e:
+                    retries_left = 0
+                    logger.error("Could not download '%s'. Exception %s", source_url, e)
+                else:
+                    with zip_archive.open(os.path.join("pdf", filename), mode="w", force_zip64=zip_64_flag) as handler:
+                        handler.write(file_data)
+
+                    zipped_files += 1
+                    retries_left = 0
+
+                    phone = "".join([c for c in donation_object.phone if c.isdigit()])
+
+                    donation_cnp: str = donation_object.get_cnp()
+                    duplicate_cnp_idx: int = cnp_idx.get(donation_cnp, 0)
+                    if duplicate_cnp_idx == 0:
+                        cnp_idx[donation_cnp] = len(donations_data)
+
+                    full_address: Dict = donation_object.get_address()
+                    donations_data[-1] = {
+                        "last_name": donation_object.last_name,
+                        "first_name": donation_object.first_name,
+                        "initial": donation_object.initial,
+                        "phone": phone,
+                        "email": donation_object.email,
+                        "cnp": donation_cnp,
+                        "duplicate": duplicate_cnp_idx,
+                        "county": donation_object.county,
+                        "city": donation_object.city,
+                        "full_address": f"jud. {donation_object.county}, loc. {donation_object.city}, "
+                        + donation_object.address_to_string(full_address),
+                        "str": full_address.get("str", ""),
+                        "nr": full_address.get("nr", ""),
+                        "bl": full_address.get("bl", ""),
+                        "sc": full_address.get("sc", ""),
+                        "et": full_address.get("et", ""),
+                        "ap": full_address.get("ap", ""),
+                        "filename": filename,
+                        "date": donation_object.date_created,
+                        "duration": 2 if donation_object.two_years else 1,
+                    }
+
         csv_output = io.StringIO()
         csv_writer = csv.writer(csv_output, quoting=csv.QUOTE_ALL)
         csv_writer.writerow(
@@ -118,114 +170,85 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], ngo: Ngo):
                 _("duration"),
             ]
         )
-
-        cnp_idx: dict[str, int] = {}  # record a CNP first appearance 1-based-index in the donations data list
-        donations_data: List[Dict] = []
-        donation: Donor
-
-        for index, donation in enumerate(donations):
-            donations_data.append({})
-
-            source_url = _get_pdf_url(donation)
-
-            if not source_url:
-                continue
-
-            donation_timestamp = donation.date_created or timezone.now()
-            filename = datetime.strftime(donation_timestamp, "%Y%m%d_%H%M") + f"__d{donation.id:06d}.pdf"
-
-            retries_left = 2
-            while retries_left > 0:
-                try:
-                    file_data = _download_file(source_url)
-                except JobDownloadError:
-                    retries_left -= 1
-                    logger.error("Could not download '%s'. Retries left %d.", source_url, retries_left)
-                except Exception as e:
-                    retries_left = 0
-                    logger.error("Could not download '%s'. Exception %s", source_url, e)
-                else:
-                    with zip_archive.open(os.path.join("pdf", filename), mode="w", force_zip64=zip_64_flag) as handler:
-                        handler.write(file_data)
-
-                    zipped_files += 1
-                    retries_left = 0
-
-                    phone = "".join([c for c in donation.phone if c.isdigit()])
-
-                    donation_cnp = donation.get_cnp()
-                    if donation_cnp not in cnp_idx:
-                        cnp_idx[donation_cnp] = len(donations_data)
-                        duplicate_cnp_idx = 0
-                    else:
-                        duplicate_cnp_idx = cnp_idx[donation_cnp]
-
-                    full_address: Dict = donation.get_address()
-                    donations_data[-1] = {
-                        "last_name": donation.last_name,
-                        "first_name": donation.first_name,
-                        "initial": donation.initial,
-                        "phone": phone,
-                        "email": donation.email,
-                        "cnp": donation_cnp,
-                        "duplicate": duplicate_cnp_idx,
-                        "county": donation.county,
-                        "city": donation.city,
-                        "full_address": f"jud. {donation.county}, loc. {donation.city}, "
-                        + donation.address_to_string(full_address),
-                        "str": full_address.get("str", ""),
-                        "nr": full_address.get("nr", ""),
-                        "bl": full_address.get("bl", ""),
-                        "sc": full_address.get("sc", ""),
-                        "et": full_address.get("et", ""),
-                        "ap": full_address.get("ap", ""),
-                        "filename": filename,
-                        "date": donation.date_created,
-                        "duration": 2 if donation.two_years else 1,
-                    }
-
-                    csv_writer.writerow(
-                        [
-                            index + 1,
-                            donations_data[-1]["last_name"],
-                            donations_data[-1]["first_name"],
-                            donations_data[-1]["initial"],
-                            donations_data[-1]["cnp"],
-                            donations_data[-1]["duplicate"],
-                            donations_data[-1]["phone"],
-                            donations_data[-1]["email"],
-                            donations_data[-1]["county"],
-                            donations_data[-1]["city"],
-                            donations_data[-1]["full_address"],
-                            donations_data[-1]["str"],
-                            donations_data[-1]["nr"],
-                            donations_data[-1]["bl"],
-                            donations_data[-1]["sc"],
-                            donations_data[-1]["et"],
-                            donations_data[-1]["ap"],
-                            donations_data[-1]["filename"],
-                            donations_data[-1]["date"],
-                            donations_data[-1]["duration"],
-                        ]
-                    )
+        for index, donation_csv in enumerate(donations_data):
+            csv_writer.writerow(
+                [
+                    index + 1,
+                    donation_csv["last_name"],
+                    donation_csv["first_name"],
+                    donation_csv["initial"],
+                    donation_csv["cnp"],
+                    donation_csv["duplicate"],
+                    donation_csv["phone"],
+                    donation_csv["email"],
+                    donation_csv["county"],
+                    donation_csv["city"],
+                    donation_csv["full_address"],
+                    donation_csv["str"],
+                    donation_csv["nr"],
+                    donation_csv["bl"],
+                    donation_csv["sc"],
+                    donation_csv["et"],
+                    donation_csv["ap"],
+                    donation_csv["filename"],
+                    donation_csv["date"],
+                    donation_csv["duration"],
+                ]
+            )
 
         # Attach a CSV file with all donor data
         logger.info("Attaching the CSV to the ZIP")
         with zip_archive.open("index.csv", mode="w", force_zip64=zip_64_flag) as handler:
             handler.write(csv_output.getvalue().encode())
 
-        _generate_xmls(donations_data, ngo, zip_archive, zip_64_flag, zip_timestamp)
+        _generate_xml_files(donations_data, ngo, zip_archive, zip_64_flag, zip_timestamp)
 
     logger.info("Creating ZIP file for %d donations", zipped_files)
 
     return zip_path
 
 
-def _generate_xmls(
+def _get_pdf_url(donation: Donor) -> str:
+    # The 'pdf_file' property has priority over the old 'pdf_url' one
+    if donation.pdf_file:
+        source_url = donation.pdf_file.url
+    elif donation.pdf_url:
+        source_url = donation.pdf_url
+    else:
+        source_url = ""
+
+    if not source_url:
+        logger.info("Donation #%d has no PDF URL", donation.id)
+    else:
+        logger.info("Donation #%d PDF URL: '%s'", donation.id, source_url)
+
+    return source_url
+
+
+def _download_file(source_url: str):
+    if not source_url.startswith("https://"):
+        media_root = "/".join(settings.MEDIA_ROOT.split("/")[:-1])
+        with open(media_root + source_url, "rb") as f:
+            return f.read()
+
+    if not source_url:
+        raise ValueError("source_url is empty")
+
+    response = requests.get(source_url)
+
+    if response.status_code != 200:
+        raise JobDownloadError
+
+    return response.content
+
+
+def _generate_xml_files(
     donations_data: List[Dict], ngo: Ngo, zip_archive: ZipFile, zip_64_flag: bool, zip_timestamp: datetime
 ):
     if not donations_data or not ngo or not zip_archive:
         return
+
+    donations_data: List[Dict] = list(reversed(donations_data))
 
     previous_year: int = zip_timestamp.year - 1
     donations_per_file: int = settings.DONATIONS_XML_LIMIT_PER_FILE
@@ -233,12 +256,37 @@ def _generate_xmls(
     # Attach XML files with data for up to DONATIONS_XML_LIMIT_PER_FILE donors each
     logger.info("Attaching the XMLs to the ZIP")
     for xml_idx in range(1, math.ceil(len(donations_data) / donations_per_file) + 1):  # 1-based-index
-        # The XML header content
-        xml_str: str = """<?xml version="1.0" encoding="UTF-8"?>"""
+        xml_str = _build_xml(donations_data, donations_per_file, ngo, previous_year, xml_idx, zip_timestamp)
 
-        # The XML start and the body referring to the NGO's identification and the form's metadata
-        xml_str += f"""
-            <form1>
+        with zip_archive.open(
+            os.path.join("xml", f"index_{xml_idx:04}.xml"), mode="w", force_zip64=zip_64_flag
+        ) as handler:
+            handler.write(xml_str.encode())
+
+
+def _build_xml(donations_data, donations_per_file, ngo, previous_year, xml_idx, zip_timestamp):
+    xml_str: str = """<?xml version="1.0" encoding="UTF-8"?>\n<form1>"""
+
+    xml_str += _build_xml_header(ngo, previous_year, xml_idx, zip_timestamp)
+
+    donations_slice: List[Dict] = donations_data[(xml_idx - 1) * donations_per_file : xml_idx * donations_per_file]
+    for donation_idx, donation in enumerate(donations_slice):
+        # skip donations which have a duplicate CNP from the XML
+        if donation["duplicate"]:
+            continue
+
+        xml_str = _build_xml_donation_content(donation, donation_idx, ngo, xml_str)
+
+    xml_str += """</form1>"""
+
+    xml_str = xml_str.replace("\n            ", "\n")
+    xml_str = xml_str.replace("\n\n", "\n")
+
+    return xml_str
+
+
+def _build_xml_header(ngo, previous_year, xml_idx, zip_timestamp) -> str:
+    xml_str = f"""
                 <btnDoc>
                     <btnSalt/>
                     <btnWebService/>
@@ -275,21 +323,14 @@ def _generate_xmls(
                     <ibanD>{ngo.bank_account}</ibanD>
                 </nrDataB>
             """
+    return xml_str
 
-        donation_idx = 0  # 1-based-index
-        donations_slice: List[Dict] = donations_data[(xml_idx - 1) * donations_per_file : xml_idx * donations_per_file]
-        for donation in donations_slice:
-            # skip donations which have a duplicate CNP
-            if donation["duplicate"]:
-                continue
 
-            donation_idx += 1
-
-            # The XML donation content
-            xml_str += f"""
+def _build_xml_donation_content(donation, donation_idx, ngo, xml_str):
+    xml_str += f"""
                 <contrib>
                     <nrCrt>
-                        <nV>{donation_idx}</nV>
+                        <nV>{donation_idx + 1}</nV>
                     </nrCrt>
                     <idCnt>
                         <nume>{donation["last_name"].upper()}</nume>
@@ -342,39 +383,4 @@ def _generate_xmls(
                 </contrib>
             """
 
-        xml_str += """</form1>"""
-
-        xml_str = xml_str.replace("\n            ", "\n")
-        xml_str = xml_str.replace("\n\n", "\n")
-
-        with zip_archive.open(
-            os.path.join("xml", f"index_{xml_idx:04}.xml"), mode="w", force_zip64=zip_64_flag
-        ) as handler:
-            handler.write(xml_str.encode())
-
-
-def _download_file(source_url: str):
-    if not source_url.startswith("https://"):
-        media_root = "/".join(settings.MEDIA_ROOT.split("/")[:-1])
-        with open(media_root + source_url, "rb") as f:
-            return f.read()
-
-    if not source_url:
-        raise ValueError("source_url is empty")
-
-    response = requests.get(source_url)
-
-    if response.status_code != 200:
-        raise JobDownloadError
-
-    return response.content
-
-
-def _announce_done(job: Job):
-    send_email(
-        subject=_("Documents ready for download"),
-        to_emails=[job.ngo.email],
-        text_template="email/zipped_forms/zipped_forms.txt",
-        html_template="email/zipped_forms/zipped_forms.html",
-        context={"link": reverse("admin-download-link", kwargs={"job_id": job.id})},
-    )
+    return xml_str
