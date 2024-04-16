@@ -5,22 +5,26 @@ import math
 import os
 import tempfile
 from datetime import datetime
-from typing import Dict, List
+from typing import Any, Dict, List, Tuple
 from zipfile import ZIP_DEFLATED, ZipFile
 
 import requests
 from django.conf import settings
 from django.core.files import File
-from django.db.models import QuerySet
+from django.db.models import Count, QuerySet
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from localflavor.ro.ro_counties import COUNTIES_CHOICES
 
 from donations.models.jobs import Job, JobDownloadError, JobStatusChoices
 from donations.models.main import Donor, Ngo
 from redirectioneaza.common.messaging import send_email
 
 logger = logging.getLogger(__name__)
+
+
+COUNTIES_CHOICES_REVERSED = {name: code for code, name in COUNTIES_CHOICES}
 
 
 def download_donations_job(job_id: int = 0):
@@ -31,7 +35,7 @@ def download_donations_job(job_id: int = 0):
         return
 
     ngo: Ngo = job.ngo
-    timestamp = timezone.now()
+    timestamp: datetime = timezone.now()
     donations: QuerySet[Donor] = (
         Donor.objects.filter(
             ngo=ngo,
@@ -69,7 +73,7 @@ def download_donations_job(job_id: int = 0):
     )
 
 
-def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], ngo: Ngo):
+def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], ngo: Ngo) -> str:
     logger.info("Processing %d donations for '%s'", len(donations), ngo.name)
 
     zip_timestamp: datetime = timezone.now()
@@ -80,21 +84,20 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], ngo: Ngo):
 
     zipped_files: int = 0
 
+    cnp_idx: Dict[str, Dict[str, Any]] = {}
     with ZipFile(zip_path, mode="w", compression=ZIP_DEFLATED, compresslevel=1) as zip_archive:
-        cnp_idx: dict[str, int] = {}  # record a CNP first appearance 1-based-index in the donations data list
+        # record a CNP first appearance 1-based-index in the data list of donations
         donations_data: List[Dict] = []
 
         donation_object: Donor
         for donation_object in donations:
-            donations_data.append({})
-
             source_url = _get_pdf_url(donation_object)
 
             if not source_url:
                 continue
 
-            donation_timestamp = donation_object.date_created or timezone.now()
-            filename = datetime.strftime(donation_timestamp, "%Y%m%d_%H%M") + f"__d{donation_object.id:06d}.pdf"
+            donation_timestamp: datetime = donation_object.date_created
+            filename = f"{datetime.strftime(donation_timestamp, '%Y%m%d_%H%M')}__d{donation_object.id:06d}.pdf"
 
             retries_left = 2
             while retries_left > 0:
@@ -113,36 +116,42 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], ngo: Ngo):
                     zipped_files += 1
                     retries_left = 0
 
-                    phone = "".join([c for c in donation_object.phone if c.isdigit()])
+                    phone = _parse_phone(donation_object.phone)
 
                     donation_cnp: str = donation_object.get_cnp()
-                    duplicate_cnp_idx: int = cnp_idx.get(donation_cnp, 0)
+                    duplicate_cnp_idx: int = cnp_idx.get(donation_cnp, {}).get("index", 0)
                     if duplicate_cnp_idx == 0:
-                        cnp_idx[donation_cnp] = len(donations_data)
+                        cnp_idx[donation_cnp] = {
+                            "index": len(donations_data) + 1,
+                            "has_duplicate": False,
+                        }
+                    else:
+                        cnp_idx[donation_cnp]["has_duplicate"] = True
 
-                    full_address: Dict = donation_object.get_address()
-                    donations_data[-1] = {
-                        "last_name": donation_object.last_name,
-                        "first_name": donation_object.first_name,
-                        "initial": donation_object.initial,
-                        "phone": phone,
-                        "email": donation_object.email,
-                        "cnp": donation_cnp,
-                        "duplicate": duplicate_cnp_idx,
-                        "county": donation_object.county,
-                        "city": donation_object.city,
-                        "full_address": f"jud. {donation_object.county}, loc. {donation_object.city}, "
-                        + donation_object.address_to_string(full_address),
-                        "str": full_address.get("str", ""),
-                        "nr": full_address.get("nr", ""),
-                        "bl": full_address.get("bl", ""),
-                        "sc": full_address.get("sc", ""),
-                        "et": full_address.get("et", ""),
-                        "ap": full_address.get("ap", ""),
-                        "filename": filename,
-                        "date": donation_object.date_created,
-                        "duration": 2 if donation_object.two_years else 1,
-                    }
+                    detailed_address: Dict = _get_address_details(donation_object)
+                    donations_data.append(
+                        {
+                            "last_name": donation_object.last_name,
+                            "first_name": donation_object.first_name,
+                            "initial": donation_object.initial,
+                            "phone": phone,
+                            "email": donation_object.email,
+                            "cnp": donation_cnp,
+                            "duplicate": duplicate_cnp_idx,
+                            "county": donation_object.county,
+                            "city": donation_object.city,
+                            "full_address": detailed_address["full_address"],
+                            "str": detailed_address["str"],
+                            "nr": detailed_address["nr"],
+                            "bl": detailed_address["bl"],
+                            "sc": detailed_address["sc"],
+                            "et": detailed_address["et"],
+                            "ap": detailed_address["ap"],
+                            "filename": filename,
+                            "date": donation_object.date_created,
+                            "duration": _parse_duration(donation_object.two_years),
+                        }
+                    )
 
         csv_output = io.StringIO()
         csv_writer = csv.writer(csv_output, quoting=csv.QUOTE_ALL)
@@ -201,11 +210,41 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], ngo: Ngo):
         with zip_archive.open("index.csv", mode="w", force_zip64=zip_64_flag) as handler:
             handler.write(csv_output.getvalue().encode())
 
-        _generate_xml_files(donations_data, ngo, zip_archive, zip_64_flag, zip_timestamp)
+        _generate_xml_files(ngo, zip_archive, zip_64_flag, zip_timestamp, cnp_idx)
 
     logger.info("Creating ZIP file for %d donations", zipped_files)
 
     return zip_path
+
+
+def _parse_duration(donation_duration: bool) -> int:
+    return 2 if donation_duration else 1
+
+
+def _parse_phone(phone: str) -> str:
+    if not phone:
+        return ""
+
+    return "".join([c for c in phone if c.isdigit()])
+
+
+def _get_address_details(donation_object: Donor) -> Dict[str, str]:
+    full_address: Dict = donation_object.get_address()
+
+    full_address_prefix: str = f"jud. {donation_object.county}, loc. {donation_object.city}"
+    full_address_string: str = f"{full_address_prefix}, {donation_object.address_to_string(full_address)}"
+
+    address_details = {
+        "full_address": full_address_string,
+        "str": full_address.get("str", ""),
+        "nr": full_address.get("nr", ""),
+        "bl": full_address.get("bl", ""),
+        "sc": full_address.get("sc", ""),
+        "et": full_address.get("et", ""),
+        "ap": full_address.get("ap", ""),
+    }
+
+    return address_details
 
 
 def _get_pdf_url(donation: Donor) -> str:
@@ -225,7 +264,7 @@ def _get_pdf_url(donation: Donor) -> str:
     return source_url
 
 
-def _download_file(source_url: str):
+def _download_file(source_url: str) -> bytes:
     if not source_url.startswith("https://"):
         media_root = "/".join(settings.MEDIA_ROOT.split("/")[:-1])
         with open(media_root + source_url, "rb") as f:
@@ -243,36 +282,70 @@ def _download_file(source_url: str):
 
 
 def _generate_xml_files(
-    donations_data: List[Dict], ngo: Ngo, zip_archive: ZipFile, zip_64_flag: bool, zip_timestamp: datetime
+    ngo: Ngo, zip_archive: ZipFile, zip_64_flag: bool, zip_timestamp: datetime, cnp_idx: Dict[str, Dict[str, Any]]
 ):
-    if not donations_data or not ngo or not zip_archive:
+    if not cnp_idx or not ngo or not zip_archive:
         return
 
-    donations_data: List[Dict] = list(reversed(donations_data))
+    ngo_donations: QuerySet[Donor] = Donor.objects.filter(
+        ngo=ngo,
+        has_signed=True,
+        date_created__gte=datetime(
+            year=zip_timestamp.year, month=1, day=1, hour=0, minute=0, second=0, tzinfo=zip_timestamp.tzinfo
+        ),
+    ).order_by("-date_created")
 
-    previous_year: int = zip_timestamp.year - 1
-    donations_per_file: int = settings.DONATIONS_XML_LIMIT_PER_FILE
+    if ngo_donations.count() < 2 * settings.DONATIONS_XML_LIMIT_PER_FILE:
+        xml_name: str = "d230.xml"
+        _build_xml(ngo, ngo_donations, 1, xml_name, cnp_idx, zip_timestamp, zip_archive, zip_64_flag)
 
-    # Attach XML files with data for up to DONATIONS_XML_LIMIT_PER_FILE donors each
-    logger.info("Attaching the XMLs to the ZIP")
-    for xml_idx in range(1, math.ceil(len(donations_data) / donations_per_file) + 1):  # 1-based-index
-        xml_str = _build_xml(donations_data, donations_per_file, ngo, previous_year, xml_idx, zip_timestamp)
+        return
 
-        with zip_archive.open(
-            os.path.join("xml", f"index_{xml_idx:04}.xml"), mode="w", force_zip64=zip_64_flag
-        ) as handler:
-            handler.write(xml_str.encode())
+    number_of_donations_by_county: QuerySet[Tuple[str, int]] = (
+        ngo_donations.values("county").annotate(count=Count("county")).order_by("county").values_list("county", "count")
+    )
+
+    sorted_donations_by_county: List[Tuple[str, int]] = sorted(number_of_donations_by_county, key=lambda x: x[1])
+
+    xml_count: int = 1
+    for county, count in sorted_donations_by_county:
+        county_code: str = COUNTIES_CHOICES_REVERSED.get(county, f"S{county}").lower().replace(" ", "_")
+        if count <= settings.DONATIONS_XML_LIMIT_PER_FILE:
+            xml_name: str = f"d230_{county_code}.xml"
+
+            county_donations: QuerySet[Donor] = ngo_donations.filter(county=county)
+            _build_xml(ngo, county_donations, xml_count, xml_name, cnp_idx, zip_timestamp, zip_archive, zip_64_flag)
+            xml_count += 1
+        else:
+            for i in range(math.ceil(count / settings.DONATIONS_XML_LIMIT_PER_FILE)):
+                xml_name: str = f"d230_{county_code}_{xml_count:04}.xml"
+
+                county_donations: QuerySet[Donor] = ngo_donations.filter(county=county)[
+                    : settings.DONATIONS_XML_LIMIT_PER_FILE
+                ]
+                _build_xml(ngo, county_donations, xml_count, xml_name, cnp_idx, zip_timestamp, zip_archive, zip_64_flag)
+
+                xml_count += 1
 
 
-def _build_xml(donations_data, donations_per_file, ngo, previous_year, xml_idx, zip_timestamp):
+def _build_xml(
+    ngo: Ngo,
+    donations_batch: QuerySet[Donor],
+    batch_count: int,
+    xml_name: str,
+    cnp_idx: Dict[str, Dict[str, Any]],
+    zip_timestamp: datetime,
+    zip_archive: ZipFile,
+    zip_64_flag: bool,
+):
     xml_str: str = """<?xml version="1.0" encoding="UTF-8"?>\n<form1>"""
 
-    xml_str += _build_xml_header(ngo, previous_year, xml_idx, zip_timestamp)
+    xml_str += _build_xml_header(ngo, batch_count, zip_timestamp)
 
-    donations_slice: List[Dict] = donations_data[(xml_idx - 1) * donations_per_file : xml_idx * donations_per_file]
-    for donation_idx, donation in enumerate(donations_slice):
+    for donation_idx, donation in enumerate(donations_batch):
         # skip donations which have a duplicate CNP from the XML
-        if donation["duplicate"]:
+        cnp = donation.get_cnp()
+        if cnp in cnp_idx and cnp_idx[cnp]["has_duplicate"]:
             continue
 
         xml_str = _build_xml_donation_content(donation, donation_idx, ngo, xml_str)
@@ -282,10 +355,12 @@ def _build_xml(donations_data, donations_per_file, ngo, previous_year, xml_idx, 
     xml_str = xml_str.replace("\n            ", "\n")
     xml_str = xml_str.replace("\n\n", "\n")
 
-    return xml_str
+    with zip_archive.open(os.path.join("xml", xml_name), mode="w", force_zip64=zip_64_flag) as handler:
+        handler.write(xml_str.encode())
 
 
-def _build_xml_header(ngo, previous_year, xml_idx, zip_timestamp) -> str:
+def _build_xml_header(ngo, xml_idx, zip_timestamp) -> str:
+    # noinspection HttpUrlsUsage
     xml_str = f"""
                 <btnDoc>
                     <btnSalt/>
@@ -303,7 +378,7 @@ def _build_xml_header(ngo, previous_year, xml_idx, zip_timestamp) -> str:
                     <formValid>FORMULAR NEVALIDAT</formValid>
                     <luna_r>12</luna_r>
                     <d_rec>0</d_rec>
-                    <an_r>{previous_year}</an_r>
+                    <an_r>{zip_timestamp.year - 1}</an_r>
                 </IdDoc>
                 <imp>
                     <bifaI>
@@ -326,21 +401,23 @@ def _build_xml_header(ngo, previous_year, xml_idx, zip_timestamp) -> str:
     return xml_str
 
 
-def _build_xml_donation_content(donation, donation_idx, ngo, xml_str):
+def _build_xml_donation_content(donation: Donor, donation_idx: int, ngo: Ngo, xml_str: str):
+    # noinspection HttpUrlsUsage
+    detailed_address: Dict = _get_address_details(donation)
     xml_str += f"""
                 <contrib>
                     <nrCrt>
                         <nV>{donation_idx + 1}</nV>
                     </nrCrt>
                     <idCnt>
-                        <nume>{donation["last_name"].upper()}</nume>
-                        <init>{donation["initial"].upper()}</init>
-                        <pren>{donation["first_name"].upper()}</pren>
-                        <cif_c>{donation["cnp"]}</cif_c>
-                        <adresa>{donation["full_address"].upper()}</adresa>
-                        <telefon>{donation['phone']}</telefon>
+                        <nume>{donation.last_name.upper()}</nume>
+                        <init>{donation.initial.upper()}</init>
+                        <pren>{donation.first_name.upper()}</pren>
+                        <cif_c>{donation.get_cnp()}</cif_c>
+                        <adresa>{detailed_address["full_address"].upper()}</adresa>
+                        <telefon>{_parse_phone(donation.phone)}</telefon>
                         <fax/>
-                        <email>{donation['email'].upper()}</email>
+                        <email>{donation.email}</email>
                     </idCnt>
                     <s15>
                         <date>
@@ -370,7 +447,7 @@ def _build_xml_donation_content(donation, donation_idx, ngo, xml_str):
                             <ent>
                                 <Gap xmlns:xfa="http://www.xfa.org/schema/xfa-data/1.0/" xfa:dataNode="dataGroup"/>
                                 <idEnt>
-                                    <anDoi>{donation["duration"]}</anDoi>
+                                    <anDoi>{_parse_duration(donation.two_years)}</anDoi>
                                     <cifOJ>{ngo.registration_number}</cifOJ>
                                     <denOJ>{ngo.name}</denOJ>
                                     <ibanNp>{ngo.bank_account}</ibanNp>
