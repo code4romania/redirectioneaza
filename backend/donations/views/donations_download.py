@@ -36,17 +36,7 @@ def download_donations_job(job_id: int = 0):
 
     ngo: Ngo = job.ngo
     timestamp: datetime = timezone.now()
-    donations: QuerySet[Donor] = (
-        Donor.objects.filter(
-            ngo=ngo,
-            has_signed=True,
-            date_created__gte=datetime(
-                year=timestamp.year, month=1, day=1, hour=0, minute=0, second=0, tzinfo=timestamp.tzinfo
-            ),
-        )
-        .order_by("-date_created")
-        .all()
-    )
+    donations: QuerySet[Donor] = Donor.current_year_signed.filter(ngo=ngo).order_by("-date_created").all()
 
     file_name = f"{datetime.strftime(timestamp, '%Y%m%d_%H%M')}__n{ngo.id:06d}.zip"
 
@@ -287,14 +277,10 @@ def _generate_xml_files(
     if not cnp_idx or not ngo or not zip_archive:
         return
 
-    ngo_donations: QuerySet[Donor] = Donor.objects.filter(
-        ngo=ngo,
-        has_signed=True,
-        date_created__gte=datetime(
-            year=zip_timestamp.year, month=1, day=1, hour=0, minute=0, second=0, tzinfo=zip_timestamp.tzinfo
-        ),
-    ).order_by("-date_created")
+    ngo_donations: QuerySet[Donor] = Donor.current_year_signed.filter(ngo=ngo).order_by("-date_created")
 
+    # if there are less than 2 * settings.DONATIONS_XML_LIMIT_PER_FILE donations
+    # create a single XML file
     if ngo_donations.count() < 2 * settings.DONATIONS_XML_LIMIT_PER_FILE:
         xml_name: str = "d230.xml"
         _build_xml(ngo, ngo_donations, 1, xml_name, cnp_idx, zip_timestamp, zip_archive, zip_64_flag)
@@ -308,19 +294,21 @@ def _generate_xml_files(
     sorted_donations_by_county: List[Tuple[str, int]] = sorted(number_of_donations_by_county, key=lambda x: x[1])
 
     xml_count: int = 1
-    for county, count in sorted_donations_by_county:
-        county_code: str = COUNTIES_CHOICES_REVERSED.get(county, f"S{county}").lower().replace(" ", "_")
-        if count <= settings.DONATIONS_XML_LIMIT_PER_FILE:
+    for current_county, current_county_count in sorted_donations_by_county:
+        # if there are more than settings.DONATIONS_XML_LIMIT_PER_FILE donations for a county
+        # split them into multiple files
+        county_code: str = COUNTIES_CHOICES_REVERSED.get(current_county, f"S{current_county}").lower().replace(" ", "_")
+        if current_county_count <= settings.DONATIONS_XML_LIMIT_PER_FILE:
             xml_name: str = f"d230_{county_code}.xml"
 
-            county_donations: QuerySet[Donor] = ngo_donations.filter(county=county)
+            county_donations: QuerySet[Donor] = ngo_donations.filter(county=current_county)
             _build_xml(ngo, county_donations, xml_count, xml_name, cnp_idx, zip_timestamp, zip_archive, zip_64_flag)
             xml_count += 1
         else:
-            for i in range(math.ceil(count / settings.DONATIONS_XML_LIMIT_PER_FILE)):
+            for i in range(math.ceil(current_county_count / settings.DONATIONS_XML_LIMIT_PER_FILE)):
                 xml_name: str = f"d230_{county_code}_{xml_count:04}.xml"
 
-                county_donations: QuerySet[Donor] = ngo_donations.filter(county=county)[
+                county_donations: QuerySet[Donor] = ngo_donations.filter(county=current_county)[
                     : settings.DONATIONS_XML_LIMIT_PER_FILE
                 ]
                 _build_xml(ngo, county_donations, xml_count, xml_name, cnp_idx, zip_timestamp, zip_archive, zip_64_flag)
