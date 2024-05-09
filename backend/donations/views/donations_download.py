@@ -249,7 +249,7 @@ def _get_pdf_url(donation: Donor) -> str:
     if not source_url:
         logger.info("Donation #%d has no PDF URL", donation.id)
     else:
-        logger.info("Donation #%d PDF URL: '%s'", donation.id, source_url)
+        logger.debug("Donation #%d PDF URL: '%s'", donation.id, source_url)
 
     return source_url
 
