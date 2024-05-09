@@ -33,12 +33,17 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         total_donations = options["total_donations"]
         target_org = options.get("org", None)
+
         self.stdout.write(f"Generating {total_donations} donations")
 
         if not target_org:
             ngos = list(Ngo.active.all())
         else:
             ngos = [Ngo.objects.get(id=target_org)]
+
+        if not ngos:
+            self.stdout.write(self.style.ERROR("No active organizations found"))
+            return
 
         generated_donations: List[Donor] = []
         while len(generated_donations) < total_donations:
