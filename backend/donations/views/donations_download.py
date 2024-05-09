@@ -38,12 +38,12 @@ def download_donations_job(job_id: int = 0):
     timestamp: datetime = timezone.now()
     donations: QuerySet[Donor] = Donor.current_year_signed.filter(ngo=ngo).order_by("-date_created").all()
 
-    file_name = f"{datetime.strftime(timestamp, '%Y%m%d_%H%M')}__n{ngo.id:06d}.zip"
+    file_name = f"n{ngo.id:06d}__{datetime.strftime(timestamp, '%Y%m%d_%H%M')}.zip"
 
     with tempfile.TemporaryDirectory(prefix=f"rdr_zip_{job_id:06d}_") as tmp_dir_name:
         logger.info("Created temporary directory '%s'", tmp_dir_name)
         try:
-            zip_path = _package_donations(tmp_dir_name, donations, ngo)
+            zip_path = _package_donations(tmp_dir_name, donations, ngo, file_name)
             with open(zip_path, "rb") as f:
                 job.zip.save(file_name, File(f), save=False)
             job.status = JobStatusChoices.DONE
@@ -63,11 +63,10 @@ def download_donations_job(job_id: int = 0):
     )
 
 
-def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], ngo: Ngo) -> str:
+def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], ngo: Ngo, zip_name: str) -> str:
     logger.info("Processing %d donations for '%s'", len(donations), ngo.name)
 
     zip_timestamp: datetime = timezone.now()
-    zip_name: str = datetime.strftime(zip_timestamp, "%Y%m%d_%H%M") + f"__n{ngo.id:06d}.zip"
     zip_path: str = os.path.join(tmp_dir_name, zip_name)
 
     zip_64_flag: bool = len(donations) > 4000
