@@ -294,13 +294,11 @@ def _generate_donations_by_county(cnp_idx, ngo, ngo_donations, zip_64_flag, zip_
     donations_limit: int = settings.DONATIONS_XML_LIMIT_PER_FILE
 
     number_of_donations_by_county: QuerySet[Tuple[str, int]] = (
-        ngo_donations.values("county").annotate(count=Count("county")).order_by("county").values_list("county", "count")
+        ngo_donations.values("county").annotate(count=Count("county")).order_by("count").values_list("county", "count")
     )
 
-    sorted_donations_by_county: List[Tuple[str, int]] = sorted(number_of_donations_by_county, key=lambda x: x[1])
-
     xml_count: int = 1
-    for current_county, current_county_count in sorted_donations_by_county:
+    for current_county, current_county_count in number_of_donations_by_county:
         # if there are more than donations_limit donations for a county, split them into multiple files
         county_code: str = COUNTIES_CHOICES_REVERSED.get(current_county, f"S{current_county}").lower().replace(" ", "_")
         if current_county_count <= donations_limit:
