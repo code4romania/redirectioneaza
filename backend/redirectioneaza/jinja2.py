@@ -1,8 +1,9 @@
+from django.conf import settings
 from django.templatetags.static import static
 from django.urls import reverse
-
-from django.conf import settings
 from jinja2 import Environment
+
+from donations.templatetags.url_extras import apex_reverse
 
 
 def environment(**options):
@@ -11,6 +12,7 @@ def environment(**options):
         {
             "static": static,
             "reverse": reverse,
+            "apex_reverse": apex_reverse,
             "bower_components": settings.DEV_DEPENDECIES_LOCATION,
             "DEV": settings.ENVIRONMENT == "development",
             "PRODUCTION": settings.ENVIRONMENT == "production",
