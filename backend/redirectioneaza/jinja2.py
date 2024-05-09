@@ -10,7 +10,7 @@ def environment(**options):
     env.globals.update(
         {
             "static": static,
-            "url": reverse,
+            "reverse": reverse,
             "bower_components": settings.DEV_DEPENDECIES_LOCATION,
             "DEV": settings.ENVIRONMENT == "development",
             "PRODUCTION": settings.ENVIRONMENT == "production",

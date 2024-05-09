@@ -58,7 +58,7 @@
             {% if custom_note %}
                 <h4>
                     Dacă ONG-ul tău preferat nu se află pe această pagină, <br>
-                    consultă lista completă de organizații pe <a href="//{{ APEX_DOMAIN }}{{ url('home') }}">redirectioneaza.ro</a>.
+                    consultă lista completă de organizații pe <a href="//{{ APEX_DOMAIN }}{{ reverse('home') }}">redirectioneaza.ro</a>.
                 </h4>
             {% endif %}
 
@@ -100,7 +100,7 @@
                         <a
                             id="for-ngos"
                             class="btn btn-primary btn-primary-contrast btn-lg"
-                            href="{{ url('organizations') }}">
+                            href="{{ reverse('organizations') }}">
                             Vezi toate organizațiile
                         </a>
                     </div>
@@ -139,7 +139,7 @@
                             <div class="media-body">
                                 <h3 class="homepage-media-title">
                                     Completează Declarația 230 de pe pagina unui
-                                    <a href="{{ url('organizations') }}">ONG</a>,
+                                    <a href="{{ reverse('organizations') }}">ONG</a>,
                                     apoi alege una dintre opțiunile disponibile:
                                 </h3>
 

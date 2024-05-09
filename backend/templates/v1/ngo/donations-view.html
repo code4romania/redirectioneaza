@@ -43,7 +43,7 @@
                             arhiva direct de aici din platforma.
                         </div>
                     {% endif %}
-                    <form action="{{ url('api-ngo-forms') }}" method="post">
+                    <form action="{{ reverse('api-ngo-forms') }}" method="post">
                         {{ csrf_input }}
                         {% if not has_signed_form %}
                             <div class="alert alert-info">
@@ -95,7 +95,7 @@
                                     </td>
                                     <td>
                                         {% if job.zip %}
-                                            <a href="{{ url('admin-download-link', kwargs={'job_id': job.id}) }}">Descarcă</a>
+                                            <a href="{{ reverse('admin-download-link', kwargs={'job_id': job.id}) }}">Descarcă</a>
                                         {% else %}
                                             -
                                         {% endif %}

@@ -7,19 +7,19 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{ url('home') }}">
+            <a class="navbar-brand" href="{{ reverse('home') }}">
                 <img src="{{ static('images/logo-smaller.png') }}" alt="Redirectioneaza logo" width="90px;">
             </a>
         </div>
 
         <div id="account-header-container" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><a href="{{ url('contul-meu') }}">Acasă</a></li>
-                <li><a href="{{ url('organization') }}">Date organizație</a></li>
-                <li><a href="{{ url('date-contul-meu') }}">Date cont</a></li>
+                <li><a href="{{ reverse('contul-meu') }}">Acasă</a></li>
+                <li><a href="{{ reverse('organization') }}">Date organizație</a></li>
+                <li><a href="{{ reverse('date-contul-meu') }}">Date cont</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="{{ url('logout') }}">Ieși din cont</a></li>
+                <li><a href="{{ reverse('logout') }}">Ieși din cont</a></li>
             </ul>
         </div>
     </div>
