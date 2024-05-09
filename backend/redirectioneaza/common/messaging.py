@@ -60,19 +60,14 @@ def send_emails(
     logger.info(f"Sending emails to {len(user_emails)} users.")
 
     for email in user_emails:
-        try:
-            text_body = render_to_string(text_template, context=html_context)
+        text_body = render_to_string(text_template, context=html_context)
 
-            html = get_template(html_template)
-            html_content = html.render(html_context)
+        html = get_template(html_template)
+        html_content = html.render(html_context)
 
-            from_email = (
-                settings.DEFAULT_FROM_EMAIL if hasattr(settings, "DEFAULT_FROM_EMAIL") else settings.NO_REPLY_EMAIL
-            )
+        from_email = settings.DEFAULT_FROM_EMAIL if hasattr(settings, "DEFAULT_FROM_EMAIL") else settings.NO_REPLY_EMAIL
 
-            msg = EmailMultiAlternatives(subject, text_body, from_email, [email])
-            msg.attach_alternative(html_content, "text/html")
+        msg = EmailMultiAlternatives(subject, text_body, from_email, [email])
+        msg.attach_alternative(html_content, "text/html")
 
-            msg.send(fail_silently=False)
-        except Exception as e:
-            logger.error(f"Failed to send email to {email}. Error: {e}")
+        msg.send(fail_silently=False)
