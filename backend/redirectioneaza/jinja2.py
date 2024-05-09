@@ -15,6 +15,7 @@ def environment(**options):
             "DEV": settings.ENVIRONMENT == "development",
             "PRODUCTION": settings.ENVIRONMENT == "production",
             "GOOGLE_ANALYTICS_ID": settings.GOOGLE_ANALYTICS_ID,
+            "APEX_DOMAIN": settings.APEX_DOMAIN,
             "title": settings.TITLE,
             "language": "ro",
             "base_url": "/",
