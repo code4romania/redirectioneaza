@@ -64,7 +64,7 @@
                 <h2 id="donation-page-title">Redirecționează în 3 pași simpli</h2>
                 <h3 class="donation-page-subtitle">Pasul 1. Completează și descarcă formularul</h3>
                 {% if ngo.bank_account and ngo.registration_number %}
-                    <form id="twopercent" class="form form-horizontal" action="{{ url('twopercent', kwargs={'ngo_url': ngo.slug}) }}" role="form" method="post">
+                    <form id="twopercent" class="form form-horizontal" action="{{ reverse('twopercent', kwargs={'ngo_url': ngo.slug}) }}" role="form" method="post">
 
                         {{ csrf_input }}
                         <fieldset class="margin-bottom">
@@ -181,8 +181,8 @@
                                 <div class="col-xs-12 col-lg-10 checkbox">
                                     <label class="agree-label" for="agree">
                                         <input type="checkbox" name="agree" id="agree" required />
-                                        Sunt de acord cu <a href="{{ url('terms') }}" target="_blank">Termenii
-                                        aplicației</a> și cu <a href="{{ url('policy') }}" target="_blank">Politica de
+                                        Sunt de acord cu <a href="{{ reverse('terms') }}" target="_blank">Termenii
+                                        aplicației</a> și cu <a href="{{ reverse('policy') }}" target="_blank">Politica de
                                         confidențialitate</a>.
                                     </label>
                                 </div>
@@ -243,7 +243,7 @@
                     <div class="alert alert-dismissible alert-info">
                         <button type="button" class="close" data-dismiss="alert">×</button>
                         <strong>Notă!</strong> Toate datele de pe această pagină sunt transmise folosind o conexiune sigură. Următoarele date sunt stocate temporar, până la completarea formularului: numele, prenumele, orasul, judetul, email/telefon. După completarea formularului, aceste date sunt șterse, excepție făcând cazul în care ați optat să permiteți ONG-ului să vă contacteze. În acest caz, datele sunt stocate pe platforma Redirecționează cu scopul de a oferi acces ONG-ului la ele. <br />
-                        Poți citi mai multe despre <a href="{{ url('note') }}" target="_blank">Drepturile tale cu privire la protectia datelor</a>. <br /><br />
+                        Poți citi mai multe despre <a href="{{ reverse('note') }}" target="_blank">Drepturile tale cu privire la protectia datelor</a>. <br /><br />
                         Prin completarea acestui formular, redirecționezi 3.5% din impozitul pe venit către organizația pe care ai ales-o.
                     </div>
                 </div>

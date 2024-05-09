@@ -8,14 +8,14 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{ url('home') }}">
+            <a class="navbar-brand" href="{{ reverse('home') }}">
                 <img src="{{ static('images/logo-smaller.png') }}" alt="Redirectioneaza logo" width="90px;">
             </a>
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="{{ url('admin-index') }}">Acasă</a></li>
+                <li><a href="{{ reverse('admin-index') }}">Acasă</a></li>
 
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -29,40 +29,40 @@
                             </strong>
                         </li>
                         <li role="menuitem">
-                            <a href="{{ url('admin-ngos-by-date') }}">
+                            <a href="{{ reverse('admin-ngos-by-date') }}">
                                 data creării
                             </a>
                         </li>
                         <li role="menuitem">
-                            <a href="{{ url('admin-ngos-by-name') }}">
+                            <a href="{{ reverse('admin-ngos-by-name') }}">
                                 alfabetic
                             </a>
                         </li>
                         <li role="menuitem">
-                            <a href="{{ url('admin-ngos-by-forms') }}">
+                            <a href="{{ reverse('admin-ngos-by-forms') }}">
                                 numărul de formulare
                             </a>
                         </li>
                         <li role="menuitem">
-                            <a href="{{ url('admin-ngos-by-forms-now') }}">
+                            <a href="{{ reverse('admin-ngos-by-forms-now') }}">
                                 numărul de formulare în anul curent
                             </a>
                         </li>
                         <li role="menuitem">
-                            <a href="{{ url('admin-ngos-by-forms-prev') }}">
+                            <a href="{{ reverse('admin-ngos-by-forms-prev') }}">
                                 numărul de formulare în anul precedent
                             </a>
                         </li>
                     </ul>
                 </li>
 
-                <li><a href="{{ url('admin-users') }}">Conturi</a></li>
+                <li><a href="{{ reverse('admin-users') }}">Conturi</a></li>
                 {% if is_staff %}
-                    <li><a href="{{ url('admin:index') }}">Admin avansat</a></li>
+                    <li><a href="{{ reverse('admin:index') }}">Admin avansat</a></li>
                 {% endif %}
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="{{ url('admin:logout') }}?next=/">Ieși din cont admin</a></li>
+                <li><a href="{{ reverse('admin:logout') }}?next=/">Ieși din cont admin</a></li>
             </ul>
         </div>
     </div>

@@ -26,11 +26,11 @@
                             {{ loop.index }}
                         </td>
                         <td>
-                            <a href="{{ url('admin-ong', kwargs={'ngo_url': ngo.slug}) }}">{{ ngo.name }}</a>
+                            <a href="{{ reverse('admin-ong', kwargs={'ngo_url': ngo.slug}) }}">{{ ngo.name }}</a>
                         </td>
                         <td>
                             {% if ngo.is_active %}
-                                <a href="{{ url('twopercent', kwargs={'ngo_url':ngo.slug}) }}" target="_blank">
+                                <a href="{{ reverse('twopercent', kwargs={'ngo_url':ngo.slug}) }}" target="_blank">
                                     DA
                                 </a>
                             {% else %}

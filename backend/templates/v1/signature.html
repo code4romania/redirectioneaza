@@ -15,7 +15,7 @@
         </div>
 
         <div class="signature-button-container">
-            <form action="{{ url('ngo-twopercent-signature', kwargs={'ngo_url': ngo.slug}) }}" role="form" method="post" class="signature-form">
+            <form action="{{ reverse('ngo-twopercent-signature', kwargs={'ngo_url': ngo.slug}) }}" role="form" method="post" class="signature-form">
                 {{ csrf_input }}
                 <span class="reset-button">
                     <button id="clear-signature" class="btn btn-lg" type="button">
