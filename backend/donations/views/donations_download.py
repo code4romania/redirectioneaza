@@ -12,6 +12,7 @@ import requests
 from django.conf import settings
 from django.core.files import File
 from django.db.models import Count, QuerySet
+from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
@@ -75,6 +76,12 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], ngo: Ngo, 
 
     cnp_idx: Dict[str, Dict[str, Any]] = {}
     with ZipFile(zip_path, mode="w", compression=ZIP_DEFLATED, compresslevel=1) as zip_archive:
+        # Attach a TXT help file
+        logger.info("Attaching the TXT help file to the ZIP")
+        with zip_archive.open("DESCRIERE.txt", mode="w", force_zip64=zip_64_flag) as handler:
+            help_text = render_to_string("DESCRIERE.txt", context={})
+            handler.write(help_text.encode())
+
         # record a CNP first appearance 1-based-index in the data list of donations
         donations_data: List[Dict] = []
 

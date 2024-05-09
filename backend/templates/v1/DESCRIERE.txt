@@ -1,0 +1,42 @@
+CE SE AFLĂ ÎN ACEST DOSAR?
+--------------------------------------------------
+Fișierul 'DESCRIERE.txt' cu informații despre conținutul acestui dosar (e acest fișier)
+Fișierul 'index.csv' cu informații care centralizează datele donatorilor
+Dosarul 'pdf' cu formularele cu informațiile completate de către donatori
+Dosarul 'xml' cu fișierele XML generate de către donatori care se pot încărca în PDF-ul ANAF
+
+IMPORTAREA DATELOR ÎN PDF-UL ANAF
+--------------------------------------------------
+01. Descărcați fișierul 'soft A' de pe site-ul ANAF
+    Link Descărcare: https://static.anaf.ro/static/10/Anaf/Declaratii_R/AplicatiiDec/D230_v1.0.8_14012024.pdf
+    Link ANAF: https://static.anaf.ro/static/10/Anaf/Declaratii_R/230.html
+02. Deschideți fișierul cu Adobe Acrobat Reader sau Adobe Acrobat Pro
+03. Selectați persoană fizică pentru a trece la următorul pas
+04. Importați XML-ul generat
+    Navigați pe 'Edit > Form Options > Import Data' și selectați fișierul XML
+05. Validați formularul și salvați-l
+    De aici puteți să îl semnați electronic și să îl încărcați pe site-ul ANAF
+    Dacă apar probleme la validare, vă rugăm să ne contactați pentru a remedia problema
+
+EXPLICAȚIA CONȚINUTULUI FIȘIERULUI 'index.csv'
+--------------------------------------------------
+number         / număr curent - numărul de ordine al donatorului
+last name      / nume de familie - numele de familie al donatorului
+first name     / prenume - prenumele donatorului
+initial        / inițiala tatălui - inițiala tatălui donatorului
+CNP            / CNP - codul numeric personal al donatorului
+duplicate      / duplicat - dacă CNP-ul mai există în fișierul 'index.csv'
+phone          / telefon - numărul de telefon al donatorului
+email          / email - adresa de email a donatorului
+county         / județ - județul de reședință al donatorului
+city           / localitate - localitatea de reședință a donatorului
+full address   / adresă completă - adresa completă a donatorului
+street name    / nume stradă - numele străzii de reședință a donatorului
+street number  / număr stradă - numărul străzii de reședință a donatorului
+building       / bloc - blocul de reședință al donatorului
+entrance       / scară - scara de reședință a donatorului
+floor          / etaj - etajul de reședință al donatorului
+apartment      / apartament - apartamentul de reședință al donatorului
+filename       / nume fișier - numele formularului corespunzător donatorului
+date           / dată - data la care a fost completat formularul
+duration       / durată - durata de valabilitate a formularului (1 sau 2 ani)
