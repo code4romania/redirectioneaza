@@ -287,6 +287,12 @@ def _generate_xml_files(
 
         return
 
+    _generate_donations_by_county(cnp_idx, ngo, ngo_donations, zip_64_flag, zip_archive, zip_timestamp)
+
+
+def _generate_donations_by_county(cnp_idx, ngo, ngo_donations, zip_64_flag, zip_archive, zip_timestamp):
+    donations_limit: int = settings.DONATIONS_XML_LIMIT_PER_FILE
+
     number_of_donations_by_county: QuerySet[Tuple[str, int]] = (
         ngo_donations.values("county").annotate(count=Count("county")).order_by("county").values_list("county", "count")
     )
@@ -295,22 +301,19 @@ def _generate_xml_files(
 
     xml_count: int = 1
     for current_county, current_county_count in sorted_donations_by_county:
-        # if there are more than settings.DONATIONS_XML_LIMIT_PER_FILE donations for a county
-        # split them into multiple files
+        # if there are more than donations_limit donations for a county, split them into multiple files
         county_code: str = COUNTIES_CHOICES_REVERSED.get(current_county, f"S{current_county}").lower().replace(" ", "_")
-        if current_county_count <= settings.DONATIONS_XML_LIMIT_PER_FILE:
+        if current_county_count <= donations_limit:
             xml_name: str = f"d230_{county_code}.xml"
 
             county_donations: QuerySet[Donor] = ngo_donations.filter(county=current_county)
             _build_xml(ngo, county_donations, xml_count, xml_name, cnp_idx, zip_timestamp, zip_archive, zip_64_flag)
             xml_count += 1
         else:
-            for i in range(math.ceil(current_county_count / settings.DONATIONS_XML_LIMIT_PER_FILE)):
+            for i in range(math.ceil(current_county_count / donations_limit)):
                 xml_name: str = f"d230_{county_code}_{xml_count:04}.xml"
 
-                county_donations: QuerySet[Donor] = ngo_donations.filter(county=current_county)[
-                    : settings.DONATIONS_XML_LIMIT_PER_FILE
-                ]
+                county_donations: QuerySet[Donor] = ngo_donations.filter(county=current_county)[:donations_limit]
                 _build_xml(ngo, county_donations, xml_count, xml_name, cnp_idx, zip_timestamp, zip_archive, zip_64_flag)
 
                 xml_count += 1
@@ -326,10 +329,14 @@ def _build_xml(
     zip_archive: ZipFile,
     zip_64_flag: bool,
 ):
+    # build the XML body
+    # 01. XML opening tag
     xml_str: str = """<?xml version="1.0" encoding="UTF-8"?>\n<form1>"""
 
+    # 02. XML header
     xml_str += _build_xml_header(ngo, batch_count, zip_timestamp)
 
+    # 03. XML body
     for donation_idx, donation in enumerate(donations_batch):
         # skip donations which have a duplicate CNP from the XML
         cnp = donation.get_cnp()
@@ -338,8 +345,10 @@ def _build_xml(
 
         xml_str = _build_xml_donation_content(donation, donation_idx, ngo, xml_str)
 
+    # 04. XML closing tag
     xml_str += """</form1>"""
 
+    # 05. XML cleanup
     xml_str = xml_str.replace("\n            ", "\n")
     xml_str = xml_str.replace("\n\n", "\n")
 
