@@ -107,7 +107,7 @@ def ngo_id_number_validator(value):
     raise ValidationError(_("The ID number is not valid"))
 
 
-class ActiveManager(models.Manager):
+class NgoActiveManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().filter(is_active=True)
 
@@ -219,7 +219,7 @@ class Ngo(models.Model):
     date_updated = models.DateTimeField(verbose_name=_("date updated"), db_index=True, auto_now=timezone.now)
 
     objects = models.Manager()
-    active = ActiveManager()
+    active = NgoActiveManager()
 
     def save(self, *args, **kwargs):
         is_new = self.id is None
@@ -268,6 +268,16 @@ class Ngo(models.Model):
         if changed:
             ngo.save()
             logging.info("Prefilled form deleted for NGO id %d", ngo_id)
+
+
+class DonorSignedManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(has_signed=True)
+
+
+class DonorCurrentYearSignedManager(DonorSignedManager):
+    def get_queryset(self):
+        return super().get_queryset().filter(date_created__year=timezone.now().year)
 
 
 class Donor(models.Model):
@@ -344,6 +354,10 @@ class Donor(models.Model):
     )
 
     date_created = models.DateTimeField(verbose_name=_("date created"), db_index=True, auto_now_add=timezone.now)
+
+    objects = models.Manager()
+    signed = DonorSignedManager()
+    current_year_signed = DonorCurrentYearSignedManager()
 
     class Meta:
         verbose_name = _("donor")

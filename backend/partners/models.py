@@ -3,7 +3,7 @@ from django.db.models.functions import Lower
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from donations.models.main import ActiveManager, Ngo
+from donations.models.main import Ngo
 from redirectioneaza.common.validators import url_validator
 
 
@@ -11,6 +11,11 @@ class DisplayOrderingChoices(models.TextChoices):
     ALPHABETICAL = "ABC", _("Alphabetical")
     NEWEST = "AGE", _("Newest")
     RANDOM = "RND", _("Random")
+
+
+class ActiveManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(is_active=True)
 
 
 class Partner(models.Model):
