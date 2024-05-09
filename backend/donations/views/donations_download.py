@@ -327,7 +327,6 @@ def _build_xml(
     zip_archive: ZipFile,
     zip_64_flag: bool,
 ):
-    # build the XML body
     # 01. XML opening tag
     xml_str: str = """<?xml version="1.0" encoding="UTF-8"?>\n<form1>"""
 
