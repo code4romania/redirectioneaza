@@ -78,8 +78,8 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], ngo: Ngo, 
     with ZipFile(zip_path, mode="w", compression=ZIP_DEFLATED, compresslevel=1) as zip_archive:
         # Attach a TXT help file
         logger.info("Attaching the TXT help file to the ZIP")
-        with zip_archive.open("DESCRIERE.txt", mode="w", force_zip64=zip_64_flag) as handler:
-            help_text = render_to_string("DESCRIERE.txt", context={})
+        with zip_archive.open("DESCRIERE.html", mode="w", force_zip64=zip_64_flag) as handler:
+            help_text = render_to_string("DESCRIERE.html", context={})
             handler.write(help_text.encode())
 
         # record a CNP first appearance 1-based-index in the data list of donations
