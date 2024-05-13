@@ -164,7 +164,7 @@ class DonorAdmin(admin.ModelAdmin):
         ),
         (
             _("Date"),
-            {"fields": ("date_created",)},
+            {"fields": ("date_created", "geoip")},
         ),
     )
 
