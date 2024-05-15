@@ -1,57 +1,189 @@
 <!DOCTYPE html>
-<html>
+<html lang="ro">
     <head>
         <meta charset="UTF-8">
         <title>Descriere</title>
     </head>
     <body>
-        <h2>CE SE AFLĂ ÎN ACEST DOSAR?</h2>
+    <h2>CE SE AFLĂ ÎN ACEST DOSAR/FOLDER</h2>
 
         <ul>
-            <li>Fișierul 'DESCRIERE.html' cu informații despre conținutul acestui dosar (e acest fișier)</li>
-            <li>Fișierul 'index.csv' cu informații care centralizează datele donatorilor</li>
-            <li>Dosarul 'pdf' cu formularele cu informațiile completate de către donatori</li>
-            <li>Dosarul 'xml' cu fișierele XML generate de către donatori care se pot încărca în PDF-ul ANAF</li>
+            <li>
+                Fișierul 'DESCRIERE.html' cu informații despre conținutul acestui dosar (acest fișier)
+            </li>
+            <li>
+                Fișierul 'index.csv' cu informații care centralizează datele contribuabililor
+            </li>
+            <li>
+                Dosarul 'pdf' cu formularele completate de către contribuabili
+            </li>
+            <li>
+                Dosarul 'xml' cu fișierele XML generate de către contribuabili care se pot încărca în PDF-ul ANAF
+            </li>
         </ul>
 
-        <h2>IMPORTAREA DATELOR ÎN PDF-UL ANAF</h2>
+    <h2>CUM SE ÎNCARCĂ DATELE ÎN PDF-UL ANAF</h2>
 
         <ol>
             <li>Descărcați fișierul 'soft A' de pe site-ul ANAF<br>
-                Link Descărcare: https://static.anaf.ro/static/10/Anaf/Declaratii_R/AplicatiiDec/D230_v1.0.8_14012024.pdf<br>
-                Link ANAF: https://static.anaf.ro/static/10/Anaf/Declaratii_R/230.html</li>
-            <li>Deschideți fișierul cu Adobe Acrobat Reader sau Adobe Acrobat Pro</li>
-            <li>Selectați persoană fizică pentru a trece la următorul pas</li>
-            <li>Importați XML-ul generat<br>
-                Navigați pe 'Edit > Form Options > Import Data' și selectați fișierul XML</li>
-            <li>Validați formularul și salvați-l<br>
-                De aici puteți să îl semnați electronic și să îl încărcați pe site-ul ANAF<br>
-                Dacă apar probleme la validare, vă rugăm să ne contactați pentru a remedia problema</li>
+                Link Descărcare:
+                <a href="https://static.anaf.ro/static/10/Anaf/Declaratii_R/AplicatiiDec/D230_v1.0.8_14012024.pdf">
+                    https://static.anaf.ro/static/10/Anaf/Declaratii_R/AplicatiiDec/D230_v1.0.8_14012024.pdf
+                </a>
+                <br>
+                Link ANAF:
+                <a href="https://static.anaf.ro/static/10/Anaf/Declaratii_R/230.html">
+                    https://static.anaf.ro/static/10/Anaf/Declaratii_R/230.html
+                </a>
+            </li>
+            <li>
+                Deschideți fișierul cu Adobe Acrobat Reader sau Adobe Acrobat Pro
+            </li>
+            <li>
+                Selectați persoană fizică pentru a trece la următorul pas
+            </li>
+            <li>
+                Importați XML-ul generat
+                <br>
+                Navigați pe 'Edit > Form Options > Import Data' și selectați fișierul XML
+            </li>
+            <li>
+                Validați formularul și salvați-l
+                <br>
+                De aici puteți să îl semnați electronic și să îl încărcați pe site-ul ANAF
+                <br>
+                Dacă apar probleme la validare, vă rugăm să ne contactați pentru a remedia problema
+            </li>
+            <li>
+                Repetați pașii pentru fiecare XML generat.
+                <br>
+                Într-un fișier PDF poate fi încărcat un singur XML, dar un XML conține mai multe formulare.
+            </li>
         </ol>
 
-        <h2>EXPLICAȚIA CONȚINUTULUI FIȘIERULUI 'index.csv'</h2>
+    <h2>CE INFORMAȚII SUNT ÎN FIȘIERUL 'index.csv'</h2>
 
         <ul>
-            <li><code>number</code>: număr curent - numărul de ordine al donatorului</li>
-            <li><code>last name</code>: nume de familie - numele de familie al donatorului</li>
-            <li><code>first name</code>: prenume - prenumele donatorului</li>
-            <li><code>initial</code>: inițiala tatălui - inițiala tatălui donatorului</li>
-            <li><code>CNP</code>: CNP - codul numeric personal al donatorului</li>
-            <li><code>duplicate</code>: duplicat - dacă CNP-ul mai există în fișierul 'index.csv'</li>
-            <li><code>phone</code>: telefon - numărul de telefon al donatorului</li>
-            <li><code>email</code>: email - adresa de email a donatorului</li>
-            <li><code>county</code>: județ - județul de reședință al donatorului</li>
-            <li><code>city</code>: localitate - localitatea de reședință a donatorului</li>
-            <li><code>full address</code>: adresă completă - adresa completă a donatorului</li>
-            <li><code>street name</code>: nume stradă - numele străzii de reședință a donatorului</li>
-            <li><code>street number</code>: număr stradă - numărul străzii de reședință a donatorului</li>
-            <li><code>building</code>: bloc - blocul de reședință al donatorului</li>
-            <li><code>entrance</code>: scară - scara de reședință a donatorului</li>
-            <li><code>floor</code>: etaj - etajul de reședință al donatorului</li>
-            <li><code>apartment</code>: apartament - apartamentul de reședință al donatorului</li>
-            <li><code>filename</code>: nume fișier - numele formularului corespunzător donatorului</li>
-            <li><code>date</code>: dată - data la care a fost completat formularul</li>
-            <li><code>duration</code>: durată - durata de valabilitate a formularului (1 sau 2 ani)</li>
+            <li>
+                <code>number</code>:
+                număr curent
+                -
+                numărul de ordine al contribuabilului
+            </li>
+            <li>
+                <code>last name</code>:
+                nume de familie
+                -
+                numele de familie al contribuabilului
+            </li>
+            <li>
+                <code>first name</code>:
+                prenume
+                -
+                prenumele contribuabilului
+            </li>
+            <li>
+                <code>initial</code>:
+                inițiala tatălui
+                -
+                inițiala tatălui contribuabilului
+            </li>
+            <li>
+                <code>CNP</code>:
+                CNP
+                -
+                codul numeric personal al contribuabilului
+            </li>
+            <li>
+                <code>duplicate</code>:
+                duplicat
+                -
+                dacă CNP-ul mai există în fișierul 'index.csv'
+            </li>
+            <li>
+                <code>phone</code>:
+                telefon
+                -
+                numărul de telefon al contribuabilului
+            </li>
+            <li>
+                <code>email</code>:
+                email
+                -
+                adresa de email a contribuabilului
+            </li>
+            <li>
+                <code>county</code>:
+                județ
+                -
+                județul de reședință al contribuabilului
+            </li>
+            <li>
+                <code>city</code>:
+                localitate
+                -
+                localitatea de reședință a contribuabilului
+            </li>
+            <li>
+                <code>full address</code>:
+                adresă completă
+                -
+                adresa completă a contribuabilului
+            </li>
+            <li>
+                <code>street name</code>:
+                nume stradă
+                -
+                numele străzii de reședință a contribuabilului
+            </li>
+            <li>
+                <code>street number</code>:
+                număr stradă
+                -
+                numărul străzii de reședință a contribuabilului
+            </li>
+            <li>
+                <code>building</code>:
+                bloc
+                -
+                blocul de reședință al contribuabilului
+            </li>
+            <li>
+                <code>entrance</code>:
+                scară
+                -
+                scara de reședință a contribuabilului
+            </li>
+            <li>
+                <code>floor</code>:
+                etaj
+                -
+                etajul de reședință al contribuabilului
+            </li>
+            <li>
+                <code>apartment</code>:
+                apartament
+                -
+                apartamentul de reședință al contribuabilului
+            </li>
+            <li>
+                <code>filename</code>:
+                nume fișier
+                -
+                numele formularului corespunzător contribuabilului
+            </li>
+            <li>
+                <code>date</code>:
+                dată
+                -
+                data la care a fost completat formularul
+            </li>
+            <li>
+                <code>duration</code>:
+                durată
+                -
+                durata de valabilitate a formularului (1 sau 2 ani)
+            </li>
         </ul>
     </body>
 </html>
