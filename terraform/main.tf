@@ -132,6 +132,26 @@ module "ecs_redirectioneaza" {
       value = 0.5
     },
     {
+      name  = "DJANGO_Q_WORKERS_COUNT"
+      value = 2
+    },
+    {
+      name  = "DJANGO_Q_RECYCLE_RATE"
+      value = 50
+    },
+    {
+      name  = "DJANGO_Q_TIMEOUT_SECONDS"
+      value = 1200
+    },
+    {
+      name  = "DJANGO_Q_RETRY_AFTER_TIMEOUT_SECONDS"
+      value = 120
+    },
+    {
+      name  = "DJANGO_Q_POLL_SECONDS"
+      value = 4
+    },
+    {
       name  = "GOOGLE_ANALYTICS_ID"
       value = var.google_analytics_id
     },
