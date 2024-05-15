@@ -81,7 +81,10 @@ env = environ.Env(
     DEFAULT_FROM_EMAIL=(str, "no-reply@code4.ro"),
     NO_REPLY_EMAIL=(str, "no-reply@code4.ro"),
     # django-q2 settings
-    BACKGROUND_WORKERS_COUNT=(int, 1),
+    DJANGO_Q_WORKERS_COUNT=(int, 1),
+    DJANGO_Q_TIMEOUT_SECONDS=(int, 900),  # A task must finish in less than 15 minutes
+    DJANGO_Q_RETRY_AFTER_TIMEOUT_SECONDS=(int, 300),  # Retry unfinished tasks 5 minutes after timeout
+    DJANGO_Q_POLL_SECONDS=(int, 4),
     IMPORT_METHOD=(str, "async"),
     IMPORT_USE_BATCHES=(bool, True),
     IMPORT_BATCH_SIZE=(int, 100),
@@ -561,21 +564,25 @@ CONTACT_EMAIL_ADDRESS = env.str("CONTACT_EMAIL_ADDRESS")
 # Django Q2
 # https://django-q2.readthedocs.io/en/stable/configure.html#configuration
 
+Q_CLUSTER_WORKERS: int = env.int("DJANGO_Q_WORKERS_COUNT")
+Q_CLUSTER_TIMEOUT: int = env.int("DJANGO_Q_TIMEOUT_SECONDS")
+Q_CLUSTER_RETRY: int = Q_CLUSTER_TIMEOUT + (env.int("DJANGO_Q_RETRY_AFTER_TIMEOUT_SECONDS") or 1)
+Q_CLUSTER_POLL: int = env.int("DJANGO_Q_POLL_SECONDS")
+
 Q_CLUSTER = {
     "name": "redirect",
-    "workers": env.int("BACKGROUND_WORKERS_COUNT"),
+    "workers": Q_CLUSTER_WORKERS,
     "recycle": 100,
-    "timeout": 900,  # A task must finish in less than 15 minutes
-    "retry": 1200,  # Retry an unfinished tasks after 20 minutes
+    "timeout": Q_CLUSTER_TIMEOUT,
+    "retry": Q_CLUSTER_RETRY,
     "ack_failures": True,
     "max_attempts": 2,
     "compress": True,
     "save_limit": 200,
-    "queue_limit": 4,
     "cpu_affinity": 1,
     "label": "Django Q2",
     "orm": "default",
-    "poll": 2,
+    "poll": Q_CLUSTER_POLL,
     "guard_cycle": 3,
     "catch_up": False,
 }
