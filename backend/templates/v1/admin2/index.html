@@ -1,4 +1,3 @@
-
 {% extends "base.html" %}
 
 {% block header %}
@@ -6,47 +5,51 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="row">
-        <div class="col-xs-12">
-            <h3>General stats</h3>
-            <p>ONG-uri: {{ stats_dict["ngos"] }}</p>
-            <p>Formulare: {{ stats_dict["forms"] }}</p>
-        </div>
-        {% for key, value in stats_dict['years'].items()|reverse %}
-            <div class="col-xs-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        {{ key }}
-                    </div>
-                    <div class="panel-body">
-                        <p>
-                            ONG-uri: {{ value["ngos"] }}
-                        </p>
-                        <p>
-                            Formulare: {{ value["forms"] }}
-                        </p>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <h3>General stats</h3>
+                <p>ONG-uri înregistrate anul acesta: <strong>{{ stats_dict["ngos"] }}</strong></p>
+                <p>ONG-uri către care s-a donat: <strong>{{ stats_dict["ngos_with_forms"] }}</strong></p>
+                <p>Formulare completate: <strong>{{ stats_dict["forms"] }}</strong></p>
+            </div>
+            {% for key, value in stats_dict['years'].items()|reverse %}
+                <div class="col-xs-2">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            {{ key }}
+                        </div>
+                        <div class="panel-body">
+                            <p>
+                                ONG-uri înregistrate: <strong>{{ value["ngos"] }}</strong>
+                            </p>
+                            <p>
+                                ONG-uri beneficiare: <strong>{{ value["ngos_donated_to_by_year"] }}</strong>
+                            </p>
+                            <p>
+                                Formulare completate: <strong>{{ value["forms"] }}</strong>
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        {% endfor %}
-    </div>
+            {% endfor %}
+        </div>
 
-    <div class="row">
-        <div class="col-xs-12">
-            <h4>Statistici pe judet (total)</h4>
-            <table class="table">
-                <thead>
+        <div class="row">
+            <div class="col-xs-12">
+                <h4>Statistici pe judet (total)</h4>
+                <table class="table">
+                    <thead>
                     <tr>
                         <th>Judet/Sector</th>
                         <th>ONG-uri</th>
                         <th>Formulare</th>
                     </tr>
-                </thead>
-                <tbody>
+                    </thead>
+                    <tbody>
                     {% for key, value in stats_dict["counties"].items()|sort %}
                         <tr>
-                            <td>{{key}}</td>
+                            <td>{{ key }}</td>
                             <td>
                                 {{ value["ngos"] }}
                             </td>
@@ -55,9 +58,9 @@
                             </td>
                         </tr>
                     {% endfor %}
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
 {% endblock %}

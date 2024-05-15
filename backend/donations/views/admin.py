@@ -37,10 +37,10 @@ class AdminHome(TemplateView):
 
         # if we don't have any data
         if stats_dict["init"] is False:
-            ngos = []
+            ngos_registered_this_year = []
             donations = []
 
-            stats_dict["ngos"] = len(ngos)
+            stats_dict["ngos"] = len(ngos_registered_this_year)
             stats_dict["forms"] = len(donations)
 
             # init the rest of the dict
@@ -58,33 +58,39 @@ class AdminHome(TemplateView):
                     "forms": 0,
                 }
 
-            self.add_data(stats_dict)
+            self.add_yearly_data(stats_dict)
 
             stats_dict["init"] = True
 
         # just look at the last year
-        ngos = Ngo.objects.filter(date_created__gte=from_date).all()
+        ngos_registered_this_year = Ngo.objects.filter(date_created__gte=from_date).all()
         donations = Donor.objects.filter(date_created__gte=from_date).all()
+        ngos_receiving_donations_this_year = donations.values("ngo").distinct()
 
         stats = deepcopy(stats_dict)
-        stats["ngos"] = ngos.count() + stats_dict["ngos"]
+        stats["ngos"] = ngos_registered_this_year.count() + stats_dict["ngos"]
         stats["forms"] = donations.count() + stats_dict["forms"]
+        stats["ngos_with_forms"] = ngos_receiving_donations_this_year.count()
 
-        self.add_data(stats)
+        self.add_yearly_data(stats)
 
         context["stats_dict"] = stats
 
         # render a response
         return render(request, self.template_name, context)
 
-    def add_data(self, obj):
+    def add_yearly_data(self, obj):
         ngos_by_year = {
             year_stas["date_created__year"]: year_stas["count"]
             for year_stas in Ngo.active.values("date_created__year").annotate(count=Count("id"))
         }
         donations_by_year = {
-            year_stas["date_created__year"]: year_stas["count"]
-            for year_stas in Donor.objects.values("date_created__year").annotate(count=Count("id"))
+            year_stats["date_created__year"]: year_stats["count"]
+            for year_stats in Donor.objects.values("date_created__year").annotate(count=Count("id"))
+        }
+        ngos_donated_to_by_year = {
+            year_stats["date_created__year"]: year_stats["count"]
+            for year_stats in Donor.objects.values("date_created__year").annotate(count=Count("ngo", distinct=True))
         }
 
         ngos_by_county = {
@@ -97,7 +103,11 @@ class AdminHome(TemplateView):
         }
 
         obj["years"] = {
-            year: {"ngos": ngos_by_year.get(year, 0), "forms": donations_by_year.get(year, 0)}
+            year: {
+                "ngos": ngos_by_year.get(year, 0),
+                "forms": donations_by_year.get(year, 0),
+                "ngos_donated_to_by_year": ngos_donated_to_by_year.get(year, 0) or 0,
+            }
             for year in range(settings.START_YEAR, timezone.now().year + 1)
         }
         obj["counties"] = {
