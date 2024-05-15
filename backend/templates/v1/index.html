@@ -75,7 +75,7 @@
             {% for ngo in ngos %}
                 <div class="col-xs-6 col-sm-4 col-md-3">
                     <div class="ong-panel panel panel-default">
-                        <a href="{{ ngo.slug }}">
+                        <a href="{{ reverse('twopercent', kwargs={'ngo_url':ngo.slug}) }}">
                             <div class="ong-logo">
                                 {% if ngo and ngo.logo %}
                                     {% set logo = ngo.logo.url %}
