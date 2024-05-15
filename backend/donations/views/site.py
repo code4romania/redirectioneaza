@@ -7,6 +7,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 
 from partners.models import DisplayOrderingChoices
@@ -116,12 +117,12 @@ class NoteHandler(TemplateView):
         return render(request, self.template_name, context)
 
 
-class ContactHandler(TemplateView):
-    template_name = "contact.html"
+class FAQHandler(TemplateView):
+    template_name = "faq.html"
 
     def get(self, request, *args, **kwargs):
         context = {
-            "title": "Contact",
+            "title": _("Frequently Asked Questions"),
             "contact_email": settings.CONTACT_EMAIL_ADDRESS,
         }
         return render(request, self.template_name, context)

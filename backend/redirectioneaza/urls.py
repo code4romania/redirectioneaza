@@ -51,7 +51,7 @@ from donations.views.my_account import (
 from donations.views.ngo import DonationSucces, FormSignature, OwnFormDownloadLinkHandler, TwoPercentHandler
 from donations.views.site import (
     AboutHandler,
-    ContactHandler,
+    FAQHandler,
     ForNgoHandler,
     HealthCheckHandler,
     HomePage,
@@ -85,15 +85,7 @@ urlpatterns = (
         path("nota-de-informare/", NoteHandler.as_view(), name="note"),
         path("politica/", PolicyHandler.as_view(), name="policy"),
         path("despre/", AboutHandler.as_view(), name="about"),
-        path(
-            "contact/",
-            (
-                ContactHandler.as_view()
-                if settings.ENABLE_FLAG_CONTACT
-                else RedirectView.as_view(pattern_name="note", permanent=False)
-            ),
-            name="contact",
-        ),
+        path("faq/", (FAQHandler.as_view()), name="faq"),
         # account management
         path("cont-nou/", SignupView.as_view(), name="signup"),
         path("login/", LoginView.as_view(), name="login"),
