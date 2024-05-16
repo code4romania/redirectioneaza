@@ -1,5 +1,4 @@
 import logging
-from copy import deepcopy
 from datetime import datetime
 
 from django.conf import settings
@@ -11,6 +10,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.views.generic import TemplateView
 
+from redirectioneaza.common.cache import cache_decorator
 from redirectioneaza.common.messaging import send_email
 from users.models import User
 from ..models.main import Donor, Ngo
@@ -18,7 +18,7 @@ from ..models.main import Donor, Ngo
 logger = logging.getLogger(__name__)
 
 # dict used as cache
-stats_dict = {"init": False, "ngos": 0, "forms": 0, "years": {}, "counties": {}}
+stats_dict = {"init": False, "years": {}, "counties": {}, "all_time": {}}
 
 
 class AdminHome(TemplateView):
@@ -31,58 +31,33 @@ class AdminHome(TemplateView):
             return redirect(User.create_admin_login_url(reverse("admin-index")))
 
         context["title"] = "Admin"
-        now = timezone.now()
-
-        from_date = datetime(now.year, 1, 1, 0, 0, 0, tzinfo=now.tzinfo)
-
-        # if we don't have any data
-        if stats_dict["init"] is False:
-            ngos_registered_this_year = []
-            donations = []
-
-            stats_dict["ngos"] = len(ngos_registered_this_year)
-            stats_dict["forms"] = len(donations)
-
-            # init the rest of the dict
-            for x in range(settings.START_YEAR, now.year + 1):
-                stats_dict["years"][x] = {
-                    "ngos": 0,
-                    "forms": 0,
-                }
-
-            counties = settings.LIST_OF_COUNTIES + ["1", "2", "3", "4", "5", "6", "RO"]
-
-            for county in counties:
-                stats_dict["counties"][county] = {
-                    "ngos": 0,
-                    "forms": 0,
-                }
-
-            self.add_yearly_data(stats_dict)
-
-            stats_dict["init"] = True
-
-        # just look at the last year
-        ngos_registered_this_year = Ngo.objects.filter(date_created__gte=from_date).all()
-        donations = Donor.objects.filter(date_created__gte=from_date).all()
-        ngos_receiving_donations_this_year = donations.values("ngo").distinct()
-
-        stats = deepcopy(stats_dict)
-        stats["ngos"] = ngos_registered_this_year.count() + stats_dict["ngos"]
-        stats["forms"] = donations.count() + stats_dict["forms"]
-        stats["ngos_with_forms"] = ngos_receiving_donations_this_year.count()
-
-        self.add_yearly_data(stats)
-
-        context["stats_dict"] = stats
+        context["stats_dict"] = self.collect_stats()
 
         # render a response
         return render(request, self.template_name, context)
 
-    def add_yearly_data(self, obj):
+    @cache_decorator(timeout=settings.CACHE_TIMEOUT_TINY, cache_key="ADMIN_STATS")
+    def collect_stats(self):
+        return {
+            "timestamp": timezone.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "years": self.get_yearly_data(),
+            "counties": self.get_conties_data(),
+            "all_time": self.get_all_time_data(),
+        }
+
+    @staticmethod
+    def get_all_time_data():
+        return {
+            "ngos": Ngo.objects.all().count(),
+            "forms": Donor.objects.all().count(),
+            "ngos_with_forms": Donor.objects.all().values("ngo").distinct().count(),
+        }
+
+    @staticmethod
+    def get_yearly_data():
         ngos_by_year = {
-            year_stas["date_created__year"]: year_stas["count"]
-            for year_stas in Ngo.active.values("date_created__year").annotate(count=Count("id"))
+            year_stats["date_created__year"]: year_stats["count"]
+            for year_stats in Ngo.active.values("date_created__year").annotate(count=Count("id"))
         }
         donations_by_year = {
             year_stats["date_created__year"]: year_stats["count"]
@@ -93,6 +68,17 @@ class AdminHome(TemplateView):
             for year_stats in Donor.objects.values("date_created__year").annotate(count=Count("ngo", distinct=True))
         }
 
+        return {
+            year: {
+                "ngos": ngos_by_year.get(year, 0),
+                "forms": donations_by_year.get(year, 0),
+                "ngos_donated_to_by_year": ngos_donated_to_by_year.get(year, 0) or 0,
+            }
+            for year in range(settings.START_YEAR, timezone.now().year + 1)
+        }
+
+    @staticmethod
+    def get_conties_data():
         ngos_by_county = {
             county_stats["county"]: county_stats["count"]
             for county_stats in Ngo.active.values("county").annotate(count=Count("id"))
@@ -101,16 +87,7 @@ class AdminHome(TemplateView):
             county_stats["county"]: county_stats["count"]
             for county_stats in Donor.objects.values("county").annotate(count=Count("id"))
         }
-
-        obj["years"] = {
-            year: {
-                "ngos": ngos_by_year.get(year, 0),
-                "forms": donations_by_year.get(year, 0),
-                "ngos_donated_to_by_year": ngos_donated_to_by_year.get(year, 0) or 0,
-            }
-            for year in range(settings.START_YEAR, timezone.now().year + 1)
-        }
-        obj["counties"] = {
+        return {
             county: {"ngos": ngos_by_county.get(county, 0), "forms": donations_by_county.get(county, 0)}
             for county in settings.LIST_OF_COUNTIES + ["1", "2", "3", "4", "5", "6", "RO"]
         }

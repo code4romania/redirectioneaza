@@ -9,9 +9,10 @@
         <div class="row">
             <div class="col-xs-12">
                 <h3>General stats</h3>
-                <p>ONG-uri înregistrate anul acesta: <strong>{{ stats_dict["ngos"] }}</strong></p>
-                <p>ONG-uri către care s-a donat: <strong>{{ stats_dict["ngos_with_forms"] }}</strong></p>
-                <p>Formulare completate: <strong>{{ stats_dict["forms"] }}</strong></p>
+                <p><small>Generate la: {{ stats_dict["timestamp"] }} GMT</small></p>
+                <p>ONG-uri înregistrate: <strong>{{ stats_dict["all_time"]["ngos"] }}</strong></p>
+                <p>ONG-uri către care s-a donat: <strong>{{ stats_dict["all_time"]["ngos_with_forms"] }}</strong></p>
+                <p>Formulare completate: <strong>{{ stats_dict["all_time"]["forms"] }}</strong></p>
             </div>
             {% for key, value in stats_dict['years'].items()|reverse %}
                 <div class="col-xs-2">
