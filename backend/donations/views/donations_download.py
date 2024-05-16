@@ -127,8 +127,10 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], ngo: Ngo, 
                     detailed_address: Dict = _get_address_details(donation_object)
                     donations_data.append(
                         {
-                            "last_name": donation_object.last_name,
-                            "first_name": donation_object.first_name,
+                            # TODO: first name and last name have been swapped
+                            # https://github.com/code4romania/redirectioneaza/issues/269
+                            "last_name": donation_object.first_name,
+                            "first_name": donation_object.last_name,
                             "initial": donation_object.initial,
                             "phone": phone,
                             "email": donation_object.email,
@@ -402,6 +404,9 @@ def _build_xml_header(ngo, xml_idx, zip_timestamp) -> str:
 
 
 def _build_xml_donation_content(donation: Donor, donation_idx: int, ngo: Ngo, xml_str: str):
+    # TODO: first name and last name have been swapped
+    # https://github.com/code4romania/redirectioneaza/issues/269
+
     # noinspection HttpUrlsUsage
     detailed_address: Dict = _get_address_details(donation)
     xml_str += f"""
@@ -410,9 +415,9 @@ def _build_xml_donation_content(donation: Donor, donation_idx: int, ngo: Ngo, xm
                         <nV>{donation_idx + 1}</nV>
                     </nrCrt>
                     <idCnt>
-                        <nume>{donation.last_name.upper()}</nume>
+                        <nume>{donation.first_name.upper()}</nume>
                         <init>{donation.initial.upper()}</init>
-                        <pren>{donation.first_name.upper()}</pren>
+                        <pren>{donation.last_name.upper()}</pren>
                         <cif_c>{donation.get_cnp()}</cif_c>
                         <adresa>{detailed_address["full_address"].upper()}</adresa>
                         <telefon>{_parse_phone(donation.phone)}</telefon>
