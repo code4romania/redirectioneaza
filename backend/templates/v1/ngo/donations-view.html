@@ -53,7 +53,7 @@
                                 din secțiunea de setări a organizației.
                             </div>
                         {% endif %}
-                        {% if has_signed_form and disable_download %}
+                        {% if has_signed_form and disable_new_download %}
                             <div class="alert alert-info">
                                 Descărcarea de declarații este momentan blocată pentru organizația ta.
                                 <br>
@@ -63,7 +63,7 @@
                             </div>
                         {% endif %}
                         <button id="download-button" class="btn" type="submit"
-                                {% if disable_download %}disabled{% endif %}
+                                {% if disable_new_download %}disabled{% endif %}
                         >
                             Descarcă declarațiile semnate
                         </button>
@@ -94,10 +94,12 @@
                                         {% endif %}
                                     </td>
                                     <td>
-                                        {% if job.zip %}
+                                        {% if disable_past_download %}
+                                            <span class="text-muted">Momentan indisponibil</span>
+                                        {% elif job.zip %}
                                             <a href="{{ reverse('admin-download-link', kwargs={'job_id': job.id}) }}">Descarcă</a>
                                         {% else %}
-                                            -
+                                            &ndash;
                                         {% endif %}
                                     </td>
                                 </tr>
@@ -128,14 +130,18 @@
                             <td>{{ "Da" if donation.has_signed else "Nu" }}</td>
                             <td>{{ donation.city }}, <span class="text-muted">{{ donation.county }}</span></td>
 
-                            {% if donation.is_anonymous != True %}
-                                <td>{{ donation.email if donation.email }}</td>
-                                <td>{{ donation.tel if donation.tel }}</td>
-                            {% else %}
+                            {% if disable_past_download %}
+                                <td colspan="2" class="text-center text-muted">
+                                    Momentan nu puteți vizualiza datele de contact.
+                                </td>
+                            {% elif donation.is_anonymous %}
                                 <td colspan="2" class="text-center text-muted">
                                     Aceasta persoana a ales <br>
                                     să nu-și arate datele de contact.
                                 </td>
+                            {% else %}
+                                <td>{{ donation.email if donation.email }}</td>
+                                <td>{{ donation.tel if donation.tel }}</td>
                             {% endif %}
                         </tr>
                     {% endfor %}

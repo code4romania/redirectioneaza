@@ -161,7 +161,7 @@ class GetNgoForms(BaseAccountView):
         ngo = request.user.ngo
         if not ngo:
             return redirect(reverse("contul-meu"))
-        
+
         if not ngo.is_active:
             return redirect(reverse("contul-meu"))
 

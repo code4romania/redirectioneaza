@@ -63,7 +63,11 @@ class ArchiveDownloadLinkView(BaseAccountView):
             raise Http404
 
         else:
-            # Check that the asked job belongs to the current user
+            # Check that the current user's NGO is active
+            if not user.ngo.is_active:
+                raise Http404
+
+            # Check that the requested job belongs to the current user
             try:
                 job = Job.objects.get(pk=job_id, ngo=user.ngo, owner=user)
             except Job.DoesNotExist:
@@ -135,8 +139,10 @@ class MyAccountView(BaseAccountView):
         has_signed_form = user_ngo.is_accepting_forms if user_ngo else False
 
         disable_forms_download = False
+        disable_past_download = False
         if not user_ngo.is_active:
             disable_forms_download = True
+            disable_past_download = True
         elif settings.ENABLE_FORMS_DOWNLOAD and (not has_signed_form or not can_donate or last_job_was_recent):
             disable_forms_download = True
 
@@ -148,7 +154,8 @@ class MyAccountView(BaseAccountView):
             "donors": grouped_donors,
             "donor_metadata": donors_metadata,
             "counties": settings.FORM_COUNTIES_NATIONAL,
-            "disable_download": disable_forms_download,
+            "disable_new_download": disable_forms_download,
+            "disable_past_download": disable_past_download,
             "contact_email": settings.CONTACT_EMAIL_ADDRESS,
             "hours_between_retries": settings.TIMEDELTA_FORMS_DOWNLOAD_HOURS,
             "has_signed_form": has_signed_form,

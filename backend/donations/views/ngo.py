@@ -447,6 +447,10 @@ class OwnFormDownloadLinkHandler(TemplateView):
         else:
             failed = False
 
+        # Don't allow downloading donation forms for non active NGOs
+        if not donor.ngo or not donor.ngo.is_active:
+            raise Http404
+
         # Compare the donation date with the date string
         date_created_str = datetime.strftime(donor.date_created, "%Y%m%d")
         if date_created_str != donor_date_str:
