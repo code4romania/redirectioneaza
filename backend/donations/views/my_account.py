@@ -140,7 +140,7 @@ class MyAccountView(BaseAccountView):
 
         disable_forms_download = False
         disable_past_download = False
-        if not user_ngo.is_active:
+        if not user_ngo or not user_ngo.is_active:
             disable_forms_download = True
             disable_past_download = True
         elif settings.ENABLE_FORMS_DOWNLOAD and (not has_signed_form or not can_donate or last_job_was_recent):
