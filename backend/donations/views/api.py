@@ -162,6 +162,9 @@ class GetNgoForms(BaseAccountView):
         if not ngo:
             return redirect(reverse("contul-meu"))
 
+        if not ngo.is_active:
+            return redirect(reverse("contul-meu"))
+
         try:
             latest_job: Job = Job.objects.filter(ngo=ngo).latest("date_created")
 
