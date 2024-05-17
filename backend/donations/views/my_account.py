@@ -133,9 +133,12 @@ class MyAccountView(BaseAccountView):
                 last_job_was_recent = True
 
         has_signed_form = user_ngo.is_accepting_forms if user_ngo else False
-        disable_download = settings.ENABLE_FORMS_DOWNLOAD and (
-            not has_signed_form or not can_donate or last_job_was_recent
-        )
+
+        disable_forms_download = False
+        if not user_ngo.is_active:
+            disable_forms_download = True
+        elif settings.ENABLE_FORMS_DOWNLOAD and (not has_signed_form or not can_donate or last_job_was_recent):
+            disable_forms_download = True
 
         context = {
             "user": user,
@@ -145,7 +148,7 @@ class MyAccountView(BaseAccountView):
             "donors": grouped_donors,
             "donor_metadata": donors_metadata,
             "counties": settings.FORM_COUNTIES_NATIONAL,
-            "disable_download": disable_download,
+            "disable_download": disable_forms_download,
             "contact_email": settings.CONTACT_EMAIL_ADDRESS,
             "hours_between_retries": settings.TIMEDELTA_FORMS_DOWNLOAD_HOURS,
             "has_signed_form": has_signed_form,
