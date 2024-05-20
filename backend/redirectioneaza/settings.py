@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from base64 import urlsafe_b64encode
 from copy import deepcopy
-from datetime import date, datetime
+from datetime import datetime
 from pathlib import Path
 
 import environ
@@ -61,7 +61,9 @@ env = environ.Env(
     # site settings
     APEX_DOMAIN=(str, "redirectioneaza.ro"),
     SITE_TITLE=(str, "redirectioneaza.ro"),
-    DONATIONS_LIMIT_DATE=(str, "2016-05-25"),
+    DONATIONS_LIMIT_DAY=(int, 25),
+    DONATIONS_LIMIT_MONTH=(int, 5),
+    DONATIONS_LIMIT_YEAR=(int, 2016),
     DONATIONS_LIMIT_TO_CURRENT_YEAR=(bool, True),
     DONATIONS_XML_LIMIT_PER_FILE=(int, 100),
     # security settings
@@ -526,9 +528,18 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 TITLE = env.str("SITE_TITLE")
 
-DONATIONS_LIMIT = datetime.strptime(env.str("DONATIONS_LIMIT_DATE"), "%Y-%m-%d").date()
 if env.bool("DONATIONS_LIMIT_TO_CURRENT_YEAR"):
-    DONATIONS_LIMIT = date(timezone.now().year, DONATIONS_LIMIT.month, DONATIONS_LIMIT.day)
+    DONATIONS_LIMIT_YEAR = timezone.now().year
+else:
+    DONATIONS_LIMIT_YEAR = env.int("DONATIONS_LIMIT_YEAR")
+DONATIONS_LIMIT_MONTH = env.int("DONATIONS_LIMIT_MONTH")
+DONATIONS_LIMIT_DAY = env.int("DONATIONS_LIMIT_DAY")
+
+DONATIONS_LIMIT = datetime(
+    year=DONATIONS_LIMIT_YEAR,
+    month=DONATIONS_LIMIT_MONTH,
+    day=DONATIONS_LIMIT_DAY,
+).date()
 
 DONATIONS_XML_LIMIT_PER_FILE = env.int("DONATIONS_XML_LIMIT_PER_FILE")
 
