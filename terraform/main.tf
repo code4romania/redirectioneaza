@@ -156,6 +156,10 @@ module "ecs_redirectioneaza" {
       value = 2
     },
     {
+      name  = "DONATIONS_LIMIT_DAY"
+      value = 27
+    },
+    {
       name  = "GOOGLE_ANALYTICS_ID"
       value = var.google_analytics_id
     },
