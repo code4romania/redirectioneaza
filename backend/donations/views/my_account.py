@@ -108,19 +108,19 @@ class MyAccountView(BaseAccountView):
 
         now = timezone.now()
 
-        current_year = now.year
-        grouped_donors = self._get_donors_by_donation_year(ngo=user_ngo)
+        grouped_donors: OrderedDict[int, QuerySet[Donor]] = self._get_donors_by_donation_year(ngo=user_ngo)
+        current_year_donors: Optional[QuerySet[Donor]] = grouped_donors.get(now.year)
         donors_metadata = {
-            "total": grouped_donors[current_year].count(),
-            "total_signed": grouped_donors[current_year].filter(has_signed=True).count(),
+            "total": current_year_donors.count() if current_year_donors else 0,
+            "total_signed": current_year_donors.filter(has_signed=True).count() if current_year_donors else 0,
             "years": list(grouped_donors.keys()),
         }
 
         can_donate = not now.date() > settings.DONATIONS_LIMIT
 
-        ngo_url = (
-            request.build_absolute_uri(reverse("twopercent", kwargs={"ngo_url": user_ngo.slug})) if user_ngo else ""
-        )
+        ngo_url = ""
+        if user_ngo:
+            ngo_url = request.build_absolute_uri(reverse("twopercent", kwargs={"ngo_url": user_ngo.slug}))
 
         ngo_jobs = user_ngo.jobs.all()[:10] if user_ngo else None
 
