@@ -124,6 +124,7 @@ class FAQHandler(TemplateView):
         context = {
             "title": _("Frequently Asked Questions"),
             "contact_email": settings.CONTACT_EMAIL_ADDRESS,
+            "limit": settings.DONATIONS_LIMIT,
         }
         return render(request, self.template_name, context)
 
