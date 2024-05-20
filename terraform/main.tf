@@ -152,6 +152,10 @@ module "ecs_redirectioneaza" {
       value = 4
     },
     {
+      name  = "TIMEDELTA_FORMS_DOWNLOAD_HOURS"
+      value = 2
+    },
+    {
       name  = "GOOGLE_ANALYTICS_ID"
       value = var.google_analytics_id
     },
