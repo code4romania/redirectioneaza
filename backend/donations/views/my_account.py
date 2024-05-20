@@ -85,18 +85,15 @@ class MyAccountView(BaseAccountView):
 
     @staticmethod
     @cache_decorator(timeout=settings.CACHE_TIMEOUT_TINY, cache_key_prefix="DONORS_BY_DONATION_YEAR")
-    def _get_donors_by_donation_year(ngo: Ngo) -> OrderedDict:
-        donors_grouped_by_year = OrderedDict()
+    def _get_donors_by_donation_year(ngo: Ngo) -> OrderedDict[int, QuerySet[Donor]]:
+        donation_dates = Donor.objects.filter(ngo=ngo).order_by("-date_created").values_list("date_created", flat=True)
+        donation_years = {donation_date.year for donation_date in donation_dates}
 
-        count_per_year = {}
-        ngo_donors = Donor.objects.filter(ngo=ngo).order_by("-date_created")
-        for donor in ngo_donors:
-            donation_year = donor.date_created.year
-            if donation_year not in donors_grouped_by_year:
-                count_per_year[donation_year] = 0
-                donors_grouped_by_year[donation_year] = []
-            donors_grouped_by_year[donation_year].append(donor)
-            count_per_year[donation_year] += 1
+        donors_grouped_by_year = OrderedDict()
+        for donation_year in donation_years:
+            donors_grouped_by_year[donation_year] = Donor.objects.filter(
+                ngo=ngo, date_created__year=donation_year
+            ).order_by("-date_created")
 
         return donors_grouped_by_year
 
@@ -114,8 +111,8 @@ class MyAccountView(BaseAccountView):
         current_year = now.year
         grouped_donors = self._get_donors_by_donation_year(ngo=user_ngo)
         donors_metadata = {
-            "total": sum(len(donors) for donors in grouped_donors.values()),
-            "total_signed": len(grouped_donors[current_year]),
+            "total": grouped_donors[current_year].count(),
+            "total_signed": grouped_donors[current_year].filter(has_signed=True).count(),
             "years": list(grouped_donors.keys()),
         }
 
