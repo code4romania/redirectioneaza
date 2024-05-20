@@ -89,7 +89,8 @@ class MyAccountView(BaseAccountView):
         donors_grouped_by_year = OrderedDict()
 
         count_per_year = {}
-        for donor in Donor.objects.filter(ngo=ngo).order_by("-date_created"):
+        ngo_donors = Donor.objects.filter(ngo=ngo).order_by("-date_created")
+        for donor in ngo_donors:
             donation_year = donor.date_created.year
             if donation_year not in donors_grouped_by_year:
                 count_per_year[donation_year] = 0
@@ -108,14 +109,16 @@ class MyAccountView(BaseAccountView):
 
         user_ngo: Ngo = user.ngo if user.ngo else None
 
+        now = timezone.now()
+
+        current_year = now.year
         grouped_donors = self._get_donors_by_donation_year(ngo=user_ngo)
         donors_metadata = {
             "total": sum(len(donors) for donors in grouped_donors.values()),
-            "total_signed": sum(1 for donors in grouped_donors.values() if donors),
+            "total_signed": len(grouped_donors[current_year]),
             "years": list(grouped_donors.keys()),
         }
 
-        now = timezone.now()
         can_donate = not now.date() > settings.DONATIONS_LIMIT
 
         ngo_url = (

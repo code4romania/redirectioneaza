@@ -17,13 +17,16 @@
             {% if donor_metadata["total_signed"] == 1 %}
                 Folosind butonul de mai jos, puteți descărca declarația semnată online pentru anul curent.
             {% else %}
-                Folosind butonul de mai jos, puteți descărca cele {{ donor_metadata["total_signed"] }} declarații
-                semnate online pentru anul curent.
+                Folosind butonul de mai jos, puteți descărca
+                <strong>
+                    cele
+                    {{ donor_metadata["total_signed"] }}
+                    declarații semnate online pentru anul curent.
+                </strong>
             {% endif %}
             <br>
             Deoarece operația de descărcare a declarațiilor poate dura mai mult timp, în funcție de numărul de donatori,
             momentan puteți descărca o singură arhivă la fiecare {{ hours_between_retries }} ore.
-            
         </p>
     {% endif %}
 
