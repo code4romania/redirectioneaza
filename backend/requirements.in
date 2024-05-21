@@ -41,7 +41,7 @@ pypdf~=4.2.0
 svglib~=1.5.1
 
 # requests
-requests~=2.31.0
+requests~=2.32.0
 
 # Sentry
 sentry-sdk[django]~=2.1.1

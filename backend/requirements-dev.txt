@@ -186,7 +186,7 @@ reportlab==4.2.0
     # via
     #   -r requirements.txt
     #   svglib
-requests==2.31.0
+requests==2.32.0
     # via -r requirements.txt
 ruff==0.4.3
     # via -r requirements-dev.in
