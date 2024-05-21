@@ -86,8 +86,10 @@ class MyAccountView(BaseAccountView):
     @staticmethod
     @cache_decorator(timeout=settings.CACHE_TIMEOUT_TINY, cache_key_prefix="DONORS_BY_DONATION_YEAR")
     def _get_donors_by_donation_year(ngo: Ngo) -> OrderedDict[int, QuerySet[Donor]]:
-        donation_dates = Donor.objects.filter(ngo=ngo).order_by("-date_created").values_list("date_created", flat=True)
-        donation_years = {donation_date.year for donation_date in donation_dates}
+        if not ngo:
+            return OrderedDict()
+
+        donation_years = list(range(timezone.now().year, ngo.date_created.year - 1, -1))
 
         donors_grouped_by_year = OrderedDict()
         for donation_year in donation_years:
