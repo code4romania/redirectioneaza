@@ -14,6 +14,8 @@ else
     # https://docs.gunicorn.org/en/latest/design.html#how-many-workers
     WORKERS=${GUNICORN_WORKERS:-$(((2 * $(nproc)) + 1))}
 
+    echo "Starting Gunicorn with ${WORKERS} workers"
+
     python3 -m gunicorn redirectioneaza.wsgi \
         --bind "unix:///run/gunicorn.sock" \
         --log-level "${LOG_LEVEL}" \
