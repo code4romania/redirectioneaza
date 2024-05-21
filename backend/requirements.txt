@@ -86,7 +86,7 @@ psycopg2-binary==2.9.9
     # via -r requirements.in
 pycparser==2.22
     # via cffi
-pymysql==1.1.0
+pymysql==1.1.1
     # via -r requirements.in
 pypdf==4.2.0
     # via -r requirements.in
