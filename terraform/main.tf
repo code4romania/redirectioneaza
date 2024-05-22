@@ -132,6 +132,10 @@ module "ecs_redirectioneaza" {
       value = 0.5
     },
     {
+      name  = "GUNICORN_WORKERS"
+      value = 3
+    },
+    {
       name  = "DJANGO_Q_WORKERS_COUNT"
       value = 2
     },
