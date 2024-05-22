@@ -18,7 +18,7 @@ croniter~=2.0.5  # optional requirement for django-q2
 django-ses~=4.0.0
 
 # database
-pymysql~=1.1.0
+pymysql~=1.1
 psycopg2-binary~=2.9.9
 
 # Jinja2
@@ -41,7 +41,7 @@ pypdf~=4.2.0
 svglib~=1.5.1
 
 # requests
-requests~=2.31.0
+requests~=2.32
 
 # Sentry
-sentry-sdk[django]~=2.1.1
+sentry-sdk[django]~=2.2.1
