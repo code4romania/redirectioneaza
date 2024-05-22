@@ -89,3 +89,15 @@ resource "aws_secretsmanager_secret_version" "rds" {
     "port"     = aws_db_instance.main.port
   })
 }
+
+resource "aws_db_parameter_group" "main_parameter_group" {
+  name        = "${local.namespace}-db-parameter-group"
+  family      = "${aws_db_instance.main.engine}-${aws_db_instance.main.engine_version}"
+  description = "Custom parameter group for ${local.namespace} RDS instance"
+
+  parameter {
+    name         = "max_connections"
+    value = "300"
+    apply_method = "pending-reboot"
+  }
+}
