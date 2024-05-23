@@ -3,26 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <title>Descriere</title>
+    <style>
+        * {
+            font-family: Verdana, Arial, sans-serif;
+            max-width: 940px;
+            padding-left: 10px;
+        }
+
+        .alert {
+            padding: 20px 20px 20px 20px;
+            background-color: #ffd209; /* Red */
+            color: black;
+            margin-bottom: 15px;
+            margin-right: 15px;
+            width: 100%;
+        }
+
+        h2 {
+            margin-top: 30px;
+        }
+
+        li {
+            margin-bottom: 10px;
+            margin-left: 30px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #eeeeee;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(odd) {
+            background-color: #ffffe6;
+        }
+
+        th {
+            background-color: #ffff99;
+        }
+    </style>
+
 </head>
 <body>
+
+<div class="alert">
+    Acest dosar conține doar datele contribuabililor care au ales să semneze formularele online.
+    <br>
+    Formularele nesemnate electronic nu se regăsesc aici și responsabilitatea completării lor revine contribuabililor.
+</div>
+
+
 <h2>CE SE AFLĂ ÎN ACEST DOSAR/FOLDER</h2>
 
 <ul>
     <li>
-        Fișierul 'DESCRIERE.html' cu informații despre conținutul acestui dosar (acest fișier)
+        Fișierul <strong>'DESCRIERE.html'</strong> cu informații despre conținutul acestui dosar (acest fișier)
     </li>
     <li>
-        Fișierul 'index.csv' cu informații care centralizează datele contribuabililor
+        Fișierul <strong>'index.csv'</strong> cu informații care centralizează datele contribuabililor
     </li>
     <li>
-        Dosarul 'pdf' cu formularele completate de către contribuabili
+        Dosarul <strong>'pdf'</strong> cu formularele completate de către contribuabili
     </li>
     <li>
-        Dosarul 'xml' cu fișierele XML generate de către contribuabili care se pot încărca în PDF-ul ANAF
+        Dosarul <strong>'xml'</strong> cu fișierele XML generate de către contribuabili care se pot încărca în PDF-ul
+        ANAF
     </li>
 </ul>
 
+
 <h2>CUM SE ÎNCARCĂ DATELE ÎN PDF-UL ANAF</h2>
+
+<p>
+    Urmăriți pașii de mai jos sau să urmăriți tutorialul video:
+    <iframe
+        src="https://drive.google.com/file/d/1iM_baDu5TORrxEkkcMHMk31pIOrJcaZp/preview"
+        width="640"
+        height="414"
+        allow="autoplay">
+    </iframe>
+</p>
 
 <ol>
     <li>Descărcați fișierul 'soft A' de pe site-ul ANAF<br>
@@ -38,9 +103,13 @@
     </li>
     <li>
         Deschideți fișierul cu Adobe Acrobat Reader sau Adobe Acrobat Pro
+        <br>
+        (nu funcționează cu alte programe de vizualizare PDF)
     </li>
     <li>
-        Selectați persoană fizică pentru a trece la următorul pas
+        Selectați "persoană fizică" pentru a trece la următorul pas mai repede
+        <br>
+        (PDF-ul se schimbă singur pe persoană juridică după ce se importă datele și suprascrie datele completate)
     </li>
     <li>
         Importați XML-ul generat
@@ -61,129 +130,101 @@
     </li>
 </ol>
 
+
 <h2>CE INFORMAȚII SUNT ÎN FIȘIERUL 'index.csv'</h2>
 
-<ul>
-    <li>
-        <code>number</code>:
-        număr curent
-        -
-        numărul de ordine al contribuabilului
-    </li>
-    <li>
-        <code>last name</code>:
-        nume de familie
-        -
-        numele de familie al contribuabilului
-    </li>
-    <li>
-        <code>first name</code>:
-        prenume
-        -
-        prenumele contribuabilului
-    </li>
-    <li>
-        <code>initial</code>:
-        inițiala tatălui
-        -
-        inițiala tatălui contribuabilului
-    </li>
-    <li>
-        <code>CNP</code>:
-        CNP
-        -
-        codul numeric personal al contribuabilului
-    </li>
-    <li>
-        <code>duplicate</code>:
-        duplicat
-        -
-        dacă CNP-ul mai există în fișierul 'index.csv'
-    </li>
-    <li>
-        <code>phone</code>:
-        telefon
-        -
-        numărul de telefon al contribuabilului
-    </li>
-    <li>
-        <code>email</code>:
-        email
-        -
-        adresa de email a contribuabilului
-    </li>
-    <li>
-        <code>county</code>:
-        județ
-        -
-        județul de reședință al contribuabilului
-    </li>
-    <li>
-        <code>city</code>:
-        localitate
-        -
-        localitatea de reședință a contribuabilului
-    </li>
-    <li>
-        <code>full address</code>:
-        adresă completă
-        -
-        adresa completă a contribuabilului
-    </li>
-    <li>
-        <code>street name</code>:
-        nume stradă
-        -
-        numele străzii de reședință a contribuabilului
-    </li>
-    <li>
-        <code>street number</code>:
-        număr stradă
-        -
-        numărul străzii de reședință a contribuabilului
-    </li>
-    <li>
-        <code>building</code>:
-        bloc
-        -
-        blocul de reședință al contribuabilului
-    </li>
-    <li>
-        <code>entrance</code>:
-        scară
-        -
-        scara de reședință a contribuabilului
-    </li>
-    <li>
-        <code>floor</code>:
-        etaj
-        -
-        etajul de reședință al contribuabilului
-    </li>
-    <li>
-        <code>apartment</code>:
-        apartament
-        -
-        apartamentul de reședință al contribuabilului
-    </li>
-    <li>
-        <code>filename</code>:
-        nume fișier
-        -
-        numele formularului corespunzător contribuabilului
-    </li>
-    <li>
-        <code>date</code>:
-        dată
-        -
-        data la care a fost completat formularul
-    </li>
-    <li>
-        <code>duration</code>:
-        durată
-        -
-        durata de valabilitate a formularului (1 sau 2 ani)
-    </li>
-</ul>
+<p>
+    Tabelul conține informații despre contribuabili și formularele completate de aceștia.
+    Cuprinde toate formularele completate de contribuabili, inclusiv duplicatele
+    (care sunt marcate ca atare în coloana 'duplicat').
+</p>
+
+<table>
+    <tr>
+        <th>denumire</th>
+        <th>descriere</th>
+    </tr>
+    <tr>
+        <td><strong>nr. crt.</strong></td>
+        <td>Numărul de ordine al contribuabilului</td>
+    </tr>
+    <tr>
+        <td><strong>nume</strong></td>
+        <td>Numele de familie al contribuabilului</td>
+    </tr>
+    <tr>
+        <td><strong>prenume</strong></td>
+        <td>Prenumele contribuabilului</td>
+    </tr>
+    <tr>
+        <td><strong>inițială</strong></td>
+        <td>Inițiala tatălui contribuabilului</td>
+    </tr>
+    <tr>
+        <td><strong>CNP</strong></td>
+        <td>Codul numeric personal al contribuabilului</td>
+    </tr>
+    <tr>
+        <td><strong>duplicat</strong></td>
+        <td>Dacă CNP-ul mai există în fișierul 'index.csv'</td>
+    </tr>
+    <tr>
+        <td><strong>telefon</strong></td>
+        <td>Numărul de telefon al contribuabilului</td>
+    </tr>
+    <tr>
+        <td><strong>email</strong></td>
+        <td>Adresa de email a contribuabilului</td>
+    </tr>
+    <tr>
+        <td><strong>județ</strong></td>
+        <td>Județul de reședință al contribuabilului</td>
+    </tr>
+    <tr>
+        <td><strong>oraș</strong></td>
+        <td>Localitatea de reședință a contribuabilului</td>
+    </tr>
+    <tr>
+        <td><strong>adresă completă</strong></td>
+        <td>Adresa completă a contribuabilului</td>
+    </tr>
+    <tr>
+        <td><strong>strada</strong></td>
+        <td>Numele străzii de reședință a contribuabilului</td>
+    </tr>
+    <tr>
+        <td><strong>număr</strong></td>
+        <td>Numărul străzii de reședință a contribuabilului</td>
+    </tr>
+    <tr>
+        <td><strong>bloc</strong></td>
+        <td>Blocul de reședință al contribuabilului</td>
+    </tr>
+    <tr>
+        <td><strong>scara</strong></td>
+        <td>Scara de reședință a contribuabilului</td>
+    </tr>
+    <tr>
+        <td><strong>etaj</strong></td>
+        <td>Etajul de reședință al contribuabilului</td>
+    </tr>
+    <tr>
+        <td><strong>apartament</strong></td>
+        <td>Apartamentul de reședință al contribuabilului</td>
+    </tr>
+    <tr>
+        <td><strong>nume fișier</strong></td>
+        <td>Numele formularului corespunzător contribuabilului</td>
+    </tr>
+    <tr>
+        <td><strong>data completării</strong></td>
+        <td>Data la care a fost completat formularul</td>
+    </tr>
+    <tr>
+        <td><strong>perioadă</strong></td>
+        <td>Durata de valabilitate a formularului (1 sau 2 ani)
+    </tr>
+</table>
+
 </body>
 </html>
