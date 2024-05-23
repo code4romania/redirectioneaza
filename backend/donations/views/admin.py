@@ -1,5 +1,4 @@
 import logging
-from datetime import datetime
 
 from django.conf import settings
 from django.core.exceptions import BadRequest, PermissionDenied
@@ -176,58 +175,37 @@ class AdminNgosListByForms(AdminNgosList):
 
 class AdminNgosListByFormsNow(AdminNgosList):
     def _get_ngos(self):
-        return Ngo.objects.all().annotate(
-            forms_count=Count(
-                "donor",
-                filter=Q(
-                    date_created__gte=timezone.now().replace(
-                        year=datetime.date(timezone.now()).year,
-                        month=1,
-                        day=1,
-                        hour=0,
-                        minute=0,
-                        second=0,
-                        microsecond=0,
-                        tzinfo=timezone.now().tzinfo,
+        query = (
+            Ngo.objects.all()
+            .annotate(
+                forms_count=Count(
+                    "donor",
+                    filter=Q(
+                        donor__date_created__year__gte=timezone.now().year,
                     ),
-                ),
+                )
             )
+            .order_by("-forms_count")
         )
+        return query
 
 
 class AdminNgosListByFormsPrevious(AdminNgosList):
     def _get_ngos(self):
-        return Ngo.objects.all().annotate(
-            forms_count=Count(
-                "donor",
-                filter=(
-                    Q(
-                        date_created__gte=timezone.now().replace(
-                            year=datetime.date(timezone.now()).year - 1,
-                            month=1,
-                            day=1,
-                            hour=0,
-                            minute=0,
-                            second=0,
-                            microsecond=0,
-                            tzinfo=timezone.now().tzinfo,
-                        )
-                    )
-                    & Q(
-                        date_created__lt=timezone.now().replace(
-                            year=datetime.date(timezone.now()).year - 1,
-                            month=12,
-                            day=31,
-                            hour=23,
-                            minute=59,
-                            second=59,
-                            microsecond=999999,
-                            tzinfo=timezone.now().tzinfo,
-                        )
-                    )
-                ),
-            ),
+        query = (
+            Ngo.objects.all()
+            .annotate(
+                forms_count=Count(
+                    "donor",
+                    filter=Q(
+                        donor__date_created__year__gte=timezone.now().year - 1,
+                        donor__date_created__year__lt=timezone.now().year,
+                    ),
+                )
+            )
+            .order_by("-forms_count")
         )
+        return query
 
 
 class SendCampaign(TemplateView):
