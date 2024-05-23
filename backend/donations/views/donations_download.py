@@ -361,7 +361,15 @@ def _build_xml(
         handler.write(xml_str.encode())
 
 
+def _clean_registration_number(cif: str) -> str:
+    # The CIF should be added without the "RO" prefix
+    cif: str = cif.upper()
+    return cif if not cif.startswith("RO") else cif[2:]
+
+
 def _build_xml_header(ngo, xml_idx, zip_timestamp) -> str:
+    valid_registration_number: str = _clean_registration_number(ngo.registration_number)
+
     # noinspection HttpUrlsUsage
     xml_str = f"""
                 <btnDoc>
@@ -376,7 +384,7 @@ def _build_xml_header(ngo, xml_idx, zip_timestamp) -> str:
                 <IdDoc>
                     <universalCode>B230_A1.0.8</universalCode>
                     <totalPlata_A/>
-                    <cif>{ngo.registration_number}</cif>
+                    <cif>{valid_registration_number}</cif>
                     <formValid>FORMULAR NEVALIDAT</formValid>
                     <luna_r>12</luna_r>
                     <d_rec>0</d_rec>
@@ -389,13 +397,13 @@ def _build_xml_header(ngo, xml_idx, zip_timestamp) -> str:
                 </imp>
                 <z_tipPersoana>Rad2</z_tipPersoana>
                 <z_denEntitate>{ngo.name}</z_denEntitate>
-                <z_cifEntitate>{ngo.registration_number}</z_cifEntitate>
+                <z_cifEntitate>{valid_registration_number}</z_cifEntitate>
                 <z_ibanEntitate>{ngo.bank_account}</z_ibanEntitate>
                 <nrDataB>
                     <nrD>{xml_idx}</nrD>
                     <dataD>{zip_timestamp.day:02}.{zip_timestamp.month:02}.{zip_timestamp.year}</dataD>
                     <denD>{ngo.name}</denD>
-                    <cifD>{ngo.registration_number}</cifD>
+                    <cifD>{valid_registration_number}</cifD>
                     <adresaD>{ngo.address}</adresaD>
                     <ibanD>{ngo.bank_account}</ibanD>
                 </nrDataB>
@@ -453,7 +461,7 @@ def _build_xml_donation_content(donation: Donor, donation_idx: int, ngo: Ngo, xm
                                 <Gap xmlns:xfa="http://www.xfa.org/schema/xfa-data/1.0/" xfa:dataNode="dataGroup"/>
                                 <idEnt>
                                     <anDoi>{_parse_duration(donation.two_years)}</anDoi>
-                                    <cifOJ>{ngo.registration_number}</cifOJ>
+                                    <cifOJ>{_clean_registration_number(ngo.registration_number)}</cifOJ>
                                     <denOJ>{ngo.name}</denOJ>
                                     <ibanNp>{ngo.bank_account}</ibanNp>
                                     <prc>3.50</prc>
