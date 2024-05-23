@@ -275,6 +275,11 @@ class DonorSignedManager(models.Manager):
         return super().get_queryset().filter(has_signed=True)
 
 
+class DonorCurrentYearManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(date_created__year=timezone.now().year)
+
+
 class DonorCurrentYearSignedManager(DonorSignedManager):
     def get_queryset(self):
         return super().get_queryset().filter(date_created__year=timezone.now().year)
@@ -359,6 +364,7 @@ class Donor(models.Model):
 
     objects = models.Manager()
     signed = DonorSignedManager()
+    current_year = DonorCurrentYearManager()
     current_year_signed = DonorCurrentYearSignedManager()
 
     class Meta:
