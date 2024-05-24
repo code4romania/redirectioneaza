@@ -341,14 +341,9 @@ def _build_xml(
     # 02. XML header
     xml_str += _build_xml_header(ngo, batch_count, zip_timestamp)
 
-    # 03. XML body
+    # 03. XML body (duplicates were already removed)
     for donation_idx, donation in enumerate(donations_batch):
-        # skip donations which have a duplicate CNP from the XML
-        cnp = donation.get_cnp()
-        if cnp in cnp_idx and cnp_idx[cnp]["has_duplicate"]:
-            continue
-
-        xml_str = _build_xml_donation_content(donation, donation_idx, ngo, xml_str)
+        xml_str += _build_xml_donation_content(donation, donation_idx, ngo)
 
     # 04. XML closing tag
     xml_str += """</form1>"""
@@ -411,13 +406,13 @@ def _build_xml_header(ngo, xml_idx, zip_timestamp) -> str:
     return xml_str
 
 
-def _build_xml_donation_content(donation: Donor, donation_idx: int, ngo: Ngo, xml_str: str):
+def _build_xml_donation_content(donation: Donor, donation_idx: int, ngo: Ngo):
     # TODO: first name and last name have been swapped
     # https://github.com/code4romania/redirectioneaza/issues/269
 
     # noinspection HttpUrlsUsage
     detailed_address: Dict = _get_address_details(donation)
-    xml_str += f"""
+    return f"""
                 <contrib>
                     <nrCrt>
                         <nV>{donation_idx + 1}</nV>
@@ -472,5 +467,3 @@ def _build_xml_donation_content(donation: Donor, donation_idx: int, ngo: Ngo, xm
                     </s15>
                 </contrib>
             """
-
-    return xml_str
