@@ -341,8 +341,16 @@ def _build_xml(
     # 02. XML header
     xml_str += _build_xml_header(ngo, batch_count, zip_timestamp)
 
-    # 03. XML body (duplicates were already removed)
+    # 03. XML body
     for donation_idx, donation in enumerate(donations_batch):
+        # skip donations which have a duplicate CNP from the XML
+        cnp = donation.get_cnp()
+        if cnp in cnp_idx and cnp_idx[cnp]["has_duplicate"]:
+            if not cnp_idx[cnp].get("skip", False):
+                cnp_idx[cnp]["skip"] = True
+            else:
+                continue
+
         xml_str += _build_xml_donation_content(donation, donation_idx, ngo)
 
     # 04. XML closing tag
