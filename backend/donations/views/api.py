@@ -68,8 +68,13 @@ class CheckNgoUrl(BaseAccountView):
             return HttpResponseBadRequest()
 
         ngo_queryset = Ngo.objects
-        if user.ngo:
-            ngo_queryset = ngo_queryset.exclude(id=user.ngo.id)
+
+        try:
+            if user.ngo:
+                ngo_queryset = ngo_queryset.exclude(id=user.ngo.id)
+        except AttributeError:
+            # Anonymous users don't have the .ngo attribute
+            pass
 
         if ngo_queryset.filter(slug=slug.lower()).count():
             return HttpResponseBadRequest()
