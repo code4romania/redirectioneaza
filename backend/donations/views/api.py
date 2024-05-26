@@ -181,9 +181,9 @@ class GetNgoForms(BaseAccountView):
             pass
 
         DONATION_LIMIT = date(
-            year=settings.DONATION_LIMIT_YEAR,
-            month=settings.DONATION_LIMIT_MONTH,
-            day=settings.DONATION_LIMIT_DAY,
+            year=settings.DONATIONS_LIMIT_YEAR,
+            month=settings.DONATIONS_LIMIT_MONTH,
+            day=settings.DONATIONS_LIMIT_DAY,
         )
 
         if timezone.now().date() > DONATION_LIMIT:

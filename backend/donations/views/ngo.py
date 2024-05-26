@@ -39,9 +39,9 @@ class DonationSucces(TemplateView):
     def get(self, request, ngo_url, *args, **kwargs):
         context = self.get_context_data(ngo_url)
         donation_limit = date(
-            year=settings.DONATION_LIMIT_YEAR,
-            month=settings.DONATION_LIMIT_MONTH,
-            day=settings.DONATION_LIMIT_DAY,
+            year=settings.DONATIONS_LIMIT_YEAR,
+            month=settings.DONATIONS_LIMIT_MONTH,
+            day=settings.DONATIONS_LIMIT_DAY,
         )
 
         try:
