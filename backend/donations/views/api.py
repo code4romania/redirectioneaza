@@ -180,7 +180,11 @@ class GetNgoForms(BaseAccountView):
         except Job.DoesNotExist:
             pass
 
-        DONATION_LIMIT = date(timezone.now().year, 5, 25)
+        DONATION_LIMIT = date(
+            year=settings.DONATION_LIMIT_YEAR,
+            month=settings.DONATION_LIMIT_MONTH,
+            day=settings.DONATION_LIMIT_DAY,
+        )
 
         if timezone.now().date() > DONATION_LIMIT:
             return redirect(reverse("contul-meu"))
