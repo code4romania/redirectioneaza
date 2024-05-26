@@ -1,7 +1,7 @@
 locals {
   namespace  = "redirectioneaza-${var.env}"
   image_repo = data.aws_ecr_repository.this.repository_url
-  image_tag = "2.1.14"
+  image_tag = "2.1.15"
 
   availability_zone = data.aws_availability_zones.current.names[0]
 
