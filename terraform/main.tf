@@ -156,8 +156,8 @@ module "ecs_redirectioneaza" {
       value = 4
     },
     {
-      name  = "TIMEDELTA_FORMS_DOWNLOAD_HOURS"
-      value = 2
+      name  = "TIMEDELTA_FORMS_DOWNLOAD_MINUTES"
+      value = 20
     },
     {
       name  = "DONATIONS_LIMIT_DAY"

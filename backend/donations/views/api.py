@@ -173,7 +173,9 @@ class GetNgoForms(BaseAccountView):
         try:
             latest_job: Job = Job.objects.filter(ngo=ngo).latest("date_created")
 
-            form_retry_threshold = timezone.now() - timezone.timedelta(hours=settings.TIMEDELTA_FORMS_DOWNLOAD_HOURS)
+            form_retry_threshold = timezone.now() - timezone.timedelta(
+                minutes=settings.TIMEDELTA_FORMS_DOWNLOAD_MINUTES
+            )
             if latest_job.status != JobStatusChoices.ERROR and latest_job.date_created > form_retry_threshold:
                 return redirect(reverse("contul-meu"))
 
