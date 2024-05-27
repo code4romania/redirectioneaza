@@ -319,7 +319,9 @@ def _generate_donations_by_county(cnp_idx, ngo, ngo_donations, zip_64_flag, zip_
             for i in range(math.ceil(current_county_count / donations_limit)):
                 xml_name: str = f"d230_{county_code}_{xml_count:04}.xml"
 
-                county_donations: QuerySet[Donor] = ngo_donations.filter(county=current_county)[:donations_limit]
+                county_donations: QuerySet[Donor] = ngo_donations.filter(county=current_county)[
+                    i * donations_limit : (i + 1) * donations_limit
+                ]
                 _build_xml(ngo, county_donations, xml_count, xml_name, cnp_idx, zip_timestamp, zip_archive, zip_64_flag)
 
                 xml_count += 1
