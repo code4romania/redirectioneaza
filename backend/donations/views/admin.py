@@ -38,9 +38,9 @@ class AdminHome(TemplateView):
     @cache_decorator(timeout=settings.CACHE_TIMEOUT_TINY, cache_key="ADMIN_STATS")
     def collect_stats(self):
         return {
-            "timestamp": timezone.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "timestamp": timezone.now(),
             "years": self.get_yearly_data(),
-            "counties": self.get_conties_data(),
+            "counties": self.get_counties_data(),
             "all_time": self.get_all_time_data(),
         }
 
@@ -77,7 +77,7 @@ class AdminHome(TemplateView):
         }
 
     @staticmethod
-    def get_conties_data():
+    def get_counties_data():
         ngos_by_county = {
             county_stats["county"]: county_stats["count"]
             for county_stats in Ngo.active.values("county").annotate(count=Count("id"))
@@ -86,8 +86,18 @@ class AdminHome(TemplateView):
             county_stats["county"]: county_stats["count"]
             for county_stats in Donor.objects.values("county").annotate(count=Count("id"))
         }
+        donations_by_county_current_year = {
+            county_stats["county"]: county_stats["count"]
+            for county_stats in Donor.objects.filter(date_created__year=timezone.now().year)
+            .values("county")
+            .annotate(count=Count("id"))
+        }
         return {
-            county: {"ngos": ngos_by_county.get(county, 0), "forms": donations_by_county.get(county, 0)}
+            county: {
+                "ngos": ngos_by_county.get(county, 0),
+                "forms": donations_by_county.get(county, 0),
+                "forms_current_year": donations_by_county_current_year.get(county, 0),
+            }
             for county in settings.LIST_OF_COUNTIES + ["1", "2", "3", "4", "5", "6", "RO"]
         }
 

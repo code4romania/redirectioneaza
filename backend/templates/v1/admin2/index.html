@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col-xs-12">
                 <h3>General stats</h3>
-                <p><small>Generate la: {{ stats_dict["timestamp"] }} GMT</small></p>
+                <p><small>Generate la: {{ stats_dict["timestamp"].strftime("%Y-%m-%d %H:%M:%S") }} GMT</small></p>
                 <p>ONG-uri înregistrate: <strong>{{ stats_dict["all_time"]["ngos"] }}</strong></p>
                 <p>ONG-uri către care s-a donat: <strong>{{ stats_dict["all_time"]["ngos_with_forms"] }}</strong></p>
                 <p>Formulare completate: <strong>{{ stats_dict["all_time"]["forms"] }}</strong></p>
@@ -38,13 +38,14 @@
 
         <div class="row">
             <div class="col-xs-12">
-                <h4>Statistici pe judet (total)</h4>
+                <h4>Statistici pe județ</h4>
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>Judet/Sector</th>
+                        <th>Județ/Sector</th>
                         <th>ONG-uri</th>
-                        <th>Formulare</th>
+                        <th>Formulare ({{ stats_dict["timestamp"].strftime("%Y") }})</th>
+                        <th>Formulare (total)</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -53,6 +54,9 @@
                             <td>{{ key }}</td>
                             <td>
                                 {{ value["ngos"] }}
+                            </td>
+                            <td>
+                                {{ value["forms_current_year"] }}
                             </td>
                             <td>
                                 {{ value["forms"] }}
