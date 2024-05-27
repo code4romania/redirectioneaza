@@ -45,7 +45,7 @@ env = environ.Env(
     LOG_LEVEL=(str, "INFO"),
     ENABLE_CACHE=(bool, True),
     ENABLE_FORMS_DOWNLOAD=(bool, True),
-    TIMEDELTA_FORMS_DOWNLOAD_HOURS=(int, 6),
+    TIMEDELTA_FORMS_DOWNLOAD_MINUTES=(int, 360),
     IS_CONTAINERIZED=(bool, False),
     RECAPTCHA_ENABLED=(bool, True),
     # proxy headers
@@ -619,7 +619,7 @@ if DEBUG or not RECAPTCHA_ENABLED:
     SILENCED_SYSTEM_CHECKS = ["django_recaptcha.recaptcha_test_key_error"]
 
 ENABLE_FORMS_DOWNLOAD = env.bool("ENABLE_FORMS_DOWNLOAD", True)
-TIMEDELTA_FORMS_DOWNLOAD_HOURS = env.int("TIMEDELTA_FORMS_DOWNLOAD_HOURS")
+TIMEDELTA_FORMS_DOWNLOAD_MINUTES = env.int("TIMEDELTA_FORMS_DOWNLOAD_MINUTES")
 
 
 # encryption

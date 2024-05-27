@@ -133,7 +133,7 @@ class MyAccountView(BaseAccountView):
 
             timedelta = timezone.timedelta(0)
             if last_job_status != JobStatusChoices.ERROR:
-                timedelta = timezone.timedelta(hours=settings.TIMEDELTA_FORMS_DOWNLOAD_HOURS)
+                timedelta = timezone.timedelta(minutes=settings.TIMEDELTA_FORMS_DOWNLOAD_MINUTES)
 
             if last_job_date > now - timedelta:
                 last_job_was_recent = True
@@ -159,7 +159,7 @@ class MyAccountView(BaseAccountView):
             "disable_new_download": disable_forms_download,
             "disable_past_download": disable_past_download,
             "contact_email": settings.CONTACT_EMAIL_ADDRESS,
-            "hours_between_retries": settings.TIMEDELTA_FORMS_DOWNLOAD_HOURS,
+            "minutes_between_retries": settings.TIMEDELTA_FORMS_DOWNLOAD_MINUTES,
             "has_signed_form": has_signed_form,
             "current_year": now.year,
             "ngo_url": ngo_url,
