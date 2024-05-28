@@ -8,8 +8,8 @@ module "ecs_cluster" {
   default_instance_type = "t3a.small"
   instance_types        = local.ecs.instance_types
 
-  min_size                  = 4
-  max_size                  = 8
+  min_size                  = 1
+  max_size                  = 2
   minimum_scaling_step_size = 1
   maximum_scaling_step_size = 1
 
