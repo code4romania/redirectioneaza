@@ -1,7 +1,7 @@
 locals {
   namespace  = "redirectioneaza-${var.env}"
   image_repo = data.aws_ecr_repository.this.repository_url
-  image_tag = "2.1.19"
+  image_tag  = "2.1.19"
 
   availability_zone = data.aws_availability_zones.current.names[0]
 
@@ -18,7 +18,7 @@ locals {
 
   db = {
     name           = "redirectioneaza"
-    instance_class = var.env == "production" ? "db.t4g.medium" : "db.t4g.micro"
+    instance_class = "db.t4g.micro" # var.env == "production" ? "db.t4g.medium" : "db.t4g.micro"
   }
 
   networking = {
