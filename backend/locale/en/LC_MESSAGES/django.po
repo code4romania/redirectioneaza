@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-23 16:34+0300\n"
+"POT-Creation-Date: 2024-05-28 10:06+0300\n"
 "PO-Revision-Date: 2024-02-28 15:45+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -19,85 +19,98 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 5.3.1\n"
 
-#: donations/admin.py:29
+#: donations/admin.py:36
 msgid "User Link"
 msgstr "User Link"
 
-#: donations/admin.py:33
+#: donations/admin.py:40
 msgid "User Details"
 msgstr "User Details"
 
-#: donations/admin.py:37
+#: donations/admin.py:44
 msgid "User Permissions"
 msgstr "User Permissions"
 
-#: donations/admin.py:45
+#: donations/admin.py:52
 msgid "User"
 msgstr "User"
 
-#: donations/admin.py:52
+#: donations/admin.py:59
 msgid "Has owner"
 msgstr "Has owner"
 
-#: donations/admin.py:56
+#: donations/admin.py:63
 msgid "Yes"
 msgstr "Yes"
 
-#: donations/admin.py:56
+#: donations/admin.py:63
 msgid "No"
 msgstr "No"
 
-#: donations/admin.py:89 donations/admin.py:118
+#: donations/admin.py:98 donations/admin.py:127
 msgid "Donations"
 msgstr "Donations"
 
-#: donations/admin.py:93 donations/admin.py:150 donations/admin.py:190
+#: donations/admin.py:102 donations/admin.py:182 donations/admin.py:222
 #: donations/models/jobs.py:28 donations/models/main.py:234
 #: donations/models/main.py:294 partners/admin.py:11 users/models.py:70
 msgid "NGO"
 msgstr "NGO"
 
-#: donations/admin.py:97
+#: donations/admin.py:106
 msgid "Activity"
 msgstr "Activity"
 
-#: donations/admin.py:101
+#: donations/admin.py:110
 msgid "Logo"
 msgstr "Logo"
 
-#: donations/admin.py:105
+#: donations/admin.py:114
 msgid "Contact"
 msgstr "Contact"
 
-#: donations/admin.py:109
+#: donations/admin.py:118
 msgid "Details"
 msgstr "Details"
 
-#: donations/admin.py:113 donations/admin.py:166 donations/admin.py:202
+#: donations/admin.py:122 donations/admin.py:198 donations/admin.py:234
 msgid "Date"
 msgstr "Date"
 
-#: donations/admin.py:120
+#: donations/admin.py:129
 msgid "Open the NGO donor list"
 msgstr "Open the NGO donor list"
 
-#: donations/admin.py:154
+#: donations/admin.py:135
+msgid "Generate donations archive"
+msgstr ""
+
+#: donations/admin.py:153
+msgid "The donations archive has been generated for the following NGOs: "
+msgstr ""
+
+#: donations/admin.py:155
+msgid ""
+"The donations archive could not be generated for any of the selected NGOs."
+msgstr ""
+
+#: donations/admin.py:186
 msgid "Identity"
 msgstr "Identity"
 
-#: donations/admin.py:158
+#: donations/admin.py:190
 msgid "Info"
 msgstr "Info"
 
-#: donations/admin.py:162 donations/admin.py:198 importer/models.py:28
+#: donations/admin.py:194 donations/admin.py:230 importer/models.py:28
 msgid "File"
 msgstr "File"
 
-#: donations/admin.py:174
+#: donations/admin.py:206
 msgid "Form"
 msgstr "Form"
 
-#: donations/admin.py:194 importer/models.py:24
+#: donations/admin.py:226 importer/models.py:24
 msgid "Status"
 msgstr "Status"
 
@@ -470,11 +483,11 @@ msgstr "The IBAN number must contain only letters and digits"
 msgid "The IBAN number must start with 'RO'"
 msgstr "The IBAN number must start with 'RO'"
 
-#: donations/views/ngo.py:148 donations/views/ngo.py:393
+#: donations/views/ngo.py:152 donations/views/ngo.py:397
 msgid "Formularul tău de redirecționare"
 msgstr "Formularul tău de redirecționare"
 
-#: donations/views/ngo.py:155
+#: donations/views/ngo.py:159
 msgid "Un nou formular de redirecționare"
 msgstr "Un nou formular de redirecționare"
 

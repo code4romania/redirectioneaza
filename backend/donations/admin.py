@@ -1,12 +1,19 @@
+import logging
+from typing import List
+
 from django.contrib import admin
+from django.core.management import call_command
+from django.db.models import QuerySet
 from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 
 from redirectioneaza.common.admin import HasNgoFilter
-from .models.jobs import Job
-from .models.main import Donor, Ngo
 from users.models import User
+from .models.jobs import Job, JobStatusChoices
+from .models.main import Donor, Ngo
+
+logger = logging.getLogger(__name__)
 
 
 class NgoPartnerInline(admin.TabularInline):
@@ -84,6 +91,8 @@ class NgoAdmin(admin.ModelAdmin):
 
     readonly_fields = ("date_created", "date_updated", "get_donations_link")
 
+    actions = ("generate_donations_archive",)
+
     fieldsets = (
         (
             _("Donations"),
@@ -122,6 +131,31 @@ class NgoAdmin(admin.ModelAdmin):
         return format_html(
             f'<a data-popup="yes" id="ngo_donor_list" class="related-widget-wrapper-link" href="{link_url}?ngo_id={obj.id}&_popup=1" target="_blank">{link_name}</a>'
         )
+
+    @admin.action(description=_("Generate donations archive"))
+    def generate_donations_archive(self, request, queryset: QuerySet[Ngo]):
+        ngo_names: List[str] = []
+
+        for ngo in queryset:
+            new_job: Job = Job(ngo=ngo, owner=request.user)
+            new_job.save()
+
+            try:
+                call_command("download_donations", new_job.id)
+
+                ngo_names.append(f"{ngo.id} - {ngo.name}")
+            except Exception as e:
+                logger.error(e)
+
+                new_job.status = JobStatusChoices.ERROR
+                new_job.save()
+
+        if ngo_names:
+            message = _("The donations archive has been generated for the following NGOs: ") + ", ".join(ngo_names)
+        else:
+            message = _("The donations archive could not be generated for any of the selected NGOs.")
+
+        self.message_user(request, message)
 
 
 @admin.register(Donor)
