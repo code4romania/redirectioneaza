@@ -188,7 +188,9 @@ class GetNgoForms(BaseAccountView):
             day=settings.DONATIONS_LIMIT_DAY,
         )
 
-        if timezone.now().date() > DONATION_LIMIT:
+        if timezone.now().date() > DONATION_LIMIT + timezone.timedelta(
+            days=settings.TIMEDELTA_DONATIONS_LIMIT_DOWNLOAD_DAYS
+        ):
             return redirect(reverse("contul-meu"))
 
         new_job: Job = Job(ngo=ngo, owner=request.user)
