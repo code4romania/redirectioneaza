@@ -118,7 +118,9 @@ class MyAccountView(BaseAccountView):
             "years": list(grouped_donors.keys()),
         }
 
-        can_donate = not now.date() > settings.DONATIONS_LIMIT
+        download_expired = not now.date() > settings.DONATIONS_LIMIT + timezone.timedelta(
+            days=settings.TIMEDELTA_DONATIONS_LIMIT_DOWNLOAD_DAYS
+        )
 
         ngo_url = ""
         if user_ngo:
@@ -145,7 +147,7 @@ class MyAccountView(BaseAccountView):
         if not user_ngo or not user_ngo.is_active:
             disable_forms_download = True
             disable_past_download = True
-        elif settings.ENABLE_FORMS_DOWNLOAD and (not has_signed_form or not can_donate or last_job_was_recent):
+        elif settings.ENABLE_FORMS_DOWNLOAD and (not has_signed_form or not download_expired or last_job_was_recent):
             disable_forms_download = True
 
         context = {

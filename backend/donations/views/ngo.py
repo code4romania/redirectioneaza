@@ -1,6 +1,6 @@
 import logging
 import re
-from datetime import date, datetime, timedelta
+from datetime import date, datetime
 from urllib.parse import urlparse
 
 from django.conf import settings
@@ -443,7 +443,7 @@ class TwoPercentHandler(TemplateView):
 class OwnFormDownloadLinkHandler(TemplateView):
     def get(self, request, donor_date_str, donor_id, donor_hash, *args, **kwargs):
         # Don't allow downloading donation forms older than this
-        cutoff_date = timezone.now() - timedelta(days=365)
+        cutoff_date = timezone.now() - timezone.timedelta(days=365)
         try:
             donor = Donor.objects.get(pk=donor_id, date_created__gte=cutoff_date)
         except Donor.DoesNotExist:
