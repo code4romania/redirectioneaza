@@ -54,7 +54,7 @@ cssselect2==0.7.0
     # via
     #   -r requirements.txt
     #   svglib
-django==4.2.13
+django==4.2.15
     # via
     #   -r requirements.txt
     #   django-localflavor
