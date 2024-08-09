@@ -105,9 +105,10 @@ class User(AbstractUser):
         return self.validation_token
 
     def verify_token(self, token):
-        if not self.validation_token or not token:
+        validation_token: uuid.UUID = self.validation_token
+        if not validation_token or not token:
             return False
-        if self.validation_token == token:
+        if hmac.compare_digest(validation_token.hex, token.hex):
             return True
         return False
 
@@ -117,7 +118,8 @@ class User(AbstractUser):
         if commit:
             self.save()
 
-    def old_hash_password(self, password, method, salt=None, pepper=None):
+    @staticmethod
+    def old_hash_password(password, method, salt=None, pepper=None):
         """
         Implement the old password hashing algorithm from webapp2
         """
@@ -149,9 +151,9 @@ class User(AbstractUser):
             return False
 
         pepper = settings.OLD_SESSION_KEY
-        hashval, method, salt = self.old_password.split("$", 2)
+        hash_val, method, salt = self.old_password.split("$", 2)
 
-        return self.old_hash_password(password, method, salt, pepper) == hashval
+        return hmac.compare_digest(self.old_hash_password(password, method, salt, pepper), hash_val)
 
     @staticmethod
     def create_admin_login_url(next_url=""):
