@@ -48,7 +48,7 @@ coverage==7.5.1
     # via pytest-cov
 croniter==2.0.5
     # via -r requirements.txt
-cryptography==42.0.7
+cryptography==43.0.1
     # via -r requirements.txt
 cssselect2==0.7.0
     # via
