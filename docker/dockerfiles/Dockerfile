@@ -1,5 +1,5 @@
-ARG NODE_VERSION=20.12.1
-ARG PYTHON_VERSION=3.11.8
+ARG NODE_VERSION=20.17.0
+ARG PYTHON_VERSION=3.12.6
 
 
 FROM node:${NODE_VERSION}-bookworm as frontend
@@ -59,7 +59,6 @@ ENV RUN_COMPILE_MESSAGES=True
 ENV RUN_COLLECT_STATIC=True
 ENV RUN_CREATE_SUPER_USER=True
 ENV RUN_SEED_GROUPS=True
-# ENV ENABLE_DJANGO_ADMIN=False
 
 ENV IS_CONTAINERIZED=True
 
@@ -72,7 +71,7 @@ RUN apt-get update && \
     nginx gcc xz-utils gettext
 
 # configure process manager
-ARG S6_OVERLAY_VERSION=3.1.2.1
+ARG S6_OVERLAY_VERSION=3.2.0.0
 ENV S6_CMD_WAIT_FOR_SERVICES_MAXTIME 0
 
 ADD https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-noarch.tar.xz /tmp
@@ -95,8 +94,6 @@ COPY ./backend/ /var/www/redirect/backend/
 
 COPY --from=frontend /home/builduser/redirect/build/bower_components/ /var/www/redirect/backend/bower_components/
 
-# activate the virtualenv:
-RUN . "${VIRTUAL_ENV}/bin/activate"
 
 ARG VERSION
 ARG REVISION

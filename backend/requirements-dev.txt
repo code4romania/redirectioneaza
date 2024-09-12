@@ -8,27 +8,27 @@ asgiref==3.8.1
     # via
     #   -r requirements.txt
     #   django
-black==24.4.2
+black==24.8.0
     # via -r requirements-dev.in
 blessed==1.20.0
     # via -r requirements.txt
-boto3==1.34.110
+boto3==1.35.17
     # via
     #   -r requirements.txt
     #   django-ses
-botocore==1.34.110
+botocore==1.35.17
     # via
     #   -r requirements.txt
     #   boto3
     #   s3transfer
-build==1.2.1
+build==1.2.2
     # via pip-tools
-certifi==2024.2.2
+certifi==2024.8.30
     # via
     #   -r requirements.txt
     #   requests
     #   sentry-sdk
-cffi==1.16.0
+cffi==1.17.1
     # via
     #   -r requirements.txt
     #   cryptography
@@ -44,17 +44,17 @@ click==8.1.7
     # via
     #   black
     #   pip-tools
-coverage==7.5.1
+coverage==7.6.1
     # via pytest-cov
-croniter==2.0.5
+croniter==3.0.3
     # via -r requirements.txt
-cryptography==42.0.7
+cryptography==43.0.1
     # via -r requirements.txt
 cssselect2==0.7.0
     # via
     #   -r requirements.txt
     #   svglib
-django==4.2.13
+django==5.1.1
     # via
     #   -r requirements.txt
     #   django-localflavor
@@ -65,7 +65,7 @@ django==4.2.13
     #   django-storages
 django-environ==0.11.2
     # via -r requirements.txt
-django-ipware==6.0.5
+django-ipware==7.0.1
     # via -r requirements.txt
 django-localflavor==4.0
     # via -r requirements.txt
@@ -73,27 +73,27 @@ django-picklefield==3.2
     # via
     #   -r requirements.txt
     #   django-q2
-django-q2==1.6.2
+django-q2==1.7.2
     # via -r requirements.txt
 django-recaptcha==4.0.0
     # via -r requirements.txt
-django-ses==4.0.0
+django-ses==4.1.1
     # via -r requirements.txt
-django-storages==1.14.3
+django-storages==1.14.4
     # via -r requirements.txt
 execnet==2.1.1
     # via pytest-xdist
-faker==25.1.0
+faker==28.4.1
     # via -r requirements-dev.in
 gevent==24.2.1
     # via -r requirements.txt
-greenlet==3.0.3
+greenlet==3.1.0
     # via
     #   -r requirements.txt
     #   gevent
-gunicorn==22.0.0
+gunicorn==23.0.0
     # via -r requirements.txt
-idna==3.7
+idna==3.8
     # via
     #   -r requirements.txt
     #   requests
@@ -106,7 +106,7 @@ jmespath==1.0.1
     #   -r requirements.txt
     #   boto3
     #   botocore
-lxml==5.2.2
+lxml==5.3.0
     # via
     #   -r requirements.txt
     #   svglib
@@ -116,7 +116,7 @@ markupsafe==2.1.5
     #   jinja2
 mypy-extensions==1.0.0
     # via black
-packaging==24.0
+packaging==24.1
     # via
     #   -r requirements.txt
     #   black
@@ -125,17 +125,17 @@ packaging==24.0
     #   pytest
 pathspec==0.12.1
     # via black
-pillow==10.3.0
+pillow==10.4.0
     # via
     #   -r requirements.txt
     #   reportlab
 pip-tools==7.4.1
     # via -r requirements-dev.in
-platformdirs==4.2.2
+platformdirs==4.3.2
     # via black
 pluggy==1.5.0
     # via pytest
-psutil==5.9.8
+psutil==6.0.0
     # via -r requirements.txt
 psycopg2-binary==2.9.9
     # via -r requirements.txt
@@ -145,13 +145,13 @@ pycparser==2.22
     #   cffi
 pymysql==1.1.1
     # via -r requirements.txt
-pypdf==4.2.0
+pypdf==4.3.1
     # via -r requirements.txt
 pyproject-hooks==1.1.0
     # via
     #   build
     #   pip-tools
-pytest==8.2.1
+pytest==8.3.3
     # via
     #   -r requirements-dev.in
     #   pytest-cov
@@ -159,7 +159,7 @@ pytest==8.2.1
     #   pytest-xdist
 pytest-cov==5.0.0
     # via -r requirements-dev.in
-pytest-django==4.8.0
+pytest-django==4.9.0
     # via -r requirements-dev.in
 pytest-xdist==3.6.1
     # via -r requirements-dev.in
@@ -177,31 +177,30 @@ python-stdnum==1.20
     # via
     #   -r requirements.txt
     #   django-localflavor
-pytz==2024.1
+pytz==2024.2
     # via
     #   -r requirements.txt
     #   croniter
-    #   django-ses
-reportlab==4.2.0
+reportlab==4.2.2
     # via
     #   -r requirements.txt
     #   svglib
-requests==2.32.2
+requests==2.32.3
     # via -r requirements.txt
-ruff==0.4.4
+ruff==0.6.4
     # via -r requirements-dev.in
-s3transfer==0.10.1
+s3transfer==0.10.2
     # via
     #   -r requirements.txt
     #   boto3
-sentry-sdk==2.2.1
+sentry-sdk==2.14.0
     # via -r requirements.txt
 six==1.16.0
     # via
     #   -r requirements.txt
     #   blessed
     #   python-dateutil
-sqlparse==0.5.0
+sqlparse==0.5.1
     # via
     #   -r requirements.txt
     #   django
@@ -212,7 +211,7 @@ tinycss2==1.3.0
     #   -r requirements.txt
     #   cssselect2
     #   svglib
-urllib3==2.2.1
+urllib3==2.2.2
     # via
     #   -r requirements.txt
     #   botocore
@@ -227,15 +226,15 @@ webencodings==0.5.1
     #   -r requirements.txt
     #   cssselect2
     #   tinycss2
-wheel==0.43.0
+wheel==0.44.0
     # via pip-tools
-whitenoise==6.6.0
+whitenoise==6.7.0
     # via -r requirements.txt
 zope-event==5.0
     # via
     #   -r requirements.txt
     #   gevent
-zope-interface==6.4.post0
+zope-interface==7.0.3
     # via
     #   -r requirements.txt
     #   gevent

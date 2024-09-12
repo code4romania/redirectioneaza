@@ -1,21 +1,21 @@
-django~=4.2.13
+django~=5.1.1
 django-environ~=0.11.2
-django-ipware~=6.0.5
+django-ipware~=7.0.1
 
 # captcha
 django-recaptcha~=4.0.0
 
 # encrypting data
-cryptography~=42.0.7
+cryptography~=43.0.1
 
 # django-q
-django-q2~=1.6.1
+django-q2~=1.7.2
 blessed~=1.20.0  # optional requirement for django-q2
-psutil~=5.9.8  # optional requirement for django-q2
-croniter~=2.0.5  # optional requirement for django-q2
+psutil~=6.0.0  # optional requirement for django-q2
+croniter~=3.0.3  # optional requirement for django-q2
 
 # emails
-django-ses~=4.0.0
+django-ses~=4.1.1
 
 # database
 pymysql~=1.1
@@ -26,22 +26,22 @@ jinja2~=3.1.4
 
 # web server
 gevent~=24.2.1
-gunicorn~=22.0.0
+gunicorn~=23.0.0
 
 # file storage
-whitenoise~=6.6.0
-django-storages[s3]~=1.14.3
+whitenoise~=6.7.0
+django-storages[s3]~=1.14.4
 
 # locale data
 django-localflavor~=4.0.0
 
 # pdf creation
-reportlab~=4.2.0
-pypdf~=4.2.0
+reportlab~=4.2.2
+pypdf~=4.3.1
 svglib~=1.5.1
 
 # requests
-requests~=2.32
+requests~=2.32.3
 
 # Sentry
-sentry-sdk[django]~=2.2.1
+sentry-sdk[django]~=2.14.0

@@ -1,16 +1,16 @@
 pip-tools~= 7.4.0
 
 # formatting & linting
-black~=24.4.2
-ruff~=0.4.3
+black~=24.8.0
+ruff~=0.6.4
 
-faker~=25.1.0
+faker~=28.4.1
 
 
 # testing
-pytest~=8.2.0
+pytest~=8.3.3
 
-pytest-django~=4.8.0
+pytest-django~=4.9.0
 pytest-xdist~=3.6.1
 pytest-cov~=5.0.0
 
