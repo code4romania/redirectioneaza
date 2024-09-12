@@ -19,6 +19,7 @@ from pathlib import Path
 import environ
 import sentry_sdk
 from cryptography.fernet import Fernet
+from django.templatetags.static import static
 from django.utils import timezone
 from localflavor.ro.ro_counties import COUNTIES_CHOICES
 
@@ -221,6 +222,7 @@ LOGGING = {
 # Application definition
 
 INSTALLED_APPS = [
+    "unfold",  # this must be loaded before django.contrib.admin
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -575,6 +577,51 @@ FORM_COUNTIES_NATIONAL = deepcopy(FORM_COUNTIES)
 FORM_COUNTIES_NATIONAL.insert(0, "Național")
 
 CONTACT_EMAIL_ADDRESS = env.str("CONTACT_EMAIL_ADDRESS")
+
+# Unfold Admin settings
+UNFOLD = {
+    "SITE_TITLE": TITLE,
+    "SITE_HEADER": f"Admin | {VERSION_SUFFIX}",
+    "SITE_ICON": lambda request: static("images/logo-smaller.png"),
+    "SITE_LOGO": lambda request: static("images/logo-smaller.png"),
+    "SITE_FAVICONS": [
+        {
+            "rel": "icon",
+            "sizes": "16x16",
+            "type": "image/png",
+            "href": lambda request: static("images/favicon/favicon-16x16.png"),
+        },
+        {
+            "rel": "icon",
+            "sizes": "32x32",
+            "type": "image/png",
+            "href": lambda request: static("images/favicon/favicon-32x32.png"),
+        },
+    ],
+    "COLORS": {
+        "font": {
+            "subtle-light": "107 114 128",
+            "subtle-dark": "156 163 175",
+            "default-light": "75 85 99",
+            "default-dark": "209 213 219",
+            "important-light": "17 24 39",
+            "important-dark": "243 244 246",
+        },
+        "primary": {
+            50: "#F2C512",
+            100: "#F2C617",
+            200: "#F3CA25",
+            300: "#F4CC2F",
+            400: "#F4D03E",
+            500: "#F5D449",
+            600: "#F3C921",
+            700: "#DAB00C",
+            800: "#B3910A",
+            900: "#876E07",
+            950: "#745E06",
+        },
+    },
+}
 
 # Django Q2
 # https://django-q2.readthedocs.io/en/stable/configure.html#configuration

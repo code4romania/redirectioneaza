@@ -41,6 +41,7 @@ django==5.1.1
     #   django-recaptcha
     #   django-ses
     #   django-storages
+    #   django-unfold
     #   sentry-sdk
 django-environ==0.11.2
     # via -r requirements.in
@@ -57,6 +58,8 @@ django-recaptcha==4.0.0
 django-ses==4.1.1
     # via -r requirements.in
 django-storages==1.14.4
+    # via -r requirements.in
+django-unfold==0.38.0
     # via -r requirements.in
 gevent==24.2.1
     # via -r requirements.in

@@ -12,6 +12,7 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from donations.models.main import Ngo
+from django.contrib.auth.models import Group
 
 
 class CustomUserManager(UserManager):
@@ -161,3 +162,11 @@ class User(AbstractUser):
         Create a link to the Django Admin login page with a custom "next" parameter
         """
         return "{}?next={}".format(reverse("admin:login"), next_url)
+
+
+class GroupProxy(Group):
+    class Meta:
+        proxy = True
+
+        verbose_name = _("Group")
+        verbose_name_plural = _("Groups")

@@ -4,13 +4,14 @@ from django.core.management import call_command
 from django.db.models import QuerySet
 from django.utils.translation import gettext_lazy as _
 from django_q.tasks import async_task
+from unfold.admin import ModelAdmin
 
 from .models import ImportJob
 from .tasks.processor import process_import_task
 
 
 @admin.register(ImportJob)
-class ImportAdmin(admin.ModelAdmin):
+class ImportAdmin(ModelAdmin):
     list_display = ("import_type", "csv_file", "uploaded_at", "status")
     list_filter = ("import_type", "uploaded_at")
     search_fields = ("import_type",)

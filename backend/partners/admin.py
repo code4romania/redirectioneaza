@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
+from unfold.admin import ModelAdmin
 
 from .models import Partner
 
@@ -15,7 +16,7 @@ class NgoPartnerInline(admin.TabularInline):
 
 
 @admin.register(Partner)
-class PartnerAdmin(admin.ModelAdmin):
+class PartnerAdmin(ModelAdmin):
     list_display = (
         "subdomain",
         "name",

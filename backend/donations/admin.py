@@ -7,6 +7,7 @@ from django.db.models import QuerySet
 from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
+from unfold.admin import ModelAdmin
 
 from redirectioneaza.common.admin import HasNgoFilter
 from users.models import User
@@ -70,7 +71,7 @@ class HasOwnerFilter(admin.SimpleListFilter):
 
 
 @admin.register(Ngo)
-class NgoAdmin(admin.ModelAdmin):
+class NgoAdmin(ModelAdmin):
     list_display = ("id", "slug", "registration_number", "name")
     list_display_links = ("id", "slug", "registration_number", "name")
     list_filter = (
@@ -159,7 +160,7 @@ class NgoAdmin(admin.ModelAdmin):
 
 
 @admin.register(Donor)
-class DonorAdmin(admin.ModelAdmin):
+class DonorAdmin(ModelAdmin):
     list_display = ("id", "email", "first_name", "last_name", "ngo", "date_created")
     list_display_links = ("id", "email", "first_name", "last_name")
     list_filter = (
@@ -211,7 +212,7 @@ class DonorAdmin(admin.ModelAdmin):
 
 
 @admin.register(Job)
-class JobAdmin(admin.ModelAdmin):
+class JobAdmin(ModelAdmin):
     list_display = ("id", "ngo", "status", "date_created")
     list_display_links = ("id", "ngo")
     list_filter = ("date_created", "status")

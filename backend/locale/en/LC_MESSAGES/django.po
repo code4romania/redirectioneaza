@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-28 10:06+0300\n"
+"POT-Creation-Date: 2024-09-12 13:11+0300\n"
 "PO-Revision-Date: 2024-02-28 15:45+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -19,98 +19,98 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 5.3.1\n"
 
-#: donations/admin.py:36
+#: donations/admin.py:37
 msgid "User Link"
 msgstr "User Link"
 
-#: donations/admin.py:40
+#: donations/admin.py:41
 msgid "User Details"
 msgstr "User Details"
 
-#: donations/admin.py:44
+#: donations/admin.py:45
 msgid "User Permissions"
 msgstr "User Permissions"
 
-#: donations/admin.py:52
+#: donations/admin.py:53
 msgid "User"
 msgstr "User"
 
-#: donations/admin.py:59
+#: donations/admin.py:60
 msgid "Has owner"
 msgstr "Has owner"
 
-#: donations/admin.py:63
+#: donations/admin.py:64
 msgid "Yes"
 msgstr "Yes"
 
-#: donations/admin.py:63
+#: donations/admin.py:64
 msgid "No"
 msgstr "No"
 
-#: donations/admin.py:98 donations/admin.py:127
+#: donations/admin.py:99 donations/admin.py:128 donations/apps.py:8
 msgid "Donations"
 msgstr "Donations"
 
-#: donations/admin.py:102 donations/admin.py:182 donations/admin.py:222
+#: donations/admin.py:103 donations/admin.py:185 donations/admin.py:225
 #: donations/models/jobs.py:28 donations/models/main.py:234
-#: donations/models/main.py:294 partners/admin.py:11 users/models.py:70
+#: donations/models/main.py:294 partners/admin.py:12 users/models.py:71
 msgid "NGO"
 msgstr "NGO"
 
-#: donations/admin.py:106
+#: donations/admin.py:107
 msgid "Activity"
 msgstr "Activity"
 
-#: donations/admin.py:110
+#: donations/admin.py:111
 msgid "Logo"
 msgstr "Logo"
 
-#: donations/admin.py:114
+#: donations/admin.py:115
 msgid "Contact"
 msgstr "Contact"
 
-#: donations/admin.py:118
+#: donations/admin.py:119
 msgid "Details"
 msgstr "Details"
 
-#: donations/admin.py:122 donations/admin.py:198 donations/admin.py:234
+#: donations/admin.py:123 donations/admin.py:201 donations/admin.py:237
 msgid "Date"
 msgstr "Date"
 
-#: donations/admin.py:129
+#: donations/admin.py:130
 msgid "Open the NGO donor list"
 msgstr "Open the NGO donor list"
 
-#: donations/admin.py:135
+#: donations/admin.py:136
 msgid "Generate donations archive"
 msgstr ""
 
-#: donations/admin.py:153
+#: donations/admin.py:155
 msgid "The donations archive has been generated for the following NGOs: "
 msgstr ""
 
-#: donations/admin.py:155
+#: donations/admin.py:157
 msgid ""
 "The donations archive could not be generated for any of the selected NGOs."
 msgstr ""
 
-#: donations/admin.py:186
+#: donations/admin.py:189
 msgid "Identity"
 msgstr "Identity"
 
-#: donations/admin.py:190
+#: donations/admin.py:193
 msgid "Info"
 msgstr "Info"
 
-#: donations/admin.py:194 donations/admin.py:230 importer/models.py:28
+#: donations/admin.py:197 donations/admin.py:233 importer/models.py:28
 msgid "File"
 msgstr "File"
 
-#: donations/admin.py:206
+#: donations/admin.py:209
 msgid "Form"
 msgstr "Form"
 
-#: donations/admin.py:226 importer/models.py:24
+#: donations/admin.py:229 importer/models.py:24
 msgid "Status"
 msgstr "Status"
 
@@ -188,7 +188,7 @@ msgid "ZIP"
 msgstr "ZIP"
 
 #: donations/models/jobs.py:52 donations/models/main.py:218
-#: donations/models/main.py:363 partners/models.py:54 users/models.py:86
+#: donations/models/main.py:363 partners/models.py:54 users/models.py:87
 msgid "date created"
 msgstr "date created"
 
@@ -289,7 +289,7 @@ msgstr "website"
 msgid "other emails"
 msgstr "other emails"
 
-#: donations/models/main.py:189 users/models.py:78
+#: donations/models/main.py:189 users/models.py:79
 msgid "is verified"
 msgstr "is verified"
 
@@ -313,11 +313,11 @@ msgstr "form url"
 msgid "form with prefilled ngo data"
 msgstr "form with prefilled ngo data"
 
-#: donations/models/main.py:219 partners/models.py:55 users/models.py:87
+#: donations/models/main.py:219 partners/models.py:55 users/models.py:88
 msgid "date updated"
 msgstr "date updated"
 
-#: donations/models/main.py:235 partners/admin.py:12 partners/models.py:52
+#: donations/models/main.py:235 partners/admin.py:13 partners/models.py:52
 msgid "NGOs"
 msgstr "NGOs"
 
@@ -467,19 +467,19 @@ msgstr "date"
 msgid "duration"
 msgstr "duration"
 
-#: donations/views/my_account.py:265
+#: donations/views/my_account.py:267
 msgid "The URL is already used"
 msgstr "The URL is already used"
 
-#: donations/views/my_account.py:326
+#: donations/views/my_account.py:328
 msgid "The IBAN number must have 24 characters"
 msgstr "The IBAN number must have 24 characters"
 
-#: donations/views/my_account.py:329
+#: donations/views/my_account.py:331
 msgid "The IBAN number must contain only letters and digits"
 msgstr "The IBAN number must contain only letters and digits"
 
-#: donations/views/my_account.py:332
+#: donations/views/my_account.py:334
 msgid "The IBAN number must start with 'RO'"
 msgstr "The IBAN number must start with 'RO'"
 
@@ -495,41 +495,47 @@ msgstr "Un nou formular de redirecționare"
 msgid "Frequently Asked Questions"
 msgstr ""
 
-#: importer/admin.py:28
+#: importer/admin.py:29
 msgid "Process the selected import jobs"
 msgstr "Process the selected import jobs"
 
-#: importer/admin.py:37
+#: importer/admin.py:38
 msgid "The import has been processed."
 msgstr "The import has been processed."
 
-#: importer/admin.py:39
+#: importer/admin.py:40
 msgid "Schedule the transfer of logos to the current storage"
 msgstr "Schedule the transfer of logos to the current storage"
 
-#: importer/admin.py:43
+#: importer/admin.py:44
 msgid "The logos have been transferred."
 msgstr "The logos have been transferred."
 
-#: importer/admin.py:45
+#: importer/admin.py:46
 msgid "Transfer of donor forms to the current storage (dry run)"
 msgstr "Transfer of donor forms to the current storage (dry run)"
 
-#: importer/admin.py:49 importer/admin.py:55
+#: importer/admin.py:50 importer/admin.py:56
 msgid "The donor forms have been transferred."
 msgstr "The donor forms have been transferred."
 
-#: importer/admin.py:51
+#: importer/admin.py:52
 msgid "Transfer of donor forms to the current storage"
 msgstr "Transfer of donor forms to the current storage"
 
-#: importer/admin.py:57
+#: importer/admin.py:58
 msgid "Schedule the transfer of donor forms to the current storage"
 msgstr "Schedule the transfer of donor forms to the current storage"
 
-#: importer/admin.py:61
+#: importer/admin.py:62
 msgid "The donor forms have been scheduled for transfer."
 msgstr "The donor forms have been scheduled for transfer."
+
+#: importer/apps.py:8
+#, fuzzy
+#| msgid "Import"
+msgid "Importer"
+msgstr "Import"
 
 #: importer/models.py:15
 msgid "Pending"
@@ -559,17 +565,21 @@ msgstr "Import"
 msgid "Imports"
 msgstr "Imports"
 
-#: partners/admin.py:43 partners/models.py:61
+#: partners/admin.py:44 partners/models.py:61
 msgid "Partner"
 msgstr "Partner"
 
-#: partners/admin.py:52
+#: partners/admin.py:53
 msgid "Options"
 msgstr "Options"
 
-#: partners/admin.py:63
+#: partners/admin.py:64
 msgid "Metadata"
 msgstr "Metadata"
+
+#: partners/apps.py:8 partners/models.py:62
+msgid "Partners"
+msgstr "Partners"
 
 #: partners/models.py:11
 msgid "Alphabetical"
@@ -603,10 +613,6 @@ msgstr "has custom note"
 msgid "display ordering"
 msgstr "display ordering"
 
-#: partners/models.py:62
-msgid "Partners"
-msgstr "Partners"
-
 #: redirectioneaza/common/messaging.py:31
 msgid "Invalid email send method. Must be 'async' or 'sync'."
 msgstr "Invalid email send method. Must be 'async' or 'sync'."
@@ -627,42 +633,56 @@ msgstr "Subdomain must contain only alphanumeric characters and '-' (hyphens)."
 msgid "Subdomain must have between 3 and 100 characters."
 msgstr "Subdomain must have between 3 and 100 characters."
 
-#: users/admin.py:37
+#: users/admin.py:52
 msgid "Permissions"
 msgstr "Permissions"
 
-#: users/admin.py:46
+#: users/admin.py:61
 msgid "Important dates"
 msgstr "Important dates"
 
-#: users/models.py:38
+#: users/apps.py:8
+#, fuzzy
+#| msgid "User"
+msgid "Users"
+msgstr "User"
+
+#: users/models.py:39
 msgid "Superuser must have is_staff=True."
 msgstr "Superuser must have is_staff=True."
 
-#: users/models.py:40
+#: users/models.py:41
 msgid "Superuser must have is_superuser=True."
 msgstr "Superuser must have is_superuser=True."
 
-#: users/models.py:56
+#: users/models.py:57
 msgid "username"
 msgstr "username"
 
-#: users/models.py:59
+#: users/models.py:60
 msgid "We do not use this field"
 msgstr "We do not use this field"
 
-#: users/models.py:66
+#: users/models.py:67
 msgid "email address"
 msgstr "email address"
 
-#: users/models.py:80
+#: users/models.py:81
 msgid "validation token"
 msgstr "validation token"
 
-#: users/models.py:82
+#: users/models.py:83
 msgid "validation token timestamp"
 msgstr "validation token timestamp"
 
-#: users/models.py:84
+#: users/models.py:85
 msgid "old password"
 msgstr "old password"
+
+#: users/models.py:171
+msgid "Group"
+msgstr ""
+
+#: users/models.py:172
+msgid "Groups"
+msgstr ""

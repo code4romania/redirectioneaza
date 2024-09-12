@@ -63,6 +63,7 @@ django==5.1.1
     #   django-recaptcha
     #   django-ses
     #   django-storages
+    #   django-unfold
 django-environ==0.11.2
     # via -r requirements.txt
 django-ipware==7.0.1
@@ -80,6 +81,8 @@ django-recaptcha==4.0.0
 django-ses==4.1.1
     # via -r requirements.txt
 django-storages==1.14.4
+    # via -r requirements.txt
+django-unfold==0.38.0
     # via -r requirements.txt
 execnet==2.1.1
     # via pytest-xdist
