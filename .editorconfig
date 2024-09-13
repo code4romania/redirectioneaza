@@ -1,8 +1,23 @@
 root = true
 
 [*]
-indent_size = 4
-indent_style = space
-
-[{*.js,*.jsx,*.ts,*.tsx,*.json,.prettierrc,*.yml,*.yaml,*.tf,*.lock.hcl,.bowerrc}]
+charset = utf-8
+end_of_line = lf
 indent_size = 2
+indent_style = space
+insert_final_newline = true
+max_line_length = 120
+tab_width = 2
+trim_trailing_whitespace = true
+
+[*.html]
+max_line_length = 240
+
+[Makefile]
+tab_width = 4
+indent_style = tab
+max_line_length = 240
+
+[*.py]
+indent_size = 4
+tab_width = 4
