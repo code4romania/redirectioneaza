@@ -1,0 +1,28 @@
+{% extends "account/base_entrance.html" %}
+{% load i18n allauth account %}
+
+{% block head_title %}
+  {% trans "Sign In" %}
+{% endblock head_title %}
+
+{% block content %}
+  {% element h1 %}
+    {% trans "Sign In" %}
+  {% endelement %}
+
+  <div id="login-container" class="row">
+<div class="col-xs-12 col-sm-8 col-sm-offset-1" id="login">
+
+    {% if not SOCIALACCOUNT_ONLY %}
+      {% include "account/snippets/classic-login.html" %}
+    {% endif %}
+
+    {% if SOCIALACCOUNT_ONLY or SOCIALACCOUNT_ENABLED %}
+      {% include "account/snippets/third-party.html" %}
+    {% endif %}
+
+    <div class="g-recaptcha" data-sitekey="{{ captcha_public_key }}" data-size="invisible" data-callback="onSubmit"></div>
+  </div>
+  </div>
+
+{% endblock content %}

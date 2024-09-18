@@ -71,7 +71,7 @@ class ForgotPasswordView(BaseAccountView):
 
 
 class LoginView(BaseAccountView):
-    template_name = "login.html"
+    template_name = "account/login.html"
 
     def get(self, request, *args, **kwargs):
         context = {"title": "Contul meu"}

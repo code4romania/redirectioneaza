@@ -1,0 +1,37 @@
+{% load i18n %}
+{% load allauth %}
+{% load socialaccount %}
+
+{% get_providers as socialaccount_providers %}
+
+{% if socialaccount_providers %}
+
+  {% if not SOCIALACCOUNT_ONLY %}
+    <hr>
+  {% endif %}
+
+  <div class="row">
+    <div class="col-sm">
+      <h2>
+        {% translate "Login through NGO Hub" %}
+      </h2>
+
+      {% if SOCIALACCOUNT_ONLY %}
+        <p id="login-subtitle" class="title is-4">
+          {% trans "To access your account, you need to authenticate through NGO Hub." %}
+        </p>
+      {% endif %}
+
+      <p class="login-text">
+        {% trans 'Click the "Go to account" button and you will be redirected to the page where you need to authenticate using your NGO Hub credentials. After authentication, you will be redirected to your votONG account.' %}
+      </p>
+    </div>
+
+    <div id="allauth-login-form-container" class="col-sm">
+      <form action="{% url 'amazon_cognito_login' %}" method="GET">
+        <input class="btn btn-primary btn-pull-right" id="go-to-login" type="submit" value="{% trans "Go to account" %}">
+      </form>
+    </div>
+  </div>
+
+{% endif %}

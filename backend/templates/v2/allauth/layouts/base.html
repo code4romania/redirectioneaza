@@ -1,0 +1,10 @@
+{% extends 'redirect/base.html' %}
+{% load i18n static %}
+
+{% block title %}{% block head_title %}{% endblock head_title %}{% endblock %}
+
+{% block content_container %}
+  <div class="container section tight-container">
+    {% block content %}{% endblock content %}
+  </div>
+{% endblock content_container %}
