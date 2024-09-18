@@ -1,0 +1,113 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html class="no-js" lang="{{ language }}">
+<head>
+  <base href="{{ base_url }}">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <title>{{ title }}</title>
+
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/favicon/apple-touch-icon.png' %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicon/favicon-32x32.png' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon/favicon-16x16.png' %}">
+  <link rel="manifest" href="{% static 'images/favicon/site.webmanifest' %}">
+
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+
+  <meta name="description" content="redirectioneaza.ro este platforma care ajută ONG-urile să colecteze formularul 230 de redirecționare a până la 3.5% din impozit pentru până la doi ani"/>
+  <meta name="keywords" content="platforma, ong, formular doi la suta, formular 3.5%, redirecționare 3.5%, donație 3.5%, donează doi la sută, formularul 230"/>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google" content="notranslate">
+
+  <meta property="og:locale" content="ro"/>
+  <meta property="og:site_name" content="redirectioneaza.ro"/>
+
+  {# block used to add additional headers to a page, eg: ok:title #}
+  {% block additional_headers %}
+  {% endblock %}
+
+  {# if we are on dev load with less, if not load the css #}
+  {% if DEV %}
+    <script>
+      less = {
+        env: "development",
+        async: false
+      }
+    </script>
+    <link rel="stylesheet/less" type="text/css" href="{% static 'css/main.less' %}">
+
+    {# block used to add new less #}
+    {% block less %}
+    {% endblock %}
+
+    <script src="{% static 'bower_components/less/dist/less.js' %}"></script>
+  {% else %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+
+  {% endif %}
+
+  {% block main_scripts %}
+    {# if we are on dev load with less, if not load the css #}
+    {% if DEV %}
+
+      <script src="{% static 'bower_components/jquery/dist/jquery.min.js' %}"></script>
+      <script src="{% static 'bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    {% else %}
+
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    {% endif %}
+  {% endblock %}
+
+  {% block assets %}
+  {% endblock %}
+
+</head>
+<body>
+
+{# block for special css #}
+{% block css %}
+{% endblock %}
+
+<header>
+  {% block header %}
+    {% include "redirect/header.html" %}
+  {% endblock %}
+</header>
+
+{% block content_container %}
+  <div id="main">
+    {% block content %}
+    {% endblock %}
+  </div>
+{% endblock %}
+
+{% block footer %}
+  {% include "redirect/footer.html" %}
+{% endblock %}
+
+
+{% block scripts %}
+{% endblock %}
+
+{% block analytics %}
+  {% if GOOGLE_ANALYTICS_ID %}
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ GOOGLE_ANALYTICS_ID }}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+
+      gtag('js', new Date());
+      gtag('config', '{{ GOOGLE_ANALYTICS_ID }}');
+    </script>
+  {% endif %}
+{% endblock %}
+</body>
+</html>
