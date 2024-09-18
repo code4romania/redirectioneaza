@@ -65,6 +65,7 @@ class User(AbstractUser):
     )
 
     email = models.EmailField(verbose_name=_("email address"), blank=False, null=False, unique=True)
+    is_ngohub_user = models.BooleanField(default=False)
 
     ngo = models.ForeignKey(
         Ngo,
@@ -97,6 +98,12 @@ class User(AbstractUser):
             models.UniqueConstraint(Lower("email"), name="email_unique"),
         ]
         permissions = (("can_view_old_dashboard", "Can view the old dashboard"),)
+
+    def get_cognito_id(self):
+        social = self.socialaccount_set.filter(provider="amazon_cognito").last()
+        if social:
+            return social.uid
+        return None
 
     def refresh_token(self, commit=True):
         self.token_timestamp = timezone.now()

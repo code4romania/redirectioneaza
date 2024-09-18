@@ -18,7 +18,7 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin, admin as django_admin
-from django.urls import path, re_path
+from django.urls import include, path, re_path, reverse
 from django.views.generic import RedirectView
 
 from donations.views.account_management import (
@@ -140,6 +140,15 @@ urlpatterns = (
         re_path(r"^(?P<ngo_url>[\w-]+)/semnatura/", FormSignature.as_view(), name="ngo-twopercent-signature"),
         re_path(r"^(?P<ngo_url>[\w-]+)/succes/", DonationSucces.as_view(), name="ngo-twopercent-success"),
         re_path(r"^(?P<ngo_url>[\w-]+)/$", TwoPercentHandler.as_view(), name="twopercent"),
+        # Skip the login provider selector page and redirect to Cognito
+        path(
+            "allauth/login/",
+            RedirectView.as_view(
+                url=f'/allauth{reverse("amazon_cognito_login", urlconf="allauth.urls")}',
+                permanent=True,
+            ),
+        ),
+        path("allauth/", include("allauth.urls")),
     ]
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
