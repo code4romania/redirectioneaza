@@ -8,6 +8,7 @@ from django.http import Http404, HttpRequest
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
 from redirectioneaza.common.messaging import send_email
@@ -74,13 +75,21 @@ class LoginView(BaseAccountView):
     template_name = "account/login.html"
 
     def get(self, request, *args, **kwargs):
-        context = {"title": "Contul meu"}
-
-        # if the user is logged in just redirect
+        # if the user is logged in, then redirect
         if request.user.is_authenticated:
             if request.user.has_perm("users.can_view_old_dashboard"):
                 return redirect(reverse("admin-index"))
             return redirect(reverse("contul-meu"))
+
+        signup_text: str = _("sign up")
+        signup_link: str = request.build_absolute_uri(reverse("signup"))
+        signup_url: str = f'<a href="{signup_link}">{signup_text}</a>'
+
+        # noinspection DjangoSafeString
+        context = {
+            "title": "Contul meu",
+            "signup_url": mark_safe(signup_url),
+        }
 
         return render(request, self.template_name, context)
 

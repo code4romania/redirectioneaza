@@ -19,6 +19,7 @@ from pathlib import Path
 import environ
 import sentry_sdk
 from cryptography.fernet import Fernet
+from django.urls import reverse_lazy
 from django.templatetags.static import static
 from django.utils import timezone
 from localflavor.ro.ro_counties import COUNTIES_CHOICES
@@ -62,6 +63,7 @@ env = environ.Env(
     DATABASE_PORT=(str, "3306"),
     # site settings
     APEX_DOMAIN=(str, "redirectioneaza.ro"),
+    BASE_WEBSITE=(str, "https://redirectioneaza.ro"),
     SITE_TITLE=(str, "redirectioneaza.ro"),
     DONATIONS_LIMIT_DAY=(int, 25),
     DONATIONS_LIMIT_MONTH=(int, 5),
@@ -124,6 +126,17 @@ env = environ.Env(
     AWS_SES_CONFIGURATION_SET_NAME=(str, None),
     AWS_SES_AUTO_THROTTLE=(float, 0.5),
     AWS_SES_REGION_ENDPOINT=(str, ""),
+    # Cognito
+    AWS_COGNITO_DOMAIN=(str, ""),
+    AWS_COGNITO_CLIENT_ID=(str, ""),
+    AWS_COGNITO_CLIENT_SECRET=(str, ""),
+    # NGO Hub
+    NGOHUB_HOME_HOST=(str, "ngohub.ro"),
+    NGOHUB_APP_HOST=(str, "app-staging.ngohub.ro"),
+    NGOHUB_API_HOST=(str, "api-staging.ngohub.ro"),
+    NGOHUB_API_ACCOUNT=(str, ""),
+    NGOHUB_API_KEY=(str, ""),
+    UPDATE_ORGANIZATION_METHOD=(str, "async"),
     # sentry
     SENTRY_DSN=(str, ""),
     SENTRY_TRACES_SAMPLE_RATE=(float, 0),
@@ -158,6 +171,7 @@ DJANGO_ADMIN_EMAIL = env.str("DJANGO_ADMIN_EMAIL", None)
 
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 APEX_DOMAIN = env.str("APEX_DOMAIN")
+BASE_WEBSITE = env.str("BASE_WEBSITE")
 
 CSRF_HEADER_NAME = "HTTP_X_XSRF_TOKEN"
 CSRF_COOKIE_NAME = "XSRF-TOKEN"
@@ -233,6 +247,11 @@ INSTALLED_APPS = [
     "storages",
     "django_q",
     "django_recaptcha",
+    # authentication
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.amazon_cognito",
     # custom apps:
     "donations",
     "partners",
@@ -254,6 +273,12 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "partners.middleware.PartnerDomainMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
+]
+
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",  # this is the default
+    "allauth.account.auth_backends.AuthenticationBackend",
 ]
 
 ROOT_URLCONF = "redirectioneaza.urls"
@@ -683,3 +708,48 @@ GOOGLE_ANALYTICS_ID = env.str("GOOGLE_ANALYTICS_ID")
 
 # Feature flags
 ENABLE_FLAG_CONTACT = env.bool("ENABLE_FLAG_CONTACT", False)
+
+
+LOGIN_URL = reverse_lazy("login")
+LOGIN_REDIRECT_URL = reverse_lazy("home")
+LOGOUT_REDIRECT_URL = reverse_lazy("home")
+
+# Django Allauth settings
+SOCIALACCOUNT_PROVIDERS = {
+    "amazon_cognito": {
+        "DOMAIN": "https://" + env.str("AWS_COGNITO_DOMAIN"),
+        "EMAIL_AUTHENTICATION": True,  # TODO
+        "VERIFIED_EMAIL": True,  # TODO
+        "APPS": [
+            {
+                "client_id": env.str("AWS_COGNITO_CLIENT_ID"),
+                "secret": env.str("AWS_COGNITO_CLIENT_SECRET"),
+            },
+        ],
+    }
+}
+
+# Django Allauth Social Login adapter
+SOCIALACCOUNT_ADAPTER = "redirectioneaza.social_adapters.UserOrgAdapter"
+
+# Django Allauth allow only social logins
+SOCIALACCOUNT_ONLY = False
+SOCIALACCOUNT_ENABLED = True
+ACCOUNT_EMAIL_VERIFICATION = "none"
+
+# NGO Hub settings
+NGOHUB_HOME_HOST = env("NGOHUB_HOME_HOST")
+NGOHUB_HOME_BASE = f"https://{env('NGOHUB_HOME_HOST')}/"
+NGOHUB_APP_BASE = f"https://{env('NGOHUB_APP_HOST')}/"
+NGOHUB_API_HOST = env("NGOHUB_API_HOST")
+NGOHUB_API_BASE = f"https://{NGOHUB_API_HOST}/"
+NGOHUB_API_ACCOUNT = env("NGOHUB_API_ACCOUNT")
+NGOHUB_API_KEY = env("NGOHUB_API_KEY")
+
+# NGO Hub user roles
+NGOHUB_ROLE_SUPER_ADMIN = "super-admin"
+NGOHUB_ROLE_NGO_ADMIN = "admin"
+NGOHUB_ROLE_NGO_EMPLOYEE = "employee"
+
+# Configurations for the NGO Hub integration
+UPDATE_ORGANIZATION_METHOD = env("UPDATE_ORGANIZATION_METHOD")
