@@ -27,11 +27,9 @@ def select_public_storage():
 
 
 def hash_id_secret(prefix: str, pk: int) -> str:
-    return (
-        hashlib.blake2s(f"{prefix}-{pk}-{settings.SECRET_KEY_HASH}".encode(), digest_size=16, usedforsecurity=False)
-        .hexdigest()
-        .lower()
-    )
+    return hashlib.blake2s(
+        f"{prefix}-{pk}-{settings.SECRET_KEY_HASH}".encode(), digest_size=16, usedforsecurity=False
+    ).hexdigest()
 
 
 def ngo_directory_path(subdir: str, instance: "Ngo", filename: str) -> str:
