@@ -1,3 +1,4 @@
+import codecs
 import csv
 import logging
 import os
@@ -134,8 +135,9 @@ KINDS = {
 
 
 def write_query_data_to_csv(csv_name, current_kind, items):
-    with open(csv_name, "a") as f:
-        writer = csv.writer(f)
+    with open(csv_name, "a", encoding="utf-8-sig") as f:
+        f.write(codecs.BOM_UTF8)
+        writer = csv.writer(f, dialect=csv.excel)
 
         for item in items:
             new_row: List[Any] = []
@@ -238,8 +240,9 @@ def retrieve_data(csv_name, kind_data):
 
 
 def create_kind_csv_file(csv_name, current_kind):
-    with open(csv_name, "w") as f:
-        writer = csv.writer(f)
+    with open(csv_name, "w", encoding="utf-8-sig") as f:
+        f.write(codecs.BOM_UTF8)
+        writer = csv.writer(f, dialect=csv.excel)
         writer.writerow(current_kind["webapp_to_django"].values())
 
     logger.info(f"Created {csv_name}")

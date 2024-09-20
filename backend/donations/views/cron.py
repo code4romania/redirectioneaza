@@ -1,3 +1,4 @@
+import codecs
 import csv
 import logging
 import operator
@@ -86,11 +87,12 @@ class CustomExport(TemplateView):
         logger.info("Found {} donations".format(len(donors)))
 
         response = HttpResponse(
-            content_type="text/csv",
+            content_type="text/csv; charset=utf-8-sig",
             headers={"Content-Disposition": 'attachment; filename="export_donor.csv"'},
         )
+        response.write(codecs.BOM_UTF8)
 
-        writer = csv.writer(response, quoting=csv.QUOTE_ALL)
+        writer = csv.writer(response, dialect=csv.excel)
         writer.writerow(fields)
 
         for donor in donors:
@@ -131,11 +133,12 @@ class NgoExport(TemplateView):
         )
 
         response = HttpResponse(
-            content_type="text/csv",
+            content_type="text/csv; charset=utf-8-sig",
             headers={"Content-Disposition": 'attachment; filename="export_ngo.csv"'},
         )
+        response.write(codecs.BOM_UTF8)
 
-        writer = csv.writer(response, quoting=csv.QUOTE_ALL)
+        writer = csv.writer(response, dialect=csv.excel)
         writer.writerow(fields)
 
         for ngo in Ngo.objects.all().values(*fields):
