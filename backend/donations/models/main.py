@@ -27,8 +27,9 @@ def select_public_storage():
 
 
 def hash_id_secret(prefix: str, pk: int) -> str:
-    # noinspection InsecureHash
-    return hashlib.sha1(f"{prefix}-{pk}-{settings.SECRET_KEY}".encode()).hexdigest()[:10]
+    return hashlib.blake2s(
+        f"{prefix}-{pk}-{settings.SECRET_KEY_HASH}".encode(), digest_size=16, usedforsecurity=False
+    ).hexdigest().lower()
 
 
 def ngo_directory_path(subdir: str, instance: "Ngo", filename: str) -> str:
