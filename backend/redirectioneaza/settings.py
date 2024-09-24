@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import hashlib
 import os
 from base64 import urlsafe_b64encode
 from copy import deepcopy
@@ -152,6 +153,7 @@ environ.Env.read_env(ENV_FILE_PATH)
 
 # SECURITY WARNING: keep the secret key used in production secret
 SECRET_KEY = env.str("SECRET_KEY")
+SECRET_KEY_HASH = hashlib.blake2s(SECRET_KEY.encode()).hexdigest()
 OLD_SESSION_KEY = env.str("OLD_SESSION_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production
