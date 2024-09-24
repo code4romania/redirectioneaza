@@ -1,3 +1,4 @@
+import codecs
 import csv
 import io
 import logging
@@ -152,7 +153,8 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], ngo: Ngo, 
                     )
 
         csv_output = io.StringIO()
-        csv_writer = csv.writer(csv_output, quoting=csv.QUOTE_ALL)
+        csv_output.write(codecs.BOM_UTF8)
+        csv_writer = csv.writer(csv_output, dialect=csv.excel)
         csv_writer.writerow(
             [
                 _("no."),
