@@ -24,7 +24,7 @@ else
   echo "Running in production mode"
 
   # https://docs.gunicorn.org/en/latest/design.html#how-many-workers
-  WORKERS=${GUNICORN_WORKERS_COUNT:-$(((2 * $(nproc)) + 1))}
+  WORKERS=${GUNICORN_WORKERS:-$(((2 * $(nproc)) + 1))}
 
   echo "Starting Gunicorn with ${WORKERS} workers"
 
