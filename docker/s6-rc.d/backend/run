@@ -4,22 +4,34 @@ set -e
 
 cd /var/www/redirect/backend/ || exit 1
 
-if [ "${ENVIRONMENT}" = "development" ]; then
-    echo "Running in development mode"
-
-    python3 -Wd manage.py runserver 0.0.0.0:8000
+if [ "${ENVIRONMENT}" = "debug" ]; then
+  echo "**********************************************"
+  echo "***  Web server in development DEBUG mode  ***"
+  echo "**********************************************"
+  python3 -Xfrozen_modules=off -m debugpy --listen 0.0.0.0:5678 manage.py runserver 0.0.0.0:8000
+elif [ "${ENVIRONMENT}" = "debugwait" ]; then
+  echo "***********************************************"
+  echo "***  Web server in development DEBUG mode   ***"
+  echo "***   Waiting for debugger connection...    ***"
+  echo "***********************************************"
+  python3 -Xfrozen_modules=off -m debugpy --wait-for-client --listen 0.0.0.0:5678 manage.py runserver 0.0.0.0:8000
+elif [ "${ENVIRONMENT}" = "development" ]; then
+  echo "****************************************"
+  echo "***  Web server in development mode  ***"
+  echo "****************************************"
+  python3 -Wd manage.py runserver 0.0.0.0:8000
 else
-    echo "Running in production mode"
+  echo "Running in production mode"
 
-    # https://docs.gunicorn.org/en/latest/design.html#how-many-workers
-    WORKERS=${GUNICORN_WORKERS:-$(((2 * $(nproc)) + 1))}
+  # https://docs.gunicorn.org/en/latest/design.html#how-many-workers
+  WORKERS=${GUNICORN_WORKERS_COUNT:-$(((2 * $(nproc)) + 1))}
 
-    echo "Starting Gunicorn with ${WORKERS} workers"
+  echo "Starting Gunicorn with ${WORKERS} workers"
 
-    python3 -m gunicorn redirectioneaza.wsgi \
-        --bind "unix:///run/gunicorn.sock" \
-        --log-level "${LOG_LEVEL}" \
-        --worker-class gevent \
-        --workers "${WORKERS}" \
-        --timeout 60
+  python3 -m gunicorn redirectioneaza.wsgi \
+    --bind "unix:///run/gunicorn.sock" \
+    --log-level "${LOG_LEVEL}" \
+    --worker-class gevent \
+    --workers "${WORKERS}" \
+    --timeout 60
 fi

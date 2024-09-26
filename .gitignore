@@ -34,6 +34,9 @@ blobs/
 # Local History for Visual Studio Code
 .history/
 
+# Stores VSCode versions used for testing VSCode extensions
+.vscode-test
+
 ### JetBrains template
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
@@ -290,8 +293,6 @@ cython_debug/
 /backend/static/
 /backend/media/
 
-/.vscode/
-
 # Logs
 logs
 *.log
@@ -409,9 +410,6 @@ dist
 
 # TernJS port file
 .tern-port
-
-# Stores VSCode versions used for testing VSCode extensions
-.vscode-test
 
 # yarn v2
 .yarn/cache

@@ -11,8 +11,6 @@ services:
       dockerfile: ./docker/dockerfiles/Dockerfile.dev
     volumes:
       - ./backend:/var/www/redirect/backend
-    environment:
-      - "ENVIRONMENT=development"
     env_file:
       - .env
     ports:

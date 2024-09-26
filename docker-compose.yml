@@ -10,3 +10,6 @@ services:
       - ./backend/.db_sqlite:/var/www/redirect/backend/.db_sqlite
     environment:
       - "DATABASE_ENGINE=sqlite3"
+    ports:
+      - "5678:5678"
+      - "5677:5677"
