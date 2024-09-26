@@ -8,13 +8,13 @@ if [ "${ENVIRONMENT}" = "debug" ]; then
   echo "**********************************************"
   echo "***  Web server in development DEBUG mode  ***"
   echo "**********************************************"
-  python3 -Xfrozen_modules=off -m debugpy --listen 0.0.0.0:5678 manage.py runserver 0.0.0.0:8000
+  python3 -Wd -Xfrozen_modules=off -m debugpy --listen 0.0.0.0:5678 manage.py runserver 0.0.0.0:8000
 elif [ "${ENVIRONMENT}" = "debugwait" ]; then
   echo "***********************************************"
   echo "***  Web server in development DEBUG mode   ***"
   echo "***   Waiting for debugger connection...    ***"
   echo "***********************************************"
-  python3 -Xfrozen_modules=off -m debugpy --wait-for-client --listen 0.0.0.0:5678 manage.py runserver 0.0.0.0:8000
+  python3 -Wd -Xfrozen_modules=off -m debugpy --wait-for-client --listen 0.0.0.0:5678 manage.py runserver 0.0.0.0:8000
 elif [ "${ENVIRONMENT}" = "development" ]; then
   echo "****************************************"
   echo "***  Web server in development mode  ***"
