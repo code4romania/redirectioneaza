@@ -14,7 +14,8 @@
 </div>
 
     <form id='login-form' class="form form-horizontal" action="/login/" role="form" method="post">
-      {{ csrf_input }}
+      {% csrf_token %}
+
       <fieldset>
         <legend>Login</legend>
         <div class="form-group">

@@ -162,7 +162,6 @@ class NgoRemoveForms(TemplateView):
         # loop through them and remove the form_url
         # this will force an update on it when downloaded again
         for ngo in ngos:
-            ngo.form_url = ""
             ngo.prefilled_form.delete()
             total_removed += 1
 

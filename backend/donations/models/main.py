@@ -79,6 +79,9 @@ def ngo_slug_validator(value):
 def ngo_id_number_validator(value):
     cif = "".join([char for char in value.upper() if char.isalnum()])
 
+    if cif == len(cif) * "0":
+        raise ValidationError(_("The ID number cannot be all zeros"))
+
     if value.startswith("RO"):
         cif = value[2:]
 
@@ -95,7 +98,7 @@ def ngo_id_number_validator(value):
 
     cif_control_digit: int = reversed_cif.pop(0)
 
-    cif_key_pairs: Tuple[Tuple[int, int], ...] = tuple(
+    cif_key_pairs: Tuple[int, ...] = tuple(
         cif_digit * key_digit for cif_digit, key_digit in zip(reversed_cif, reversed_key)
     )
     control_result: int = sum(cif_key_pairs) * 10 % 11
@@ -128,22 +131,12 @@ class Ngo(models.Model):
     description = models.TextField(verbose_name=_("description"))
 
     # originally: logo
-    logo_url = models.URLField(verbose_name=_("logo url"), blank=True, null=False, default="")
     logo = models.ImageField(
         verbose_name=_("logo"),
         blank=True,
         null=False,
         storage=select_public_storage,
         upload_to=partial(ngo_directory_path, "logos"),
-    )
-
-    image_url = models.URLField(verbose_name=_("image url"), blank=True, null=False, default="")
-    image = models.ImageField(
-        verbose_name=_("image"),
-        blank=True,
-        null=False,
-        storage=select_public_storage,
-        upload_to=partial(ngo_directory_path, "images"),
     )
 
     # originally: account
@@ -158,6 +151,19 @@ class Ngo(models.Model):
         null=False,
         unique=True,
         validators=[ngo_id_number_validator],
+    )
+    vat_id = models.CharField(
+        verbose_name=_("VAT ID"),
+        max_length=2,
+        blank=True,
+        null=False,
+        default="",
+        db_index=True,
+    )
+    registration_number_valid = models.BooleanField(
+        verbose_name=_("registration validation failed"),
+        db_index=True,
+        null=True,
     )
 
     address = models.TextField(verbose_name=_("address"), blank=True, null=False, default="")
@@ -183,8 +189,6 @@ class Ngo(models.Model):
 
     email = models.EmailField(verbose_name=_("email"), blank=True, null=False, default="", db_index=True)
     website = models.URLField(verbose_name=_("website"), blank=True, null=False, default="")
-    # TODO: this seems unused
-    other_emails = models.TextField(verbose_name=_("other emails"), blank=True, null=False, default="")
 
     # originally: verified
     is_verified = models.BooleanField(verbose_name=_("is verified"), db_index=True, default=False)
@@ -201,13 +205,6 @@ class Ngo(models.Model):
     is_active = models.BooleanField(verbose_name=_("is active"), db_index=True, default=True)
 
     # url to the form that contains only the ngo's details
-    form_url = models.URLField(
-        verbose_name=_("form url"),
-        default="",
-        blank=True,
-        null=False,
-        max_length=255,
-    )
     prefilled_form = models.FileField(
         verbose_name=_("form with prefilled ngo data"),
         blank=True,
@@ -257,10 +254,6 @@ class Ngo(models.Model):
             return
 
         changed = False
-
-        if ngo.form_url:
-            ngo.form_url = ""
-            changed = True
 
         if ngo.prefilled_form:
             ngo.prefilled_form.delete(save=False)
