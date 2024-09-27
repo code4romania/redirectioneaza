@@ -57,7 +57,7 @@ module "ecs_redirectioneaza" {
     },
     {
       name  = "LOG_LEVEL"
-      value = "INFO"
+      value = "WARNING"
     },
     {
       name  = "ENABLE_DJANGO_ADMIN"
