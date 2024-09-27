@@ -1,0 +1,8 @@
+{% extends 'account/errors/base.html' %}
+{% load i18n %}
+
+{% block error_message %}
+<p>
+    {% trans "Your current role isn't supported." %}
+</p>
+{% endblock %}

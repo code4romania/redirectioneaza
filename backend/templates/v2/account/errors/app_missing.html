@@ -1,0 +1,11 @@
+{% extends 'account/errors/base.html' %}
+{% load i18n %}
+
+{% block content %}
+<h1>
+    {% trans 'Application not activated' %}
+</h1>
+<p>
+    {% trans 'The application is not activated for this user/organization.' %}
+</p>
+{% endblock %}

@@ -2,13 +2,14 @@ import codecs
 import csv
 import io
 import logging
-import math
 import os
+import re
 import tempfile
 from datetime import datetime
 from typing import Any, Dict, List, Tuple
 from zipfile import ZIP_DEFLATED, ZipFile
 
+import math
 import requests
 from django.conf import settings
 from django.core.files import File
@@ -20,7 +21,7 @@ from django.utils.translation import gettext_lazy as _
 from localflavor.ro.ro_counties import COUNTIES_CHOICES
 
 from donations.models.jobs import Job, JobDownloadError, JobStatusChoices
-from donations.models.main import Donor, Ngo
+from donations.models.main import Donor, Ngo, REGISTRATION_NUMBER_REGEX_SANS_VAT
 from redirectioneaza.common.messaging import send_email
 
 logger = logging.getLogger(__name__)
@@ -368,10 +369,13 @@ def _build_xml(
         handler.write(xml_str.encode())
 
 
-def _clean_registration_number(cif: str) -> str:
-    # The CIF should be added without the "RO" prefix
-    cif: str = cif.upper()
-    return cif if not cif.startswith("RO") else cif[2:]
+def _clean_registration_number(reg_num: str) -> str:
+    # The registration number should be added without the country prefix
+    reg_num: str = reg_num.upper()
+    if re.match(REGISTRATION_NUMBER_REGEX_SANS_VAT, reg_num):
+        return reg_num
+
+    return reg_num[2:]
 
 
 def _build_xml_header(ngo, xml_idx, zip_timestamp) -> str:

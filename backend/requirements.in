@@ -4,11 +4,13 @@ django-ipware~=7.0.1
 django-unfold~=0.39.0
 django-allauth~=64.2.1
 
+pycognito~=2024.5.1
+
 # captcha
 django-recaptcha~=4.0.0
 
 # NGO Hub integration
-ngohub~=0.0.6
+ngohub~=0.0.8
 
 # encrypting data
 cryptography~=43.0.1

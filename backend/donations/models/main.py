@@ -1,6 +1,7 @@
 import hashlib
 import json
 import logging
+import re
 from datetime import datetime
 from functools import partial
 from typing import Dict, List, Tuple
@@ -18,6 +19,10 @@ from django.utils.translation import gettext_lazy as _
 ALL_NGOS_CACHE_KEY = "ALL_NGOS"
 ALL_NGO_IDS_CACHE_KEY = "ALL_NGO_IDS"
 FRONTPAGE_NGOS_KEY = "FRONTPAGE_NGOS"
+
+REGISTRATION_NUMBER_REGEX = r"^([A-Z]{2}|)\d{2,10}$"
+REGISTRATION_NUMBER_REGEX_SANS_VAT = r"^\d{2,10}$"
+REGISTRATION_NUMBER_REGEX_WITH_VAT = r"^[A-Z]{2}\d{2,10}$"
 
 logger = logging.getLogger(__name__)
 
@@ -77,18 +82,21 @@ def ngo_slug_validator(value):
 
 
 def ngo_id_number_validator(value):
-    cif = "".join([char for char in value.upper() if char.isalnum()])
+    reg_num: str = "".join([char for char in value.upper() if char.isalnum()])
 
-    if cif == len(cif) * "0":
+    if reg_num == len(reg_num) * "0":
         raise ValidationError(_("The ID number cannot be all zeros"))
 
-    if value.startswith("RO"):
-        cif = value[2:]
+    if not re.match(REGISTRATION_NUMBER_REGEX, reg_num):
+        raise ValidationError(_("The ID number format is not valid"))
 
-    if not cif.isdigit():
+    if re.match(REGISTRATION_NUMBER_REGEX_WITH_VAT, reg_num):
+        reg_num = value[2:]
+
+    if not reg_num.isdigit():
         raise ValidationError(_("The ID number must contain only digits"))
 
-    if 2 > len(cif) or len(cif) > 10:
+    if 2 > len(reg_num) or len(reg_num) > 10:
         raise ValidationError(_("The ID number must be between 2 and 10 digits long"))
 
     if not settings.RUN_FULL_CUI_VALIDATION:
@@ -97,7 +105,7 @@ def ngo_id_number_validator(value):
     control_key: str = "753217532"
 
     reversed_key: List[int] = [int(digit) for digit in control_key[::-1]]
-    reversed_cif: List[int] = [int(digit) for digit in cif[::-1]]
+    reversed_cif: List[int] = [int(digit) for digit in reg_num[::-1]]
 
     cif_control_digit: int = reversed_cif.pop(0)
 
@@ -132,6 +140,17 @@ class Ngo(models.Model):
 
     name = models.CharField(verbose_name=_("Name"), blank=False, null=False, max_length=200, db_index=True)
     description = models.TextField(verbose_name=_("description"))
+
+    # NGO Hub details
+    ngohub_org_id = models.IntegerField(
+        verbose_name=_("NGO Hub organization ID"),
+        blank=True,
+        null=True,
+        db_index=True,
+        unique=True,
+    )
+    ngohub_last_update_started = models.DateTimeField(_("Last NGO Hub update"), null=True, blank=True, editable=False)
+    ngohub_last_update_ended = models.DateTimeField(_("Last NGO Hub update"), null=True, blank=True, editable=False)
 
     # originally: logo
     logo = models.ImageField(
@@ -198,13 +217,13 @@ class Ngo(models.Model):
 
     # originally: special_status
     # if the ngo has a special status (e.g. social ngo) they are entitled to 3.5% donation, not 2%
-    has_special_status = models.BooleanField(verbose_name=_("has special status"), db_index=True, default=False)
+    is_social_service_viable = models.BooleanField(verbose_name=_("has special status"), db_index=True, default=False)
 
     # originally: accepts_forms
     # if the ngo accepts to receive donation forms through email
     is_accepting_forms = models.BooleanField(verbose_name=_("is accepting forms"), db_index=True, default=False)
 
-    # originally: active
+    # originally: active — the user cannot modify this property, it is set by the admin/by the NGO Hub settings
     is_active = models.BooleanField(verbose_name=_("is active"), db_index=True, default=True)
 
     # url to the form that contains only the ngo's details
@@ -216,6 +235,8 @@ class Ngo(models.Model):
         upload_to=partial(year_ngo_directory_path, "ngo-forms"),
     )
 
+    filename_cache = models.JSONField(_("Filename cache"), editable=False, default=dict, blank=False, null=False)
+
     date_created = models.DateTimeField(verbose_name=_("date created"), db_index=True, auto_now_add=timezone.now)
     date_updated = models.DateTimeField(verbose_name=_("date updated"), db_index=True, auto_now=timezone.now)
 
@@ -225,6 +246,12 @@ class Ngo(models.Model):
     def save(self, *args, **kwargs):
         is_new = self.id is None
         self.slug = self.slug.lower()
+
+        if self.registration_number:
+            uppercase_registration_number = self.registration_number
+            if re.match(REGISTRATION_NUMBER_REGEX_WITH_VAT, uppercase_registration_number):
+                self.vat_id = uppercase_registration_number[:2]
+                self.registration_number = uppercase_registration_number[2:]
 
         super().save(*args, **kwargs)
 
@@ -247,6 +274,19 @@ class Ngo(models.Model):
             return f"redirectioneaza.ro/{self.slug}"
         else:
             return ""
+
+    def activate(self):
+        if self.is_active:
+            return
+        self.is_active = True
+        self.save()
+
+    def deactivate(self):
+        if not self.is_active:
+            return
+
+        self.is_active = False
+        self.save()
 
     @staticmethod
     def delete_prefilled_form(ngo_id):

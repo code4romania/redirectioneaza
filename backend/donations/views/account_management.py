@@ -106,7 +106,7 @@ class LoginView(BaseAccountView):
 
         user = authenticate(email=email, password=password)
         if user is not None:
-            login(request, user)
+            login(request, user, backend="django.contrib.auth.backends.ModelBackend")
             if user.has_perm("users.can_view_old_dashboard"):
                 return redirect(reverse("admin-index"))
 
@@ -122,7 +122,7 @@ class LoginView(BaseAccountView):
             if user and user.check_old_password(password):
                 user.set_password(password)
                 user.save()
-                login(request, user)
+                login(request, user, backend="django.contrib.auth.backends.ModelBackend")
                 if user.has_perm("users.can_view_old_dashboard"):
                     return redirect(reverse("admin-index"))
                 return redirect(reverse("contul-meu"))
@@ -161,7 +161,7 @@ class SetPasswordView(BaseAccountView):
         user.clear_token(commit=False)
         user.save()
 
-        login(request, user)
+        login(request, user, backend="django.contrib.auth.backends.ModelBackend")
 
         return redirect(reverse("contul-meu"))
 
@@ -237,7 +237,7 @@ class SignupView(BaseAccountView):
         )
 
         # login the user after signup
-        login(request, user)
+        login(request, user, backend="django.contrib.auth.backends.ModelBackend")
         # redirect to my account
         return redirect(reverse("contul-meu"))
 
@@ -271,7 +271,7 @@ class VerificationView(BaseAccountView):
             # user.clear_token()
             pass
 
-        login(request, user)
+        login(request, user, backend="django.contrib.auth.backends.ModelBackend")
 
         if verification_type == "v":
             user.is_verified = True

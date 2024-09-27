@@ -126,6 +126,19 @@ class User(AbstractUser):
         if commit:
             self.save()
 
+    def activate(self):
+        if self.is_active:
+            return
+        self.is_active = True
+        self.save()
+
+    def deactivate(self):
+        if not self.is_active:
+            return
+
+        self.is_active = False
+        self.save()
+
     @staticmethod
     def old_hash_password(password, method, salt=None, pepper=None):
         """

@@ -60,6 +60,7 @@ from donations.views.site import (
     PolicyHandler,
     TermsHandler,
 )
+from redirectioneaza.views import StaticPageView
 
 admin.site.site_header = f"Admin | {settings.VERSION_SUFFIX}"
 
@@ -103,6 +104,21 @@ urlpatterns = (
         path("organizatia/", NgoDetailsView.as_view(), name="organization"),
         path("asociatia/", RedirectView.as_view(pattern_name="organization", permanent=True)),
         path("date-cont/", MyAccountDetailsView.as_view(), name="date-contul-meu"),
+        path(
+            "contul-meu/eroare/aplicatie-lipsa/",
+            StaticPageView.as_view(template_name="account/errors/app_missing.html"),
+            name="error-app-missing",
+        ),
+        path(
+            "contul-meu/eroare/sincronizare-ong/",
+            StaticPageView.as_view(template_name="account/errors/multiple_ngos.html"),
+            name="error-multiple-organizations",
+        ),
+        path(
+            "contul-meu/eroare/rol-necunoscut/",
+            StaticPageView.as_view(template_name="account/errors/unknown_role.html"),
+            name="error-unknown-user-role",
+        ),
         # APIs
         path("api/ngo/check-url/<ngo_url>/", CheckNgoUrl.as_view(), name="api-ngo-check-url"),
         path("api/ngos/", NgosApi.as_view(), name="api-ngos"),

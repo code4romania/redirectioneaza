@@ -332,7 +332,7 @@ class TwoPercentHandler(TemplateView):
             "account": ngo.bank_account.upper(),
             "cif": ngo.registration_number,
             "two_years": two_years,
-            "special_status": ngo.has_special_status,
+            "special_status": ngo.is_social_service_viable,
             "percent": "3,5%",
         }
 

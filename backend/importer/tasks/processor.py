@@ -1,5 +1,6 @@
 import csv
 import logging
+import re
 from datetime import datetime
 from typing import Any, Dict, List, Optional, TypedDict, Union
 
@@ -10,7 +11,7 @@ from django.db import IntegrityError
 from django.db.models.base import ModelBase
 from django.utils.timezone import make_aware
 
-from donations.models.main import Ngo
+from donations.models.main import Ngo, REGISTRATION_NUMBER_REGEX
 from importer.models import ImportJob, ImportModelTypeChoices, ImportStatusChoices
 
 logger = logging.getLogger(__name__)
@@ -142,7 +143,7 @@ def clean_bank_account(value: str) -> str:
 def clean_registration(value: str) -> str:
     value = "".join(value.split()).strip().upper()
 
-    if (value.startswith("RO") and len(value) != 10) or (not value.startswith("RO") and len(value)) != 8:
+    if not re.match(REGISTRATION_NUMBER_REGEX, value):
         logger.warning(f"Invalid registration number: {value}")
 
     return value

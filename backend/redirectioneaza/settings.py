@@ -381,7 +381,11 @@ else:
         }
     }
 
+TIMEOUT_CACHE_SHORT = 60  # 1 minute
+TIMEOUT_CACHE_NORMAL = 60 * 15  # 15 minutes
+TIMEOUT_CACHE_LONG = 60 * 60 * 2  # 2 hours
 
+# User & Auth
 AUTH_USER_MODEL = "users.User"
 
 # Password validation
