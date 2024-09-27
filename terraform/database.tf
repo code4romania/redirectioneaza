@@ -15,7 +15,7 @@ resource "aws_db_instance" "main" {
   iam_database_authentication_enabled = true
 
   engine                      = "postgres"
-  engine_version              = "16.1"
+  engine_version              = "16.3"
   allow_major_version_upgrade = false
   auto_minor_version_upgrade  = true
 
