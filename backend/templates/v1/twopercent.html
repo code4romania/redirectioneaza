@@ -6,9 +6,6 @@
     {% if ngo.logo %}
         <meta property="og:image" content="{{ ngo.logo.url }}" />
         <meta property="og:image:secure_url" content="{{ ngo.logo.url }}" />
-    {% elif ngo.logo_url %}
-        <meta property="og:image" content="{{ ngo.logo_url }}" />
-        <meta property="og:image:secure_url" content="{{ ngo.logo_url }}" />
     {% endif %}
 
     <meta property="og:type" content="website" />

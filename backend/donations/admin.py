@@ -83,6 +83,7 @@ class NgoAdmin(ModelAdmin):
         HasOwnerFilter,
         "county",
         "active_region",
+        "registration_number_valid",
     )
     list_per_page = 30
 
@@ -92,7 +93,7 @@ class NgoAdmin(ModelAdmin):
 
     readonly_fields = ("date_created", "date_updated", "get_donations_link")
 
-    actions = ("generate_donations_archive",)
+    actions = ("generate_donations_archive", "clean_registration_numbers")
 
     fieldsets = (
         (
@@ -157,6 +158,15 @@ class NgoAdmin(ModelAdmin):
             message = _("The donations archive could not be generated for any of the selected NGOs.")
 
         self.message_user(request, message)
+
+    @admin.action(description=_("Clean up registration numbers"))
+    def clean_registration_numbers(self, request, queryset: QuerySet[Ngo]):
+        result = call_command("registration_numbers_cleanup")
+
+        if result:
+            self.message_user(request, result, level="ERROR")
+        else:
+            self.message_user(request, _("Registration numbers are clean."), level="SUCCESS")
 
 
 @admin.register(Donor)

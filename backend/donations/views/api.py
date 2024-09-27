@@ -149,9 +149,6 @@ class GetNgoForm(TemplateView):
         # close the file after it has been uploaded
         pdf.close()
 
-        ngo.form_url = ngo.prefilled_form.url
-        ngo.save()
-
         return redirect(ngo.prefilled_form.url)
 
 
