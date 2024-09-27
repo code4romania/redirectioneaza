@@ -132,7 +132,7 @@ module "ecs_redirectioneaza" {
       value = 0.5
     },
     {
-      name  = "GUNICORN_WORKERS"
+      name  = "GUNICORN_WORKERS_COUNT"
       value = 3
     },
     {
