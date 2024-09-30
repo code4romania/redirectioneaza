@@ -91,6 +91,9 @@ def ngo_id_number_validator(value):
     if 2 > len(cif) or len(cif) > 10:
         raise ValidationError(_("The ID number must be between 2 and 10 digits long"))
 
+    if not settings.RUN_FULL_CUI_VALIDATION:
+        return
+
     control_key: str = "753217532"
 
     reversed_key: List[int] = [int(digit) for digit in control_key[::-1]]

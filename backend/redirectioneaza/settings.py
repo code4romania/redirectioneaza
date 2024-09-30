@@ -144,6 +144,8 @@ env = environ.Env(
     SENTRY_PROFILES_SAMPLE_RATE=(float, 0),
     # Google Analytics:
     GOOGLE_ANALYTICS_ID=(str, ""),
+    # App settings
+    RUN_FULL_CUI_VALIDATION=(bool, True),
 )
 
 environ.Env.read_env(ENV_FILE_PATH)
@@ -755,3 +757,6 @@ NGOHUB_ROLE_NGO_EMPLOYEE = "employee"
 
 # Configurations for the NGO Hub integration
 UPDATE_ORGANIZATION_METHOD = env("UPDATE_ORGANIZATION_METHOD")
+
+# Other settings
+RUN_FULL_CUI_VALIDATION = env.bool("RUN_FULL_CUI_VALIDATION")
