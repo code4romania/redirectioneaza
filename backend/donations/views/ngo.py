@@ -276,7 +276,8 @@ class TwoPercentHandler(TemplateView):
                 # the email has the @ so the first regex will fail
                 elif arg == "email":
                     # if we found a match
-                    if 5 > len(value) > 255 or re.match(r"[^@]+@[^@]+\.[^@]+", value) is None:
+                    email_regex = r"^[^@]+@[^@]+\.[^@]{2,}$"
+                    if 5 > len(value) > 255 or re.match(email_regex, value) is None:
                         errors["fields"].append(arg)
                         return ""
 
