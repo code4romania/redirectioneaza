@@ -2,40 +2,36 @@
 {% load allauth %}
 {% load socialaccount %}
 
-<div class="row">
-  {% if errors %}
-    <div class="col-xs-12 col-md-6 col-md-offset-3">
-      <div class="alert alert-dismissible alert-danger">
-        <button type="button" class="close" data-dismiss="alert">×</button>
-        <strong>Oops!</strong> {{ errors }}
+<form id='login-form' class="form form-horizontal" action="/login/" role="form" method="post">
+  {% csrf_token %}
+
+  <fieldset>
+    <h2>
+      {% trans "Login with email & password" %}
+    </h2>
+
+    <p class="login-text">
+      {% trans "Login for organizations that don't fit the definitions in the NGO Law — 26/2000" %}
+    </p>
+    
+    <div class="form-group">
+      <div class="col-sm-12">
+        <input class="form-control" type="email" name="email" value="{{ email }}" placeholder="Email" autocomplete="email" x-moz-errormessage="Te rugăm sa introduci o adresa de email validă" required/>
       </div>
     </div>
-  {% endif %}
-</div>
+    <div class="form-group">
+      <div class="col-sm-12">
+        <input class="form-control" type="password" name="password" placeholder="Parola" required/>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-12">
+        <button type="submit" class="btn btn-primary">Trimite</button>
 
-    <form id='login-form' class="form form-horizontal" action="/login/" role="form" method="post">
-      {% csrf_token %}
-
-      <fieldset>
-        <legend>Login</legend>
-        <div class="form-group">
-          <div class="col-sm-12">
-            <input class="form-control" type="email" name="email" value="{{ email }}" placeholder="Email" autocomplete="email" x-moz-errormessage="Te rugăm sa introduci o adresa de email validă" required/>
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-sm-12">
-            <input class="form-control" type="password" name="password" placeholder="Parola" required/>
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-sm-12">
-            <button type="submit" class="btn btn-primary">Trimite</button>
-
-            <a href="{% url 'forgot' %}" class="btn btn-link pull-right">Am uitat parola</a>
-            <a href="{% url 'signup' %}" class="btn btn-link pull-right">Vreau un cont nou</a>
-          </div>
-        </div>
-      </fieldset>
-    </form>
+        <a href="{% url 'forgot' %}" class="btn btn-link pull-right">Am uitat parola</a>
+        <a href="{% url 'signup' %}" class="btn btn-link pull-right">Vreau un cont nou</a>
+      </div>
+    </div>
+  </fieldset>
+</form>
 

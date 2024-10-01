@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-01 11:24+0300\n"
+"POT-Creation-Date: 2024-10-01 13:54+0300\n"
 "PO-Revision-Date: 2024-02-28 15:45+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -428,6 +428,10 @@ msgstr "Reset site password"
 msgid "sign up"
 msgstr "sign up"
 
+#: donations/views/account_management.py:136
+msgid "It seems that this email and password combination is incorrect."
+msgstr "It seems that this email and password combination is incorrect."
+
 #: donations/views/account_management.py:236
 msgid "Welcome to redirectioneaza.ro"
 msgstr "Confirm redirectioneaza.ro account"
@@ -654,7 +658,7 @@ msgstr "Subdomain must have between 3 and 100 characters."
 
 #: templates/v2/account/errors/app_missing.html:6
 msgid "Application not activated"
-msgstr ""
+msgstr "Application not activated"
 
 #: templates/v2/account/errors/app_missing.html:9
 msgid "The application is not activated for this user/organization."
@@ -667,7 +671,7 @@ msgstr "Sign In Error"
 
 #: templates/v2/account/errors/multiple_ngos.html:6
 msgid "Multiple NGOs for this CUI"
-msgstr ""
+msgstr "Multiple NGOs for this CUI"
 
 #: templates/v2/account/errors/multiple_ngos.html:9
 msgid ""
@@ -679,7 +683,7 @@ msgstr ""
 
 #: templates/v2/account/errors/unknown_role.html:6
 msgid "Unknown role"
-msgstr ""
+msgstr "Unknown role"
 
 #: templates/v2/account/errors/unknown_role.html:9
 msgid "Your current role isn't supported."
@@ -690,27 +694,49 @@ msgstr "Your current role isn't supported."
 msgid "Sign In"
 msgstr "Sign In"
 
-#: templates/v2/account/snippets/third-party.html:16
+#: templates/v2/account/login.html:22
+msgid "Error!"
+msgstr "Error!"
+
+#: templates/v2/account/snippets/classic-login.html:10
+msgid "Login with email & password"
+msgstr "Login with email & password"
+
+#: templates/v2/account/snippets/classic-login.html:14
+msgid ""
+"Login for organizations that don't fit the definitions in the NGO Law — "
+"26/2000"
+msgstr ""
+"Login for organizations that don't fit the definitions in the NGO Law — "
+"26/2000"
+
+#: templates/v2/account/snippets/third-party.html:8
 msgid "Login through NGO Hub"
 msgstr "Login through NGO Hub"
 
-#: templates/v2/account/snippets/third-party.html:21
+#: templates/v2/account/snippets/third-party.html:13
 msgid "To access your account, you need to authenticate through NGO Hub."
 msgstr "To access your account, you need to authenticate through NGO Hub."
 
-#: templates/v2/account/snippets/third-party.html:26
+#: templates/v2/account/snippets/third-party.html:18
 msgid ""
 "Click the \"Go to account\" button and you will be redirected to the page "
-"where you need to authenticate using your NGO Hub credentials. After "
-"authentication, you will be redirected to your Redirecționează account."
+"where you need to authenticate using your NGO Hub credentials."
 msgstr ""
 "Click the \"Go to account\" button and you will be redirected to the page "
-"where you need to authenticate using your NGO Hub credentials. After "
-"authentication, you will be redirected to your Redirecționează account."
+"where you need to authenticate using your NGO Hub credentials."
 
-#: templates/v2/account/snippets/third-party.html:32
+#: templates/v2/account/snippets/third-party.html:22
+msgid "After authentication, you will be redirected to your account."
+msgstr "After authentication, you will be redirected to your account."
+
+#: templates/v2/account/snippets/third-party.html:30
 msgid "Go to account"
 msgstr "Go to account"
+
+#: templates/v2/account/snippets/third-party.html:36
+msgid "Create an account"
+msgstr "Create an account"
 
 #: templates/v2/socialaccount/login.html:28
 msgid "Redirecting to authentication..."

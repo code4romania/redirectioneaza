@@ -2,17 +2,17 @@
 {% load static %}
 {% load i18n %}
 
+{% block content %}
+    <div class="container">
 
-{% block title %}{% trans 'Sign In Error' %}{% endblock %}
+        <h1>
+            {% block title %}{% endblock %}
+        </h1>
+        <p>
+            {% block message %}{% endblock %}
+        </p>
 
-{% block left-side-view %}
-<div class="container tight-container content mb-50">
-    <h2>
-        {% trans 'Sign In Error' %}
-    </h2>
+        {% block extra_content %}{% endblock %}
 
-    {% block error_message %}
-        <p></p>
-    {% endblock %}
-</div>
+    </div>
 {% endblock %}

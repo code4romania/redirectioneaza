@@ -11,18 +11,34 @@
   {% endelement %}
 
   <div id="login-container" class="row">
-<div class="col-xs-12 col-sm-8 col-sm-offset-1" id="login">
+    <div class="col-xs-12 col-sm-8 col-sm-offset-1" id="login">
 
-    {% if not SOCIALACCOUNT_ONLY %}
-      {% include "account/snippets/classic-login.html" %}
-    {% endif %}
+      <div class="row">
+        {% if errors %}
+          <div class="col-xs-12 col-md-6 col-md-offset-3">
+            <div class="alert alert-dismissible alert-danger">
+              <button type="button" class="close" data-dismiss="alert">×</button>
+              <strong>
+                {% trans "Error!" %}
+              </strong>
+              {{ errors }}
+            </div>
+          </div>
+        {% endif %}
+      </div>
 
-    {% if SOCIALACCOUNT_ONLY or SOCIALACCOUNT_ENABLED %}
-      {% include "account/snippets/third-party.html" %}
-    {% endif %}
+      {% if SOCIALACCOUNT_ONLY or SOCIALACCOUNT_ENABLED %}
+        {% include "account/snippets/third-party.html" %}
+      {% endif %}
 
-    <div class="g-recaptcha" data-sitekey="{{ captcha_public_key }}" data-size="invisible" data-callback="onSubmit"></div>
-  </div>
+      {% if not SOCIALACCOUNT_ONLY %}
+        <hr>
+
+        {% include "account/snippets/classic-login.html" %}
+      {% endif %}
+
+      <div class="g-recaptcha" data-sitekey="{{ captcha_public_key }}" data-size="invisible" data-callback="onSubmit"></div>
+    </div>
   </div>
 
 {% endblock content %}

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-01 11:24+0300\n"
+"POT-Creation-Date: 2024-10-01 13:54+0300\n"
 "PO-Revision-Date: 2024-03-07 11:27+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -430,6 +430,10 @@ msgstr "Resetare parolă redirectioneaza.ro"
 msgid "sign up"
 msgstr "înregistrare"
 
+#: donations/views/account_management.py:136
+msgid "It seems that this email and password combination is incorrect."
+msgstr "Se pare că această combinație de email și parolă este incorectă."
+
 #: donations/views/account_management.py:236
 msgid "Welcome to redirectioneaza.ro"
 msgstr "Confirmare cont redirectioneaza.ro"
@@ -695,27 +699,49 @@ msgstr "Rolul tău actual nu este suportat."
 msgid "Sign In"
 msgstr "Autentificare"
 
-#: templates/v2/account/snippets/third-party.html:16
+#: templates/v2/account/login.html:22
+msgid "Error!"
+msgstr "Eroare!"
+
+#: templates/v2/account/snippets/classic-login.html:10
+msgid "Login with email & password"
+msgstr "Autentificare cu email și parolă"
+
+#: templates/v2/account/snippets/classic-login.html:14
+msgid ""
+"Login for organizations that don't fit the definitions in the NGO Law — "
+"26/2000"
+msgstr ""
+"Autentificare pentru organizațiile care nu se potrivesc definițiilor din "
+"Legea Asociațiilor și Fundațiilor — 26/2000"
+
+#: templates/v2/account/snippets/third-party.html:8
 msgid "Login through NGO Hub"
 msgstr "Autentificare prin NGO Hub"
 
-#: templates/v2/account/snippets/third-party.html:21
+#: templates/v2/account/snippets/third-party.html:13
 msgid "To access your account, you need to authenticate through NGO Hub."
 msgstr "Pentru a accesa contul, trebuie să te autentifici prin NGO Hub."
 
-#: templates/v2/account/snippets/third-party.html:26
+#: templates/v2/account/snippets/third-party.html:18
 msgid ""
 "Click the \"Go to account\" button and you will be redirected to the page "
-"where you need to authenticate using your NGO Hub credentials. After "
-"authentication, you will be redirected to your Redirecționează account."
+"where you need to authenticate using your NGO Hub credentials."
 msgstr ""
 "Apasă butonul „Mergi la cont” și vei fi redirecționat către pagina unde "
-"trebuie să te autentifici folosind datele tale de autentificare din NGO Hub. "
-"După autentificare, vei fi redirecționat către contul tău Redirecționează."
+"trebuie să te autentifici folosind datele tale de autentificare din NGO Hub."
 
-#: templates/v2/account/snippets/third-party.html:32
+#: templates/v2/account/snippets/third-party.html:22
+msgid "After authentication, you will be redirected to your account."
+msgstr "După autentificare, vei fi redirecționat către contul tău."
+
+#: templates/v2/account/snippets/third-party.html:30
 msgid "Go to account"
 msgstr "Mergi la cont"
+
+#: templates/v2/account/snippets/third-party.html:36
+msgid "Create an account"
+msgstr "Creează un cont"
 
 #: templates/v2/socialaccount/login.html:28
 msgid "Redirecting to authentication..."

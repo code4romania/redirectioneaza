@@ -1,0 +1,10 @@
+{% extends 'account/errors/login/base_login.html' %}
+{% load i18n %}
+
+{% block title %}
+  {% trans 'Application not activated' %}
+{% endblock %}
+
+{% block message %}
+  {% trans 'The application is not activated for this user/organization.' %}
+{% endblock %}

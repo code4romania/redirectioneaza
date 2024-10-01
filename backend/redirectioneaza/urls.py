@@ -106,17 +106,17 @@ urlpatterns = (
         path("date-cont/", MyAccountDetailsView.as_view(), name="date-contul-meu"),
         path(
             "contul-meu/eroare/aplicatie-lipsa/",
-            StaticPageView.as_view(template_name="account/errors/app_missing.html"),
+            StaticPageView.as_view(template_name="account/errors/login/app_missing.html"),
             name="error-app-missing",
         ),
         path(
             "contul-meu/eroare/sincronizare-ong/",
-            StaticPageView.as_view(template_name="account/errors/multiple_ngos.html"),
+            StaticPageView.as_view(template_name="account/errors/login/multiple_ngos.html"),
             name="error-multiple-organizations",
         ),
         path(
             "contul-meu/eroare/rol-necunoscut/",
-            StaticPageView.as_view(template_name="account/errors/unknown_role.html"),
+            StaticPageView.as_view(template_name="account/errors/login/unknown_role.html"),
             name="error-unknown-user-role",
         ),
         # APIs

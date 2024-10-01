@@ -2,36 +2,30 @@
 {% load allauth %}
 {% load socialaccount %}
 
-{% get_providers as socialaccount_providers %}
+<div class="col-sm">
 
-{% if socialaccount_providers %}
+  <h2>
+    {% trans "Login through NGO Hub" %}
+  </h2>
 
-  {% if not SOCIALACCOUNT_ONLY %}
-    <hr>
+  {% if SOCIALACCOUNT_ONLY %}
+    <p id="login-subtitle" class="title is-4">
+      {% trans "To access your account, you need to authenticate through NGO Hub." %}
+    </p>
   {% endif %}
 
-  <div class="row">
-    <div class="col-sm">
-      <h2>
-        {% translate "Login through NGO Hub" %}
-      </h2>
+  <p class="login-text">
+    {% trans 'Click the "Go to account" button and you will be redirected to the page where you need to authenticate using your NGO Hub credentials.' %}
+  </p>
 
-      {% if SOCIALACCOUNT_ONLY %}
-        <p id="login-subtitle" class="title is-4">
-          {% trans "To access your account, you need to authenticate through NGO Hub." %}
-        </p>
-      {% endif %}
+  <p class="login-text">
+    {% trans "After authentication, you will be redirected to your account." %}
+  </p>
 
-      <p class="login-text">
-        {% trans 'Click the "Go to account" button and you will be redirected to the page where you need to authenticate using your NGO Hub credentials. After authentication, you will be redirected to your Redirecționează account.' %}
-      </p>
-    </div>
-
-    <div id="allauth-login-form-container" class="col-sm">
+    <div id="allauth-login-form-container" class="col-2">
       <form action="{% url 'amazon_cognito_login' %}" method="GET">
-        <input class="btn btn-primary btn-pull-right" id="go-to-login" type="submit" value="{% trans "Go to account" %}">
+        <input class="btn btn-primary" id="go-to-login" type="submit" value="{% trans "Go to account" %}">
       </form>
     </div>
-  </div>
 
-{% endif %}
+</div>

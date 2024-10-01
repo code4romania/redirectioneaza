@@ -133,7 +133,7 @@ class LoginView(BaseAccountView):
 
         logger.warning("Invalid email or password: {0}".format(email))
         context["email"] = email
-        context["errors"] = "Se pare că această combinație de email și parolă este incorectă."
+        context["errors"] = _("It seems that this email and password combination is incorrect.")
 
         return render(request, self.template_name, context)
 

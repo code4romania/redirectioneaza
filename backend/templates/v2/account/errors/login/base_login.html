@@ -1,0 +1,8 @@
+{% extends 'account/errors/base.html' %}
+{% load i18n %}
+
+{% block extra_content %}
+  <p>
+    <a href="{% url 'login' %}" class="btn btn-primary">{% trans "Return to login" %}</a>
+  </p>
+{% endblock %}
