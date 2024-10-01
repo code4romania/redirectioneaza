@@ -165,6 +165,7 @@ class Ngo(models.Model):
     bank_account = models.CharField(verbose_name=_("bank account"), max_length=100)
 
     # originally: cif
+    # TODO: the number's length should be between 2 and 10 (or 8)
     registration_number = models.CharField(
         verbose_name=_("registration number"),
         max_length=100,
@@ -275,18 +276,23 @@ class Ngo(models.Model):
         else:
             return ""
 
-    def activate(self):
+    def activate(self, commit: bool = True):
         if self.is_active:
             return
-        self.is_active = True
-        self.save()
 
-    def deactivate(self):
+        self.is_active = True
+
+        if commit:
+            self.save()
+
+    def deactivate(self, commit: bool = True):
         if not self.is_active:
             return
 
         self.is_active = False
-        self.save()
+
+        if commit:
+            self.save()
 
     @staticmethod
     def delete_prefilled_form(ngo_id):

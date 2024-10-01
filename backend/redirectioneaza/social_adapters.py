@@ -97,8 +97,6 @@ def common_user_init(sociallogin: SocialLogin) -> UserModel:
     # Check the user role from NGO Hub
     if user_role == settings.NGOHUB_ROLE_SUPER_ADMIN:
         # A super admin from NGO Hub will become a Django admin
-        user.save()
-
         user.groups.add(Group.objects.get(name=RESTRICTED_ADMIN))
     elif user_role == settings.NGOHUB_ROLE_NGO_ADMIN:
         if not ngohub.check_user_organization_has_application(ngo_token=token, login_link=settings.BASE_WEBSITE):
