@@ -88,8 +88,6 @@ def common_user_init(sociallogin: SocialLogin) -> UserModel:
         raise ImmediateHttpResponse(redirect(reverse("error-app-missing")))
 
     user_role: str = user_profile.role
-    ngohub_org_id: int = user_profile.organization.id
-
     if not user.first_name:
         user.first_name = user_profile.name
         user.save()
@@ -98,7 +96,11 @@ def common_user_init(sociallogin: SocialLogin) -> UserModel:
     if user_role == settings.NGOHUB_ROLE_SUPER_ADMIN:
         # A super admin from NGO Hub will become a Django admin
         user.groups.add(Group.objects.get(name=RESTRICTED_ADMIN))
-    elif user_role == settings.NGOHUB_ROLE_NGO_ADMIN:
+
+        return user
+
+    ngohub_org_id: int = user_profile.organization.id
+    if user_role == settings.NGOHUB_ROLE_NGO_ADMIN:
         if not ngohub.check_user_organization_has_application(ngo_token=token, login_link=settings.BASE_WEBSITE):
             _deactivate_ngo_and_users(ngohub_org_id)
             raise ImmediateHttpResponse(redirect(reverse("error-app-missing")))
@@ -107,7 +109,10 @@ def common_user_init(sociallogin: SocialLogin) -> UserModel:
         user.groups.add(Group.objects.get(name=NGO_ADMIN))
 
         _connect_user_and_ngo(user, ngohub_org_id, token)
-    elif user_role == settings.NGOHUB_ROLE_NGO_EMPLOYEE:
+
+        return user
+
+    if user_role == settings.NGOHUB_ROLE_NGO_EMPLOYEE:
         if not ngohub.check_user_organization_has_application(ngo_token=token, login_link=settings.BASE_WEBSITE):
             user.deactivate()
             raise ImmediateHttpResponse(redirect(reverse("error-app-missing")))
@@ -116,11 +121,11 @@ def common_user_init(sociallogin: SocialLogin) -> UserModel:
         user.groups.add(Group.objects.get(name=NGO_MEMBER))
 
         _connect_user_and_ngo(user, ngohub_org_id, token)
-    else:
-        # Unknown user role
-        raise ImmediateHttpResponse(redirect(reverse("error-unknown-user-role")))
 
-    return user
+        return user
+
+    # Unknown user role
+    raise ImmediateHttpResponse(redirect(reverse("error-unknown-user-role")))
 
 
 def _connect_user_and_ngo(user, ngohub_org_id, token):
