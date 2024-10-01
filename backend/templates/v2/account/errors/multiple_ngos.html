@@ -1,7 +1,10 @@
 {% extends 'account/errors/base.html' %}
 {% load i18n %}
 
-{% block error_message %}
+{% block content %}
+<h1>
+    {% trans 'Multiple NGOs for this CUI' %}
+</h1>
 <p>
     {% trans 'Multiple NGOs have been found during synchronization. Admins have been notified and will resolve the issue shortly.'%}
 </p>

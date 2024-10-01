@@ -1,7 +1,10 @@
 {% extends 'account/errors/base.html' %}
 {% load i18n %}
 
-{% block error_message %}
+{% block content %}
+<h1>
+    {% trans 'Unknown role' %}
+</h1>
 <p>
     {% trans "Your current role isn't supported." %}
 </p>
