@@ -106,7 +106,7 @@ class NgoAdmin(ModelAdmin):
         ),
         (
             _("Activity"),
-            {"fields": ("is_verified", "is_active", "is_accepting_forms", "has_special_status")},
+            {"fields": ("is_verified", "is_active", "is_accepting_forms", "is_social_service_viable")},
         ),
         (
             _("Logo"),

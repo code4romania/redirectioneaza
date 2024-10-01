@@ -26,7 +26,7 @@ def test_validation_works_with_good_cif(cif):
         "6040117043197",
         "5010418324902",
         # some random test data
-        "XY36317167",
+        "XYZ36317167",
         "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
     ],
 )

@@ -18,6 +18,10 @@ from ..forms.account import ForgotPasswordForm, LoginForm, RegisterForm, ResetPa
 logger = logging.getLogger(__name__)
 
 
+def django_login(request, user) -> None:
+    login(request, user, backend="django.contrib.auth.backends.ModelBackend")
+
+
 class ForgotPasswordView(BaseAccountView):
     template_name = "resetare-parola.html"
 
@@ -106,7 +110,7 @@ class LoginView(BaseAccountView):
 
         user = authenticate(email=email, password=password)
         if user is not None:
-            login(request, user)
+            django_login(request, user)
             if user.has_perm("users.can_view_old_dashboard"):
                 return redirect(reverse("admin-index"))
 
@@ -122,7 +126,7 @@ class LoginView(BaseAccountView):
             if user and user.check_old_password(password):
                 user.set_password(password)
                 user.save()
-                login(request, user)
+                django_login(request, user)
                 if user.has_perm("users.can_view_old_dashboard"):
                     return redirect(reverse("admin-index"))
                 return redirect(reverse("contul-meu"))
@@ -161,7 +165,7 @@ class SetPasswordView(BaseAccountView):
         user.clear_token(commit=False)
         user.save()
 
-        login(request, user)
+        django_login(request, user)
 
         return redirect(reverse("contul-meu"))
 
@@ -237,7 +241,8 @@ class SignupView(BaseAccountView):
         )
 
         # login the user after signup
-        login(request, user)
+        django_login(request, user)
+
         # redirect to my account
         return redirect(reverse("contul-meu"))
 
@@ -271,7 +276,7 @@ class VerificationView(BaseAccountView):
             # user.clear_token()
             pass
 
-        login(request, user)
+        django_login(request, user)
 
         if verification_type == "v":
             user.is_verified = True
@@ -285,4 +290,5 @@ class VerificationView(BaseAccountView):
             return render(request, self.template_name, context)
 
         logger.info("verification type not supported")
+
         raise Http404

@@ -253,7 +253,7 @@ class NgoDetailsView(BaseAccountView):
         ngo.address = post.get("ong-adresa", "").strip()
         ngo.county = post.get("ong-judet", "").strip()
         ngo.active_region = post.get("ong-activitate", "").strip()
-        ngo.has_special_status = True if post.get("special-status") == "on" else False
+        ngo.is_social_service_viable = True if post.get("special-status") == "on" else False
         ngo.is_accepting_forms = True if post.get("accepts-forms") == "on" else False
 
         errors: List[str] = []

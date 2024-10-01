@@ -1,0 +1,18 @@
+{% extends 'redirect/base.html' %}
+{% load static %}
+{% load i18n %}
+
+
+{% block title %}{% trans 'Sign In Error' %}{% endblock %}
+
+{% block left-side-view %}
+<div class="container tight-container content mb-50">
+    <h2>
+        {% trans 'Sign In Error' %}
+    </h2>
+
+    {% block error_message %}
+        <p></p>
+    {% endblock %}
+</div>
+{% endblock %}

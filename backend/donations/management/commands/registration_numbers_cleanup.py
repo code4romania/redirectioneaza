@@ -4,19 +4,28 @@ from typing import Dict, List, Optional
 from django.core.exceptions import ValidationError
 from django.core.management import BaseCommand
 
-from donations.models.main import Ngo, ngo_id_number_validator
+from donations.models.main import (
+    Ngo,
+    REGISTRATION_NUMBER_REGEX,
+    REGISTRATION_NUMBER_REGEX_SANS_VAT,
+    ngo_id_number_validator,
+)
 
 
 class Command(BaseCommand):
     help = "Clean up registration numbers for all NGOs."
 
-    registration_number_pattern = r"^(RO|)\d{1,10}$"
-    registration_number_with_vat_id_pattern = r"^RO\d{1,10}$"
-
     def handle(self, *args, **options):
         errors: List[str] = []
-        # for ngo_id in Ngo.objects.filter(registration_number_valid=None).values_list("pk", flat=True):
-        for ngo_id in Ngo.objects.filter(registration_number_valid=False).values_list("pk", flat=True):
+        target_ngos = Ngo.objects.filter(registration_number_valid=None)
+        if target_ngos.count() == 0:
+            target_ngos = Ngo.objects.filter(registration_number_valid=False)
+        if target_ngos.count() == 0:
+            self.stdout.write(self.style.SUCCESS("No NGOs to clean registration numbers for."))
+
+            return
+
+        for ngo_id in target_ngos.values_list("pk", flat=True):
             result = self.clean_ngo(ngo_id)
 
             if result["state"] != "success":
@@ -47,7 +56,7 @@ class Command(BaseCommand):
         initial_registration_number = ngo.registration_number
         cleaned_registration_number = self._clean_registration_number(initial_registration_number)
 
-        if not re.match(self.registration_number_pattern, cleaned_registration_number):
+        if not re.match(REGISTRATION_NUMBER_REGEX, cleaned_registration_number):
             self.stdout.write(
                 self.style.ERROR(f"NGO {ngo.pk} has an invalid registration number: {ngo.registration_number}")
             )
@@ -97,8 +106,9 @@ class Command(BaseCommand):
             ),
         }
 
-    def _clean_registration_number(self, reg_num: str) -> Optional[str]:
-        if re.match(self.registration_number_pattern, reg_num):
+    @staticmethod
+    def _clean_registration_number(reg_num: str) -> Optional[str]:
+        if re.match(REGISTRATION_NUMBER_REGEX, reg_num):
             return reg_num
 
         # uppercase the string and strip of any whitespace
@@ -109,16 +119,18 @@ class Command(BaseCommand):
 
         return reg_num
 
-    def _extract_vat_id(self, reg_num: str) -> Dict[str, str]:
+    @staticmethod
+    def _extract_vat_id(reg_num: str) -> Dict[str, str]:
         result = {
             "vat_id": "",
             "registration_number": reg_num,
         }
 
-        # if the registration number matches the RO########## pattern separate the VAT ID from the CUI
-        if re.match(self.registration_number_with_vat_id_pattern, reg_num):
-            result["vat_id"] = reg_num[:2]
-            result["registration_number"] = reg_num[2:]
+        if re.match(REGISTRATION_NUMBER_REGEX_SANS_VAT, reg_num):
+            return result
+
+        result["vat_id"] = reg_num[:2]
+        result["registration_number"] = reg_num[2:]
 
         return result
 
