@@ -131,6 +131,8 @@ env = environ.Env(
     AWS_COGNITO_DOMAIN=(str, ""),
     AWS_COGNITO_CLIENT_ID=(str, ""),
     AWS_COGNITO_CLIENT_SECRET=(str, ""),
+    AWS_COGNITO_USER_POOL_ID=(str, ""),
+    AWS_COGNITO_REGION=(str, ""),
     # NGO Hub
     NGOHUB_HOME_HOST=(str, "ngohub.ro"),
     NGOHUB_APP_HOST=(str, "app-staging.ngohub.ro"),
@@ -725,16 +727,22 @@ LOGIN_URL = reverse_lazy("login")
 LOGIN_REDIRECT_URL = reverse_lazy("home")
 LOGOUT_REDIRECT_URL = reverse_lazy("home")
 
+AWS_COGNITO_DOMAIN = env.str("AWS_COGNITO_DOMAIN")
+AWS_COGNITO_CLIENT_ID = env.str("AWS_COGNITO_CLIENT_ID")
+AWS_COGNITO_CLIENT_SECRET = env.str("AWS_COGNITO_CLIENT_SECRET")
+AWS_COGNITO_USER_POOL_ID = env.str("AWS_COGNITO_USER_POOL_ID")
+AWS_COGNITO_REGION = env.str("AWS_COGNITO_REGION")
+
 # Django Allauth settings
 SOCIALACCOUNT_PROVIDERS = {
     "amazon_cognito": {
-        "DOMAIN": "https://" + env.str("AWS_COGNITO_DOMAIN"),
+        "DOMAIN": "https://" + AWS_COGNITO_DOMAIN,
         "EMAIL_AUTHENTICATION": True,  # TODO
         "VERIFIED_EMAIL": True,  # TODO
         "APPS": [
             {
-                "client_id": env.str("AWS_COGNITO_CLIENT_ID"),
-                "secret": env.str("AWS_COGNITO_CLIENT_SECRET"),
+                "client_id": AWS_COGNITO_CLIENT_ID,
+                "secret": AWS_COGNITO_CLIENT_SECRET,
             },
         ],
     }
