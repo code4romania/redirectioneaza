@@ -62,7 +62,7 @@ from donations.views.site import (
 )
 from redirectioneaza.views import StaticPageView
 
-admin.site.site_header = f"Admin | {settings.VERSION_SUFFIX}"
+admin.site.site_header = f"Admin | {settings.VERSION_LABEL}"
 
 
 urlpatterns = (

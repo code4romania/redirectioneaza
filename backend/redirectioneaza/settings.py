@@ -20,8 +20,8 @@ from pathlib import Path
 import environ
 import sentry_sdk
 from cryptography.fernet import Fernet
-from django.urls import reverse_lazy
 from django.templatetags.static import static
+from django.urls import reverse_lazy
 from django.utils import timezone
 from localflavor.ro.ro_counties import COUNTIES_CHOICES
 
@@ -189,18 +189,20 @@ APPEND_SLASH = True
 # some settings will be different if it's not running in a container (e.g., locally, on a Mac)
 IS_CONTAINERIZED = env.bool("IS_CONTAINERIZED")
 
-VERSION = env.str("VERSION", "edge")
-REVISION = env.str("REVISION", "develop")
+DEFAULT_REVISION_STRING = "dev"
 
-if IS_CONTAINERIZED and VERSION == "edge" and REVISION == "develop":
+VERSION = env.str("VERSION", "edge")
+REVISION = env.str("REVISION", DEFAULT_REVISION_STRING)
+REVISION = REVISION[:7]
+
+if IS_CONTAINERIZED and VERSION == "edge" and REVISION == DEFAULT_REVISION_STRING:
     version_file = "/var/www/redirect/.version"
     if os.path.exists(version_file):
         with open(version_file) as f:
             VERSION, REVISION = f.read().strip().split("+")
 
-REVISION = REVISION[:7]
-
-VERSION_SUFFIX = f"redirect@{VERSION}+{REVISION}"
+VERSION_SUFFIX = f"{VERSION}+{REVISION}"
+VERSION_LABEL = f"redirect@{VERSION_SUFFIX}"
 
 
 # Sentry
@@ -216,7 +218,7 @@ if ENABLE_SENTRY:
         # We recommend adjusting this value in production.
         profiles_sample_rate=env.float("SENTRY_PROFILES_SAMPLE_RATE"),
         environment=ENVIRONMENT,
-        release=VERSION_SUFFIX,
+        release=VERSION_LABEL,
     )
 
 
@@ -612,9 +614,10 @@ FORM_COUNTIES_NATIONAL.insert(0, "Național")
 CONTACT_EMAIL_ADDRESS = env.str("CONTACT_EMAIL_ADDRESS")
 
 # Unfold Admin settings
+# https://unfoldadmin.com/docs/configuration/settings/
+# Supported icon set: https://fonts.google.com/icons
 UNFOLD = {
     "SITE_TITLE": TITLE,
-    "SITE_HEADER": f"Admin | {VERSION_SUFFIX}",
     "SITE_ICON": lambda request: static("images/logo-smaller.png"),
     "SITE_LOGO": lambda request: static("images/logo-smaller.png"),
     "SITE_FAVICONS": [
