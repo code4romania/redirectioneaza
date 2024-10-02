@@ -169,11 +169,12 @@ def update_organization_process(organization_id: int, token: str = "") -> Dict[s
     return task_result
 
 
-def update_organization(organization_id: int, token: str = ""):
+def update_organization(organization_id: int, update_method: str = None, token: str = ""):
     """
     Update the organization with the given ID asynchronously.
     """
-    if settings.UPDATE_ORGANIZATION_METHOD == "async":
+    update_method = update_method or settings.UPDATE_ORGANIZATION_METHOD
+    if update_method == "async":
         async_task(update_organization_process, organization_id, token)
     else:
         update_organization_process(organization_id, token)

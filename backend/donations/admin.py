@@ -13,6 +13,7 @@ from redirectioneaza.common.admin import HasNgoFilter
 from users.models import User
 from .models.jobs import Job, JobStatusChoices
 from .models.main import Donor, Ngo
+from .workers.update_organization import update_organization
 
 logger = logging.getLogger(__name__)
 
@@ -93,7 +94,12 @@ class NgoAdmin(ModelAdmin):
 
     readonly_fields = ("date_created", "date_updated", "get_donations_link")
 
-    actions = ("generate_donations_archive", "clean_registration_numbers")
+    actions = (
+        "generate_donations_archive",
+        "clean_registration_numbers",
+        "update_from_ngohub_sync",
+        "update_from_ngohub_async",
+    )
 
     fieldsets = (
         (
@@ -110,7 +116,7 @@ class NgoAdmin(ModelAdmin):
         ),
         (
             _("Logo"),
-            {"fields": ("logo", "logo_url")},
+            {"fields": ("logo",)},
         ),
         (
             _("Contact"),
@@ -168,6 +174,20 @@ class NgoAdmin(ModelAdmin):
         else:
             self.message_user(request, _("Registration numbers are clean."), level="SUCCESS")
 
+    @admin.action(description=_("Update from NGO Hub synchronously"))
+    def update_from_ngohub_sync(self, request, queryset: QuerySet[Ngo]):
+        for ngo in queryset:
+            update_organization(ngo.id, update_method="sync")
+
+        self.message_user(request, _("NGOs updated from NGO Hub."))
+
+    @admin.action(description=_("Update from NGO Hub asynchronously"))
+    def update_from_ngohub_async(self, request, queryset: QuerySet[Ngo]):
+        for ngo in queryset:
+            update_organization(ngo.id, update_method="async")
+
+        self.message_user(request, _("NGOs are being updated from NGO Hub."))
+
 
 @admin.register(Donor)
 class DonorAdmin(ModelAdmin):
@@ -185,7 +205,7 @@ class DonorAdmin(ModelAdmin):
 
     search_fields = ("email", "ngo__name", "ngo__slug")
 
-    exclude = ("personal_identifier", "address")
+    exclude = ("encrypted_cnp", "encrypted_address")
 
     readonly_fields = ("date_created", "get_form_url")
     autocomplete_fields = ("ngo",)
