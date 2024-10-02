@@ -187,10 +187,13 @@ class NgoDetailsView(BaseAccountView):
         if not user.is_authenticated or not user.ngo:
             return redirect(reverse("contul-meu"))
 
+        is_ngohub_ngo = user.ngo.ngohub_org_id is not None
+
         context = {
             "title": "Date organizație",
             "user": user,
             "ngo": user.ngo if user.ngo else None,
+            "has_ngohub": is_ngohub_ngo,
             "counties": settings.FORM_COUNTIES_NATIONAL,
         }
 

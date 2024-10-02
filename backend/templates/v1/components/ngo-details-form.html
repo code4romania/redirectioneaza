@@ -1,175 +1,232 @@
-
 <form id="ong-details-form" class="form form-horizontal" action="/organizatia/" role="form" method="post">
-    {{ csrf_input }}
-    <fieldset>
-        <legend>Datele organizației:</legend>
-        <div class="form-group">
-            <div class="col-xs-12">
-                <input class="form-control" type="text" id="ong-nume" name="ong-nume" placeholder="Numele Asociației" value="{{ ngo.name if ngo }}" required maxlength="150" />
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-xs-4 text-center">
-                {% if ngo.registration_number %}
-                <div id="upload-logo" class="{{ 'hidden' if ngo.logo }}">
-                    <label for="ong-logo">
-                        <i class="glyphicon glyphicon-picture upload-file-icon"></i>
-                        <p>Logo-ul organizației</p>
-                    </label>
-                    <input type="file" id="ong-logo" class="hidden" accept="image/png, image/jpeg" name="ong-logo" />
-                </div>
-                <div id="display-logo" class="text-center {{ 'hidden' if not ngo.logo }}">
-                    {% if ngo.logo %}
-                        <img id="ngo-logo" src="{{ ngo.logo.url }}" class="img-responsive center-block" />
-                    {% endif %}
-                    <span id="delete-ngo-logo" class="text-danger">Șterge</span>
-                    <input type="hidden" id="ong-logo-url" name="ong-logo-url" value="{{ ngo.logo.url if ngo and ngo.logo }}" />
-                </div>
-                {% endif %}
-            </div>
-            <div class="col-xs-8">
-                <textarea class="form-control" name="ong-descriere" placeholder="O scurta descriere" rows="3" required >{{ ngo.description if ngo }}</textarea>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-xs-4">
-                <input class="form-control" type="tel" name="ong-tel" placeholder="telefon (optional)" value="{{ ngo.phone if ngo and ngo.phone }}" maxlength="20" />
-            </div>
-            <div class="col-xs-4">
-                <input class="form-control" type="email" name="ong-email" placeholder="email (optional)" value="{{ ngo.email if ngo and ngo.email }}" maxlength="100" />
-            </div>
-            <div class="col-xs-4">
-                <input class="form-control" type="text" name="ong-website" placeholder="website (optional)" value="{{ ngo.website if ngo and ngo.website }}" maxlength="100" />
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-xs-8">
-                <input class="form-control" type="text" name="ong-adresa" placeholder="Adresa Asociației" value="{{ ngo.address if ngo }}" required maxlength="100" />
-            </div>
-            <div class="col-xs-4">
-                {% with identifier="ong-judet" %}
-                {% with county=ngo.county if ngo %}
-                    {% include "components/county.html" %}
-                {% endwith %}
-                {% endwith %}
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-xs-12">
-                <label for="ong-activitate">În ce regiune iși desfășoară ONG-ul activitatea?</label>
-                {% with identifier="ong-activitate" %}
-                {% with county=ngo.active_region if ngo %}
-                    {% include "components/county.html" %}
-                {% endwith %}
-                {% endwith %}
-            </div>
-        </div>
-        <div class="form-group choose-url-group">
-            <div class="col-xs-12">
-                <div>Poți alege un url personalizat pentru organizația ta:</div>
-                <div>
-                    <label for="ong-url" class="control-label">redirectioneaza.ro/</label>
-                    <input id="ong-url" class="form-control" type="text" name="ong-url" placeholder="url-ul organizației" value="{{ ngo.slug if ngo }}" required maxlength="150" {{ "readonly" if not is_admin and ngo.key  }} />
-                </div>
-            </div>
-        </div>
-    </fieldset>
-    <fieldset>
-        <legend>Date financiare</legend>
-        <p>Aceste date sunt necesare pentru formular:</p>
-        <div class="form-group">
-            <label for="ong-cif" class="col-xs-4 control-label">Codul Cif:</label>
-            <div class="col-xs-8">
-                <input type="text" class="form-control" id="ong-cif" value="{{ ngo.vat_id if ngo }}{{ ngo.registration_number if ngo }}" name="ong-cif" placeholder="Codul Cif" x-moz-errormessage="Codul Cif" title="Codul Cif" required maxlength="12" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="ong-cont" class="col-xs-4 control-label">Codul IBAN al contului:</label>
-            <div class="col-xs-8">
-                <input type="text" class="form-control" id="ong-cont" value="{{ ngo.bank_account if ngo }}" name="ong-cont" placeholder="Codul IBAN" x-moz-errormessage="Codul IBAN" title="Codul IBAN" required maxlength="40" />
-            </div>
-        </div>
-        <div class="form-group special-status">
-            <div class="col-xs-4 text-right">
-                <input id="special-status" name="special-status" type="checkbox" {{ "checked" if ngo and ngo.has_special_status }}>
-            </div>
-            <label for="special-status" class="col-xs-8">
-                Asociație înregistrată ca furnizor autorizat de servicii sociale
-            </label>
-        </div>
-        <div class="form-group special-status">
-            <div class="col-xs-4 text-right">
-                <input id="accepts-forms" name="accepts-forms" type="checkbox" {{ "checked" if ngo and ngo.is_accepting_forms }}>
-            </div>
-            <label for="accepts-forms" class="col-xs-8">
-                Doresc sa primesc formularele completate pe email <br>
-                <span class="explanation">
-                    Selectând aceasta opțiune confirm ca ONG-ul are cont SPV pentru a depune formularele
-                </span>
-            </label>
-        </div>
 
-    </fieldset>
-    {% if is_admin %}
-        <fieldset>
-            <legend>Admin</legend>
-            <input id="old-ong-url" type="hidden" name="old-ong-url" value="{{ ngo.slug if ngo }}" />
-            <div class="form-group">
-                <div class="col-xs-12">
-                    <label for="ong-activ" class="col-xs-3">Activ:</label>
-                    <input type="checkbox" id="ong-activ" name="ong-activ" {{ "checked" if ngo.is_active }} />
-                </div>
-                <div class="col-xs-12">
-                    <label for="ong-verificat" class="col-xs-3">Verificat:</label>
-                    <input type="checkbox" id="ong-verificat" name="ong-verificat" {{ "checked" if ngo.is_verified }} />
-                </div>
-            </div>
+  {{ csrf_input }}
 
-            {% if owner %}
-                <div class="form-group">
-                    <div class="col-xs-12">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <p>Cont asociat:</p>
-                            </div>
-                            <div class="panel-body">
-                                <p>Nume: {{ "{0} {1}".format(owner.first_name, owner.last_name) }}</p>
-                                <p>Email: {{ owner.email }}</p>
-                                <p>Verificat: {{ owner.is_verified }}</p>
-                                <p>Creat la: {{ owner.date_joined.strftime("%d/%m/%Y") }}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <p>Schimbare posesor:</p>
-                            </div>
-                            <div class="panel-body">
-                                <p>
-                                    Dacă vrei sa schimbi cine deține acest ONG, adaugă mai jos adresa de email a noului cont:
-                                </p>
-                                <input class="form-control" type="email" name="new-ngo-owner" placeholder="Adresa de email" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {% endif %}
-        </fieldset>
-    {% endif %}
+  <fieldset>
+    <div class="form-group">
+
+      <h1>Datele organizației</h1>
+
+      <div class="col-xs-12">
+
+        <p>
+          Aici poți introduce datele organizației tale. Acestea vor fi folosite pentru a completa formularul de donații.
+        </p>
+
+        {% if has_ngohub %}
+          <p>
+            <strong>
+              Ai cont pe NGO Hub, deci unele date nu sunt pot fi editate aici.
+            </strong>
+          </p>
+        {% endif %}
+
+      </div>
+
+    </div>
 
     <div class="form-group">
-        <div class="col-xs-12">
-            <button type="submit" class="btn btn-primary margin-top">Salvează</button>
-        </div>
+      <h2>Date de contact</h2>
+
+      <div class="col-xs-12">
+        <input
+          class="form-control"
+          type="text"
+          id="ong-nume"
+          name="ong-nume"
+          aria-label="Numele Asociației"
+          placeholder="Numele Asociației"
+          value="{{ ngo.name if ngo }}"
+          required
+          maxlength="150"
+          {% if has_ngohub %}disabled{% endif %}
+        />
+      </div>
     </div>
+    <div class="form-group">
+
+      <div class="col-xs-4 text-center">
+        {% if ngo.registration_number %}
+          <div id="upload-logo" class="{{ 'hidden' if ngo.logo }}">
+            <label for="ong-logo">
+              <i class="glyphicon glyphicon-picture upload-file-icon"></i>
+              Logo-ul organizației
+            </label>
+            <input type="file" id="ong-logo" class="hidden" accept="image/png, image/jpeg" name="ong-logo"/>
+          </div>
+          <div id="display-logo" class="text-center {{ 'hidden' if not ngo.logo }}">
+            {% if ngo.logo %}
+              <img id="ngo-logo" src="{{ ngo.logo.url }}" class="img-responsive center-block"/>
+            {% endif %}
+
+            {% if not has_ngohub %}
+              <span id="delete-ngo-logo" class="text-danger">Șterge</span>
+            {% endif %}
+
+            <input type="hidden" id="ong-logo-url" name="ong-logo-url" value="{{ ngo.logo.url if ngo and ngo.logo }}"/>
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="col-xs-8">
+        <textarea class="form-control" name="ong-descriere" placeholder="O scurtă descriere" rows="3" required>{{ ngo.description if ngo }}</textarea>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-xs-4">
+        <input class="form-control" {% if has_ngohub %}disabled{% endif %} type="tel" name="ong-tel" placeholder="telefon (opțional)" value="{{ ngo.phone if ngo and ngo.phone }}" maxlength="20"/>
+      </div>
+      <div class="col-xs-4">
+        <input class="form-control" {% if has_ngohub %}disabled{% endif %} type="email" name="ong-email" placeholder="email (opțional)" value="{{ ngo.email if ngo and ngo.email }}" maxlength="100"/>
+      </div>
+      <div class="col-xs-4">
+        <input class="form-control" {% if has_ngohub %}disabled{% endif %} type="text" name="ong-website" placeholder="website (opțional)" value="{{ ngo.website if ngo and ngo.website }}" maxlength="100"/>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-xs-8">
+        <input class="form-control" {% if has_ngohub %}disabled{% endif %} type="text" name="ong-adresa" placeholder="Adresa Asociației" value="{{ ngo.address if ngo }}" required maxlength="100"/>
+      </div>
+      <div class="col-xs-4">
+        {% with identifier="ong-judet" %}
+          {% with county=ngo.county if ngo %}
+            {% with is_disabled=has_ngohub %}
+              {% include "components/county.html" %}
+            {% endwith %}
+          {% endwith %}
+        {% endwith %}
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-xs-12">
+        <label for="ong-activitate">În ce regiune iși desfășoară ONG-ul activitatea?</label>
+        {% with identifier="ong-activitate" %}
+          {% with county=ngo.active_region if ngo %}
+            {% with is_disabled=has_ngohub %}
+              {% include "components/county.html" %}
+            {% endwith %}
+          {% endwith %}
+        {% endwith %}
+      </div>
+    </div>
+    <div class="form-group choose-url-group">
+      <div class="col-xs-12">
+        <div>Poți alege un url personalizat pentru organizația ta:</div>
+        <div>
+          <label for="ong-url" class="control-label">redirectioneaza.ro/</label>
+          <input id="ong-url" class="form-control" type="text" name="ong-url" placeholder="url-ul organizației" value="{{ ngo.slug if ngo }}" required maxlength="150" {{ "readonly" if not is_admin and ngo.key }} />
+        </div>
+      </div>
+    </div>
+  </fieldset>
+  <fieldset>
+    <h2>Date financiare</h2>
+    <p>Aceste date sunt necesare pentru formular:</p>
+    <div class="form-group">
+      <label for="ong-cif" class="col-xs-4 control-label">Codul Cif:</label>
+      <div class="col-xs-8">
+        <input
+          type="text"
+          class="form-control"
+          id="ong-cif"
+          value="{{ ngo.vat_id if ngo }}{{ ngo.registration_number if ngo }}"
+          name="ong-cif"
+          placeholder="Codul Cif"
+          x-moz-errormessage="Codul Cif"
+          title="Codul Cif"
+          required
+          maxlength="12"
+          {% if has_ngohub %}disabled{% endif %}
+        />
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="ong-cont" class="col-xs-4 control-label">Codul IBAN al contului:</label>
+      <div class="col-xs-8">
+        <input type="text" class="form-control" id="ong-cont" value="{{ ngo.bank_account if ngo }}" name="ong-cont" placeholder="Codul IBAN" x-moz-errormessage="Codul IBAN" title="Codul IBAN" required maxlength="40"/>
+      </div>
+    </div>
+    <div class="form-group special-status">
+      <div class="col-xs-4 text-right">
+        <input id="special-status" name="special-status" type="checkbox" {{ "checked" if ngo and ngo.has_special_status }} {% if has_ngohub %}disabled{% endif %}>
+      </div>
+      <label for="special-status" class="col-xs-8">
+        Asociație înregistrată ca furnizor autorizat de servicii sociale
+      </label>
+    </div>
+    <div class="form-group special-status">
+      <div class="col-xs-4 text-right">
+        <input id="accepts-forms" name="accepts-forms" type="checkbox" {{ "checked" if ngo and ngo.is_accepting_forms }}>
+      </div>
+      <label for="accepts-forms" class="col-xs-8">
+        Doresc sa primesc formularele completate pe email <br>
+        <span class="explanation">
+                    Selectând aceasta opțiune confirm ca ONG-ul are cont SPV pentru a depune formularele
+                </span>
+      </label>
+    </div>
+
+  </fieldset>
+  {% if is_admin %}
+    <fieldset>
+      <legend>Admin</legend>
+      <input id="old-ong-url" type="hidden" name="old-ong-url" value="{{ ngo.slug if ngo }}"/>
+      <div class="form-group">
+        <div class="col-xs-12">
+          <label for="ong-activ" class="col-xs-3">Activ:</label>
+          <input type="checkbox" id="ong-activ" name="ong-activ" {{ "checked" if ngo.is_active }} />
+        </div>
+        <div class="col-xs-12">
+          <label for="ong-verificat" class="col-xs-3">Verificat:</label>
+          <input type="checkbox" id="ong-verificat" name="ong-verificat" {{ "checked" if ngo.is_verified }} />
+        </div>
+      </div>
+
+      {% if owner %}
+        <div class="form-group">
+          <div class="col-xs-12">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <p>Cont asociat:</p>
+              </div>
+              <div class="panel-body">
+                <p>Nume: {{ "{0} {1}".format(owner.first_name, owner.last_name) }}</p>
+                <p>Email: {{ owner.email }}</p>
+                <p>Verificat: {{ owner.is_verified }}</p>
+                <p>Creat la: {{ owner.date_joined.strftime("%d/%m/%Y") }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <p>Schimbare posesor:</p>
+              </div>
+              <div class="panel-body">
+                <p>
+                  Dacă vrei sa schimbi cine deține acest ONG, adaugă mai jos adresa de email a noului cont:
+                </p>
+                <input class="form-control" type="email" name="new-ngo-owner" placeholder="Adresa de email"/>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    </fieldset>
+  {% endif %}
+
+  <div class="form-group">
+    <div class="col-xs-12">
+      <button type="submit" class="btn btn-primary margin-top">Salvează</button>
+    </div>
+  </div>
 </form>
 
 {# this script is only for setting up the ngo #}
 
 {# if it's a new ngo #}
 {% if not ngo.key %}
-    <script src="{{ static('js/ngo/ngo-url-check.js') }}"></script>
+  <script src="{{ static('js/ngo/ngo-url-check.js') }}"></script>
 {% endif %}
 
 <script src="{{ static('js/ngo/ngo-setup.js') }}"></script>
