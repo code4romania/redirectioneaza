@@ -5,7 +5,7 @@ from typing import Optional
 from allauth.core.exceptions import ImmediateHttpResponse
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 from allauth.socialaccount.models import SocialLogin
-from allauth.socialaccount.signals import social_account_added, social_account_updated
+from allauth.socialaccount.signals import pre_social_login, social_account_added, social_account_updated
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
@@ -20,7 +20,7 @@ from ngohub.models.user import UserProfile
 from sentry_sdk import capture_message
 
 from donations.models.main import Ngo
-from donations.workers.update_organization import create_organization_for_user
+from donations.workers.update_organization import create_organization_for_user, update_organization
 from users.groups_management import NGO_ADMIN, NGO_MEMBER, RESTRICTED_ADMIN
 
 logger = logging.getLogger(__name__)
@@ -51,6 +51,25 @@ def handle_existing_login(sociallogin: SocialLogin, **kwargs) -> None:
     common_user_init(sociallogin=sociallogin)
 
 
+@receiver(pre_social_login)
+def handle_pre_social_login(sociallogin: SocialLogin, **kwargs) -> None:
+    """
+    Handler for the pre-social-login signal, which is sent before the login is actually processed.
+
+    We must make sure that the User is active and has the correct permissions.
+    """
+
+    user = sociallogin.user
+
+    if not user:
+        return
+
+    if user.is_ngohub_user:
+        return
+
+    common_user_init(sociallogin=sociallogin)
+
+
 class UserOrgAdapter(DefaultSocialAccountAdapter):
     """
     Authentication adapter which makes sure that each new `User` also has an `NGO`
@@ -59,12 +78,20 @@ class UserOrgAdapter(DefaultSocialAccountAdapter):
     def save_user(self, request: HttpRequest, sociallogin: SocialLogin, form=None) -> UserModel:
         """
         Besides the default user creation, also mark this user as coming from NGO Hub,
-        create a blank Organization for them, and schedule a data update from NGO Hub.
+        update the data with that from NGO Hub.
+
+        If a user with the same email already exists, it will be updated with the new data.
         """
 
-        user: UserModel = super().save_user(request, sociallogin, form)
+        user_email: str = sociallogin.user.email
+        if UserModel.objects.filter(email=user_email).exists():
+            user: UserModel = UserModel.objects.get(email=user_email)
+        else:
+            user: UserModel = super().save_user(request, sociallogin, form)
+
         user.is_ngohub_user = True
         user.is_verified = True
+
         user.save()
 
         common_user_init(sociallogin=sociallogin)
@@ -137,7 +164,15 @@ def _connect_user_and_ngo(user, ngohub_org_id, token):
     # Make sure the user is active
     user.activate()
 
-    user_ngo: Ngo = _get_or_create_user_ngo(user, ngohub_org_id, token)
+    if user.ngo:
+        # If the user already has an organization, update it
+        user_ngo: Ngo = user.ngo
+        user_ngo.ngohub_org_id = ngohub_org_id
+        user_ngo.save()
+
+        update_organization(organization_id=user_ngo.pk, token=token)
+    else:
+        user_ngo: Ngo = _get_or_create_user_ngo(user, ngohub_org_id, token)
 
     # Make sure the organization is active
     user_ngo.activate()
