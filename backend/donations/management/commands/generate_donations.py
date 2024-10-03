@@ -107,7 +107,7 @@ class Command(BaseCommand):
                 "cif": ngo.registration_number,
                 "account": ngo.bank_account.upper(),
                 "years_checkmark": False,
-                "special_status": ngo.is_social_service_viable,
+                "is_social_service_viable": ngo.is_social_service_viable,
             }
 
             donor.pdf_file = File(create_pdf(donor_dict, ngo_dict))

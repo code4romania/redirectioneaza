@@ -2,10 +2,10 @@ import codecs
 import csv
 import logging
 import os
+import time
 from pathlib import Path
 from typing import Any, List
 
-import time
 from google.cloud import datastore
 from google.cloud.datastore import Client as DsClient, Entity, Query
 
@@ -24,7 +24,7 @@ KINDS = {
         "iterations": -1,
         "webapp_to_django": {
             "key.name": "slug",
-            "special_status": "has_special_status",
+            "special_status": "is_social_service_viable",
             "description": "description",
             "name": "name",
             "account": "bank_account",
@@ -158,7 +158,10 @@ def write_query_data_to_csv(csv_name, current_kind, items):
                     except KeyError:
                         value = getattr(item, split_parameters[0])
                 except AttributeError:
-                    if "default_values" in current_kind and split_parameters[0] not in current_kind["default_values"]:
+                    if (
+                        "default_values" in current_kind
+                        and split_parameters[0] not in current_kind["default_values"]
+                    ):
                         raise KeyError(
                             f"Key '{split_parameters[0]}' not found in item {item} and no default value provided."
                         )
@@ -175,9 +178,14 @@ def write_query_data_to_csv(csv_name, current_kind, items):
                     else:
                         value = getattr(value, parameter)
 
-                if "hard_stop" in current_kind and composed_parameter == current_kind["hard_stop"]["output_field"]:
+                if (
+                    "hard_stop" in current_kind
+                    and composed_parameter == current_kind["hard_stop"]["output_field"]
+                ):
                     compare_value = current_kind["hard_stop"]["value"]
-                    if eval(f"{value} {current_kind['hard_stop']['operator']} {compare_value}"):
+                    if eval(
+                        f"{value} {current_kind['hard_stop']['operator']} {compare_value}"
+                    ):
                         logger.info(
                             f"Hard stop condition met for {composed_parameter} with comparison:"
                             f"[ {value} {current_kind['hard_stop']['operator']} {compare_value} ]"
@@ -216,7 +224,9 @@ def retrieve_data(csv_name, kind_data):
     offset: int = 0
     iterations: int = kind_data["iterations"]
 
-    logger.info(f"Retrieving data for {kind_data['name']} a batch of {limit} for {iterations} iterations.")
+    logger.info(
+        f"Retrieving data for {kind_data['name']} a batch of {limit} for {iterations} iterations."
+    )
 
     runs = 0
     num_items = 0
@@ -232,7 +242,9 @@ def retrieve_data(csv_name, kind_data):
             break
 
         if len(items) < limit:
-            logger.info(f"–– Retrieved {num_items} items of type {kind_data['name']} after {runs + 1} runs.")
+            logger.info(
+                f"–– Retrieved {num_items} items of type {kind_data['name']} after {runs + 1} runs."
+            )
             break
 
         offset += limit

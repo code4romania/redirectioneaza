@@ -265,7 +265,7 @@ class NgoDetailsView(BaseAccountView):
             ngo.address = post.get("ong-adresa", "").strip()
             ngo.county = post.get("ong-judet", "").strip()
             ngo.active_region = post.get("ong-activitate", "").strip()
-            ngo.is_social_service_viable = True if post.get("special-status") == "on" else False
+            ngo.is_social_service_viable = True if post.get("social-service") == "on" else False
 
             if registration_number_errors:
                 errors.append(registration_number_errors)

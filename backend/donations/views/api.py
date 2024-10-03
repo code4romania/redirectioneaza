@@ -129,7 +129,7 @@ class GetNgoForm(TemplateView):
             # do not add any checkmark on this form regarding the number of years
             "years_checkmark": False,
             # "two_years": False,
-            "special_status": ngo.is_social_service_viable,
+            "is_social_service_viable": ngo.is_social_service_viable,
         }
         donor = {
             # we assume that ngos are looking for people with income from wages

@@ -154,15 +154,15 @@
         <input type="text" class="form-control" id="ong-cont" value="{{ ngo.bank_account if ngo }}" name="ong-cont" placeholder="Codul IBAN" x-moz-errormessage="Codul IBAN" title="Codul IBAN" required maxlength="40"/>
       </div>
     </div>
-    <div class="form-group special-status">
+    <div class="form-group social-service">
       <div class="col-xs-4 text-right">
-        <input id="special-status" name="special-status" type="checkbox" {{ "checked" if ngo and ngo.has_special_status }} {% if has_ngohub %}disabled{% endif %}>
+        <input id="social-service" name="social-service" type="checkbox" {{ "checked" if ngo and ngo.is_social_service_viable }} {% if has_ngohub %}disabled{% endif %}>
       </div>
-      <label for="special-status" class="col-xs-8">
+      <label for="social-service" class="col-xs-8">
         Asociație înregistrată ca furnizor autorizat de servicii sociale
       </label>
     </div>
-    <div class="form-group special-status">
+    <div class="form-group social-service">
       <div class="col-xs-4 text-right">
         <input id="accepts-forms" name="accepts-forms" type="checkbox" {{ "checked" if ngo and ngo.is_accepting_forms }}>
       </div>
