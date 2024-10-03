@@ -21,7 +21,7 @@ from sentry_sdk import capture_message
 
 from donations.models.main import Ngo
 from donations.workers.update_organization import create_organization_for_user, update_organization
-from users.groups_management import NGO_ADMIN, NGO_MEMBER, RESTRICTED_ADMIN
+from users.groups_management import MAIN_ADMIN, NGO_ADMIN, NGO_MEMBER
 
 logger = logging.getLogger(__name__)
 
@@ -100,67 +100,95 @@ class UserOrgAdapter(DefaultSocialAccountAdapter):
 
 
 def common_user_init(sociallogin: SocialLogin) -> UserModel:
-    user = sociallogin.user
+    user: UserModel = sociallogin.user
     if user.is_superuser:
         return user
 
-    token: str = sociallogin.token.token
+    user_token: str = sociallogin.token.token
 
-    ngohub = NGOHub(settings.NGOHUB_API_HOST)
+    ngohub: NGOHub = NGOHub(settings.NGOHUB_API_HOST)
 
-    try:
-        user_profile: Optional[UserProfile] = ngohub.get_profile(token)
-    except HubHTTPException:
-        user.deactivate()
-        raise ImmediateHttpResponse(redirect(reverse("error-app-missing")))
-
+    user_profile: UserProfile = _get_user_profile(ngohub, user, user_token)
     user_role: str = user_profile.role
-    if not user.first_name:
-        user.first_name = user_profile.name
-        user.is_verified = True
 
-        user.save()
+    _set_user_name(user, user_profile)
 
-    # Check the user role from NGO Hub
+    ngohub_org_id: int = user_profile.organization.id
+
+    user = _set_user_permissions(ngohub, user, ngohub_org_id, user_role, user_token)
+
+    if user_role in (settings.NGOHUB_ROLE_NGO_ADMIN, settings.NGOHUB_ROLE_NGO_EMPLOYEE):
+        _connect_user_and_ngo(user, ngohub_org_id, user_token)
+
+
+def _set_user_permissions(
+    ngohub: NGOHub, user: UserModel, ngohub_org_id: int, user_role: str, user_token: str
+) -> UserModel:
     if user_role == settings.NGOHUB_ROLE_SUPER_ADMIN:
         # A super admin from NGO Hub will become a Django admin
-        user.groups.add(Group.objects.get(name=RESTRICTED_ADMIN))
         user.is_staff = True
         user.is_superuser = True
         user.save()
 
+        user.groups.add(Group.objects.get(name=MAIN_ADMIN))
+
         return user
 
-    ngohub_org_id: int = user_profile.organization.id
     if user_role == settings.NGOHUB_ROLE_NGO_ADMIN:
-        if not ngohub.check_user_organization_has_application(ngo_token=token, login_link=settings.BASE_WEBSITE):
-            _deactivate_ngo_and_users(ngohub_org_id)
+        if not ngohub.check_user_organization_has_application(ngo_token=user_token, login_link=settings.BASE_WEBSITE):
+            if user.ngo:
+                _deactivate_ngo_and_users(user_ngo=user.ngo)
+            else:
+                _deactivate_ngo_and_users(ngohub_org_id=ngohub_org_id)
+
             raise ImmediateHttpResponse(redirect(reverse("error-app-missing")))
 
         # Add the user to the NGO admin group
         user.groups.add(Group.objects.get(name=NGO_ADMIN))
 
-        _connect_user_and_ngo(user, ngohub_org_id, token)
-
         return user
 
     if user_role == settings.NGOHUB_ROLE_NGO_EMPLOYEE:
-        if not ngohub.check_user_organization_has_application(ngo_token=token, login_link=settings.BASE_WEBSITE):
+        if not ngohub.check_user_organization_has_application(ngo_token=user_token, login_link=settings.BASE_WEBSITE):
             user.deactivate()
+
             raise ImmediateHttpResponse(redirect(reverse("error-app-missing")))
 
-        # Add the user to the NGO admin group
+        # Add the user to the NGO member group
         user.groups.add(Group.objects.get(name=NGO_MEMBER))
-
-        _connect_user_and_ngo(user, ngohub_org_id, token)
 
         return user
 
-    # Unknown user role
     raise ImmediateHttpResponse(redirect(reverse("error-unknown-user-role")))
 
 
-def _connect_user_and_ngo(user, ngohub_org_id, token):
+def _set_user_name(user, user_profile) -> None:
+    changes_made: bool = False
+    if not user.first_name:
+        user.first_name = user_profile.name
+        user.is_verified = True
+        changes_made = True
+
+    if user.last_name:
+        user.last_name = ""
+        changes_made = True
+
+    if changes_made:
+        user.save()
+
+
+def _get_user_profile(ngohub, user, user_token) -> UserProfile:
+    try:
+        user_profile: Optional[UserProfile] = ngohub.get_profile(user_token)
+    except HubHTTPException:
+        user.deactivate()
+
+        raise ImmediateHttpResponse(redirect(reverse("error-app-missing")))
+
+    return user_profile
+
+
+def _connect_user_and_ngo(user, ngohub_org_id, token) -> None:
     # Make sure the user is active
     user.activate()
 
@@ -181,16 +209,20 @@ def _connect_user_and_ngo(user, ngohub_org_id, token):
     user.save()
 
 
-def _deactivate_ngo_and_users(ngohub_org_id: int) -> None:
-    # Deactivate users if their organization does not have the application
-    try:
-        user_ngo: Ngo = Ngo.objects.get(ngohub_org_id=ngohub_org_id)
-        user_ngo.deactivate()
+def _deactivate_ngo_and_users(ngohub_org_id: int = None, user_ngo: Ngo = None) -> None:
+    if not user_ngo:
+        if not ngohub_org_id:
+            raise ValueError("Either ngohub_org_id or ngo must be provided")
 
-        for user in UserModel.objects.filter(ngo=user_ngo):
-            user.deactivate()
-    except Ngo.DoesNotExist:
-        pass
+        try:
+            user_ngo: Ngo = Ngo.objects.get(ngohub_org_id=ngohub_org_id)
+        except Ngo.DoesNotExist:
+            return
+
+    user_ngo.deactivate()
+
+    for user in UserModel.objects.filter(ngo=user_ngo):
+        user.deactivate()
 
 
 def _get_or_create_user_ngo(user: UserModel, ngohub_org_id: int, token: str) -> Ngo:
@@ -231,7 +263,7 @@ def _get_or_create_user_ngo(user: UserModel, ngohub_org_id: int, token: str) -> 
     return user_ngo
 
 
-def _raise_error_multiple_ngos(ngo_registration_number, ngohub_org_id, user_email, user_pk):
+def _raise_error_multiple_ngos(ngo_registration_number, ngohub_org_id, user_email, user_pk) -> None:
     error_message = (
         f"Multiple organizations with the same registration {ngo_registration_number} found "
         f"for organization with ngohub_org_id {ngohub_org_id} "
