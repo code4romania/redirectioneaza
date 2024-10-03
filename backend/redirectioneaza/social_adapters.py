@@ -90,6 +90,8 @@ def common_user_init(sociallogin: SocialLogin) -> UserModel:
     user_role: str = user_profile.role
     if not user.first_name:
         user.first_name = user_profile.name
+        user.is_verified = True
+
         user.save()
 
     # Check the user role from NGO Hub
