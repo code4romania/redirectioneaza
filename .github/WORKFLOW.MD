@@ -88,7 +88,7 @@ Now, it may be desirable to squash some of your smaller commits down into a smal
 
 ```shell
 # Rebase all commits on your development branch
-git checkout 
+git checkout
 git rebase -i master
 ```
 
@@ -147,14 +147,12 @@ Now that you're done with the development branch, you're free to delete it.
 git branch -d newfeature
 ```
 
-
-
 **Copyright**
 
 Copyright 2017, Chase Pettit
 
 MIT License, http://www.opensource.org/licenses/mit-license.php
- 
+
 **Additional Reading**
 * [Atlassian - Merging vs. Rebasing](https://www.atlassian.com/git/tutorials/merging-vs-rebasing)
 

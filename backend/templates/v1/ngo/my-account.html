@@ -1,96 +1,100 @@
 {% extends "base.html" %}
 
 {% block header %}
-    {% include "ngo/account-header.html" %}
+  {% include "ngo/account-header.html" %}
 {% endblock %}
 
 {% block content %}
-    <div class="my-account-container">
+  <div class="my-account-container">
 
-        {# if the user has an ngo attached, everything is ok #}
-        {% if user.ngo %}
-            {% if not ngo.is_active %}
-                <div class="row">
-                    <div class="col-xs-12 col-md-8 col-md-offset-2">
-                        <div class="alert alert-danger">
-                            <strong>Notă!</strong>
-                            Contul organizației tale a fost dezactivat.
-                            Prin urmare, colectarea de noi formulare și descărcarea vechilor formulare este blocată.
-                            Pentru a reactiva contul, te rugăm să ne contactezi la
-                            <a href="mailto:{{ contact_email }}">{{ contact_email }}</a>.
-                        </div>
-                    </div>
-                </div>
-            {% else %}
-
-                {# show message if the user hasn't verified its address yet #}
-                {% if not user.is_verified %}
-                    <div class="row">
-                        <div class="col-xs-12 col-md-8 col-md-offset-2">
-                            <div class="alert alert-dismissible alert-info">
-                                <button type="button" class="close" data-dismiss="alert">×</button>
-                                <strong>Notă!</strong>
-                                Te rugăm să accesezi linkul primit pe email pentru a-ți verifica
-                                adresa de email.
-                            </div>
-                        </div>
-                    </div>
-                {% endif %}
-
-                {% if not can_donate %}
-                    <div class="row">
-                        <div class="col-xs-12 col-md-8 col-md-offset-2">
-                            <div class="alert alert-dismissible alert-info">
-                                <button type="button" class="close" data-dismiss="alert">×</button>
-                                <strong>Nota!</strong>
-                                Formularul de redirecționare a până la 3.5% din impozitul anual
-                                poate fi completat de cei care vizitează pagina organizației, doar intre 1 Ianuarie
-                                si {{ limit.day }} {{ month_limit }} ale anului curent.
-                            </div>
-                        </div>
-                    </div>
-                {% endif %}
-            {% endif %}
-            {% include "components/ngo-header.html" %}
-
-            <div class="row">
-                <div class="col-xs-12 col-md-6 col-md-offset-3">
-                    <div data-toggle="popover" data-placement="bottom"
-                         data-content="Apasă CTRL+C pentru a copia adresa">
-                        <label for="url-ngo">URL:</label>
-                        <input id="url-ngo" class="ngo-copy-url form-control" value="{{ ngo_url }}" readonly/>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                {% include "ngo/donations-view.html" %}
-            </div>
-
-        {% else %}
-            <div class="row">
-                <div class="col-xs-12 col-md-8 col-md-offset-2">
-                    <h3>Salut, {{ user.last_name }}. Bine ai venit pe redirectioneaza.ro</h3>
-                    <h4>Mai întâi, spune-ne despre organizație.</h4>
-                    {% include "components/ngo-details-form.html" %}
-                </div>
-            </div>
-        {% endif %}
+    {# if the user has an ngo attached, everything is ok #}
+    {% if user.ngo %}
+      {% if not ngo.is_active %}
 
         <div class="row">
-            <div class="col-xs-12 col-md-8 col-md-offset-2">
-                <div class="suggestions-box">
-                    <p>
-                        <strong>Salut!</strong> Dacă întâmpini orice dificultate te rugăm să ne transmiți un e-mail la
-                        <a href="mailto:{{ contact_email }}">{{ contact_email }}</a>.
-                    </p>
-                </div>
+          <div class="col-xs-12 col-md-8 col-md-offset-2">
+            <div class="alert alert-danger">
+              <strong>Notă!</strong>
+              Contul organizației tale a fost dezactivat.
+              Prin urmare, colectarea de noi formulare și descărcarea vechilor formulare este blocată.
+              Pentru a reactiva contul, te rugăm să ne contactezi la
+              <a href="mailto:{{ contact_email }}">{{ contact_email }}</a>.
             </div>
+          </div>
         </div>
+
+      {% else %}
+
+        {# show message if the user hasn't verified its address yet #}
+        {% if not user.is_verified %}
+          <div class="row">
+            <div class="col-xs-12 col-md-8 col-md-offset-2">
+              <div class="alert alert-dismissible alert-info">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>Notă!</strong>
+                Te rugăm să accesezi linkul primit pe email pentru a-ți verifica
+                adresa de email.
+              </div>
+            </div>
+          </div>
+        {% endif %}
+
+        {% if not can_donate %}
+          <div class="row">
+            <div class="col-xs-12 col-md-8 col-md-offset-2">
+              <div class="alert alert-dismissible alert-info">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>Nota!</strong>
+                Formularul de redirecționare a până la 3.5% din impozitul anual
+                poate fi completat de cei care vizitează pagina organizației, doar intre 1 Ianuarie
+                si {{ limit.day }} {{ month_limit }} ale anului curent.
+              </div>
+            </div>
+          </div>
+        {% endif %}
+
+      {% endif %}
+
+      {% include "components/ngo-header.html" %}
+
+      <div class="row">
+        <div class="col-xs-12 col-md-6 col-md-offset-3">
+          <div data-toggle="popover" data-placement="bottom"
+               data-content="Apasă CTRL+C pentru a copia adresa">
+            <label for="url-ngo">URL:</label>
+            <input id="url-ngo" class="ngo-copy-url form-control" value="{{ ngo_url }}" readonly/>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        {% include "ngo/donations-view.html" %}
+      </div>
+
+    {% else %}
+      <div class="row">
+        <div class="col-xs-12 col-md-8 col-md-offset-2">
+          <h3>Salut, {{ user.last_name }}. Bine ai venit pe redirectioneaza.ro</h3>
+          <h4>Mai întâi, spune-ne despre organizație.</h4>
+          {% include "components/ngo-details-form.html" %}
+        </div>
+      </div>
+    {% endif %}
+
+    <div class="row">
+      <div class="col-xs-12 col-md-8 col-md-offset-2">
+        <div class="suggestions-box">
+          <p>
+            <strong>Salut!</strong> Dacă întâmpini orice dificultate te rugăm să ne transmiți un e-mail la
+            <a href="mailto:{{ contact_email }}">{{ contact_email }}</a>.
+          </p>
+        </div>
+      </div>
     </div>
+  </div>
 
 {% endblock %}
 
 {% block scripts %}
-    <script src="{{ static ('js/account.js') }}"></script>
+  <script src="{{ static ('js/account.js') }}"></script>
 {% endblock %}
