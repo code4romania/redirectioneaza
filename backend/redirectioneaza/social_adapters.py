@@ -64,7 +64,7 @@ class UserOrgAdapter(DefaultSocialAccountAdapter):
 
         user: UserModel = super().save_user(request, sociallogin, form)
         user.is_ngohub_user = True
-        user.verify_email = True
+        user.is_verified = True
         user.save()
 
         common_user_init(sociallogin=sociallogin)
