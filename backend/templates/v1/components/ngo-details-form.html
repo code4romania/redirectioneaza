@@ -90,8 +90,12 @@
       <div class="col-xs-4">
         {% with identifier="ong-judet" %}
           {% with county=ngo.county if ngo %}
-            {% with is_disabled=has_ngohub %}
-              {% include "components/county.html" %}
+            {% with placeholder="Județ" %}
+              {% with is_disabled=has_ngohub %}
+                {% with has_ngohub=has_ngohub %}
+                  {% include "components/county.html" %}
+                {% endwith %}
+              {% endwith %}
             {% endwith %}
           {% endwith %}
         {% endwith %}
@@ -102,8 +106,12 @@
         <label for="ong-activitate">În ce regiune iși desfășoară ONG-ul activitatea?</label>
         {% with identifier="ong-activitate" %}
           {% with county=ngo.active_region if ngo %}
-            {% with is_disabled=has_ngohub %}
-              {% include "components/county.html" %}
+            {% with placeholder="Regiune" %}
+              {% with is_disabled=has_ngohub %}
+                {% with has_ngohub=has_ngohub %}
+                  {% include "components/county.html" %}
+                {% endwith %}
+              {% endwith %}
             {% endwith %}
           {% endwith %}
         {% endwith %}

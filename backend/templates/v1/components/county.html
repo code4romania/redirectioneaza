@@ -1,19 +1,32 @@
-<select
-  class="form-control"
-  id="{{ identifier }}"
-  name="{{ identifier }}"
-  required
-  x-moz-errormessage="Județul este obligatoriu"
-  title="Județul este obligatoriu"
-  {% if is_disabled %}disabled{% endif %}
->
-  <option value="" class="select-placeholder">Județul</option>
-  <optgroup label="București">
-    {% for number in range(1, 7) %}
-      <option value="{{ number }}" {{ "selected" if number|string == county }}>Sector {{ number }}</option>
+{% if has_ngohub %}
+  <input
+    class="form-control"
+    id="{{ identifier }}"
+    {% if has_ngohub %}disabled{% endif %}
+    type="text"
+    name="{{ identifier }}"
+    placeholder="{{ placeholder }} (din NGO Hub)"
+    value="{{ county }}"
+    maxlength="100"
+    aria-label="{{ placeholder }} (câmp luat din NGO Hub)"
+  />
+{% else %}
+  <select
+    class="form-control"
+    id="{{ identifier }}"
+    name="{{ identifier }}"
+    required
+    title="{{ placeholder }} este un câmp obligatoriu"
+    {% if is_disabled %}disabled{% endif %}
+  >
+    <option value="" class="select-placeholder">{{ placeholder }}</option>
+    <optgroup label="București">
+      {% for number in range(1, 7) %}
+        <option value="{{ number }}" {{ "selected" if number|string == county }}>Sector {{ number }}</option>
+      {% endfor %}
+    </optgroup>
+    {% for county_name in counties %}
+      <option value="{{ county_name }}" {{ "selected" if county_name == county }} >{{ county_name }}</option>
     {% endfor %}
-  </optgroup>
-  {% for county_name in counties %}
-    <option value="{{ county_name }}" {{ "selected" if county_name == county }} >{{ county_name }}</option>
-  {% endfor %}
-</select>
+  </select>
+{% endif %}
