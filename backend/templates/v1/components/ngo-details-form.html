@@ -7,7 +7,29 @@
 
       <h1>Datele organizației</h1>
 
-      <div class="col-xs-12">
+      {% if has_ngohub %}
+        <div class="col-xs-2">
+          <button
+            class="btn btn-link"
+            type="submit"
+            formaction="{{ reverse('api-ngohub-refresh') }}"
+            name="refresh-with-ngohub"
+            formmethod="post"
+          >
+            <i
+              class="fa fa-refresh fa-5x refresh-button"
+              aria-hidden="true"
+              aria-label="Actualizează informațiile cu cele din NGO Hub"
+            >
+
+            </i>
+
+          </button>
+
+        </div>
+      {% endif %}
+
+      <div class="{% if has_ngohub %}col-xs-10{% else %}col-xs-12{% endif %}">
 
         <p>
           Aici poți introduce datele organizației tale. Acestea vor fi folosite pentru a completa formularul de donații.

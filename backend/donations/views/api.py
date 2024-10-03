@@ -19,8 +19,24 @@ from .base import BaseAccountView
 from ..models.jobs import Job, JobStatusChoices
 from ..models.main import ALL_NGOS_CACHE_KEY, Ngo
 from ..pdf import create_pdf
+from ..workers.update_organization import update_organization
 
 logger = logging.getLogger(__name__)
+
+
+class UpdateFromNgohub(BaseAccountView):
+    def post(self, request, *args, **kwargs):
+        redirect_success = redirect(reverse("organization"))
+        redirect_error = redirect(reverse("organization"))
+
+        user = request.user
+
+        if not user.ngo or not user.ngo.is_active:
+            return redirect_error
+
+        update_organization(user.ngo.pk)
+
+        return redirect_success
 
 
 class CheckNgoUrl(BaseAccountView):

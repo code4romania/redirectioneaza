@@ -40,7 +40,7 @@ from donations.views.admin import (
     AdminNgosListByName,
     UserAccounts,
 )
-from donations.views.api import CheckNgoUrl, GetNgoForm, GetNgoForms, GetUploadUrl, NgosApi
+from donations.views.api import CheckNgoUrl, GetNgoForm, GetNgoForms, GetUploadUrl, NgosApi, UpdateFromNgohub
 from donations.views.cron import CustomExport, NgoExport, NgoRemoveForms, Stats
 from donations.views.my_account import (
     ArchiveDownloadLinkView,
@@ -120,6 +120,7 @@ urlpatterns = (
             name="error-unknown-user-role",
         ),
         # APIs
+        path("api/ngohub-refresh/", UpdateFromNgohub.as_view(), name="api-ngohub-refresh"),
         path("api/ngo/check-url/<ngo_url>/", CheckNgoUrl.as_view(), name="api-ngo-check-url"),
         path("api/ngos/", NgosApi.as_view(), name="api-ngos"),
         #
