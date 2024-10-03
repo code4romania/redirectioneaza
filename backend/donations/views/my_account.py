@@ -29,7 +29,10 @@ class MyAccountDetailsView(BaseAccountView):
 
     @method_decorator(login_required(login_url=reverse_lazy("login")))
     def get(self, request, *args, **kwargs):
-        context = {"user": request.user}
+        user = request.user
+        is_ngohub_user: bool = user.is_ngohub_user
+
+        context = {"user": user, "is_ngohub_user": is_ngohub_user}
         return render(request, self.template_name, context)
 
     @method_decorator(login_required(login_url=reverse_lazy("login")))
