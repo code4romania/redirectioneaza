@@ -215,9 +215,11 @@ class NgoDetailsView(BaseAccountView):
             except Ngo.DoesNotExist:
                 raise Http404()
 
+        errors: List[str] = []
+
         ngo: Ngo = user.ngo
 
-        must_refresh_form = False
+        must_refresh_prefilled_form = False
         is_new_ngo = False
 
         if not ngo:
@@ -228,40 +230,45 @@ class NgoDetailsView(BaseAccountView):
             ngo.is_verified = False
             ngo.is_active = True
 
-        registration_number = post.get("ong-cif", "").upper().replace(" ", "").replace("<", "").replace(">", "")[:20]
-        registration_number_errors: str = self._validate_registration_number(ngo, registration_number)
-        if ngo.registration_number != registration_number:
-            ngo.registration_number = registration_number
-            must_refresh_form = True
+        is_fully_editable = ngo.ngohub_org_id is None
 
         bank_account = post.get("ong-cont", "").strip().upper().replace(" ", "").replace("<", "").replace(">", "")[:34]
         bank_account_errors: str = self._validate_iban_number(bank_account)
         if ngo.bank_account != bank_account:
             ngo.bank_account = bank_account
-            must_refresh_form = True
+            must_refresh_prefilled_form = True
 
         ngo_slug = post.get("ong-url", "").strip().lower()
         ngo_slug_errors = CheckNgoUrl.validate_ngo_slug(user, ngo_slug)
         ngo.slug = ngo_slug
 
-        ngo_name = post.get("ong-nume", "").strip()
-        if ngo.name != ngo_name:
-            ngo.name = ngo_name
-            must_refresh_form = True
-
         ngo.description = post.get("ong-descriere", "").strip()
-        ngo.phone = post.get("ong-tel", "").strip()
-        ngo.email = post.get("ong-email", "").strip()
-        ngo.website = post.get("ong-website", "").strip()
-        ngo.address = post.get("ong-adresa", "").strip()
-        ngo.county = post.get("ong-judet", "").strip()
-        ngo.active_region = post.get("ong-activitate", "").strip()
-        ngo.is_social_service_viable = True if post.get("special-status") == "on" else False
         ngo.is_accepting_forms = True if post.get("accepts-forms") == "on" else False
 
-        errors: List[str] = []
-        if registration_number_errors:
-            errors.append(registration_number_errors)
+        if is_fully_editable:
+            registration_number = (
+                post.get("ong-cif", "").upper().replace(" ", "").replace("<", "").replace(">", "")[:20]
+            )
+            registration_number_errors: str = self._validate_registration_number(ngo, registration_number)
+            if ngo.registration_number != registration_number:
+                ngo.registration_number = registration_number
+                must_refresh_prefilled_form = True
+
+            ngo_name = post.get("ong-nume", "").strip()
+            if ngo.name != ngo_name:
+                ngo.name = ngo_name
+                must_refresh_prefilled_form = True
+
+            ngo.phone = post.get("ong-tel", "").strip()
+            ngo.email = post.get("ong-email", "").strip()
+            ngo.website = post.get("ong-website", "").strip()
+            ngo.address = post.get("ong-adresa", "").strip()
+            ngo.county = post.get("ong-judet", "").strip()
+            ngo.active_region = post.get("ong-activitate", "").strip()
+            ngo.is_social_service_viable = True if post.get("special-status") == "on" else False
+
+            if registration_number_errors:
+                errors.append(registration_number_errors)
 
         if bank_account_errors:
             errors.append(bank_account_errors)
@@ -294,7 +301,7 @@ class NgoDetailsView(BaseAccountView):
         ngo.save()
 
         # Delete the NGO's old prefilled form
-        if must_refresh_form:
+        if must_refresh_prefilled_form:
             async_task("donations.views.my_account.delete_prefilled_form", ngo.id)
 
         if is_new_ngo:
