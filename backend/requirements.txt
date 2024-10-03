@@ -8,12 +8,12 @@ asgiref==3.8.1
     # via django
 blessed==1.20.0
     # via -r requirements.in
-boto3==1.35.28
+boto3==1.35.32
     # via
     #   django-ses
     #   django-storages
     #   pycognito
-botocore==1.35.28
+botocore==1.35.32
     # via
     #   boto3
     #   s3transfer
@@ -47,7 +47,7 @@ django==5.1.1
     #   django-storages
     #   django-unfold
     #   sentry-sdk
-django-allauth==64.2.1
+django-allauth==65.0.2
     # via -r requirements.in
 django-environ==0.11.2
     # via -r requirements.in
@@ -87,7 +87,7 @@ lxml==5.3.0
     # via svglib
 markupsafe==2.1.5
     # via jinja2
-ngohub==0.0.8
+ngohub==0.0.9
     # via -r requirements.in
 packaging==24.1
     # via gunicorn
@@ -105,7 +105,7 @@ pyjwt==2.9.0
     # via pycognito
 pymysql==1.1.1
     # via -r requirements.in
-pypdf==4.3.1
+pypdf==5.0.1
     # via -r requirements.in
 python-dateutil==2.9.0.post0
     # via
@@ -117,7 +117,7 @@ python-stdnum==1.20
     # via django-localflavor
 pytz==2024.2
     # via croniter
-reportlab==4.2.2
+reportlab==4.2.5
     # via
     #   -r requirements.in
     #   svglib
@@ -127,7 +127,7 @@ requests==2.32.3
     #   pycognito
 s3transfer==0.10.2
     # via boto3
-sentry-sdk==2.14.0
+sentry-sdk==2.15.0
     # via -r requirements.in
 six==1.16.0
     # via
