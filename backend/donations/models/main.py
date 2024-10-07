@@ -127,6 +127,16 @@ class NgoActiveManager(models.Manager):
         return super().get_queryset().filter(is_active=True)
 
 
+class NgoHubManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(is_active=True, ngohub_org_id__isnull=False)
+
+
+class NgoWithFormsManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(is_active=True, is_accepting_forms=True)
+
+
 class Ngo(models.Model):
     slug = models.SlugField(
         verbose_name=_("slug"),
@@ -243,6 +253,8 @@ class Ngo(models.Model):
 
     objects = models.Manager()
     active = NgoActiveManager()
+    ngo_hub = NgoHubManager()
+    with_forms = NgoWithFormsManager()
 
     def save(self, *args, **kwargs):
         is_new = self.id is None
@@ -403,7 +415,11 @@ class Donor(models.Model):
         upload_to=partial(year_ngo_donor_directory_path, "donation-forms"),
     )
 
-    date_created = models.DateTimeField(verbose_name=_("date created"), db_index=True, auto_now_add=timezone.now)
+    date_created = models.DateTimeField(
+        verbose_name=_("date created"),
+        db_index=True,
+        auto_now_add=timezone.now,
+    )
 
     objects = models.Manager()
     signed = DonorSignedManager()

@@ -115,6 +115,10 @@ class Command(BaseCommand):
             generated_donations.append(donor)
 
         self.stdout.write(self.style.SUCCESS("Writing to the database..."))
-        Donor.objects.bulk_create(generated_donations, batch_size=500)
+        Donor.objects.bulk_create(
+            generated_donations,
+            batch_size=500,
+            ignore_conflicts=True,
+        )
 
         self.stdout.write(self.style.SUCCESS("Done!"))

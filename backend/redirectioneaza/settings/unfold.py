@@ -2,8 +2,8 @@ from django.templatetags.static import static
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
-from .base import VERSION_LABEL
 from .app_configs import TITLE
+from .base import VERSION_LABEL
 
 # Unfold Admin settings
 
@@ -101,7 +101,7 @@ UNFOLD = {
     # https://unfoldadmin.com/docs/configuration/settings/
     # Site configuration
     "ENVIRONMENT": "redirectioneaza.callbacks.environment_callback",
-    "DASHBOARD_CALLBACK": "donations.views.admin_dashboard.callback",
+    "DASHBOARD_CALLBACK": "donations.views.unfold.dashboard.callback",
     # Site customization
     "SITE_HEADER": f"Admin | {VERSION_LABEL}",
     "SITE_TITLE": TITLE,
