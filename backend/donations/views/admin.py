@@ -137,7 +137,7 @@ class AdminNgoHandler(TemplateView):
             "ngo_upload_url": reverse("api-ngo-upload-url"),
             "counties": settings.FORM_COUNTIES_NATIONAL,
             "ngo": ngo,
-            "other_emails": ", ".join(str(x) for x in ngo.other_emails) if ngo.other_emails else "",
+            "other_emails": (", ".join(str(x) for x in ngo.other_emails) if ngo.other_emails else ""),
         }
 
         try:

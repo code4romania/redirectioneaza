@@ -117,7 +117,7 @@ class MyAccountView(BaseAccountView):
         current_year_donors: Optional[QuerySet[Donor]] = grouped_donors.get(now.year)
         donors_metadata = {
             "total": current_year_donors.count() if current_year_donors else 0,
-            "total_signed": current_year_donors.filter(has_signed=True).count() if current_year_donors else 0,
+            "total_signed": (current_year_donors.filter(has_signed=True).count() if current_year_donors else 0),
             "years": list(grouped_donors.keys()),
         }
 

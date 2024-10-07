@@ -103,7 +103,11 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], ngo: Ngo, 
                     file_data = _download_file(source_url)
                 except JobDownloadError:
                     retries_left -= 1
-                    logger.error("Could not download '%s'. Retries left %d.", source_url, retries_left)
+                    logger.error(
+                        "Could not download '%s'. Retries left %d.",
+                        source_url,
+                        retries_left,
+                    )
                 except Exception as e:
                     retries_left = 0
                     logger.error("Could not download '%s'. Exception %s", source_url, e)
@@ -283,7 +287,11 @@ def _download_file(source_url: str) -> bytes:
 
 
 def _generate_xml_files(
-    ngo: Ngo, zip_archive: ZipFile, zip_64_flag: bool, zip_timestamp: datetime, cnp_idx: Dict[str, Dict[str, Any]]
+    ngo: Ngo,
+    zip_archive: ZipFile,
+    zip_64_flag: bool,
+    zip_timestamp: datetime,
+    cnp_idx: Dict[str, Dict[str, Any]],
 ):
     if not cnp_idx or not ngo or not zip_archive:
         return
@@ -294,7 +302,16 @@ def _generate_xml_files(
     # create a single XML file
     if ngo_donations.count() < 2 * settings.DONATIONS_XML_LIMIT_PER_FILE:
         xml_name: str = "d230.xml"
-        _build_xml(ngo, ngo_donations, 1, xml_name, cnp_idx, zip_timestamp, zip_archive, zip_64_flag)
+        _build_xml(
+            ngo,
+            ngo_donations,
+            1,
+            xml_name,
+            cnp_idx,
+            zip_timestamp,
+            zip_archive,
+            zip_64_flag,
+        )
 
         return
 
@@ -316,7 +333,16 @@ def _generate_donations_by_county(cnp_idx, ngo, ngo_donations, zip_64_flag, zip_
             xml_name: str = f"d230_{county_code}.xml"
 
             county_donations: QuerySet[Donor] = ngo_donations.filter(county=current_county)
-            _build_xml(ngo, county_donations, xml_count, xml_name, cnp_idx, zip_timestamp, zip_archive, zip_64_flag)
+            _build_xml(
+                ngo,
+                county_donations,
+                xml_count,
+                xml_name,
+                cnp_idx,
+                zip_timestamp,
+                zip_archive,
+                zip_64_flag,
+            )
             xml_count += 1
         else:
             for i in range(math.ceil(current_county_count / donations_limit)):
@@ -325,7 +351,16 @@ def _generate_donations_by_county(cnp_idx, ngo, ngo_donations, zip_64_flag, zip_
                 county_donations: QuerySet[Donor] = ngo_donations.filter(county=current_county)[
                     i * donations_limit : (i + 1) * donations_limit
                 ]
-                _build_xml(ngo, county_donations, xml_count, xml_name, cnp_idx, zip_timestamp, zip_archive, zip_64_flag)
+                _build_xml(
+                    ngo,
+                    county_donations,
+                    xml_count,
+                    xml_name,
+                    cnp_idx,
+                    zip_timestamp,
+                    zip_archive,
+                    zip_64_flag,
+                )
 
                 xml_count += 1
 
