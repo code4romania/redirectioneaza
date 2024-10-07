@@ -57,26 +57,51 @@ class NgoUserInline(admin.StackedInline):
         return format_html(f'<a href="{link_url}">{obj.email}</a>')
 
 
+class HasNgoHubFilter(admin.SimpleListFilter):
+    title = _("Has NGO Hub account")
+    parameter_name = "has_ngohub"
+
+    def lookups(self, request, model_admin):
+        return (1, _("Yes")), (0, _("No"))
+
+    def queryset(self, request, queryset):
+        filter_value = None
+        if self.value() == "1":
+            filter_value = True
+        elif self.value() == "0":
+            filter_value = False
+
+        if filter_value is not None:
+            return queryset.filter(ngohub_org_id__isnull=filter_value)
+
+
 class HasOwnerFilter(admin.SimpleListFilter):
     title = _("Has owner")
     parameter_name = "has_owner"
 
     def lookups(self, request, model_admin):
-        return ("yes", _("Yes")), ("no", _("No"))
+        return (1, _("Yes")), (0, _("No"))
 
     def queryset(self, request, queryset):
-        if self.value() == "yes":
-            return queryset.filter(users__isnull=False)
-        if self.value() == "no":
-            return queryset.filter(users__isnull=True)
+        filter_value = None
+        if self.value() == "1":
+            filter_value = True
+        elif self.value() == "0":
+            filter_value = False
+
+        if filter_value is not None:
+            return queryset.filter(users__isnull=filter_value)
 
 
 @admin.register(Ngo)
 class NgoAdmin(ModelAdmin):
+    list_filter_submit = True
+
     list_display = ("id", "ngohub_org_id", "slug", "registration_number", "name")
     list_display_links = ("id", "ngohub_org_id", "slug", "registration_number", "name")
     list_filter = (
         "date_created",
+        HasNgoHubFilter,
         "is_verified",
         "is_active",
         "is_accepting_forms",

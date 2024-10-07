@@ -7,8 +7,8 @@ TEMPLATES = [
         # New templates for v2
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
-            os.path.abspath(os.path.join(BASE_DIR, "templates", "v2")),
             os.path.abspath(os.path.join(BASE_DIR, "templates", "v3")),
+            os.path.abspath(os.path.join(BASE_DIR, "templates", "v2")),
         ],
         "APP_DIRS": True,
         "OPTIONS": {
