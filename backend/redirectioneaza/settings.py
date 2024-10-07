@@ -23,6 +23,7 @@ from cryptography.fernet import Fernet
 from django.templatetags.static import static
 from django.urls import reverse_lazy
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 from localflavor.ro.ro_counties import COUNTIES_CHOICES
 
 # Constants for memory sizes
@@ -147,7 +148,7 @@ env = environ.Env(
     # Google Analytics:
     GOOGLE_ANALYTICS_ID=(str, ""),
     # App settings
-    RUN_FULL_CUI_VALIDATION=(bool, True),
+    ENABLE_FULL_CUI_VALIDATION=(bool, True),
 )
 
 environ.Env.read_env(ENV_FILE_PATH)
@@ -248,6 +249,7 @@ INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
+    "django.contrib.humanize",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
@@ -295,7 +297,10 @@ TEMPLATES = [
     {
         # New templates for v2
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.abspath(os.path.join(BASE_DIR, "templates", "v2"))],
+        "DIRS": [
+            os.path.abspath(os.path.join(BASE_DIR, "templates", "v2")),
+            os.path.abspath(os.path.join(BASE_DIR, "templates", "v3")),
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -615,10 +620,94 @@ FORM_COUNTIES_NATIONAL.insert(0, "Național")
 
 CONTACT_EMAIL_ADDRESS = env.str("CONTACT_EMAIL_ADDRESS")
 
+
 # Unfold Admin settings
-# https://unfoldadmin.com/docs/configuration/settings/
-# Supported icon set: https://fonts.google.com/icons
+
+SIDEBAR_NAVIGATION = [
+    # Supported icon set: https://fonts.google.com/icons
+    {
+        "title": _("Donations"),
+        "items": [
+            {
+                "title": _("NGOs"),
+                "icon": "foundation",
+                "link": reverse_lazy("admin:donations_ngo_changelist"),
+                "permission": lambda request: request.user.is_superuser,
+            },
+            {
+                "title": _("Donations"),
+                "icon": "edit_document",
+                "link": reverse_lazy("admin:donations_donor_changelist"),
+                "permission": lambda request: request.user.is_superuser,
+            },
+            {
+                "title": _("Partners"),
+                "icon": "handshake",
+                "link": reverse_lazy("admin:partners_partner_changelist"),
+                "permission": lambda request: request.user.is_superuser,
+            },
+            {
+                "title": _("Donation exports"),
+                "icon": "file_copy",
+                "link": reverse_lazy("admin:donations_job_changelist"),
+                "permission": lambda request: request.user.is_superuser,
+            },
+        ],
+    },
+    {
+        "title": _("Users"),
+        "items": [
+            {
+                "title": _("Users"),
+                "icon": "person",
+                "link": reverse_lazy("admin:users_user_changelist"),
+                "permission": lambda request: request.user.is_superuser,
+            },
+            {
+                "title": _("Groups"),
+                "icon": "group",
+                "link": reverse_lazy("admin:users_groupproxy_changelist"),
+                "permission": lambda request: request.user.is_superuser,
+            },
+        ],
+    },
+    {
+        "title": _("Django Q"),
+        "items": [
+            {
+                "title": _("Failed tasks"),
+                "icon": "assignment_late",
+                "link": reverse_lazy("admin:django_q_failure_changelist"),
+                "permission": lambda request: request.user.is_superuser,
+            },
+            {
+                "title": _("Queued tasks"),
+                "icon": "assignment_add",
+                "link": reverse_lazy("admin:django_q_ormq_changelist"),
+                "permission": lambda request: request.user.is_superuser,
+            },
+            {
+                "title": _("Scheduled tasks"),
+                "icon": "assignment",
+                "link": reverse_lazy("admin:django_q_schedule_changelist"),
+                "permission": lambda request: request.user.is_superuser,
+            },
+            {
+                "title": _("Successful tasks"),
+                "icon": "assignment_turned_in",
+                "link": reverse_lazy("admin:django_q_success_changelist"),
+                "permission": lambda request: request.user.is_superuser,
+            },
+        ],
+    },
+]
+
 UNFOLD = {
+    # https://unfoldadmin.com/docs/configuration/settings/
+    # Site configuration
+    "ENVIRONMENT": "redirectioneaza.callbacks.environment_callback",
+    # Site customization
+    "SITE_HEADER": f"Admin | {VERSION_LABEL}",
     "SITE_TITLE": TITLE,
     "SITE_ICON": lambda request: static("images/logo-smaller.png"),
     "SITE_LOGO": lambda request: static("images/logo-smaller.png"),
@@ -659,10 +748,16 @@ UNFOLD = {
             950: "#745E06",
         },
     },
+    # Sidebar settings
+    "SIDEBAR": {
+        "show_search": True,
+        "show_all_applications": False,
+        "navigation": SIDEBAR_NAVIGATION,
+    },
 }
 
-# Django Q2
-# https://django-q2.readthedocs.io/en/stable/configure.html#configuration
+
+# Django Q2 — https://django-q2.readthedocs.io/en/stable/configure.html#configuration
 
 Q_CLUSTER_WORKERS: int = env.int("DJANGO_Q_WORKERS_COUNT")
 Q_CLUSTER_RECYCLE: int = env.int("DJANGO_Q_RECYCLE_RATE")
@@ -692,7 +787,8 @@ IMPORT_METHOD = env.str("IMPORT_METHOD")
 IMPORT_USE_BATCHES = env.bool("IMPORT_USE_BATCHES")
 IMPORT_BATCH_SIZE = env.int("IMPORT_BATCH_SIZE")
 
-# reCAPTCHA
+# reCAPTCHA & Analytics settings
+GOOGLE_ANALYTICS_ID = env.str("GOOGLE_ANALYTICS_ID")
 
 RECAPTCHA_PUBLIC_KEY = env.str("CAPTCHA_PUBLIC_KEY")
 RECAPTCHA_PRIVATE_KEY = env.str("CAPTCHA_PRIVATE_KEY")
@@ -706,23 +802,29 @@ RECAPTCHA_ENABLED = env.bool("RECAPTCHA_ENABLED", True if RECAPTCHA_PUBLIC_KEY e
 if DEBUG or not RECAPTCHA_ENABLED:
     SILENCED_SYSTEM_CHECKS = ["django_recaptcha.recaptcha_test_key_error"]
 
-ENABLE_FORMS_DOWNLOAD = env.bool("ENABLE_FORMS_DOWNLOAD", True)
-TIMEDELTA_FORMS_DOWNLOAD_MINUTES = env.int("TIMEDELTA_FORMS_DOWNLOAD_MINUTES")
 
-
-# encryption
+# Encryption settings
 ENCRYPT_KEY = env.str("ENCRYPT_KEY", "%INVALID%")
 if len(ENCRYPT_KEY) != 32 or ENCRYPT_KEY == "%INVALID%":
     raise Exception("ENCRYPT_KEY must be exactly 32 characters long")
 FERNET_OBJECT = Fernet(urlsafe_b64encode(ENCRYPT_KEY.encode("utf-8")))
 
 
-GOOGLE_ANALYTICS_ID = env.str("GOOGLE_ANALYTICS_ID")
-
 # Feature flags
 ENABLE_FLAG_CONTACT = env.bool("ENABLE_FLAG_CONTACT", False)
 
+# Configurations for the NGO Hub integration
+UPDATE_ORGANIZATION_METHOD = env("UPDATE_ORGANIZATION_METHOD")
 
+# Other settings
+ENABLE_FULL_CUI_VALIDATION = env.bool("ENABLE_FULL_CUI_VALIDATION")
+
+# Form download settings
+ENABLE_FORMS_DOWNLOAD = env.bool("ENABLE_FORMS_DOWNLOAD", True)
+TIMEDELTA_FORMS_DOWNLOAD_MINUTES = env.int("TIMEDELTA_FORMS_DOWNLOAD_MINUTES")
+
+
+# Login & Auth settings
 LOGIN_URL = reverse_lazy("login")
 LOGIN_REDIRECT_URL = reverse_lazy("home")
 LOGOUT_REDIRECT_URL = reverse_lazy("home")
@@ -769,9 +871,3 @@ NGOHUB_API_KEY = env("NGOHUB_API_KEY")
 NGOHUB_ROLE_SUPER_ADMIN = "super-admin"
 NGOHUB_ROLE_NGO_ADMIN = "admin"
 NGOHUB_ROLE_NGO_EMPLOYEE = "employee"
-
-# Configurations for the NGO Hub integration
-UPDATE_ORGANIZATION_METHOD = env("UPDATE_ORGANIZATION_METHOD")
-
-# Other settings
-RUN_FULL_CUI_VALIDATION = env.bool("RUN_FULL_CUI_VALIDATION")

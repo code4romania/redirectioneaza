@@ -1,0 +1,19 @@
+{% if items %}
+  <select
+    name="{{ title }}"
+    aria-label="{{ title }}"
+    class="bg-gray-100 flex gap-2 mb-8 p-1 rounded text-sm bg-none dark:bg-white/[.04]{% if class %} {{ class }}{% endif %}"
+  >
+
+    {% for item in items %}
+      <option
+        value="{{ item.value }}"
+        {% if item.active %} selected{% endif %}
+      >
+        {{ item.title }}
+      </option>
+    {% endfor %}
+
+  </select>
+
+{% endif %}
