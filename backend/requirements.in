@@ -1,4 +1,4 @@
-django~=5.1.1
+django~=5.1.2
 django-environ~=0.11.2
 django-ipware~=7.0.1
 django-unfold~=0.40.0
@@ -32,7 +32,7 @@ psycopg2-binary~=2.9.9
 jinja2~=3.1.4
 
 # web server
-gevent~=24.2.1
+gevent~=24.10.1
 gunicorn~=23.0.0
 
 # file storage
@@ -51,4 +51,4 @@ svglib~=1.5.1
 requests~=2.32.3
 
 # Sentry
-sentry-sdk[django]~=2.15.0
+sentry-sdk[django]~=2.16.0

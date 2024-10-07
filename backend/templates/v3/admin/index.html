@@ -3,17 +3,12 @@
 {% load unfold i18n %}
 
 {% block content %}
+
   {% component "unfold/components/container.html" %}
 
-    {% component "unfold/components/flex.html" with class="gap-4" %}
-      {% component "unfold/components/navigation.html" with items=navigation %}{% endcomponent %}
-
-      {% component "redirect/components/dropdown_navigation.html" with class="ml-auto" items=filters title="AAAAA" %}{% endcomponent %}
-    {% endcomponent %}
-
     {% component "unfold/components/flex.html" with class="gap-8 mb-8 flex-col lg:flex-row" %}
-      {% for stat in stats %}
-        {% component "redirect/components/card.html" with class="lg:w-1/3" label=stat.label footer=stat.footer footer_class=stat.footer_class %}
+      {% for stat in header_stats %}
+        {% component "unfold/components/card.html" with class="lg:w-1/3" label=stat.label footer=stat.footer footer_class=stat.footer_class %}
           {% component "unfold/components/title.html" %}
             {{ stat.metric }}
           {% endcomponent %}
@@ -25,14 +20,36 @@
       {% endfor %}
     {% endcomponent %}
 
+
+    {% component "unfold/components/card.html" with class="mb-8" title=forms_per_month_chart.title %}
+      {% component "unfold/components/chart/line.html" with data=forms_per_month_chart.data height=320 %}{% endcomponent %}
+    {% endcomponent %}
+
+
+    {% component "unfold/components/separator.html" %}{% endcomponent %}
+
+
+    {% for yearly_stat in yearly_stats %}
+      {% component "unfold/components/title.html" %}
+        {{ yearly_stat.year }}
+      {% endcomponent %}
+
+      {% component "unfold/components/flex.html" with class="gap-8 mb-8 flex-col lg:flex-row" %}
+        {% for stat_card in yearly_stat.stats %}
+
+          {% component "unfold/components/card.html" with class="lg:w-1/3" label=stat_card.label %}
+            {% component "unfold/components/title.html" %}
+              {{ stat_card.metric }}
+            {% endcomponent %}
+
+            {% component "unfold/components/text.html" %}
+              {{ stat_card.title }}
+            {% endcomponent %}
+          {% endcomponent %}
+        {% endfor %}
+      {% endcomponent %}
+    {% endfor %}
+
   {% endcomponent %}
-
-
-  <h2>
-    {{ page_title }}
-  </h2>
-  <p>
-    {{ page_description }}
-  </p>
 
 {% endblock %}
