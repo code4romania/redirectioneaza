@@ -1,0 +1,15 @@
+{% extends "admin/announcements/base.html" %}
+
+{% load i18n %}
+
+{% block announcement_title %}
+  {% trans "Work in progress" %}
+{% endblock %}
+
+{% block announcement_description %}
+  {% trans "The site is still a work in progress. If you have any feedback, please let us know" %}
+{% endblock %}
+
+{% block announcement_cta_url %}mailto:{{ contact_email }}{% endblock %}
+
+{% block announcement_cta_text %}{% trans "Contact us" %}{% endblock %}

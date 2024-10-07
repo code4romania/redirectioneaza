@@ -73,8 +73,8 @@ class HasOwnerFilter(admin.SimpleListFilter):
 
 @admin.register(Ngo)
 class NgoAdmin(ModelAdmin):
-    list_display = ("id", "slug", "registration_number", "name")
-    list_display_links = ("id", "slug", "registration_number", "name")
+    list_display = ("id", "ngohub_org_id", "slug", "registration_number", "name")
+    list_display_links = ("id", "ngohub_org_id", "slug", "registration_number", "name")
     list_filter = (
         "date_created",
         "is_verified",
@@ -112,7 +112,14 @@ class NgoAdmin(ModelAdmin):
         ),
         (
             _("Activity"),
-            {"fields": ("is_verified", "is_active", "is_accepting_forms", "is_social_service_viable")},
+            {
+                "fields": (
+                    "is_verified",
+                    "is_active",
+                    "is_accepting_forms",
+                    "is_social_service_viable",
+                )
+            },
         ),
         (
             _("Logo"),
@@ -120,7 +127,16 @@ class NgoAdmin(ModelAdmin):
         ),
         (
             _("Contact"),
-            {"fields": ("address", "county", "active_region", "phone", "website", "email")},
+            {
+                "fields": (
+                    "address",
+                    "county",
+                    "active_region",
+                    "phone",
+                    "website",
+                    "email",
+                )
+            },
         ),
         (
             _("Details"),
@@ -217,7 +233,17 @@ class DonorAdmin(ModelAdmin):
         ),
         (
             _("Identity"),
-            {"fields": ("first_name", "last_name", "initial", "county", "city", "email", "phone")},
+            {
+                "fields": (
+                    "first_name",
+                    "last_name",
+                    "initial",
+                    "county",
+                    "city",
+                    "email",
+                    "phone",
+                )
+            },
         ),
         (
             _("Info"),

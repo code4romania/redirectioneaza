@@ -1,0 +1,24 @@
+{% load i18n %}
+
+<div class="flex flex-col gap-4 lg:flex-row lg:items-center">
+  <div class="flex flex-col">
+    <strong class="block font-semibold">
+      {% block announcement_title %}{% endblock %}
+    </strong>
+
+    <p class="leading-relaxed max-w-3xl mt-2">
+      {% block announcement_description %}{% endblock %}
+    </p>
+  </div>
+
+  {% block announcement_cta %}
+    <div class="lg:ml-auto">
+      <a
+        href="{% block announcement_cta_url %}{% endblock %}"
+        class="bg-white shadow-sm block border border-transparent font-semibold px-3 py-2 rounded-md text-sm text-center text-blue-700 w-full whitespace-nowrap lg:w-auto dark:bg-blue-500/20 dark:text-white"
+        target="_blank">
+        {% block announcement_cta_text %}{% endblock %}
+      </a>
+    </div>
+  {% endblock %}
+</div>
