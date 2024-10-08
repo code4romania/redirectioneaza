@@ -100,7 +100,7 @@ class CheckNgoUrl(BaseAccountView):
 
 class NgosApi(TemplateView):
     @staticmethod
-    @cache_decorator(timeout=settings.CACHE_TIMEOUT_SMALL, cache_key=ALL_NGOS_CACHE_KEY)
+    @cache_decorator(timeout=settings.TIMEOUT_CACHE_NORMAL, cache_key=ALL_NGOS_CACHE_KEY)
     def _get_all_ngos() -> list:
         return Ngo.active.order_by("name")
 

@@ -19,7 +19,7 @@ class HomePage(TemplateView):
     template_name = "index.html"
 
     @staticmethod
-    @cache_decorator(timeout=settings.CACHE_TIMEOUT_MEDIUM, cache_key_prefix=ALL_NGO_IDS_CACHE_KEY)
+    @cache_decorator(timeout=settings.TIMEOUT_CACHE_LONG, cache_key_prefix=ALL_NGO_IDS_CACHE_KEY)
     def _get_list_of_ngo_ids() -> list:
         return list(Ngo.active.values_list("id", flat=True))
 
@@ -62,7 +62,7 @@ class HomePage(TemplateView):
 
         return render(request, self.template_name, context)
 
-    @cache_decorator(timeout=settings.CACHE_TIMEOUT_TINY, cache_key_prefix=FRONTPAGE_NGOS_KEY)
+    @cache_decorator(timeout=settings.TIMEOUT_CACHE_SHORT, cache_key_prefix=FRONTPAGE_NGOS_KEY)
     def _get_random_ngos(self, ngo_queryset: QuerySet, num_ngos: int):
         all_ngo_ids = self._get_list_of_ngo_ids()
         return ngo_queryset.filter(id__in=random.sample(all_ngo_ids, num_ngos))
@@ -91,7 +91,7 @@ class NgoListHandler(TemplateView):
     template_name = "all-ngos.html"
 
     @staticmethod
-    @cache_decorator(timeout=settings.CACHE_TIMEOUT_SMALL, cache_key=ALL_NGOS_CACHE_KEY)
+    @cache_decorator(timeout=settings.TIMEOUT_CACHE_NORMAL, cache_key=ALL_NGOS_CACHE_KEY)
     def _get_all_ngos() -> list:
         return Ngo.active.order_by("name")
 
