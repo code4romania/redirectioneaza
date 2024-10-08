@@ -1,7 +1,7 @@
 django~=5.1.1
 django-environ~=0.11.2
 django-ipware~=7.0.1
-django-unfold~=0.39.0
+django-unfold~=0.40.0
 django-allauth~=65.0.2
 
 pycognito~=2024.5.1
@@ -22,7 +22,7 @@ psutil~=6.0.0  # optional requirement for django-q2
 croniter~=3.0.3  # optional requirement for django-q2
 
 # emails
-django-ses~=4.1.1
+django-ses~=4.2.0
 
 # database
 pymysql~=1.1
