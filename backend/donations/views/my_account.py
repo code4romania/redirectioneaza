@@ -87,7 +87,7 @@ class MyAccountView(BaseAccountView):
     template_name = "ngo/my-account.html"
 
     @staticmethod
-    @cache_decorator(timeout=settings.CACHE_TIMEOUT_TINY, cache_key_prefix="DONORS_BY_DONATION_YEAR")
+    @cache_decorator(timeout=settings.TIMEOUT_CACHE_SHORT, cache_key_prefix="DONORS_BY_DONATION_YEAR")
     def _get_donors_by_donation_year(ngo: Ngo) -> OrderedDict[int, QuerySet[Donor]]:
         if not ngo:
             return OrderedDict()

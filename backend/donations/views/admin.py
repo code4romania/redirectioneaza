@@ -35,7 +35,7 @@ class AdminHome(TemplateView):
         # render a response
         return render(request, self.template_name, context)
 
-    @cache_decorator(timeout=settings.CACHE_TIMEOUT_TINY, cache_key="ADMIN_STATS")
+    @cache_decorator(timeout=settings.TIMEOUT_CACHE_SHORT, cache_key="ADMIN_STATS")
     def collect_stats(self):
         return {
             "timestamp": timezone.now(),
