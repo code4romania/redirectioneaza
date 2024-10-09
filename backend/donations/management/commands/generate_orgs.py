@@ -195,7 +195,6 @@ class Command(BaseCommand):
                 "name": name,
                 "slug": kebab_case_name,
                 "description": fake.paragraph(nb_sentences=3, variable_nb_sentences=True),
-                "logo_url": "https://storage.googleapis.com/redirectioneaza/logo_bw.png",
                 "bank_account": fake.iban(),
                 "registration_number": fake.ssn()[:8],
                 "address": address,
@@ -206,6 +205,7 @@ class Command(BaseCommand):
                 "website": fake.url(),
                 "is_active": create_valid or random.choice([True, False]),
                 "is_accepting_forms": create_valid or random.choice([True, False]),
+                "ngohub_org_id": random.randint(1, 9999) or None,
             }
             try:
                 org = Ngo.objects.create(**organization_details)

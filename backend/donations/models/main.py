@@ -127,6 +127,11 @@ class NgoActiveManager(models.Manager):
         return super().get_queryset().filter(is_active=True)
 
 
+class NgoHubManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(is_active=True, ngohub_org_id__isnull=False)
+
+
 class Ngo(models.Model):
     slug = models.SlugField(
         verbose_name=_("slug"),
@@ -243,6 +248,7 @@ class Ngo(models.Model):
 
     objects = models.Manager()
     active = NgoActiveManager()
+    ngo_hub = NgoHubManager()
 
     def save(self, *args, **kwargs):
         is_new = self.id is None
