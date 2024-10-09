@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-01 13:54+0300\n"
-"PO-Revision-Date: 2024-03-07 11:27+0000\n"
-"Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
+"PO-Revision-Date: 2024-10-02 12:15+0000\n"
+"Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
 "act4good/core/ro/>\n"
 "Language: ro\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2;\n"
-"X-Generator: Weblate 5.3.1\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #: donations/admin.py:37
 msgid "User Link"
@@ -55,6 +55,7 @@ msgstr "Donații"
 #: donations/admin.py:104 donations/admin.py:195 donations/admin.py:235
 #: donations/models/jobs.py:28 donations/models/main.py:263
 #: donations/models/main.py:337 partners/admin.py:12 users/models.py:72
+#: donations/models/main.py:259 donations/models/main.py:328
 msgid "NGO"
 msgstr "ONG"
 
@@ -200,6 +201,7 @@ msgstr "Arhivă"
 
 #: donations/models/jobs.py:52 donations/models/main.py:241
 #: donations/models/main.py:406 partners/models.py:54 users/models.py:88
+#: donations/models/main.py:237 donations/models/main.py:397
 msgid "date created"
 msgstr "data creării"
 
@@ -239,194 +241,210 @@ msgstr "Numărul de identificare trebuie să conțină doar cifre"
 msgid "The ID number must be between 2 and 10 digits long"
 msgstr "Numărul de identificare trebuie să aibă între 2 și 10 cifre"
 
-#: donations/models/main.py:122
+#: donations/models/main.py:122 donations/models/main.py:119
 msgid "The ID number is not valid"
 msgstr "Numărul de identificare nu este valid"
 
-#: donations/models/main.py:132
+#: donations/models/main.py:132 donations/models/main.py:129
 msgid "slug"
 msgstr "adresă"
 
-#: donations/models/main.py:141
+#: donations/models/main.py:141 donations/models/main.py:138
 msgid "Name"
 msgstr "Nume"
 
-#: donations/models/main.py:142
+#: donations/models/main.py:142 donations/models/main.py:139
 msgid "description"
 msgstr "descriere"
 
-#: donations/models/main.py:146
+#: donations/models/main.py:146 donations/models/main.py:143
 msgid "NGO Hub organization ID"
 msgstr "ID organizație în NGO Hub"
 
 #: donations/models/main.py:152 donations/models/main.py:153
+#: donations/models/main.py:149 donations/models/main.py:150
 msgid "Last NGO Hub update"
 msgstr "Ultima actualizare din NGO Hub"
 
-#: donations/models/main.py:157
+#: donations/models/main.py:157 donations/models/main.py:154
 msgid "logo"
 msgstr "logo"
 
-#: donations/models/main.py:165
+#: donations/models/main.py:165 donations/models/main.py:162
 msgid "bank account"
 msgstr "cont bancar"
 
-#: donations/models/main.py:170
+#: donations/models/main.py:170 donations/models/main.py:166
 msgid "registration number"
 msgstr "număr de înregistrare"
 
-#: donations/models/main.py:179
+#: donations/models/main.py:179 donations/models/main.py:175
 msgid "VAT ID"
 msgstr "COD TVA"
 
-#: donations/models/main.py:187
+#: donations/models/main.py:187 donations/models/main.py:183
 msgid "registration validation failed"
 msgstr "validarea înregistrării a eșuat"
 
 #: donations/models/main.py:192 donations/models/main.py:363
+#: donations/models/main.py:188 donations/models/main.py:354
 msgid "address"
 msgstr "adresă"
 
 #: donations/models/main.py:194 donations/models/main.py:356
-#: donations/views/donations_download.py:169
+#: donations/views/donations_download.py:169 donations/models/main.py:190
+#: donations/models/main.py:347
 msgid "county"
 msgstr "județ"
 
-#: donations/models/main.py:202
+#: donations/models/main.py:202 donations/models/main.py:198
 msgid "active region"
 msgstr "regiune activă"
 
 #: donations/models/main.py:211 donations/models/main.py:366
+#: donations/models/main.py:207 donations/models/main.py:357
 msgid "telephone"
 msgstr "telefon"
 
 #: donations/models/main.py:213 donations/models/main.py:367
-#: donations/views/donations_download.py:168
+#: donations/views/donations_download.py:168 donations/models/main.py:209
+#: donations/models/main.py:358
 msgid "email"
 msgstr "email"
 
-#: donations/models/main.py:214
+#: donations/models/main.py:214 donations/models/main.py:210
 msgid "website"
 msgstr "website"
 
-#: donations/models/main.py:217 users/models.py:80
+#: donations/models/main.py:217 users/models.py:80 donations/models/main.py:213
 msgid "is verified"
 msgstr "este verificat"
 
-#: donations/models/main.py:221
+#: donations/models/main.py:221 donations/models/main.py:217
 msgid "has special status"
 msgstr "are statut special"
 
-#: donations/models/main.py:225
+#: donations/models/main.py:225 donations/models/main.py:221
 msgid "is accepting forms"
 msgstr "acceptă formulare"
 
 #: donations/models/main.py:228 partners/models.py:38
+#: donations/models/main.py:224
 msgid "is active"
 msgstr "este activ"
 
-#: donations/models/main.py:232
+#: donations/models/main.py:232 donations/models/main.py:228
 msgid "form with prefilled ngo data"
 msgstr "formular cu datele ONG-ului completate"
 
-#: donations/models/main.py:239
+#: donations/models/main.py:239 donations/models/main.py:235
 msgid "Filename cache"
 msgstr "Cache nume fișier"
 
 #: donations/models/main.py:242 partners/models.py:55 users/models.py:89
+#: donations/models/main.py:238
 msgid "date updated"
 msgstr "data actualizării"
 
 #: donations/models/main.py:264 partners/admin.py:13 partners/models.py:52
+#: donations/models/main.py:260
 msgid "NGOs"
 msgstr "ONG-uri"
 
-#: donations/models/main.py:333
+#: donations/models/main.py:333 donations/models/main.py:324
 msgid "wage"
 msgstr "salariu"
 
-#: donations/models/main.py:334
+#: donations/models/main.py:334 donations/models/main.py:325
 msgid "pension"
 msgstr "pensie"
 
 #: donations/models/main.py:341 donations/views/donations_download.py:162
+#: donations/models/main.py:332
 msgid "last name"
 msgstr "nume"
 
 #: donations/models/main.py:342 donations/views/donations_download.py:163
+#: donations/models/main.py:333
 msgid "first name"
 msgstr "prenume"
 
-#: donations/models/main.py:343
+#: donations/models/main.py:343 donations/models/main.py:334
 msgid "initials"
 msgstr "inițiale"
 
 #: donations/models/main.py:345 donations/views/donations_download.py:165
+#: donations/models/main.py:336
 msgid "CNP"
 msgstr "CNP"
 
 #: donations/models/main.py:348 donations/views/donations_download.py:170
+#: donations/models/main.py:339
 msgid "city"
 msgstr "oraș"
 
-#: donations/models/main.py:371
+#: donations/models/main.py:371 donations/models/main.py:362
 msgid "anonymous"
 msgstr "anonim"
 
-#: donations/models/main.py:374
+#: donations/models/main.py:374 donations/models/main.py:365
 msgid "If the user would like the ngo to see the donation"
 msgstr "Dacă utilizatorul dorește ca ONG-ul să vadă donația"
 
-#: donations/models/main.py:379
+#: donations/models/main.py:379 donations/models/main.py:370
 msgid "income type"
 msgstr "tip venit"
 
-#: donations/models/main.py:388
+#: donations/models/main.py:388 donations/models/main.py:379
 msgid "two years"
 msgstr "doi ani"
 
-#: donations/models/main.py:390
+#: donations/models/main.py:390 donations/models/main.py:381
 msgid "If the user wants to donate for 2 years"
 msgstr "Dacă utilizatorul dorește să doneze pentru 2 ani"
 
-#: donations/models/main.py:393
+#: donations/models/main.py:393 donations/models/main.py:384
 msgid "Geo IP"
 msgstr "Geo IP"
 
-#: donations/models/main.py:395
+#: donations/models/main.py:395 donations/models/main.py:386
 msgid "PDF URL"
 msgstr "URL PDF"
 
 #: donations/models/main.py:396 donations/views/donations_download.py:178
+#: donations/models/main.py:387
 msgid "filename"
 msgstr "nume fișier"
 
-#: donations/models/main.py:397
+#: donations/models/main.py:397 donations/models/main.py:388
 msgid "has signed"
 msgstr "a semnat"
 
-#: donations/models/main.py:400
+#: donations/models/main.py:400 donations/models/main.py:391
 msgid "PDF file"
 msgstr "fișier PDF"
 
-#: donations/models/main.py:414
+#: donations/models/main.py:414 donations/models/main.py:405
 msgid "donor"
 msgstr "donator"
 
-#: donations/models/main.py:415
+#: donations/models/main.py:415 donations/models/main.py:406
 msgid "donors"
 msgstr "donatori"
 
 #: donations/views/account_management.py:48
+#: donations/views/account_management.py:44
 msgid ""
 "If the email address is valid, you will receive an email with instructions."
 msgstr "Dacă adresa de email este validă, vei primi un email cu instrucțiuni."
 
 #: donations/views/account_management.py:70
+#: donations/views/account_management.py:66
 msgid "Reset redirectioneaza.ro password"
 msgstr "Resetare parolă redirectioneaza.ro"
 
 #: donations/views/account_management.py:88
+#: donations/views/account_management.py:84
 msgid "sign up"
 msgstr "înregistrare"
 
@@ -435,6 +453,7 @@ msgid "It seems that this email and password combination is incorrect."
 msgstr "Se pare că această combinație de email și parolă este incorectă."
 
 #: donations/views/account_management.py:236
+#: donations/views/account_management.py:232
 msgid "Welcome to redirectioneaza.ro"
 msgstr "Confirmare cont redirectioneaza.ro"
 
@@ -511,6 +530,7 @@ msgid "The IBAN number must start with 'RO'"
 msgstr "IBAN-ul trebuie să înceapă cu 'RO'"
 
 #: donations/views/ngo.py:152 donations/views/ngo.py:398
+#: donations/views/ngo.py:397
 msgid "Formularul tău de redirecționare"
 msgstr "Formularul tău de redirecționare"
 
@@ -661,24 +681,30 @@ msgid "Subdomain must have between 3 and 100 characters."
 msgstr "Subdomeniul trebuie să aibă între 3 și 100 de caractere."
 
 #: templates/v2/account/errors/app_missing.html:6
+#, fuzzy
 msgid "Application not activated"
 msgstr "Aplicația nu este activată"
 
 #: templates/v2/account/errors/app_missing.html:9
+#: templates/v2/account/errors/app_missing.html:6
 msgid "The application is not activated for this user/organization."
 msgstr ""
 "Aplicația nu este activată pentru acest utilizator/această organizație."
 
 #: templates/v2/account/errors/base.html:6
 #: templates/v2/account/errors/base.html:11
+#: templates/v2/account/errors/base.html:8
+#: templates/v2/account/errors/base.html:13
 msgid "Sign In Error"
 msgstr "Eroare la autentificare"
 
 #: templates/v2/account/errors/multiple_ngos.html:6
+#, fuzzy
 msgid "Multiple NGOs for this CUI"
 msgstr "Mai multe ONG-uri cu acest CUI"
 
 #: templates/v2/account/errors/multiple_ngos.html:9
+#: templates/v2/account/errors/multiple_ngos.html:6
 msgid ""
 "Multiple NGOs have been found during synchronization. Admins have been "
 "notified and will resolve the issue shortly."
@@ -687,10 +713,12 @@ msgstr ""
 "fost notificați și vor rezolva problema în curând."
 
 #: templates/v2/account/errors/unknown_role.html:6
+#, fuzzy
 msgid "Unknown role"
 msgstr "Rol necunoscut"
 
 #: templates/v2/account/errors/unknown_role.html:9
+#: templates/v2/account/errors/unknown_role.html:6
 msgid "Your current role isn't supported."
 msgstr "Rolul tău actual nu este suportat."
 
