@@ -11,12 +11,14 @@ on:
 name: Build Docker image
 
 jobs:
+
   build:
     name: Build Docker image
-    uses: code4romania/.github/.github/workflows/build-push-image-ecr.yml@main
+    uses: code4romania/.github/.github/workflows/build-push-image.yml@main
     with:
-      image_name: redirectioneaza
-      region: eu-west-1
+      images: code4romania/redirectioneaza
+      context: ./
       dockerfile: ./docker/dockerfiles/Dockerfile
     secrets:
-      role_to_assume: ${{ secrets.ROLE_TO_ASSUME }}
+      username: ${{ secrets.DOCKER_HUB_USERNAME }}
+      token: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
