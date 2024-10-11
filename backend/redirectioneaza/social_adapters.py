@@ -15,7 +15,7 @@ from django.shortcuts import redirect
 from django.urls import reverse
 from ngohub import NGOHub
 from ngohub.exceptions import HubHTTPException
-from ngohub.models.organization import Organization
+from ngohub.models.organization import Organization, OrganizationBase
 from ngohub.models.user import UserProfile
 from sentry_sdk import capture_message
 
@@ -113,17 +113,6 @@ def common_user_init(sociallogin: SocialLogin) -> UserModel:
 
     _set_user_name(user, user_profile)
 
-    ngohub_org_id: int = user_profile.organization.id
-
-    user = _set_user_permissions(ngohub, user, ngohub_org_id, user_role, user_token)
-
-    if user_role in (settings.NGOHUB_ROLE_NGO_ADMIN, settings.NGOHUB_ROLE_NGO_EMPLOYEE):
-        _connect_user_and_ngo(user, ngohub_org_id, user_token)
-
-
-def _set_user_permissions(
-    ngohub: NGOHub, user: UserModel, ngohub_org_id: int, user_role: str, user_token: str
-) -> UserModel:
     if user_role == settings.NGOHUB_ROLE_SUPER_ADMIN:
         # A super admin from NGO Hub will become a Django admin
         user.is_staff = True
@@ -132,7 +121,16 @@ def _set_user_permissions(
 
         user.groups.add(Group.objects.get(name=MAIN_ADMIN))
 
-        return user
+        return
+
+    organization: OrganizationBase = user_profile.organization
+    _set_ngo_user(ngohub, user, user_role, user_token, organization)
+
+
+def _set_ngo_user(
+    ngohub: NGOHub, user: UserModel, user_role: str, user_token: str, user_organization: OrganizationBase
+) -> UserModel:
+    ngohub_org_id = user_organization.id
 
     if user_role == settings.NGOHUB_ROLE_NGO_ADMIN:
         if not ngohub.check_user_organization_has_application(ngo_token=user_token, login_link=settings.BASE_WEBSITE):
@@ -146,9 +144,7 @@ def _set_user_permissions(
         # Add the user to the NGO admin group
         user.groups.add(Group.objects.get(name=NGO_ADMIN))
 
-        return user
-
-    if user_role == settings.NGOHUB_ROLE_NGO_EMPLOYEE:
+    elif user_role == settings.NGOHUB_ROLE_NGO_EMPLOYEE:
         if not ngohub.check_user_organization_has_application(ngo_token=user_token, login_link=settings.BASE_WEBSITE):
             user.deactivate()
 
@@ -157,9 +153,10 @@ def _set_user_permissions(
         # Add the user to the NGO member group
         user.groups.add(Group.objects.get(name=NGO_MEMBER))
 
-        return user
+    else:
+        raise ImmediateHttpResponse(redirect(reverse("error-unknown-user-role")))
 
-    raise ImmediateHttpResponse(redirect(reverse("error-unknown-user-role")))
+    _connect_user_and_ngo(user, ngohub_org_id, user_token)
 
 
 def _set_user_name(user, user_profile) -> None:
