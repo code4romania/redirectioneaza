@@ -17,7 +17,7 @@ Including another URLconf
 
 from django.conf import settings
 from django.conf.urls.static import static
-from django.contrib import admin, admin as django_admin
+from django.contrib import admin
 from django.urls import include, path, re_path, reverse
 from django.views.generic import RedirectView
 
@@ -132,10 +132,10 @@ urlpatterns = (
         path("cron/ngos/remove-form/", NgoRemoveForms.as_view(), name="cron-ngo-remove-form"),
         path("cron/ngos/export/", NgoExport.as_view(), name="cron-ngo-export"),
         path("cron/export/custom/", CustomExport.as_view(), name="cron-custom-export"),
-        #
-        path("admin/django/login/", RedirectView.as_view(pattern_name="login", permanent=True)),
         # Django Admin
-        path("admin/django/", django_admin.site.urls),
+        path("admin/django/", RedirectView.as_view(pattern_name="admin:index", permanent=True)),
+        path("admin/avansat/login/", RedirectView.as_view(pattern_name="login", permanent=True)),
+        path("admin/avansat/", admin.site.urls),
         # ADMIN HANDLERS
         path("admin/ong-nou/", AdminNewNgoHandler.as_view(), name="admin-ong-nou"),
         path("admin/conturi/", UserAccounts.as_view(), name="admin-users"),
