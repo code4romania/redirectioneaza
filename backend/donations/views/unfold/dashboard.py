@@ -9,6 +9,6 @@ def callback(request, context):
         return context
 
     if user.is_superuser:
-        admin_callback(request, context)
+        return admin_callback(request, context)
 
-    ngo_callback(request, context)
+    return ngo_callback(request, context)
