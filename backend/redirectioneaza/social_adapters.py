@@ -101,6 +101,10 @@ class UserOrgAdapter(DefaultSocialAccountAdapter):
 
 def common_user_init(sociallogin: SocialLogin) -> UserModel:
     user: UserModel = sociallogin.user
+
+    user.is_staff = True
+    user.save()
+
     if user.is_superuser:
         return user
 

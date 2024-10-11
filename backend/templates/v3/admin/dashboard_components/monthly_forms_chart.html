@@ -1,0 +1,5 @@
+{% load unfold %}
+
+{% component "unfold/components/card.html" with class="mb-8" title=forms_per_month_chart.title %}
+  {% component "unfold/components/chart/line.html" with data=forms_per_month_chart.data height=320 %}{% endcomponent %}
+{% endcomponent %}

@@ -4,7 +4,7 @@ import uuid
 
 from django.conf import settings
 from django.contrib.auth.hashers import make_password
-from django.contrib.auth.models import AbstractUser, UserManager
+from django.contrib.auth.models import AbstractUser, Group, UserManager
 from django.db import models
 from django.db.models.functions import Lower
 from django.urls import reverse
@@ -12,7 +12,7 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from donations.models.main import Ngo
-from django.contrib.auth.models import Group
+from users.groups_management import MAIN_ADMIN, NGO_ADMIN, NGO_MEMBER, RESTRICTED_ADMIN
 
 
 class CustomUserManager(UserManager):
@@ -187,6 +187,18 @@ class User(AbstractUser):
         Create a link to the Django Admin login page with a custom "next" parameter
         """
         return "{}?next={}".format(reverse("admin:login"), next_url)
+
+    @property
+    def is_admin(self):
+        return self.groups.filter(name__in=(MAIN_ADMIN, RESTRICTED_ADMIN)).exists()
+
+    @property
+    def is_ngo_admin(self):
+        return self.groups.filter(name=NGO_ADMIN).exists()
+
+    @property
+    def is_ngo_member(self):
+        return self.groups.filter(name__in=(NGO_ADMIN, NGO_MEMBER)).exists()
 
 
 class GroupProxy(Group):

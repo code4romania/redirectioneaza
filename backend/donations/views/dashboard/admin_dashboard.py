@@ -1,26 +1,29 @@
-import json
-from datetime import datetime
-from typing import Dict
+from typing import Dict, List, Union
 
 from django.conf import settings
 from django.contrib import messages
 from django.template.loader import render_to_string
 from django.urls import reverse
-from django.utils.http import urlencode
 from django.utils.safestring import mark_safe
-from django.utils.timezone import localtime, now
+from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 
 from donations.models.main import Donor, Ngo
 from redirectioneaza.common.cache import cache_decorator
 
+from .helpers import (
+    generate_donations_per_month_chart,
+    get_current_year_range,
+    get_encoded_current_year_range,
+)
+
 ADMIN_DASHBOARD_CACHE_KEY = "ADMIN_DASHBOARD"
 
 
 @cache_decorator(timeout=settings.TIMEOUT_CACHE_SHORT, cache_key_prefix=ADMIN_DASHBOARD_CACHE_KEY)
-def admin_callback(request, context):
+def callback(request, context) -> Dict:
     today = now()
-    years_range_ascending = range(settings.START_YEAR, today.year + 1)
+    years_range_ascending = get_current_year_range()
 
     messages.warning(
         request,
@@ -32,11 +35,11 @@ def admin_callback(request, context):
         ),
     )
 
-    header_stats = _get_header_stats(today)
+    header_stats: List[List[Dict[str, Union[str, int]]]] = _get_header_stats(today)
 
-    yearly_stats = _get_yearly_stats(years_range_ascending)
+    yearly_stats: List[Dict] = _get_yearly_stats(years_range_ascending)
 
-    forms_per_month_chart = _create_chart_statistics(years_range_ascending)
+    forms_per_month_chart: Dict[str, str] = _create_chart_statistics()
 
     context.update(
         {
@@ -49,107 +52,60 @@ def admin_callback(request, context):
     return context
 
 
-def _get_header_stats(today):
+def _get_header_stats(today) -> List[List[Dict[str, Union[str, int]]]]:
     current_year = today.year
 
-    start_of_this_year = datetime(year=current_year, month=1, day=1, hour=0, minute=0, second=0, tzinfo=today.tzinfo)
-    end_of_next_year = start_of_this_year.replace(year=current_year + 1)
-
-    current_year_range: str = urlencode(
-        {
-            "date_created__gte": localtime(start_of_this_year),
-            "date_created__lt": localtime(end_of_next_year),
-        }
-    )
+    current_year_range = get_encoded_current_year_range(current_year, today.tzinfo)
 
     return [
-        {
-            "title": _("Donations this year"),
-            "icon": "edit_document",
-            "metric": Donor.objects.filter(date_created__year=current_year).count(),
-            "footer": _create_stat_link(
-                url=f'{reverse("admin:donations_donor_changelist")}?{current_year_range}', text=_("View all")
-            ),
-        },
-        {
-            "title": _("Donations all-time"),
-            "icon": "edit_document",
-            "metric": Donor.objects.count(),
-            "footer": _create_stat_link(url=reverse("admin:donations_donor_changelist"), text=_("View all")),
-        },
-        {
-            "title": _("NGOs registered"),
-            "icon": "foundation",
-            "metric": Ngo.active.count(),
-            "footer": _create_stat_link(
-                url=f'{reverse("admin:donations_ngo_changelist")}?is_active=1', text=_("View all")
-            ),
-        },
-        {
-            "title": _("NGOs from NGO Hub"),
-            "icon": "foundation",
-            "metric": Ngo.ngo_hub.count(),
-            "footer": _create_stat_link(
-                url=f'{reverse("admin:donations_ngo_changelist")}?is_active=1&is_ngohub=1', text=_("View all")
-            ),
-        },
+        [
+            {
+                "title": _("Donations this year"),
+                "icon": "edit_document",
+                "metric": Donor.objects.filter(date_created__year=current_year).count(),
+                "footer": _create_stat_link(
+                    url=f'{reverse("admin:donations_donor_changelist")}?{current_year_range}', text=_("View all")
+                ),
+            },
+            {
+                "title": _("Donations all-time"),
+                "icon": "edit_document",
+                "metric": Donor.objects.count(),
+                "footer": _create_stat_link(url=reverse("admin:donations_donor_changelist"), text=_("View all")),
+            },
+            {
+                "title": _("NGOs registered"),
+                "icon": "foundation",
+                "metric": Ngo.active.count(),
+                "footer": _create_stat_link(
+                    url=f'{reverse("admin:donations_ngo_changelist")}?is_active=1', text=_("View all")
+                ),
+            },
+            {
+                "title": _("NGOs from NGO Hub"),
+                "icon": "foundation",
+                "metric": Ngo.ngo_hub.count(),
+                "footer": _create_stat_link(
+                    url=f'{reverse("admin:donations_ngo_changelist")}?is_active=1&is_ngohub=1', text=_("View all")
+                ),
+            },
+        ]
     ]
 
 
-def _create_chart_statistics(years_range_ascending):
+def _create_chart_statistics() -> Dict[str, str]:
     default_border_width: int = 3
 
     donations_per_month_queryset = [
         Donor.objects.filter(date_created__month=month) for month in range(1, settings.DONATIONS_LIMIT.month + 1)
     ]
 
-    dataset_parameters = [
-        {
-            "year": year,
-            "border_color": (
-                "rgba("
-                f"{settings.CHART_COLORS[year % len(settings.CHART_COLORS)]['r']}, "
-                f"{settings.CHART_COLORS[year % len(settings.CHART_COLORS)]['g']}, "
-                f"{settings.CHART_COLORS[year % len(settings.CHART_COLORS)]['b']}, "
-                "1)"
-            ),
-            "background_color": (
-                "rgba("
-                f"{settings.CHART_COLORS[year % len(settings.CHART_COLORS)]['r']}, "
-                f"{settings.CHART_COLORS[year % len(settings.CHART_COLORS)]['g']}, "
-                f"{settings.CHART_COLORS[year % len(settings.CHART_COLORS)]['b']}, "
-                "0.2)"
-            ),
-        }
-        for year in years_range_ascending
-    ]
-
-    forms_per_month_chart = {
-        "title": _("Donations per month"),
-        "data": json.dumps(
-            {
-                "labels": [str(month["label"]) for month in settings.MONTHS[: settings.DONATIONS_LIMIT.month]],
-                "datasets": [
-                    {
-                        "label": str(data["year"]),
-                        "data": [
-                            donations.filter(date_created__year=data["year"]).count()
-                            for donations in donations_per_month_queryset
-                        ],
-                        "borderColor": data["border_color"],
-                        "backgroundColor": data["background_color"],
-                        "borderWidth": data.get("border_width", default_border_width),
-                    }
-                    for data in dataset_parameters
-                ],
-            }
-        ),
-    }
+    forms_per_month_chart = generate_donations_per_month_chart(default_border_width, donations_per_month_queryset)
 
     return forms_per_month_chart
 
 
-def _get_yearly_stats(years_range_ascending):
+def _get_yearly_stats(years_range_ascending) -> List[Dict[str, Union[int, List[Dict]]]]:
     statistics = [_get_stats_for_year(year) for year in years_range_ascending]
 
     for index, statistic in enumerate(statistics):
@@ -185,7 +141,7 @@ def _get_stats_for_year(year: int) -> Dict[str, int]:
     return statistic
 
 
-def _format_yearly_stats(statistics):
+def _format_yearly_stats(statistics) -> List[Dict[str, Union[int, List[Dict]]]]:
     return [
         {
             "year": statistic["year"],

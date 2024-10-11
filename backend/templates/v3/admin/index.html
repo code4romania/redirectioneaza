@@ -6,49 +6,24 @@
 
   {% component "unfold/components/container.html" %}
 
-    {% component "unfold/components/flex.html" with class="gap-8 mb-8 flex-col lg:flex-row" %}
-      {% for stat in header_stats %}
-        {% component "unfold/components/card.html" with class="lg:w-1/3" label=stat.label footer=stat.footer footer_class=stat.footer_class %}
-          {% component "unfold/components/title.html" %}
-            {{ stat.metric }}
-          {% endcomponent %}
-
-          {% component "unfold/components/text.html" %}
-            {{ stat.title }}
-          {% endcomponent %}
-        {% endcomponent %}
-      {% endfor %}
-    {% endcomponent %}
+    {% if header_stats %}
+      {% include "admin/dashboard_components/header_stats.html" with header_stats=header_stats %}
+    {% endif %}
 
 
-    {% component "unfold/components/card.html" with class="mb-8" title=forms_per_month_chart.title %}
-      {% component "unfold/components/chart/line.html" with data=forms_per_month_chart.data height=320 %}{% endcomponent %}
-    {% endcomponent %}
+    {% if forms_per_month_chart %}
+      {% include "admin/dashboard_components/monthly_forms_chart.html" with forms_per_month_chart=forms_per_month_chart %}
+    {% endif %}
 
 
-    {% component "unfold/components/separator.html" %}{% endcomponent %}
+    {% if yearly_stats %}
+      {% include "admin/dashboard_components/yearly_stats.html" with yearly_stats=yearly_stats %}
+    {% endif %}
 
 
-    {% for yearly_stat in yearly_stats %}
-      {% component "unfold/components/title.html" %}
-        {{ yearly_stat.year }}
-      {% endcomponent %}
-
-      {% component "unfold/components/flex.html" with class="gap-8 mb-8 flex-col lg:flex-row" %}
-        {% for stat_card in yearly_stat.stats %}
-
-          {% component "unfold/components/card.html" with class="lg:w-1/3" label=stat_card.label %}
-            {% component "unfold/components/title.html" %}
-              {{ stat_card.metric }}
-            {% endcomponent %}
-
-            {% component "unfold/components/text.html" %}
-              {{ stat_card.title }}
-            {% endcomponent %}
-          {% endcomponent %}
-        {% endfor %}
-      {% endcomponent %}
-    {% endfor %}
+    {% if table_stats %}
+      {% include "admin/dashboard_components/table_stats.html" with table_stats=table_stats %}
+    {% endif %}
 
   {% endcomponent %}
 

@@ -16,7 +16,6 @@ SIDEBAR_NAVIGATION = [
                 "title": _("Dashboard"),
                 "icon": "dashboard",
                 "link": reverse_lazy("admin:index"),
-                "permission": lambda request: request.user.is_superuser,
             },
         ],
     },
@@ -101,7 +100,7 @@ UNFOLD = {
     # https://unfoldadmin.com/docs/configuration/settings/
     # Site configuration
     "ENVIRONMENT": "redirectioneaza.callbacks.environment_callback",
-    "DASHBOARD_CALLBACK": "donations.views.unfold.dashboard.callback",
+    "DASHBOARD_CALLBACK": "donations.views.dashboard.dashboard.callback",
     # Site customization
     "SITE_HEADER": f"Admin | {VERSION_LABEL}",
     "SITE_TITLE": TITLE,

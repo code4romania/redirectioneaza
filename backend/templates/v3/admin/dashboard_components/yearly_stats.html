@@ -1,0 +1,23 @@
+{% load unfold %}
+
+{% for yearly_stat in yearly_stats %}
+  {% component "unfold/components/title.html" %}
+    {{ yearly_stat.year }}
+  {% endcomponent %}
+
+  {% component "unfold/components/flex.html" with class="gap-8 mb-8 flex-col lg:flex-row" %}
+    {% for stat_card in yearly_stat.stats %}
+
+      {% component "unfold/components/card.html" with class="lg:w-1/3" label=stat_card.label %}
+        {% component "unfold/components/title.html" %}
+          {{ stat_card.metric }}
+        {% endcomponent %}
+
+        {% component "unfold/components/text.html" %}
+          {{ stat_card.title }}
+        {% endcomponent %}
+      {% endcomponent %}
+    {% endfor %}
+  {% endcomponent %}
+{% endfor %}
+
