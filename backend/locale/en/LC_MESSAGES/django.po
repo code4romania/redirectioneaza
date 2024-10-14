@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-10 13:35+0300\n"
+"POT-Creation-Date: 2024-10-14 11:07+0300\n"
 "PO-Revision-Date: 2024-02-28 15:45+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -36,10 +36,8 @@ msgid "User"
 msgstr "User"
 
 #: donations/admin.py:61
-#, fuzzy
-#| msgid "Last NGO Hub update"
 msgid "Has NGO Hub account"
-msgstr "Last NGO Hub update"
+msgstr "Has NGO Hub account"
 
 #: donations/admin.py:65 donations/admin.py:83
 msgid "Yes"
@@ -54,8 +52,8 @@ msgid "Has owner"
 msgstr "Has owner"
 
 #: donations/admin.py:131 donations/admin.py:176 donations/apps.py:8
-#: donations/views/admin_dashboard.py:194 redirectioneaza/settings/unfold.py:24
-#: redirectioneaza/settings/unfold.py:33
+#: donations/views/dashboard/admin_dashboard.py:150
+#: redirectioneaza/settings/unfold.py:23 redirectioneaza/settings/unfold.py:32
 msgid "Donations"
 msgstr "Donations"
 
@@ -113,19 +111,19 @@ msgstr "Registration numbers are clean."
 
 #: donations/admin.py:218
 msgid "Update from NGO Hub synchronously"
-msgstr ""
+msgstr "Update from NGO Hub synchronously"
 
 #: donations/admin.py:223
 msgid "NGOs updated from NGO Hub."
-msgstr ""
+msgstr "NGOs updated from NGO Hub."
 
 #: donations/admin.py:225
 msgid "Update from NGO Hub asynchronously"
-msgstr ""
+msgstr "Update from NGO Hub asynchronously"
 
 #: donations/admin.py:230
 msgid "NGOs are being updated from NGO Hub."
-msgstr ""
+msgstr "NGOs are being updated from NGO Hub."
 
 #: donations/admin.py:260
 msgid "Identity"
@@ -359,7 +357,7 @@ msgid "date updated"
 msgstr "date updated"
 
 #: donations/models/main.py:276 partners/admin.py:13 partners/models.py:52
-#: redirectioneaza/settings/unfold.py:27
+#: redirectioneaza/settings/unfold.py:26
 msgid "NGOs"
 msgstr "NGOs"
 
@@ -447,7 +445,7 @@ msgstr ""
 
 #: donations/views/account_management.py:70
 msgid "Reset redirectioneaza.ro password"
-msgstr "Reset site password"
+msgstr "Reset redirectioneaza.ro password"
 
 #: donations/views/account_management.py:88
 msgid "sign up"
@@ -459,45 +457,59 @@ msgstr "It seems that this email and password combination is incorrect."
 
 #: donations/views/account_management.py:236
 msgid "Welcome to redirectioneaza.ro"
-msgstr "Confirm redirectioneaza.ro account"
+msgstr "Welcome to redirectioneaza.ro"
 
-#: donations/views/admin_dashboard.py:67
-#, fuzzy
-#| msgid "Donations"
+#: donations/views/dashboard/admin_dashboard.py:63
 msgid "Donations this year"
-msgstr "Donations"
+msgstr "Donations this year"
 
-#: donations/views/admin_dashboard.py:71 donations/views/admin_dashboard.py:78
-#: donations/views/admin_dashboard.py:85 donations/views/admin_dashboard.py:93
-#: donations/views/admin_dashboard.py:200
-#: donations/views/admin_dashboard.py:210
-#: donations/views/admin_dashboard.py:220
+#: donations/views/dashboard/admin_dashboard.py:67
+#: donations/views/dashboard/admin_dashboard.py:74
+#: donations/views/dashboard/admin_dashboard.py:81
+#: donations/views/dashboard/admin_dashboard.py:89
+#: donations/views/dashboard/admin_dashboard.py:156
+#: donations/views/dashboard/admin_dashboard.py:166
+#: donations/views/dashboard/admin_dashboard.py:176
 msgid "View all"
-msgstr ""
+msgstr "View all"
 
-#: donations/views/admin_dashboard.py:75
-#, fuzzy
-#| msgid "Donations"
+#: donations/views/dashboard/admin_dashboard.py:71
 msgid "Donations all-time"
-msgstr "Donations"
+msgstr "Donations all-time"
 
-#: donations/views/admin_dashboard.py:81 donations/views/admin_dashboard.py:204
+#: donations/views/dashboard/admin_dashboard.py:77
+#: donations/views/dashboard/admin_dashboard.py:160
 msgid "NGOs registered"
-msgstr ""
+msgstr "NGOs registered"
 
-#: donations/views/admin_dashboard.py:89
+#: donations/views/dashboard/admin_dashboard.py:85
 msgid "NGOs from NGO Hub"
-msgstr ""
+msgstr "NGOs from NGO Hub"
 
-#: donations/views/admin_dashboard.py:128
-#, fuzzy
-#| msgid "Donations"
-msgid "Donations per month"
-msgstr "Donations"
-
-#: donations/views/admin_dashboard.py:214
+#: donations/views/dashboard/admin_dashboard.py:170
 msgid "NGOs with forms"
-msgstr ""
+msgstr "NGOs with forms"
+
+#: donations/views/dashboard/helpers.py:68
+msgid "Donations per month"
+msgstr "Donations per month"
+
+#: donations/views/dashboard/ngo_dashboard.py:55
+msgid "County"
+msgstr "County"
+
+#: donations/views/dashboard/ngo_dashboard.py:56
+msgid "Number of donations"
+msgstr "Number of donations"
+
+#: donations/views/dashboard/ngo_dashboard.py:75
+msgid "Current year donations per county"
+msgstr "Current year donations per county"
+
+#: donations/views/dashboard/ngo_dashboard.py:95
+#, python-format
+msgid "Donations in %d"
+msgstr "Donations in %d"
 
 #: donations/views/donations_download.py:61
 msgid "Documents ready for download"
@@ -664,7 +676,7 @@ msgid "Metadata"
 msgstr "Metadata"
 
 #: partners/apps.py:8 partners/models.py:62
-#: redirectioneaza/settings/unfold.py:39
+#: redirectioneaza/settings/unfold.py:38
 msgid "Partners"
 msgstr "Partners"
 
@@ -722,139 +734,133 @@ msgstr "Subdomain must have between 3 and 100 characters."
 
 #: redirectioneaza/settings/app_configs.py:34
 msgid "January"
-msgstr ""
+msgstr "January"
 
 #: redirectioneaza/settings/app_configs.py:35
 msgid "Jan"
-msgstr ""
+msgstr "Jan"
 
 #: redirectioneaza/settings/app_configs.py:38
 msgid "February"
-msgstr ""
+msgstr "February"
 
 #: redirectioneaza/settings/app_configs.py:39
 msgid "Feb"
-msgstr ""
+msgstr "Feb"
 
 #: redirectioneaza/settings/app_configs.py:42
 msgid "March"
-msgstr ""
+msgstr "March"
 
 #: redirectioneaza/settings/app_configs.py:43
 msgid "Mar"
-msgstr ""
+msgstr "Mar"
 
 #: redirectioneaza/settings/app_configs.py:46
 msgid "April"
-msgstr ""
+msgstr "April"
 
 #: redirectioneaza/settings/app_configs.py:47
 msgid "Apr"
-msgstr ""
+msgstr "Apr"
 
 #: redirectioneaza/settings/app_configs.py:50
 #: redirectioneaza/settings/app_configs.py:51
 msgid "May"
-msgstr ""
+msgstr "May"
 
 #: redirectioneaza/settings/app_configs.py:54
 msgid "June"
-msgstr ""
+msgstr "June"
 
 #: redirectioneaza/settings/app_configs.py:55
 msgid "Jun"
-msgstr ""
+msgstr "Jun"
 
 #: redirectioneaza/settings/app_configs.py:58
 msgid "July"
-msgstr ""
+msgstr "July"
 
 #: redirectioneaza/settings/app_configs.py:59
 msgid "Jul"
-msgstr ""
+msgstr "Jul"
 
 #: redirectioneaza/settings/app_configs.py:62
 msgid "August"
-msgstr ""
+msgstr "August"
 
 #: redirectioneaza/settings/app_configs.py:63
 msgid "Aug"
-msgstr ""
+msgstr "Aug"
 
 #: redirectioneaza/settings/app_configs.py:66
 msgid "September"
-msgstr ""
+msgstr "September"
 
 #: redirectioneaza/settings/app_configs.py:67
 msgid "Sep"
-msgstr ""
+msgstr "Sep"
 
 #: redirectioneaza/settings/app_configs.py:70
 msgid "October"
-msgstr ""
+msgstr "October"
 
 #: redirectioneaza/settings/app_configs.py:71
 msgid "Oct"
-msgstr ""
+msgstr "Oct"
 
 #: redirectioneaza/settings/app_configs.py:74
-#, fuzzy
-#| msgid "Number"
 msgid "November"
-msgstr "Number"
+msgstr "November"
 
 #: redirectioneaza/settings/app_configs.py:75
-#, fuzzy
-#| msgid "No"
 msgid "Nov"
-msgstr "No"
+msgstr "Nov"
 
 #: redirectioneaza/settings/app_configs.py:78
 msgid "December"
-msgstr ""
+msgstr "December"
 
 #: redirectioneaza/settings/app_configs.py:79
 msgid "Dec"
-msgstr ""
+msgstr "Dec"
 
 #: redirectioneaza/settings/unfold.py:13 redirectioneaza/settings/unfold.py:16
 msgid "Dashboard"
-msgstr ""
+msgstr "Dashboard"
 
-#: redirectioneaza/settings/unfold.py:45
-#, fuzzy
-#| msgid "Donations"
+#: redirectioneaza/settings/unfold.py:44
 msgid "Donation exports"
-msgstr "Donations"
+msgstr "Donation exports"
 
-#: redirectioneaza/settings/unfold.py:53 redirectioneaza/settings/unfold.py:56
+#: redirectioneaza/settings/unfold.py:52 redirectioneaza/settings/unfold.py:55
 #: users/apps.py:8
 msgid "Users"
 msgstr "Users"
 
-#: redirectioneaza/settings/unfold.py:62 users/models.py:197
+#: redirectioneaza/settings/unfold.py:61 users/models.py:209
 msgid "Groups"
 msgstr "Groups"
 
-#: redirectioneaza/settings/unfold.py:70
+#: redirectioneaza/settings/unfold.py:69
 msgid "Django Q"
-msgstr ""
+msgstr "Django Q"
 
-#: redirectioneaza/settings/unfold.py:73
+#: redirectioneaza/settings/unfold.py:72
 msgid "Failed tasks"
-msgstr ""
+msgstr "Failed tasks"
 
-#: redirectioneaza/settings/unfold.py:79
+#: redirectioneaza/settings/unfold.py:78
 msgid "Queued tasks"
-msgstr ""
+msgstr "Queued tasks"
 
-#: redirectioneaza/settings/unfold.py:85
+#: redirectioneaza/settings/unfold.py:84
 msgid "Scheduled tasks"
-msgstr ""
+msgstr "Scheduled tasks"
 
-#: redirectioneaza/settings/unfold.py:91
+#: redirectioneaza/settings/unfold.py:90
 msgid "Successful tasks"
-msgstr ""
+msgstr "Successful tasks"
 
 #: templates/v2/account/errors/login/app_missing.html:5
 msgid "Application not activated"
@@ -866,7 +872,7 @@ msgstr "The application is not activated for this user/organization."
 
 #: templates/v2/account/errors/login/base_login.html:6
 msgid "Return to login"
-msgstr ""
+msgstr "Return to login"
 
 #: templates/v2/account/errors/login/multiple_ngos.html:5
 msgid "Multiple NGOs for this CUI"
@@ -943,27 +949,27 @@ msgstr "or click here to sign in"
 
 #: templates/v3/admin/announcements/work_in_progress.html:6
 msgid "Work in progress"
-msgstr ""
+msgstr "Work in progress"
 
 #: templates/v3/admin/announcements/work_in_progress.html:10
 msgid ""
 "The site is still a work in progress. If you have any feedback, please let "
 "us know"
 msgstr ""
+"The site is still a work in progress. If you have any feedback, please let "
+"us know"
 
 #: templates/v3/admin/announcements/work_in_progress.html:15
-#, fuzzy
-#| msgid "Contact"
 msgid "Contact us"
-msgstr "Contact"
+msgstr "Contact us"
 
 #: templates/v3/admin/base_admin.html:12
 msgid "Django site admin"
-msgstr ""
+msgstr "Django site admin"
 
 #: templates/v3/admin/base_admin.html:18
 msgid "Django administration"
-msgstr ""
+msgstr "Django administration"
 
 #: users/admin.py:52
 msgid "Permissions"
@@ -1005,7 +1011,7 @@ msgstr "validation token timestamp"
 msgid "old password"
 msgstr "old password"
 
-#: users/models.py:196
+#: users/models.py:208
 msgid "Group"
 msgstr "Group"
 

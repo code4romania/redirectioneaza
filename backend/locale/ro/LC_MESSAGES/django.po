@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-10 13:35+0300\n"
+"POT-Creation-Date: 2024-10-14 11:07+0300\n"
 "PO-Revision-Date: 2024-03-07 11:27+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -53,8 +53,8 @@ msgid "Has owner"
 msgstr "Are utilizator"
 
 #: donations/admin.py:131 donations/admin.py:176 donations/apps.py:8
-#: donations/views/admin_dashboard.py:194 redirectioneaza/settings/unfold.py:24
-#: redirectioneaza/settings/unfold.py:33
+#: donations/views/dashboard/admin_dashboard.py:150
+#: redirectioneaza/settings/unfold.py:23 redirectioneaza/settings/unfold.py:32
 msgid "Donations"
 msgstr "Donații"
 
@@ -360,7 +360,7 @@ msgid "date updated"
 msgstr "data actualizării"
 
 #: donations/models/main.py:276 partners/admin.py:13 partners/models.py:52
-#: redirectioneaza/settings/unfold.py:27
+#: redirectioneaza/settings/unfold.py:26
 msgid "NGOs"
 msgstr "ONG-uri"
 
@@ -461,37 +461,57 @@ msgstr "Se pare că această combinație de email și parolă este incorectă."
 msgid "Welcome to redirectioneaza.ro"
 msgstr "Confirmare cont redirectioneaza.ro"
 
-#: donations/views/admin_dashboard.py:67
+#: donations/views/dashboard/admin_dashboard.py:63
 msgid "Donations this year"
 msgstr "Donații anul acesta"
 
-#: donations/views/admin_dashboard.py:71 donations/views/admin_dashboard.py:78
-#: donations/views/admin_dashboard.py:85 donations/views/admin_dashboard.py:93
-#: donations/views/admin_dashboard.py:200
-#: donations/views/admin_dashboard.py:210
-#: donations/views/admin_dashboard.py:220
+#: donations/views/dashboard/admin_dashboard.py:67
+#: donations/views/dashboard/admin_dashboard.py:74
+#: donations/views/dashboard/admin_dashboard.py:81
+#: donations/views/dashboard/admin_dashboard.py:89
+#: donations/views/dashboard/admin_dashboard.py:156
+#: donations/views/dashboard/admin_dashboard.py:166
+#: donations/views/dashboard/admin_dashboard.py:176
 msgid "View all"
 msgstr "Vezi toate"
 
-#: donations/views/admin_dashboard.py:75
+#: donations/views/dashboard/admin_dashboard.py:71
 msgid "Donations all-time"
 msgstr "Donații totale"
 
-#: donations/views/admin_dashboard.py:81 donations/views/admin_dashboard.py:204
+#: donations/views/dashboard/admin_dashboard.py:77
+#: donations/views/dashboard/admin_dashboard.py:160
 msgid "NGOs registered"
 msgstr "ONG-uri înregistrate"
 
-#: donations/views/admin_dashboard.py:89
+#: donations/views/dashboard/admin_dashboard.py:85
 msgid "NGOs from NGO Hub"
 msgstr "ONG-uri din NGO Hub"
 
-#: donations/views/admin_dashboard.py:128
+#: donations/views/dashboard/admin_dashboard.py:170
+msgid "NGOs with forms"
+msgstr "ONG-uri cu formulare"
+
+#: donations/views/dashboard/helpers.py:68
 msgid "Donations per month"
 msgstr "Donații pe lună"
 
-#: donations/views/admin_dashboard.py:214
-msgid "NGOs with forms"
-msgstr "ONG-uri cu formulare"
+#: donations/views/dashboard/ngo_dashboard.py:55
+msgid "County"
+msgstr "Județ"
+
+#: donations/views/dashboard/ngo_dashboard.py:56
+msgid "Number of donations"
+msgstr "Număr de donații"
+
+#: donations/views/dashboard/ngo_dashboard.py:75
+msgid "Current year donations per county"
+msgstr "Donații pe județe pentru anul curent"
+
+#: donations/views/dashboard/ngo_dashboard.py:95
+#, python-format
+msgid "Donations in %d"
+msgstr "Donații în %d"
 
 #: donations/views/donations_download.py:61
 msgid "Documents ready for download"
@@ -658,7 +678,7 @@ msgid "Metadata"
 msgstr "Metadate"
 
 #: partners/apps.py:8 partners/models.py:62
-#: redirectioneaza/settings/unfold.py:39
+#: redirectioneaza/settings/unfold.py:38
 msgid "Partners"
 msgstr "Parteneri"
 
@@ -813,36 +833,36 @@ msgstr "Dec"
 msgid "Dashboard"
 msgstr "Tablou de bord"
 
-#: redirectioneaza/settings/unfold.py:45
+#: redirectioneaza/settings/unfold.py:44
 msgid "Donation exports"
 msgstr "Exporturi de donații"
 
-#: redirectioneaza/settings/unfold.py:53 redirectioneaza/settings/unfold.py:56
+#: redirectioneaza/settings/unfold.py:52 redirectioneaza/settings/unfold.py:55
 #: users/apps.py:8
 msgid "Users"
 msgstr "Utilizatori"
 
-#: redirectioneaza/settings/unfold.py:62 users/models.py:197
+#: redirectioneaza/settings/unfold.py:61 users/models.py:209
 msgid "Groups"
 msgstr "Grupuri"
 
-#: redirectioneaza/settings/unfold.py:70
+#: redirectioneaza/settings/unfold.py:69
 msgid "Django Q"
 msgstr "Django Q"
 
-#: redirectioneaza/settings/unfold.py:73
+#: redirectioneaza/settings/unfold.py:72
 msgid "Failed tasks"
 msgstr "Task-uri eșuate"
 
-#: redirectioneaza/settings/unfold.py:79
+#: redirectioneaza/settings/unfold.py:78
 msgid "Queued tasks"
 msgstr "Task-uri în așteptare"
 
-#: redirectioneaza/settings/unfold.py:85
+#: redirectioneaza/settings/unfold.py:84
 msgid "Scheduled tasks"
 msgstr "Task-uri programate"
 
-#: redirectioneaza/settings/unfold.py:91
+#: redirectioneaza/settings/unfold.py:90
 msgid "Successful tasks"
 msgstr "Task-uri reușite"
 
@@ -995,7 +1015,7 @@ msgstr "dată token de validare"
 msgid "old password"
 msgstr "parolă veche"
 
-#: users/models.py:196
+#: users/models.py:208
 msgid "Group"
 msgstr "Grup"
 
