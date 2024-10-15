@@ -1,0 +1,601 @@
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2024-10-15 09:04+0000\n"
+"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"Language-Team: Armenian <https://translate.commitglobal.org/projects/"
+"act4good/core/hy/>\n"
+"Language: hy\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.6.2\n"
+
+#: donations/admin.py:36
+msgid "User Link"
+msgstr "Օգտատիրոջ հղում"
+
+#: donations/admin.py:40
+msgid "User Details"
+msgstr "Օգտատիրոջ տվյալներ"
+
+#: donations/admin.py:52
+msgid "User"
+msgstr "Օգտատեր"
+
+#: donations/admin.py:63
+msgid "Yes"
+msgstr "այո"
+
+#: donations/admin.py:63
+msgid "No"
+msgstr "ոչ"
+
+#: donations/admin.py:44
+msgid "User Permissions"
+msgstr "Օգտատիրոջ թույլտվություն"
+
+#: donations/forms/account.py:24 donations/forms/common.py:31
+msgid "Password is required"
+msgstr "Գաղտնաբառը պարտադիր է"
+
+#: donations/admin.py:102 donations/admin.py:182 donations/admin.py:222
+#: donations/models/jobs.py:28 donations/models/main.py:234
+#: donations/models/main.py:294 partners/admin.py:11 users/models.py:70
+msgid "NGO"
+msgstr "ՀԿ"
+
+#: donations/admin.py:59
+msgid "Has owner"
+msgstr "Ունի օգտատեր"
+
+#: donations/admin.py:106
+msgid "Activity"
+msgstr "Գործունեություն"
+
+#: donations/admin.py:110
+msgid "Logo"
+msgstr "Լոգո"
+
+#: donations/admin.py:114
+msgid "Contact"
+msgstr "Կապ"
+
+#: donations/admin.py:118
+msgid "Details"
+msgstr "Մանրամասներ"
+
+#: donations/admin.py:122 donations/admin.py:198 donations/admin.py:234
+msgid "Date"
+msgstr "Ամսաթիվ"
+
+#: donations/admin.py:129
+msgid "Open the NGO donor list"
+msgstr "Բացել ՀԿ-ների դոնորների ցանկը"
+
+#: donations/admin.py:186
+msgid "Identity"
+msgstr "Ինքնություն"
+
+#: donations/admin.py:190
+msgid "Info"
+msgstr "Տեղեկություն"
+
+#: donations/admin.py:194 donations/admin.py:230 importer/models.py:28
+msgid "File"
+msgstr "Ֆայլ"
+
+#: donations/admin.py:206
+msgid "Form"
+msgstr "հարցաթերթ"
+
+#: donations/admin.py:226 importer/models.py:24
+msgid "Status"
+msgstr "Կարգավիճակ"
+
+#: donations/forms/account.py:18 donations/forms/account.py:56
+#: donations/forms/account.py:69
+msgid "Email is required"
+msgstr "Էլ. փոստը պարտադիր է"
+
+#: donations/forms/account.py:44
+msgid "First name is required"
+msgstr "Անունը պարտադիր է"
+
+#: donations/forms/account.py:50
+msgid "Last name is required"
+msgstr "Ազգանունը պարտադիր է"
+
+#: donations/forms/common.py:39
+msgid "Passwords do not match"
+msgstr "Գաղտնաբառերը չեն համընկնում"
+
+#: donations/forms/donation.py:9
+msgid "Street"
+msgstr "Փողոց"
+
+#: donations/forms/donation.py:10
+msgid "Number"
+msgstr "Թիվ"
+
+#: donations/forms/donation.py:11
+msgid "Building"
+msgstr "Շենք"
+
+#: donations/forms/donation.py:12
+msgid "Entrance"
+msgstr "Մուտք"
+
+#: donations/forms/donation.py:13
+msgid "Floor"
+msgstr "Հարկ"
+
+#: donations/forms/donation.py:14
+msgid "Apartment"
+msgstr "Բնակարան"
+
+#: donations/forms/donation.py:15
+msgid "Terms"
+msgstr "Պայմաններ"
+
+#: donations/models/jobs.py:18
+msgid "New"
+msgstr "Նոր"
+
+#: donations/models/jobs.py:19 importer/models.py:18
+msgid "Error"
+msgstr "Սխալ"
+
+#: donations/models/jobs.py:20 importer/models.py:17
+msgid "Done"
+msgstr "Կատարված է"
+
+#: donations/models/jobs.py:35
+msgid "owner"
+msgstr "օգտատեր"
+
+#: donations/models/jobs.py:41
+msgid "status"
+msgstr "կարգավիճակ"
+
+#: donations/models/jobs.py:65
+msgid "job"
+msgstr "աշխատանք"
+
+#: donations/models/jobs.py:66
+msgid "jobs"
+msgstr "աշխատանքներ"
+
+#: donations/models/main.py:85
+msgid "The ID number must contain only digits"
+msgstr "ID համարը պետք է պարունակի միայն թվանշաններ"
+
+#: donations/models/main.py:88
+msgid "The ID number must be between 2 and 10 digits long"
+msgstr "ID համարը պետք է լինի 2-ից 10 նիշ"
+
+#: donations/models/main.py:107
+msgid "The ID number is not valid"
+msgstr "ID համարը վավեր չէ"
+
+#: donations/models/main.py:127
+msgid "description"
+msgstr "նկարագրություն"
+
+#: donations/models/main.py:132
+msgid "logo"
+msgstr "լոգո"
+
+#: donations/models/main.py:149
+msgid "bank account"
+msgstr "բանկային հաշիվ"
+
+#: donations/models/main.py:162 donations/models/main.py:320
+msgid "address"
+msgstr "հասցե"
+
+#: donations/models/main.py:164 donations/models/main.py:313
+#: donations/views/donations_download.py:166
+msgid "county"
+msgstr "մարզ"
+
+#: donations/models/main.py:172
+msgid "active region"
+msgstr "ակտիվ տարածաշրջան"
+
+#: donations/models/main.py:181 donations/models/main.py:323
+msgid "telephone"
+msgstr "հեռախոս"
+
+#: donations/models/main.py:183 donations/models/main.py:324
+#: donations/views/donations_download.py:165
+msgid "email"
+msgstr "էլ. փոստ"
+
+#: donations/models/main.py:184
+msgid "website"
+msgstr "վեբկայք"
+
+#: donations/models/main.py:189 users/models.py:78
+msgid "is verified"
+msgstr "վավերացված է"
+
+#: donations/models/main.py:193
+msgid "has special status"
+msgstr "ունի հատուկ կարգավիճակ"
+
+#: donations/models/main.py:197
+msgid "is accepting forms"
+msgstr "ընդունում է ձևաթղթեր"
+
+#: donations/views/donations_download.py:173
+msgid "floor"
+msgstr "հարկ"
+
+#: donations/views/donations_download.py:174
+msgid "apartment"
+msgstr "բնակարան"
+
+#: donations/views/donations_download.py:176
+msgid "date"
+msgstr "ամսաթիվ"
+
+#: donations/views/donations_download.py:177
+msgid "duration"
+msgstr "տևողություն"
+
+#: donations/admin.py:98 donations/admin.py:127
+msgid "Donations"
+msgstr "Նվիրատվություններ"
+
+#: donations/models/jobs.py:52 donations/models/main.py:218
+#: donations/models/main.py:363 partners/models.py:54 users/models.py:86
+msgid "date created"
+msgstr "ամսաթիվը ստեղծվել է"
+
+#: importer/models.py:15
+msgid "Pending"
+msgstr "Սպասվում է"
+
+#: importer/models.py:16
+msgid "Processing"
+msgstr "Մշակում"
+
+#: importer/models.py:22
+msgid "Import type"
+msgstr "Ներմուծման տեսակը"
+
+#: importer/models.py:30
+msgid "Uploaded at"
+msgstr "Վերբեռնված է"
+
+#: importer/models.py:38
+msgid "Import"
+msgstr "Ներմուծում"
+
+#: importer/models.py:39
+msgid "Imports"
+msgstr "Ներմուծումներ"
+
+#: partners/admin.py:43 partners/models.py:61
+msgid "Partner"
+msgstr "Գործընկեր"
+
+#: partners/admin.py:52
+msgid "Options"
+msgstr "Տարբերակներ"
+
+#: partners/admin.py:63
+msgid "Metadata"
+msgstr "Մետատվյալներ"
+
+#: partners/models.py:11
+msgid "Alphabetical"
+msgstr "Այբբենական"
+
+#: partners/models.py:13
+msgid "Random"
+msgstr "Պատահական"
+
+#: partners/models.py:23
+msgid "name"
+msgstr "անուն"
+
+#: partners/models.py:62
+msgid "Partners"
+msgstr "Գործընկերներ"
+
+#: donations/models/main.py:69
+#, python-format
+msgid ""
+"%(value)s is not a valid identifier. The identifier must look like %(sample)s"
+msgstr ""
+"%(value)s վավեր նույնացուցիչ չէ: Նույնացուցիչը պետք է նման լինի %(sample)s"
+
+#: donations/models/main.py:126
+msgid "Name"
+msgstr "Անուն"
+
+#: donations/models/main.py:153
+msgid "registration number"
+msgstr "գրանցման համարը"
+
+#: donations/views/donations_download.py:172
+msgid "entrance"
+msgstr "մուտք"
+
+#: importer/models.py:27
+msgid "Has header"
+msgstr "Ունի վերնագիր"
+
+#: partners/models.py:30
+msgid "subdomain"
+msgstr "ենթադոմեյն"
+
+#: donations/admin.py:135
+msgid "Generate donations archive"
+msgstr "Ստեղծել նվիրատվությունների արխիվ"
+
+#: donations/admin.py:153
+msgid "The donations archive has been generated for the following NGOs: "
+msgstr "Նվիրատվությունների արխիվը ստեղծվել է հետևյալ ՀԿ-ների համար "
+
+#: donations/admin.py:155
+msgid ""
+"The donations archive could not be generated for any of the selected NGOs."
+msgstr ""
+"Նվիրատվությունների արխիվը չի կարող ստեղծվել ընտրված ՀԿ-ներից որևէ մեկի համար"
+
+#: donations/models/main.py:357
+msgid "PDF file"
+msgstr "PDF ֆայլ"
+
+#: donations/models/main.py:353 donations/views/donations_download.py:175
+msgid "filename"
+msgstr "ֆայլի անունը"
+
+#: donations/models/main.py:354
+msgid "has signed"
+msgstr "ստորագրել է"
+
+#: donations/models/main.py:305 donations/views/donations_download.py:167
+msgid "city"
+msgstr "քաղաք"
+
+#: donations/models/main.py:328
+msgid "anonymous"
+msgstr "անանուն"
+
+#: donations/models/main.py:331
+msgid "If the user would like the ngo to see the donation"
+msgstr "Թե օգտատերը ցանկանում է, որ ՀԿ-ն տեսնի նվիրատվությունը"
+
+#: donations/models/main.py:336
+msgid "income type"
+msgstr "եկամտի տեսակը"
+
+#: donations/models/main.py:345
+msgid "two years"
+msgstr "երկու տարի"
+
+#: donations/models/main.py:347
+msgid "If the user wants to donate for 2 years"
+msgstr "Եթե օգտատերը ցանկանում է նվիրատվություն անել 2 տարի"
+
+#: donations/models/main.py:235 partners/admin.py:12 partners/models.py:52
+msgid "NGOs"
+msgstr "ՀԿ-ներ"
+
+#: donations/models/main.py:290
+msgid "wage"
+msgstr "աշխատավարձ"
+
+#: donations/models/main.py:291
+msgid "pension"
+msgstr "կենսաթոշակ"
+
+#: donations/models/main.py:298 donations/views/donations_download.py:159
+msgid "last name"
+msgstr "ազգանուն"
+
+#: donations/models/main.py:299 donations/views/donations_download.py:160
+msgid "first name"
+msgstr "անուն"
+
+#: donations/models/main.py:300
+msgid "initials"
+msgstr "սկզբնատառերը"
+
+#: donations/models/main.py:219 partners/models.py:55 users/models.py:87
+msgid "date updated"
+msgstr "ամսաթիվը թարմացվել է"
+
+#: donations/models/main.py:200 partners/models.py:38
+msgid "is active"
+msgstr "ակտիվ է"
+
+#: donations/models/main.py:211
+msgid "form with prefilled ngo data"
+msgstr "ձևաթուղթ՝ նախապես լրացված ՀԿ-ի տվյալներով"
+
+#: donations/models/main.py:371
+msgid "donor"
+msgstr "դոնոր"
+
+#: donations/models/main.py:372
+msgid "donors"
+msgstr "դոնորներ"
+
+#: donations/views/account_management.py:43
+msgid ""
+"If the email address is valid, you will receive an email with instructions."
+msgstr "Եթե էլփոստի հասցեն վավեր է, դուք կստանաք նամակ` հրահանգներով:"
+
+#: donations/views/account_management.py:65
+#, fuzzy
+msgid "Reset redirectioneaza.ro password"
+msgstr "Վերականգնել կայքի գաղտնաբառը"
+
+#: donations/views/donations_download.py:59
+msgid "Documents ready for download"
+msgstr "Ներբեռնման համար պատրաստ փաստաթղթերը"
+
+#: donations/views/donations_download.py:158
+msgid "no."
+msgstr "ոչ:"
+
+#: donations/views/donations_download.py:161
+msgid "initial"
+msgstr "սկզբնական"
+
+#: donations/views/donations_download.py:163
+msgid "duplicate"
+msgstr "կրկնօրինակել"
+
+#: donations/views/donations_download.py:164
+msgid "phone"
+msgstr "հեռախոս"
+
+#: donations/views/donations_download.py:168
+msgid "full address"
+msgstr "ամբողջական հասցե"
+
+#: donations/views/donations_download.py:169
+msgid "street name"
+msgstr "փողոցի անվանումը"
+
+#: donations/views/donations_download.py:170
+msgid "street number"
+msgstr "փողոցի համարը"
+
+#: donations/views/donations_download.py:171
+msgid "building"
+msgstr "շենք"
+
+#: importer/admin.py:43
+msgid "The logos have been transferred."
+msgstr "Լոգոները փոխանցվել են։"
+
+#: importer/admin.py:49 importer/admin.py:55
+msgid "The donor forms have been transferred."
+msgstr "Դոնորների ձևաթղթերը փոխանցվել են։"
+
+#: redirectioneaza/common/validators.py:7
+msgid "This subdomain is reserved."
+msgstr "Այս ենթադոմեյնը զբաղված է:"
+
+#: redirectioneaza/common/validators.py:10
+msgid "Subdomain must contain only lowercase characters."
+msgstr "Ենթադոմեյնը պետք է պարունակի միայն փոքրատառ նիշեր:"
+
+#: redirectioneaza/common/validators.py:13
+msgid "Subdomain must contain only alphanumeric characters and '-' (hyphens)."
+msgstr "Ենթադոմեյնը պետք է պարունակի միայն տառեր, թվանշաններ և «-» (գծիկներ):"
+
+#: redirectioneaza/common/validators.py:16
+msgid "Subdomain must have between 3 and 100 characters."
+msgstr "Ենթադոմեյնը պետք է պարունակի 3-ից 100 նիշ:"
+
+#: users/admin.py:37
+msgid "Permissions"
+msgstr "Թույլտվություններ"
+
+#: users/admin.py:46
+msgid "Important dates"
+msgstr "Կարևոր ամսաթվեր"
+
+#: users/models.py:56
+msgid "username"
+msgstr "օգտանուն"
+
+#: users/models.py:59
+msgid "We do not use this field"
+msgstr "Մենք չենք օգտագործում այս դաշտը"
+
+#: users/models.py:66
+msgid "email address"
+msgstr "էլ. փոստի հասցեն"
+
+#: users/models.py:80
+msgid "validation token"
+msgstr "վավերացման նշան"
+
+#: users/models.py:82
+msgid "validation token timestamp"
+msgstr "վավերացման նշանի ժամանակի դրոշմ"
+
+#: users/models.py:84
+msgid "old password"
+msgstr "հին գաղտնաբառ"
+
+#: partners/models.py:12
+msgid "Newest"
+msgstr "Ամենանոր"
+
+#: partners/models.py:46
+msgid "display ordering"
+msgstr "ցուցադրման պատվեր"
+
+#: donations/views/account_management.py:223
+#, fuzzy
+msgid "Welcome to redirectioneaza.ro"
+msgstr "Հաստատել redirectioneaza.ro-ի հաշիվը"
+
+#: importer/admin.py:29
+msgid "Process the selected import jobs"
+msgstr "Մշակել ընտրված ներմուծման աշխատանքները"
+
+#: importer/admin.py:38
+msgid "The import has been processed."
+msgstr "Ներմուծումը կատարվել է։"
+
+#: importer/admin.py:40
+msgid "Schedule the transfer of logos to the current storage"
+msgstr "Պլանավորել լոգոների տեղափոխումը ներկա պահեստ"
+
+#: importer/admin.py:52
+msgid "Transfer of donor forms to the current storage"
+msgstr "Դոնորների ձևաթղթերի փոխանցում ներկա պահեստ"
+
+#: importer/admin.py:58
+msgid "Schedule the transfer of donor forms to the current storage"
+msgstr "Պլանավորել դոնորների ձևաթղթերի տեղափոխումը ներկա պահեստ"
+
+#: redirectioneaza/common/messaging.py:31
+msgid "Invalid email send method. Must be 'async' or 'sync'."
+msgstr "Էլ. փոստի ուղարկման սխալ եղանակ: Պետք է լինի «async» կամ «sync»:"
+
+#: importer/admin.py:62
+msgid "The donor forms have been scheduled for transfer."
+msgstr "Դոնորների ձևաթղթերը նշանակվել են փոխանցման:"
+
+#: partners/models.py:43
+#, fuzzy
+msgid "has custom header"
+msgstr "ունի հատուկ վերնագիր"
+
+#: partners/models.py:44
+msgid "has custom note"
+msgstr "ունի մաքսային նշում"
+
+#: importer/apps.py:8
+#, fuzzy
+msgid "Importer"
+msgstr "Ներմուծում"
+
+#: users/apps.py:8
+#, fuzzy
+msgid "Users"
+msgstr "Օգտատեր"
+
+#: donations/admin.py:162
+msgid "Clean up registration numbers"
+msgstr "Մաքրել գրանցման համարները"
+
+#: donations/admin.py:169
+msgid "Registration numbers are clean."
+msgstr "Գրանցման համարները մաքուր են"
+
+#: donations/models/jobs.py:50
+msgid "ZIP"
+msgstr "ZIP"
