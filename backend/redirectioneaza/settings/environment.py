@@ -57,6 +57,7 @@ env = environ.Env(
     DJANGO_Q_TIMEOUT_SECONDS=(int, 900),  # A task must finish in less than 15 minutes
     DJANGO_Q_RETRY_AFTER_TIMEOUT_SECONDS=(int, 300),  # Retry unfinished tasks 5 minutes after timeout
     DJANGO_Q_POLL_SECONDS=(int, 4),
+    DJANGO_Q_LOG_LEVEL=(str, None),
     IMPORT_METHOD=(str, "async"),
     IMPORT_USE_BATCHES=(bool, True),
     IMPORT_BATCH_SIZE=(int, 100),
