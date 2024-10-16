@@ -22,6 +22,7 @@ if ENABLE_SENTRY:
 
 # Logging
 DJANGO_LOG_LEVEL = env.str("LOG_LEVEL").upper()
+DJANGO_Q_LOG_LEVEL = env.str("LOG_LEVEL") or DJANGO_LOG_LEVEL
 
 LOGGING = {
     "version": 1,
@@ -34,5 +35,17 @@ LOGGING = {
     "root": {
         "handlers": ["console"],
         "level": DJANGO_LOG_LEVEL,
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console"],
+            "level": DJANGO_LOG_LEVEL,
+            "propagate": True,
+        },
+        "django-q": {
+            "handlers": ["console"],
+            "level": DJANGO_Q_LOG_LEVEL,
+            "propagate": True,
+        },
     },
 }
