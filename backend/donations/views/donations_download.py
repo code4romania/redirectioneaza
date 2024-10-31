@@ -136,7 +136,7 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], ngo: Ngo, 
                             # TODO: first name and last name have been swapped
                             # https://github.com/code4romania/redirectioneaza/issues/269
                             "last_name": donation_object.l_name,
-                            "first_name": donation_object.last_name,
+                            "first_name": donation_object.f_name,
                             "initial": donation_object.initial,
                             "phone": phone,
                             "email": donation_object.email,
@@ -471,7 +471,7 @@ def _build_xml_donation_content(donation: Donor, donation_idx: int, ngo: Ngo):
                     <idCnt>
                         <nume>{donation.l_name.upper()}</nume>
                         <init>{donation.initial.upper()}</init>
-                        <pren>{donation.last_name.upper()}</pren>
+                        <pren>{donation.f_name.upper()}</pren>
                         <cif_c>{donation.get_cnp()}</cif_c>
                         <adresa>{detailed_address["full_address"].upper()}</adresa>
                         <telefon>{_parse_phone(donation.phone)}</telefon>

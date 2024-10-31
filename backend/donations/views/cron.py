@@ -101,7 +101,7 @@ class CustomExport(TemplateView):
                     [
                         donor.id,
                         donor.l_name,
-                        donor.last_name,
+                        donor.f_name,
                         donor.email,
                         donor.has_signed,
                         donor.pdf_file.url if donor.pdf_file else donor.pdf_url,

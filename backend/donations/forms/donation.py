@@ -21,7 +21,7 @@ class DonorInputForm(forms.ModelForm):
         model = Donor
         fields = [
             "l_name",
-            "last_name",
+            "f_name",
             "initial",
             "city",
             "county",

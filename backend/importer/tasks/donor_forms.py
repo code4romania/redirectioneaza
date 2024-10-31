@@ -79,10 +79,10 @@ def import_donor_forms(ids: List[int], dry_run: bool):
     donor: Donor
     for attempted_donors, donor in enumerate(target_donors):
 
-        logger.debug("Processing donation: %s", donor.l_name)
+        logger.debug("Processing donation: %s", donor.pk)
 
         if not donor.pdf_url.startswith("http"):
-            logger.debug("Skipped form %s: PDF URL does not start with http", donor.l_name)
+            logger.debug("Skipped form %s: PDF URL does not start with http", donor.pk)
             continue
 
         r: Response = requests.get(donor.pdf_url)

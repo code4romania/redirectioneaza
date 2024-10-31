@@ -342,7 +342,7 @@ class TwoPercentHandler(TemplateView):
 
         # create the donor and save it
         donor = Donor(
-            last_name=donor_dict["first_name"],
+            f_name=donor_dict["first_name"],
             l_name=donor_dict["last_name"],
             initial=donor_dict["father"],
             city=donor_dict["city"],
