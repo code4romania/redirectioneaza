@@ -404,7 +404,6 @@ class Donor(models.Model):
 
     geoip = models.JSONField(verbose_name=_("Geo IP"), blank=True, null=False, default=dict)
 
-    pdf_url = models.URLField(verbose_name=_("PDF URL"), blank=True, null=False, default="", max_length=255)
     filename = models.CharField(verbose_name=_("filename"), blank=True, null=False, default="", max_length=100)
     has_signed = models.BooleanField(verbose_name=_("has signed"), db_index=True, default=False)
 

@@ -104,7 +104,7 @@ class CustomExport(TemplateView):
                         donor.f_name,
                         donor.email,
                         donor.has_signed,
-                        donor.pdf_file.url if donor.pdf_file else donor.pdf_url,
+                        donor.pdf_file.url if donor.pdf_file else "",
                         donor.ngo.name,
                         donor.ngo.email,
                         donor.ngo.is_accepting_forms,

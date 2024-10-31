@@ -253,11 +253,8 @@ def _get_address_details(donation_object: Donor) -> Dict[str, str]:
 
 
 def _get_pdf_url(donation: Donor) -> str:
-    # The 'pdf_file' property has priority over the old 'pdf_url' one
     if donation.pdf_file:
         source_url = donation.pdf_file.url
-    elif donation.pdf_url:
-        source_url = donation.pdf_url
     else:
         source_url = ""
 
