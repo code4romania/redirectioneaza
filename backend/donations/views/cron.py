@@ -100,7 +100,7 @@ class CustomExport(TemplateView):
                 writer.writerow(
                     [
                         donor.id,
-                        donor.first_name,
+                        donor.l_name,
                         donor.last_name,
                         donor.email,
                         donor.has_signed,

@@ -14,9 +14,10 @@ from django.views.generic import TemplateView
 from ipware import get_client_ip
 
 from redirectioneaza.common.messaging import send_email
-from .captcha import validate_captcha
+
 from ..models.main import Donor, Ngo
 from ..pdf import add_signature, create_pdf
+from .captcha import validate_captcha
 
 logger = logging.getLogger(__name__)
 
@@ -293,8 +294,8 @@ class TwoPercentHandler(TemplateView):
 
         donor_dict = {
             # the donor's data
-            "first_name": get_post_value("nume").title(),
-            "last_name": get_post_value("prenume").title(),
+            "last_name": get_post_value("nume").title(),
+            "first_name": get_post_value("prenume").title(),
             "father": get_post_value("tatal").title(),
             "cnp": get_post_value("cnp", False),
             "email": get_post_value("email").lower(),
@@ -341,8 +342,8 @@ class TwoPercentHandler(TemplateView):
 
         # create the donor and save it
         donor = Donor(
-            first_name=donor_dict["first_name"],
-            last_name=donor_dict["last_name"],
+            last_name=donor_dict["first_name"],
+            l_name=donor_dict["last_name"],
             initial=donor_dict["father"],
             city=donor_dict["city"],
             county=donor_dict["county"],
@@ -400,7 +401,7 @@ class TwoPercentHandler(TemplateView):
                 html_template="email/twopercent-form/twopercent_form.html",
                 text_template="email/twopercent-form/twopercent_form_text.txt",
                 context={
-                    "name": donor.first_name,
+                    "name": donor.l_name,
                     "form_url": donor.form_url,
                     "ngo": ngo,
                 },
