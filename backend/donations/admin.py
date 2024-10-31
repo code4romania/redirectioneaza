@@ -233,8 +233,8 @@ class NgoAdmin(ModelAdmin):
 
 @admin.register(Donor)
 class DonorAdmin(ModelAdmin):
-    list_display = ("id", "email", "l_name", "last_name", "ngo", "date_created")
-    list_display_links = ("id", "email", "l_name", "last_name")
+    list_display = ("id", "email", "l_name", "f_name", "ngo", "date_created")
+    list_display_links = ("id", "email", "l_name", "f_name")
     list_filter = (
         "date_created",
         HasNgoFilter,
@@ -262,7 +262,7 @@ class DonorAdmin(ModelAdmin):
             {
                 "fields": (
                     "l_name",
-                    "last_name",
+                    "f_name",
                     "initial",
                     "county",
                     "city",

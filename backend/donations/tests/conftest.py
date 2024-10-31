@@ -11,7 +11,7 @@ def ngo() -> Ngo:
 @pytest.fixture
 def donor(ngo) -> Donor:
     return Donor.objects.create(
-        last_name="Test",
+        f_name="Test",
         l_name="Donor",
         email="test@example.com",
         city="Test City",
