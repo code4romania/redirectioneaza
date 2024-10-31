@@ -1,4 +1,5 @@
 #!/command/with-contenv sh
+# shellcheck shell=bash
 
 # Convert one parameter to uppercase
 to_uppercase() {
