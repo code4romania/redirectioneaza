@@ -73,7 +73,6 @@ class Command(BaseCommand):
                 income_type="wage",
                 has_signed=random.choice([True, False]),
                 two_years=random.choice([True, False]),
-                pdf_url="https://storage.googleapis.com/redirectioneaza/logo_bw.png",
             )
             donor.set_cnp(cnp)
             donor.set_address_helper(**address)
@@ -87,8 +86,8 @@ class Command(BaseCommand):
                 "ap": str(address["street_ap"]),
             }
             donor_dict = {
-                "first_name": donor.l_name,
-                "last_name": donor.f_name,
+                "last_name": donor.l_name,
+                "first_name": donor.f_name,
                 "father": donor.initial,
                 "email": donor.email,
                 "tel": donor.phone,
@@ -98,7 +97,6 @@ class Command(BaseCommand):
                 "income_type": donor.income_type,
                 "has_signed": donor.has_signed,
                 "two_years": donor.two_years,
-                "pdf_url": donor.pdf_url,
             }
             donor_dict.update(address_dict)
 
