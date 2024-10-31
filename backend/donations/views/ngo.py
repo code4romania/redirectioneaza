@@ -401,7 +401,7 @@ class TwoPercentHandler(TemplateView):
                 html_template="email/twopercent-form/twopercent_form.html",
                 text_template="email/twopercent-form/twopercent_form_text.txt",
                 context={
-                    "name": donor.l_name,
+                    "name": donor.f_name,
                     "form_url": donor.form_url,
                     "ngo": ngo,
                 },
