@@ -163,7 +163,7 @@ def _set_ngo_user(
     _connect_user_and_ngo(user, ngohub_org_id, user_token)
 
 
-def _set_user_name(user, user_profile) -> None:
+def _set_user_name(user: UserModel, user_profile) -> None:
     changes_made: bool = False
     if not user.first_name:
         user.first_name = user_profile.name
@@ -178,7 +178,7 @@ def _set_user_name(user, user_profile) -> None:
         user.save()
 
 
-def _get_user_profile(ngohub, user, user_token) -> UserProfile:
+def _get_user_profile(ngohub, user: UserModel, user_token) -> UserProfile:
     try:
         user_profile: Optional[UserProfile] = ngohub.get_profile(user_token)
     except HubHTTPException:
@@ -189,7 +189,7 @@ def _get_user_profile(ngohub, user, user_token) -> UserProfile:
     return user_profile
 
 
-def _connect_user_and_ngo(user, ngohub_org_id, token) -> None:
+def _connect_user_and_ngo(user: UserModel, ngohub_org_id, token) -> None:
     # Make sure the user is active
     user.activate()
 

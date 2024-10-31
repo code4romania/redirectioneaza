@@ -12,6 +12,7 @@ from requests import Response
 from sentry_sdk import capture_message
 
 from donations.models.main import Donor, Ngo
+
 from ..extract import DATA_ZONES, extract_data
 
 logger = logging.getLogger(__name__)
@@ -78,10 +79,10 @@ def import_donor_forms(ids: List[int], dry_run: bool):
     donor: Donor
     for attempted_donors, donor in enumerate(target_donors):
 
-        logger.debug("Processing donation: %s", donor.first_name)
+        logger.debug("Processing donation: %s", donor.l_name)
 
         if not donor.pdf_url.startswith("http"):
-            logger.debug("Skipped form %s: PDF URL does not start with http", donor.first_name)
+            logger.debug("Skipped form %s: PDF URL does not start with http", donor.l_name)
             continue
 
         r: Response = requests.get(donor.pdf_url)

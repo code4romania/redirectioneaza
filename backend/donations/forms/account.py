@@ -4,6 +4,8 @@ from django.utils.translation import gettext_lazy as _
 
 from donations.forms.common import ReCaptchaMixin, TwoPasswordMixin
 
+UserModel = get_user_model()
+
 
 class LoginForm(forms.Form, ReCaptchaMixin):
     email = forms.EmailField(required=True)
@@ -29,7 +31,7 @@ class RegisterForm(forms.ModelForm, ReCaptchaMixin, TwoPasswordMixin):
     password_confirm = forms.CharField(widget=forms.PasswordInput(), required=True, max_length=150)
 
     class Meta:
-        model = get_user_model()
+        model = UserModel
         fields = [
             "first_name",
             "last_name",

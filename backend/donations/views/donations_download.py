@@ -2,6 +2,7 @@ import codecs
 import csv
 import io
 import logging
+import math
 import os
 import re
 import tempfile
@@ -9,7 +10,6 @@ from datetime import datetime
 from typing import Any, Dict, List, Tuple
 from zipfile import ZIP_DEFLATED, ZipFile
 
-import math
 import requests
 from django.conf import settings
 from django.core.files import File
@@ -21,7 +21,7 @@ from django.utils.translation import gettext_lazy as _
 from localflavor.ro.ro_counties import COUNTIES_CHOICES
 
 from donations.models.jobs import Job, JobDownloadError, JobStatusChoices
-from donations.models.main import Donor, Ngo, REGISTRATION_NUMBER_REGEX_SANS_VAT
+from donations.models.main import REGISTRATION_NUMBER_REGEX_SANS_VAT, Donor, Ngo
 from redirectioneaza.common.messaging import send_email
 
 logger = logging.getLogger(__name__)
@@ -135,7 +135,7 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], ngo: Ngo, 
                         {
                             # TODO: first name and last name have been swapped
                             # https://github.com/code4romania/redirectioneaza/issues/269
-                            "last_name": donation_object.first_name,
+                            "last_name": donation_object.l_name,
                             "first_name": donation_object.last_name,
                             "initial": donation_object.initial,
                             "phone": phone,
@@ -469,7 +469,7 @@ def _build_xml_donation_content(donation: Donor, donation_idx: int, ngo: Ngo):
                         <nV>{donation_idx + 1}</nV>
                     </nrCrt>
                     <idCnt>
-                        <nume>{donation.first_name.upper()}</nume>
+                        <nume>{donation.l_name.upper()}</nume>
                         <init>{donation.initial.upper()}</init>
                         <pren>{donation.last_name.upper()}</pren>
                         <cif_c>{donation.get_cnp()}</cif_c>

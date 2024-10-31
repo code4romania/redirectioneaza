@@ -350,7 +350,7 @@ class Donor(models.Model):
 
     # TODO: first name and last name have been swapped
     # https://github.com/code4romania/redirectioneaza/issues/269
-    first_name = models.CharField(verbose_name=_("last name"), blank=True, null=False, default="", max_length=100)
+    l_name = models.CharField(verbose_name=_("last name"), blank=True, null=False, default="", max_length=100)
     last_name = models.CharField(verbose_name=_("first name"), blank=True, null=False, default="", max_length=100)
     initial = models.CharField(verbose_name=_("initials"), blank=True, null=False, default="", max_length=5)
 

@@ -23,6 +23,8 @@ from .base import BaseAccountView
 from ..models.jobs import Job, JobStatusChoices
 from ..models.main import Donor, Ngo, ngo_id_number_validator
 
+UserModel = get_user_model()
+
 
 class MyAccountDetailsView(BaseAccountView):
     template_name = "ngo/my-account-details.html"
@@ -39,12 +41,13 @@ class MyAccountDetailsView(BaseAccountView):
     def post(self, request, *args, **kwargs):
         post = request.POST
 
-        request.user.last_name = post.get("nume")
-        request.user.first_name = post.get("prenume")
+        user: UserModel = request.user
+        user.last_name = post.get("nume")
+        user.first_name = post.get("prenume")
 
-        request.user.save()
+        user.save()
 
-        context = {"user": request.user}
+        context = {"user": user}
 
         return render(request, self.template_name, context)
 

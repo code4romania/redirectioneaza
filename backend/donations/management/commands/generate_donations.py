@@ -63,8 +63,8 @@ class Command(BaseCommand):
             # generate a random donor
             donor = Donor(
                 ngo=ngo,
-                first_name=fake.first_name(),
-                last_name=fake.last_name(),
+                last_name=fake.first_name(),
+                l_name=fake.last_name(),
                 initial=random.choice(string.ascii_uppercase),
                 email=fake.email(),
                 phone=fake.phone_number(),
@@ -87,7 +87,7 @@ class Command(BaseCommand):
                 "ap": str(address["street_ap"]),
             }
             donor_dict = {
-                "first_name": donor.first_name,
+                "first_name": donor.l_name,
                 "last_name": donor.last_name,
                 "father": donor.initial,
                 "email": donor.email,

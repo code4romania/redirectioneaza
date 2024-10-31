@@ -20,7 +20,7 @@ class DonorInputForm(forms.ModelForm):
     class Meta:
         model = Donor
         fields = [
-            "first_name",
+            "l_name",
             "last_name",
             "initial",
             "city",

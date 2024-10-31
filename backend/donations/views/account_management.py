@@ -12,10 +12,13 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
 from redirectioneaza.common.messaging import send_email
-from .base import BaseAccountView
+
 from ..forms.account import ForgotPasswordForm, LoginForm, RegisterForm, ResetPasswordForm
+from .base import BaseAccountView
 
 logger = logging.getLogger(__name__)
+
+UserModel = get_user_model()
 
 
 def django_login(request, user) -> None:
@@ -49,7 +52,7 @@ class ForgotPasswordView(BaseAccountView):
 
         return render(request, self.template_name, context)
 
-    def _send_password_reset_email(self, user):
+    def _send_password_reset_email(self, user: UserModel):
         template_context = {
             "name": user.first_name,
             "url": "{}://{}{}".format(

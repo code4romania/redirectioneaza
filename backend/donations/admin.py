@@ -11,6 +11,7 @@ from unfold.admin import ModelAdmin
 
 from redirectioneaza.common.admin import HasNgoFilter
 from users.models import User
+
 from .models.jobs import Job, JobStatusChoices
 from .models.main import Donor, Ngo
 from .workers.update_organization import update_organization
@@ -232,8 +233,8 @@ class NgoAdmin(ModelAdmin):
 
 @admin.register(Donor)
 class DonorAdmin(ModelAdmin):
-    list_display = ("id", "email", "first_name", "last_name", "ngo", "date_created")
-    list_display_links = ("id", "email", "first_name", "last_name")
+    list_display = ("id", "email", "l_name", "last_name", "ngo", "date_created")
+    list_display_links = ("id", "email", "l_name", "last_name")
     list_filter = (
         "date_created",
         HasNgoFilter,
@@ -260,7 +261,7 @@ class DonorAdmin(ModelAdmin):
             _("Identity"),
             {
                 "fields": (
-                    "first_name",
+                    "l_name",
                     "last_name",
                     "initial",
                     "county",
