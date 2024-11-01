@@ -135,7 +135,7 @@
                     {% for donation in value %}
                         <tr>
                             <td>{{ loop.length - loop.index + 1 }}</td>
-                            <td>{{ donation.first_name + " " + donation.last_name }}</td>
+                            <td>{{ donation.f_name + " " + donation.l_name }}</td>
                             <td>{{ "Da" if donation.has_signed else "Nu" }}</td>
                             <td>{{ donation.city }}, <span class="text-muted">{{ donation.county }}</span></td>
 
