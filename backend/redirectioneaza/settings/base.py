@@ -81,10 +81,9 @@ INSTALLED_APPS = [
     "allauth.socialaccount",
     "allauth.socialaccount.providers.amazon_cognito",
     # custom apps:
+    "users",
     "donations",
     "partners",
-    "users",
-    "importer",
 ]
 
 if not env.bool("USE_S3"):
