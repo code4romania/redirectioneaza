@@ -141,8 +141,6 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], ngo: Ngo, 
                     detailed_address: Dict = _get_address_details(donation_object)
                     donations_data.append(
                         {
-                            # TODO: first name and last name have been swapped
-                            # https://github.com/code4romania/redirectioneaza/issues/269
                             "last_name": donation_object.l_name,
                             "first_name": donation_object.f_name,
                             "initial": donation_object.initial,
