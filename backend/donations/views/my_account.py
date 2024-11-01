@@ -18,10 +18,11 @@ from django_q.tasks import async_task
 
 from redirectioneaza.common.cache import cache_decorator
 from users.models import User
-from .api import CheckNgoUrl
-from .base import BaseAccountView
+
 from ..models.jobs import Job, JobStatusChoices
 from ..models.main import Donor, Ngo, ngo_id_number_validator
+from .api import CheckNgoUrl
+from .base import BaseAccountView
 
 UserModel = get_user_model()
 
@@ -183,6 +184,32 @@ def delete_prefilled_form(ngo_id):
 class NgoDetailsView(BaseAccountView):
     template_name = "ngo/ngo-details.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        user: User = self.request.user
+        ngo: Ngo = user.ngo if user.ngo else None
+
+        context.update(
+            {
+                "title": "Date organizație",
+                "counties": settings.FORM_COUNTIES_NATIONAL,
+                "user": user,
+                "ngo": ngo,
+            }
+        )
+
+        if not ngo:
+            return context
+
+        context.update(
+            {
+                "has_ngohub": ngo.ngohub_org_id is not None,
+            }
+        )
+
+        return context
+
     @method_decorator(login_required(login_url=reverse_lazy("login")))
     def get(self, request, *args, **kwargs):
         user = request.user
@@ -193,15 +220,7 @@ class NgoDetailsView(BaseAccountView):
         if not user.is_authenticated or not user.ngo:
             return redirect(reverse("contul-meu"))
 
-        is_ngohub_ngo = user.ngo.ngohub_org_id is not None
-
-        context = {
-            "title": "Date organizație",
-            "user": user,
-            "ngo": user.ngo if user.ngo else None,
-            "has_ngohub": is_ngohub_ngo,
-            "counties": settings.FORM_COUNTIES_NATIONAL,
-        }
+        context = self.get_context_data(**kwargs)
 
         return render(request, self.template_name, context)
 
@@ -282,14 +301,8 @@ class NgoDetailsView(BaseAccountView):
         if isinstance(ngo_slug_errors, HttpResponseBadRequest):
             errors.append(_("The URL is already used"))
 
+        context = self.get_context_data()
         if errors:
-            context = {
-                "title": "Date organizație",
-                "user": user,
-                "ngo": ngo,  # send back the unsaved NGO data
-                "counties": settings.FORM_COUNTIES_NATIONAL,
-                "errors": errors,
-            }
             return render(request, self.template_name, context)
 
         ngo.other_emails = ""
@@ -317,7 +330,7 @@ class NgoDetailsView(BaseAccountView):
         if request.user.has_perm("users.can_view_old_dashboard"):
             return redirect(reverse("admin-ong", kwargs={"ngo_url": user.ngo.slug}))
 
-        return redirect(reverse("organization"))
+        return render(request, self.template_name, context)
 
     @staticmethod
     def _validate_registration_number(ngo, registration_number) -> Optional[str]:
@@ -330,7 +343,7 @@ class NgoDetailsView(BaseAccountView):
         if ngo.pk:
             reg_num_query = reg_num_query.exclude(pk=ngo.pk)
 
-        if reg_num_query.count():
+        if reg_num_query.exists():
             return f'CIF "{registration_number}" este înregistrat deja'
 
         return ""
