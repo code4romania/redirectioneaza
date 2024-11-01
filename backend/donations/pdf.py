@@ -44,7 +44,7 @@ def add_donor_data(c: Canvas, person: Dict):
     if len(person["first_name"]) > 18:
         c.setFontSize(12)
 
-    c.drawString(75, donor_block_x, person["first_name"])
+    c.drawString(75, donor_block_x - 22, person["first_name"])
     c.setFontSize(default_font_size)
 
     # father's first letter
@@ -55,7 +55,7 @@ def add_donor_data(c: Canvas, person: Dict):
     if len(last_name) > 34:
         c.setFontSize(10)
 
-    c.drawString(75, donor_block_x - 22, last_name)
+    c.drawString(75, donor_block_x, last_name)
 
     # =======================================
     # THIRD ROW
