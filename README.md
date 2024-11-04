@@ -35,7 +35,7 @@ would like the UI to look like if you are suggesting new UI elements.
 
 ### Programming languages
 
-- Backend: [Python3.11](https://www.python.org/)
+- Backend: [Python3.12](https://www.python.org/)
 
 ### Platforms
 
