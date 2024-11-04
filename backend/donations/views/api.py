@@ -15,16 +15,17 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView
 
 from redirectioneaza.common.cache import cache_decorator
-from .base import BaseAccountView
+
 from ..models.jobs import Job, JobStatusChoices
 from ..models.main import ALL_NGOS_CACHE_KEY, Ngo
 from ..pdf import create_pdf
 from ..workers.update_organization import update_organization
+from .base import BaseTemplateView
 
 logger = logging.getLogger(__name__)
 
 
-class UpdateFromNgohub(BaseAccountView):
+class UpdateFromNgohub(BaseTemplateView):
     def post(self, request, *args, **kwargs):
         redirect_success = redirect(reverse("organization"))
         redirect_error = redirect(reverse("organization"))
@@ -39,7 +40,7 @@ class UpdateFromNgohub(BaseAccountView):
         return redirect_success
 
 
-class CheckNgoUrl(BaseAccountView):
+class CheckNgoUrl(BaseTemplateView):
     ngo_url_block_list = (
         "",
         "admin",
@@ -168,7 +169,7 @@ class GetNgoForm(TemplateView):
         return redirect(ngo.prefilled_form.url)
 
 
-class GetNgoForms(BaseAccountView):
+class GetNgoForms(BaseTemplateView):
     def get(self, request, *args, **kwargs):
         raise Http404
 
@@ -221,7 +222,7 @@ class GetNgoForms(BaseAccountView):
 
 @method_decorator(login_required(login_url=reverse_lazy("login")), name="dispatch")
 @method_decorator(csrf_exempt, name="dispatch")
-class GetUploadUrl(BaseAccountView):
+class GetUploadUrl(BaseTemplateView):
     def get(self, request, *args, **kwargs):
         raise Http404
 

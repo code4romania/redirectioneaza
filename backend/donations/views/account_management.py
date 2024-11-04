@@ -14,7 +14,7 @@ from django.utils.translation import gettext_lazy as _
 from redirectioneaza.common.messaging import send_email
 
 from ..forms.account import ForgotPasswordForm, LoginForm, RegisterForm, ResetPasswordForm
-from .base import BaseAccountView
+from .base import BaseTemplateView
 
 logger = logging.getLogger(__name__)
 
@@ -25,15 +25,16 @@ def django_login(request, user) -> None:
     login(request, user, backend="django.contrib.auth.backends.ModelBackend")
 
 
-class ForgotPasswordView(BaseAccountView):
+class ForgotPasswordView(BaseTemplateView):
     template_name = "resetare-parola.html"
+    title = "Resetare parola"
 
     def get(self, request, *args, **kwargs):
-        context = {"title": "Resetare parola"}
+        context = self.get_context_data(**kwargs)
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        context = {}
+        context = self.get_context_data(**kwargs)
 
         form = ForgotPasswordForm(request.POST)
         if not form.is_valid():
@@ -78,8 +79,9 @@ class ForgotPasswordView(BaseAccountView):
         )
 
 
-class LoginView(BaseAccountView):
+class LoginView(BaseTemplateView):
     template_name = "account/login.html"
+    title = "Contul meu"
 
     def get(self, request, *args, **kwargs):
         # if the user is logged in, then redirect
@@ -88,20 +90,19 @@ class LoginView(BaseAccountView):
                 return redirect(reverse("admin-index"))
             return redirect(reverse("contul-meu"))
 
+        context = self.get_context_data(**kwargs)
+
         signup_text: str = _("sign up")
         signup_link: str = request.build_absolute_uri(reverse("signup"))
         signup_url: str = f'<a href="{signup_link}">{signup_text}</a>'
 
         # noinspection DjangoSafeString
-        context = {
-            "title": "Contul meu",
-            "signup_url": mark_safe(signup_url),
-        }
+        context.update({"signup_url": mark_safe(signup_url)})
 
         return render(request, self.template_name, context)
 
-    def post(self, request: HttpRequest):
-        context = {}
+    def post(self, request: HttpRequest, **kwargs):
+        context = self.get_context_data(**kwargs)
 
         form = LoginForm(request.POST)
         if not form.is_valid():
@@ -141,17 +142,17 @@ class LoginView(BaseAccountView):
         return render(request, self.template_name, context)
 
 
-class LogoutView(BaseAccountView):
+class LogoutView(BaseTemplateView):
     def get(self, request, *args, **kwargs):
         logout(request)
         return redirect("/")
 
 
-class SetPasswordView(BaseAccountView):
+class SetPasswordView(BaseTemplateView):
     template_name = "parola-noua.html"
 
     def post(self, request, *args, **kwargs):
-        context = {}
+        context = self.get_context_data(**kwargs)
 
         form = ResetPasswordForm(request.POST)
         if not form.is_valid():
@@ -173,15 +174,17 @@ class SetPasswordView(BaseAccountView):
         return redirect(reverse("contul-meu"))
 
 
-class SignupView(BaseAccountView):
+class SignupView(BaseTemplateView):
     template_name = "cont-nou.html"
+    title = "Cont nou"
 
     def get(self, request, *args, **kwargs):
-        context = {"title": "Cont nou"}
+        context = self.get_context_data(**kwargs)
+
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        context = {}
+        context = self.get_context_data(**kwargs)
 
         form = RegisterForm(request.POST)
         if not form.is_valid():
@@ -250,7 +253,7 @@ class SignupView(BaseAccountView):
         return redirect(reverse("contul-meu"))
 
 
-class VerificationView(BaseAccountView):
+class VerificationView(BaseTemplateView):
     """
     handler used to:
         v - verify new account
@@ -260,6 +263,8 @@ class VerificationView(BaseAccountView):
     template_name = "parola-noua.html"
 
     def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+
         verification_type = kwargs["verification_type"]
         user_id = kwargs["user_id"]
         signup_token = kwargs["signup_token"]
@@ -289,7 +294,7 @@ class VerificationView(BaseAccountView):
 
         if verification_type == "p":
             # supply user to the page
-            context = {"token": signup_token, "is_admin": request.user.is_staff}
+            context.update({"token": signup_token, "is_admin": request.user.is_staff})
             return render(request, self.template_name, context)
 
         logger.info("verification type not supported")
