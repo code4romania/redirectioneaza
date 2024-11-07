@@ -1,11 +1,17 @@
-{% load i18n %}
-{% load allauth %}
-{% load socialaccount %}
+{% load i18n allauth socialaccount %}
+
+{% trans "Go to account" as account_button %}
 
 <div class="col-sm">
 
   <h2>
-    {% trans "Login through NGO Hub" %}
+    {% if page_type == "login" %}
+      {% trans "Login through NGO Hub" %}
+      {% elif page_type == "register" %}
+      {% trans "Register through NGO Hub" %}
+    {% else %}
+      {% trans "Access your account through NGO Hub" %}
+    {% endif %}
   </h2>
 
   {% if SOCIALACCOUNT_ONLY %}
@@ -15,17 +21,22 @@
   {% endif %}
 
   <p class="login-text">
-    {% trans 'Click the "Go to account" button and you will be redirected to the page where you need to authenticate using your NGO Hub credentials.' %}
+    {% blocktranslate trimmed %}
+      To access your account, click the
+      <strong>{{ account_button }}</strong>
+      button and you will be able to enter the platform using your
+      NGO Hub credentials.
+    {% endblocktranslate %}
   </p>
 
   <p class="login-text">
     {% trans "After authentication, you will be redirected to your account." %}
   </p>
 
-    <div id="allauth-login-form-container" class="col-2">
-      <form action="{% url 'amazon_cognito_login' %}" method="GET">
-        <input class="btn btn-primary" id="go-to-login" type="submit" value="{% trans "Go to account" %}">
-      </form>
-    </div>
+  <div id="allauth-login-form-container" class="col-2">
+    <form action="{% url 'amazon_cognito_login' %}" method="GET">
+      <input class="btn btn-primary" id="go-to-login" type="submit" value="{{ account_button }}">
+    </form>
+  </div>
 
 </div>

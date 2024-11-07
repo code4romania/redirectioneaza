@@ -4,15 +4,15 @@ from datetime import datetime
 from django.conf import settings
 from django.db.models import QuerySet
 from django.http import HttpResponse
-from django.shortcuts import redirect, render
-from django.urls import reverse
+from django.shortcuts import render
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 
 from partners.models import DisplayOrderingChoices
 from redirectioneaza.common.cache import cache_decorator
-from ..models.main import ALL_NGOS_CACHE_KEY, ALL_NGO_IDS_CACHE_KEY, Donor, FRONTPAGE_NGOS_KEY, Ngo
+
+from ..models.main import ALL_NGO_IDS_CACHE_KEY, ALL_NGOS_CACHE_KEY, FRONTPAGE_NGOS_KEY, Donor, Ngo
 
 
 class HomePage(TemplateView):
@@ -73,17 +73,6 @@ class AboutHandler(TemplateView):
 
     def get(self, request, *args, **kwargs):
         context = {"title": "Despre Redirectioneaza.ro"}
-        return render(request, self.template_name, context)
-
-
-class ForNgoHandler(TemplateView):
-    template_name = "for-ngos.html"
-
-    def get(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
-            return redirect(reverse("contul-meu"))
-
-        context = {"title": "Pentru ONG-uri"}
         return render(request, self.template_name, context)
 
 

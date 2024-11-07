@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-14 11:07+0300\n"
+"POT-Creation-Date: 2024-11-07 12:57+0200\n"
 "PO-Revision-Date: 2024-03-07 11:27+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -20,147 +20,147 @@ msgstr ""
 "20)) ? 1 : 2;\n"
 "X-Generator: Weblate 5.3.1\n"
 
-#: donations/admin.py:38
+#: donations/admin.py:39
 msgid "User Link"
 msgstr "Link utilizator"
 
-#: donations/admin.py:42
+#: donations/admin.py:43
 msgid "User Details"
 msgstr "Detalii utilizator"
 
-#: donations/admin.py:46
+#: donations/admin.py:47
 msgid "User Permissions"
 msgstr "Permisiuni utilizator"
 
-#: donations/admin.py:54
+#: donations/admin.py:55
 msgid "User"
 msgstr "Utilizator"
 
-#: donations/admin.py:61
+#: donations/admin.py:62
 msgid "Has NGO Hub account"
 msgstr "Are cont NGO Hub"
 
-#: donations/admin.py:65 donations/admin.py:83
+#: donations/admin.py:66 donations/admin.py:84
 msgid "Yes"
 msgstr "Da"
 
-#: donations/admin.py:65 donations/admin.py:83
+#: donations/admin.py:66 donations/admin.py:84
 msgid "No"
 msgstr "Nu"
 
-#: donations/admin.py:79
+#: donations/admin.py:80
 msgid "Has owner"
 msgstr "Are utilizator"
 
-#: donations/admin.py:131 donations/admin.py:176 donations/apps.py:8
+#: donations/admin.py:132 donations/admin.py:177 donations/apps.py:8
 #: donations/views/dashboard/admin_dashboard.py:150
 #: redirectioneaza/settings/unfold.py:23 redirectioneaza/settings/unfold.py:32
 msgid "Donations"
 msgstr "Donații"
 
-#: donations/admin.py:135 donations/admin.py:256 donations/admin.py:306
+#: donations/admin.py:136 donations/admin.py:257 donations/admin.py:307
 #: donations/models/jobs.py:28 donations/models/main.py:275
 #: donations/models/main.py:349 partners/admin.py:12 users/models.py:72
 msgid "NGO"
 msgstr "ONG"
 
-#: donations/admin.py:139
+#: donations/admin.py:140
 msgid "Activity"
 msgstr "Activitate"
 
-#: donations/admin.py:150
+#: donations/admin.py:151
 msgid "Logo"
 msgstr "Logo"
 
-#: donations/admin.py:154
+#: donations/admin.py:155
 msgid "Contact"
 msgstr "Contact"
 
-#: donations/admin.py:167
+#: donations/admin.py:168
 msgid "Details"
 msgstr "Detalii"
 
-#: donations/admin.py:171 donations/admin.py:282 donations/admin.py:318
+#: donations/admin.py:172 donations/admin.py:283 donations/admin.py:319
 msgid "Date"
 msgstr "Data"
 
-#: donations/admin.py:178
+#: donations/admin.py:179
 msgid "Open the NGO donor list"
 msgstr "Deschide lista de donatori pentru acest ONG"
 
-#: donations/admin.py:184
+#: donations/admin.py:185
 msgid "Generate donations archive"
 msgstr "Generează arhiva de donații"
 
-#: donations/admin.py:203
+#: donations/admin.py:204
 msgid "The donations archive has been generated for the following NGOs: "
 msgstr "Arhiva de donații a fost generată pentru următoarele ONG-uri: "
 
-#: donations/admin.py:205
+#: donations/admin.py:206
 msgid ""
 "The donations archive could not be generated for any of the selected NGOs."
 msgstr ""
 "Arhiva de donații nu a putut fi generată pentru niciunul dintre ONG-urile "
 "selectate."
 
-#: donations/admin.py:209
+#: donations/admin.py:210
 msgid "Clean up registration numbers"
 msgstr "Curăță numerele de înregistrare"
 
-#: donations/admin.py:216
+#: donations/admin.py:217
 msgid "Registration numbers are clean."
 msgstr "Numerele de înregistrare sunt curate."
 
-#: donations/admin.py:218
+#: donations/admin.py:219
 msgid "Update from NGO Hub synchronously"
 msgstr "Actualizează din NGO Hub sincron"
 
-#: donations/admin.py:223
+#: donations/admin.py:224
 msgid "NGOs updated from NGO Hub."
 msgstr "ONG-urile au fost actualizate din NGO Hub."
 
-#: donations/admin.py:225
+#: donations/admin.py:226
 msgid "Update from NGO Hub asynchronously"
 msgstr "Actualizează din NGO Hub asincron"
 
-#: donations/admin.py:230
+#: donations/admin.py:231
 msgid "NGOs are being updated from NGO Hub."
 msgstr "ONG-urile sunt actualizate din NGO Hub."
 
-#: donations/admin.py:260
+#: donations/admin.py:261
 msgid "Identity"
 msgstr "Identitate"
 
-#: donations/admin.py:274
+#: donations/admin.py:275
 msgid "Info"
 msgstr "Info"
 
-#: donations/admin.py:278 donations/admin.py:314 importer/models.py:28
+#: donations/admin.py:279 donations/admin.py:315
 msgid "File"
 msgstr "Fișier"
 
-#: donations/admin.py:290
+#: donations/admin.py:291
 msgid "Form"
 msgstr "Formular"
 
-#: donations/admin.py:310 importer/models.py:24
+#: donations/admin.py:311
 msgid "Status"
 msgstr "Stare"
 
-#: donations/forms/account.py:18 donations/forms/account.py:56
-#: donations/forms/account.py:69
+#: donations/forms/account.py:20 donations/forms/account.py:58
+#: donations/forms/account.py:71
 msgid "Email is required"
 msgstr "Adresa de email este obligatorie"
 
-#: donations/forms/account.py:24 donations/forms/common.py:31
+#: donations/forms/account.py:26 donations/forms/common.py:31
 msgid "Password is required"
 msgstr "Parola este obligatorie"
 
-#: donations/forms/account.py:44
+#: donations/forms/account.py:46
 msgid "First name is required"
 msgstr "Prenumele este obligatoriu"
 
-#: donations/forms/account.py:50
+#: donations/forms/account.py:52
 msgid "Last name is required"
 msgstr "Numele este obligatoriu"
 
@@ -200,11 +200,11 @@ msgstr "Termeni"
 msgid "New"
 msgstr "Nou"
 
-#: donations/models/jobs.py:19 importer/models.py:18
+#: donations/models/jobs.py:19
 msgid "Error"
 msgstr "Eroare"
 
-#: donations/models/jobs.py:20 importer/models.py:17
+#: donations/models/jobs.py:20
 msgid "Done"
 msgstr "Gata"
 
@@ -221,7 +221,7 @@ msgid "ZIP"
 msgstr "Arhivă"
 
 #: donations/models/jobs.py:52 donations/models/main.py:251
-#: donations/models/main.py:419 partners/models.py:54 users/models.py:88
+#: donations/models/main.py:418 partners/models.py:54 users/models.py:88
 msgid "date created"
 msgstr "data creării"
 
@@ -416,48 +416,53 @@ msgstr "Dacă utilizatorul dorește să doneze pentru 2 ani"
 msgid "Geo IP"
 msgstr "Geo IP"
 
-#: donations/models/main.py:407
-msgid "PDF URL"
-msgstr "URL PDF"
-
-#: donations/models/main.py:408 donations/views/donations_download.py:182
+#: donations/models/main.py:407 donations/views/donations_download.py:182
 msgid "filename"
 msgstr "nume fișier"
 
-#: donations/models/main.py:409
+#: donations/models/main.py:408
 msgid "has signed"
 msgstr "a semnat"
 
-#: donations/models/main.py:412
+#: donations/models/main.py:411
 msgid "PDF file"
 msgstr "fișier PDF"
 
-#: donations/models/main.py:430
+#: donations/models/main.py:429
 msgid "donor"
 msgstr "donator"
 
-#: donations/models/main.py:431
+#: donations/models/main.py:430
 msgid "donors"
 msgstr "donatori"
 
-#: donations/views/account_management.py:48
+#: donations/views/account_management.py:52
 msgid ""
 "If the email address is valid, you will receive an email with instructions."
 msgstr "Dacă adresa de email este validă, vei primi un email cu instrucțiuni."
 
-#: donations/views/account_management.py:70
+#: donations/views/account_management.py:74
 msgid "Reset redirectioneaza.ro password"
 msgstr "Resetare parolă redirectioneaza.ro"
 
-#: donations/views/account_management.py:88
+#: donations/views/account_management.py:84
+#: templates/v2/socialaccount/login.html:5
+msgid "Sign In"
+msgstr "Autentificare"
+
+#: donations/views/account_management.py:95
 msgid "sign up"
 msgstr "înregistrare"
 
-#: donations/views/account_management.py:136
+#: donations/views/account_management.py:142
 msgid "It seems that this email and password combination is incorrect."
 msgstr "Se pare că această combinație de email și parolă este incorectă."
 
-#: donations/views/account_management.py:236
+#: donations/views/account_management.py:181
+msgid "New account"
+msgstr "Cont nou"
+
+#: donations/views/account_management.py:247
 msgid "Welcome to redirectioneaza.ro"
 msgstr "Confirmare cont redirectioneaza.ro"
 
@@ -569,101 +574,37 @@ msgstr "data completării"
 msgid "duration"
 msgstr "perioadă"
 
-#: donations/views/my_account.py:280
+#: donations/views/my_account.py:302
 msgid "The URL is already used"
 msgstr "URL-ul este deja folosit"
 
-#: donations/views/my_account.py:341
+#: donations/views/my_account.py:357
 msgid "The IBAN number must have 24 characters"
 msgstr "IBAN-ul trebuie să aibă 24 de cifre"
 
-#: donations/views/my_account.py:344
+#: donations/views/my_account.py:360
 msgid "The IBAN number must contain only letters and digits"
 msgstr "IBAN-ul trebuie să conțină doar litere și cifre"
 
-#: donations/views/my_account.py:347
+#: donations/views/my_account.py:363
 msgid "The IBAN number must start with 'RO'"
 msgstr "IBAN-ul trebuie să înceapă cu 'RO'"
 
-#: donations/views/ngo.py:152 donations/views/ngo.py:398
+#: donations/views/ngo.py:153 donations/views/ngo.py:399
 msgid "Formularul tău de redirecționare"
 msgstr "Formularul tău de redirecționare"
 
-#: donations/views/ngo.py:159
+#: donations/views/ngo.py:160
 msgid "Un nou formular de redirecționare"
 msgstr "Un nou formular de redirecționare"
 
-#: donations/views/site.py:125
+#: donations/views/site.py:114
 msgid "Frequently Asked Questions"
 msgstr "Întrebări frecvente"
-
-#: importer/admin.py:29
-msgid "Process the selected import jobs"
-msgstr "Procesează job-urile de import selectate"
-
-#: importer/admin.py:38
-msgid "The import has been processed."
-msgstr "Importul a fost procesat."
-
-#: importer/admin.py:40
-msgid "Schedule the transfer of logos to the current storage"
-msgstr "Programează transferul logourilor în stocarea curentă"
-
-#: importer/admin.py:44
-msgid "The logos have been transferred."
-msgstr "Logourile au fost transferate."
-
-#: importer/admin.py:46
-msgid "Transfer of donor forms to the current storage (dry run)"
-msgstr "Transferă formularele de donare în stocarea curentă (rulare test)"
-
-#: importer/admin.py:50 importer/admin.py:56
-msgid "The donor forms have been transferred."
-msgstr "Formularele de donare au fost transferate."
-
-#: importer/admin.py:52
-msgid "Transfer of donor forms to the current storage"
-msgstr "Transferă formularele de donare în stocarea curentă"
-
-#: importer/admin.py:58
-msgid "Schedule the transfer of donor forms to the current storage"
-msgstr "Programează transferul formularelor de donare în stocarea curentă"
-
-#: importer/admin.py:62
-msgid "The donor forms have been scheduled for transfer."
-msgstr "Transferul formularelor de donare a fost programat."
 
 #: importer/apps.py:8
 msgid "Importer"
 msgstr "Importator"
-
-#: importer/models.py:15
-msgid "Pending"
-msgstr "În așteptare"
-
-#: importer/models.py:16
-msgid "Processing"
-msgstr "Procesare"
-
-#: importer/models.py:22
-msgid "Import type"
-msgstr "Tip import"
-
-#: importer/models.py:27
-msgid "Has header"
-msgstr "Are antet"
-
-#: importer/models.py:30
-msgid "Uploaded at"
-msgstr "Încărcat la"
-
-#: importer/models.py:38
-msgid "Import"
-msgstr "Import"
-
-#: importer/models.py:39
-msgid "Imports"
-msgstr "Importuri"
 
 #: partners/admin.py:44 partners/models.py:61
 msgid "Partner"
@@ -899,50 +840,54 @@ msgstr "Rol necunoscut"
 msgid "Your current role isn't supported."
 msgstr "Rolul tău actual nu este suportat."
 
-#: templates/v2/account/login.html:5 templates/v2/account/login.html:10
-#: templates/v2/socialaccount/login.html:5
-msgid "Sign In"
-msgstr "Autentificare"
-
-#: templates/v2/account/login.html:22
-msgid "Error!"
-msgstr "Eroare!"
-
 #: templates/v2/account/snippets/classic-login.html:10
 msgid "Login with email & password"
 msgstr "Autentificare cu email și parolă"
 
 #: templates/v2/account/snippets/classic-login.html:14
-msgid ""
-"Login for organizations that don't fit the definitions in the NGO Law — "
-"26/2000"
-msgstr ""
-"Autentificare pentru organizațiile care nu se potrivesc definițiilor din "
-"Legea Asociațiilor și Fundațiilor — 26/2000"
+msgid "Login for organizations that don't have an NGO Hub account"
+msgstr "Autentificare pentru organizațiile care nu au cont în NGO Hub"
 
-#: templates/v2/account/snippets/third-party.html:8
+#: templates/v2/account/snippets/errors.html:6
+msgid "Error!"
+msgstr "Eroare!"
+
+#: templates/v2/account/snippets/register-form.html:4
+msgid "Classic registration"
+msgstr "Înregistrare clasică"
+
+#: templates/v2/account/snippets/third-party.html:3
+msgid "Go to account"
+msgstr "Mergi la cont"
+
+#: templates/v2/account/snippets/third-party.html:9
 msgid "Login through NGO Hub"
 msgstr "Autentificare prin NGO Hub"
 
+#: templates/v2/account/snippets/third-party.html:11
+msgid "Register through NGO Hub"
+msgstr "Înregistrare prin NGO Hub"
+
 #: templates/v2/account/snippets/third-party.html:13
+msgid "Access your account through NGO Hub"
+msgstr "Accesează-ți contul prin NGO Hub"
+
+#: templates/v2/account/snippets/third-party.html:19
 msgid "To access your account, you need to authenticate through NGO Hub."
 msgstr "Pentru a accesa contul, trebuie să te autentifici prin NGO Hub."
 
-#: templates/v2/account/snippets/third-party.html:18
+#: templates/v2/account/snippets/third-party.html:24
+#,  python-format
 msgid ""
-"Click the \"Go to account\" button and you will be redirected to the page "
-"where you need to authenticate using your NGO Hub credentials."
+"To access your account, click the <strong>%(account_button)s</strong> button "
+"and you will be able to enter the platform using your NGO Hub credentials."
 msgstr ""
-"Apasă butonul „Mergi la cont” și vei fi redirecționat către pagina unde "
-"trebuie să te autentifici folosind datele tale de autentificare din NGO Hub."
+"Pentru a accesa contul, apasă butonul <strong>%(account_button)s</strong> și "
+"vei putea intra pe platformă folosind datele tale de autentificare din NGO Hub."
 
-#: templates/v2/account/snippets/third-party.html:22
+#: templates/v2/account/snippets/third-party.html:33
 msgid "After authentication, you will be redirected to your account."
 msgstr "După autentificare, vei fi redirecționat către contul tău."
-
-#: templates/v2/account/snippets/third-party.html:27
-msgid "Go to account"
-msgstr "Mergi la cont"
 
 #: templates/v2/socialaccount/login.html:28
 msgid "Redirecting to authentication..."
@@ -1018,6 +963,65 @@ msgstr "parolă veche"
 #: users/models.py:208
 msgid "Group"
 msgstr "Grup"
+
+#~ msgid ""
+#~ "Click the \"Go to account\" button and you will be redirected to the page "
+#~ "where you need to authenticate using your NGO Hub credentials."
+#~ msgstr ""
+#~ "Apasă butonul „Mergi la cont” și vei fi redirecționat către pagina unde "
+#~ "trebuie să te autentifici folosind datele tale de autentificare din NGO "
+#~ "Hub."
+
+#~ msgid "PDF URL"
+#~ msgstr "URL PDF"
+
+#~ msgid "Process the selected import jobs"
+#~ msgstr "Procesează job-urile de import selectate"
+
+#~ msgid "The import has been processed."
+#~ msgstr "Importul a fost procesat."
+
+#~ msgid "Schedule the transfer of logos to the current storage"
+#~ msgstr "Programează transferul logourilor în stocarea curentă"
+
+#~ msgid "The logos have been transferred."
+#~ msgstr "Logourile au fost transferate."
+
+#~ msgid "Transfer of donor forms to the current storage (dry run)"
+#~ msgstr "Transferă formularele de donare în stocarea curentă (rulare test)"
+
+#~ msgid "The donor forms have been transferred."
+#~ msgstr "Formularele de donare au fost transferate."
+
+#~ msgid "Transfer of donor forms to the current storage"
+#~ msgstr "Transferă formularele de donare în stocarea curentă"
+
+#~ msgid "Schedule the transfer of donor forms to the current storage"
+#~ msgstr "Programează transferul formularelor de donare în stocarea curentă"
+
+#~ msgid "The donor forms have been scheduled for transfer."
+#~ msgstr "Transferul formularelor de donare a fost programat."
+
+#~ msgid "Pending"
+#~ msgstr "În așteptare"
+
+#~ msgid "Processing"
+#~ msgstr "Procesare"
+
+#~ msgid "Import type"
+#~ msgstr "Tip import"
+
+#~ msgid "Has header"
+#~ msgstr "Are antet"
+
+#~ msgid "Uploaded at"
+#~ msgstr "Încărcat la"
+
+#~ msgid "Import"
+#~ msgstr "Import"
+
+#~ msgid "Imports"
+#~ msgstr "Importuri"
 
 #~ msgid "Sign In Error"
 #~ msgstr "Eroare la autentificare"

@@ -6,6 +6,7 @@
 {% endblock head_title %}
 
 {% block content %}
+
   <div class="container">
 
     {% if errors %}
@@ -16,44 +17,59 @@
       </div>
     {% endif %}
 
-
     <div id="homepage-first-paragraph" class="row text-center">
       {% element h1 %}
         {{ title }}
       {% endelement %}
+
+      <h3>Reprezinți un ONG și dorești să-ți crești organizația?</h3>
+      <p>Prin redirectioneaza.ro te poți conecta direct cu donatorii tăi</p>
     </div>
 
-    <div id="login-container" class="row">
-      <div class="col-sm-12" id="login">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        <div class="row">
+          <div class="col-xs-12 text-center">
+
+            <h4>
+              Creează-ți un cont pentru a vedea despre ce e vorba
+            </h4>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="register-container" class="row">
+
+      <div id="register" class="col-sm-12">
 
         {% if SOCIALACCONUNT_ONLY %}
 
           <div class="col-sm-12">
-            {% include "account/snippets/third-party.html" with page_type="login" %}
+            {% include "account/snippets/third-party.html" with page_type="register" %}
           </div>
 
         {% elif SOCIALACCOUNT_ENABLED %}
 
           <div class="col-sm-6">
-            {% include "account/snippets/third-party.html" with page_type="login" %}
+            {% include "account/snippets/third-party.html" with page_type="register" %}
           </div>
 
           <div class="col-sm-6">
-            {% include "account/snippets/classic-login.html" %}
+            {% include "account/snippets/register-form.html" %}
           </div>
 
         {% else %}
 
           <div class="col-sm-12">
-            {% include "account/snippets/classic-login.html" %}
+            {% include "account/snippets/register-form.html" %}
           </div>
 
         {% endif %}
 
         <div class="g-recaptcha" data-sitekey="{{ captcha_public_key }}" data-size="invisible" data-callback="onSubmit"></div>
-
       </div>
-
     </div>
 
   </div>

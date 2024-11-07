@@ -52,7 +52,6 @@ from donations.views.ngo import DonationSucces, FormSignature, OwnFormDownloadLi
 from donations.views.site import (
     AboutHandler,
     FAQHandler,
-    ForNgoHandler,
     HealthCheckHandler,
     HomePage,
     NgoListHandler,
@@ -69,8 +68,6 @@ urlpatterns = (
     [
         # the public part of the app
         path("", HomePage.as_view(), name="home"),
-        path("ong/", ForNgoHandler.as_view(), name="ngo"),
-        path("pentru-ong-uri/", RedirectView.as_view(pattern_name="ngo", permanent=True)),
         path("health/", HealthCheckHandler.as_view(), name="health-check"),
         path(
             "download/<donor_date_str>/<donor_id>/<donor_hash>/",
@@ -89,6 +86,8 @@ urlpatterns = (
         path("faq/", (FAQHandler.as_view()), name="faq"),
         # account management
         path("cont-nou/", SignupView.as_view(), name="signup"),
+        path("ong/", RedirectView.as_view(pattern_name="signup", permanent=True)),
+        path("pentru-ong-uri/", RedirectView.as_view(pattern_name="signup", permanent=True)),
         path("login/", LoginView.as_view(), name="login"),
         path("logout/", LogoutView.as_view(), name="logout"),
         path("forgot/", ForgotPasswordView.as_view(), name="forgot"),

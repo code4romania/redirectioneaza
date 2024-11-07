@@ -81,7 +81,7 @@ class ForgotPasswordView(BaseTemplateView):
 
 class LoginView(BaseTemplateView):
     template_name = "account/login.html"
-    title = "Contul meu"
+    title = _("Sign In")
 
     def get(self, request, *args, **kwargs):
         # if the user is logged in, then redirect
@@ -103,6 +103,8 @@ class LoginView(BaseTemplateView):
 
     def post(self, request: HttpRequest, **kwargs):
         context = self.get_context_data(**kwargs)
+
+        # TODO: if the account appears in NGO Hub, redirect them to the NGO Hub login page
 
         form = LoginForm(request.POST)
         if not form.is_valid():
@@ -175,10 +177,13 @@ class SetPasswordView(BaseTemplateView):
 
 
 class SignupView(BaseTemplateView):
-    template_name = "cont-nou.html"
-    title = "Cont nou"
+    template_name = "account/register.html"
+    title = _("New account")
 
     def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect(reverse("contul-meu"))
+
         context = self.get_context_data(**kwargs)
 
         return render(request, self.template_name, context)
