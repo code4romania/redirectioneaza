@@ -27,8 +27,6 @@ logger = logging.getLogger(__name__)
 
 
 class UpdateFromNgohub(BaseTemplateView):
-    title = _("Update from ")
-
     def post(self, request, *args, **kwargs):
         redirect_success = redirect(reverse("organization"))
         redirect_error = redirect(reverse("organization"))

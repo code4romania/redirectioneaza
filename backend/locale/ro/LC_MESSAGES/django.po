@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-07 12:57+0200\n"
+"POT-Creation-Date: 2024-11-08 13:01+0200\n"
 "PO-Revision-Date: 2024-03-07 11:27+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -436,6 +436,10 @@ msgstr "donator"
 msgid "donors"
 msgstr "donatori"
 
+#: donations/views/account_management.py:30
+msgid "Reset password"
+msgstr "Resetare parolă"
+
 #: donations/views/account_management.py:52
 msgid ""
 "If the email address is valid, you will receive an email with instructions."
@@ -458,13 +462,25 @@ msgstr "înregistrare"
 msgid "It seems that this email and password combination is incorrect."
 msgstr "Se pare că această combinație de email și parolă este incorectă."
 
-#: donations/views/account_management.py:181
+#: donations/views/account_management.py:148
+msgid "Sign Out"
+msgstr "Deconectare"
+
+#: donations/views/account_management.py:157
+msgid "Set New Password"
+msgstr "Setare parolă nouă"
+
+#: donations/views/account_management.py:184
 msgid "New account"
 msgstr "Cont nou"
 
-#: donations/views/account_management.py:247
+#: donations/views/account_management.py:250
 msgid "Welcome to redirectioneaza.ro"
 msgstr "Confirmare cont redirectioneaza.ro"
+
+#: donations/views/account_management.py:272
+msgid "Verification"
+msgstr "Verificare"
 
 #: donations/views/dashboard/admin_dashboard.py:63
 msgid "Donations this year"
@@ -574,19 +590,35 @@ msgstr "data completării"
 msgid "duration"
 msgstr "perioadă"
 
-#: donations/views/my_account.py:302
+#: donations/views/my_account.py:32
+msgid "My Account Details"
+msgstr "Detaliile contului meu"
+
+#: donations/views/my_account.py:58
+msgid "Download archive"
+msgstr "Descarcă arhiva"
+
+#: donations/views/my_account.py:95
+msgid "My Account"
+msgstr "Contul meu"
+
+#: donations/views/my_account.py:190
+msgid "Organization details"
+msgstr "Detalii organizație"
+
+#: donations/views/my_account.py:307
 msgid "The URL is already used"
 msgstr "URL-ul este deja folosit"
 
-#: donations/views/my_account.py:357
+#: donations/views/my_account.py:362
 msgid "The IBAN number must have 24 characters"
 msgstr "IBAN-ul trebuie să aibă 24 de cifre"
 
-#: donations/views/my_account.py:360
+#: donations/views/my_account.py:365
 msgid "The IBAN number must contain only letters and digits"
 msgstr "IBAN-ul trebuie să conțină doar litere și cifre"
 
-#: donations/views/my_account.py:363
+#: donations/views/my_account.py:368
 msgid "The IBAN number must start with 'RO'"
 msgstr "IBAN-ul trebuie să înceapă cu 'RO'"
 
@@ -877,13 +909,14 @@ msgid "To access your account, you need to authenticate through NGO Hub."
 msgstr "Pentru a accesa contul, trebuie să te autentifici prin NGO Hub."
 
 #: templates/v2/account/snippets/third-party.html:24
-#,  python-format
+#, python-format
 msgid ""
 "To access your account, click the <strong>%(account_button)s</strong> button "
 "and you will be able to enter the platform using your NGO Hub credentials."
 msgstr ""
 "Pentru a accesa contul, apasă butonul <strong>%(account_button)s</strong> și "
-"vei putea intra pe platformă folosind datele tale de autentificare din NGO Hub."
+"vei putea intra pe platformă folosind datele tale de autentificare din NGO "
+"Hub."
 
 #: templates/v2/account/snippets/third-party.html:33
 msgid "After authentication, you will be redirected to your account."

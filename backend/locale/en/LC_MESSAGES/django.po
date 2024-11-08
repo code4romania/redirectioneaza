@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-07 12:57+0200\n"
+"POT-Creation-Date: 2024-11-08 13:01+0200\n"
 "PO-Revision-Date: 2024-02-28 15:45+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -433,6 +433,12 @@ msgstr "donor"
 msgid "donors"
 msgstr "donors"
 
+#: donations/views/account_management.py:30
+#, fuzzy
+#| msgid "old password"
+msgid "Reset password"
+msgstr "old password"
+
 #: donations/views/account_management.py:52
 msgid ""
 "If the email address is valid, you will receive an email with instructions."
@@ -456,15 +462,35 @@ msgstr "sign up"
 msgid "It seems that this email and password combination is incorrect."
 msgstr "It seems that this email and password combination is incorrect."
 
-#: donations/views/account_management.py:181
+#: donations/views/account_management.py:148
+#, fuzzy
+#| msgid "Sign In"
+msgid "Sign Out"
+msgstr "Sign In"
+
+#: donations/views/account_management.py:157
+msgid "Set New Password"
+msgstr ""
+
+#: donations/views/account_management.py:184
 #, fuzzy
 #| msgid "bank account"
 msgid "New account"
 msgstr "bank account"
 
-#: donations/views/account_management.py:247
+#: donations/views/account_management.py:250
 msgid "Welcome to redirectioneaza.ro"
 msgstr "Welcome to redirectioneaza.ro"
+
+#: donations/views/account_management.py:272
+#, fuzzy
+#| msgid "description"
+msgid "Verification"
+msgstr "description"
+
+#: donations/views/api.py:30
+msgid "Update from "
+msgstr ""
 
 #: donations/views/dashboard/admin_dashboard.py:63
 msgid "Donations this year"
@@ -574,19 +600,39 @@ msgstr "date"
 msgid "duration"
 msgstr "duration"
 
-#: donations/views/my_account.py:302
+#: donations/views/my_account.py:32
+msgid "My Account Details"
+msgstr ""
+
+#: donations/views/my_account.py:58
+msgid "Download archive"
+msgstr ""
+
+#: donations/views/my_account.py:95
+#, fuzzy
+#| msgid "bank account"
+msgid "My Account"
+msgstr "bank account"
+
+#: donations/views/my_account.py:190
+#, fuzzy
+#| msgid "NGO Hub organization ID"
+msgid "Organization details"
+msgstr "NGO Hub organization ID"
+
+#: donations/views/my_account.py:307
 msgid "The URL is already used"
 msgstr "The URL is already used"
 
-#: donations/views/my_account.py:357
+#: donations/views/my_account.py:362
 msgid "The IBAN number must have 24 characters"
 msgstr "The IBAN number must have 24 characters"
 
-#: donations/views/my_account.py:360
+#: donations/views/my_account.py:365
 msgid "The IBAN number must contain only letters and digits"
 msgstr "The IBAN number must contain only letters and digits"
 
-#: donations/views/my_account.py:363
+#: donations/views/my_account.py:368
 msgid "The IBAN number must start with 'RO'"
 msgstr "The IBAN number must start with 'RO'"
 
