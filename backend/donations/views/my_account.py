@@ -22,13 +22,14 @@ from users.models import User
 from ..models.jobs import Job, JobStatusChoices
 from ..models.main import Donor, Ngo, ngo_id_number_validator
 from .api import CheckNgoUrl
-from .base import BaseTemplateView
+from .base import BaseVisibleTemplateView
 
 UserModel = get_user_model()
 
 
-class MyAccountDetailsView(BaseTemplateView):
+class MyAccountDetailsView(BaseVisibleTemplateView):
     template_name = "ngo/my-account-details.html"
+    title = _("My Account Details")
 
     @method_decorator(login_required(login_url=reverse_lazy("login")))
     def get(self, request, *args, **kwargs):
@@ -53,7 +54,9 @@ class MyAccountDetailsView(BaseTemplateView):
         return render(request, self.template_name, context)
 
 
-class ArchiveDownloadLinkView(BaseTemplateView):
+class ArchiveDownloadLinkView(BaseVisibleTemplateView):
+    title = _("Download archive")
+
     @method_decorator(login_required(login_url=reverse_lazy("login")))
     def get(self, request: HttpRequest, job_id, *args, **kwargs):
         user: User = request.user
@@ -87,8 +90,9 @@ class ArchiveDownloadLinkView(BaseTemplateView):
         return redirect(job.zip.url)
 
 
-class MyAccountView(BaseTemplateView):
+class MyAccountView(BaseVisibleTemplateView):
     template_name = "ngo/my-account.html"
+    title = _("My Account")
 
     @staticmethod
     @cache_decorator(timeout=settings.TIMEOUT_CACHE_SHORT, cache_key_prefix="DONORS_BY_DONATION_YEAR")
@@ -181,8 +185,9 @@ def delete_prefilled_form(ngo_id):
     return Ngo.delete_prefilled_form(ngo_id)
 
 
-class NgoDetailsView(BaseTemplateView):
+class NgoDetailsView(BaseVisibleTemplateView):
     template_name = "ngo/ngo-details.html"
+    title = _("Organization details")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

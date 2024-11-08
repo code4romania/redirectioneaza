@@ -14,7 +14,7 @@ from django.utils.translation import gettext_lazy as _
 from redirectioneaza.common.messaging import send_email
 
 from ..forms.account import ForgotPasswordForm, LoginForm, RegisterForm, ResetPasswordForm
-from .base import BaseTemplateView
+from .base import BaseVisibleTemplateView
 
 logger = logging.getLogger(__name__)
 
@@ -25,9 +25,9 @@ def django_login(request, user) -> None:
     login(request, user, backend="django.contrib.auth.backends.ModelBackend")
 
 
-class ForgotPasswordView(BaseTemplateView):
+class ForgotPasswordView(BaseVisibleTemplateView):
     template_name = "resetare-parola.html"
-    title = "Resetare parola"
+    title = _("Reset password")
 
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
@@ -79,7 +79,7 @@ class ForgotPasswordView(BaseTemplateView):
         )
 
 
-class LoginView(BaseTemplateView):
+class LoginView(BaseVisibleTemplateView):
     template_name = "account/login.html"
     title = _("Sign In")
 
@@ -144,14 +144,17 @@ class LoginView(BaseTemplateView):
         return render(request, self.template_name, context)
 
 
-class LogoutView(BaseTemplateView):
+class LogoutView(BaseVisibleTemplateView):
+    title = _("Sign Out")
+
     def get(self, request, *args, **kwargs):
         logout(request)
         return redirect("/")
 
 
-class SetPasswordView(BaseTemplateView):
+class SetPasswordView(BaseVisibleTemplateView):
     template_name = "parola-noua.html"
+    title = _("Set New Password")
 
     def post(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
@@ -176,7 +179,7 @@ class SetPasswordView(BaseTemplateView):
         return redirect(reverse("contul-meu"))
 
 
-class SignupView(BaseTemplateView):
+class SignupView(BaseVisibleTemplateView):
     template_name = "account/register.html"
     title = _("New account")
 
@@ -258,7 +261,7 @@ class SignupView(BaseTemplateView):
         return redirect(reverse("contul-meu"))
 
 
-class VerificationView(BaseTemplateView):
+class VerificationView(BaseVisibleTemplateView):
     """
     handler used to:
         v - verify new account
@@ -266,6 +269,7 @@ class VerificationView(BaseTemplateView):
     """
 
     template_name = "parola-noua.html"
+    title = _("Verification")
 
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
