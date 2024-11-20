@@ -7,6 +7,8 @@ from django.template.loader import get_template, render_to_string
 from django.utils.translation import gettext_lazy as _
 from django_q.tasks import async_task
 
+from redirectioneaza.common.monitoring import check_queue_status
+
 logger = logging.getLogger(__name__)
 
 
@@ -39,6 +41,8 @@ def async_send_email(
     html_context: Dict,
 ):
     logger.info(f"Asynchronously sending {len(to_emails)} emails with subject: {subject}.")
+
+    check_queue_status()
 
     async_task(
         send_emails,
