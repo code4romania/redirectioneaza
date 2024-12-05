@@ -8,12 +8,12 @@ asgiref==3.8.1
     # via django
 blessed==1.20.0
     # via -r requirements.in
-boto3==1.35.54
+boto3==1.35.76
     # via
     #   django-ses
     #   django-storages
     #   pycognito
-botocore==1.35.54
+botocore==1.35.76
     # via
     #   boto3
     #   s3transfer
@@ -35,7 +35,7 @@ cryptography==43.0.3
     #   pyjwt
 cssselect2==0.7.0
     # via svglib
-django==5.1.2
+django==5.1.4
     # via
     #   -r requirements.in
     #   django-allauth
@@ -65,7 +65,7 @@ django-ses==4.2.0
     # via -r requirements.in
 django-storages==1.14.4
     # via -r requirements.in
-django-unfold==0.40.0
+django-unfold==0.42.0
     # via -r requirements.in
 envs==1.4
     # via pycognito
@@ -89,7 +89,7 @@ markupsafe==3.0.2
     # via jinja2
 ngohub==0.0.9
     # via -r requirements.in
-packaging==24.1
+packaging==24.2
     # via gunicorn
 pillow==11.0.0
     # via reportlab
@@ -101,7 +101,7 @@ pycognito==2024.5.1
     # via -r requirements.in
 pycparser==2.22
     # via cffi
-pyjwt==2.9.0
+pyjwt==2.10.1
     # via pycognito
 pymysql==1.1.1
     # via -r requirements.in
@@ -125,15 +125,15 @@ requests==2.32.3
     # via
     #   -r requirements.in
     #   pycognito
-s3transfer==0.10.3
+s3transfer==0.10.4
     # via boto3
 sentry-sdk==2.16.0
     # via -r requirements.in
-six==1.16.0
+six==1.17.0
     # via
     #   blessed
     #   python-dateutil
-sqlparse==0.5.1
+sqlparse==0.5.2
     # via django
 svglib==1.5.1
     # via -r requirements.in
@@ -156,7 +156,7 @@ whitenoise==6.7.0
     # via -r requirements.in
 zope-event==5.0
     # via gevent
-zope-interface==7.1.1
+zope-interface==7.2
     # via gevent
 
 # The following packages are considered to be unsafe in a requirements file:
