@@ -23,3 +23,7 @@
 {% block content %}
   {% include "unfold/helpers/messages.html" %}
 {% endblock %}
+  
+  {% if display_work_in_progress %}
+    {% include "admin/announcements/work_in_progress.html" %}
+  {% endif %}

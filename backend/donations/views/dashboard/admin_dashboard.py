@@ -1,8 +1,6 @@
 from typing import Dict, List, Union
 
 from django.conf import settings
-from django.contrib import messages
-from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 from django.utils.timezone import now
@@ -24,16 +22,6 @@ ADMIN_DASHBOARD_CACHE_KEY = "ADMIN_DASHBOARD"
 def callback(request, context) -> Dict:
     today = now()
     years_range_ascending = get_current_year_range()
-
-    messages.warning(
-        request,
-        render_to_string(
-            "admin/announcements/work_in_progress.html",
-            context={
-                "contact_email": settings.CONTACT_EMAIL_ADDRESS,
-            },
-        ),
-    )
 
     header_stats: List[List[Dict[str, Union[str, int]]]] = _get_header_stats(today)
 
