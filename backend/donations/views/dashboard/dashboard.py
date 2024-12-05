@@ -28,4 +28,4 @@ def callback(request, context):
     if user.is_admin:
         return admin_callback(request, context)
 
-    return ngo_callback(request, context)
+    return {"redirect": reverse("contul-meu")}

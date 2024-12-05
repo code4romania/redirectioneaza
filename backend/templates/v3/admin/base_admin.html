@@ -21,9 +21,18 @@
 {% endblock %}
 
 {% block content %}
-  {% include "unfold/helpers/messages.html" %}
-{% endblock %}
   
   {% if display_work_in_progress %}
     {% include "admin/announcements/work_in_progress.html" %}
   {% endif %}
+
+  <body>
+
+  {% if redirect %}
+    <meta http-equiv="refresh" content="0; url={{ redirect }}"/>
+  {% endif %}
+
+  {% block body %}{% endblock body %}
+
+  </body>
+{% endblock content %}
