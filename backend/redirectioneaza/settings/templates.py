@@ -18,7 +18,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "partners.context_processors.custom_subdomain",
-                "users.context_processors.is_admin",
+                "users.context_processors.get_admin_properties",
                 "donations.context_processors.default_ngo_logo",
             ],
         },
@@ -32,7 +32,7 @@ TEMPLATES = [
             "environment": "redirectioneaza.jinja2.environment",
             "context_processors": [
                 "partners.context_processors.custom_subdomain",
-                "users.context_processors.is_admin",
+                "users.context_processors.get_admin_properties",
                 "donations.context_processors.default_ngo_logo",
             ],
         },
