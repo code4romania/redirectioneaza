@@ -6,9 +6,10 @@ from django.utils.safestring import mark_safe
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 
-from donations.models.main import Donor, Ngo
+from donations.models.ngos import Ngo
 from redirectioneaza.common.cache import cache_decorator
 
+from ...models.donors import Donor
 from .helpers import (
     generate_donations_per_month_chart,
     get_current_year_range,

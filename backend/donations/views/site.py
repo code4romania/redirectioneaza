@@ -12,7 +12,8 @@ from django.views.generic import TemplateView
 from partners.models import DisplayOrderingChoices
 from redirectioneaza.common.cache import cache_decorator
 
-from ..models.main import ALL_NGO_IDS_CACHE_KEY, ALL_NGOS_CACHE_KEY, FRONTPAGE_NGOS_KEY, Donor, Ngo
+from ..models.donors import Donor
+from ..models.ngos import ALL_NGO_IDS_CACHE_KEY, ALL_NGOS_CACHE_KEY, FRONTPAGE_NGOS_KEY, Ngo
 
 
 class HomePage(TemplateView):

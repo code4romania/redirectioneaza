@@ -1,6 +1,7 @@
 import pytest
 
-from donations.models.main import Donor, Ngo
+from donations.models.donors import Donor
+from donations.models.ngos import Ngo
 
 
 @pytest.fixture

@@ -6,7 +6,7 @@ from django.core.management import BaseCommand
 from django.db import IntegrityError
 from faker import Faker
 
-from donations.models.main import Ngo
+from donations.models.ngos import Ngo
 from partners.models import DisplayOrderingChoices, Partner
 
 fake = Faker("ro_RO")

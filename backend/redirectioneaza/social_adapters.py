@@ -19,7 +19,7 @@ from ngohub.models.organization import Organization, OrganizationBase
 from ngohub.models.user import UserProfile
 from sentry_sdk import capture_message
 
-from donations.models.main import Ngo
+from donations.models.ngos import Ngo
 from donations.workers.update_organization import create_organization_for_user, update_organization
 from users.groups_management import MAIN_ADMIN, NGO_ADMIN, NGO_MEMBER
 

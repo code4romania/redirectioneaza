@@ -9,7 +9,8 @@ from django.http import HttpResponse
 from django.utils import timezone
 from django.views.generic import TemplateView
 
-from donations.models.main import Donor, Ngo
+from donations.models.donors import Donor
+from donations.models.ngos import Ngo
 
 logger = logging.getLogger(__name__)
 

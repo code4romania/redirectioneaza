@@ -13,7 +13,7 @@ from ngohub.models.organization import Organization, OrganizationGeneral
 from pycognito import Cognito
 from requests import Response
 
-from donations.models.main import Ngo
+from donations.models.ngos import Ngo
 from redirectioneaza.common.cache import cache_decorator
 
 logger = logging.getLogger(__name__)

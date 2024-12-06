@@ -4,7 +4,7 @@ from typing import Dict, List, Optional
 from django.core.exceptions import ValidationError
 from django.core.management import BaseCommand
 
-from donations.models.main import (
+from donations.models.ngos import (
     Ngo,
     REGISTRATION_NUMBER_REGEX,
     REGISTRATION_NUMBER_REGEX_SANS_VAT,

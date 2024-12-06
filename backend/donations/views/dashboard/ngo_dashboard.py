@@ -3,10 +3,11 @@ from typing import Dict, List, Union
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 
-from donations.models.main import Donor, Ngo
+from donations.models.ngos import Ngo
 from redirectioneaza import settings
 from redirectioneaza.common.cache import cache_decorator
 
+from ...models.donors import Donor
 from .helpers import generate_donations_per_month_chart
 
 UserModel = get_user_model()

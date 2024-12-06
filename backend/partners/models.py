@@ -3,7 +3,7 @@ from django.db.models.functions import Lower
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from donations.models.main import Ngo
+from donations.models.ngos import Ngo
 from redirectioneaza.common.validators import url_validator
 
 

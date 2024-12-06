@@ -7,7 +7,8 @@ from django.core.management import BaseCommand
 from faker import Faker
 from localflavor.ro.ro_counties import COUNTIES_CHOICES
 
-from donations.models.main import Donor, Ngo
+from donations.models.donors import Donor
+from donations.models.ngos import Ngo
 from donations.pdf import create_pdf
 
 fake = Faker("ro_RO")

@@ -7,7 +7,7 @@ from django.conf import settings
 from django.db.models import QuerySet
 from django_q.tasks import async_task
 
-from donations.models.main import Donor
+from donations.models.donors import Donor
 from importer.tasks.utils import batch
 
 logger = logging.getLogger(__name__)

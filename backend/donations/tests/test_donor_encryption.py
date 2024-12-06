@@ -1,6 +1,6 @@
 from faker import Faker
 
-from donations.models.main import Donor
+from donations.models.donors import Donor
 
 fake = Faker("ro_RO")
 

@@ -12,7 +12,9 @@ from django.views.generic import TemplateView
 from redirectioneaza.common.cache import cache_decorator
 from redirectioneaza.common.messaging import send_email
 from users.models import User
-from ..models.main import Donor, Ngo
+
+from ..models.donors import Donor
+from ..models.ngos import Ngo
 
 logger = logging.getLogger(__name__)
 

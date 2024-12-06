@@ -15,7 +15,8 @@ from ipware import get_client_ip
 
 from redirectioneaza.common.messaging import send_email
 
-from ..models.main import Donor, Ngo
+from ..models.donors import Donor
+from ..models.ngos import Ngo
 from ..pdf import add_signature, create_pdf
 from .captcha import validate_captcha
 

@@ -11,7 +11,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from donations.models.main import Ngo
+from donations.models.ngos import Ngo
 from users.groups_management import MAIN_ADMIN, NGO_ADMIN, NGO_MEMBER, RESTRICTED_ADMIN
 
 

@@ -1,7 +1,7 @@
 import pytest
 from django.core.exceptions import ValidationError
 
-from donations.models.main import ngo_id_number_validator
+from donations.models.ngos import ngo_id_number_validator
 
 
 @pytest.mark.django_db

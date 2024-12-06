@@ -20,8 +20,9 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from localflavor.ro.ro_counties import COUNTIES_CHOICES
 
+from donations.models.donors import Donor
 from donations.models.jobs import Job, JobDownloadError, JobStatusChoices
-from donations.models.main import REGISTRATION_NUMBER_REGEX_SANS_VAT, Donor, Ngo
+from donations.models.ngos import REGISTRATION_NUMBER_REGEX_SANS_VAT, Ngo
 from redirectioneaza.common.messaging import send_email
 
 logger = logging.getLogger(__name__)

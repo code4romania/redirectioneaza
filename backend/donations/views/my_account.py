@@ -19,8 +19,9 @@ from django_q.tasks import async_task
 from redirectioneaza.common.cache import cache_decorator
 from users.models import User
 
+from ..models.donors import Donor
 from ..models.jobs import Job, JobStatusChoices
-from ..models.main import Donor, Ngo, ngo_id_number_validator
+from ..models.ngos import Ngo, ngo_id_number_validator
 from .api import CheckNgoUrl
 from .base import BaseVisibleTemplateView
 

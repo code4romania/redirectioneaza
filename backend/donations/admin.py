@@ -12,8 +12,9 @@ from unfold.admin import ModelAdmin
 from redirectioneaza.common.admin import HasNgoFilter
 from users.models import User
 
+from .models.donors import Donor
 from .models.jobs import Job, JobStatusChoices
-from .models.main import Donor, Ngo
+from .models.ngos import Ngo
 from .workers.update_organization import update_organization
 
 logger = logging.getLogger(__name__)

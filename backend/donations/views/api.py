@@ -17,7 +17,7 @@ from django.views.generic import TemplateView
 from redirectioneaza.common.cache import cache_decorator
 
 from ..models.jobs import Job, JobStatusChoices
-from ..models.main import ALL_NGOS_CACHE_KEY, Ngo
+from ..models.ngos import ALL_NGOS_CACHE_KEY, Ngo
 from ..pdf import create_pdf
 from ..workers.update_organization import update_organization
 from .base import BaseTemplateView
