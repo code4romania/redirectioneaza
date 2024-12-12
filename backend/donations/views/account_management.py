@@ -8,7 +8,6 @@ from django.http import Http404, HttpRequest
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils import timezone
-from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
 from redirectioneaza.common.messaging import send_email
@@ -92,12 +91,13 @@ class LoginView(BaseVisibleTemplateView):
 
         context = self.get_context_data(**kwargs)
 
-        signup_text: str = _("sign up")
-        signup_link: str = request.build_absolute_uri(reverse("signup"))
-        signup_url: str = f'<a href="{signup_link}">{signup_text}</a>'
-
-        # noinspection DjangoSafeString
-        context.update({"signup_url": mark_safe(signup_url)})
+        context.update(
+            {
+                "account_button": _("Go to account"),
+                "section_title": _("Login through NGO Hub"),
+                "form_action": reverse("amazon_cognito_login"),
+            }
+        )
 
         return render(request, self.template_name, context)
 
@@ -188,6 +188,15 @@ class SignupView(BaseVisibleTemplateView):
             return redirect(reverse("contul-meu"))
 
         context = self.get_context_data(**kwargs)
+
+        context.update(
+            {
+                "account_button": _("Register new account"),
+                "account_button_is_external": True,
+                "section_title": _("Register through NGO Hub"),
+                "form_action": settings.NGOHUB_APP_BASE,
+            }
+        )
 
         return render(request, self.template_name, context)
 

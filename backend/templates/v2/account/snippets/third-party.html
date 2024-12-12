@@ -1,17 +1,23 @@
 {% load i18n allauth socialaccount %}
 
-{% trans "Go to account" as account_button %}
+{% if not account_button %}
+    {% trans "Go to account" as account_button %}
+{% endif %}
+{% if not section_title %}
+    {% trans "Access your account through NGO Hub" as section_title %}
+{% endif %}
+{% if not form_action %}
+  {% if SOCIALACCOUNT_ENABLED %}
+    {% url 'amazon_cognito_login' as form_action %}
+  {% else %}
+    {% url 'login' as form_action %}
+  {% endif %}
+{% endif %}
 
 <div class="col-sm">
 
   <h2>
-    {% if page_type == "login" %}
-      {% trans "Login through NGO Hub" %}
-      {% elif page_type == "register" %}
-      {% trans "Register through NGO Hub" %}
-    {% else %}
-      {% trans "Access your account through NGO Hub" %}
-    {% endif %}
+    {{ section_title }}
   </h2>
 
   {% if SOCIALACCOUNT_ONLY %}
@@ -34,9 +40,13 @@
   </p>
 
   <div id="allauth-login-form-container" class="col-2">
-    <form action="{% url 'amazon_cognito_login' %}" method="GET">
-      <input class="btn btn-primary" id="go-to-login" type="submit" value="{{ account_button }}">
-    </form>
+    <a
+      class="btn btn-primary"
+      href="{{ form_action }}"
+      {% if account_button_is_external %}target="_blank"{% endif %}
+    >
+      {{ account_button }}
+    </a>
   </div>
 
 </div>
