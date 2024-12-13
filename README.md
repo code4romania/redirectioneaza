@@ -67,7 +67,9 @@ Go to the `backend/` folder and run the following commands:
 ```bash
 nvm use --lts || nvm install --lts
 
-npm i -g less@2.7.3 less-plugin-clean-css@1.5.1
+npm ci
+
+bower install
 
 cp -r bower_components/  static_extras/
 
@@ -83,7 +85,7 @@ popd
 or, in a one-liner:
 
 ```bash
-pushd backend/ && nvm use --lts || nvm install --lts && npm i -g less@2.7.3 less-plugin-clean-css@1.5.1 && cp -r bower_components/  static_extras/ && pushd static_extras/ && lessc css/main.less > css/main.css --clean-css="--s1 --advanced --compatibility=ie8" && rm -rf bower_components/ && popd && popd
+pushd backend/ && nvm use --lts || nvm install --lts && npm ci && bower install && cp -r bower_components/  static_extras/ && pushd static_extras/ && lessc css/main.less > css/main.css --clean-css="--s1 --advanced --compatibility=ie8" && rm -rf bower_components/ && popd && popd
 ```
 
 ## Deployment
