@@ -262,6 +262,8 @@ module "ecs_redirectioneaza" {
     aws_secretsmanager_secret.seed_admin.arn,
     aws_secretsmanager_secret.sentry_dsn.arn,
     aws_secretsmanager_secret.recaptcha.arn,
+    aws_secretsmanager_secret.ngohub_cognito.arn,
+    aws_secretsmanager_secret.ngohub_api.arn,
     aws_secretsmanager_secret.rds.arn,
   ]
 }
