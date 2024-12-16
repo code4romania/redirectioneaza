@@ -4,7 +4,7 @@ variable "env" {
   default     = "staging"
 
   validation {
-    condition     = contains(["production", "staging", "development"], var.env)
+    condition = contains(["production", "staging", "development"], var.env)
     error_message = "Allowed values for env are \"production\", \"staging\" or \"development\"."
   }
 }
@@ -81,3 +81,41 @@ variable "recaptcha_private_key" {
   type    = string
   default = null
 }
+
+# Cognito authentication
+variable "aws_cognito_region" {
+  type    = string
+  default = null
+}
+
+variable "aws_cognito_domain" {
+  type    = string
+  default = null
+}
+
+variable "aws_cognito_user_pool_id" {
+  type    = string
+  default = null
+}
+
+variable "aws_cognito_client_id" {
+  type    = string
+  default = null
+}
+
+variable "aws_cognito_client_secret" {
+  type    = string
+  default = null
+}
+
+# NGO Hub API
+variable "ngohub_api_account" {
+  type    = string
+  default = null
+}
+
+variable "ngohub_api_key" {
+  type    = string
+  default = null
+}
+

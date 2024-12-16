@@ -28,10 +28,10 @@ module "ecs_redirectioneaza" {
   log_group_name                 = module.ecs_cluster.log_group_name
   service_discovery_namespace_id = module.ecs_cluster.service_discovery_namespace_id
 
-  container_port          = 80
-  network_mode            = "awsvpc"
+  container_port = 80
+  network_mode   = "awsvpc"
   network_security_groups = [aws_security_group.ecs.id]
-  network_subnets         = [aws_subnet.private.0.id]
+  network_subnets = [aws_subnet.private.0.id]
 
   task_role_arn          = aws_iam_role.ecs_task_role.arn
   enable_execute_command = var.enable_execute_command
@@ -52,7 +52,7 @@ module "ecs_redirectioneaza" {
 
   environment = [
     {
-      name  = "DEBUG"
+      name = "DEBUG"
       value = tostring(false)
     },
     {
@@ -60,15 +60,15 @@ module "ecs_redirectioneaza" {
       value = "WARNING"
     },
     {
-      name  = "ENABLE_DJANGO_ADMIN"
+      name = "ENABLE_DJANGO_ADMIN"
       value = tostring(true)
     },
     {
-      name  = "ENABLE_CACHE"
+      name = "ENABLE_CACHE"
       value = tostring(false)
     },
     {
-      name  = "USE_S3"
+      name = "USE_S3"
       value = tostring(true)
     },
     {
@@ -226,6 +226,34 @@ module "ecs_redirectioneaza" {
       name      = "CAPTCHA_PRIVATE_KEY"
       valueFrom = "${aws_secretsmanager_secret.recaptcha.arn}:private_key::"
     },
+    {
+      name      = "AWS_COGNITO_REGION"
+      valueFrom = "${aws_secretsmanager_secret.ngohub_cognito.arn}:region::"
+    },
+    {
+      name      = "AWS_COGNITO_DOMAIN"
+      valueFrom = "${aws_secretsmanager_secret.ngohub_cognito.arn}:domain::"
+    },
+    {
+      name      = "AWS_COGNITO_USER_POOL_ID"
+      valueFrom = "${aws_secretsmanager_secret.ngohub_cognito.arn}:user_pool_id::"
+    },
+    {
+      name      = "AWS_COGNITO_CLIENT_ID"
+      valueFrom = "${aws_secretsmanager_secret.ngohub_cognito.arn}:client_id::"
+    },
+    {
+      name      = "AWS_COGNITO_CLIENT_SECRET"
+      valueFrom = "${aws_secretsmanager_secret.ngohub_cognito.arn}:client_secret::"
+    },
+    {
+      name      = "NGOHUB_API_ACCOUNT"
+      valueFrom = "${aws_secretsmanager_secret.ngohub_api.arn}:account::"
+    },
+    {
+      name      = "NGOHUB_API_KEY"
+      valueFrom = "${aws_secretsmanager_secret.ngohub_api.arn}:key::"
+    },
   ]
 
   allowed_secrets = [
@@ -331,5 +359,32 @@ resource "aws_secretsmanager_secret_version" "recaptcha" {
   secret_string = jsonencode({
     public_key  = var.recaptcha_public_key
     private_key = var.recaptcha_private_key
+  })
+}
+
+resource "aws_secretsmanager_secret" "ngohub_cognito" {
+  name = "${local.namespace}-ngohub_cognito-${random_string.secrets_suffix.result}"
+}
+
+resource "aws_secretsmanager_secret_version" "ngohub_cognito" {
+  secret_id = aws_secretsmanager_secret.ngohub_cognito.id
+  secret_string = jsonencode({
+    region        = var.aws_cognito_region
+    domain        = var.aws_cognito_domain
+    user_pool_id  = var.aws_cognito_user_pool_id
+    client_id     = var.aws_cognito_client_id
+    client_secret = var.aws_cognito_client_secret
+  })
+}
+
+resource "aws_secretsmanager_secret" "ngohub_api" {
+  name = "${local.namespace}-ngohub_api_credentials-${random_string.secrets_suffix.result}"
+}
+
+resource "aws_secretsmanager_secret_version" "ngohub_api" {
+  secret_id = aws_secretsmanager_secret.ngohub_api.id
+  secret_string = jsonencode({
+    account = var.ngohub_api_account
+    key     = var.ngohub_api_key
   })
 }
