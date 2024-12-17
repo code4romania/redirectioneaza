@@ -75,6 +75,7 @@ INSTALLED_APPS = [
     "storages",
     "django_q",
     "django_recaptcha",
+    "django_vite",
     # authentication
     "allauth",
     "allauth.account",
