@@ -7,8 +7,8 @@ export default defineConfig(({ command, mode }) => {
 
   return {
     plugins: [],
-    root: resolve(__dirname, './src'),
-    base: command === 'serve' ? '/static/' : '',
+    // root: resolve(__dirname, './src'),
+    base: '/static/',
     server: {
       open: false,
       host: '0.0.0.0',
@@ -22,7 +22,7 @@ export default defineConfig(({ command, mode }) => {
     //     '@constants': resolve(__dirname, './src/constants'),
     //     '@hooks': resolve(__dirname, './src/hooks'),
     //   },
-      extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
+      extensions: ['.css','.js', '.jsx', '.ts', '.tsx', '.json'],
     },
     build: {
       manifest: "manifest.json",
@@ -30,14 +30,11 @@ export default defineConfig(({ command, mode }) => {
       assetsDir: '',
       target: 'es2015',
       modulePreload: false,
-      outDir: resolve(__dirname, './dist'),
+      outDir: resolve('./dist'),
       rollupOptions: {
-        // input: {
-        //   main: resolve('./src/main.jsx'),
-        // },
-        // output: {
-        //   chunkFileNames: undefined,
-        // },
+        input: {
+          main: resolve('./assets/main.css'),
+        },
       },
     },
   };
