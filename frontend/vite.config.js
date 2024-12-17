@@ -25,7 +25,7 @@ export default defineConfig(({ command, mode }) => {
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
     },
     build: {
-      manifest: true,
+      manifest: "manifest.json",
       emptyOutDir: true,
       assetsDir: '',
       target: 'es2015',
