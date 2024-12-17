@@ -1,8 +1,9 @@
-django~=5.1.2
+django~=5.1.4
 django-environ~=0.11.2
 django-ipware~=7.0.1
-django-unfold~=0.42.0
-django-allauth~=65.0.2
+django-unfold~=0.43.0
+django-allauth~=65.3.0
+django-vite~=3.0.5
 
 pycognito~=2024.5.1
 
@@ -13,16 +14,16 @@ django-recaptcha~=4.0.0
 ngohub~=0.0.9
 
 # encrypting data
-cryptography~=43.0.1
+cryptography~=44.0.0
 
 # django-q
-django-q2~=1.7.2
+django-q2~=1.7.4
 blessed~=1.20.0  # optional requirement for django-q2
-psutil~=6.0.0  # optional requirement for django-q2
-croniter~=3.0.3  # optional requirement for django-q2
+psutil~=6.1.0  # optional requirement for django-q2
+croniter~=5.0.1  # optional requirement for django-q2
 
 # emails
-django-ses~=4.2.0
+django-ses~=4.3.1
 
 # database
 pymysql~=1.1
@@ -32,11 +33,11 @@ psycopg2-binary~=2.9.9
 jinja2~=3.1.4
 
 # web server
-gevent~=24.10.1
+gevent~=24.11.1
 gunicorn~=23.0.0
 
 # file storage
-whitenoise~=6.7.0
+whitenoise~=6.8.2
 django-storages[s3]~=1.14.4
 
 # locale data
@@ -44,11 +45,11 @@ django-localflavor~=4.0.0
 
 # pdf creation
 reportlab~=4.2.5
-pypdf~=5.0.1
+pypdf~=5.1.0
 svglib~=1.5.1
 
 # requests
 requests~=2.32.3
 
 # Sentry
-sentry-sdk[django]~=2.16.0
+sentry-sdk[django]~=2.19.2
