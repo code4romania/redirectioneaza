@@ -25,7 +25,7 @@ def django_login(request, user) -> None:
 
 
 class ForgotPasswordView(BaseVisibleTemplateView):
-    template_name = "resetare-parola.html"
+    template_name = "account/reset-password.html"
     title = _("Reset password")
 
     def get(self, request, *args, **kwargs):
