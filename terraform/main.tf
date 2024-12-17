@@ -226,6 +226,34 @@ module "ecs_redirectioneaza" {
       name      = "CAPTCHA_PRIVATE_KEY"
       valueFrom = "${aws_secretsmanager_secret.recaptcha.arn}:private_key::"
     },
+    {
+      name      = "AWS_COGNITO_REGION"
+      valueFrom = "${aws_secretsmanager_secret.ngohub_cognito.arn}:region::"
+    },
+    {
+      name      = "AWS_COGNITO_DOMAIN"
+      valueFrom = "${aws_secretsmanager_secret.ngohub_cognito.arn}:domain::"
+    },
+    {
+      name      = "AWS_COGNITO_USER_POOL_ID"
+      valueFrom = "${aws_secretsmanager_secret.ngohub_cognito.arn}:user_pool_id::"
+    },
+    {
+      name      = "AWS_COGNITO_CLIENT_ID"
+      valueFrom = "${aws_secretsmanager_secret.ngohub_cognito.arn}:client_id::"
+    },
+    {
+      name      = "AWS_COGNITO_CLIENT_SECRET"
+      valueFrom = "${aws_secretsmanager_secret.ngohub_cognito.arn}:client_secret::"
+    },
+    {
+      name      = "NGOHUB_API_ACCOUNT"
+      valueFrom = "${aws_secretsmanager_secret.ngohub_api.arn}:account::"
+    },
+    {
+      name      = "NGOHUB_API_KEY"
+      valueFrom = "${aws_secretsmanager_secret.ngohub_api.arn}:key::"
+    },
   ]
 
   allowed_secrets = [
@@ -234,6 +262,8 @@ module "ecs_redirectioneaza" {
     aws_secretsmanager_secret.seed_admin.arn,
     aws_secretsmanager_secret.sentry_dsn.arn,
     aws_secretsmanager_secret.recaptcha.arn,
+    aws_secretsmanager_secret.ngohub_cognito.arn,
+    aws_secretsmanager_secret.ngohub_api.arn,
     aws_secretsmanager_secret.rds.arn,
   ]
 }
@@ -331,5 +361,32 @@ resource "aws_secretsmanager_secret_version" "recaptcha" {
   secret_string = jsonencode({
     public_key  = var.recaptcha_public_key
     private_key = var.recaptcha_private_key
+  })
+}
+
+resource "aws_secretsmanager_secret" "ngohub_cognito" {
+  name = "${local.namespace}-ngohub_cognito-${random_string.secrets_suffix.result}"
+}
+
+resource "aws_secretsmanager_secret_version" "ngohub_cognito" {
+  secret_id = aws_secretsmanager_secret.ngohub_cognito.id
+  secret_string = jsonencode({
+    region        = var.aws_cognito_region
+    domain        = var.aws_cognito_domain
+    user_pool_id  = var.aws_cognito_user_pool_id
+    client_id     = var.aws_cognito_client_id
+    client_secret = var.aws_cognito_client_secret
+  })
+}
+
+resource "aws_secretsmanager_secret" "ngohub_api" {
+  name = "${local.namespace}-ngohub_api_credentials-${random_string.secrets_suffix.result}"
+}
+
+resource "aws_secretsmanager_secret_version" "ngohub_api" {
+  secret_id = aws_secretsmanager_secret.ngohub_api.id
+  secret_string = jsonencode({
+    account = var.ngohub_api_account
+    key     = var.ngohub_api_key
   })
 }

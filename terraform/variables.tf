@@ -78,6 +78,47 @@ variable "recaptcha_public_key" {
 }
 
 variable "recaptcha_private_key" {
+  type      = string
+  sensitive = true
+  default   = null
+}
+
+# Cognito authentication
+variable "aws_cognito_region" {
   type    = string
   default = null
 }
+
+variable "aws_cognito_domain" {
+  type    = string
+  default = null
+}
+
+variable "aws_cognito_user_pool_id" {
+  type    = string
+  default = null
+}
+
+variable "aws_cognito_client_id" {
+  type    = string
+  default = null
+}
+
+variable "aws_cognito_client_secret" {
+  type      = string
+  sensitive = true
+  default   = null
+}
+
+# NGO Hub API
+variable "ngohub_api_account" {
+  type    = string
+  default = null
+}
+
+variable "ngohub_api_key" {
+  type      = string
+  sensitive = true
+  default   = null
+}
+
