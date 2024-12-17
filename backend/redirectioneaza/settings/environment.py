@@ -6,6 +6,8 @@ env = environ.Env(
     # set casting, default value
     # Django settings
     DEBUG=(bool, False),
+    DJANGO_VITE_DEV_MODE=(bool, False),
+    DJANGO_VITE_DEV_SERVER_PORT=(int, 3000),
     ENVIRONMENT=(str, "production"),
     DATA_UPLOAD_MAX_NUMBER_FIELDS=(int, 1000),
     OLD_SESSION_KEY=(str, ""),
