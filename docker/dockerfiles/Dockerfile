@@ -1,5 +1,5 @@
-ARG NODE_VERSION=20.18.0
-ARG PYTHON_VERSION=3.12.7
+ARG NODE_VERSION=22.12.0
+ARG PYTHON_VERSION=3.12.8
 
 
 FROM node:${NODE_VERSION}-bookworm as frontend
@@ -71,7 +71,7 @@ RUN apt-get update && \
     nginx gcc xz-utils gettext
 
 # configure process manager
-ARG S6_OVERLAY_VERSION=3.2.0.0
+ARG S6_OVERLAY_VERSION=3.2.0.2
 ENV S6_CMD_WAIT_FOR_SERVICES_MAXTIME 0
 
 ADD https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-noarch.tar.xz /tmp
