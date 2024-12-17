@@ -67,7 +67,9 @@ Go to the `backend/` folder and run the following commands:
 ```bash
 nvm use --lts || nvm install --lts
 
-npm i -g less@2.7.3 less-plugin-clean-css@1.5.1
+npm i -g less@2.7.3 less-plugin-clean-css@1.5.1 bower@1.8.14
+
+bower install
 
 cp -r bower_components/  static_extras/
 
