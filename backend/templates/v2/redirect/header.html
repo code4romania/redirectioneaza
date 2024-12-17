@@ -3,7 +3,7 @@
 {% include 'redirect/commitglobal-banner.html' %}
 
 {% block content %}
-<header x-data="{ menuOpen: false }" x-on:click.outside="menuOpen = false" class="bg-white relative shadow">
+<header x-data="{ menuOpen: false }" x-on:click.outside="menuOpen = false" class="bg-white relative shadow-lg">
   <nav class="flex container items-center justify-between py-3 gap-x-12" aria-label="Global">
     <div class="flex items-center gap-x-10">
       <a class="-m-1.5 p-1.5" href="{% url 'home' %}">
