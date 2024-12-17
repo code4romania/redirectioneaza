@@ -3,31 +3,96 @@
 {% include 'redirect/commitglobal-banner.html' %}
 
 {% block content %}
-  <nav class="navbar navbar-default">
-    <div class="container">
-      <div class="navbar-header">
-        {% if not custom_subdomain %}
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#header-menu">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-          </button>
-        {% endif %}
-        <a class="navbar-brand" href="{% url 'home' %}">
-          <img src="{% static 'images/logo-smaller.png' %}" alt="Redirectioneaza logo" width="90px;"/>
-        </a>
-      </div>
+<header x-data="{ menuOpen: false }" x-on:click.outside="menuOpen = false" class="bg-white relative shadow">
+  <nav class="flex container items-center justify-between py-3 gap-x-12" aria-label="Global">
+    <div class="flex items-center gap-x-10">
+      <a class="-m-1.5 p-1.5" href="{% url 'home' %}">
+        <img src="{% static 'images/logo.png' %}" alt="Redirectioneaza logo" class="max-h-12" />
+      </a>
 
       {% if not custom_subdomain %}
-        <div id="header-menu" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li><a href="{% url 'organizations' %}">Organizații</a></li>
-            <li><a href="{% url 'signup' %}">Înregistrează ONG</a></li>
-            <li><a href="{% url 'faq' %}">Întrebări frecvente</a></li>
-            <li><a href="{% url 'about' %}">Despre</a></li>
-            <li><a href="{% url 'login' %}">Log In</a></li>
-          </ul>
+        <div class="hidden lg:flex gap-x-6 items-center text-center">
+          <a
+            class="text-gray-900 hover:text-cyan-600 active:text-cyan-700"
+            href="{% url 'about' %}">
+            Despre
+          </a>
+
+          <button
+            type="button"
+            class="text-gray-900 hover:text-cyan-600 active:text-cyan-700"
+            href="{% url 'signup' %}">
+            Pentru contribuabili
+          </button>
+
+          <button
+            type="button"
+            class="text-gray-900 hover:text-cyan-600 active:text-cyan-700"
+            href="{% url 'faq' %}">
+            Pentru organizații
+          </button>
         </div>
       {% endif %}
     </div>
+
+    {% if not custom_subdomain %}
+      <div class="flex lg:hidden">
+        <button type="button" x-on:click="menuOpen = !menuOpen" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700">
+          <span class="sr-only">Open main menu</span>
+          <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+            <path x-show="!menuOpen" stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            <path x-show="menuOpen" stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+
+          </svg>
+        </button>
+      </div>
+    {% endif %}
+
+    <div class="hidden lg:flex gap-x-6 items-center text-center">
+      <a class="text-gray-900 hover:text-cyan-600 active:text-cyan-700" href="{% url 'login' %}">
+        Intră în cont ONG
+      </a>
+
+      <a class="bg-amber-300 sm:text-base text-sm sm:px-6 sm:py-2 px-2 py-1 shadow-sm rounded-full text-gray-900 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300" href="{% url 'login' %}">
+        Înregistrează ONG
+      </a>
+    </div>
   </nav>
+
+
+  <!-- Mobile menu, show/hide based on menu open state. -->
+  <nav class="absolute inset-x-0 z-50 transition origin-top transform bg-white shadow-lg top-full lg:hidden" role="dialog" aria-modal="true" x-show="menuOpen" x-collapse x-cloak>
+    <div class="container">
+      <div class="divide-y divide-gray-500/10">
+        <div class="py-3 grid gap-2">
+          <a
+            class="-mx-3 block rounded-lg px-3 py-2 text-base/7  text-gray-900 hover:bg-gray-50"
+            href="{% url 'about' %}">
+            Despre
+          </a>
+
+          <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base/7  text-gray-900 hover:bg-gray-50">Features</a>
+          <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base/7  text-gray-900 hover:bg-gray-50">Marketplace</a>
+          <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base/7  text-gray-900 hover:bg-gray-50">Company</a>
+        </div>
+
+        <div class="py-3 grid gap-2 grid-cols-2 -mx-3 items-center justify-center text-center">
+          <a
+            class="block rounded-lg px-3 py-2.5 text-base/7 text-gray-900 hover:bg-gray-50"
+            href="{% url 'login' %}">
+            Intră în cont ONG
+          </a>
+
+          <a
+            class="block px-3 py-2.5 text-base/7 text-gray-900
+shadow-sm rounded-full
+            bg-amber-300 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
+            href="{% url 'login' %}">
+            Înregistrează ONG
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
 {% endblock %}

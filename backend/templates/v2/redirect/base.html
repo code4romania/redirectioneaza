@@ -32,44 +32,16 @@
   {% block additional_headers %}
   {% endblock %}
 
-  {# if we are on dev load with less, if not load the css #}
-  {% if DEV %}
-    <script>
-      less = {
-        env: "development",
-        async: false
-      }
-    </script>
-    <link rel="stylesheet/less" type="text/css" href="{% static 'css/main.less' %}">
-
-    {# block used to add new less #}
-    {% block less %}
-    {% endblock %}
-
-    <script src="{% static 'bower_components/less/dist/less.js' %}"></script>
-  {% else %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
-
-  {% endif %}
+  <style>
+    [x-cloak] {
+        display: none !important;
+    }
+  </style>
 
   {% vite_asset 'assets/main.js' %}
 
-  {% block main_scripts %}
-    {# if we are on dev load with less, if not load the css #}
-    {% if DEV %}
-
-      <script src="{% static 'bower_components/jquery/dist/jquery.min.js' %}"></script>
-      <script src="{% static 'bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
-    {% else %}
-
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    {% endif %}
-  {% endblock %}
-
   {% block assets %}
   {% endblock %}
-
 </head>
 <body>
 
@@ -77,11 +49,10 @@
 {% block css %}
 {% endblock %}
 
-<header>
-  {% block header %}
-    {% include "redirect/header.html" %}
-  {% endblock %}
-</header>
+
+{% block header %}
+  {% include "redirect/header.html" %}
+{% endblock %}
 
 {% block content_container %}
   <div id="main">
