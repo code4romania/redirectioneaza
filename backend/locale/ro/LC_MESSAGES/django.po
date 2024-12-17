@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-12 15:48+0200\n"
+"POT-Creation-Date: 2024-12-17 19:22+0200\n"
 "PO-Revision-Date: 2024-03-07 11:27+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -436,62 +436,62 @@ msgstr "data actualizării"
 msgid "NGOs"
 msgstr "ONG-uri"
 
-#: donations/views/account_management.py:30
+#: donations/views/account_management.py:29
 msgid "Reset password"
 msgstr "Resetare parolă"
 
-#: donations/views/account_management.py:52
+#: donations/views/account_management.py:51
 msgid ""
 "If the email address is valid, you will receive an email with instructions."
 msgstr "Dacă adresa de email este validă, vei primi un email cu instrucțiuni."
 
-#: donations/views/account_management.py:74
+#: donations/views/account_management.py:73
 msgid "Reset redirectioneaza.ro password"
 msgstr "Resetare parolă redirectioneaza.ro"
 
-#: donations/views/account_management.py:84
+#: donations/views/account_management.py:83
 #: templates/v2/socialaccount/login.html:5
 msgid "Sign In"
 msgstr "Autentificare"
 
-#: donations/views/account_management.py:97
+#: donations/views/account_management.py:96
 #: templates/v2/account/snippets/third-party.html:4
 msgid "Go to account"
 msgstr "Mergi la cont"
 
-#: donations/views/account_management.py:98
+#: donations/views/account_management.py:97
 msgid "Login through NGO Hub"
 msgstr "Autentificare prin NGO Hub"
 
-#: donations/views/account_management.py:143
+#: donations/views/account_management.py:142
 msgid "It seems that this email and password combination is incorrect."
 msgstr "Se pare că această combinație de email și parolă este incorectă."
 
-#: donations/views/account_management.py:149
+#: donations/views/account_management.py:148
 msgid "Sign Out"
 msgstr "Deconectare"
 
-#: donations/views/account_management.py:158
+#: donations/views/account_management.py:157
 msgid "Set New Password"
 msgstr "Setare parolă nouă"
 
-#: donations/views/account_management.py:185
+#: donations/views/account_management.py:184
 msgid "New account"
 msgstr "Cont nou"
 
-#: donations/views/account_management.py:195
+#: donations/views/account_management.py:194
 msgid "Register new account"
 msgstr "Creează un cont"
 
-#: donations/views/account_management.py:197
+#: donations/views/account_management.py:196
 msgid "Register through NGO Hub"
 msgstr "Înregistrare prin NGO Hub"
 
-#: donations/views/account_management.py:260
+#: donations/views/account_management.py:259
 msgid "Welcome to redirectioneaza.ro"
 msgstr "Confirmare cont redirectioneaza.ro"
 
-#: donations/views/account_management.py:282
+#: donations/views/account_management.py:281
 msgid "Verification"
 msgstr "Verificare"
 
@@ -891,11 +891,15 @@ msgstr "Rol necunoscut"
 msgid "Your current role isn't supported."
 msgstr "Rolul tău actual nu este suportat."
 
-#: templates/v2/account/snippets/classic-login.html:10
+#: templates/v2/account/reset-password.html:32
+msgid "Password recovery"
+msgstr "Recuperare parolă"
+
+#: templates/v2/account/snippets/classic-login.html:11
 msgid "Login with email & password"
 msgstr "Autentificare cu email și parolă"
 
-#: templates/v2/account/snippets/classic-login.html:14
+#: templates/v2/account/snippets/classic-login.html:17
 msgid "Login for organizations that don't have an NGO Hub account"
 msgstr "Autentificare pentru organizațiile care nu au cont în NGO Hub"
 
@@ -911,11 +915,11 @@ msgstr "Înregistrare clasică"
 msgid "Access your account through NGO Hub"
 msgstr "Accesează-ți contul prin NGO Hub"
 
-#: templates/v2/account/snippets/third-party.html:25
+#: templates/v2/account/snippets/third-party.html:28
 msgid "To access your account, you need to authenticate through NGO Hub."
 msgstr "Pentru a accesa contul, trebuie să te autentifici prin NGO Hub."
 
-#: templates/v2/account/snippets/third-party.html:30
+#: templates/v2/account/snippets/third-party.html:37
 #, python-format
 msgid ""
 "To access your account, click the <strong>%(account_button)s</strong> button "
@@ -925,7 +929,7 @@ msgstr ""
 "vei putea intra pe platformă folosind datele tale de autentificare din NGO "
 "Hub."
 
-#: templates/v2/account/snippets/third-party.html:39
+#: templates/v2/account/snippets/third-party.html:46
 msgid "After authentication, you will be redirected to your account."
 msgstr "După autentificare, vei fi redirecționat către contul tău."
 
