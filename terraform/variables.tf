@@ -78,8 +78,9 @@ variable "recaptcha_public_key" {
 }
 
 variable "recaptcha_private_key" {
-  type    = string
-  default = null
+  type      = string
+  sensitive = true
+  default   = null
 }
 
 # Cognito authentication
@@ -104,8 +105,9 @@ variable "aws_cognito_client_id" {
 }
 
 variable "aws_cognito_client_secret" {
-  type    = string
-  default = null
+  type      = string
+  sensitive = true
+  default   = null
 }
 
 # NGO Hub API
@@ -115,7 +117,8 @@ variable "ngohub_api_account" {
 }
 
 variable "ngohub_api_key" {
-  type    = string
-  default = null
+  type      = string
+  sensitive = true
+  default   = null
 }
 
