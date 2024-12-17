@@ -28,7 +28,7 @@ export default defineConfig(({ command, mode }) => {
       manifest: "manifest.json",
       emptyOutDir: true,
       assetsDir: '',
-      target: 'es2015',
+      target: 'es2017',
       modulePreload: false,
       outDir: resolve('./dist'),
       rollupOptions: {
