@@ -4,11 +4,14 @@ from typing import Dict, List, Optional
 from django.core.exceptions import ValidationError
 from django.core.management import BaseCommand
 
+from donations.common.validation.registration_number import (
+    REGISTRATION_NUMBER_REGEX,
+    clean_registration_number,
+    extract_vat_id,
+    ngo_id_number_validator,
+)
 from donations.models.ngos import (
     Ngo,
-    REGISTRATION_NUMBER_REGEX,
-    REGISTRATION_NUMBER_REGEX_SANS_VAT,
-    ngo_id_number_validator,
 )
 
 
@@ -55,7 +58,7 @@ class Command(BaseCommand):
 
     def clean_ngo_registration_number(self, ngo: Ngo) -> Dict[str, str]:
         initial_registration_number = ngo.registration_number
-        cleaned_registration_number = self._clean_up_registration_number(initial_registration_number)
+        cleaned_registration_number = clean_registration_number(initial_registration_number)
 
         if not re.match(REGISTRATION_NUMBER_REGEX, cleaned_registration_number):
             self.stdout.write(
@@ -90,7 +93,7 @@ class Command(BaseCommand):
                     ),
                 }
 
-        vat_information = self._extract_vat_id(cleaned_registration_number)
+        vat_information = extract_vat_id(cleaned_registration_number)
 
         ngo.vat_id = vat_information["vat_id"]
         ngo.registration_number = vat_information["registration_number"]
@@ -119,21 +122,6 @@ class Command(BaseCommand):
         reg_num = re.sub(r"\s+", "", reg_num)
 
         return reg_num
-
-    @staticmethod
-    def _extract_vat_id(reg_num: str) -> Dict[str, str]:
-        result = {
-            "vat_id": "",
-            "registration_number": reg_num,
-        }
-
-        if re.match(REGISTRATION_NUMBER_REGEX_SANS_VAT, reg_num):
-            return result
-
-        result["vat_id"] = reg_num[:2]
-        result["registration_number"] = reg_num[2:]
-
-        return result
 
     @staticmethod
     def _validate_registration_number(reg_num: str) -> bool:

@@ -1,0 +1,37 @@
+{% load i18n static %}
+
+<html lang="ro">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>{{ title }}</title>
+
+  <style>{% include "emails/styles.css" %}</style>
+</head>
+
+<body>
+<div style="margin:auto auto 3rem;text-align:left;background:#ffffff;width:75%;max-width:600px;">
+
+  <nav>
+    {% include "emails/base-header.html" %}
+  </nav>
+
+  <header>
+    <h1>
+      {% block heading %}{% endblock %}
+    </h1>
+  </header>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer>
+    {% include "emails/base-footer.html" %}
+  </footer>
+</div>
+</body>
+
+</html>

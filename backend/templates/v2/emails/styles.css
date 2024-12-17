@@ -1,0 +1,41 @@
+body {
+    font-family: Inter, Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+nav {
+    padding: 20px;
+}
+
+header {
+    padding: 20px;
+    color: #000000;
+    font-weight: 700;
+    font-size: medium;
+}
+
+main {
+    color: #000000;
+    padding: 0 40px;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+footer {
+    margin-top: 20px;
+    padding: 20px 40px;
+    background-color: #f9fafb;
+    color: #374151;
+    font-size: 12px;
+}
+
+a {
+    color: #0891b2;
+    text-decoration: underline;
+}
+
+h2 {
+    padding-top: 20px;
+    font-size: 20px;
+    font-weight: 600;
+}

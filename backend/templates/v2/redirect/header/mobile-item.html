@@ -1,0 +1,33 @@
+{% load static %}
+
+{% if not menu_item.desktop_only %}
+  {% if menu_item.url %}
+
+    <a
+      {% if menu_item.style == "auth-highlight" %}
+        class="block px-3 py-2.5 text-base/7 text-gray-900 shadow-sm rounded-full bg-amber-300 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
+      {% elif menu_item.style == "auth-normal" %}
+        class="block rounded-lg px-3 py-2.5 text-base/7 text-gray-900 hover:bg-gray-50"
+      {% else %}
+        class="inline-flex items-center w-full text-gray-900 hover:text-cyan-600 active:text-cyan-700 gap-x-1 py-2"
+      {% endif %}
+        href="{{ menu_item.url }}">
+
+      {% if menu_item.icon %}
+        <svg class="size-6 shrink-0 text-gray-400 group-hover:text-amber-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="{{ menu_item.icon }}"/>
+        </svg>
+      {% endif %}
+
+      {{ menu_item.title }}
+    </a>
+
+  {% elif menu_item.content %}
+
+    {% include "redirect/header/dropdown-item.html" with item=menu_item %}
+
+  {% endif %}
+{% endif %}

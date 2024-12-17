@@ -5,19 +5,21 @@
 #    pip-compile --output-file=requirements.txt --strip-extras requirements.in
 #
 asgiref==3.8.1
-    # via django
+    # via
+    #   django
+    #   django-allauth
 blessed==1.20.0
     # via -r requirements.in
-boto3==1.35.76
+boto3==1.36.7
     # via
     #   django-ses
     #   django-storages
     #   pycognito
-botocore==1.35.76
+botocore==1.36.7
     # via
     #   boto3
     #   s3transfer
-certifi==2024.8.30
+certifi==2024.12.14
     # via
     #   requests
     #   sentry-sdk
@@ -25,31 +27,36 @@ cffi==1.17.1
     # via cryptography
 chardet==5.2.0
     # via reportlab
-charset-normalizer==3.4.0
+charset-normalizer==3.4.1
     # via requests
-croniter==3.0.4
-    # via -r requirements.in
-cryptography==43.0.3
+cryptography==44.0.0
     # via
     #   -r requirements.in
     #   pyjwt
 cssselect2==0.7.0
     # via svglib
+diff-match-patch==20241021
+    # via django-import-export
 django==5.1.5
     # via
     #   -r requirements.in
     #   django-allauth
+    #   django-import-export
     #   django-localflavor
     #   django-picklefield
     #   django-q2
     #   django-recaptcha
     #   django-ses
     #   django-storages
+    #   django-tinymce
     #   django-unfold
+    #   django-vite
     #   sentry-sdk
-django-allauth==65.0.2
+django-allauth==65.3.1
     # via -r requirements.in
 django-environ==0.11.2
+    # via -r requirements.in
+django-import-export==4.3.4
     # via -r requirements.in
 django-ipware==7.0.1
     # via -r requirements.in
@@ -57,19 +64,23 @@ django-localflavor==4.0
     # via -r requirements.in
 django-picklefield==3.2
     # via django-q2
-django-q2==1.7.4
+django-q2==1.7.6
     # via -r requirements.in
 django-recaptcha==4.0.0
     # via -r requirements.in
-django-ses==4.2.0
+django-ses==4.3.2
     # via -r requirements.in
 django-storages==1.14.4
     # via -r requirements.in
-django-unfold==0.42.0
+django-tinymce==4.1.0
+    # via -r requirements.in
+django-unfold==0.46.0
+    # via -r requirements.in
+django-vite==3.0.6
     # via -r requirements.in
 envs==1.4
     # via pycognito
-gevent==24.10.3
+gevent==24.11.1
     # via -r requirements.in
 greenlet==3.1.1
     # via gevent
@@ -87,13 +98,13 @@ lxml==5.3.0
     # via svglib
 markupsafe==3.0.2
     # via jinja2
-ngohub==0.0.10
+ngohub==0.0.9
     # via -r requirements.in
 packaging==24.2
     # via gunicorn
-pillow==11.0.0
+pillow==11.1.0
     # via reportlab
-psutil==6.0.0
+psutil==6.1.1
     # via -r requirements.in
 psycopg2-binary==2.9.10
     # via -r requirements.in
@@ -105,18 +116,14 @@ pyjwt==2.10.1
     # via pycognito
 pymysql==1.1.1
     # via -r requirements.in
-pypdf==5.0.1
+pypdf==5.1.0
     # via -r requirements.in
 python-dateutil==2.9.0.post0
-    # via
-    #   botocore
-    #   croniter
+    # via botocore
 python-ipware==3.0.0
     # via django-ipware
 python-stdnum==1.20
     # via django-localflavor
-pytz==2024.2
-    # via croniter
 reportlab==4.2.5
     # via
     #   -r requirements.in
@@ -125,23 +132,25 @@ requests==2.32.3
     # via
     #   -r requirements.in
     #   pycognito
-s3transfer==0.10.4
+s3transfer==0.11.2
     # via boto3
-sentry-sdk==2.16.0
+sentry-sdk==2.19.2
     # via -r requirements.in
 six==1.17.0
     # via
     #   blessed
     #   python-dateutil
-sqlparse==0.5.2
+sqlparse==0.5.3
     # via django
 svglib==1.5.1
     # via -r requirements.in
+tablib==3.8.0
+    # via django-import-export
 tinycss2==1.4.0
     # via
     #   cssselect2
     #   svglib
-urllib3==2.2.3
+urllib3==2.3.0
     # via
     #   botocore
     #   requests
@@ -152,7 +161,7 @@ webencodings==0.5.1
     # via
     #   cssselect2
     #   tinycss2
-whitenoise==6.7.0
+whitenoise==6.8.2
     # via -r requirements.in
 zope-event==5.0
     # via gevent

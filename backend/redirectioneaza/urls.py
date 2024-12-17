@@ -29,29 +29,28 @@ from donations.views.account_management import (
     SignupView,
     VerificationView,
 )
-from donations.views.admin import (
-    AdminHome,
-    AdminNewNgoHandler,
-    AdminNgoHandler,
-    AdminNgosListByDate,
-    AdminNgosListByForms,
-    AdminNgosListByFormsNow,
-    AdminNgosListByFormsPrevious,
-    AdminNgosListByName,
-    UserAccounts,
+from donations.views.api import (
+    CheckNgoUrl,
+    DownloadNgoForms,
+    GetNgoForm,
+    GetUploadUrl,
+    NgosApi,
+    SearchNgosApi,
+    UpdateFromNgohub,
 )
-from donations.views.api import CheckNgoUrl, GetNgoForm, GetNgoForms, GetUploadUrl, NgosApi, UpdateFromNgohub
-from donations.views.cron import CustomExport, NgoExport, NgoRemoveForms, Stats
-from donations.views.my_account import (
+from donations.views.cron import NgoRemoveForms
+from donations.views.errors import create_error_view
+from donations.views.ngo_account import (
     ArchiveDownloadLinkView,
-    MyAccountDetailsView,
-    MyAccountView,
-    NgoDetailsView,
 )
-from donations.views.ngo import DonationSucces, FormSignature, OwnFormDownloadLinkHandler, TwoPercentHandler
+from donations.views.redirections import (
+    OwnFormDownloadLinkHandler,
+    RedirectionHandler,
+    RedirectionSuccessHandler,
+)
 from donations.views.site import (
     AboutHandler,
-    FAQHandler,
+    EmailDemoHandler,
     HealthCheckHandler,
     HomePage,
     NgoListHandler,
@@ -59,6 +58,7 @@ from donations.views.site import (
     PolicyHandler,
     TermsHandler,
 )
+from frequent_questions.views import FAQHandler
 from redirectioneaza.views import StaticPageView
 
 admin.site.site_header = f"Admin | {settings.VERSION_LABEL}"
@@ -98,11 +98,13 @@ urlpatterns = (
             name="verification",
         ),
         path("password/", SetPasswordView.as_view(), name="password"),
-        # my account
-        path("contul-meu/", MyAccountView.as_view(), name="contul-meu"),
-        path("organizatia/", NgoDetailsView.as_view(), name="organization"),
-        path("asociatia/", RedirectView.as_view(pattern_name="organization", permanent=True)),
-        path("date-cont/", MyAccountDetailsView.as_view(), name="date-contul-meu"),
+        # organization account management
+        path("organizatia-mea/", include(("donations.urls_ngo_account", "donations"), namespace="my-organization")),
+        # old organization account management urls
+        path("contul-meu/", RedirectView.as_view(pattern_name="my-organization:dashboard", permanent=True)),
+        path("organizatia/", RedirectView.as_view(pattern_name="my-organization:dashboard", permanent=True)),
+        path("asociatia/", RedirectView.as_view(pattern_name="my-organization:dashboard", permanent=True)),
+        path("date-cont/", RedirectView.as_view(pattern_name="my-organization:settings", permanent=True)),
         path(
             "contul-meu/eroare/aplicatie-lipsa/",
             StaticPageView.as_view(template_name="account/errors/login/app_missing.html"),
@@ -125,37 +127,25 @@ urlpatterns = (
         #
         path("api/ngo/upload-url/", GetUploadUrl.as_view(), name="api-ngo-upload-url"),
         path("api/ngo/form/<ngo_url>/", GetNgoForm.as_view(), name="api-ngo-form-url"),
-        path("api/ngo/forms/download/", GetNgoForms.as_view(), name="api-ngo-forms"),
+        path("api/ngo/forms/download/", DownloadNgoForms.as_view(), name="api-ngo-forms"),
+        #
+        path("api/search/", SearchNgosApi.as_view(), name="api-search-ngos"),
         # Cron routes
-        path("cron/stats/", Stats.as_view(), name="cron-stats"),
         path("cron/ngos/remove-form/", NgoRemoveForms.as_view(), name="cron-ngo-remove-form"),
-        path("cron/ngos/export/", NgoExport.as_view(), name="cron-ngo-export"),
-        path("cron/export/custom/", CustomExport.as_view(), name="cron-custom-export"),
         # Django Admin
-        path("admin/django/", RedirectView.as_view(pattern_name="admin:index", permanent=True)),
+        path("admin/", admin.site.urls),
+        path("admin/login/", RedirectView.as_view(pattern_name="login", permanent=True)),
         path("admin/avansat/login/", RedirectView.as_view(pattern_name="login", permanent=True)),
-        path("admin/avansat/", admin.site.urls),
+        path("admin/avansat/", RedirectView.as_view(pattern_name="admin:index", permanent=True)),
+        path("admin/django/", RedirectView.as_view(pattern_name="admin:index", permanent=True)),
         # ADMIN HANDLERS
-        path("admin/ong-nou/", AdminNewNgoHandler.as_view(), name="admin-ong-nou"),
-        path("admin/conturi/", UserAccounts.as_view(), name="admin-users"),
-        path("admin/orgs/date/", AdminNgosListByDate.as_view(), name="admin-ngos-by-date"),
-        path("admin/orgs/name/", AdminNgosListByName.as_view(), name="admin-ngos-by-name"),
-        path("admin/orgs/forms/", AdminNgosListByForms.as_view(), name="admin-ngos-by-forms"),
-        path("admin/orgs/forms-current/", AdminNgosListByFormsNow.as_view(), name="admin-ngos-by-forms-now"),
-        path("admin/orgs/forms-previous/", AdminNgosListByFormsPrevious.as_view(), name="admin-ngos-by-forms-prev"),
-        path(
-            "admin/organizatii/",
-            RedirectView.as_view(pattern_name="admin-ngos-by-date", permanent=True),
-            name="admin-ngos",
-        ),
-        path("admin/<ngo_url>/", AdminNgoHandler.as_view(), name="admin-ong"),
+        path("admin/organizatii/", RedirectView.as_view(pattern_name="admin:index", permanent=True)),
         path("admin/download/<job_id>/", ArchiveDownloadLinkView.as_view(), name="admin-download-link"),
-        path("admin/", AdminHome.as_view(), name="admin-index"),  # name was "admin"
         # must always be the last set of urls
         re_path(r"^(?P<ngo_url>[\w-]+)/doilasuta/", RedirectView.as_view(pattern_name="twopercent", permanent=True)),
-        re_path(r"^(?P<ngo_url>[\w-]+)/semnatura/", FormSignature.as_view(), name="ngo-twopercent-signature"),
-        re_path(r"^(?P<ngo_url>[\w-]+)/succes/", DonationSucces.as_view(), name="ngo-twopercent-success"),
-        re_path(r"^(?P<ngo_url>[\w-]+)/$", TwoPercentHandler.as_view(), name="twopercent"),
+        # re_path(r"^(?P<ngo_url>[\w-]+)/semnatura/", FormSignature.as_view(), name="ngo-twopercent-signature"),
+        re_path(r"^(?P<ngo_url>[\w-]+)/succes/", RedirectionSuccessHandler.as_view(), name="ngo-twopercent-success"),
+        re_path(r"^(?P<ngo_url>[\w-]+)/$", RedirectionHandler.as_view(), name="twopercent"),
         # Skip the login provider selector page and redirect to Cognito
         path(
             "allauth/login/",
@@ -165,8 +155,22 @@ urlpatterns = (
             ),
         ),
         path("allauth/", include("allauth.urls")),
+        path("tinymce/", include("tinymce.urls")),
         path("robots.txt", StaticPageView.as_view(template_name="robots.txt", content_type="text/plain")),
     ]
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 )
+
+if settings.DEBUG:
+    urlpatterns.extend(
+        [
+            path("email-demo/<email_path_str>/", EmailDemoHandler.as_view(), name="email-demo"),
+        ]
+    )
+
+# Custom views for errors
+handler400 = create_error_view(error_code=400)
+handler403 = create_error_view(error_code=403)
+handler404 = create_error_view(error_code=404)
+handler500 = create_error_view(error_code=500)

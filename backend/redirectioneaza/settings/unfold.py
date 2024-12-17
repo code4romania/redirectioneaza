@@ -50,6 +50,23 @@ SIDEBAR_NAVIGATION = [
         ],
     },
     {
+        "title": _("Frequently asked questions"),
+        "items": [
+            {
+                "title": _("Sections"),
+                "icon": "folder",
+                "link": reverse_lazy("admin:frequent_questions_section_changelist"),
+                "permission": lambda request: request.user.is_superuser,
+            },
+            {
+                "title": _("Questions"),
+                "icon": "help",
+                "link": reverse_lazy("admin:frequent_questions_question_changelist"),
+                "permission": lambda request: request.user.is_superuser,
+            },
+        ],
+    },
+    {
         "title": _("Users"),
         "items": [
             {
@@ -67,7 +84,7 @@ SIDEBAR_NAVIGATION = [
         ],
     },
     {
-        "title": _("Django Q"),
+        "title": _("Background Tasks"),
         "items": [
             {
                 "title": _("Failed tasks"),

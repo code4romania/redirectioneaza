@@ -6,9 +6,14 @@ env = environ.Env(
     # set casting, default value
     # Django settings
     DEBUG=(bool, False),
+    DJANGO_VITE_DEV_MODE=(bool, False),
+    DJANGO_VITE_DEV_SERVER_PORT=(int, 3000),
+    DJANGO_VITE_DEV_SERVER_HOST=(str, "localhost"),
     ENVIRONMENT=(str, "production"),
     DATA_UPLOAD_MAX_NUMBER_FIELDS=(int, 1000),
     OLD_SESSION_KEY=(str, ""),
+    ALLOW_OLD_PASSWORDS=(bool, True),
+    SESSION_COOKIE_SECURE=(bool, True),
     LOG_LEVEL=(str, "WARNING"),
     ENABLE_CACHE=(bool, True),
     ENABLE_FORMS_DOWNLOAD=(bool, True),
@@ -20,7 +25,6 @@ env = environ.Env(
     USE_PROXY_FORWARDED_HOST=(bool, False),
     PROXY_SSL_HEADER=(str, "HTTP_CLOUDFRONT_FORWARDED_PROTO"),
     # db settings
-    DATABASE_ENGINE=(str, "sqlite3"),
     DATABASE_NAME=(str, "default"),
     DATABASE_USER=(str, "root"),
     DATABASE_PASSWORD=(str, ""),

@@ -1,0 +1,20 @@
+{% load i18n %}
+
+{% trans "Hello," %} {{ first_name }},
+
+{% block content %}
+
+{% blocktrans trimmed %}
+  Welcome to redirectioneaza.ro!
+{% endblocktrans %}
+
+{% blocktrans trimmed %}
+  We're happy to have you on the platform!
+  To activate your account, you have to confirm your email address by clicking the button below.
+{% endblocktrans %}
+
+{{ button_url }}
+
+{% blocktrans trimmed %}
+  Thank you for being part of this community!
+{% endblocktrans %}

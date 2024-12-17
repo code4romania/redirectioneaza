@@ -25,7 +25,7 @@ def django_login(request, user) -> None:
 
 
 class ForgotPasswordView(BaseVisibleTemplateView):
-    template_name = "resetare-parola.html"
+    template_name = "account/reset-password.html"
     title = _("Reset password")
 
     def get(self, request, *args, **kwargs):
@@ -91,14 +91,15 @@ class LoginView(BaseVisibleTemplateView):
         if request.user.is_authenticated:
             if request.user.has_perm("users.can_view_old_dashboard"):
                 return redirect(reverse("admin-index"))
-            return redirect(reverse("contul-meu"))
+            return redirect(reverse("my-organization:dashboard"))
 
         context = self.get_context_data(**kwargs)
 
         context.update(
             {
-                "account_button": _("Go to account"),
-                "section_title": _("Login through NGO Hub"),
+                "ngohub_site": settings.NGOHUB_HOME_BASE,
+                "account_button": _("Continue with NGO Hub"),
+                "section_title": _("I have an NGO Hub account"),
                 "form_action": reverse("amazon_cognito_login"),
             }
         )
@@ -124,8 +125,8 @@ class LoginView(BaseVisibleTemplateView):
             if user.has_perm("users.can_view_old_dashboard"):
                 return redirect(reverse("admin-index"))
 
-            return redirect(reverse("contul-meu"))
-        else:
+            return redirect(reverse("my-organization:dashboard"))
+        elif settings.ALLOW_OLD_PASSWORDS:
             # Check the old password authentication and migrate it to the new method
             user_model = get_user_model()
             try:
@@ -139,7 +140,7 @@ class LoginView(BaseVisibleTemplateView):
                 django_login(request, user)
                 if user.has_perm("users.can_view_old_dashboard"):
                     return redirect(reverse("admin-index"))
-                return redirect(reverse("contul-meu"))
+                return redirect(reverse("my-organization:dashboard"))
 
         logger.warning("Invalid email or password: {0}".format(email))
         context["email"] = email
@@ -157,7 +158,7 @@ class LogoutView(BaseVisibleTemplateView):
 
 
 class SetPasswordView(BaseVisibleTemplateView):
-    template_name = "parola-noua.html"
+    template_name = "account/set-password.html"
     title = _("Set New Password")
 
     def post(self, request, *args, **kwargs):
@@ -180,7 +181,7 @@ class SetPasswordView(BaseVisibleTemplateView):
 
         django_login(request, user)
 
-        return redirect(reverse("contul-meu"))
+        return redirect(reverse("my-organization:dashboard"))
 
 
 class SignupView(BaseVisibleTemplateView):
@@ -189,12 +190,13 @@ class SignupView(BaseVisibleTemplateView):
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect(reverse("contul-meu"))
+            return redirect(reverse("my-organization:dashboard"))
 
         context = self.get_context_data(**kwargs)
 
         context.update(
             {
+                "ngohub_site": settings.NGOHUB_HOME_BASE,
                 "account_button": _("Register new account"),
                 "account_button_is_external": True,
                 "section_title": _("Register through NGO Hub"),
@@ -271,7 +273,7 @@ class SignupView(BaseVisibleTemplateView):
         django_login(request, user)
 
         # redirect to my account
-        return redirect(reverse("contul-meu"))
+        return redirect(reverse("my-organization:dashboard"))
 
 
 class VerificationView(BaseVisibleTemplateView):
@@ -281,7 +283,7 @@ class VerificationView(BaseVisibleTemplateView):
         p - reset user password
     """
 
-    template_name = "parola-noua.html"
+    template_name = "account/set-password.html"
     title = _("Verification")
 
     def get(self, request, *args, **kwargs):
@@ -312,7 +314,7 @@ class VerificationView(BaseVisibleTemplateView):
             user.is_verified = True
             user.clear_token(commit=False)
             user.save()
-            return redirect(reverse("contul-meu"))
+            return redirect(reverse("my-organization:dashboard"))
 
         if verification_type == "p":
             # supply user to the page

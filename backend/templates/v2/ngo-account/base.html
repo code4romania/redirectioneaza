@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% load i18n static %}
+
+{% block content_container %}
+  <div class="flex-1 bg-gray-50">
+    <main class="container py-10">
+      <div class="mb-6">
+        {% block page_heading %}{% endblock %}
+      </div>
+
+      <div class="px-4 py-5 bg-white rounded-lg shadow sm:p-6">
+        {% block content %}{% endblock %}
+      </div>
+    </main>
+  </div>
+{% endblock %}

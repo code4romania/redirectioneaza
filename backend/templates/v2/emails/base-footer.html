@@ -1,0 +1,50 @@
+{% load i18n static %}
+
+<div>
+  <img
+    src="{% static 'images/code4romania.png' %}"
+    alt="Redirecționează logo"
+    style="margin:0;display:block;max-height:24px;width:auto;">
+</div>
+
+<div>
+  <p>
+    {% trans "If you have any questions, please contact us at" %}
+    <a
+      href="mailto:{{ contact_email }}">
+      {{ contact_email }}
+    </a>
+  </p>
+</div>
+
+{% comment %}
+  <div style="margin:auto 0;">
+
+    {# TODO: add the images for the social sites #}
+    <a
+      href="https://www.facebook.com/code4romania"
+      style="margin:0 10px;text-decoration:none;color:inherit;"
+      target="_blank">
+    </a>
+
+    <a
+      href="https://instagram.com/code4romania"
+      style="margin:0 10px;text-decoration:none;color:inherit;"
+      target="_blank">
+    </a>
+
+    <a
+      href="https://github.com/code4romania/redirectioneaza"
+      style="margin:0 10px;text-decoration:none;color:inherit;"
+      target="_blank">
+    </a>
+
+  </div>
+{% endcomment %}
+
+<div>
+  <p>
+    © {% now "Y" %} Code for Romania.
+    {% trans "All rights reserved." %}
+  </p>
+</div>

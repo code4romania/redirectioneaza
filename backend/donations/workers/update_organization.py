@@ -122,6 +122,7 @@ def update_local_ngo_with_ngohub_data(ngo: Ngo, ngohub_ngo: Organization) -> Dic
 
     # TODO: the county and active region have different formats here
     ngo.address = ngohub_general_data.address
+    ngo.locality = ngohub_general_data.city.name
     ngo.county = ngohub_general_data.county.name
 
     active_region: str = ngohub_ngo.activity_data.area

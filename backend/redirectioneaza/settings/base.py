@@ -10,6 +10,7 @@ from .environment import env
 SECRET_KEY = env.str("SECRET_KEY")
 SECRET_KEY_HASH = hashlib.blake2s(SECRET_KEY.encode()).hexdigest()
 OLD_SESSION_KEY = env.str("OLD_SESSION_KEY")
+ALLOW_OLD_PASSWORDS = env.bool("ALLOW_OLD_PASSWORDS")
 
 # SECURITY WARNING: don't run with debug turned on in production
 DEBUG = env.bool("DEBUG")
@@ -33,8 +34,12 @@ BASE_WEBSITE = env.str("BASE_WEBSITE")
 CSRF_HEADER_NAME = "HTTP_X_XSRF_TOKEN"
 CSRF_COOKIE_NAME = "XSRF-TOKEN"
 
+SESSION_COOKIE_SECURE = env.bool("SESSION_COOKIE_SECURE")
+
 CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS")
 CORS_ALLOW_ALL_ORIGINS = env.bool("CORS_ALLOW_ALL_ORIGINS")
+
+FORMS_URLFIELD_ASSUME_HTTPS = True
 
 # Application definition
 APPEND_SLASH = True
@@ -75,6 +80,9 @@ INSTALLED_APPS = [
     "storages",
     "django_q",
     "django_recaptcha",
+    "django_vite",
+    "import_export",
+    "tinymce",
     # authentication
     "allauth",
     "allauth.account",
@@ -85,6 +93,7 @@ INSTALLED_APPS = [
     "partners",
     "users",
     "importer",
+    "frequent_questions",
 ]
 
 if not env.bool("USE_S3"):

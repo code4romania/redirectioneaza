@@ -1,15 +1,15 @@
 import logging
-from datetime import date
+from typing import Dict, List
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import BadRequest, PermissionDenied
 from django.core.files import File
 from django.core.management import call_command
+from django.db.models import QuerySet
 from django.http import Http404, HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
-from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView
@@ -18,17 +18,18 @@ from redirectioneaza.common.cache import cache_decorator
 
 from ..models.jobs import Job, JobStatusChoices
 from ..models.ngos import ALL_NGOS_CACHE_KEY, Ngo, ngo_slug_validator
-from ..pdf import create_pdf
+from ..pdf import create_ngo_pdf
 from ..workers.update_organization import update_organization
 from .base import BaseTemplateView
+from .common import SearchMixin, get_is_over_donation_archival_limit, get_ngo_response_item, get_was_last_job_recent
 
 logger = logging.getLogger(__name__)
 
 
 class UpdateFromNgohub(BaseTemplateView):
     def post(self, request, *args, **kwargs):
-        redirect_success = redirect(reverse("organization"))
-        redirect_error = redirect(reverse("organization"))
+        redirect_success = redirect(reverse("my-organization:dashboard"))
+        redirect_error = redirect(reverse("home"))
 
         user = request.user
 
@@ -77,6 +78,29 @@ class CheckNgoUrl(BaseTemplateView):
         return self.validate_ngo_slug(request.user, ngo_url)
 
     @classmethod
+    def check_slug_is_blocked(cls, slug):
+        if slug.lower() in cls.ngo_url_block_list:
+            return True
+
+        return False
+
+    @classmethod
+    def check_slug_is_reused(cls, slug, user):
+        ngo_queryset: QuerySet[Ngo] = Ngo.objects
+
+        try:
+            if user.ngo:
+                ngo_queryset = ngo_queryset.exclude(id=user.ngo.id)
+        except AttributeError:
+            # Anonymous users don't have the .ngo attribute
+            pass
+
+        if ngo_queryset.filter(slug=slug.lower()).count():
+            return True
+
+        return False
+
+    @classmethod
     def validate_ngo_slug(cls, user, slug):
         if not slug or not user and not user.is_staff:
             raise PermissionDenied()
@@ -117,15 +141,23 @@ class NgosApi(TemplateView):
             if not ngo.slug:
                 continue
 
-            response.append(
-                {
-                    "name": ngo.name,
-                    "url": reverse("twopercent", kwargs={"ngo_url": ngo.slug}),
-                    "logo": ngo.logo.url if ngo.logo else None,
-                    "active_region": ngo.active_region,
-                    "description": ngo.description,
-                }
-            )
+            response.append(get_ngo_response_item(ngo))
+
+        return JsonResponse(response, safe=False)
+
+
+class SearchNgosApi(TemplateView, SearchMixin):
+    def get(self, request, *args, **kwargs):
+        queryset = Ngo.active
+
+        ngos_queryset = self.search(queryset)
+
+        response: List[Dict] = []
+        for ngo in ngos_queryset:
+            if not ngo.slug:
+                continue
+
+            response.append(get_ngo_response_item(ngo))
 
         return JsonResponse(response, safe=False)
 
@@ -141,21 +173,7 @@ class GetNgoForm(TemplateView):
         if ngo.prefilled_form:
             return redirect(ngo.prefilled_form.url)
 
-        # else, create a new one and save it for future use
-        ngo_dict = {
-            "name": ngo.name,
-            "cif": ngo.registration_number,
-            "account": ngo.bank_account.upper(),
-            # do not add any checkmark on this form regarding the number of years
-            "years_checkmark": False,
-            # "two_years": False,
-            "is_social_service_viable": ngo.is_social_service_viable,
-        }
-        donor = {
-            # we assume that ngos are looking for people with income from wages
-            "income": "wage"
-        }
-        pdf = create_pdf(donor, ngo_dict)
+        pdf = create_ngo_pdf(ngo)
 
         # filename = "Formular 2% - {0}.pdf".format(ngo.name)
         filename = "Formular_donatie.pdf"
@@ -172,7 +190,7 @@ class GetNgoForm(TemplateView):
         return redirect(ngo.prefilled_form.url)
 
 
-class GetNgoForms(BaseTemplateView):
+class DownloadNgoForms(BaseTemplateView):
     def get(self, request, *args, **kwargs):
         raise Http404
 
@@ -180,35 +198,22 @@ class GetNgoForms(BaseTemplateView):
         if not request.user.is_authenticated:
             return redirect(reverse("login"))
 
-        ngo = request.user.ngo
+        failure_redirect_url = reverse("my-organization:redirections")
+        success_redirect_url = reverse("my-organization:archives")
+
+        ngo: Ngo = request.user.ngo
         if not ngo:
-            return redirect(reverse("contul-meu"))
+            return redirect(failure_redirect_url)
 
         if not ngo.is_active:
-            return redirect(reverse("contul-meu"))
+            return redirect(failure_redirect_url)
 
-        try:
-            latest_job: Job = Job.objects.filter(ngo=ngo).latest("date_created")
+        last_job_was_recent = get_was_last_job_recent(ngo)
+        if last_job_was_recent:
+            return redirect(failure_redirect_url)
 
-            form_retry_threshold = timezone.now() - timezone.timedelta(
-                minutes=settings.TIMEDELTA_FORMS_DOWNLOAD_MINUTES
-            )
-            if latest_job.status != JobStatusChoices.ERROR and latest_job.date_created > form_retry_threshold:
-                return redirect(reverse("contul-meu"))
-
-        except Job.DoesNotExist:
-            pass
-
-        DONATION_LIMIT = date(
-            year=settings.DONATIONS_LIMIT_YEAR,
-            month=settings.DONATIONS_LIMIT_MONTH,
-            day=settings.DONATIONS_LIMIT_DAY,
-        )
-
-        if timezone.now().date() > DONATION_LIMIT + timezone.timedelta(
-            days=settings.TIMEDELTA_DONATIONS_LIMIT_DOWNLOAD_DAYS
-        ):
-            return redirect(reverse("contul-meu"))
+        if get_is_over_donation_archival_limit():
+            return redirect(failure_redirect_url)
 
         new_job: Job = Job(ngo=ngo, owner=request.user)
         new_job.save()
@@ -217,10 +222,11 @@ class GetNgoForms(BaseTemplateView):
             call_command("download_donations", new_job.id)
         except Exception as e:
             logging.error(e)
+
             new_job.status = JobStatusChoices.ERROR
             new_job.save()
 
-        return redirect(reverse("contul-meu"))
+        return redirect(success_redirect_url)
 
 
 @method_decorator(login_required(login_url=reverse_lazy("login")), name="dispatch")

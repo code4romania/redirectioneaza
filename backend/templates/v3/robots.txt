@@ -1,8 +1,10 @@
 User-Agent: *
 Disallow: /admin/
 Disallow: /cron/
+Disallow: /allauth/
 Disallow: /api/
 Disallow: /contul-meu/
+Disallow: /organizatia-mea/
 Disallow: /ngo-forms/
 Disallow: /donation-forms/
 

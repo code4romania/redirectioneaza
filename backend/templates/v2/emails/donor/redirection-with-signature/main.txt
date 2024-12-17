@@ -1,0 +1,38 @@
+{% load i18n %}
+
+{% trans "Good news! You have just redirected a part of your income tax!" %}
+
+{% blocktrans trimmed %}
+  Thank you for choosing to support {{ ngo_name }}!
+  Your form has reached the organization,
+  so you don't have to worry about anything else.
+  You can see the form you have filled in by clicking the button below.
+{% endblocktrans %}
+
+{{ form_url }}
+
+
+{% trans "Do you want to give an extra helping hand?" %}
+
+{% blocktrans trimmed %}
+  If you want to be a true civic superhero,
+  you can help the organization collect more forms!
+  Here's how:
+{% endblocktrans %}
+
+{% blocktranslate trimmed %}
+  Share the
+  <a href="{{ ngo_url }}">organization's page</a>
+  on social networks
+  and encourage your friends to complete the form online for the organization you believe in,
+  simply and safely,
+  on redirectioneaza.ro.
+{% endblocktranslate %}
+
+{% blocktranslate trimmed %}
+  Download the form 230 template for {{ ngo_name }},
+  print multiple copies and convince your colleagues,
+  friends or family to complete it.
+{% endblocktranslate %}
+
+{% trans "Thank you for your involvement!" %}

@@ -5,6 +5,7 @@ import functools
 import django.db.models.functions.text
 from django.db import migrations, models
 
+import donations.common.validation.registration_number
 import donations.models.donors
 import donations.models.ngos
 
@@ -138,7 +139,7 @@ class Migration(migrations.Migration):
                         db_index=True,
                         max_length=100,
                         unique=True,
-                        validators=[donations.models.ngos.ngo_id_number_validator],
+                        validators=[donations.common.validation.registration_number.ngo_id_number_validator],
                         verbose_name="registration number",
                     ),
                 ),

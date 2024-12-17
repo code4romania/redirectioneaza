@@ -1,0 +1,17 @@
+{% load i18n %}
+
+<div class="container text-center">
+  <h1 class="font-semibold text-4xl">
+    <strong>
+      {% trans "Notice!" %}
+    </strong>
+
+    {% blocktranslate trimmed %}
+      The donation form can only be filled out between
+      <span class="text-amber-600">January 1st</span>
+      and
+      <span class="text-amber-600">{{ limit.day }} {{ month_limit }}</span>
+      of the current year.
+    {% endblocktranslate %}
+  </h1>
+</div>

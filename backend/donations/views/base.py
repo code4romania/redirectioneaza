@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 from django.views.generic import TemplateView
 
 
-class BaseTemplateView(TemplateView):
+class BaseContextPropertiesMixin:
     user_model = get_user_model()
 
     def _get_checked_property(self, property_name: str, default_value: str) -> Any:
@@ -19,6 +19,8 @@ class BaseTemplateView(TemplateView):
 
         return property_value or default_value
 
+
+class BaseTemplateView(BaseContextPropertiesMixin, TemplateView):
     def get_context_data(self, **kwargs):
         return super().get_context_data(**kwargs)
 

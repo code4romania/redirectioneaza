@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+
+{% block additional_headers %}
+  <meta property="og:title" content="{{ ngo.name }}"/>
+  <meta property="og:description" content="{{ ngo.description }}"/>
+  {% if ngo.logo %}
+    <meta property="og:image" content="{{ ngo.logo.url }}"/>
+    <meta property="og:image:secure_url" content="{{ ngo.logo.url }}"/>
+  {% endif %}
+
+  <meta property="og:type" content="website"/>
+
+  <script src="https://www.google.com/recaptcha/api.js?hl=ro" async defer></script>
+
+{% endblock %}
+
+{% block content %}
+  <div class="container max-w-4xl">
+
+    {% include "form/redirection-header.html" %}
+
+    {% if donation_status == "open" %}
+
+      {% include "form/redirection-open.html" %}
+
+    {% elif donation_status == "closed" %}
+
+      {% include "form/redirection-closed.html" %}
+
+    {% endif %}
+
+  </div>
+{% endblock %}

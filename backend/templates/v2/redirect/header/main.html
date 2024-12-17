@@ -1,0 +1,19 @@
+{% load static %}
+
+{% if header_content %}
+  <header
+    x-data="{ menuOpen: false }"
+    x-on:click.outside="menuOpen = false"
+    class="relative bg-white shadow-lg">
+
+    {% block header_desktop %}
+      {% include "redirect/header/desktop.html" %}
+    {% endblock %}
+
+
+    {% block header_mobile %}
+      {% include "redirect/header/mobile.html" %}
+    {% endblock %}
+
+  </header>
+{% endif %}

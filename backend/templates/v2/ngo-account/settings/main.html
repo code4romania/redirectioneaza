@@ -1,0 +1,72 @@
+{% extends "ngo-account/base.html" %}
+
+{% load i18n %}
+
+{% block page_heading %}
+
+  <div>
+
+    <h1 class="text-2xl font-semibold text-gray-900">
+      {% trans "Organization settings" %}
+    </h1>
+
+    <p class="pt-2 mt-2 text-lg text-gray-500">
+      {% if has_ngo_hub %}
+        {% blocktrans trimmed %}
+          Some of the settings here are managed by the NGO Hub platform.
+          If you need to change them, make the updates on NGO Hub.
+        {% endblocktrans %}
+      {% else %}
+        {% blocktrans trimmed %}
+          Here you can manage your organization's settings.
+        {% endblocktrans %}
+      {% endif %}
+    </p>
+
+  </div>
+
+{% endblock %}
+
+{% block content %}
+  <div>
+    <form
+      method="post"
+      enctype="multipart/form-data"
+      action="{% url 'my-organization:settings' %}">
+
+      {% csrf_token %}
+
+      {% trans "User Account Details" as title %}
+      {% include "ngo-account/components/form-title.html" with hide_ngohub_button=True %}
+
+      <fieldset>
+        <div class="grid grid-cols-2 py-4 gap-x-6 gap-y-8">
+
+          <div class="col-span-2">
+            {% trans "E-mail address" as input_title %}
+            {% include "components/input/input.html" with input_id="email" input_type="email" input_name="email" placeholder="Email address" is_required=True value=user.email is_disabled=True %}
+          </div>
+
+          {% if has_ngohub %}
+            <div class="col-span-2">
+              {% trans "Full name" as input_title %}
+              {% include "components/input/input.html" with input_id="full_name" input_type="text" input_name="full_name" placeholder=input_title is_required=True value=user.first_name is_disabled=has_ngohub %}
+            </div>
+          {% else %}
+            <div class="col-span-1">
+              {% trans "First name" as input_title %}
+              {% include "components/input/input.html" with input_id="first_name" input_type="text" input_name="first_name" placeholder=input_title is_required=True value=user.first_name %}
+            </div>
+
+            <div class="col-span-1">
+              {% trans "Last name" as input_title %}
+              {% include "components/input/input.html" with input_id="last_name" input_type="text" input_name="last_name" placeholder=input_title is_required=True value=user.last_name %}
+            </div>
+          {% endif %}
+
+        </div>
+      </fieldset>
+
+    </form>
+  </div>
+{% endblock %}

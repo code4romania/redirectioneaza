@@ -1,0 +1,115 @@
+{% load django_vite %}
+{% load static %}
+
+<!DOCTYPE html>
+<html class="no-js" lang="ro">
+<head>
+  {% vite_hmr_client %}
+  <base href="{{ base_url }}">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <title>{% block html_title %}{{ title }}{% endblock %}</title>
+
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/favicon/apple-touch-icon.png' %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicon/favicon-32x32.png' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon/favicon-16x16.png' %}">
+  <link rel="manifest" href="{% static 'images/favicon/site.webmanifest' %}">
+
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+
+  <meta name="description" content="redirectioneaza.ro este platforma care ajută ONG-urile să colecteze formularul 230 de redirecționare a până la 3.5% din impozit pentru până la doi ani"/>
+  <meta name="keywords" content="platforma, ong, formular doi la suta, formular 3.5%, redirecționare 3.5%, donație 3.5%, donează doi la sută, formularul 230"/>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google" content="notranslate">
+
+  <meta property="og:locale" content="ro"/>
+  <meta property="og:site_name" content="redirectioneaza.ro"/>
+
+  {# block used to add additional headers to a page, eg: ok:title #}
+  {% block additional_headers %}
+  {% endblock %}
+
+  <style>
+    [x-cloak] {
+      display: none !important;
+    }
+  </style>
+
+  {% vite_asset 'assets/main.js' %}
+
+  {% block assets %}
+  {% endblock %}
+</head>
+<body class="flex flex-col min-h-screen">
+
+{# block for special css #}
+{% block css %}
+{% endblock %}
+
+{% block header %}
+  {% include 'redirect/commitglobal-banner.html' %}
+  {% include "redirect/header/main.html" %}
+{% endblock %}
+
+{% block content_container %}
+  <main class="flex-1 py-16">
+    {% block content %}
+    {% endblock %}
+  </main>
+{% endblock %}
+
+{% block notification_container %}
+  {% include "notification_messages.html" %}
+{% endblock %}
+
+{% block footer %}
+  {% include "redirect/footer.html" %}
+{% endblock %}
+
+
+{% block scripts %}
+{% endblock %}
+
+{# Register error messages for Pristine #}
+<script type="text/javascript" src="{% static 'js/pristine.min.js' %}"></script>
+<script>
+  const errorMessages = {
+    required: "Acest câmp este obligatoriu",
+    email: "Acest câmp necesită o adresă de e-mail validă",
+    number: "Acest câmp necesită un număr",
+    integer: "Acest câmp necesită o valoare întreagă",
+    url: "Acest câmp necesită un URL valid",
+    tel: "Acest câmp necesită un număr de telefon valid",
+    maxlength: "Lungimea acestui câmp trebuie să fie < ${1}",
+    minlength: "Lungimea acestui câmp trebuie să fie > ${1}",
+    min: "Valoarea minimă pentru acest câmp este ${1}",
+    max: "Valoarea maximă pentru acest câmp este ${1}",
+    pattern: "Vă rugăm să respectați formatul solicitat",
+    equals: "Cele două câmpuri nu se potrivesc",
+    default: "Vă rugăm să introduceți o valoare corectă"
+  };
+
+  Pristine.addMessages('en', errorMessages);
+</script>
+
+
+{% block analytics %}
+  {% if GOOGLE_ANALYTICS_ID %}
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ GOOGLE_ANALYTICS_ID }}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+
+      gtag('js', new Date());
+      gtag('config', '{{ GOOGLE_ANALYTICS_ID }}');
+    </script>
+  {% endif %}
+{% endblock %}
+</body>
+</html>

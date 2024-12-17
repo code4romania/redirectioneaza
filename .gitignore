@@ -2,6 +2,16 @@ local_tools/*
 !local_tools/export.py
 !local_tools/requirements.txt
 
+
+
+backend/static_extras/bootstrap/
+backend/static_extras/bootswatch/
+backend/static_extras/bower_components/
+backend/static_extras/fontawesome/
+backend/static_extras/jquery/
+backend/static_extras/less/
+backend/static_extras/tailwind/
+
 # env files
 .env
 .env.*
@@ -41,8 +51,10 @@ blobs/
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
+./backend/.idea
+.idea/*.xml
+
 # User-specific stuff
-.idea/
 .idea/**/workspace.xml
 .idea/**/tasks.xml
 .idea/**/usage.statistics.xml

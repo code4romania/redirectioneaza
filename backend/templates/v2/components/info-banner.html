@@ -1,0 +1,63 @@
+<div class="text-lg">
+  <div
+    {% if style == "info" %}
+      class="relative px-4 py-3 text-blue-700 bg-blue-100 border border-blue-400 rounded"
+    {% elif style == "success" %}
+      class="relative px-4 py-3 text-green-700 bg-green-100 border border-green-400 rounded"
+    {% elif style == "error" %}
+      class="relative px-4 py-3 text-red-700 bg-red-100 border border-red-400 rounded"
+    {% elif style == "warning" %}
+      class="relative px-4 py-3 text-yellow-700 bg-yellow-100 border border-yellow-400 rounded"
+    {% else %}
+      class="relative px-4 py-3 text-gray-700 bg-gray-100 border border-gray-400 rounded"
+    {% endif %}
+      role="alert">
+
+    <div class="flex items-start">
+
+      <div class="pl-1 pr-3">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+          {% if style == "info" %}
+            <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"/>
+          {% elif style == "success" %}
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+          {% elif style == "error" %}
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"/>
+          {% elif style == "warning" %}
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"/>
+          {% else %}
+            <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"/>
+          {% endif %}
+        </svg>
+      </div>
+
+      <div>
+        {% if banner_title %}
+          <strong class="font-bold">
+            {{ banner_title }}
+          </strong>
+        {% endif %}
+
+        <div class="block sm:inline">
+          {{ banner_message }}
+
+          {% if banner_list %}
+            <ul class="list-disc list-inside">
+              {% for item in banner_list %}
+                <li>{{ item }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+
+        {% if banner_cta_message and banner_cta_url %}
+          <a href="{{ banner_cta_url }}" class="font-semibold underline">
+            {{ banner_cta_message }}
+          </a>
+        {% endif %}
+      </div>
+
+    </div>
+
+  </div>
+</div>
