@@ -1,0 +1,12 @@
+name: redirect_dev
+
+services:
+
+  webapp_local_psql:
+    extends:
+      file: docker-compose.base.yml
+      service: redirect_dev_base
+    environment:
+      - "DATABASE_ENGINE=postgres"
+      - "DATABASE_HOST=127.0.0.1"
+      - "DATABASE_PORT=5432"
