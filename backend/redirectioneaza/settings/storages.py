@@ -105,13 +105,13 @@ STORAGES = {
 # Django Vite config
 
 # Where ViteJS assets are built
-django_vite_assets_path = os.path.abspath(os.path.join(os.pardir, "frontend", "dist"))  # noqa
-django_vite_sources_dir = os.path.abspath(os.path.join(os.pardir, "frontend", "src"))  # noqa
+django_vite_assets_path = os.path.abspath("dist")  # noqa
+django_vite_sources_dir = os.path.abspath("assets")  # noqa
 
 django_vite_dev_mode = env.bool("DJANGO_VITE_DEV_MODE")
 django_vite_settings: Dict[str, Any] = {
     "dev_mode": django_vite_dev_mode,
-    "manifest_path": os.path.join(django_vite_assets_path, ".vite", "manifest.json"),
+    "manifest_path": os.path.join(django_vite_assets_path, "manifest.json"),
 }
 
 IS_CONTAINERIZED = env.bool("IS_CONTAINERIZED")
