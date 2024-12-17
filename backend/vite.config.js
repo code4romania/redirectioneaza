@@ -33,7 +33,7 @@ export default defineConfig(({ command, mode }) => {
       outDir: resolve('./dist'),
       rollupOptions: {
         input: {
-          main: resolve('./assets/main.css'),
+          main: resolve('./assets/main.js'),
         },
       },
     },

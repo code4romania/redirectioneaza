@@ -125,12 +125,9 @@ if IS_CONTAINERIZED:
 # If we should use HMR or not
 if django_vite_dev_mode:
     django_vite_settings["dev_server_port"] = env.int("DJANGO_VITE_DEV_SERVER_PORT")
-    STATICFILES_DIRS = [django_vite_sources_dir]
+    STATICFILES_DIRS.append(django_vite_sources_dir)
 else:
-    STATICFILES_DIRS = [django_vite_assets_path]
-
-# TODO: check this
-STATICFILES_DIRS.append(os.path.abspath(os.path.join(BASE_DIR, "static_extras")))
+    STATICFILES_DIRS.append(django_vite_assets_path)
 
 DJANGO_VITE: Dict[str, Dict] = {
     "default": django_vite_settings,
