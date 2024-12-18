@@ -8,6 +8,7 @@ env = environ.Env(
     DEBUG=(bool, False),
     DJANGO_VITE_DEV_MODE=(bool, False),
     DJANGO_VITE_DEV_SERVER_PORT=(int, 3000),
+    DJANGO_VITE_DEV_SERVER_HOST=(str, "localhost"),
     ENVIRONMENT=(str, "production"),
     DATA_UPLOAD_MAX_NUMBER_FIELDS=(int, 1000),
     OLD_SESSION_KEY=(str, ""),
