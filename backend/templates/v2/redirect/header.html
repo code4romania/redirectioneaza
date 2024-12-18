@@ -22,7 +22,6 @@
             <div class="hidden lg:flex gap-x-6 items-center text-center">
 
               {% for menu_item in header_content.main_menu %}
-
                 {% if menu_item.url %}
 
                   <a
@@ -76,9 +75,7 @@
                           {% for dropdown_item in menu_item.content %}
 
                             <div class="group relative flex gap-x-4 p-3 rounded-lg hover:bg-gray-50">
-                              <svg class="size-6 text-cyan-700" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
-                                {% include "icons/"|add:dropdown_item.icon|add:".svg" %}
-                              </svg>
+                              <img src="{% static 'images/icons/'|add:dropdown_item.icon|add:'.svg' %}" alt="icon" class="size-6 text-cyan-700"/>
 
                               <div>
                                 <a href="{{ dropdown_item.url }}" class="font-semibold text-gray-900">
@@ -113,7 +110,6 @@
                   <!-- END FLYOUT -->
 
                 {% endif %}
-
               {% endfor %}
 
             </div>
@@ -172,7 +168,7 @@
 
                   {% if menu_item.url %}
                     <a
-                      class="-mx-3 block rounded-lg px-3 py-2 text-base/7  text-gray-900 hover:bg-gray-50"
+                      class="text-gray-900 hover:text-cyan-600 active:text-cyan-700 inline-flex items-center gap-x-1 w-full"
                       href="{{ menu_item.url }}">
                       {{ menu_item.title }}
                     </a>
@@ -212,9 +208,7 @@
 
                             {% for dropdown_item in menu_item.content %}
                               <div class="group relative flex gap-x-4 p-3 rounded-lg hover:bg-gray-50">
-                                <svg class="size-6 text-cyan-700" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
-                                  {% include "icons/"|add:dropdown_item.icon|add:".svg" %}
-                                </svg>
+                                <img src="{% static 'images/icons/'|add:dropdown_item.icon|add:'.svg' %}" alt="icon" class="size-6 text-cyan-700"/>
 
                                 <div>
                                   <a href="{{ dropdown_item.url }}" class="font-semibold text-gray-900">
