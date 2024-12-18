@@ -1,0 +1,34 @@
+<dt>
+  <!-- Expand/collapse question button -->
+  <button
+    type="button"
+    class="flex w-full items-start justify-between text-left text-gray-900"
+    aria-controls="faq-0"
+    aria-expanded="false">
+
+  <span
+    class="text-base/7 font-semibold">
+    {{ question }}
+  </span>
+
+    <span
+      class="ml-6 flex h-7 items-center">
+    <!--
+      Icon when question is collapsed.
+
+      Item expanded: "hidden", Item collapsed: ""
+    -->
+    <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6"></path>
+    </svg>
+      <!--
+        Icon when question is expanded.
+
+        Item expanded: "", Item collapsed: "hidden"
+      -->
+    <svg class="hidden size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M18 12H6"></path>
+    </svg>
+  </span>
+  </button>
+</dt>
