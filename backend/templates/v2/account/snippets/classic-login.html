@@ -4,36 +4,28 @@
 {% load static %}
 
 <form id='login-form' action="/login/" role="form" method="post">
-  <header class="flex flex-col justify-center items-center">
-    <img src="{% static 'images/logo-smaller.png' %}" alt="Redirectioneaza logo" class="h-24 w-auto mb-6" />
+  <div class="text-center">
+    <header class="flex flex-col justify-center items-center">
+      <img src="{% static 'images/logo-smaller.png' %}" alt="Redirectioneaza logo" class="h-24 w-auto mb-6"/>
 
-    <h1 class="text-center text-gray-900 text-3xl font-bold leading-9 mb-2">
-      {% trans "Login with email & password" %}
-    </h1>
-  </header>
+      <h1 class="text-gray-900 text-3xl font-bold leading-9 mb-2">
+        {% trans "Login with email & password" %}
+      </h1>
+    </header>
 
-  <div class="prose mb-6">
-    <p>
-      {% trans "Login for organizations that don't have an NGO Hub account" %}
-    </p>
+    <div class="prose mb-6">
+      <p>
+        {% trans "Login for organizations that don't have an NGO Hub account" %}
+      </p>
+    </div>
   </div>
 
   {% csrf_token %}
 
   <div class="overflow-hidden rounded-lg bg-white drop-shadow ring-1 ring-gray-200">
     <div class="px-10 py-8 grid gap-6">
-      <div>
-        <label>
-          <span class="block text-sm/6 font-medium text-gray-900 mb-2">Adresă de email</span>
-          <input
-            type="email"
-            name="email"
-            autocomplete="email"
-            aria-errormessage="Te rugăm sa introduci o adresa de email validă"
-            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-400 sm:text-sm/6"
-            required>
-        </label>
-      </div>
+
+      {% include "components/email-input.html" %}
 
       <div>
         <label>
@@ -51,7 +43,8 @@
         </div>
       </div>
 
-      <button type="submit" class="w-full text-center bg-amber-300 sm:text-base text-sm sm:px-6 sm:py-2 px-2 py-1 shadow-sm rounded-full text-gray-900 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
+      <button type="submit"
+              class="w-full text-center bg-amber-300 sm:text-base text-sm sm:px-6 sm:py-2 px-2 py-1 shadow-sm rounded-full text-gray-900 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
         Intră în cont
       </button>
     </div>
