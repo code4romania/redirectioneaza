@@ -15,7 +15,7 @@ services:
       - .env
     ports:
       - "${WEBAPP_PORT:-8080}:8000"
-
+      - "${STATIC_PORT:-3000}:3000"
 
   redirect_base:
     container_name: redirect_dev
