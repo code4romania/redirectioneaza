@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-17 19:22+0200\n"
+"POT-Creation-Date: 2024-12-18 11:25+0200\n"
 "PO-Revision-Date: 2024-03-07 11:27+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -895,6 +895,18 @@ msgstr "Rolul tău actual nu este suportat."
 msgid "Password recovery"
 msgstr "Recuperare parolă"
 
+#: templates/v2/account/reset-password.html:44
+msgid ""
+"To recover your password, please enter the email address you registered with "
+"and then press the Send button."
+msgstr ""
+"Pentru a-ți recupera parola, te rugăm să introduci adresa de email cu care "
+"te-ai înregistrat și apoi apasă butonul Trimite."
+
+#: templates/v2/account/reset-password.html:54
+msgid "Send"
+msgstr "Trimite"
+
 #: templates/v2/account/snippets/classic-login.html:11
 msgid "Login with email & password"
 msgstr "Autentificare cu email și parolă"
@@ -932,6 +944,10 @@ msgstr ""
 #: templates/v2/account/snippets/third-party.html:46
 msgid "After authentication, you will be redirected to your account."
 msgstr "După autentificare, vei fi redirecționat către contul tău."
+
+#: templates/v2/components/email-input.html:6
+msgid "Email address"
+msgstr "Adresă de email"
 
 #: templates/v2/socialaccount/login.html:28
 msgid "Redirecting to authentication..."
