@@ -93,8 +93,9 @@ class LoginView(BaseVisibleTemplateView):
 
         context.update(
             {
-                "account_button": _("Go to account"),
-                "section_title": _("Login through NGO Hub"),
+                "ngohub_site": settings.NGOHUB_HOME_BASE,
+                "account_button": _("Continue with NGO Hub"),
+                "section_title": _("I have an NGO Hub account"),
                 "form_action": reverse("amazon_cognito_login"),
             }
         )
@@ -191,6 +192,7 @@ class SignupView(BaseVisibleTemplateView):
 
         context.update(
             {
+                "ngohub_site": settings.NGOHUB_HOME_BASE,
                 "account_button": _("Register new account"),
                 "account_button_is_external": True,
                 "section_title": _("Register through NGO Hub"),

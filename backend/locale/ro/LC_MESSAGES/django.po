@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-18 11:25+0200\n"
+"POT-Creation-Date: 2024-12-19 17:23+0200\n"
 "PO-Revision-Date: 2024-03-07 11:27+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -454,44 +454,43 @@ msgstr "Resetare parolă redirectioneaza.ro"
 msgid "Sign In"
 msgstr "Autentificare"
 
-#: donations/views/account_management.py:96
-#: templates/v2/account/snippets/third-party.html:4
-msgid "Go to account"
-msgstr "Mergi la cont"
-
 #: donations/views/account_management.py:97
-msgid "Login through NGO Hub"
-msgstr "Autentificare prin NGO Hub"
+msgid "Continue with NGO Hub"
+msgstr "Continuă prin NGO Hub"
 
-#: donations/views/account_management.py:142
+#: donations/views/account_management.py:98
+msgid "I have an NGO Hub account"
+msgstr "Am cont NGO Hub"
+
+#: donations/views/account_management.py:143
 msgid "It seems that this email and password combination is incorrect."
 msgstr "Se pare că această combinație de email și parolă este incorectă."
 
-#: donations/views/account_management.py:148
+#: donations/views/account_management.py:149
 msgid "Sign Out"
 msgstr "Deconectare"
 
-#: donations/views/account_management.py:157
+#: donations/views/account_management.py:158
 msgid "Set New Password"
 msgstr "Setare parolă nouă"
 
-#: donations/views/account_management.py:184
+#: donations/views/account_management.py:185
 msgid "New account"
 msgstr "Cont nou"
 
-#: donations/views/account_management.py:194
-msgid "Register new account"
-msgstr "Creează un cont"
-
 #: donations/views/account_management.py:196
+msgid "Register new account"
+msgstr "Creează un cont în NGO Hub"
+
+#: donations/views/account_management.py:198
 msgid "Register through NGO Hub"
 msgstr "Înregistrare prin NGO Hub"
 
-#: donations/views/account_management.py:259
+#: donations/views/account_management.py:261
 msgid "Welcome to redirectioneaza.ro"
 msgstr "Confirmare cont redirectioneaza.ro"
 
-#: donations/views/account_management.py:281
+#: donations/views/account_management.py:283
 msgid "Verification"
 msgstr "Verificare"
 
@@ -643,7 +642,39 @@ msgstr "Formularul tău de redirecționare"
 msgid "Un nou formular de redirecționare"
 msgstr "Un nou formular de redirecționare"
 
-#: donations/views/site.py:115
+#: frequent_questions/apps.py:8
+msgid "Frequent Questions"
+msgstr "Întrebări frecvente"
+
+#: frequent_questions/models.py:7
+msgid "Title"
+msgstr "Titlu"
+
+#: frequent_questions/models.py:9 frequent_questions/models.py:34
+msgid "Order"
+msgstr "Ordine"
+
+#: frequent_questions/models.py:14
+msgid "Section"
+msgstr "Secțiune"
+
+#: frequent_questions/models.py:15 redirectioneaza/settings/unfold.py:56
+msgid "Sections"
+msgstr "Secțiuni"
+
+#: frequent_questions/models.py:31 frequent_questions/models.py:39
+msgid "Question"
+msgstr "Întrebare"
+
+#: frequent_questions/models.py:32
+msgid "Answer"
+msgstr "Răspuns"
+
+#: frequent_questions/models.py:40 redirectioneaza/settings/unfold.py:62
+msgid "Questions"
+msgstr "Întrebări"
+
+#: frequent_questions/views.py:330
 msgid "Frequently Asked Questions"
 msgstr "Întrebări frecvente"
 
@@ -823,34 +854,42 @@ msgstr "Tablou de bord"
 msgid "Donation exports"
 msgstr "Exporturi de donații"
 
-#: redirectioneaza/settings/unfold.py:53 redirectioneaza/settings/unfold.py:56
+#: redirectioneaza/settings/unfold.py:53
+msgid "Frequently asked questions"
+msgstr "Întrebări frecvente"
+
+#: redirectioneaza/settings/unfold.py:70 redirectioneaza/settings/unfold.py:73
 #: users/apps.py:8
 msgid "Users"
 msgstr "Utilizatori"
 
-#: redirectioneaza/settings/unfold.py:62 users/models.py:209
+#: redirectioneaza/settings/unfold.py:79 users/models.py:209
 msgid "Groups"
 msgstr "Grupuri"
 
-#: redirectioneaza/settings/unfold.py:70
+#: redirectioneaza/settings/unfold.py:87
 msgid "Django Q"
 msgstr "Django Q"
 
-#: redirectioneaza/settings/unfold.py:73
+#: redirectioneaza/settings/unfold.py:90
 msgid "Failed tasks"
 msgstr "Task-uri eșuate"
 
-#: redirectioneaza/settings/unfold.py:79
+#: redirectioneaza/settings/unfold.py:96
 msgid "Queued tasks"
 msgstr "Task-uri în așteptare"
 
-#: redirectioneaza/settings/unfold.py:85
+#: redirectioneaza/settings/unfold.py:102
 msgid "Scheduled tasks"
 msgstr "Task-uri programate"
 
-#: redirectioneaza/settings/unfold.py:91
+#: redirectioneaza/settings/unfold.py:108
 msgid "Successful tasks"
 msgstr "Task-uri reușite"
+
+#: templates/v2/account/components/email-input.html:6
+msgid "Email address"
+msgstr "Adresă de email"
 
 #: templates/v2/account/errors/login/app_missing.html:5
 msgid "Application not activated"
@@ -907,53 +946,156 @@ msgstr ""
 msgid "Send"
 msgstr "Trimite"
 
-#: templates/v2/account/snippets/classic-login.html:11
+#: templates/v2/account/snippets/classic-login.html:12
 msgid "Login with email & password"
-msgstr "Autentificare cu email și parolă"
+msgstr "Conectare cu email și parolă"
 
-#: templates/v2/account/snippets/classic-login.html:17
-msgid "Login for organizations that don't have an NGO Hub account"
-msgstr "Autentificare pentru organizațiile care nu au cont în NGO Hub"
+#: templates/v2/account/snippets/classic-login.html:18
+msgid ""
+"If your organization doesn't have an account on NGO Hub, you can log in to "
+"redirectioneaza.ro using the same login details as in previous years."
+msgstr ""
+"Dacă organizația ta nu are cont în NGO Hub, te poți autentifica pe "
+"redirectioneaza.ro folosind aceleași date de logare ca anii trecuți."
+
+#: templates/v2/account/snippets/classic-login.html:23
+msgid ""
+"You can choose to create an account on NGO Hub at any time, without losing "
+"the data and forms collected in previous years."
+msgstr ""
+"Poți alege oricând să-ți creezi cont în NGO Hub, fără a pierde datele și "
+"formularele strânse anii trecuți. "
 
 #: templates/v2/account/snippets/errors.html:6
 msgid "Error!"
 msgstr "Eroare!"
 
-#: templates/v2/account/snippets/register-form.html:4
-msgid "Classic registration"
-msgstr "Înregistrare clasică"
+#: templates/v2/account/snippets/register-form.html:9
+msgid "Register without NGO Hub"
+msgstr "Înregistrare fără NGO Hub"
 
-#: templates/v2/account/snippets/third-party.html:7
+#: templates/v2/account/snippets/register-form.html:15
+msgid ""
+"You can use redirectioneaza.ro without having an account in NGO Hub. "
+"Register by filling out the form below."
+msgstr ""
+"Poți folosi platforma redirectioneaza.ro și fără a avea un cont în NGO Hub. "
+"Înregistrează-te completând formularul de mai jos."
+
+#: templates/v2/account/snippets/register-form.html:31
+msgid "First name"
+msgstr "Prenume"
+
+#: templates/v2/account/snippets/register-form.html:44
+msgid "Last name"
+msgstr "Nume"
+
+#: templates/v2/account/snippets/register-form.html:59
+msgid "Password"
+msgstr "Parola"
+
+#: templates/v2/account/snippets/register-form.html:72
+msgid "Confirm password"
+msgstr "Confirmă parola"
+
+#: templates/v2/account/snippets/register-form.html:101
+msgid "I agree with"
+msgstr "Sunt de acord cu"
+
+#: templates/v2/account/snippets/register-form.html:103
+msgid "the terms of the platform"
+msgstr "Termenii și condițiile platformei"
+
+#: templates/v2/account/snippets/third-party.html:4
+msgid "Go to account"
+msgstr "Mergi la cont"
+
+#: templates/v2/account/snippets/third-party.html:8
 msgid "Access your account through NGO Hub"
 msgstr "Accesează-ți contul prin NGO Hub"
 
-#: templates/v2/account/snippets/third-party.html:28
+#: templates/v2/account/snippets/third-party.html:32
 msgid "To access your account, you need to authenticate through NGO Hub."
 msgstr "Pentru a accesa contul, trebuie să te autentifici prin NGO Hub."
 
 #: templates/v2/account/snippets/third-party.html:37
-#, python-format
 msgid ""
-"To access your account, click the <strong>%(account_button)s</strong> button "
-"and you will be able to enter the platform using your NGO Hub credentials."
+"If you're a non-profit organization, you can benefit from all the solutions "
+"in the NGO-dedicated ecosystem through NGO Hub. To access redirectioneaza.ro "
+"through your NGO Hub account, make sure:"
 msgstr ""
-"Pentru a accesa contul, apasă butonul <strong>%(account_button)s</strong> și "
-"vei putea intra pe platformă folosind datele tale de autentificare din NGO "
-"Hub."
+"Dacă ești o organizație non-profit, poți beneficia de toate soluțiile din "
+"ecosistemul dedicat sectorului ONG prin NGO Hub. Pentru a accesa "
+"redirectioneaza.ro prin contul tău NGO Hub, asigură-te că:"
 
-#: templates/v2/account/snippets/third-party.html:46
-msgid "After authentication, you will be redirected to your account."
-msgstr "După autentificare, vei fi redirecționat către contul tău."
+#: templates/v2/account/snippets/third-party.html:56
+msgid "You have an active account in NGO Hub"
+msgstr "Ai un cont activ în NGO Hub"
 
-#: templates/v2/components/email-input.html:6
-msgid "Email address"
-msgstr "Adresă de email"
+#: templates/v2/account/snippets/third-party.html:58
+msgid "Register your organization in NGO Hub"
+msgstr "Înregistrează-ți organizația în NGO Hub"
 
-#: templates/v2/socialaccount/login.html:28
+#: templates/v2/account/snippets/third-party.html:63
+msgid ""
+"If you don't have an account in NGO Hub, you can create one for free. Learn "
+"more about the benefits of NGO Hub"
+msgstr ""
+"Dacă nu ai un cont în NGO Hub, poți crea unul gratuit. Află mai multe despre "
+"beneficiile NGO Hub"
+
+#: templates/v2/account/snippets/third-party.html:68
+msgid "here"
+msgstr "aici"
+
+#: templates/v2/account/snippets/third-party.html:87
+msgid "You have activated the Redirecționează platform in your NGO Hub account"
+msgstr "Ai activat platforma Redirecționează în contul tău NGO Hub"
+
+#: templates/v2/account/snippets/third-party.html:90
+msgid "Activate the Redirecționează application in your NGO Hub account"
+msgstr "Activează-ți aplicația Redirecționează în contul tău NGO Hub"
+
+#: templates/v2/account/snippets/third-party.html:97
+msgid ""
+"Check with your organization's administrator if access to this platform is "
+"correctly configured."
+msgstr "Verifică cu administratorul organizației tale dacă accesul la această platformă este configurat corect."
+
+#: templates/v2/account/snippets/third-party.html:100
+msgid ""
+"Look for the Redirecționează application in the All applications section. It "
+"is one of the many applications offered for free to non-profit organizations "
+"in Romania."
+msgstr "Caută aplicația Redirecționează în secțiunea Toate aplicațiile. Este una dintre multele aplicații oferite gratuit organizațiilor nonprofit din România"
+
+#: templates/v2/account/snippets/third-party.html:120
+msgid ""
+"You have access permission from the organization's administrator in NGO Hub"
+msgstr ""
+"Ai permisiunea de acces din partea administratorului organizației din NGO Hub"
+
+#: templates/v2/account/snippets/third-party.html:123
+msgid "Give access to your colleagues in NGO Hub"
+msgstr "Oferă acces colegilor tăi în NGO Hub"
+
+#: templates/v2/account/snippets/third-party.html:130
+msgid ""
+"Check with your organization's administrator if they have given you access "
+"to the Redirecționează application."
+msgstr "Verifică cu administratorul organizației tale dacă ți-a oferit acces în aplicația Redirecționează."
+
+#: templates/v2/account/snippets/third-party.html:133
+msgid ""
+"In NGO Hub, each of your colleagues can have their own account. Make sure "
+"you give your colleagues access to the applications they work with every day."
+msgstr "În NGO Hub fiecare coleg de-al tău poate avea propriul său cont. Asigură-te că le oferi acces colegilor tăi la aplicațiile cu care lucrează zi de zi."
+
+#: templates/v2/socialaccount/login.html:31
 msgid "Redirecting to authentication..."
 msgstr "Redirecționare către autentificare..."
 
-#: templates/v2/socialaccount/login.html:34
+#: templates/v2/socialaccount/login.html:47
 msgid "or click here to sign in"
 msgstr "sau apasă aici pentru a te autentifica"
 
@@ -1023,6 +1165,22 @@ msgstr "parolă veche"
 #: users/models.py:208
 msgid "Group"
 msgstr "Grup"
+
+#~ msgid "Classic registration"
+#~ msgstr "Înregistrare clasică"
+
+#, python-format
+#~ msgid ""
+#~ "To access your account, click the <strong>%(account_button)s</strong> "
+#~ "button and you will be able to enter the platform using your NGO Hub "
+#~ "credentials."
+#~ msgstr ""
+#~ "Pentru a accesa contul, apasă butonul <strong>%(account_button)s</strong> "
+#~ "și vei putea intra pe platformă folosind datele tale de autentificare din "
+#~ "NGO Hub."
+
+#~ msgid "After authentication, you will be redirected to your account."
+#~ msgstr "După autentificare, vei fi redirecționat către contul tău."
 
 #~ msgid "sign up"
 #~ msgstr "înregistrare"

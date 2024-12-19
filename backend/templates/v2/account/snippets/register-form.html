@@ -1,77 +1,118 @@
-{% load i18n %}
+{% load i18n static %}
 
-<h2>
-  {% trans "Classic registration" %}
-</h2>
+<form id='register-form' action="/cont-nou/" role="form" method="post">
+  <div class="text-center">
+    <header class="flex flex-col justify-center items-center">
+      <img src="{% static 'images/logo-smaller.png' %}" alt="Redirectioneaza logo" class="h-24 w-auto mb-6"/>
 
-<form class="form form-horizontal" action="/cont-nou/" role="form" method="post">
+      <h1 class="text-center text-gray-900 text-3xl font-bold leading-9 mb-2">
+        {% trans "Register without NGO Hub" %}
+      </h1>
+    </header>
+
+    <div class="prose mb-6 text-gray-700 font-medium">
+      <p>
+        {% blocktrans trimmed %}
+          You can use redirectioneaza.ro without having an account in NGO Hub.
+          Register by filling out the form below.
+        {% endblocktrans %}
+      </p>
+    </div>
+  </div>
+
   {% csrf_token %}
-  <fieldset>
-    <div class="form-group">
-      <div class="col-xs-12 col-sm-6">
-        <input
-          class="form-control"
-          type="text"
-          name="last_name"
-          placeholder="Nume"
-          aria-label="Nume"
-          required/>
-      </div>
-      <div class="col-xs-12 col-sm-6 second-form-row">
-        <input
-          class="form-control"
-          type="text"
-          name="first_name"
-          placeholder="Prenume"
-          aria-label="Prenume"
-          required/>
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="col-xs-12">
-        <input
-          class="form-control"
-          type="email"
-          name="email"
-          placeholder="Email"
-          aria-label="Email"
-          required/>
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="col-xs-12">
-        <input
-          class="form-control"
-          type="password"
-          name="password"
-          placeholder="Parola"
-          aria-label="Parola"
-          required/>
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="col-xs-12">
-        <input
-          class="form-control"
-          type="password"
-          name="password_confirm"
-          placeholder="Confirmă parola"
-          aria-label="Confirmă parola"
-          required/>
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="col-xs-12 checkbox">
-        <label class="" for="agree">
-          <input type="checkbox" name="agree" id="agree" required/>
-          Sunt de acord cu <a href="{% url 'terms' %}">Termenii aplicației</a>.
+
+  <div class="overflow-hidden rounded-lg bg-white drop-shadow ring-1 ring-gray-200">
+    <div class="px-10 py-8 grid gap-6">
+
+      <div>
+        <label>
+      <span class="block text-sm/6 font-medium text-gray-900 mb-2">
+        {% trans "First name" %}
+      </span>
+          <input
+            type="text"
+            name="first_name"
+            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-400 sm:text-sm/6"
+            required>
         </label>
       </div>
-    </div>
-    <div class="form-group margin-top">
-      <div class="col-sm-12">
-        <button type="submit" class="btn btn-primary">Trimite</button>
+
+      <div>
+        <label>
+      <span class="block text-sm/6 font-medium text-gray-900 mb-2">
+        {% trans "Last name" %}
+      </span>
+          <input
+            type="text"
+            name="last_name"
+            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-400 sm:text-sm/6"
+            required>
+        </label>
       </div>
+
+      {% include "account/components/email-input.html" %}
+
+      <div>
+        <label>
+      <span class="block text-sm/6 font-medium text-gray-900 mb-2">
+        {% trans "Password" %}
+      </span>
+          <input
+            type="password"
+            name="password"
+            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-400 sm:text-sm/6"
+            required>
+        </label>
+      </div>
+
+      <div>
+        <label>
+      <span class="block text-sm/6 font-medium text-gray-900 mb-2">
+        {% trans "Confirm password" %}
+      </span>
+          <input
+            type="password"
+            name="password_confirm"
+            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-400 sm:text-sm/6"
+            required>
+        </label>
+      </div>
+
+      <div class="space-y-5">
+        <div class="flex gap-3">
+          <div class="flex h-6 shrink-0 items-center">
+            <div class="group grid size-4 grid-cols-1">
+              <input
+                id="agree"
+                name="agree"
+                type="checkbox"
+                required
+                class="col-start-1 row-start-1 appearance-none rounded border border-gray-300 bg-white checked:border-amber-300 checked:bg-amber-300 indeterminate:border-amber-300 indeterminate:bg-amber-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto">
+              <svg class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-[:disabled]:stroke-gray-950/25" viewBox="0 0 14 14" fill="none">
+                <path class="opacity-0 group-has-[:checked]:opacity-100" d="M3 8L6 11L11 3.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path class="opacity-0 group-has-[:indeterminate]:opacity-100" d="M3 7H11" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </div>
+          </div>
+          <div class="text-sm/6">
+            <label for="agree" class="font-medium text-gray-900">
+              <span class="block text-sm/6 font-medium text-gray-900 mb-2">
+              {% trans "I agree with" %}
+              <a href="{% url 'terms' %}" class="text-cyan-700 font-semibold">
+                {% trans "the terms of the platform" %}
+              </a>.
+            </span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        class="w-full text-center bg-amber-300 sm:text-base text-sm sm:px-6 sm:py-2 px-2 py-1 shadow-sm rounded-full text-gray-900 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
+        Intră în cont
+      </button>
     </div>
-  </fieldset>
+  </div>
 </form>
