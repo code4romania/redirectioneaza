@@ -184,6 +184,8 @@ def _get_user_profile(ngohub, user: UserModel, user_token) -> UserProfile:
     except HubHTTPException:
         user.deactivate()
 
+        logger.error(f"User {user.email} could not be found in NGO Hub. Please check the configuration.")
+
         raise ImmediateHttpResponse(redirect(reverse("error-app-missing")))
 
     return user_profile

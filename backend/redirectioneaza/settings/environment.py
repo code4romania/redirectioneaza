@@ -101,8 +101,8 @@ env = environ.Env(
     AWS_COGNITO_VERIFIED_EMAIL=(bool, True),
     # NGO Hub
     NGOHUB_HOME_HOST=(str, "ngohub.ro"),
-    NGOHUB_APP_HOST=(str, "app-staging.ngohub.ro"),
-    NGOHUB_API_HOST=(str, "api-staging.ngohub.ro"),
+    NGOHUB_APP_HOST=(str, "app.ngohub.ro"),
+    NGOHUB_API_HOST=(str, "api.ngohub.ro"),
     NGOHUB_API_ACCOUNT=(str, ""),
     NGOHUB_API_KEY=(str, ""),
     UPDATE_ORGANIZATION_METHOD=(str, "async"),
