@@ -2,7 +2,7 @@ ARG NODE_VERSION=22.12.0
 ARG PYTHON_VERSION=3.12.8
 
 
-FROM node:${NODE_VERSION}-bookworm as frontend
+FROM node:${NODE_VERSION}-bookworm AS frontend
 
 # set up a user and group for bower since it's not working as root
 ARG USER=builduser
@@ -24,7 +24,7 @@ COPY ./backend/package.json ./backend/package-lock.json ./backend/bower.json ./b
 RUN npm cache clean --force && npm ci && bower install
 
 
-FROM python:${PYTHON_VERSION}-bookworm as backend
+FROM python:${PYTHON_VERSION}-bookworm AS backend
 
 ENV DEBIAN_FRONTEND=noninteractive
 
