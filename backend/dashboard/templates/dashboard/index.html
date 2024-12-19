@@ -1,0 +1,24 @@
+
+{% extends 'admin/base.html' %}
+
+{% load i18n %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Redirectioneaza NGO Dashboard') }}{% endblock %}
+
+{% block branding %}
+    <h1 id="site-name">
+        <a href="{% url 'admin:index' %}">
+            {{ site_header|default:_('NGO Dashboard') }}
+        </a>
+    </h1>
+{% endblock %}
+
+{% block content %}
+    <div class="flex flex-col lg:flex-row lg:gap-8">
+        {% if app_dashboard %}
+            Placeholder for the account homepage content.
+        {% endif %}
+    </div>
+{% endblock %}

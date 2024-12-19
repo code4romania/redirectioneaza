@@ -21,6 +21,7 @@ from django.contrib import admin
 from django.urls import include, path, re_path, reverse
 from django.views.generic import RedirectView
 
+from dashboard.admin import ngo_dashboard
 from donations.views.account_management import (
     ForgotPasswordView,
     LoginView,
@@ -149,6 +150,10 @@ urlpatterns = (
             name="admin-ngos",
         ),
         path("admin/<ngo_url>/", AdminNgoHandler.as_view(), name="admin-ong"),
+
+        # The new dashboard site for NGOs
+        path("dashboard/", ngo_dashboard.urls),  # these admin URLs use the "dashboard:" prefix
+
         path("admin/download/<job_id>/", ArchiveDownloadLinkView.as_view(), name="admin-download-link"),
         path("admin/", AdminHome.as_view(), name="admin-index"),  # name was "admin"
         # must always be the last set of urls

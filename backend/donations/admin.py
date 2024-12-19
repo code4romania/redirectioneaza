@@ -17,6 +17,9 @@ from .models.jobs import Job, JobStatusChoices
 from .models.ngos import Ngo
 from .workers.update_organization import update_organization
 
+from dashboard.admin import ngo_dashboard
+
+
 logger = logging.getLogger(__name__)
 
 
@@ -321,3 +324,24 @@ class JobAdmin(ModelAdmin):
             {"fields": ("date_created",)},
         ),
     )
+
+
+class NgoInDashboard(ModelAdmin):
+    def get_queryset(self, request):
+        ngo_id = request.user.ngo_id if request.user.ngo else 0
+        return super().get_queryset(request).filter(id=ngo_id)
+    
+    def has_view_permission(self, request, obj=None):
+        return request.user.is_active
+
+ngo_dashboard.register(Ngo, NgoInDashboard)
+
+
+class DonorInDashboard(ModelAdmin):
+    def get_queryset(self, request):
+        return super().get_queryset(request).filter(ngo=request.user.ngo).exclude(ngo__isnull=True)
+    
+    def has_view_permission(self, request, obj=None):
+        return request.user.is_active
+
+ngo_dashboard.register(Donor, DonorInDashboard)
