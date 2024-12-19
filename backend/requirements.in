@@ -5,6 +5,12 @@ django-unfold~=0.43.0
 django-allauth~=65.3.0
 django-vite~=3.0.5
 
+# wysiwyg editor
+django-tinymce~=4.1.0
+
+# import/export data in bulk
+django-import-export~=4.3
+
 pycognito~=2024.5.1
 
 # captcha

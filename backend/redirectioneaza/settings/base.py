@@ -76,6 +76,8 @@ INSTALLED_APPS = [
     "django_q",
     "django_recaptcha",
     "django_vite",
+    "import_export",
+    "tinymce",
     # authentication
     "allauth",
     "allauth.account",
@@ -86,6 +88,7 @@ INSTALLED_APPS = [
     "partners",
     "users",
     "importer",
+    "frequent_questions",
 ]
 
 if not env.bool("USE_S3"):

@@ -165,6 +165,7 @@ urlpatterns = (
             ),
         ),
         path("allauth/", include("allauth.urls")),
+        path("tinymce/", include("tinymce.urls")),
         path("robots.txt", StaticPageView.as_view(template_name="robots.txt", content_type="text/plain")),
     ]
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
