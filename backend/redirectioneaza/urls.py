@@ -51,7 +51,6 @@ from donations.views.my_account import (
 from donations.views.ngo import DonationSucces, FormSignature, OwnFormDownloadLinkHandler, TwoPercentHandler
 from donations.views.site import (
     AboutHandler,
-    FAQHandler,
     HealthCheckHandler,
     HomePage,
     NgoListHandler,
@@ -59,6 +58,7 @@ from donations.views.site import (
     PolicyHandler,
     TermsHandler,
 )
+from frequent_questions.views import FAQHandler
 from redirectioneaza.views import StaticPageView
 
 admin.site.site_header = f"Admin | {settings.VERSION_LABEL}"
