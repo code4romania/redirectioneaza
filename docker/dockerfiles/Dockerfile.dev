@@ -60,6 +60,8 @@ RUN npm install -g npm bower && \
 COPY ./backend/ /var/www/redirect/backend/
 RUN rm -rf ./_appengine_legacy
 
+RUN npm ci
+
 USER root
 
 
@@ -78,4 +80,4 @@ WORKDIR /var/www/redirect/
 
 ENTRYPOINT ["/init"]
 
-EXPOSE 8000
+EXPOSE 8000 3000
