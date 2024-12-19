@@ -1,4 +1,4 @@
-{% load i18n allauth socialaccount %}
+{% load i18n allauth socialaccount static %}
 
 {% if not account_button %}
     {% trans "Go to account" as account_button %}
@@ -14,39 +14,47 @@
   {% endif %}
 {% endif %}
 
-<div class="col-sm">
+<section class="">
+  <header class="flex flex-col justify-center items-center">
+    <img src="{% static 'images/hub.png' %}" alt="NGOHub logo" class="h-24 w-auto mb-6" />
 
-  <h2>
-    {{ section_title }}
-  </h2>
+    <h1 class="text-center text-gray-900 text-3xl font-bold leading-9 mb-2">{{ section_title }}</h1>
+  </header>
 
-  {% if SOCIALACCOUNT_ONLY %}
-    <p id="login-subtitle" class="title is-4">
-      {% trans "To access your account, you need to authenticate through NGO Hub." %}
+  <div class="prose">
+
+    {% if SOCIALACCOUNT_ONLY %}
+      <p id="login-subtitle">
+        {% trans "To access your account, you need to authenticate through NGO Hub." %}
+      </p>
+    {% endif %}
+
+    <p>
+      Dacă ești o organizație non-profit, poți beneficia de toate soluțiile din ecosistemul dedicat sectorului ONG prin NGO Hub. Pentru a accesa redirectioneaza.ro prin contul tău NGO Hub, asigură-te că:
     </p>
-  {% endif %}
 
-  <p class="login-text">
-    {% blocktranslate trimmed %}
-      To access your account, click the
-      <strong>{{ account_button }}</strong>
-      button and you will be able to enter the platform using your
-      NGO Hub credentials.
-    {% endblocktranslate %}
-  </p>
+    <p>
+      {% blocktranslate trimmed %}
+        To access your account, click the
+        <strong>{{ account_button }}</strong>
+        button and you will be able to enter the platform using your
+        NGO Hub credentials.
+      {% endblocktranslate %}
+    </p>
 
-  <p class="login-text">
-    {% trans "After authentication, you will be redirected to your account." %}
-  </p>
+    <p>
+      {% trans "After authentication, you will be redirected to your account." %}
+    </p>
+  </div>
 
-  <div id="allauth-login-form-container" class="col-2">
+  <div id="allauth-login-form-container" class="flex justify-stretch mt-6">
     <a
-      class="btn btn-primary"
+      class="w-full text-center bg-amber-300 sm:text-base text-sm sm:px-6 sm:py-2 px-2 py-1 shadow-sm rounded-full text-gray-900 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
       href="{{ form_action }}"
       {% if account_button_is_external %}target="_blank"{% endif %}
     >
       {{ account_button }}
     </a>
   </div>
+</section>
 
-</div>

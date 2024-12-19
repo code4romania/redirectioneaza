@@ -6,7 +6,6 @@ from django.db.models import QuerySet
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.utils import timezone
-from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 
 from partners.models import DisplayOrderingChoices
@@ -103,18 +102,6 @@ class NoteHandler(TemplateView):
         context = {
             "title": "Notă de informare",
             "contact_email": settings.CONTACT_EMAIL_ADDRESS,
-        }
-        return render(request, self.template_name, context)
-
-
-class FAQHandler(TemplateView):
-    template_name = "faq.html"
-
-    def get(self, request, *args, **kwargs):
-        context = {
-            "title": _("Frequently Asked Questions"),
-            "contact_email": settings.CONTACT_EMAIL_ADDRESS,
-            "limit": settings.DONATIONS_LIMIT,
         }
         return render(request, self.template_name, context)
 
