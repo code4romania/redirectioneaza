@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-18 11:25+0200\n"
+"POT-Creation-Date: 2024-12-19 17:23+0200\n"
 "PO-Revision-Date: 2024-02-28 15:45+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -452,52 +452,55 @@ msgstr "Reset redirectioneaza.ro password"
 msgid "Sign In"
 msgstr "Sign In"
 
-#: donations/views/account_management.py:96
-#: templates/v2/account/snippets/third-party.html:4
-msgid "Go to account"
-msgstr "Go to account"
-
 #: donations/views/account_management.py:97
-msgid "Login through NGO Hub"
+#, fuzzy
+#| msgid "Login through NGO Hub"
+msgid "Continue with NGO Hub"
 msgstr "Login through NGO Hub"
 
-#: donations/views/account_management.py:142
+#: donations/views/account_management.py:98
+#, fuzzy
+#| msgid "Has NGO Hub account"
+msgid "I have an NGO Hub account"
+msgstr "Has NGO Hub account"
+
+#: donations/views/account_management.py:143
 msgid "It seems that this email and password combination is incorrect."
 msgstr "It seems that this email and password combination is incorrect."
 
-#: donations/views/account_management.py:148
+#: donations/views/account_management.py:149
 #, fuzzy
 #| msgid "Sign In"
 msgid "Sign Out"
 msgstr "Sign In"
 
-#: donations/views/account_management.py:157
+#: donations/views/account_management.py:158
 msgid "Set New Password"
 msgstr ""
 
-#: donations/views/account_management.py:184
+#: donations/views/account_management.py:185
 #, fuzzy
 #| msgid "bank account"
 msgid "New account"
 msgstr "bank account"
 
-#: donations/views/account_management.py:194
+#: donations/views/account_management.py:196
 #, fuzzy
 #| msgid "Create an account"
 msgid "Register new account"
 msgstr "Create an account"
 
-#: donations/views/account_management.py:196
+#: donations/views/account_management.py:198
 #, fuzzy
 #| msgid "Login through NGO Hub"
 msgid "Register through NGO Hub"
 msgstr "Login through NGO Hub"
 
-#: donations/views/account_management.py:259
+#: donations/views/account_management.py:261
 msgid "Welcome to redirectioneaza.ro"
 msgstr "Welcome to redirectioneaza.ro"
 
-#: donations/views/account_management.py:281
+#: donations/views/account_management.py:283
 #, fuzzy
 #| msgid "description"
 msgid "Verification"
@@ -655,7 +658,49 @@ msgstr "Formularul tău de redirecționare"
 msgid "Un nou formular de redirecționare"
 msgstr "Un nou formular de redirecționare"
 
-#: donations/views/site.py:115
+#: frequent_questions/apps.py:8
+#, fuzzy
+#| msgid "Frequently Asked Questions"
+msgid "Frequent Questions"
+msgstr "Frequently Asked Questions"
+
+#: frequent_questions/models.py:7
+msgid "Title"
+msgstr ""
+
+#: frequent_questions/models.py:9 frequent_questions/models.py:34
+msgid "Order"
+msgstr ""
+
+#: frequent_questions/models.py:14
+#, fuzzy
+#| msgid "description"
+msgid "Section"
+msgstr "description"
+
+#: frequent_questions/models.py:15 redirectioneaza/settings/unfold.py:56
+#, fuzzy
+#| msgid "Options"
+msgid "Sections"
+msgstr "Options"
+
+#: frequent_questions/models.py:31 frequent_questions/models.py:39
+#, fuzzy
+#| msgid "description"
+msgid "Question"
+msgstr "description"
+
+#: frequent_questions/models.py:32
+msgid "Answer"
+msgstr ""
+
+#: frequent_questions/models.py:40 redirectioneaza/settings/unfold.py:62
+#, fuzzy
+#| msgid "Options"
+msgid "Questions"
+msgstr "Options"
+
+#: frequent_questions/views.py:330
 msgid "Frequently Asked Questions"
 msgstr "Frequently Asked Questions"
 
@@ -833,34 +878,44 @@ msgstr "Dashboard"
 msgid "Donation exports"
 msgstr "Donation exports"
 
-#: redirectioneaza/settings/unfold.py:53 redirectioneaza/settings/unfold.py:56
+#: redirectioneaza/settings/unfold.py:53
+#, fuzzy
+#| msgid "Frequently Asked Questions"
+msgid "Frequently asked questions"
+msgstr "Frequently Asked Questions"
+
+#: redirectioneaza/settings/unfold.py:70 redirectioneaza/settings/unfold.py:73
 #: users/apps.py:8
 msgid "Users"
 msgstr "Users"
 
-#: redirectioneaza/settings/unfold.py:62 users/models.py:209
+#: redirectioneaza/settings/unfold.py:79 users/models.py:209
 msgid "Groups"
 msgstr "Groups"
 
-#: redirectioneaza/settings/unfold.py:70
+#: redirectioneaza/settings/unfold.py:87
 msgid "Django Q"
 msgstr "Django Q"
 
-#: redirectioneaza/settings/unfold.py:73
+#: redirectioneaza/settings/unfold.py:90
 msgid "Failed tasks"
 msgstr "Failed tasks"
 
-#: redirectioneaza/settings/unfold.py:79
+#: redirectioneaza/settings/unfold.py:96
 msgid "Queued tasks"
 msgstr "Queued tasks"
 
-#: redirectioneaza/settings/unfold.py:85
+#: redirectioneaza/settings/unfold.py:102
 msgid "Scheduled tasks"
 msgstr "Scheduled tasks"
 
-#: redirectioneaza/settings/unfold.py:91
+#: redirectioneaza/settings/unfold.py:108
 msgid "Successful tasks"
 msgstr "Successful tasks"
+
+#: templates/v2/account/components/email-input.html:6
+msgid "Email address"
+msgstr "Email address"
 
 #: templates/v2/account/errors/login/app_missing.html:5
 msgid "Application not activated"
@@ -915,65 +970,160 @@ msgstr ""
 msgid "Send"
 msgstr ""
 
-#: templates/v2/account/snippets/classic-login.html:11
+#: templates/v2/account/snippets/classic-login.html:12
 msgid "Login with email & password"
 msgstr "Login with email & password"
 
-#: templates/v2/account/snippets/classic-login.html:17
-#, fuzzy
-#| msgid ""
-#| "Login for organizations that don't fit the definitions in the NGO Law — "
-#| "26/2000"
-msgid "Login for organizations that don't have an NGO Hub account"
+#: templates/v2/account/snippets/classic-login.html:18
+msgid ""
+"If your organization doesn't have an account on NGO Hub, you can log in to "
+"redirectioneaza.ro using the same login details as in previous years."
 msgstr ""
-"Login for organizations that don't fit the definitions in the NGO Law — "
-"26/2000"
+
+#: templates/v2/account/snippets/classic-login.html:23
+msgid ""
+"You can choose to create an account on NGO Hub at any time, without losing "
+"the data and forms collected in previous years."
+msgstr ""
 
 #: templates/v2/account/snippets/errors.html:6
 msgid "Error!"
 msgstr "Error!"
 
-#: templates/v2/account/snippets/register-form.html:4
+#: templates/v2/account/snippets/register-form.html:9
 #, fuzzy
-#| msgid "Clean up registration numbers"
-msgid "Classic registration"
-msgstr "Clean up registration numbers"
+#| msgid "Login through NGO Hub"
+msgid "Register without NGO Hub"
+msgstr "Login through NGO Hub"
 
-#: templates/v2/account/snippets/third-party.html:7
+#: templates/v2/account/snippets/register-form.html:15
+msgid ""
+"You can use redirectioneaza.ro without having an account in NGO Hub. "
+"Register by filling out the form below."
+msgstr ""
+
+#: templates/v2/account/snippets/register-form.html:31
+#, fuzzy
+#| msgid "first name"
+msgid "First name"
+msgstr "first name"
+
+#: templates/v2/account/snippets/register-form.html:44
+#, fuzzy
+#| msgid "last name"
+msgid "Last name"
+msgstr "last name"
+
+#: templates/v2/account/snippets/register-form.html:59
+#, fuzzy
+#| msgid "old password"
+msgid "Password"
+msgstr "old password"
+
+#: templates/v2/account/snippets/register-form.html:72
+#, fuzzy
+#| msgid "old password"
+msgid "Confirm password"
+msgstr "old password"
+
+#: templates/v2/account/snippets/register-form.html:101
+msgid "I agree with"
+msgstr ""
+
+#: templates/v2/account/snippets/register-form.html:103
+msgid "the terms of the platform"
+msgstr ""
+
+#: templates/v2/account/snippets/third-party.html:4
+msgid "Go to account"
+msgstr "Go to account"
+
+#: templates/v2/account/snippets/third-party.html:8
 #, fuzzy
 #| msgid "To access your account, you need to authenticate through NGO Hub."
 msgid "Access your account through NGO Hub"
 msgstr "To access your account, you need to authenticate through NGO Hub."
 
-#: templates/v2/account/snippets/third-party.html:28
+#: templates/v2/account/snippets/third-party.html:32
 msgid "To access your account, you need to authenticate through NGO Hub."
 msgstr "To access your account, you need to authenticate through NGO Hub."
 
 #: templates/v2/account/snippets/third-party.html:37
-#, fuzzy, python-format
-#| msgid ""
-#| "Click the \"Go to account\" button and you will be redirected to the page "
-#| "where you need to authenticate using your NGO Hub credentials."
 msgid ""
-"To access your account, click the <strong>%(account_button)s</strong> button "
-"and you will be able to enter the platform using your NGO Hub credentials."
+"If you're a non-profit organization, you can benefit from all the solutions "
+"in the NGO-dedicated ecosystem through NGO Hub. To access redirectioneaza.ro "
+"through your NGO Hub account, make sure:"
 msgstr ""
-"Click the \"Go to account\" button and you will be redirected to the page "
-"where you need to authenticate using your NGO Hub credentials."
 
-#: templates/v2/account/snippets/third-party.html:46
-msgid "After authentication, you will be redirected to your account."
-msgstr "After authentication, you will be redirected to your account."
+#: templates/v2/account/snippets/third-party.html:56
+msgid "You have an active account in NGO Hub"
+msgstr ""
 
-#: templates/v2/components/email-input.html:6
-msgid "Email address"
-msgstr "Email address"
+#: templates/v2/account/snippets/third-party.html:58
+#, fuzzy
+#| msgid "Login through NGO Hub"
+msgid "Register your organization in NGO Hub"
+msgstr "Login through NGO Hub"
 
-#: templates/v2/socialaccount/login.html:28
+#: templates/v2/account/snippets/third-party.html:63
+msgid ""
+"If you don't have an account in NGO Hub, you can create one for free. Learn "
+"more about the benefits of NGO Hub"
+msgstr ""
+
+#: templates/v2/account/snippets/third-party.html:68
+msgid "here"
+msgstr ""
+
+#: templates/v2/account/snippets/third-party.html:87
+msgid "You have activated the Redirecționează platform in your NGO Hub account"
+msgstr ""
+
+#: templates/v2/account/snippets/third-party.html:90
+msgid "Activate the Redirecționează application in your NGO Hub account"
+msgstr ""
+
+#: templates/v2/account/snippets/third-party.html:97
+msgid ""
+"Check with your organization's administrator if access to this platform is "
+"correctly configured."
+msgstr ""
+
+#: templates/v2/account/snippets/third-party.html:100
+msgid ""
+"Look for the Redirecționează application in the All applications section. It "
+"is one of the many applications offered for free to non-profit organizations "
+"in Romania."
+msgstr ""
+
+#: templates/v2/account/snippets/third-party.html:120
+msgid ""
+"You have access permission from the organization's administrator in NGO Hub"
+msgstr ""
+
+#: templates/v2/account/snippets/third-party.html:123
+#, fuzzy
+#| msgid "To access your account, you need to authenticate through NGO Hub."
+msgid "Give access to your colleagues in NGO Hub"
+msgstr "To access your account, you need to authenticate through NGO Hub."
+
+#: templates/v2/account/snippets/third-party.html:130
+msgid ""
+"Check with your organization's administrator if they have given you access "
+"to the Redirecționează application."
+msgstr ""
+
+#: templates/v2/account/snippets/third-party.html:133
+msgid ""
+"In NGO Hub, each of your colleagues can have their own account. Make sure "
+"you give your colleagues access to the applications they work with every day."
+msgstr ""
+
+#: templates/v2/socialaccount/login.html:31
 msgid "Redirecting to authentication..."
 msgstr "Redirecting to authentication..."
 
-#: templates/v2/socialaccount/login.html:34
+#: templates/v2/socialaccount/login.html:47
 msgid "or click here to sign in"
 msgstr "or click here to sign in"
 
@@ -1044,6 +1194,45 @@ msgstr "old password"
 #: users/models.py:208
 msgid "Group"
 msgstr "Group"
+
+#, fuzzy
+#~| msgid "Clean up registration numbers"
+#~ msgid "Classic registration"
+#~ msgstr "Clean up registration numbers"
+
+#, fuzzy, python-format
+#~| msgid ""
+#~| "Click the \"Go to account\" button and you will be redirected to the "
+#~| "page where you need to authenticate using your NGO Hub credentials."
+#~ msgid ""
+#~ "To access your account, click the <strong>%(account_button)s</strong> "
+#~ "button and you will be able to enter the platform using your NGO Hub "
+#~ "credentials."
+#~ msgstr ""
+#~ "Click the \"Go to account\" button and you will be redirected to the page "
+#~ "where you need to authenticate using your NGO Hub credentials."
+
+#~ msgid "After authentication, you will be redirected to your account."
+#~ msgstr "After authentication, you will be redirected to your account."
+
+#, fuzzy
+#~| msgid "NGOs"
+#~ msgid "For NGOs"
+#~ msgstr "NGOs"
+
+#, fuzzy
+#~| msgid "donors"
+#~ msgid "For Donors"
+#~ msgstr "donors"
+
+#, fuzzy
+#~| msgid ""
+#~| "Login for organizations that don't fit the definitions in the NGO Law — "
+#~| "26/2000"
+#~ msgid "Login for organizations that don't have an NGO Hub account"
+#~ msgstr ""
+#~ "Login for organizations that don't fit the definitions in the NGO Law — "
+#~ "26/2000"
 
 #~ msgid "sign up"
 #~ msgstr "sign up"
