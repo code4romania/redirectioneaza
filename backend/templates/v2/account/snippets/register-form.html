@@ -53,31 +53,12 @@
 
       {% include "account/components/email-input.html" %}
 
-      <div>
-        <label>
-      <span class="block text-sm/6 font-medium text-gray-900 mb-2">
-        {% trans "Password" %}
-      </span>
-          <input
-            type="password"
-            name="password"
-            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-400 sm:text-sm/6"
-            required>
-        </label>
-      </div>
+      {% trans "Password" as password_label %}
+      {% trans "Confirm password" as password_confirm_label %}
 
-      <div>
-        <label>
-      <span class="block text-sm/6 font-medium text-gray-900 mb-2">
-        {% trans "Confirm password" %}
-      </span>
-          <input
-            type="password"
-            name="password_confirm"
-            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-400 sm:text-sm/6"
-            required>
-        </label>
-      </div>
+      {% include "account/components/password-input.html" with field_label=password_label input_name="password" password_type="new" %}
+
+      {% include "account/components/password-input.html" with field_label=password_confirm_label input_name="password_confirm" password_type="new" %}
 
       <div class="space-y-5">
         <div class="flex gap-3">
