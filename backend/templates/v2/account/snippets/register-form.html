@@ -2,15 +2,15 @@
 
 <form id='register-form' action="/cont-nou/" role="form" method="post">
   <div class="text-center">
-    <header class="flex flex-col justify-center items-center">
-      <img src="{% static 'images/logo-smaller.png' %}" alt="Redirectioneaza logo" class="h-24 w-auto mb-6"/>
+    <header class="flex flex-col items-center justify-center">
+      <img src="{% static 'images/logo-smaller.png' %}" alt="Redirectioneaza logo" class="w-auto h-24 mb-6"/>
 
-      <h1 class="text-center text-gray-900 text-3xl font-bold leading-9 mb-2">
+      <h1 class="mb-2 text-3xl font-bold leading-9 text-center text-gray-900">
         {% trans "Register without NGO Hub" %}
       </h1>
     </header>
 
-    <div class="prose mb-6 text-gray-700 font-medium">
+    <div class="mb-6 font-medium prose text-gray-700">
       <p>
         {% blocktrans trimmed %}
           You can use redirectioneaza.ro without having an account in NGO Hub.
@@ -22,12 +22,12 @@
 
   {% csrf_token %}
 
-  <div class="overflow-hidden rounded-lg bg-white drop-shadow ring-1 ring-gray-200">
-    <div class="px-10 py-8 grid gap-6">
+  <div class="overflow-hidden rounded-lg bg-white drop-shadow ring-1 ring-gray-200 max-w-[448px] mx-auto">
+    <div class="grid gap-6 px-10 py-8">
 
       <div>
         <label>
-      <span class="block text-sm/6 font-medium text-gray-900 mb-2">
+      <span class="block mb-2 font-medium text-gray-900 text-sm/6">
         {% trans "First name" %}
       </span>
           <input
@@ -40,7 +40,7 @@
 
       <div>
         <label>
-      <span class="block text-sm/6 font-medium text-gray-900 mb-2">
+      <span class="block mb-2 font-medium text-gray-900 text-sm/6">
         {% trans "Last name" %}
       </span>
           <input
@@ -62,14 +62,14 @@
 
       <div class="space-y-5">
         <div class="flex gap-3">
-          <div class="flex h-6 shrink-0 items-center">
-            <div class="group grid size-4 grid-cols-1">
+          <div class="flex items-center h-6 shrink-0">
+            <div class="grid grid-cols-1 group size-4">
               <input
                 id="agree"
                 name="agree"
                 type="checkbox"
                 required
-                class="col-start-1 row-start-1 appearance-none rounded border border-gray-300 bg-white checked:border-amber-300 checked:bg-amber-300 indeterminate:border-amber-300 indeterminate:bg-amber-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto">
+                class="col-start-1 row-start-1 bg-white border border-gray-300 rounded appearance-none checked:border-amber-300 checked:bg-amber-300 indeterminate:border-amber-300 indeterminate:bg-amber-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto">
               <svg class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-[:disabled]:stroke-gray-950/25" viewBox="0 0 14 14" fill="none">
                 <path class="opacity-0 group-has-[:checked]:opacity-100" d="M3 8L6 11L11 3.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                 <path class="opacity-0 group-has-[:indeterminate]:opacity-100" d="M3 7H11" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -78,9 +78,9 @@
           </div>
           <div class="text-sm/6">
             <label for="agree" class="font-medium text-gray-900">
-              <span class="block text-sm/6 font-medium text-gray-900 mb-2">
+              <span class="block mb-2 font-medium text-gray-900 text-sm/6">
               {% trans "I agree with" %}
-              <a href="{% url 'terms' %}" class="text-cyan-700 font-semibold">
+              <a href="{% url 'terms' %}" class="font-semibold text-cyan-700">
                 {% trans "the terms of the platform" %}
               </a>.
             </span>
@@ -91,7 +91,7 @@
 
       <button
         type="submit"
-        class="w-full text-center bg-amber-300 sm:text-base text-sm sm:px-6 sm:py-2 px-2 py-1 shadow-sm rounded-full text-gray-900 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
+        class="w-full px-2 py-1 text-sm text-center text-gray-900 rounded-full shadow-sm bg-amber-300 sm:text-base sm:px-6 sm:py-2 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
         Intră în cont
       </button>
     </div>

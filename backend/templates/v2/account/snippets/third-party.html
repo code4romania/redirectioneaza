@@ -17,106 +17,77 @@
 {% endif %}
 
 <section class="">
-  <header class="flex flex-col justify-center items-center">
-    <img src="{% static 'images/hub.png' %}" alt="NGO Hub logo" class="h-24 w-auto mb-6"/>
+  <header class="flex flex-col items-center justify-center">
+    <img src="{% static 'images/hub.png' %}" alt="NGO Hub logo" class="w-auto h-24 mb-6"/>
 
-    <h1 class="text-center text-gray-900 text-3xl font-bold leading-9 mb-2">
+    <h1 class="mb-2 text-3xl font-extrabold leading-9 text-center text-gray-900">
       {{ section_title }}
     </h1>
   </header>
 
-  <div class="prose">
-
+  <div class="font-medium prose text-center prose-p:text-gray-700">
     {% if SOCIALACCOUNT_ONLY %}
       <p id="login-subtitle">
         {% trans "To access your account, you need to authenticate through NGO Hub." %}
       </p>
     {% endif %}
 
-    <p class="text-center font-semibold">
+    <p>
       {% blocktrans trimmed %}
         If you're a non-profit organization, you can benefit from all the solutions in the NGO-dedicated ecosystem through NGO Hub.
         To access redirectioneaza.ro through your NGO Hub account, make sure:
       {% endblocktrans %}
     </p>
+  </div>
 
-    <div class="text-left text-base text-gray-500">
-      <div>
-        {% comment %}
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" color="#0E7490" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"></path>
-          </svg>
-        {% endcomment %}
-
-        <div>
-          <p>
-            <strong>
-              {% if page_type == "login" %}
-                {% trans "You have an active account in NGO Hub" %}
-              {% else %}
-                {% trans "Register your organization in NGO Hub" %}
-              {% endif %}
-            </strong>
-          </p>
-          <p>
-            {% blocktrans trimmed %}
-              If you don't have an account in NGO Hub, you can create one for free.
-              Learn more about the benefits of NGO Hub
-            {% endblocktrans %}
-            <a class="text-cyan-700 text-base font-normal" href="{{ ngohub_site }}">
-              {% trans "here" %}
-            </a>.
-          </p>
-        </div>
+  <div class="mx-auto mt-8 max-w-[368px]">
+    <dl class="grid gap-8 text-gray-500 text-base/7">
+      <div class="relative pl-9">
+        <dt class="font-medium text-gray-900">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="absolute left-0 text-cyan-700 top-1 size-5"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+          {% if page_type == "login" %}
+            {% trans "You have an active account in NGO Hub" %}
+          {% else %}
+            {% trans "Register your organization in NGO Hub" %}
+          {% endif %}
+        </dt>
+        <dd class="mt-2">
+          {% blocktrans trimmed %}
+            If you don't have an account in NGO Hub, you can create one for free.
+            Learn more about the benefits of NGO Hub
+          {% endblocktrans %}
+          <a class="text-base font-normal text-cyan-700" href="{{ ngohub_site }}">{% trans "here" %}</a>.
+        </dd>
       </div>
 
-      <div>
-        {% comment %}
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" color="#0E7490" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"></path>
-          </svg>
-        {% endcomment %}
-
-        <div>
-          <p>
-            <strong>
-              {% if page_type == "login" %}
-                {% trans "You have activated the Redirecționează platform in your NGO Hub account" %}
-              {% else %}
-
-                {% trans "Activate the Redirecționează application in your NGO Hub account" %}
-              {% endif %}
-            </strong>
-          </p>
-          <p>
-            {% if page_type == "login" %}
-              {% trans "Check with your organization's administrator if access to this platform is correctly configured." %}
-            {% else %}
-              {% trans "Look for the Redirecționează application in the All applications section. It is one of the many applications offered for free to non-profit organizations in Romania." %}
-            {% endif %}
-          </p>
-        </div>
+      <div class="relative pl-9">
+        <dt class="font-semibold text-gray-900">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="absolute left-0 text-cyan-700 top-1 size-5"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+          {% if page_type == "login" %}
+            {% trans "You have activated the Redirecționează platform in your NGO Hub account" %}
+          {% else %}
+            {% trans "Activate the Redirecționează application in your NGO Hub account" %}
+          {% endif %}
+        </dt>
+        <dd class="mt-2">
+          {% if page_type == "login" %}
+            {% trans "Check with your organization's administrator if access to this platform is correctly configured." %}
+          {% else %}
+            {% trans "Look for the Redirecționează application in the All applications section. It is one of the many applications offered for free to non-profit organizations in Romania." %}
+          {% endif %}
+        </dd>
       </div>
-    </div>
 
-    <div>
-      {% comment %}
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" color="#0E7490" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-6">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"></path>
-        </svg>
-      {% endcomment %}
-
-      <div>
-        <p>
-          <strong>
-            {% if page_type == "login" %}
-              {% trans "You have access permission from the organization's administrator in NGO Hub" %}
-            {% else %}
-              {% trans "Give access to your colleagues in NGO Hub" %}
-            {% endif %}
-          </strong>
-        </p>
-        <p>
+      <div class="relative pl-9">
+        <dt class="font-semibold text-gray-900">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="absolute left-0 text-cyan-700 top-1 size-5"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+          {% if page_type == "login" %}
+            {% trans "You have access permission from the organization's administrator in NGO Hub" %}
+          {% else %}
+            {% trans "Give access to your colleagues in NGO Hub" %}
+          {% endif %}
+        </dt>
+        <dd class="mt-2">
           {% if page_type == "login" %}
             {% trans "Check with your organization's administrator if they have given you access to the Redirecționează application." %}
           {% else %}
@@ -126,19 +97,19 @@
           {% comment %}
             {% trans "Read more in the User Guide" %}
           {% endcomment %}
-        </p>
+        </dd>
       </div>
-    </div>
-  </div>
+    </dl>
 
-  <div id="allauth-login-form-container" class="flex justify-stretch mt-6">
-    <a
-      class="w-full text-center bg-amber-300 sm:text-base text-sm sm:px-6 sm:py-2 px-2 py-1 shadow-sm rounded-full text-gray-900 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
-      href="{{ form_action }}"
-      {% if account_button_is_external %}target="_blank"{% endif %}
-    >
-      {{ account_button }}
-    </a>
+    <div id="allauth-login-form-container" class="flex mt-6 justify-stretch">
+      <a
+        class="w-full px-2 py-1 text-sm text-center text-gray-900 rounded-full shadow-sm bg-amber-300 sm:text-base sm:px-6 sm:py-2 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
+        href="{{ form_action }}"
+        {% if account_button_is_external %}target="_blank"{% endif %}
+      >
+        {{ account_button }}
+      </a>
+    </div>
   </div>
 </section>
 
