@@ -1,5 +1,6 @@
 import logging
 from datetime import date
+from typing import Dict, List
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
@@ -25,6 +26,16 @@ from ..workers.update_organization import update_organization
 from .base import BaseTemplateView
 
 logger = logging.getLogger(__name__)
+
+
+def get_ngo_response_item(ngo) -> Dict:
+    return {
+        "name": ngo.name,
+        "url": reverse("twopercent", kwargs={"ngo_url": ngo.slug}),
+        "logo": ngo.logo.url if ngo.logo else None,
+        "active_region": ngo.active_region,
+        "description": ngo.description,
+    }
 
 
 class UpdateFromNgohub(BaseTemplateView):
@@ -116,15 +127,7 @@ class NgosApi(TemplateView):
             if not ngo.slug:
                 continue
 
-            response.append(
-                {
-                    "name": ngo.name,
-                    "url": reverse("twopercent", kwargs={"ngo_url": ngo.slug}),
-                    "logo": ngo.logo.url if ngo.logo else None,
-                    "active_region": ngo.active_region,
-                    "description": ngo.description,
-                }
-            )
+            response.append(get_ngo_response_item(ngo))
 
         return JsonResponse(response, safe=False)
 
@@ -166,20 +169,12 @@ class SearchNgosApi(TemplateView):
             .distinct("name")
         )
 
-        response = []
+        response: List[Dict] = []
         for ngo in ngos:
             if not ngo.slug:
                 continue
 
-            response.append(
-                {
-                    "name": ngo.name,
-                    "url": reverse("twopercent", kwargs={"ngo_url": ngo.slug}),
-                    "logo": ngo.logo.url if ngo.logo else None,
-                    "active_region": ngo.active_region,
-                    "description": ngo.description,
-                }
-            )
+            response.append(get_ngo_response_item(ngo))
 
         return JsonResponse(response, safe=False)
 
