@@ -1,64 +1,62 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <div class="container">
-    <div class="bg-white">
-      <div class="mx-auto max-w-7xl px-6 lg:px-8">
-        <div class="mx-auto max-w-4xl">
+  <div class="container max-w-4xl">
+    <article class="prose prose-lg max-w-none prose-headings:text-cyan-700 prose-cyan">
+      <h1>
+        Despre redirectioneaza.ro
+      </h1>
 
-          <h1 class="font-semibold tracking-tight text-gray-900 sm:text-5xl pb-10">
-            Despre redirectioneaza.ro
-          </h1>
+      <p>
+        În fiecare an, orice cetățean poate alege să redirecționeze
+        <strong>3.5% din impozitul</strong>
+        pe venit către o cauză în care crede și pe care vrea să o susțină.
+        Cu toate astea, majoritatea nu o fac niciodată din două motive:
+        un proces greoi și lipsa informațiilor centralizate cu privire la ONG-urile pe care le-ar putea susține.
+      </p>
+      <p>
+        Dacă toți angajații din România ar completa acest formular,
+        după un calcul simplu,
+        ținând cont de salariul mediu brut,
+        anual s-ar putea redirecționa către organizațiile non-profit
+        <strong>peste 200 milioane de euro</strong>.
+        Împreună putem face asta să se întâmple.
+      </p>
+      <p>
+        Mai mult, și ONG-urile se confruntă cu dificultatea
+        de a transmite mesajul legat de redirecționare către audiențe foarte largi,
+        într-un mod simplu, fără consum de resurse suplimentare.
+      </p>
+      <p>
+        Redirectioneaza.ro conține informații despre peste 5.000 de ONG-uri
+        care pot fi susținute prin simpla redirecționare a 3.5% din impozitul pe venit.
+        Prin digitalizarea formularului #230 eliminăm nevoia unui contact direct
+        dintre organizații și susținători, economisind timp și resurse cheltuite pe acțiuni publice offline.
+      </p>
 
-          <div class="prose text-xl">
-            <p>
-              În fiecare an, orice cetățean poate alege să redirecționeze
-              <strong>3.5% din impozitul</strong>
-              pe venit către o cauză în care crede și pe care vrea să o susțină.
-              Cu toate astea, majoritatea nu o fac niciodată din două motive:
-              un proces greoi și lipsa informațiilor centralizate cu privire la ONG-urile pe care le-ar putea susține.
-            </p>
-            <p>
-              Dacă toți angajații din România ar completa acest formular,
-              după un calcul simplu,
-              ținând cont de salariul mediu brut,
-              anual s-ar putea redirecționa către organizațiile non-profit
-              <strong>peste 200 milioane de euro</strong>.
-              Împreună putem face asta să se întâmple.
-            </p>
-            <p>
-              Mai mult, și ONG-urile se confruntă cu dificultatea
-              de a transmite mesajul legat de redirecționare către audiențe foarte largi,
-              într-un mod simplu, fără consum de resurse suplimentare.
-            </p>
-            <p>
-              Redirectioneaza.ro conține informații despre peste 5.000 de ONG-uri
-              care pot fi susținute prin simpla redirecționare a 3.5% din impozitul pe venit.
-              Prin digitalizarea formularului #230 eliminăm nevoia unui contact direct
-              dintre organizații și susținători, economisind timp și resurse cheltuite pe acțiuni publice offline.
-            </p>
-            <p>
-              Redirectioneaza.ro este dezvoltat de Code for Romania,
-              organizație neguvernamentală independentă, neafiliată politic și apolitică.
-              Code for Romania este un grup de peste
-              <strong>3.000 de voluntari</strong>
-              români din țară și din diaspora care construiesc soluții digitale
-              pentru a rezolva blocaje si probleme sociale ale României.
-            </p>
-            <p>
-              Pentru a ține proiecte ca acesta în viață și pentru a susține crearea unor noi aplicații de acest fel,
-              puteți susține Code for Romania cu
-              <a href="https://code4.ro/ro/doneaza/" target="_blank" rel="noreferrer noopener">donație recurentă</a>.
-              Cel mai simplu, puteți dona 4 Euro lunar pentru Code for Romania trimițând prin SMS cuvântul PUTEM la 8864.
-              Orice ajutor contează în efortul nostru de a face din România un loc mai bun.
-            </p>
-            <p class="text-2xl font-semibold">
-              Proiect realizat prin implicarea voluntarilor Code for Romania.
-            </p>
-          </div>
+      <h2>
+        Despre Code for Romania
+      </h2>
+      <p>
+        Redirectioneaza.ro este dezvoltat de Code for Romania,
+        organizație neguvernamentală independentă, neafiliată politic și apolitică.
+        Code for Romania este un grup de peste
+        <strong>3.000 de voluntari</strong>
+        români din țară și din diaspora care construiesc soluții digitale
+        pentru a rezolva blocaje si probleme sociale ale României.
+      </p>
+      <p>
+        Pentru a ține proiecte ca acesta în viață și pentru a susține crearea unor noi aplicații de acest fel,
+        puteți susține Code for Romania cu
+        <a href="https://code4.ro/ro/doneaza/" target="_blank" rel="noreferrer noopener">donație recurentă</a>.
+        Cel mai simplu, puteți dona 4 Euro lunar pentru Code for Romania trimițând prin SMS cuvântul PUTEM la 8864.
+        Orice ajutor contează în efortul nostru de a face din România un loc mai bun.
+      </p>
 
-        </div>
-      </div>
-    </div>
+      <p><strong>Proiect realizat prin implicarea voluntarilor Code for Romania.</strong></p>
+    </article>
+
   </div>
+
+  {% include "account/snippets/cta-ngohub.html" %}
 {% endblock %}
