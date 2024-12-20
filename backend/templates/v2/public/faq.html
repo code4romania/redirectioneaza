@@ -2,53 +2,41 @@
 
 {% block content %}
 
-  <div class="container">
-    <div class="bg-white">
-      <div class="mx-auto max-w-7xl px-6 lg:px-8">
-        <div class="mx-auto max-w-4xl">
+  <div class="container max-w-4xl">
+    <article>
+      <div class="prose prose-lg max-w-none prose-headings:text-cyan-700 prose-cyan">
+        <h1>FAQ – Întrebări frecvente</h1>
+      </div>
 
-          <h1 class="font-semibold tracking-tight text-gray-900 sm:text-5xl">
-            FAQ – Întrebări frecvente
-          </h1>
+      {% for section in questions %}
+        <div>
+          <h2
+            id="#{{ section.title | slugify }}"
+            class="pt-10 font-semibold tracking-tight text-gray-900 sm:text-3xl">
 
-          {% for section in questions %}
-            <div>
+            <a href="#{{ section.title | slugify }}" class="group">
+              {{ section.title }}
+            </a>
+          </h2>
 
-              <h2
-                id="#{{ section.title | slugify }}"
-                class="font-semibold tracking-tight text-gray-900 sm:text-3xl pt-10">
-
-                <a href="#{{ section.title | slugify }}" class="group">
-                  {{ section.title }}
-                </a>
-              </h2>
-
-              <dl class="mt-10 space-y-6">
-                {% for question in section.questions %}
-                  <div class="pt-6">
-                    {% include "public/components/faq-question.html" with question=question.title answer=question.answer %}
-                  </div>
-                {% endfor %}
-              </dl>
-
-            </div>
-          {% endfor %}
-
-          <div class="pb-10 pt-20 prose">
-            <h2
-              class="font-semibold tracking-tight text-gray-900 sm:text-3xl">
-              Nu ai găsit ce căutai?
-            </h2>
-
-            <p class="text-xl">
-              Trimite-ne întrebarea ta la adresa de email
-              <a href="mailto:{{ contact_email }}">{{ contact_email }}</a>
-              și vom răspunde în cel mai scurt timp posibil.
-            </p>
-          </div>
+          <dl class="grid gap-6 mt-8">
+            {% for question in section.questions %}
+              {% include "public/components/faq-question.html" with question=question.title answer=question.answer %}
+            {% endfor %}
+          </dl>
 
         </div>
+      {% endfor %}
+
+      <div class="pt-20 pb-10 prose-sm prose prose-headings:text-cyan-700 prose-cyan">
+        <h2> Nu ai găsit ce căutai? </h2>
+
+        <p>
+          Trimite-ne întrebarea ta la adresa de email
+          <a href="mailto:{{ contact_email }}">{{ contact_email }}</a>
+          și vom răspunde în cel mai scurt timp posibil.
+        </p>
       </div>
-    </div>
+    </article>
   </div>
 {% endblock %}

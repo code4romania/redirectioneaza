@@ -6,40 +6,25 @@
     <button
       @click="expanded = !expanded"
       type="button"
-      class="flex w-full items-start justify-between text-left text-gray-900"
-      aria-controls="faq-0"
-      aria-expanded="false">
+      class="flex items-start justify-between w-full text-left text-gray-900"
+      :aria-expanded="expanded">
 
-      <span
-        class="text-base/7 font-semibold">
+      <span class="font-semibold text-base/7">
         {{ question }}
       </span>
 
-      <span
-        class="ml-6 flex h-7 items-center">
-
-        <!-- Icon when question is collapsed. Item expanded: "hidden", Item collapsed: "" -->
+      <span class="flex items-center ml-6 h-7">
         <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6"></path>
+          <path x-show="!expanded" stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6"></path>
+          <path x-show="expanded" stroke-linecap="round" stroke-linejoin="round" d="M18 12H6"></path>
         </svg>
-
-        <!-- Icon when question is expanded. Item expanded: "", Item collapsed: "hidden" -->
-        <svg class="hidden size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M18 12H6"></path>
-        </svg>
-
       </span>
     </button>
   </dt>
 
-  <dd
-    class="mt-2 pr-12"
-    x-show="expanded">
-
-    <div
-      class="text-base/7 text-gray-600">
+  <dd class="pr-12 mt-2" x-show="expanded">
+    <div class="text-gray-600 text-base/7">
       {{ answer|safe }}
     </div>
   </dd>
-
 </div>
