@@ -143,7 +143,8 @@ class SearchNgosApi(TemplateView):
         return SearchVector("name", weight="A")
 
     def get(self, request, *args, **kwargs):
-        query = request.GET.get("query", "")
+        query = request.GET.get("q", "")
+
         if not query:
             return JsonResponse([], safe=False)
 
