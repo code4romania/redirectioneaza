@@ -1,0 +1,38 @@
+<section class="container">
+  <header class="prose">
+      <h1 class="mb-0">Explorează ONG-uri</h1>
+      <p>Alege asociația către care vrei să redirecționezi!</p>
+  </header>
+
+  <div class="grid gap-8 my-12 sm:grid-cols-2 lg:grid-cols-4">
+    {% for i in "1234"|make_list %}
+      <article class="relative flex flex-col items-center justify-start gap-6 pb-6 overflow-hidden bg-white border border-gray-200 rounded-3xl">
+        <div class="w-full px-3 py-4 shrink-0">
+          <div class="aspect-w-3 aspect-h-2">
+            <img class="object-contain w-full" src="https://via.placeholder.com/213x188" alt="">
+          </div>
+        </div>
+
+        <div class="flex flex-col items-start self-stretch justify-start flex-1 gap-4 px-6">
+          <h1 class="text-lg font-medium">
+            <a href="#" class="text-cyan-700 hover:underline focus:underline focus:outline-none">
+              <span class="line-clamp-2">Fundatia Prison fellowship ROMÂNIA</span>
+              <span class="absolute inset-0"></span>
+            </a>
+          </h1>
+
+          <div class="text-gray-600 line-clamp-6">Lorem ipsum sg nospa. Suntem o Asociatie creata de oameni dragi noua, initial pentru a veni in sprijinul nostru, parinti de copil cu leucemie si sustinător. Lorem ipsum sg nospa. Adus...</div>
+        </div>
+      </article>
+    {% endfor %}
+  </div>
+
+  <div>
+    <a
+      class="w-full px-2 py-1 text-sm text-center text-gray-900 rounded-full shadow-sm bg-amber-300 sm:text-base sm:px-6 sm:py-2 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
+      href="#"
+    >
+      Vezi toate organizațiile
+    </a>
+  </div>
+</section>
