@@ -69,10 +69,10 @@ class HomePage(TemplateView):
 
 
 class AboutHandler(TemplateView):
-    template_name = "despre.html"
+    template_name = "public/about.html"
 
     def get(self, request, *args, **kwargs):
-        context = {"title": "Despre Redirectioneaza.ro"}
+        context = {"title": "Despre redirectioneaza.ro"}
         return render(request, self.template_name, context)
 
 
