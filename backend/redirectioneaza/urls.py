@@ -40,7 +40,15 @@ from donations.views.admin import (
     AdminNgosListByName,
     UserAccounts,
 )
-from donations.views.api import CheckNgoUrl, GetNgoForm, GetNgoForms, GetUploadUrl, NgosApi, UpdateFromNgohub
+from donations.views.api import (
+    CheckNgoUrl,
+    GetNgoForm,
+    GetNgoForms,
+    GetUploadUrl,
+    NgosApi,
+    SearchNgosApi,
+    UpdateFromNgohub,
+)
 from donations.views.cron import CustomExport, NgoExport, NgoRemoveForms, Stats
 from donations.views.my_account import (
     ArchiveDownloadLinkView,
@@ -125,7 +133,9 @@ urlpatterns = (
         #
         path("api/ngo/upload-url/", GetUploadUrl.as_view(), name="api-ngo-upload-url"),
         path("api/ngo/form/<ngo_url>/", GetNgoForm.as_view(), name="api-ngo-form-url"),
-        path("api/ngo/forms/download/", GetNgoForms.as_view(), name="api-ngo-forms"),
+        path("api/ngo/forms/download/", SearchNgosApi.as_view(), name="search-ngos"),
+        #
+        path("api/search/", GetNgoForms.as_view(), name="api-ngo-forms"),
         # Cron routes
         path("cron/stats/", Stats.as_view(), name="cron-stats"),
         path("cron/ngos/remove-form/", NgoRemoveForms.as_view(), name="cron-ngo-remove-form"),
