@@ -154,7 +154,7 @@ class LogoutView(BaseVisibleTemplateView):
 
 
 class SetPasswordView(BaseVisibleTemplateView):
-    template_name = "parola-noua.html"
+    template_name = "account/set-password.html"
     title = _("Set New Password")
 
     def post(self, request, *args, **kwargs):
@@ -279,7 +279,7 @@ class VerificationView(BaseVisibleTemplateView):
         p - reset user password
     """
 
-    template_name = "parola-noua.html"
+    template_name = "account/set-password.html"
     title = _("Verification")
 
     def get(self, request, *args, **kwargs):
