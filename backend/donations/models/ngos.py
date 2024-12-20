@@ -208,7 +208,7 @@ class Ngo(models.Model):
 
     # originally: accepts_forms
     # if the ngo accepts to receive donation forms through email
-    is_accepting_forms = models.BooleanField(verbose_name=_("is accepting forms"), db_index=True, default=False)
+    is_accepting_forms = models.BooleanField(verbose_name=_("is accepting forms"), db_index=True, default=True)
 
     # originally: active — the user cannot modify this property, it is set by the admin/by the NGO Hub settings
     is_active = models.BooleanField(verbose_name=_("is active"), db_index=True, default=True)

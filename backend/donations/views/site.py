@@ -6,7 +6,6 @@ from django.db.models import QuerySet
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.utils import timezone
-from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 
 from partners.models import DisplayOrderingChoices
@@ -17,7 +16,7 @@ from ..models.ngos import ALL_NGO_IDS_CACHE_KEY, ALL_NGOS_CACHE_KEY, FRONTPAGE_N
 
 
 class HomePage(TemplateView):
-    template_name = "index.html"
+    template_name = "public/home.html"
 
     @staticmethod
     @cache_decorator(timeout=settings.TIMEOUT_CACHE_LONG, cache_key_prefix=ALL_NGO_IDS_CACHE_KEY)
@@ -70,10 +69,10 @@ class HomePage(TemplateView):
 
 
 class AboutHandler(TemplateView):
-    template_name = "despre.html"
+    template_name = "public/about.html"
 
     def get(self, request, *args, **kwargs):
-        context = {"title": "Despre Redirectioneaza.ro"}
+        context = {"title": "Despre redirectioneaza.ro"}
         return render(request, self.template_name, context)
 
 
@@ -97,7 +96,7 @@ class NgoListHandler(TemplateView):
 
 
 class NoteHandler(TemplateView):
-    template_name = "note.html"
+    template_name = "public/note.html"
 
     def get(self, request, *args, **kwargs):
         context = {
@@ -107,20 +106,8 @@ class NoteHandler(TemplateView):
         return render(request, self.template_name, context)
 
 
-class FAQHandler(TemplateView):
-    template_name = "faq.html"
-
-    def get(self, request, *args, **kwargs):
-        context = {
-            "title": _("Frequently Asked Questions"),
-            "contact_email": settings.CONTACT_EMAIL_ADDRESS,
-            "limit": settings.DONATIONS_LIMIT,
-        }
-        return render(request, self.template_name, context)
-
-
 class PolicyHandler(TemplateView):
-    template_name = "policy.html"
+    template_name = "public/policy.html"
 
     def get(self, request, *args, **kwargs):
         context = {"title": "Politica de confidențialitate"}
@@ -128,7 +115,7 @@ class PolicyHandler(TemplateView):
 
 
 class TermsHandler(TemplateView):
-    template_name = "terms.html"
+    template_name = "public/terms.html"
 
     def get(self, request, *args, **kwargs):
         context = {

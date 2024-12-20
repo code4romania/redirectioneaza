@@ -1,0 +1,51 @@
+{% load static %}
+
+<section class="relative overflow-hidden isolate">
+  <div class="container pb-8 lg:grid lg:grid-cols-12 lg:gap-x-8 lg:pt-8 lg:pb-24">
+    <div class="px-6 lg:px-0 lg:pt-4 lg:col-span-7">
+      <div class="max-w-lg mx-auto lg:max-w-none">
+        <h1 class="block mt-1 text-4xl font-extrabold tracking-tight sm:text-5xl xl:text-6xl">
+          <span class="block text-gray-900">Tu decizi ce se întâmplă</span>
+          <span class="block text-amber-300">cu 3,5% din impozit</span>
+        </h1>
+        <p class="mt-3 text-base text-gray-500 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
+          Declarația 230 pentru redirecționarea a 3,5% din impozitul pe venit aferent anului 2024 va fi disponibilă după 15 ianuarie 2025.
+        </p>
+
+        {% include "public/components/ngo-search.html" %}
+
+        <div class="mt-8 overflow-hidden">
+          <dl class="grid -mx-8 -mt-8 sm:grid-cols-3">
+            <div class="flex flex-col px-8 pt-8">
+              <dt class="order-2 text-base font-medium text-gray-500">
+                organizații înregistrate în platformă
+              </dt>
+              <dd class="order-1 text-2xl font-bold text-cyan-700 sm:text-3xl sm:tracking-tight">
+                XXXX
+              </dd>
+            </div>
+            <div class="flex flex-col px-8 pt-8">
+              <dt class="order-2 text-base font-medium text-gray-500">
+                declarații completate în 2024
+              </dt>
+              <dd class="order-1 text-2xl font-bold text-cyan-700 sm:text-3xl sm:tracking-tight">
+                XXXX
+              </dd>
+            </div>
+            <div class="flex flex-col px-8 pt-8">
+              <dt class="order-2 text-base font-medium text-gray-500">
+                redirecționați către ONG-uri prin redirectioneaza.ro
+              </dt>
+              <dd class="order-1 text-2xl font-bold text-cyan-700 sm:text-3xl sm:tracking-tight">
+                &gt; €2 milioane
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </div>
+    <div class="mt-20 sm:mt-24 md:mx-auto md:max-w-2xl lg:mx-0 lg:mt-0 lg:w-screen lg:col-span-5">
+      <img class="w-full max-w-lg mx-auto lg:max-w-none" src="{% static 'images/hero.svg' %}" alt="">
+    </div>
+  </div>
+</section>

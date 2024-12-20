@@ -40,7 +40,15 @@ from donations.views.admin import (
     AdminNgosListByName,
     UserAccounts,
 )
-from donations.views.api import CheckNgoUrl, GetNgoForm, GetNgoForms, GetUploadUrl, NgosApi, UpdateFromNgohub
+from donations.views.api import (
+    CheckNgoUrl,
+    GetNgoForm,
+    GetNgoForms,
+    GetUploadUrl,
+    NgosApi,
+    SearchNgosApi,
+    UpdateFromNgohub,
+)
 from donations.views.cron import CustomExport, NgoExport, NgoRemoveForms, Stats
 from donations.views.my_account import (
     ArchiveDownloadLinkView,
@@ -51,7 +59,6 @@ from donations.views.my_account import (
 from donations.views.ngo import DonationSucces, FormSignature, OwnFormDownloadLinkHandler, TwoPercentHandler
 from donations.views.site import (
     AboutHandler,
-    FAQHandler,
     HealthCheckHandler,
     HomePage,
     NgoListHandler,
@@ -59,6 +66,7 @@ from donations.views.site import (
     PolicyHandler,
     TermsHandler,
 )
+from frequent_questions.views import FAQHandler
 from redirectioneaza.views import StaticPageView
 
 admin.site.site_header = f"Admin | {settings.VERSION_LABEL}"
@@ -126,6 +134,8 @@ urlpatterns = (
         path("api/ngo/upload-url/", GetUploadUrl.as_view(), name="api-ngo-upload-url"),
         path("api/ngo/form/<ngo_url>/", GetNgoForm.as_view(), name="api-ngo-form-url"),
         path("api/ngo/forms/download/", GetNgoForms.as_view(), name="api-ngo-forms"),
+        #
+        path("api/search/", SearchNgosApi.as_view(), name="api-search-ngos"),
         # Cron routes
         path("cron/stats/", Stats.as_view(), name="cron-stats"),
         path("cron/ngos/remove-form/", NgoRemoveForms.as_view(), name="cron-ngo-remove-form"),
@@ -165,6 +175,7 @@ urlpatterns = (
             ),
         ),
         path("allauth/", include("allauth.urls")),
+        path("tinymce/", include("tinymce.urls")),
         path("robots.txt", StaticPageView.as_view(template_name="robots.txt", content_type="text/plain")),
     ]
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
