@@ -10,8 +10,11 @@ import './main.css';
 
 import Alpine from 'alpinejs';
 import collapse from '@alpinejs/collapse';
+import ngoSearch from './ngoSearch';
 
 Alpine.plugin(collapse);
+
+Alpine.data('ngoSearch', ngoSearch);
 
 window.Alpine = Alpine;
 

@@ -16,7 +16,7 @@ from ..models.ngos import ALL_NGO_IDS_CACHE_KEY, ALL_NGOS_CACHE_KEY, FRONTPAGE_N
 
 
 class HomePage(TemplateView):
-    template_name = "index.html"
+    template_name = "public/home.html"
 
     @staticmethod
     @cache_decorator(timeout=settings.TIMEOUT_CACHE_LONG, cache_key_prefix=ALL_NGO_IDS_CACHE_KEY)
