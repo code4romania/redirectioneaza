@@ -96,7 +96,7 @@ class NgoListHandler(TemplateView):
 
 
 class NoteHandler(TemplateView):
-    template_name = "note.html"
+    template_name = "public/note.html"
 
     def get(self, request, *args, **kwargs):
         context = {
@@ -107,7 +107,7 @@ class NoteHandler(TemplateView):
 
 
 class PolicyHandler(TemplateView):
-    template_name = "policy.html"
+    template_name = "public/policy.html"
 
     def get(self, request, *args, **kwargs):
         context = {"title": "Politica de confidențialitate"}
@@ -115,7 +115,7 @@ class PolicyHandler(TemplateView):
 
 
 class TermsHandler(TemplateView):
-    template_name = "terms.html"
+    template_name = "public/terms.html"
 
     def get(self, request, *args, **kwargs):
         context = {
