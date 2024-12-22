@@ -1,35 +1,174 @@
 {% load static %}
 
-{% include 'redirect/commitglobal-banner.html' %}
+{% if header_content %}
+  <header
+    x-data="{ menuOpen: false }"
+    x-on:click.outside="menuOpen = false"
+    class="bg-white relative shadow-lg">
 
-{% block content %}
-  {% if header_content %}
-    <header
-      x-data="{ menuOpen: false }"
-      x-on:click.outside="menuOpen = false"
-      class="bg-white relative shadow-lg">
+    <nav
+      class="flex container items-center justify-between py-3 gap-x-12"
+      aria-label="Global">
+      <div class="flex items-center gap-x-10">
+        <a class="-m-1.5 p-1.5" href="{% url 'home' %}">
+          <img src="{% static 'images/logo.png' %}" alt="Redirectioneaza logo" class="max-h-12"/>
+        </a>
 
-      <nav
-        class="flex container items-center justify-between py-3 gap-x-12"
-        aria-label="Global">
-        <div class="flex items-center gap-x-10">
-          <a class="-m-1.5 p-1.5" href="{% url 'home' %}">
-            <img src="{% static 'images/logo.png' %}" alt="Redirectioneaza logo" class="max-h-12"/>
-          </a>
+        {% if header_content.main_menu %}
+
+          <div class="hidden lg:flex gap-x-6 items-center text-center">
+
+            {% for menu_item in header_content.main_menu %}
+              {% if menu_item.url %}
+
+                <a
+                  class="text-gray-900 hover:text-cyan-600 active:text-cyan-700"
+                  href="{{ menu_item.url }}">
+                  {{ menu_item.title }}
+                </a>
+
+              {% elif menu_item.content %}
+
+                <div
+                  x-data="{ itemOpen: false }"
+                  x-on:click.outside="itemOpen = false"
+                  class="relative text-left">
+                  <button
+                    type="button"
+                    x-on:click="itemOpen = !itemOpen"
+                    class="text-gray-900 hover:text-cyan-600 active:text-cyan-700 inline-flex items-center gap-x-1 w-full">
+
+                      <span class=" text-left">
+                        {{ menu_item.title }}
+                      </span>
+
+                    <svg class="size-5 shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                      <path
+                        fill-rule="evenodd"
+                        d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
+                        clip-rule="evenodd"></path>
+                    </svg>
+                  </button>
+
+                  <div
+                    x-show="itemOpen"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0 translate-y-1"
+                    x-transition:enter-end="opacity-100 translate-y-0"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100 translate-y-0"
+                    x-transition:leave-end="opacity-0 translate-y-1"
+                    class="absolute left-1/2 z-10 mt-5 flex w-screen max-w-max -translate-x-1/2 px-4">
+
+                    <div class="w-screen max-w-md flex-auto overflow-hidden rounded-3xl bg-white text-sm/6 shadow-lg ring-1 ring-gray-900/5">
+                      {% if menu_item.subtitle %}
+                        <div class="w-full p-8 pb-4 text-slate-500">
+                          {{ menu_item.subtitle }}
+                        </div>
+                      {% endif %}
+
+                      <div class="p-4">
+
+                        {% for dropdown_item in menu_item.content %}
+
+                          <div class="group relative flex gap-x-4 p-3 rounded-lg hover:bg-gray-50">
+                            <img src="{% static 'images/icons/'|add:dropdown_item.icon|add:'.svg' %}" alt="icon" class="size-6 text-cyan-700"/>
+
+                            <div>
+                              <a href="{{ dropdown_item.url }}" class="font-semibold text-gray-900">
+                                {{ dropdown_item.title }}
+                                <span class="absolute inset-0"></span>
+                              </a>
+                              <p class="text-gray-600">{{ dropdown_item.subtitle }}</p>
+                            </div>
+                          </div>
+
+                        {% endfor %}
+
+                      </div>
+
+                      {% if menu_item.call_to_action %}
+
+                        <a href="{{ menu_item.call_to_action.url }}" class="flex gap-x-4 py-3 px-7 bg-gray-50 font-semibold text-gray-900 hover:bg-gray-100">
+                          <svg class="size-5 flex-none text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                            <path
+                              fill-rule="evenodd"
+                              d="M2 10a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm6.39-2.908a.75.75 0 0 1 .766.027l3.5 2.25a.75.75 0 0 1 0 1.262l-3.5 2.25A.75.75 0 0 1 8 12.25v-4.5a.75.75 0 0 1 .39-.658Z"
+                              clip-rule="evenodd"></path>
+                          </svg>
+                          {{ menu_item.call_to_action.title }}
+                        </a>
+
+
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+                <!-- END FLYOUT -->
+
+              {% endif %}
+            {% endfor %}
+
+          </div>
+
+        {% endif %}
+
+        <div class="flex lg:hidden">
+          <button type="button" x-on:click="menuOpen = !menuOpen" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700">
+            <span class="sr-only">Open main menu</span>
+            <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+              <path x-show="!menuOpen" stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
+              <path x-show="menuOpen" stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      {% if header_content.auth_menu %}
+        <div class="hidden lg:flex gap-x-6 items-center text-center">
+          {% for auth_item in header_content.auth_menu %}
+
+            <a
+              {% if auth_item.style == "highlight" %}
+                class="bg-amber-300 sm:text-base text-sm sm:px-6 sm:py-2 px-2 py-1 shadow-sm rounded-full text-gray-900 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
+              {% else %}
+                class="text-gray-900 hover:text-cyan-600 active:text-cyan-700"
+              {% endif %}
+                href="{{ auth_item.url }}">
+              {{ auth_item.title }}
+            </a>
+
+          {% endfor %}
+        </div>
+      {% endif %}
+
+    </nav>
+
+
+    <!-- Mobile menu, show/hide based on menu open state. -->
+    <nav
+      class="absolute inset-x-0 z-50 transition origin-top transform bg-white shadow-lg top-full lg:hidden"
+      role="dialog"
+      aria-modal="true"
+      x-show="menuOpen"
+      x-collapse
+      x-cloak>
+
+      <div class="container">
+        <div class="divide-y divide-gray-500/10">
 
           {% if header_content.main_menu %}
 
-            <div class="hidden lg:flex gap-x-6 items-center text-center">
+            <div class="py-3 grid gap-2">
 
               {% for menu_item in header_content.main_menu %}
-                {% if menu_item.url %}
 
+                {% if menu_item.url %}
                   <a
-                    class="text-gray-900 hover:text-cyan-600 active:text-cyan-700"
+                    class="text-gray-900 hover:text-cyan-600 active:text-cyan-700 inline-flex items-center gap-x-1 w-full"
                     href="{{ menu_item.url }}">
                     {{ menu_item.title }}
                   </a>
-
                 {% elif menu_item.content %}
 
                   <div
@@ -40,16 +179,11 @@
                       type="button"
                       x-on:click="itemOpen = !itemOpen"
                       class="text-gray-900 hover:text-cyan-600 active:text-cyan-700 inline-flex items-center gap-x-1 w-full">
-
-                      <span class=" text-left">
-                        {{ menu_item.title }}
-                      </span>
-
+                        <span class=" text-left">
+                          {{ menu_item.title }}
+                        </span>
                       <svg class="size-5 shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
-                        <path
-                          fill-rule="evenodd"
-                          d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
-                          clip-rule="evenodd"></path>
+                        <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd"/>
                       </svg>
                     </button>
 
@@ -62,18 +196,14 @@
                       x-transition:leave-start="opacity-100 translate-y-0"
                       x-transition:leave-end="opacity-0 translate-y-1"
                       class="absolute left-1/2 z-10 mt-5 flex w-screen max-w-max -translate-x-1/2 px-4">
-
                       <div class="w-screen max-w-md flex-auto overflow-hidden rounded-3xl bg-white text-sm/6 shadow-lg ring-1 ring-gray-900/5">
-                        {% if menu_item.subtitle %}
-                          <div class="w-full p-8 pb-4 text-slate-500">
-                            {{ menu_item.subtitle }}
-                          </div>
-                        {% endif %}
+                        <div class="w-full p-8 pb-4 text-slate-500">
+                          {{ menu_item.subtitle }}
+                        </div>
 
                         <div class="p-4">
 
                           {% for dropdown_item in menu_item.content %}
-
                             <div class="group relative flex gap-x-4 p-3 rounded-lg hover:bg-gray-50">
                               <img src="{% static 'images/icons/'|add:dropdown_item.icon|add:'.svg' %}" alt="icon" class="size-6 text-cyan-700"/>
 
@@ -82,16 +212,18 @@
                                   {{ dropdown_item.title }}
                                   <span class="absolute inset-0"></span>
                                 </a>
-                                <p class="text-gray-600">{{ dropdown_item.subtitle }}</p>
+                                <p class="text-gray-600">
+                                  {{ dropdown_item.subtitle }}
+                                </p>
                               </div>
-                            </div>
 
+
+                            </div>
                           {% endfor %}
 
                         </div>
 
                         {% if menu_item.call_to_action %}
-
                           <a href="{{ menu_item.call_to_action.url }}" class="flex gap-x-4 py-3 px-7 bg-gray-50 font-semibold text-gray-900 hover:bg-gray-100">
                             <svg class="size-5 flex-none text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
                               <path
@@ -102,12 +234,12 @@
                             {{ menu_item.call_to_action.title }}
                           </a>
 
-
                         {% endif %}
                       </div>
                     </div>
+
+
                   </div>
-                  <!-- END FLYOUT -->
 
                 {% endif %}
               {% endfor %}
@@ -116,166 +248,30 @@
 
           {% endif %}
 
-          <div class="flex lg:hidden">
-            <button type="button" x-on:click="menuOpen = !menuOpen" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700">
-              <span class="sr-only">Open main menu</span>
-              <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
-                <path x-show="!menuOpen" stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
-                <path x-show="menuOpen" stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"></path>
-              </svg>
-            </button>
-          </div>
-        </div>
+          {% if header_content.auth_menu %}
 
-        {% if header_content.auth_menu %}
-          <div class="hidden lg:flex gap-x-6 items-center text-center">
-            {% for auth_item in header_content.auth_menu %}
+            <div class="py-3 grid gap-2 grid-cols-2 -mx-3 items-center justify-center text-center">
 
-              <a
-                {% if auth_item.style == "highlight" %}
-                  class="bg-amber-300 sm:text-base text-sm sm:px-6 sm:py-2 px-2 py-1 shadow-sm rounded-full text-gray-900 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
-                {% else %}
-                  class="text-gray-900 hover:text-cyan-600 active:text-cyan-700"
-                {% endif %}
-                  href="{{ auth_item.url }}">
-                {{ auth_item.title }}
-              </a>
-
-            {% endfor %}
-          </div>
-        {% endif %}
-
-      </nav>
-
-
-      <!-- Mobile menu, show/hide based on menu open state. -->
-      <nav
-        class="absolute inset-x-0 z-50 transition origin-top transform bg-white shadow-lg top-full lg:hidden"
-        role="dialog"
-        aria-modal="true"
-        x-show="menuOpen"
-        x-collapse
-        x-cloak>
-
-        <div class="container">
-          <div class="divide-y divide-gray-500/10">
-
-            {% if header_content.main_menu %}
-
-              <div class="py-3 grid gap-2">
-
-                {% for menu_item in header_content.main_menu %}
-
-                  {% if menu_item.url %}
-                    <a
-                      class="text-gray-900 hover:text-cyan-600 active:text-cyan-700 inline-flex items-center gap-x-1 w-full"
-                      href="{{ menu_item.url }}">
-                      {{ menu_item.title }}
-                    </a>
-                  {% elif menu_item.content %}
-
-                    <div
-                      x-data="{ itemOpen: false }"
-                      x-on:click.outside="itemOpen = false"
-                      class="relative text-left">
-                      <button
-                        type="button"
-                        x-on:click="itemOpen = !itemOpen"
-                        class="text-gray-900 hover:text-cyan-600 active:text-cyan-700 inline-flex items-center gap-x-1 w-full">
-                        <span class=" text-left">
-                          {{ menu_item.title }}
-                        </span>
-                        <svg class="size-5 shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
-                          <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd"/>
-                        </svg>
-                      </button>
-
-                      <div
-                        x-show="itemOpen"
-                        x-transition:enter="transition ease-out duration-200"
-                        x-transition:enter-start="opacity-0 translate-y-1"
-                        x-transition:enter-end="opacity-100 translate-y-0"
-                        x-transition:leave="transition ease-in duration-150"
-                        x-transition:leave-start="opacity-100 translate-y-0"
-                        x-transition:leave-end="opacity-0 translate-y-1"
-                        class="absolute left-1/2 z-10 mt-5 flex w-screen max-w-max -translate-x-1/2 px-4">
-                        <div class="w-screen max-w-md flex-auto overflow-hidden rounded-3xl bg-white text-sm/6 shadow-lg ring-1 ring-gray-900/5">
-                          <div class="w-full p-8 pb-4 text-slate-500">
-                            {{ menu_item.subtitle }}
-                          </div>
-
-                          <div class="p-4">
-
-                            {% for dropdown_item in menu_item.content %}
-                              <div class="group relative flex gap-x-4 p-3 rounded-lg hover:bg-gray-50">
-                                <img src="{% static 'images/icons/'|add:dropdown_item.icon|add:'.svg' %}" alt="icon" class="size-6 text-cyan-700"/>
-
-                                <div>
-                                  <a href="{{ dropdown_item.url }}" class="font-semibold text-gray-900">
-                                    {{ dropdown_item.title }}
-                                    <span class="absolute inset-0"></span>
-                                  </a>
-                                  <p class="text-gray-600">
-                                    {{ dropdown_item.subtitle }}
-                                  </p>
-                                </div>
-
-
-                              </div>
-                            {% endfor %}
-
-                          </div>
-
-                          {% if menu_item.call_to_action %}
-                            <a href="{{ menu_item.call_to_action.url }}" class="flex gap-x-4 py-3 px-7 bg-gray-50 font-semibold text-gray-900 hover:bg-gray-100">
-                              <svg class="size-5 flex-none text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
-                                <path
-                                  fill-rule="evenodd"
-                                  d="M2 10a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm6.39-2.908a.75.75 0 0 1 .766.027l3.5 2.25a.75.75 0 0 1 0 1.262l-3.5 2.25A.75.75 0 0 1 8 12.25v-4.5a.75.75 0 0 1 .39-.658Z"
-                                  clip-rule="evenodd"></path>
-                              </svg>
-                              {{ menu_item.call_to_action.title }}
-                            </a>
-
-                          {% endif %}
-                        </div>
-                      </div>
-
-
-                    </div>
-
+              {% for auth_item in header_content.auth_menu %}
+                <a
+                  {% if auth_item.style == "highlight" %}
+                    class="block px-3 py-2.5 text-base/7 text-gray-900 shadow-sm rounded-full bg-amber-300 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
+                  {% else %}
+                    class="block rounded-lg px-3 py-2.5 text-base/7 text-gray-900 hover:bg-gray-50"
                   {% endif %}
-                {% endfor %}
+                    href="{{ auth_item.url }}">
+                  {{ auth_item.title }}
+                </a>
 
-              </div>
+              {% endfor %}
 
-            {% endif %}
+            </div>
 
-            {% if header_content.auth_menu %}
+          {% endif %}
 
-              <div class="py-3 grid gap-2 grid-cols-2 -mx-3 items-center justify-center text-center">
-
-                {% for auth_item in header_content.auth_menu %}
-                  <a
-                    {% if auth_item.style == "highlight" %}
-                      class="block px-3 py-2.5 text-base/7 text-gray-900 shadow-sm rounded-full bg-amber-300 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
-                    {% else %}
-                      class="block rounded-lg px-3 py-2.5 text-base/7 text-gray-900 hover:bg-gray-50"
-                    {% endif %}
-                      href="{{ auth_item.url }}">
-                    {{ auth_item.title }}
-                  </a>
-
-                {% endfor %}
-
-              </div>
-
-            {% endif %}
-
-          </div>
         </div>
-      </nav>
+      </div>
+    </nav>
 
-    </header>
-  {% endif %}
-{% endblock %}
+  </header>
+{% endif %}
