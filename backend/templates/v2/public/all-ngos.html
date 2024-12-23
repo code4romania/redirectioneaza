@@ -13,7 +13,6 @@
     </div>
   </header>
 
-
   <section class="container grid gap-12">
     <!-- Search and filters -->
     <form action="" method="GET">
@@ -31,5 +30,19 @@
 
     {% include "public/components/pagination.html" with page_obj=page_obj %}
   </section>
+
+  <aside class="px-6 py-24 sm:px-6 sm:py-32 lg:px-8">
+    <div class="max-w-2xl mx-auto text-center">
+      <h2 class="text-4xl font-semibold tracking-tight text-gray-900 text-balance sm:text-5xl">
+        Reprezinți un ONG?
+      </h2>
+      <p class="max-w-xl mx-auto mb-10 text-xl text-gray-600 text-pretty sm:text-3xl">
+        Află cum te ajută redirecționează.ro
+      </p>
+
+      <a href="{% url 'signup' %}" class="py-3 font-semibold text-center text-gray-900 rounded-md shadow-sm px-7 bg-amber-300 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">Începe aici</a>
+
+    </div>
+  </aside>
 
 {% endblock %}
