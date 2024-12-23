@@ -1,19 +1,20 @@
 import random
 from datetime import datetime
-from typing import Dict
+from typing import Dict, List, Union
 
 from django.conf import settings
 from django.db.models import QuerySet
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 
 from partners.models import DisplayOrderingChoices
 from redirectioneaza.common.cache import cache_decorator
 
 from ..models.donors import Donor
-from ..models.ngos import ALL_NGO_IDS_CACHE_KEY, ALL_NGOS_CACHE_KEY, FRONTPAGE_NGOS_KEY, Ngo
+from ..models.ngos import ALL_NGO_IDS_CACHE_KEY, ALL_NGOS_CACHE_KEY, FRONTPAGE_NGOS_KEY, FRONTPAGE_STATS_KEY, Ngo
 
 
 class HomePage(TemplateView):
@@ -24,8 +25,8 @@ class HomePage(TemplateView):
     def _get_list_of_ngo_ids() -> list:
         return list(Ngo.active.values_list("id", flat=True))
 
-    @cache_decorator(timeout=settings.TIMEOUT_CACHE_SHORT, cache_key_prefix=FRONTPAGE_NGOS_KEY)
-    def _get_stats(self, now: datetime = None, ngo_queryset: QuerySet = None) -> Dict[str, int]:
+    @cache_decorator(timeout=settings.TIMEOUT_CACHE_SHORT, cache_key_prefix=FRONTPAGE_STATS_KEY)
+    def _get_stats(self, now: datetime = None, ngo_queryset: QuerySet = None) -> List[Dict[str, Union[str, int]]]:
         if now is None:
             now = timezone.now()
 
@@ -33,10 +34,20 @@ class HomePage(TemplateView):
             ngo_queryset = Ngo.active
 
         start_of_year = datetime(now.year, 1, 1, 0, 0, 0, tzinfo=now.tzinfo)
-        return {
-            "ngos": ngo_queryset.count(),
-            "forms": Donor.objects.filter(date_created__gte=start_of_year).count(),
-        }
+        return [
+            {
+                "title": _("organizations registered in the platform"),
+                "value": ngo_queryset.count(),
+            },
+            {
+                "title": _("forms filled in") + " " + str(start_of_year.year),
+                "value": Donor.objects.filter(date_created__gte=start_of_year).count(),
+            },
+            {
+                "title": _("redirected to NGOs through the platform"),
+                "value": _("> €2 million"),
+            },
+        ]
 
     def get(self, request, *args, **kwargs):
         now = timezone.now()
