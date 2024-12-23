@@ -16,12 +16,12 @@
 
   <section class="container grid gap-12">
     <!-- Search and filters -->
-    {% include "public/components/ngo-search.html" %}
+    <form action="" method="GET">
+      {% include "public/components/ngo-search.html" %}
+    </form>
 
     <div class="grid gap-x-8 gap-y-16 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-10 xl:gap-y-20">
-      <div class="col-span-full">
-        {% include "public/components/pagination.html" with page_obj=page_obj %}
-      </div>
+      {% include "public/components/pagination.html" with page_obj=page_obj %}
 
 
       {% for ngo in ngos %}
@@ -29,9 +29,7 @@
       {% endfor %}
     </div>
 
-    <div class="col-span-full">
-      {% include "public/components/pagination.html" with page_obj=page_obj %}
-    </div>
+    {% include "public/components/pagination.html" with page_obj=page_obj %}
   </section>
 
 {% endblock %}

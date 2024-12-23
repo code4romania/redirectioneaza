@@ -4,19 +4,19 @@
   <header
     x-data="{ menuOpen: false }"
     x-on:click.outside="menuOpen = false"
-    class="bg-white relative shadow-lg">
+    class="relative bg-white shadow-lg">
 
     <nav
-      class="flex container items-center justify-between py-3 gap-x-12"
+      class="container flex items-center justify-between py-3 gap-x-12"
       aria-label="Global">
-      <div class="flex items-center gap-x-10 w-full justify-between">
+      <div class="flex items-center justify-between w-full gap-x-10 xl:w-auto">
         <a class="-m-1.5 p-1.5" href="{% url 'home' %}">
           <img src="{% static 'images/logo.png' %}" alt="Redirectioneaza logo" class="max-h-12"/>
         </a>
 
         {% if header_content.main_menu %}
 
-          <div class="hidden lg:flex gap-x-6 items-center text-center">
+          <div class="items-center hidden text-center xl:flex gap-x-6">
 
             {% for menu_item in header_content.main_menu %}
               {% if menu_item.url %}
@@ -36,9 +36,9 @@
                   <button
                     type="button"
                     x-on:click="itemOpen = !itemOpen"
-                    class="text-gray-900 hover:text-cyan-600 active:text-cyan-700 inline-flex items-center gap-x-1 w-full">
+                    class="inline-flex items-center w-full text-gray-900 hover:text-cyan-600 active:text-cyan-700 gap-x-1">
 
-                      <span class=" text-left">
+                      <span class="text-left ">
                         {{ menu_item.title }}
                       </span>
 
@@ -58,9 +58,9 @@
                     x-transition:leave="transition ease-in duration-150"
                     x-transition:leave-start="opacity-100 translate-y-0"
                     x-transition:leave-end="opacity-0 translate-y-1"
-                    class="absolute left-1/2 z-10 mt-5 flex w-screen max-w-max -translate-x-1/2 px-4">
+                    class="absolute z-10 flex w-screen px-4 mt-5 -translate-x-1/2 left-1/2 max-w-max">
 
-                    <div class="w-screen max-w-md flex-auto overflow-hidden rounded-3xl bg-white text-sm/6 shadow-lg ring-1 ring-gray-900/5">
+                    <div class="flex-auto w-screen max-w-md overflow-hidden bg-white shadow-lg rounded-3xl text-sm/6 ring-1 ring-gray-900/5">
                       {% if menu_item.subtitle %}
                         <div class="w-full p-8 pb-4 text-slate-500">
                           {{ menu_item.subtitle }}
@@ -71,7 +71,7 @@
 
                         {% for dropdown_item in menu_item.content %}
 
-                          <div class="group relative flex gap-x-4 p-3 rounded-lg hover:bg-gray-50">
+                          <div class="relative flex p-3 rounded-lg group gap-x-4 hover:bg-gray-50">
                             <img src="{% static 'images/icons/'|add:dropdown_item.icon|add:'.svg' %}" alt="icon" class="size-6 text-cyan-700"/>
 
                             <div>
@@ -89,8 +89,8 @@
 
                       {% if menu_item.call_to_action %}
 
-                        <a href="{{ menu_item.call_to_action.url }}" class="flex gap-x-4 py-3 px-7 bg-gray-50 font-semibold text-gray-900 hover:bg-gray-100">
-                          <svg class="size-5 flex-none text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                        <a href="{{ menu_item.call_to_action.url }}" class="flex py-3 font-semibold text-gray-900 gap-x-4 px-7 bg-gray-50 hover:bg-gray-100">
+                          <svg class="flex-none text-gray-400 size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
                             <path
                               fill-rule="evenodd"
                               d="M2 10a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm6.39-2.908a.75.75 0 0 1 .766.027l3.5 2.25a.75.75 0 0 1 0 1.262l-3.5 2.25A.75.75 0 0 1 8 12.25v-4.5a.75.75 0 0 1 .39-.658Z"
@@ -113,7 +113,7 @@
 
         {% endif %}
 
-        <div class="flex lg:hidden">
+        <div class="flex xl:hidden">
           <button type="button" x-on:click="menuOpen = !menuOpen" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700">
             <span class="sr-only">Open main menu</span>
             <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
@@ -125,12 +125,12 @@
       </div>
 
       {% if header_content.auth_menu %}
-        <div class="hidden lg:flex gap-x-6 items-center text-center">
+        <div class="items-center hidden text-center xl:flex gap-x-6">
           {% for auth_item in header_content.auth_menu %}
 
             <a
               {% if auth_item.style == "highlight" %}
-                class="bg-amber-300 sm:text-base text-sm sm:px-6 sm:py-2 px-2 py-1 shadow-sm rounded-full text-gray-900 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
+                class="px-2 py-1 text-sm text-gray-900 rounded-full shadow-sm bg-amber-300 sm:text-base sm:px-6 sm:py-2 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
               {% else %}
                 class="text-gray-900 hover:text-cyan-600 active:text-cyan-700"
               {% endif %}
@@ -147,11 +147,10 @@
 
     <!-- Mobile menu, show/hide based on menu open state. -->
     <nav
-      class="absolute inset-x-0 z-50 transition origin-top transform bg-white shadow-lg top-full lg:hidden"
+      class="absolute inset-x-0 z-50 transition origin-top transform bg-white shadow-lg top-full xl:hidden"
       role="dialog"
       aria-modal="true"
       x-show="menuOpen"
-      x-collapse
       x-cloak>
 
       <div class="container">
@@ -159,13 +158,13 @@
 
           {% if header_content.main_menu %}
 
-            <div class="py-3 grid gap-2">
+            <div class="grid gap-2 py-3">
 
               {% for menu_item in header_content.main_menu %}
 
                 {% if menu_item.url %}
                   <a
-                    class="text-gray-900 hover:text-cyan-600 active:text-cyan-700 inline-flex items-center gap-x-1 w-full"
+                    class="inline-flex items-center w-full text-gray-900 hover:text-cyan-600 active:text-cyan-700 gap-x-1"
                     href="{{ menu_item.url }}">
                     {{ menu_item.title }}
                   </a>
@@ -178,8 +177,8 @@
                     <button
                       type="button"
                       x-on:click="itemOpen = !itemOpen"
-                      class="text-gray-900 hover:text-cyan-600 active:text-cyan-700 inline-flex items-center gap-x-1 w-full">
-                        <span class=" text-left">
+                      class="inline-flex items-center w-full text-gray-900 hover:text-cyan-600 active:text-cyan-700 gap-x-1">
+                        <span class="text-left ">
                           {{ menu_item.title }}
                         </span>
                       <svg class="size-5 shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
@@ -195,8 +194,8 @@
                       x-transition:leave="transition ease-in duration-150"
                       x-transition:leave-start="opacity-100 translate-y-0"
                       x-transition:leave-end="opacity-0 translate-y-1"
-                      class="absolute left-1/2 z-10 mt-5 flex w-screen max-w-max -translate-x-1/2 px-4">
-                      <div class="w-screen max-w-md flex-auto overflow-hidden rounded-3xl bg-white text-sm/6 shadow-lg ring-1 ring-gray-900/5">
+                      class="absolute z-10 flex w-screen px-4 mt-5 -translate-x-1/2 left-1/2 max-w-max">
+                      <div class="flex-auto w-screen max-w-md overflow-hidden bg-white shadow-lg rounded-3xl text-sm/6 ring-1 ring-gray-900/5">
                         <div class="w-full p-8 pb-4 text-slate-500">
                           {{ menu_item.subtitle }}
                         </div>
@@ -204,7 +203,7 @@
                         <div class="p-4">
 
                           {% for dropdown_item in menu_item.content %}
-                            <div class="group relative flex gap-x-4 p-3 rounded-lg hover:bg-gray-50">
+                            <div class="relative flex p-3 rounded-lg group gap-x-4 hover:bg-gray-50">
                               <img src="{% static 'images/icons/'|add:dropdown_item.icon|add:'.svg' %}" alt="icon" class="size-6 text-cyan-700"/>
 
                               <div>
@@ -224,8 +223,8 @@
                         </div>
 
                         {% if menu_item.call_to_action %}
-                          <a href="{{ menu_item.call_to_action.url }}" class="flex gap-x-4 py-3 px-7 bg-gray-50 font-semibold text-gray-900 hover:bg-gray-100">
-                            <svg class="size-5 flex-none text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                          <a href="{{ menu_item.call_to_action.url }}" class="flex py-3 font-semibold text-gray-900 gap-x-4 px-7 bg-gray-50 hover:bg-gray-100">
+                            <svg class="flex-none text-gray-400 size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
                               <path
                                 fill-rule="evenodd"
                                 d="M2 10a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm6.39-2.908a.75.75 0 0 1 .766.027l3.5 2.25a.75.75 0 0 1 0 1.262l-3.5 2.25A.75.75 0 0 1 8 12.25v-4.5a.75.75 0 0 1 .39-.658Z"
@@ -250,7 +249,7 @@
 
           {% if header_content.auth_menu %}
 
-            <div class="py-3 grid gap-2 grid-cols-2 -mx-3 items-center justify-center text-center">
+            <div class="grid items-center justify-center grid-cols-2 gap-2 py-3 -mx-3 text-center">
 
               {% for auth_item in header_content.auth_menu %}
                 <a
