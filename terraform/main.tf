@@ -7,8 +7,8 @@ module "ecs_redirectioneaza" {
 
   name         = local.namespace
   cluster_name = module.ecs_cluster.cluster_name
-  min_capacity = 1
-  max_capacity = 2
+  min_capacity = 2
+  max_capacity = 8
 
   image_repo = local.image_repo
   image_tag  = local.image_tag
