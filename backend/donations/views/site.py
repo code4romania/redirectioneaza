@@ -8,14 +8,14 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-from django.views.generic import TemplateView
+from django.views.generic import ListView, TemplateView
 
 from partners.models import DisplayOrderingChoices
 from redirectioneaza.common.cache import cache_decorator
-from .common import SearchMixin
 
 from ..models.donors import Donor
-from ..models.ngos import ALL_NGO_IDS_CACHE_KEY, ALL_NGOS_CACHE_KEY, FRONTPAGE_NGOS_KEY, FRONTPAGE_STATS_KEY, Ngo
+from ..models.ngos import ALL_NGO_IDS_CACHE_KEY, FRONTPAGE_NGOS_KEY, FRONTPAGE_STATS_KEY, Ngo
+from .common import SearchMixin
 
 
 class HomePage(TemplateView):
@@ -100,26 +100,30 @@ class AboutHandler(TemplateView):
         return render(request, self.template_name, context)
 
 
-class NgoListHandler(TemplateView, SearchMixin):
+class NgoListHandler(SearchMixin):
     template_name = "public/all-ngos.html"
+    context_object_name = "ngos"
+    queryset = Ngo.active
+    ordering = "name"
+    paginate_by = 8
 
-    @staticmethod
-    @cache_decorator(timeout=settings.TIMEOUT_CACHE_NORMAL, cache_key=ALL_NGOS_CACHE_KEY)
-    def _get_all_ngos() -> QuerySet:
-        return Ngo.active.order_by("name")
+    def get_queryset(self):
+        queryset = super().get_queryset()
 
-    def get(self, request, *args, **kwargs):
-        # TODO: add pagination
-        ngos = self.search(self._get_all_ngos())
+        queryset = self.search(queryset)
 
-        context = {
-            "title": "Toate ONG-urile",
-            "limit": settings.DONATIONS_LIMIT,
-            "month_limit": settings.DONATIONS_LIMIT_MONTH_NAME,
-            "ngos": ngos,
-        }
+        return queryset
 
-        return render(request, self.template_name, context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update(
+            {
+                "title": "Toate ONG-urile",
+                "limit": settings.DONATIONS_LIMIT,
+                "month_limit": settings.DONATIONS_LIMIT_MONTH_NAME,
+            }
+        )
+        return context
 
 
 class NoteHandler(TemplateView):
