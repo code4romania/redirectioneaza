@@ -18,7 +18,7 @@ locals {
 
   db = {
     name           = "redirectioneaza"
-    instance_class = "db.t4g.micro" # var.env == "production" ? "db.t4g.medium" : "db.t4g.micro"
+    instance_class = var.env == "production" ? "db.t4g.medium" : "db.t4g.micro"
   }
 
   networking = {
