@@ -5,3 +5,4 @@ _appengine_legacy
 media
 static
 bower_components
+dist
