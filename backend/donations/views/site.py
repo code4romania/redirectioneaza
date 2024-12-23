@@ -12,6 +12,7 @@ from django.views.generic import TemplateView
 
 from partners.models import DisplayOrderingChoices
 from redirectioneaza.common.cache import cache_decorator
+from .common import SearchMixin
 
 from ..models.donors import Donor
 from ..models.ngos import ALL_NGO_IDS_CACHE_KEY, ALL_NGOS_CACHE_KEY, FRONTPAGE_NGOS_KEY, FRONTPAGE_STATS_KEY, Ngo
@@ -99,22 +100,23 @@ class AboutHandler(TemplateView):
         return render(request, self.template_name, context)
 
 
-class NgoListHandler(TemplateView):
+class NgoListHandler(TemplateView, SearchMixin):
     template_name = "public/all-ngos.html"
 
     @staticmethod
     @cache_decorator(timeout=settings.TIMEOUT_CACHE_NORMAL, cache_key=ALL_NGOS_CACHE_KEY)
-    def _get_all_ngos() -> list:
+    def _get_all_ngos() -> QuerySet:
         return Ngo.active.order_by("name")
 
     def get(self, request, *args, **kwargs):
-        # TODO: the search isn't working
         # TODO: add pagination
+        ngos = self.search(self._get_all_ngos())
+
         context = {
             "title": "Toate ONG-urile",
             "limit": settings.DONATIONS_LIMIT,
             "month_limit": settings.DONATIONS_LIMIT_MONTH_NAME,
-            "ngos": self._get_all_ngos(),
+            "ngos": ngos,
         }
 
         return render(request, self.template_name, context)

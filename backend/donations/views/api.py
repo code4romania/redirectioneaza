@@ -4,11 +4,9 @@ from typing import Dict, List
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
-from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector, TrigramSimilarity
 from django.core.exceptions import BadRequest, PermissionDenied
 from django.core.files import File
 from django.core.management import call_command
-from django.db.models import Q, QuerySet
 from django.http import Http404, HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
@@ -24,18 +22,9 @@ from ..models.ngos import ALL_NGOS_CACHE_KEY, Ngo
 from ..pdf import create_pdf
 from ..workers.update_organization import update_organization
 from .base import BaseTemplateView
+from .common import SearchMixin, get_ngo_response_item
 
 logger = logging.getLogger(__name__)
-
-
-def get_ngo_response_item(ngo) -> Dict:
-    return {
-        "name": ngo.name,
-        "url": reverse("twopercent", kwargs={"ngo_url": ngo.slug}),
-        "logo": ngo.logo.url if ngo.logo else None,
-        "active_region": ngo.active_region,
-        "description": ngo.description,
-    }
 
 
 class UpdateFromNgohub(BaseTemplateView):
@@ -132,45 +121,14 @@ class NgosApi(TemplateView):
         return JsonResponse(response, safe=False)
 
 
-class SearchNgosApi(TemplateView):
-    def _configure_search_query(self, query: str, language_code: str) -> SearchQuery:
-        if language_code == "ro":
-            return SearchQuery(query, config="romanian_unaccent")
-
-        return SearchQuery(query)
-
-    def _configure_search_vector(self, language_code: str) -> SearchVector:
-        if language_code == "ro":
-            return SearchVector("name", weight="A", config="romanian_unaccent")
-
-        return SearchVector("name", weight="A")
-
+class SearchNgosApi(TemplateView, SearchMixin):
     def get(self, request, *args, **kwargs):
-        query = request.GET.get("q", "")
+        queryset = Ngo.active
 
-        if not query:
-            return JsonResponse([], safe=False)
-
-        language_code: str = settings.LANGUAGE_CODE
-        if hasattr(self.request, "LANGUAGE_CODE") and self.request.LANGUAGE_CODE:
-            language_code = self.request.LANGUAGE_CODE
-        language_code = language_code.lower()
-
-        search_vector: SearchVector = self._configure_search_vector(language_code)
-        search_query: SearchQuery = self._configure_search_query(query, language_code)
-
-        ngos: QuerySet[Ngo] = (
-            Ngo.active.annotate(
-                rank=SearchRank(search_vector, search_query),
-                similarity=TrigramSimilarity("name", query),
-            )
-            .filter(Q(rank__gte=0.3) | Q(similarity__gt=0.3))
-            .order_by("name")
-            .distinct("name")
-        )
+        ngos_queryset = self.search(queryset)
 
         response: List[Dict] = []
-        for ngo in ngos:
+        for ngo in ngos_queryset:
             if not ngo.slug:
                 continue
 
