@@ -1,5 +1,6 @@
 import random
 from datetime import datetime
+from typing import Dict
 
 from django.conf import settings
 from django.db.models import QuerySet
@@ -22,6 +23,20 @@ class HomePage(TemplateView):
     @cache_decorator(timeout=settings.TIMEOUT_CACHE_LONG, cache_key_prefix=ALL_NGO_IDS_CACHE_KEY)
     def _get_list_of_ngo_ids() -> list:
         return list(Ngo.active.values_list("id", flat=True))
+
+    @cache_decorator(timeout=settings.TIMEOUT_CACHE_SHORT, cache_key_prefix=FRONTPAGE_NGOS_KEY)
+    def _get_stats(self, now: datetime = None, ngo_queryset: QuerySet = None) -> Dict[str, int]:
+        if now is None:
+            now = timezone.now()
+
+        if ngo_queryset is None:
+            ngo_queryset = Ngo.active
+
+        start_of_year = datetime(now.year, 1, 1, 0, 0, 0, tzinfo=now.tzinfo)
+        return {
+            "ngos": ngo_queryset.count(),
+            "forms": Donor.objects.filter(date_created__gte=start_of_year).count(),
+        }
 
     def get(self, request, *args, **kwargs):
         now = timezone.now()
@@ -52,12 +67,8 @@ class HomePage(TemplateView):
             )
         else:
             ngo_queryset = Ngo.active
-            start_of_year = datetime(now.year, 1, 1, 0, 0, 0, tzinfo=now.tzinfo)
-            context["stats"] = {
-                "ngos": ngo_queryset.count(),
-                "forms": Donor.objects.filter(date_created__gte=start_of_year).count(),
-            }
 
+            context["stats"] = self._get_stats(now, ngo_queryset)
             context["ngos"] = self._get_random_ngos(ngo_queryset, num_ngos=min(4, ngo_queryset.count()))
 
         return render(request, self.template_name, context)

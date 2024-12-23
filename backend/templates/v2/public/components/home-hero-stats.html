@@ -1,0 +1,36 @@
+<div class="mt-8 overflow-hidden">
+  <dl class="grid -mx-8 -mt-8 sm:grid-cols-3">
+    <div class="flex flex-col px-8 pt-8">
+      <dt class="order-2 text-base font-medium text-gray-500">
+        organizații înregistrate în platformă
+      </dt>
+      <dd class="order-1 text-2xl font-bold text-cyan-700 sm:text-3xl sm:tracking-tight">
+        {% if stats %}
+          {{ stats.ngos }}
+        {% else %}
+          XXXX
+        {% endif %}
+      </dd>
+    </div>
+    <div class="flex flex-col px-8 pt-8">
+      <dt class="order-2 text-base font-medium text-gray-500">
+        declarații completate în 2024
+      </dt>
+      <dd class="order-1 text-2xl font-bold text-cyan-700 sm:text-3xl sm:tracking-tight">
+        {% if stats %}
+          {{ stats.forms }}
+        {% else %}
+          XXXX
+        {% endif %}
+      </dd>
+    </div>
+    <div class="flex flex-col px-8 pt-8">
+      <dt class="order-2 text-base font-medium text-gray-500">
+        redirecționați către ONG-uri prin redirectioneaza.ro
+      </dt>
+      <dd class="order-1 text-2xl font-bold text-cyan-700 sm:text-3xl sm:tracking-tight">
+        &gt; €2 milioane
+      </dd>
+    </div>
+  </dl>
+</div>
