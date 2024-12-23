@@ -8,6 +8,7 @@ on:
     paths:
       - 'backend/**'
       - 'docker/**'
+      - '.github/workflows/build-image.yml'
 
 name: Build Docker image
 
