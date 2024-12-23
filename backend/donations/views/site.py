@@ -55,6 +55,7 @@ class HomePage(TemplateView):
         context = {
             "title": "redirectioneaza.ro",
             "limit": settings.DONATIONS_LIMIT,
+            "month_limit": settings.DONATIONS_LIMIT_MONTH_NAME,
             "current_year": now.year,
         }
 
@@ -99,7 +100,7 @@ class AboutHandler(TemplateView):
 
 
 class NgoListHandler(TemplateView):
-    template_name = "all-ngos.html"
+    template_name = "public/all-ngos.html"
 
     @staticmethod
     @cache_decorator(timeout=settings.TIMEOUT_CACHE_NORMAL, cache_key=ALL_NGOS_CACHE_KEY)
@@ -111,6 +112,8 @@ class NgoListHandler(TemplateView):
         # TODO: add pagination
         context = {
             "title": "Toate ONG-urile",
+            "limit": settings.DONATIONS_LIMIT,
+            "month_limit": settings.DONATIONS_LIMIT_MONTH_NAME,
             "ngos": self._get_all_ngos(),
         }
 
