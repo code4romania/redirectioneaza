@@ -135,7 +135,7 @@ jobs:
         DATABASE_NAME: redirect
         DATABASE_USER: user
         DATABASE_PASSWORD: password
-        DATABASE_HOST: postgres
+        DATABASE_HOST: 127.0.0.1
         DATABASE_PORT: 5432
       run: |
         cd ./backend
