@@ -49,7 +49,7 @@ from donations.views.api import (
     SearchNgosApi,
     UpdateFromNgohub,
 )
-from donations.views.cron import CustomExport, NgoExport, NgoRemoveForms, Stats
+from donations.views.cron import CustomExport, NgoExport, NgoRemoveForms
 from donations.views.my_account import (
     ArchiveDownloadLinkView,
     MyAccountDetailsView,
@@ -137,7 +137,6 @@ urlpatterns = (
         #
         path("api/search/", SearchNgosApi.as_view(), name="api-search-ngos"),
         # Cron routes
-        path("cron/stats/", Stats.as_view(), name="cron-stats"),
         path("cron/ngos/remove-form/", NgoRemoveForms.as_view(), name="cron-ngo-remove-form"),
         path("cron/ngos/export/", NgoExport.as_view(), name="cron-ngo-export"),
         path("cron/export/custom/", CustomExport.as_view(), name="cron-custom-export"),
