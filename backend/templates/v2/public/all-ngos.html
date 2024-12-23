@@ -1,7 +1,37 @@
 {% extends "base.html" %}
 
 {% block content %}
-  {% include "public/components/all-ngos-banner.html" %}
+  <header class="-mt-16 bg-yellow-400">
+    <div class="container flex flex-col max-w-4xl gap-6 text-center pt-9 pb-14">
+      <h1 class="text-3xl font-bold text-center text-gray-900">
+        Explorează organizații
+      </h1>
 
-  {% include "public/components/all-ngos-list.html" %}
+      <p class="font-medium text-gray-900">
+        Fără să te coste nimic în plus, redirecționând, oferi un strop de putere în plus unui ONG care să facă bine și în numele tău. Poți opta pentru redistribuirea sumei până pe 25 Mai.
+      </p>
+    </div>
+  </header>
+
+
+  <section class="container grid gap-12">
+    <!-- Search and filters -->
+    {% include "public/components/ngo-search.html" %}
+
+    <div class="grid gap-x-8 gap-y-16 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-10 xl:gap-y-20">
+      <div class="col-span-full">
+        {% include "public/components/pagination.html" with page_obj=page_obj %}
+      </div>
+
+
+      {% for ngo in ngos %}
+        {% include "public/components/ngo-card.html" with ngo=ngo %}
+      {% endfor %}
+    </div>
+
+    <div class="col-span-full">
+      {% include "public/components/pagination.html" with page_obj=page_obj %}
+    </div>
+  </section>
+
 {% endblock %}
