@@ -2,11 +2,13 @@ on:
   push:
     branches:
       - 'main'
+      - 'refactor/frontend'
     tags:
       - 'v*'
     paths:
       - 'backend/**'
       - 'docker/**'
+      - '.github/workflows/build-image.yml'
 
 name: Build Docker image
 

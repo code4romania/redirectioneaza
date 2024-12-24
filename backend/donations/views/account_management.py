@@ -25,7 +25,7 @@ def django_login(request, user) -> None:
 
 
 class ForgotPasswordView(BaseVisibleTemplateView):
-    template_name = "resetare-parola.html"
+    template_name = "account/reset-password.html"
     title = _("Reset password")
 
     def get(self, request, *args, **kwargs):
@@ -93,8 +93,9 @@ class LoginView(BaseVisibleTemplateView):
 
         context.update(
             {
-                "account_button": _("Go to account"),
-                "section_title": _("Login through NGO Hub"),
+                "ngohub_site": settings.NGOHUB_HOME_BASE,
+                "account_button": _("Continue with NGO Hub"),
+                "section_title": _("I have an NGO Hub account"),
                 "form_action": reverse("amazon_cognito_login"),
             }
         )
@@ -153,7 +154,7 @@ class LogoutView(BaseVisibleTemplateView):
 
 
 class SetPasswordView(BaseVisibleTemplateView):
-    template_name = "parola-noua.html"
+    template_name = "account/set-password.html"
     title = _("Set New Password")
 
     def post(self, request, *args, **kwargs):
@@ -191,6 +192,7 @@ class SignupView(BaseVisibleTemplateView):
 
         context.update(
             {
+                "ngohub_site": settings.NGOHUB_HOME_BASE,
                 "account_button": _("Register new account"),
                 "account_button_is_external": True,
                 "section_title": _("Register through NGO Hub"),
@@ -277,7 +279,7 @@ class VerificationView(BaseVisibleTemplateView):
         p - reset user password
     """
 
-    template_name = "parola-noua.html"
+    template_name = "account/set-password.html"
     title = _("Verification")
 
     def get(self, request, *args, **kwargs):

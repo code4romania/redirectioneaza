@@ -1,27 +1,17 @@
-ARG NODE_VERSION=22.12.0
+ARG NODE_VERSION=22
 ARG PYTHON_VERSION=3.12.8
 
 
-FROM node:${NODE_VERSION}-bookworm AS frontend
+FROM node:${NODE_VERSION}-alpine as frontend
 
-# set up a user and group for bower since it's not working as root
-ARG USER=builduser
-ARG GROUP=${USER}
-ARG UID=10000
-ARG GID=10000
+WORKDIR /build
 
-RUN groupadd --gid ${GID} --non-unique ${GROUP} && \
-    useradd --create-home --shell /bin/bash --uid ${UID} --gid ${GID} --non-unique ${USER}
+COPY ./backend/assets assets
+COPY ./backend/templates templates
+COPY ./backend/package.json ./backend/package-lock.json ./backend/postcss.config.js ./backend/vite.config.js ./backend/tailwind.config.js ./
 
-USER ${USER}
-
-
-WORKDIR /home/${USER}/redirect/build
-ENV PATH /home/${USER}/redirect/build/node_modules/.bin:$PATH
-
-# install the frontend libraries:
-COPY ./backend/package.json ./backend/package-lock.json ./backend/bower.json ./backend/.bowerrc ./
-RUN npm cache clean --force && npm ci && bower install
+RUN npm ci --no-audit --ignore-scripts
+RUN npm run build
 
 
 FROM python:${PYTHON_VERSION}-bookworm AS backend
@@ -92,7 +82,7 @@ ENV PATH="${VIRTUAL_ENV}/bin:${PATH}"
 COPY --from=backend "${VIRTUAL_ENV}" "${VIRTUAL_ENV}"
 COPY ./backend/ /var/www/redirect/backend/
 
-COPY --from=frontend /home/builduser/redirect/build/bower_components/ /var/www/redirect/backend/bower_components/
+COPY --from=frontend /build/dist/ /var/www/redirect/backend/dist/
 
 
 ARG VERSION

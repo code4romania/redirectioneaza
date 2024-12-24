@@ -13,7 +13,6 @@ def environment(**options):
             "static": static,
             "reverse": reverse,
             "apex_reverse": apex_reverse,
-            "bower_components": settings.DEV_DEPENDECIES_LOCATION,
             "DEV": settings.ENVIRONMENT == "development",
             "PRODUCTION": settings.ENVIRONMENT == "production",
             "GOOGLE_ANALYTICS_ID": settings.GOOGLE_ANALYTICS_ID,

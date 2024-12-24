@@ -1,7 +1,6 @@
 import codecs
 import csv
 import logging
-import operator
 from datetime import datetime
 
 from django.core.exceptions import PermissionDenied
@@ -16,38 +15,6 @@ logger = logging.getLogger(__name__)
 
 
 # These CRON endpoints are only accessible by the Django Admin
-
-
-class Stats(TemplateView):
-    def get(self, request):
-        if not request.user.is_superuser:
-            raise PermissionDenied()
-
-        now = timezone.now()
-        start_of_year = datetime(now.year, 1, 1, 0, 0, 0, tzinfo=now.tzinfo)
-        # TODO: use aggregations for counting the totals in one step
-        donations = Donor.objects.filter(date_created__gte=start_of_year).values("ngo_id", "has_signed")
-
-        ngos = {}
-        signed = 0
-        for d in donations:
-            ngos[d["ngo_id"]] = ngos.get(d["ngo_id"], 0)
-
-            ngos[d["ngo_id"]] += 1
-
-            if d["has_signed"]:
-                signed += 1
-
-        sorted_x = sorted(ngos.items(), key=operator.itemgetter(1))
-
-        res = """
-        Formulare semnate: {} <br>
-        Top ngos: {}
-        """.format(
-            signed, sorted_x[len(sorted_x) - 10 :]
-        )
-
-        return HttpResponse(res)
 
 
 class CustomExport(TemplateView):
