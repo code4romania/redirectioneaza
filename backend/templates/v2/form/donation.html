@@ -1,0 +1,326 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block additional_headers %}
+  <meta property="og:title" content="{{ ngo.name }}"/>
+  <meta property="og:description" content="{{ ngo.description }}"/>
+  {% if ngo.logo %}
+    <meta property="og:image" content="{{ ngo.logo.url }}"/>
+    <meta property="og:image:secure_url" content="{{ ngo.logo.url }}"/>
+  {% endif %}
+
+  <meta property="og:type" content="website"/>
+
+  {# load the recaptcha api #}
+  <script src='https://www.google.com/recaptcha/api.js?hl=ro' async defer></script>
+{% endblock %}
+
+
+{% block content %}
+
+  {% if can_donate %}
+
+    <div class="container max-w-4xl">
+      <div class="prose prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-700">
+
+        <h1>
+          {% trans "Redirect easily and quickly" %}
+        </h1>
+
+        <p class="text-sm text-gray-400">
+          {% blocktrans trimmed %}
+            Since 2022, form 230 can be submitted online.
+            Fill in the form with the data from your ID,
+            sign it online, and it will be automatically sent to the organization.
+
+            Alternatively, your form will be generated, and you will be able to download the PDF,
+            but it will not reach the NGO.
+
+            We rely on you to print, sign the form by hand,
+            and send it to the NGO by mail or email,
+            or submit it directly to ANAF.
+          {% endblocktrans %}
+        </p>
+
+        <form>
+
+          <fieldset class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-5">
+
+            <div class="sm:col-span-2 sm:col-start-1">
+              <div class="mt-2">
+                <label>
+                  <span class="block text-sm/6 font-medium text-gray-900">
+                    {% trans "Last name" %}
+                  </span>
+                  <input
+                    type="text"
+                    name="last_name"
+                    id="last_name"
+                    autocomplete="family-name"
+                    required
+                    class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                </label>
+              </div>
+            </div>
+
+            <div class="sm:col-span-2">
+              <div class="mt-2">
+                <label>
+                  <span class="block text-sm/6 font-medium text-gray-900">
+                    {% trans "First name" %}
+                  </span>
+                  <input
+                    type="text"
+                    name="first_name"
+                    id="first_name"
+                    autocomplete="given-name"
+                    required
+                    class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                </label>
+              </div>
+            </div>
+
+            <div class="sm:col-span-1">
+              <div class="mt-2">
+                <label>
+                  <span class="block text-sm/6 font-medium text-gray-900">
+                    {% trans "Father's initial" %}
+                  </span>
+                  <input
+                    type="text"
+                    name="initial"
+                    id="initial"
+                    required
+                    class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                </label>
+              </div>
+            </div>
+
+            <div class="sm:col-span-4">
+              <div class="mt-2">
+                <label>
+                  <span class="block text-sm/6 font-medium text-gray-900">
+                    {% trans "Personal identification number" %}
+                  </span>
+                  <input
+                    type="text"
+                    name="cnp"
+                    id="cnp"
+                    required
+                    class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                </label>
+              </div>
+            </div>
+
+            <div class="sm:col-span-2">
+              <div class="mt-2">
+                <label>
+                  <span class="block text-sm/6 font-medium text-gray-900">
+                    {% trans "Email" %}
+                  </span>
+                  <input
+                    type="email"
+                    name="email_address"
+                    id="email_address"
+                    autocomplete="email"
+                    required
+                    class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                </label>
+              </div>
+            </div>
+
+            <div class="sm:col-span-2">
+              <div class="mt-2">
+                <label>
+                  <span class="block text-sm/6 font-medium text-gray-900">
+                    {% trans "Phone number" %}
+                  </span>
+                  <input
+                    type="tel"
+                    name="phone_number"
+                    id="phone_number"
+                    autocomplete="tel-national"
+                    class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                </label>
+              </div>
+            </div>
+
+          </fieldset>
+
+          <hr class="border-t border-gray-200 border-1">
+
+          <fieldset class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+
+            <h2 class="-mt-5 col-span-full text-base/7 font-semibold text-gray-900">
+              {% trans "Home address" %}
+            </h2>
+
+            <div class="sm:col-span-4 sm:col-start-1">
+              <div class="mt-2">
+                <label>
+                  <span class="block text-sm/6 font-medium text-gray-900">
+                    {% trans "Street name" %}
+                  </span>
+                  <input
+                    type="text"
+                    name="street_name"
+                    id="street_name"
+                    autocomplete="address-line1"
+                    required
+                    class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                </label>
+              </div>
+            </div>
+
+            <div class="sm:col-span-1">
+              <div class="mt-2">
+                <label>
+                  <span class="block text-sm/6 font-medium text-gray-900">
+                    {% trans "Number" %}
+                  </span>
+                  <input
+                    type="text"
+                    name="street_number"
+                    id="street_number"
+                    required
+                    class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                </label>
+              </div>
+            </div>
+
+            <div class="sm:col-span-1">
+              <div class="mt-2">
+                <label>
+                  <span class="block text-sm/6 font-medium text-gray-900">
+                    {% trans "Flat" %}
+                  </span>
+                  <input
+                    type="text"
+                    name="flat"
+                    id="flat"
+                    autocomplete="address-line2"
+                    class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                </label>
+              </div>
+            </div>
+
+            <div class="sm:col-span-2 sm:col-start-1">
+              <div class="mt-2">
+                <label>
+                  <span class="block text-sm/6 font-medium text-gray-900">
+                    {% trans "Entrance" %}
+                  </span>
+                  <input
+                    type="text"
+                    name="entrance"
+                    id="entrance"
+                    autocomplete="address-line3"
+                    class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                </label>
+              </div>
+            </div>
+
+            <div class="sm:col-span-2">
+              <div class="mt-2">
+                <label>
+                  <span class="block text-sm/6 font-medium text-gray-900">
+                    {% trans "Floor" %}
+                  </span>
+                  <input
+                    type="text"
+                    name="floor"
+                    id="floor"
+                    autocomplete="address-line4"
+                    class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                </label>
+              </div>
+            </div>
+
+            <div class="sm:col-span-2">
+              <div class="mt-2">
+                <label>
+                  <span class="block text-sm/6 font-medium text-gray-900">
+                    {% trans "Appartment" %}
+                  </span>
+                  <input
+                    type="text"
+                    name="appartment"
+                    id="appartment"
+                    autocomplete="address-line5"
+                    class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                </label>
+              </div>
+            </div>
+
+            <div class="sm:col-span-3 sm:col-start-1">
+              <div class="mt-2">
+                <label>
+                  <span class="block text-sm/6 font-medium text-gray-900">
+                    {% trans "County" %}
+                  </span>
+                  <select
+                    id="county"
+                    name="county"
+                    autocomplete="address-level1"
+                    required
+                    class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                    <option value="" class="select-placeholder">
+                      Județ
+                    </option>
+                    <optgroup label="București">
+                      {% for sector in '123456'|make_list %}
+                        <option value="{{ forloop.counter }}">Sector {{ forloop.counter }}</option>
+                      {% endfor %}
+                    </optgroup>
+                    {% for county_name in counties %}
+                      <option value="{{ county_name }}">{{ county_name }}</option>
+                    {% endfor %}
+                  </select>
+                </label>
+              </div>
+            </div>
+
+            <div class="sm:col-span-3">
+              <div class="mt-2">
+                <label>
+                  <span class="block text-sm/6 font-medium text-gray-900">
+                    {% trans "Locality" %}
+                  </span>
+                  <input
+                    type="text"
+                    name="locality"
+                    id="locality"
+                    autocomplete="address-level2"
+                    required
+                    class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                </label>
+              </div>
+            </div>
+
+          </fieldset>
+
+          <div class="items-center hidden text-center xl:flex gap-x-6 py-10">
+            <button
+              type="submit"
+              class="w-full text-center bg-amber-300 sm:text-base text-sm sm:px-6 sm:py-2 px-2 py-1 shadow-sm rounded-full text-gray-900 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
+              {% trans "Download form" %}
+            </button>
+            {% if ngo.is_accepting_forms %}
+              <button
+                type="submit"
+                class="w-full text-center bg-amber-300 sm:text-base text-sm sm:px-6 sm:py-2 px-2 py-1 shadow-sm rounded-full text-gray-900 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
+                {% trans "Sign form" %}
+              </button>
+            {% endif %}
+          </div>
+
+
+        </form>
+
+      </div>
+    </div>
+
+  {% endif %}
+
+{% endblock %}

@@ -174,7 +174,7 @@ class FormSignature(TemplateView):
 
 
 class TwoPercentHandler(TemplateView):
-    template_name = "twopercent.html"
+    template_name = "form/donation.html"
 
     def get(self, request, ngo_url, *args, **kwargs):
         try:
