@@ -161,7 +161,7 @@ module "ecs_redirectioneaza" {
     },
     {
       name  = "DONATIONS_LIMIT_DAY"
-      value = 27
+      value = 26
     },
     {
       name  = "GOOGLE_ANALYTICS_ID"
