@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-24 14:00+0200\n"
+"POT-Creation-Date: 2025-01-09 18:25+0200\n"
 "PO-Revision-Date: 2024-02-28 15:45+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -170,7 +170,7 @@ msgstr "Passwords do not match"
 msgid "Street"
 msgstr "Street"
 
-#: donations/forms/donation.py:10 templates/v2/form/donation.html:180
+#: donations/forms/donation.py:10 templates/v2/form/donation.html:97
 msgid "Number"
 msgstr "Number"
 
@@ -178,15 +178,15 @@ msgstr "Number"
 msgid "Building"
 msgstr "Building"
 
-#: donations/forms/donation.py:12 templates/v2/form/donation.html:212
+#: donations/forms/donation.py:12 templates/v2/form/donation.html:107
 msgid "Entrance"
 msgstr "Entrance"
 
-#: donations/forms/donation.py:13 templates/v2/form/donation.html:228
+#: donations/forms/donation.py:13 templates/v2/form/donation.html:112
 msgid "Floor"
 msgstr "Floor"
 
-#: donations/forms/donation.py:14
+#: donations/forms/donation.py:14 templates/v2/form/donation.html:117
 msgid "Apartment"
 msgstr "Apartment"
 
@@ -542,7 +542,7 @@ msgid "Donations per month"
 msgstr "Donations per month"
 
 #: donations/views/dashboard/ngo_dashboard.py:56
-#: templates/v2/form/donation.html:260
+#: templates/v2/form/donation.html:122
 msgid "County"
 msgstr "County"
 
@@ -651,7 +651,7 @@ msgstr "The IBAN number must contain only letters and digits"
 msgid "The IBAN number must start with 'RO'"
 msgstr "The IBAN number must start with 'RO'"
 
-#: donations/views/ngo.py:154 donations/views/ngo.py:400
+#: donations/views/ngo.py:154 donations/views/ngo.py:408
 msgid "Formularul tău de redirecționare"
 msgstr "Formularul tău de redirecționare"
 
@@ -1055,14 +1055,14 @@ msgid ""
 msgstr ""
 
 #: templates/v2/account/snippets/register-form.html:31
-#: templates/v2/form/donation.html:71
+#: templates/v2/form/donation.html:57
 #, fuzzy
 #| msgid "first name"
 msgid "First name"
 msgstr "first name"
 
 #: templates/v2/account/snippets/register-form.html:45
-#: templates/v2/form/donation.html:54
+#: templates/v2/form/donation.html:52
 #, fuzzy
 #| msgid "last name"
 msgid "Last name"
@@ -1161,11 +1161,11 @@ msgid ""
 "you give your colleagues access to the applications they work with every day."
 msgstr ""
 
-#: templates/v2/form/donation.html:28
+#: templates/v2/form/donation.html:29
 msgid "Redirect easily and quickly"
 msgstr ""
 
-#: templates/v2/form/donation.html:32
+#: templates/v2/form/donation.html:33
 msgid ""
 "Since 2022, form 230 can be submitted online. Fill in the form with the data "
 "from your ID, sign it online, and it will be automatically sent to the "
@@ -1175,62 +1175,76 @@ msgid ""
 "submit it directly to ANAF."
 msgstr ""
 
-#: templates/v2/form/donation.html:88
+#: templates/v2/form/donation.html:62
 #, fuzzy
 #| msgid "initial"
 msgid "Father's initial"
 msgstr "initial"
 
-#: templates/v2/form/donation.html:104
+#: templates/v2/form/donation.html:67
 msgid "Personal identification number"
 msgstr ""
 
-#: templates/v2/form/donation.html:120
+#: templates/v2/form/donation.html:72
 #, fuzzy
 #| msgid "email"
 msgid "Email"
 msgstr "email"
 
-#: templates/v2/form/donation.html:137
+#: templates/v2/form/donation.html:77
 #, fuzzy
 #| msgid "street number"
 msgid "Phone number"
 msgstr "street number"
 
-#: templates/v2/form/donation.html:156
+#: templates/v2/form/donation.html:88
 #, fuzzy
 #| msgid "address"
 msgid "Home address"
 msgstr "address"
 
-#: templates/v2/form/donation.html:163
+#: templates/v2/form/donation.html:92
 #, fuzzy
 #| msgid "street name"
 msgid "Street name"
 msgstr "street name"
 
-#: templates/v2/form/donation.html:196
+#: templates/v2/form/donation.html:102
 msgid "Flat"
 msgstr ""
 
-#: templates/v2/form/donation.html:244
-#, fuzzy
-#| msgid "Apartment"
-msgid "Appartment"
-msgstr "Apartment"
-
-#: templates/v2/form/donation.html:288
+#: templates/v2/form/donation.html:127
 msgid "Locality"
 msgstr ""
 
-#: templates/v2/form/donation.html:307
-msgid "Download form"
+#: templates/v2/form/donation.html:149
+#, fuzzy
+#| msgid "Sign In"
+msgid "Sign"
+msgstr "Sign In"
+
+#: templates/v2/form/donation.html:182
+#, fuzzy
+#| msgid "Login through NGO Hub"
+msgid "Continue without signing"
+msgstr "Login through NGO Hub"
+
+#: templates/v2/form/signature.html:43
+msgid "Add signature"
 msgstr ""
 
-#: templates/v2/form/donation.html:313
+#: templates/v2/form/signature.html:47
+msgid "Draw your signature in the canvas below."
+msgstr ""
+
+#: templates/v2/form/signature.html:66
+msgid "Reset"
+msgstr ""
+
+#: templates/v2/form/signature.html:75
 #, fuzzy
 #| msgid "Sign In Error"
-msgid "Sign form"
+msgid "Send form"
 msgstr "Sign In Error"
 
 #: templates/v2/redirect/footer.html:77

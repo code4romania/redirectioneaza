@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-24 14:00+0200\n"
+"POT-Creation-Date: 2025-01-09 18:25+0200\n"
 "PO-Revision-Date: 2024-03-07 11:27+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -172,7 +172,7 @@ msgstr "Parolele nu se potrivesc"
 msgid "Street"
 msgstr "Strada"
 
-#: donations/forms/donation.py:10 templates/v2/form/donation.html:180
+#: donations/forms/donation.py:10 templates/v2/form/donation.html:97
 msgid "Number"
 msgstr "Număr"
 
@@ -180,15 +180,15 @@ msgstr "Număr"
 msgid "Building"
 msgstr "Bloc"
 
-#: donations/forms/donation.py:12 templates/v2/form/donation.html:212
+#: donations/forms/donation.py:12 templates/v2/form/donation.html:107
 msgid "Entrance"
 msgstr "Scara"
 
-#: donations/forms/donation.py:13 templates/v2/form/donation.html:228
+#: donations/forms/donation.py:13 templates/v2/form/donation.html:112
 msgid "Floor"
 msgstr "Etaj"
 
-#: donations/forms/donation.py:14
+#: donations/forms/donation.py:14 templates/v2/form/donation.html:117
 msgid "Apartment"
 msgstr "Apartament"
 
@@ -530,7 +530,7 @@ msgid "Donations per month"
 msgstr "Donații pe lună"
 
 #: donations/views/dashboard/ngo_dashboard.py:56
-#: templates/v2/form/donation.html:260
+#: templates/v2/form/donation.html:122
 msgid "County"
 msgstr "Județ"
 
@@ -635,7 +635,7 @@ msgstr "IBAN-ul trebuie să conțină doar litere și cifre"
 msgid "The IBAN number must start with 'RO'"
 msgstr "IBAN-ul trebuie să înceapă cu 'RO'"
 
-#: donations/views/ngo.py:154 donations/views/ngo.py:400
+#: donations/views/ngo.py:154 donations/views/ngo.py:408
 msgid "Formularul tău de redirecționare"
 msgstr "Formularul tău de redirecționare"
 
@@ -1023,12 +1023,12 @@ msgstr ""
 "Înregistrează-te completând formularul de mai jos."
 
 #: templates/v2/account/snippets/register-form.html:31
-#: templates/v2/form/donation.html:71
+#: templates/v2/form/donation.html:57
 msgid "First name"
 msgstr "Prenume"
 
 #: templates/v2/account/snippets/register-form.html:45
-#: templates/v2/form/donation.html:54
+#: templates/v2/form/donation.html:52
 msgid "Last name"
 msgstr "Nume"
 
@@ -1133,11 +1133,11 @@ msgstr ""
 "În NGO Hub fiecare coleg de-al tău poate avea propriul său cont. Asigură-te "
 "că le oferi acces colegilor tăi la aplicațiile cu care lucrează zi de zi."
 
-#: templates/v2/form/donation.html:28
+#: templates/v2/form/donation.html:29
 msgid "Redirect easily and quickly"
 msgstr "Redirecționează simplu și rapid"
 
-#: templates/v2/form/donation.html:32
+#: templates/v2/form/donation.html:33
 msgid ""
 "Since 2022, form 230 can be submitted online. Fill in the form with the data "
 "from your ID, sign it online, and it will be automatically sent to the "
@@ -1153,49 +1153,61 @@ msgstr ""
 "vei imprima,semna formularul de mânăși îl vei trimite către ONG prin poștă "
 "sau email,sau îl vei depune direct la ANAF."
 
-#: templates/v2/form/donation.html:88
+#: templates/v2/form/donation.html:62
 msgid "Father's initial"
 msgstr "Inițiala tatălui"
 
-#: templates/v2/form/donation.html:104
+#: templates/v2/form/donation.html:67
 msgid "Personal identification number"
 msgstr "CNP"
 
-#: templates/v2/form/donation.html:120
+#: templates/v2/form/donation.html:72
 msgid "Email"
 msgstr "Email"
 
-#: templates/v2/form/donation.html:137
+#: templates/v2/form/donation.html:77
 msgid "Phone number"
 msgstr "Număr de telefon"
 
-#: templates/v2/form/donation.html:156
+#: templates/v2/form/donation.html:88
 msgid "Home address"
 msgstr "Adresă de domiciliu"
 
-#: templates/v2/form/donation.html:163
+#: templates/v2/form/donation.html:92
 msgid "Street name"
 msgstr "Stradă"
 
-#: templates/v2/form/donation.html:196
+#: templates/v2/form/donation.html:102
 msgid "Flat"
 msgstr "Bloc"
 
-#: templates/v2/form/donation.html:244
-msgid "Appartment"
-msgstr "Apartament"
-
-#: templates/v2/form/donation.html:288
+#: templates/v2/form/donation.html:127
 msgid "Locality"
 msgstr "Localitate"
 
-#: templates/v2/form/donation.html:307
-msgid "Download form"
-msgstr "Descarcă formular"
+#: templates/v2/form/donation.html:149
+msgid "Sign"
+msgstr "Semnează"
 
-#: templates/v2/form/donation.html:313
-msgid "Sign form"
-msgstr "Semnează formularul"
+#: templates/v2/form/donation.html:182
+msgid "Continue without signing"
+msgstr "Continuă fără a semna"
+
+#: templates/v2/form/signature.html:43
+msgid "Add signature"
+msgstr "Adaugă semnătura"
+
+#: templates/v2/form/signature.html:47
+msgid "Draw your signature in the canvas below."
+msgstr "Desenează semnătura în câmpul de mai jos."
+
+#: templates/v2/form/signature.html:66
+msgid "Reset"
+msgstr "Resetează"
+
+#: templates/v2/form/signature.html:75
+msgid "Send form"
+msgstr "Trimite formularul"
 
 #: templates/v2/redirect/footer.html:77
 msgid "Code for Romania"
@@ -1327,6 +1339,9 @@ msgstr "parolă veche"
 #: users/models.py:208
 msgid "Group"
 msgstr "Grup"
+
+#~ msgid "Download unsigned form"
+#~ msgstr "Descarcă formular nesemnat"
 
 #~ msgid "Personal identification"
 #~ msgstr "Informații personale"

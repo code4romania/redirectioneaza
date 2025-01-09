@@ -176,7 +176,12 @@ class FormSignature(TemplateView):
 class TwoPercentHandler(TemplateView):
     template_name = "form/donation.html"
 
-    def get(self, request, ngo_url, *args, **kwargs):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        request = self.request
+        ngo_url = kwargs.get("ngo_url", "")
+
         try:
             ngo = Ngo.objects.get(slug=ngo_url)
         except Ngo.DoesNotExist:
@@ -194,14 +199,17 @@ class TwoPercentHandler(TemplateView):
             request.session.pop("has_cnp", None)
             # also we can use request.session.clear(), but it might delete the logged-in user's session
 
-        context = {
-            "title": ngo.name,
-            "ngo": ngo,
-            "counties": settings.FORM_COUNTIES,
-            "limit": settings.DONATIONS_LIMIT,
-            "ngo_website_description": "",
-            "ngo_website": "",
-        }
+        context.update(
+            {
+                "title": ngo.name,
+                "ngo": ngo,
+                "counties": settings.FORM_COUNTIES,
+                "limit": settings.DONATIONS_LIMIT,
+                "month_limit": settings.DONATIONS_LIMIT_MONTH_NAME,
+                "ngo_website_description": "",
+                "ngo_website": "",
+            }
+        )
 
         # the ngo website
         ngo_website = ngo.website if ngo.website else None
@@ -243,7 +251,7 @@ class TwoPercentHandler(TemplateView):
         context["can_donate"] = can_donate
         context["is_admin"] = request.user.is_staff  # TODO: check this
 
-        return render(request, self.template_name, context)
+        return context
 
     def post(self, request, ngo_url):
         post = self.request.POST
