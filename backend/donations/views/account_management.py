@@ -45,8 +45,12 @@ class ForgotPasswordView(BaseVisibleTemplateView):
         except self.user_model.DoesNotExist:
             user = None
 
-        if user:
+        if user and not user.is_ngohub_user:
             self._send_password_reset_email(user)
+        elif user.is_ngohub_user:
+            # TODO: send an e-mail to the user
+            #       notify them that they should log in through NGO Hub
+            pass
 
         context["found"] = _("If the email address is valid, you will receive an email with instructions.")
 
