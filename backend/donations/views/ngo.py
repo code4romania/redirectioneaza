@@ -322,6 +322,9 @@ class TwoPercentHandler(TemplateView):
             if wants_to_sign == "True":
                 signature_required = True
 
+        # the new gdpr label
+        donor_dict["gdpr"] = post.get("gdpr") == "on"
+
         # if he would like the ngo to see the donation
         donor_dict["anonymous"] = post.get("anonim") != "on"
 
@@ -336,6 +339,7 @@ class TwoPercentHandler(TemplateView):
             "two_years": two_years,
             "is_social_service_viable": ngo.is_social_service_viable,
             "percent": "3,5%",
+            "gdpr": donor_dict["gdpr"],
         }
 
         if len(errors["fields"]):
