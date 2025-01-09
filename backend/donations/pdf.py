@@ -21,7 +21,7 @@ font_path = abs_path + "/static_extras/font/opensans.ttf"
 pdfmetrics.registerFont(TTFont("OpenSans", font_path))
 
 default_font_size = 15
-form_image_path = abs_path + "/static_extras/images/formular-2021.jpg"
+form_image_path = abs_path + "/static_extras/images/formular-2025.jpg"
 
 
 def format_ngo_account(ngo_account: str):
@@ -37,30 +37,32 @@ def format_ngo_account(ngo_account: str):
     return account
 
 
-def add_donor_data(c: Canvas, person: Dict):
-    donor_block_x = 681
-
-    # the first name
-    if len(person["first_name"]) > 18:
-        c.setFontSize(12)
-
-    c.drawString(75, donor_block_x - 22, person["first_name"])
-    c.setFontSize(default_font_size)
-
-    # father's first letter
-    c.drawString(300, donor_block_x, person["father"])
+def add_donor_data(start_y: int, c: Canvas, person: Dict):
+    donor_block_x = 70
+    donor_block_y = start_y - 57
 
     # the last name
     last_name = person["last_name"]
     if len(last_name) > 34:
         c.setFontSize(10)
 
-    c.drawString(75, donor_block_x, last_name)
+    c.drawString(donor_block_x, donor_block_y, last_name)
+    c.setFontSize(default_font_size)
+
+    # father's first letter
+    c.drawString(donor_block_x + 230, donor_block_y, person["father"])
+
+    # the first name
+    if len(person["first_name"]) > 18:
+        c.setFontSize(12)
+
+    c.drawString(donor_block_x, donor_block_y - 23, person["first_name"])
+    c.setFontSize(default_font_size)
 
     # =======================================
     # THIRD ROW
     #
-    third_row_x = donor_block_x - 45
+    third_row_y = donor_block_y - 45
 
     # the street
     street = person["street"]
@@ -72,7 +74,7 @@ def add_donor_data(c: Canvas, person: Dict):
     elif len(street) in range(24, 36):
         c.setFontSize(11)
 
-    c.drawString(67, third_row_x, street)
+    c.drawString(67, third_row_y, street)
     c.setFontSize(default_font_size)
 
     # număr
@@ -81,7 +83,7 @@ def add_donor_data(c: Canvas, person: Dict):
     elif len(person["number"]) > 3:
         c.setFontSize(10)
 
-    c.drawString(289, third_row_x, person["number"])
+    c.drawString(289, third_row_y, person["number"])
     c.setFontSize(default_font_size)
 
     #
@@ -89,19 +91,19 @@ def add_donor_data(c: Canvas, person: Dict):
 
     # =======================================
     # FOURTH ROW
-    fourth_row_x = donor_block_x - 67
+    fourth_row_y = donor_block_y - 67
 
     c.setFontSize(14)
     # bloc
-    c.drawString(49, fourth_row_x, person["bl"])
+    c.drawString(donor_block_x - 21, fourth_row_y, person["bl"])
     # scara
-    c.drawString(108, fourth_row_x, person["sc"])
+    c.drawString(donor_block_x + 38, fourth_row_y, person["sc"])
 
     # etaj
-    c.drawString(150, fourth_row_x, person["et"])
+    c.drawString(donor_block_x + 80, fourth_row_y, person["et"])
 
     # apartament
-    c.drawString(185, fourth_row_x, person["ap"])
+    c.drawString(donor_block_x + 115, fourth_row_y, person["ap"])
 
     # județ
     if len(person["county"]) <= 12:
@@ -109,24 +111,25 @@ def add_donor_data(c: Canvas, person: Dict):
     else:
         c.setFontSize(8)
 
-    c.drawString(255, fourth_row_x, person["county"])
+    c.drawString(donor_block_x + 185, fourth_row_y, person["county"])
     c.setFontSize(default_font_size)
     #
     # =======================================
 
     # oras
-    c.drawString(69, donor_block_x - 90, person["city"])
+    c.drawString(donor_block_x, donor_block_y - 90, person["city"])
 
     c.setFontSize(16)
 
     # cnp
-    start_x = 336
+    cnp_x = donor_block_x + 266
+    cnp_y = donor_block_y - 9
     for letter in person["cnp"]:
-        c.drawString(start_x, donor_block_x - 10, letter)
-        start_x += 18.5
+        c.drawString(cnp_x, cnp_y, letter)
+        cnp_x += 18.5
 
     # email
-    start_email_x = 368
+    start_email_x = donor_block_x + 296
     if person["email"]:
         if len(person["email"]) < 32:
             c.setFontSize(12)
@@ -135,28 +138,31 @@ def add_donor_data(c: Canvas, person: Dict):
         else:
             c.setFontSize(8)
 
-        c.drawString(start_email_x, third_row_x + 14, person["email"])
+        c.drawString(start_email_x, donor_block_y - 32, person["email"])
 
     # telephone
     if person["tel"]:
         c.setFontSize(12)
-        c.drawString(start_email_x, third_row_x - 15, person["tel"])
+        c.drawString(start_email_x, donor_block_y - 59, person["tel"])
 
     c.setFontSize(default_font_size)
 
 
-def add_ngo_data(c, ong):
-    start_ong_y = 449
+def add_ngo_data(start_y, c, ong):
+    start_ngo_y = start_y - 289
 
-    # the x mark
-    c.drawString(219, start_ong_y, "x")
+    # the x mark to support an NGO
+    c.drawString(220, start_ngo_y, "x")
 
     if ong.get("two_years"):
-        c.drawString(325, start_ong_y - 21, "x")
+        c.drawString(326, start_ngo_y - 20, "x")
+
+    if ong.get("gdpr") is True:
+        c.drawString(31, start_ngo_y - 130, "x")
 
     # the cif code
     c.setFontSize(9)
-    c.drawString(250, start_ong_y - 41, ong["cif"])
+    c.drawString(250, start_ngo_y - 39, ong["cif"])
 
     # the name
     org_name = ong["name"]
@@ -165,16 +171,16 @@ def add_ngo_data(c, ong):
     elif len(org_name) > 65:
         c.setFontSize(12)
 
-    c.drawString(186, start_ong_y - 64, org_name.encode("utf-8"))
+    c.drawString(186, start_ngo_y - 62, org_name.encode("utf-8"))
 
     c.setFontSize(11)
 
     # the bank account
     account = format_ngo_account(ong["account"])
-    c.drawString(110, start_ong_y - 86, account)
+    c.drawString(110, start_ngo_y - 84, account)
 
     if ong.get("percent"):
-        c.drawString(146, start_ong_y - 108, ong.get("percent"))
+        c.drawString(146, start_ngo_y - 106, ong.get("percent"))
 
 
 def create_pdf(person: Dict, ong: Dict):
@@ -208,7 +214,7 @@ def create_pdf(person: Dict, ong: Dict):
     packet = tempfile.TemporaryFile(mode="w+b")
 
     c: Canvas = canvas.Canvas(packet, A4)
-    width, height = A4
+    width, height = A4  # the A4 means: (w: 595.2755905511812, h: 841.8897637795277)
 
     # add the image as a background
 
@@ -218,19 +224,23 @@ def create_pdf(person: Dict, ong: Dict):
     c.setFont("OpenSans", default_font_size)
     c.setFontSize(default_font_size)
 
+    # the relative position of the year
+    # the bottom-left corner of the PDF is (x: 0, y: 0)
+    start_x = 305
+    start_y = 726
+
     # the year
     # this is the previous year
     year = str(datetime.now().year - 1)
-    start_x = 305
     for letter in year:
-        c.drawString(start_x, 736, letter)
+        c.drawString(start_x, start_y, letter)
         start_x += 18
 
     # DRAW DONOR DATA
     if person.get("first_name"):
-        add_donor_data(c, person)
+        add_donor_data(start_y, c, person)
 
-    add_ngo_data(c, ong)
+    add_ngo_data(start_y, c, ong)
 
     c.save()
 
@@ -271,7 +281,7 @@ def add_signature(pdf, image):
     drawing.scale(scaled_down, scaled_down)
 
     # add it to the PDF
-    renderPDF.draw(drawing, c, 166, 134)
+    renderPDF.draw(drawing, c, 166, 93)
 
     c.save()
     packet.seek(0)
