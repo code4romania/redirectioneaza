@@ -187,7 +187,7 @@ def delete_prefilled_form(ngo_id):
 
 
 class NgoDetailsView(BaseVisibleTemplateView):
-    template_name = "ngo/ngo-details.html"
+    template_name = "ngo-account/organization-data.html"
     title = _("Organization details")
 
     def get_context_data(self, **kwargs):
@@ -202,6 +202,7 @@ class NgoDetailsView(BaseVisibleTemplateView):
                 "counties": settings.FORM_COUNTIES_NATIONAL,
                 "user": user,
                 "ngo": ngo,
+                "ngo_url": self.request.build_absolute_uri(reverse("twopercent", kwargs={"ngo_url": ngo.slug})),
             }
         )
 

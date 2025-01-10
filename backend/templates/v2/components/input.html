@@ -1,7 +1,8 @@
 {% load i18n %}
 
 <label>
-  <span class="block text-sm/6 font-medium text-gray-900">
+
+  <span class="block text-sm/6 font-medium text-gray-500">
     {{ input_title }}
   </span>
 
@@ -12,8 +13,12 @@
       name="county"
       autocomplete="address-level1"
       {% if is_required %}required{% endif %}
+      {% if is_required %}required{% endif %}
+      {% if value %}value="{{ value }}"{% endif %}
+      {% if is_disabled %}disabled{% endif %}
       aria-describedby="input-error"
       class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-400 sm:text-sm/6">
+
       <option value="" class="select-placeholder">
         {{ input_title }}
       </option>
@@ -25,6 +30,7 @@
       {% for county_name in counties %}
         <option value="{{ county_name }}">{{ county_name }}</option>
       {% endfor %}
+
     </select>
 
   {% else %}
@@ -33,9 +39,11 @@
       id="{{ input_id }}"
       type="{{ input_type }}"
       name="{{ input_name }}"
-      autocomplete="{{ input_autocomplete }}"
+      {% if input_autocomplete %}autocomplete="{{ input_autocomplete }}"{% endif %}
       {% if is_required %}required{% endif %}
-      aria-describedby="input-error"
+      {% if value %}value="{{ value }}"{% endif %}
+      {% if placeholder %}placeholder="{{ placeholder }}"{% endif %}
+      {% if is_disabled %}disabled{% endif %}
       class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-400 sm:text-sm/6">
 
   {% endif %}
