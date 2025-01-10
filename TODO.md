@@ -20,7 +20,8 @@
 ### Files:
 
 - `templates/v2/socialaccount/login.html`
-
+- `templates/v2/account/errors/login/**`
 ### Issues:
 
 - [ ] The user isn't redirected to Cognito for login
+- [ ] The error pages need to be styled properly
