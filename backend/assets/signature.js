@@ -8,7 +8,6 @@ let clearButton = document.getElementById("signature-reset");
 let sendButton = document.getElementById("signature-send");
 
 let signaturePad = new SignaturePad(canvas, {
-
   backgroundColor: 'transparent'
 });
 
@@ -18,7 +17,7 @@ function resizeCanvas() {
     return;
   }
 
-  const ratio =  Math.max(window.devicePixelRatio || 1, 1);
+  const ratio = Math.max(window.devicePixelRatio || 1, 1);
 
   // This part causes the canvas to be cleared
   canvas.width = canvas.offsetWidth * ratio;
