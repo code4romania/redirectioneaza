@@ -1,5 +1,6 @@
 # Things to do to make the front-end work properly
 
+
 ## Donation form
 
 ### Files:
@@ -22,7 +23,21 @@
 
 - `templates/v2/socialaccount/login.html`
 - `templates/v2/account/errors/login/**`
+
 ### Issues:
 
 - [ ] The user isn't redirected to Cognito for login
 - [ ] The error pages need to be styled properly
+
+
+## Organization Data / NGO Profile
+
+### Files:
+
+- `templates/v2/ngo-account/**`
+
+### Issues:
+
+- [ ] The disabled form fields need to be styled properly
+- [ ] Connect the form to the BE properly
+- [ ] Check the data for changes when switching tabs

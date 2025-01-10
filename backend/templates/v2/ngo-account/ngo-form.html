@@ -1,0 +1,19 @@
+{% load i18n %}
+
+<div>
+  <form>
+    {% csrf_token %}
+
+    {% include "ngo-account/components/form-title.html" with hide_ngohub_button=True %}
+
+    <div class="grid grid-cols-1 gap-6">
+
+      {% trans "Oficial name" as input_title %}
+      {% include "components/input.html" with input_id="page_name" input_type="text" input_name="page_name" placeholder="Organization name" is_required=True is_disabled=True %}
+
+      {% trans "IBAN on form" as input_title %}
+      {% include "components/input.html" with input_id="iban" input_type="text" input_name="iban" placeholder="RO001234567812345678" is_required=True %}
+
+    </div>
+  </form>
+</div>
