@@ -13,6 +13,7 @@
 - [ ] Checks need to be done before the button to open the modal is clicked
 - [ ] Connect BE & FE for the donation form
 - [ ] Why is `x-trap.inert.noscroll="modalIsOpen"` displaying as a warning?
+- [ ] Figure out how to disable the signature script on other pages
 
 
 ## Login
