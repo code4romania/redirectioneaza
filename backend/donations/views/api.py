@@ -1,5 +1,6 @@
 import logging
 from datetime import date
+from typing import Dict, List
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
@@ -21,6 +22,7 @@ from ..models.ngos import ALL_NGOS_CACHE_KEY, Ngo, ngo_slug_validator
 from ..pdf import create_pdf
 from ..workers.update_organization import update_organization
 from .base import BaseTemplateView
+from .common import SearchMixin, get_ngo_response_item
 
 logger = logging.getLogger(__name__)
 
@@ -117,15 +119,23 @@ class NgosApi(TemplateView):
             if not ngo.slug:
                 continue
 
-            response.append(
-                {
-                    "name": ngo.name,
-                    "url": reverse("twopercent", kwargs={"ngo_url": ngo.slug}),
-                    "logo": ngo.logo.url if ngo.logo else None,
-                    "active_region": ngo.active_region,
-                    "description": ngo.description,
-                }
-            )
+            response.append(get_ngo_response_item(ngo))
+
+        return JsonResponse(response, safe=False)
+
+
+class SearchNgosApi(TemplateView, SearchMixin):
+    def get(self, request, *args, **kwargs):
+        queryset = Ngo.active
+
+        ngos_queryset = self.search(queryset)
+
+        response: List[Dict] = []
+        for ngo in ngos_queryset:
+            if not ngo.slug:
+                continue
+
+            response.append(get_ngo_response_item(ngo))
 
         return JsonResponse(response, safe=False)
 

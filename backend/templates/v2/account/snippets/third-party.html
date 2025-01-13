@@ -1,11 +1,13 @@
-{% load i18n allauth socialaccount %}
+{% load i18n allauth socialaccount static %}
 
 {% if not account_button %}
-    {% trans "Go to account" as account_button %}
+  {% trans "Go to account" as account_button %}
 {% endif %}
+
 {% if not section_title %}
-    {% trans "Access your account through NGO Hub" as section_title %}
+  {% trans "Access your account through NGO Hub" as section_title %}
 {% endif %}
+
 {% if not form_action %}
   {% if SOCIALACCOUNT_ENABLED %}
     {% url 'amazon_cognito_login' as form_action %}
@@ -14,39 +16,100 @@
   {% endif %}
 {% endif %}
 
-<div class="col-sm">
+<section class="">
+  <header class="flex flex-col items-center justify-center">
+    <img src="{% static 'images/hub.png' %}" alt="NGO Hub logo" class="w-auto h-24 mb-6"/>
 
-  <h2>
-    {{ section_title }}
-  </h2>
+    <h1 class="mb-2 text-3xl font-extrabold leading-9 text-center text-gray-900">
+      {{ section_title }}
+    </h1>
+  </header>
 
-  {% if SOCIALACCOUNT_ONLY %}
-    <p id="login-subtitle" class="title is-4">
-      {% trans "To access your account, you need to authenticate through NGO Hub." %}
+  <div class="font-medium prose text-center prose-p:text-gray-700">
+    {% if SOCIALACCOUNT_ONLY %}
+      <p id="login-subtitle">
+        {% trans "To access your account, you need to authenticate through NGO Hub." %}
+      </p>
+    {% endif %}
+
+    <p>
+      {% blocktrans trimmed %}
+        If you're a non-profit organization, you can benefit from all the solutions in the NGO-dedicated ecosystem through NGO Hub.
+        To access redirectioneaza.ro through your NGO Hub account, make sure:
+      {% endblocktrans %}
     </p>
-  {% endif %}
-
-  <p class="login-text">
-    {% blocktranslate trimmed %}
-      To access your account, click the
-      <strong>{{ account_button }}</strong>
-      button and you will be able to enter the platform using your
-      NGO Hub credentials.
-    {% endblocktranslate %}
-  </p>
-
-  <p class="login-text">
-    {% trans "After authentication, you will be redirected to your account." %}
-  </p>
-
-  <div id="allauth-login-form-container" class="col-2">
-    <a
-      class="btn btn-primary"
-      href="{{ form_action }}"
-      {% if account_button_is_external %}target="_blank"{% endif %}
-    >
-      {{ account_button }}
-    </a>
   </div>
 
-</div>
+  <div class="mx-auto mt-8 max-w-[368px]">
+    <dl class="grid gap-8 text-gray-500 text-base/7">
+      <div class="relative pl-9">
+        <dt class="font-medium text-gray-900">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="absolute left-0 text-cyan-700 top-1 size-5"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+          {% if page_type == "login" %}
+            {% trans "You have an active account in NGO Hub" %}
+          {% else %}
+            {% trans "Register your organization in NGO Hub" %}
+          {% endif %}
+        </dt>
+        <dd class="mt-2">
+          {% blocktrans trimmed %}
+            If you don't have an account in NGO Hub, you can create one for free.
+            Learn more about the benefits of NGO Hub
+          {% endblocktrans %}
+          <a class="text-base font-normal text-cyan-700" href="{{ ngohub_site }}">{% trans "here" %}</a>.
+        </dd>
+      </div>
+
+      <div class="relative pl-9">
+        <dt class="font-semibold text-gray-900">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="absolute left-0 text-cyan-700 top-1 size-5"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+          {% if page_type == "login" %}
+            {% trans "You have activated the Redirecționează platform in your NGO Hub account" %}
+          {% else %}
+            {% trans "Activate the Redirecționează application in your NGO Hub account" %}
+          {% endif %}
+        </dt>
+        <dd class="mt-2">
+          {% if page_type == "login" %}
+            {% trans "Check with your organization's administrator if access to this platform is correctly configured." %}
+          {% else %}
+            {% trans "Look for the Redirecționează application in the All applications section. It is one of the many applications offered for free to non-profit organizations in Romania." %}
+          {% endif %}
+        </dd>
+      </div>
+
+      <div class="relative pl-9">
+        <dt class="font-semibold text-gray-900">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="absolute left-0 text-cyan-700 top-1 size-5"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+          {% if page_type == "login" %}
+            {% trans "You have access permission from the organization's administrator in NGO Hub" %}
+          {% else %}
+            {% trans "Give access to your colleagues in NGO Hub" %}
+          {% endif %}
+        </dt>
+        <dd class="mt-2">
+          {% if page_type == "login" %}
+            {% trans "Check with your organization's administrator if they have given you access to the Redirecționează application." %}
+          {% else %}
+            {% trans "In NGO Hub, each of your colleagues can have their own account. Make sure you give your colleagues access to the applications they work with every day." %}
+          {% endif %}
+
+          {% comment %}
+            {% trans "Read more in the User Guide" %}
+          {% endcomment %}
+        </dd>
+      </div>
+    </dl>
+
+    <div id="allauth-login-form-container" class="flex mt-6 justify-stretch">
+      <a
+        class="w-full px-2 py-1 text-sm text-center text-gray-900 rounded-full shadow-sm bg-amber-300 sm:text-base sm:px-6 sm:py-2 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
+        href="{{ form_action }}"
+        {% if account_button_is_external %}target="_blank"{% endif %}
+      >
+        {{ account_button }}
+      </a>
+    </div>
+  </div>
+</section>
+

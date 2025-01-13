@@ -17,6 +17,7 @@ from donations.common.models_hashing import hash_id_secret
 ALL_NGOS_CACHE_KEY = "ALL_NGOS"
 ALL_NGO_IDS_CACHE_KEY = "ALL_NGO_IDS"
 FRONTPAGE_NGOS_KEY = "FRONTPAGE_NGOS"
+FRONTPAGE_STATS_KEY = "FRONTPAGE_NGOS_STATS"
 
 REGISTRATION_NUMBER_REGEX = r"^([A-Z]{2}|)\d{2,10}$"
 REGISTRATION_NUMBER_REGEX_SANS_VAT = r"^\d{2,10}$"
@@ -211,7 +212,7 @@ class Ngo(models.Model):
 
     # originally: accepts_forms
     # if the ngo accepts to receive donation forms through email
-    is_accepting_forms = models.BooleanField(verbose_name=_("is accepting forms"), db_index=True, default=False)
+    is_accepting_forms = models.BooleanField(verbose_name=_("is accepting forms"), db_index=True, default=True)
 
     # originally: active — the user cannot modify this property, it is set by the admin/by the NGO Hub settings
     is_active = models.BooleanField(verbose_name=_("is active"), db_index=True, default=True)

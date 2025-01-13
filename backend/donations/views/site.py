@@ -1,5 +1,6 @@
 import random
 from datetime import datetime
+from typing import Dict, List, Union
 
 from django.conf import settings
 from django.db.models import QuerySet
@@ -13,16 +14,41 @@ from partners.models import DisplayOrderingChoices
 from redirectioneaza.common.cache import cache_decorator
 
 from ..models.donors import Donor
-from ..models.ngos import ALL_NGO_IDS_CACHE_KEY, ALL_NGOS_CACHE_KEY, FRONTPAGE_NGOS_KEY, Ngo
+from ..models.ngos import ALL_NGO_IDS_CACHE_KEY, FRONTPAGE_NGOS_KEY, FRONTPAGE_STATS_KEY, Ngo
+from .common import SearchMixin
 
 
 class HomePage(TemplateView):
-    template_name = "index.html"
+    template_name = "public/home.html"
 
     @staticmethod
     @cache_decorator(timeout=settings.TIMEOUT_CACHE_LONG, cache_key_prefix=ALL_NGO_IDS_CACHE_KEY)
     def _get_list_of_ngo_ids() -> list:
         return list(Ngo.active.values_list("id", flat=True))
+
+    @cache_decorator(timeout=settings.TIMEOUT_CACHE_SHORT, cache_key_prefix=FRONTPAGE_STATS_KEY)
+    def _get_stats(self, now: datetime = None, ngo_queryset: QuerySet = None) -> List[Dict[str, Union[str, int]]]:
+        if now is None:
+            now = timezone.now()
+
+        if ngo_queryset is None:
+            ngo_queryset = Ngo.active
+
+        start_of_year = datetime(now.year, 1, 1, 0, 0, 0, tzinfo=now.tzinfo)
+        return [
+            {
+                "title": _("organizations registered in the platform"),
+                "value": ngo_queryset.count(),
+            },
+            {
+                "title": _("forms filled in") + " " + str(start_of_year.year),
+                "value": Donor.objects.filter(date_created__gte=start_of_year).count(),
+            },
+            {
+                "title": _("redirected to NGOs through the platform"),
+                "value": _("> €2 million"),
+            },
+        ]
 
     def get(self, request, *args, **kwargs):
         now = timezone.now()
@@ -30,6 +56,7 @@ class HomePage(TemplateView):
         context = {
             "title": "redirectioneaza.ro",
             "limit": settings.DONATIONS_LIMIT,
+            "month_limit": settings.DONATIONS_LIMIT_MONTH_NAME,
             "current_year": now.year,
         }
 
@@ -53,12 +80,8 @@ class HomePage(TemplateView):
             )
         else:
             ngo_queryset = Ngo.active
-            start_of_year = datetime(now.year, 1, 1, 0, 0, 0, tzinfo=now.tzinfo)
-            context["stats"] = {
-                "ngos": ngo_queryset.count(),
-                "forms": Donor.objects.filter(date_created__gte=start_of_year).count(),
-            }
 
+            context["stats"] = self._get_stats(now, ngo_queryset)
             context["ngos"] = self._get_random_ngos(ngo_queryset, num_ngos=min(4, ngo_queryset.count()))
 
         return render(request, self.template_name, context)
@@ -70,34 +93,41 @@ class HomePage(TemplateView):
 
 
 class AboutHandler(TemplateView):
-    template_name = "despre.html"
+    template_name = "public/about.html"
 
     def get(self, request, *args, **kwargs):
-        context = {"title": "Despre Redirectioneaza.ro"}
+        context = {"title": "Despre redirectioneaza.ro"}
         return render(request, self.template_name, context)
 
 
-class NgoListHandler(TemplateView):
-    template_name = "all-ngos.html"
+class NgoListHandler(SearchMixin):
+    template_name = "public/all-ngos.html"
+    context_object_name = "ngos"
+    queryset = Ngo.active
+    ordering = "name"
+    paginate_by = 8
 
-    @staticmethod
-    @cache_decorator(timeout=settings.TIMEOUT_CACHE_NORMAL, cache_key=ALL_NGOS_CACHE_KEY)
-    def _get_all_ngos() -> list:
-        return Ngo.active.order_by("name")
+    def get_queryset(self):
+        queryset = super().get_queryset()
 
-    def get(self, request, *args, **kwargs):
-        # TODO: the search isn't working
-        # TODO: add pagination
-        context = {
-            "title": "Toate ONG-urile",
-            "ngos": self._get_all_ngos(),
-        }
+        queryset = self.search(queryset)
 
-        return render(request, self.template_name, context)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update(
+            {
+                "title": "Toate ONG-urile",
+                "limit": settings.DONATIONS_LIMIT,
+                "month_limit": settings.DONATIONS_LIMIT_MONTH_NAME,
+            }
+        )
+        return context
 
 
 class NoteHandler(TemplateView):
-    template_name = "note.html"
+    template_name = "public/note.html"
 
     def get(self, request, *args, **kwargs):
         context = {
@@ -107,20 +137,8 @@ class NoteHandler(TemplateView):
         return render(request, self.template_name, context)
 
 
-class FAQHandler(TemplateView):
-    template_name = "faq.html"
-
-    def get(self, request, *args, **kwargs):
-        context = {
-            "title": _("Frequently Asked Questions"),
-            "contact_email": settings.CONTACT_EMAIL_ADDRESS,
-            "limit": settings.DONATIONS_LIMIT,
-        }
-        return render(request, self.template_name, context)
-
-
 class PolicyHandler(TemplateView):
-    template_name = "policy.html"
+    template_name = "public/policy.html"
 
     def get(self, request, *args, **kwargs):
         context = {"title": "Politica de confidențialitate"}
@@ -128,7 +146,7 @@ class PolicyHandler(TemplateView):
 
 
 class TermsHandler(TemplateView):
-    template_name = "terms.html"
+    template_name = "public/terms.html"
 
     def get(self, request, *args, **kwargs):
         context = {

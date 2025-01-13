@@ -1,0 +1,35 @@
+{% load i18n %}
+
+<div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-4">
+
+  <h2 class="sm:col-span-2 text-2xl text-bold text-gray-900">
+    {{ title }}
+  </h2>
+
+  {% if has_ngohub and not hide_ngohub_button %}
+    <div class="sm:col-span-1 sm:col-start-3">
+      {% trans "Get from NGO Hub" as button_title %}
+      {% url 'api-ngohub-refresh' as refresh_button %}
+      <button
+        type="submit"
+        formaction="{% url 'api-ngohub-refresh' %}"
+        name="refresh-with-ngohub"
+        formmethod="post"
+        class="w-full rounded-md px-3 py-2 text-sm font-semibold text-gray-800 border-amber-300 border-2 bg-white hover:bg-amber-200 no-underline">
+        {{ button_title }}
+      </button>
+    </div>
+
+  {% endif %}
+
+  <div class="sm:col-span-1 sm:col-start-4">
+    {% trans "Save changes" as button_title %}
+    <button
+      type="submit"
+      class="w-full rounded-md px-3 py-2 text-sm font-semibold text-gray-800 border-amber-300 border-2 bg-amber-300 hover:bg-amber-200 no-underline">
+      {{ button_title }}
+    </button>
+  </div>
+</div>
+
+<hr class="w-full border-gray-400 my-5">

@@ -1,0 +1,78 @@
+{% load i18n %}
+
+<div>
+  <form>
+    {% csrf_token %}
+
+    {% with disable_ngohub_fields=has_ngohub %}
+
+      {% include "ngo-account/components/form-title.html" %}
+
+      <div class="mt-10 p-4 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+
+        <div class="grid sm:col-span-6 sm:col-start-1 gap-6">
+          {% trans "Organization URL" as input_title %}
+          {% include "components/input.html" with input_id="organization-url" input_title=input_title input_type="text" input_name="organization-url" is_required=true value=ngo.slug %}
+        </div>
+
+        <hr class="w-full sm:col-span-6 border-gray-400 my-5">
+
+        <div class="grid sm:col-span-2 sm:col-start-1 gap-6">
+          {% trans "Name" as input_title %}
+          {% include "components/input.html" with input_id="name" input_title=input_title input_type="text" input_name="name" is_required=True is_disabled=disable_ngohub_fields value=ngo.name %}
+        </div>
+
+        <div class="grid sm:col-span-2 sm:col-start-1 gap-6">
+          {% trans "Logo" as input_title %}
+          {% include "components/input.html" with input_id="logo" input_title=input_title input_type="file" input_name="logo" is_required=True is_disabled=disable_ngohub_fields value=ngo.logo %}
+        </div>
+
+        <div class="grid sm:col-span-6 sm:col-start-1 gap-6">
+          {% trans "Organization description" as input_title %}
+          {% include "components/input.html" with input_id="description" input_title=input_title input_type="text" input_name="description" is_required=True is_disabled=disable_ngohub_fields value=ngo.description %}
+        </div>
+
+        <div class="grid sm:col-span-2 sm:col-start-1 gap-6">
+          {% trans "Organization website" as input_title %}
+          {% include "components/input.html" with input_id="website" input_title=input_title input_type="url" input_name="website" is_required=True is_disabled=disable_ngohub_fields value=ngo.website %}
+        </div>
+
+        <div class="grid sm:col-span-3 sm:col-start-1 gap-6">
+          {% trans "Organization contact e-mail" as input_title %}
+          {% include "components/input.html" with input_id="contact-email" input_title=input_title input_type="email" input_name="contact-email" is_required=True is_disabled=disable_ngohub_fields value=ngo.email %}
+        </div>
+
+        <div class="grid sm:col-span-3 gap-6">
+          {% trans "Display e-mail in the profile" as input_title %}
+          <div class="mt-8 flex gap-3">
+            {% include "components/checkbox-input.html" with input_id="display-email" input_title=input_title input_name="display-email" input_value=ngo.display_email %}
+          </div>
+        </div>
+
+        <div class="grid sm:col-span-3 sm:col-start-1 gap-6">
+          {% trans "Organization contact phone" as input_title %}
+          {% include "components/input.html" with input_id="contact-phone" input_title=input_title input_type="tel" input_name="contact-phone" is_required=True is_disabled=disable_ngohub_fields value=ngo.phone %}
+        </div>
+
+        <div class="grid sm:col-span-3 gap-6">
+          {% trans "Display phone in the profile" as input_title %}
+          <div class="mt-8 flex gap-3">
+            {% include "components/checkbox-input.html" with input_id="display-phone" input_title=input_title input_name="display-phone" input_value=ngo.display_email %}
+          </div>
+        </div>
+
+        <div class="grid sm:col-span-4 sm:col-start-1 gap-6">
+          {% trans "Organization address" as input_title %}
+          {% include "components/input.html" with input_id="address" input_title=input_title input_type="text" input_name="address" is_required=True is_disabled=disable_ngohub_fields value=ngo.address %}
+        </div>
+
+        <div class="grid sm:col-span-2 gap-6">
+          {% trans "County" as input_title %}
+          {% include "components/input.html" with input_id="county" input_title=input_title input_type="text" input_name="county" is_required=True is_disabled=disable_ngohub_fields value=ngo.county %}
+        </div>
+
+      </div>
+
+    {% endwith %}
+  </form>
+</div>
