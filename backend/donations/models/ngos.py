@@ -56,6 +56,9 @@ def ngo_slug_validator(value):
     if not value.islower():
         raise ValidationError(error_message)
 
+    if not re.match(r"^[a-z0-9-]+$", value):
+        raise ValidationError(error_message)
+
 
 def ngo_id_number_validator(value):
     reg_num: str = "".join([char for char in value.upper() if char.isalnum()])

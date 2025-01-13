@@ -17,7 +17,7 @@ from django.views.generic import TemplateView
 from redirectioneaza.common.cache import cache_decorator
 
 from ..models.jobs import Job, JobStatusChoices
-from ..models.ngos import ALL_NGOS_CACHE_KEY, Ngo
+from ..models.ngos import ALL_NGOS_CACHE_KEY, Ngo, ngo_slug_validator
 from ..pdf import create_pdf
 from ..workers.update_organization import update_organization
 from .base import BaseTemplateView
@@ -81,7 +81,10 @@ class CheckNgoUrl(BaseTemplateView):
         if not slug or not user and not user.is_staff:
             raise PermissionDenied()
 
-        if slug.lower() in cls.ngo_url_block_list:
+        if user.is_anonymous:
+            raise PermissionDenied()
+
+        if ngo_slug_validator(slug) in cls.ngo_url_block_list:
             return HttpResponseBadRequest()
 
         ngo_queryset = Ngo.objects
