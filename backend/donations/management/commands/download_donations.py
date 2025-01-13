@@ -1,6 +1,6 @@
 import logging
-
 import time
+
 from django.core.management import BaseCommand
 from django_q.models import Schedule
 from django_q.tasks import async_task
@@ -43,7 +43,7 @@ class Command(BaseCommand):
 
             logger.info(f"Download took {result} seconds.")
         else:
-            self.stdout.write(self.style.SUCCESS("Setting up download task for job with ID #{job_id}."))
+            self.stdout.write(self.style.SUCCESS(f"Setting up download task for job with ID #{job_id}."))
 
             success_message: str = f"set up download task for job with ID #{job_id}."
             self._run_async(job_id)

@@ -159,7 +159,6 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], ngo: Ngo, 
                     )
 
         csv_output = io.StringIO()
-        csv_output.write(codecs.BOM_UTF8)
         csv_writer = csv.writer(csv_output, dialect=csv.excel)
         csv_writer.writerow(
             [
@@ -211,10 +210,16 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], ngo: Ngo, 
                 ]
             )
 
-        # Attach a CSV file with all donor data
-        logger.info("Attaching the CSV to the ZIP")
-        with zip_archive.open("index.csv", mode="w", force_zip64=zip_64_flag) as handler:
-            handler.write(csv_output.getvalue().encode())
+        # Create the CSV file as a temporary file
+        with tempfile.TemporaryFile() as fp:
+            fp.write(codecs.BOM_UTF8)
+            fp.write(csv_output.getvalue().encode())
+
+            # Attach a CSV file with all donor data
+            logger.info("Attaching the CSV to the ZIP")
+            with zip_archive.open("index.csv", mode="w", force_zip64=zip_64_flag) as handler:
+                fp.seek(0)
+                handler.write(fp.read())
 
         _generate_xml_files(ngo, zip_archive, zip_64_flag, zip_timestamp, cnp_idx)
 
