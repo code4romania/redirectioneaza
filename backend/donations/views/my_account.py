@@ -14,7 +14,8 @@ from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.utils.decorators import method_decorator
-from django.utils.translation import gettext_lazy as _, ngettext_lazy
+from django.utils.translation import gettext_lazy as _
+from django.utils.translation import ngettext_lazy
 from django_q.tasks import async_task
 
 from redirectioneaza.common.cache import cache_decorator
@@ -326,8 +327,6 @@ class NgoDetailsView(BaseVisibleTemplateView):
         context = self.get_context_data()
         if errors:
             return render(request, self.template_name, context)
-
-        ngo.other_emails = ""
 
         if request.user.has_perm("users.can_view_old_dashboard"):
             ngo.is_verified = post.get("ong-verificat") == "on"
