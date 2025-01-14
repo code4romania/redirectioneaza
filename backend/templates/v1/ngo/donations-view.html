@@ -32,7 +32,7 @@
             {% endif %}
             <br>
             Deoarece operația de descărcare a declarațiilor poate dura mai mult timp, în funcție de numărul de donatori,
-            momentan puteți descărca o singură arhivă la fiecare {{ minutes_between_retries }} minute.
+            momentan puteți descărca o singură arhivă la fiecare {{ period_between_retries }}.
         </p>
     {% endif %}
 
@@ -67,8 +67,7 @@
                                 Descărcarea de declarații este momentan blocată pentru organizația ta.
                                 <br>
                                 Descărcarea de declarații este limitată la una singură la fiecare
-                                {{ minutes_between_retries }}
-                                minute.
+                                {{ period_between_retries }}.
                             </div>
                         {% endif %}
                         <button id="download-button" class="btn" type="submit"

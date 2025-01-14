@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-12 15:48+0200\n"
+"POT-Creation-Date: 2025-01-14 10:10+0200\n"
 "PO-Revision-Date: 2024-02-28 15:45+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -59,7 +59,7 @@ msgstr "Donations"
 
 #: donations/admin.py:137 donations/admin.py:258 donations/admin.py:308
 #: donations/models/donors.py:52 donations/models/jobs.py:28
-#: donations/models/ngos.py:251 partners/admin.py:12 users/models.py:72
+#: donations/models/ngos.py:254 partners/admin.py:12 users/models.py:72
 msgid "NGO"
 msgstr "NGO"
 
@@ -202,11 +202,11 @@ msgstr "wage"
 msgid "pension"
 msgstr "pension"
 
-#: donations/models/donors.py:56 donations/views/donations_download.py:167
+#: donations/models/donors.py:56 donations/views/donations_download.py:166
 msgid "last name"
 msgstr "last name"
 
-#: donations/models/donors.py:57 donations/views/donations_download.py:168
+#: donations/models/donors.py:57 donations/views/donations_download.py:167
 msgid "first name"
 msgstr "first name"
 
@@ -214,29 +214,29 @@ msgstr "first name"
 msgid "initials"
 msgstr "initials"
 
-#: donations/models/donors.py:60 donations/views/donations_download.py:170
+#: donations/models/donors.py:60 donations/views/donations_download.py:169
 msgid "CNP"
 msgstr "CNP"
 
-#: donations/models/donors.py:63 donations/views/donations_download.py:175
+#: donations/models/donors.py:63 donations/views/donations_download.py:174
 msgid "city"
 msgstr "city"
 
-#: donations/models/donors.py:71 donations/models/ngos.py:180
-#: donations/views/donations_download.py:174
+#: donations/models/donors.py:71 donations/models/ngos.py:183
+#: donations/views/donations_download.py:173
 msgid "county"
 msgstr "county"
 
-#: donations/models/donors.py:78 donations/models/ngos.py:178
+#: donations/models/donors.py:78 donations/models/ngos.py:181
 msgid "address"
 msgstr "address"
 
-#: donations/models/donors.py:81 donations/models/ngos.py:197
+#: donations/models/donors.py:81 donations/models/ngos.py:200
 msgid "telephone"
 msgstr "telephone"
 
-#: donations/models/donors.py:82 donations/models/ngos.py:199
-#: donations/views/donations_download.py:173
+#: donations/models/donors.py:82 donations/models/ngos.py:202
+#: donations/views/donations_download.py:172
 msgid "email"
 msgstr "email"
 
@@ -264,7 +264,7 @@ msgstr "If the user wants to donate for 2 years"
 msgid "Geo IP"
 msgstr "Geo IP"
 
-#: donations/models/donors.py:110 donations/views/donations_download.py:183
+#: donations/models/donors.py:110 donations/views/donations_download.py:182
 msgid "filename"
 msgstr "filename"
 
@@ -277,7 +277,7 @@ msgid "PDF file"
 msgstr "PDF file"
 
 #: donations/models/donors.py:121 donations/models/jobs.py:52
-#: donations/models/ngos.py:227 partners/models.py:54 users/models.py:88
+#: donations/models/ngos.py:230 partners/models.py:54 users/models.py:88
 msgid "date created"
 msgstr "date created"
 
@@ -332,174 +332,174 @@ msgid ""
 msgstr ""
 "%(value)s is not a valid identifier. The identifier must look like %(sample)s"
 
-#: donations/models/ngos.py:64
+#: donations/models/ngos.py:67
 msgid "The ID number cannot be all zeros"
 msgstr "The ID number cannot be all zeros"
 
-#: donations/models/ngos.py:67
+#: donations/models/ngos.py:70
 msgid "The ID number format is not valid"
 msgstr "The ID number format is not valid"
 
-#: donations/models/ngos.py:73
+#: donations/models/ngos.py:76
 msgid "The ID number must contain only digits"
 msgstr "The ID number must contain only digits"
 
-#: donations/models/ngos.py:76
+#: donations/models/ngos.py:79
 msgid "The ID number must be between 2 and 10 digits long"
 msgstr "The ID number must be between 2 and 10 digits long"
 
-#: donations/models/ngos.py:98
+#: donations/models/ngos.py:101
 msgid "The ID number is not valid"
 msgstr "The ID number is not valid"
 
-#: donations/models/ngos.py:118
+#: donations/models/ngos.py:121
 msgid "slug"
 msgstr "slug"
 
-#: donations/models/ngos.py:127
+#: donations/models/ngos.py:130
 msgid "Name"
 msgstr "Name"
 
-#: donations/models/ngos.py:128
+#: donations/models/ngos.py:131
 msgid "description"
 msgstr "description"
 
-#: donations/models/ngos.py:132
+#: donations/models/ngos.py:135
 msgid "NGO Hub organization ID"
 msgstr "NGO Hub organization ID"
 
-#: donations/models/ngos.py:138 donations/models/ngos.py:139
+#: donations/models/ngos.py:141 donations/models/ngos.py:142
 msgid "Last NGO Hub update"
 msgstr "Last NGO Hub update"
 
-#: donations/models/ngos.py:143
+#: donations/models/ngos.py:146
 msgid "logo"
 msgstr "logo"
 
-#: donations/models/ngos.py:151
+#: donations/models/ngos.py:154
 msgid "bank account"
 msgstr "bank account"
 
-#: donations/models/ngos.py:156
+#: donations/models/ngos.py:159
 msgid "registration number"
 msgstr "registration number"
 
-#: donations/models/ngos.py:165
+#: donations/models/ngos.py:168
 msgid "VAT ID"
 msgstr "VAT ID"
 
-#: donations/models/ngos.py:173
+#: donations/models/ngos.py:176
 msgid "registration validation failed"
 msgstr "registration validation failed"
 
-#: donations/models/ngos.py:188
+#: donations/models/ngos.py:191
 msgid "active region"
 msgstr "active region"
 
-#: donations/models/ngos.py:200
+#: donations/models/ngos.py:203
 msgid "website"
 msgstr "website"
 
-#: donations/models/ngos.py:203 users/models.py:80
+#: donations/models/ngos.py:206 users/models.py:80
 msgid "is verified"
 msgstr "is verified"
 
-#: donations/models/ngos.py:207
+#: donations/models/ngos.py:210
 msgid "has special status"
 msgstr "has special status"
 
-#: donations/models/ngos.py:211
+#: donations/models/ngos.py:214
 msgid "is accepting forms"
 msgstr "is accepting forms"
 
-#: donations/models/ngos.py:214 partners/models.py:38
+#: donations/models/ngos.py:217 partners/models.py:38
 msgid "is active"
 msgstr "is active"
 
-#: donations/models/ngos.py:218
+#: donations/models/ngos.py:221
 msgid "form with prefilled ngo data"
 msgstr "form with prefilled ngo data"
 
-#: donations/models/ngos.py:225
+#: donations/models/ngos.py:228
 msgid "Filename cache"
 msgstr "Filename cache"
 
-#: donations/models/ngos.py:228 partners/models.py:55 users/models.py:89
+#: donations/models/ngos.py:231 partners/models.py:55 users/models.py:89
 msgid "date updated"
 msgstr "date updated"
 
-#: donations/models/ngos.py:252 partners/admin.py:13 partners/models.py:52
+#: donations/models/ngos.py:255 partners/admin.py:13 partners/models.py:52
 #: redirectioneaza/settings/unfold.py:27
 msgid "NGOs"
 msgstr "NGOs"
 
-#: donations/views/account_management.py:30
+#: donations/views/account_management.py:29
 #, fuzzy
 #| msgid "old password"
 msgid "Reset password"
 msgstr "old password"
 
-#: donations/views/account_management.py:52
+#: donations/views/account_management.py:55
 msgid ""
 "If the email address is valid, you will receive an email with instructions."
 msgstr ""
 "If the email address is valid, you will receive an email with instructions."
 
-#: donations/views/account_management.py:74
+#: donations/views/account_management.py:77
 msgid "Reset redirectioneaza.ro password"
 msgstr "Reset redirectioneaza.ro password"
 
-#: donations/views/account_management.py:84
+#: donations/views/account_management.py:87
 #: templates/v2/socialaccount/login.html:5
 msgid "Sign In"
 msgstr "Sign In"
 
-#: donations/views/account_management.py:97
+#: donations/views/account_management.py:100
 #: templates/v2/account/snippets/third-party.html:4
 msgid "Go to account"
 msgstr "Go to account"
 
-#: donations/views/account_management.py:98
+#: donations/views/account_management.py:101
 msgid "Login through NGO Hub"
 msgstr "Login through NGO Hub"
 
-#: donations/views/account_management.py:143
+#: donations/views/account_management.py:146
 msgid "It seems that this email and password combination is incorrect."
 msgstr "It seems that this email and password combination is incorrect."
 
-#: donations/views/account_management.py:149
+#: donations/views/account_management.py:152
 #, fuzzy
 #| msgid "Sign In"
 msgid "Sign Out"
 msgstr "Sign In"
 
-#: donations/views/account_management.py:158
+#: donations/views/account_management.py:161
 msgid "Set New Password"
 msgstr ""
 
-#: donations/views/account_management.py:185
+#: donations/views/account_management.py:188
 #, fuzzy
 #| msgid "bank account"
 msgid "New account"
 msgstr "bank account"
 
-#: donations/views/account_management.py:195
+#: donations/views/account_management.py:198
 #, fuzzy
 #| msgid "Create an account"
 msgid "Register new account"
 msgstr "Create an account"
 
-#: donations/views/account_management.py:197
+#: donations/views/account_management.py:200
 #, fuzzy
 #| msgid "Login through NGO Hub"
 msgid "Register through NGO Hub"
 msgstr "Login through NGO Hub"
 
-#: donations/views/account_management.py:260
+#: donations/views/account_management.py:263
 msgid "Welcome to redirectioneaza.ro"
 msgstr "Welcome to redirectioneaza.ro"
 
-#: donations/views/account_management.py:282
+#: donations/views/account_management.py:285
 #, fuzzy
 #| msgid "description"
 msgid "Verification"
@@ -561,91 +561,105 @@ msgstr "Donations in %d"
 msgid "Documents ready for download"
 msgstr "Documents ready for download"
 
-#: donations/views/donations_download.py:166
+#: donations/views/donations_download.py:165
 msgid "no."
 msgstr "no."
 
-#: donations/views/donations_download.py:169
+#: donations/views/donations_download.py:168
 msgid "initial"
 msgstr "initial"
 
-#: donations/views/donations_download.py:171
+#: donations/views/donations_download.py:170
 msgid "duplicate"
 msgstr "duplicate"
 
-#: donations/views/donations_download.py:172
+#: donations/views/donations_download.py:171
 msgid "phone"
 msgstr "phone"
 
-#: donations/views/donations_download.py:176
+#: donations/views/donations_download.py:175
 msgid "full address"
 msgstr "full address"
 
-#: donations/views/donations_download.py:177
+#: donations/views/donations_download.py:176
 msgid "street name"
 msgstr "street name"
 
-#: donations/views/donations_download.py:178
+#: donations/views/donations_download.py:177
 msgid "street number"
 msgstr "street number"
 
-#: donations/views/donations_download.py:179
+#: donations/views/donations_download.py:178
 msgid "building"
 msgstr "building"
 
-#: donations/views/donations_download.py:180
+#: donations/views/donations_download.py:179
 msgid "entrance"
 msgstr "entrance"
 
-#: donations/views/donations_download.py:181
+#: donations/views/donations_download.py:180
 msgid "floor"
 msgstr "floor"
 
-#: donations/views/donations_download.py:182
+#: donations/views/donations_download.py:181
 msgid "apartment"
 msgstr "apartment"
 
-#: donations/views/donations_download.py:184
+#: donations/views/donations_download.py:183
 msgid "date"
 msgstr "date"
 
-#: donations/views/donations_download.py:185
+#: donations/views/donations_download.py:184
 msgid "duration"
 msgstr "duration"
 
-#: donations/views/my_account.py:33
+#: donations/views/my_account.py:34
 msgid "My Account Details"
 msgstr ""
 
-#: donations/views/my_account.py:59
+#: donations/views/my_account.py:60
 msgid "Download archive"
 msgstr ""
 
-#: donations/views/my_account.py:96
+#: donations/views/my_account.py:97
 #, fuzzy
 #| msgid "bank account"
 msgid "My Account"
 msgstr "bank account"
 
-#: donations/views/my_account.py:191
+#: donations/views/my_account.py:158
+#, python-format
+msgid "%(time)d minute"
+msgid_plural "%(time)d minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: donations/views/my_account.py:166
+#, python-format
+msgid "%(time)d hour"
+msgid_plural "%(time)d hours"
+msgstr[0] ""
+msgstr[1] ""
+
+#: donations/views/my_account.py:207
 #, fuzzy
 #| msgid "NGO Hub organization ID"
 msgid "Organization details"
 msgstr "NGO Hub organization ID"
 
-#: donations/views/my_account.py:308
+#: donations/views/my_account.py:324
 msgid "The URL is already used"
 msgstr "The URL is already used"
 
-#: donations/views/my_account.py:363
+#: donations/views/my_account.py:379
 msgid "The IBAN number must have 24 characters"
 msgstr "The IBAN number must have 24 characters"
 
-#: donations/views/my_account.py:366
+#: donations/views/my_account.py:382
 msgid "The IBAN number must contain only letters and digits"
 msgstr "The IBAN number must contain only letters and digits"
 
-#: donations/views/my_account.py:369
+#: donations/views/my_account.py:385
 msgid "The IBAN number must start with 'RO'"
 msgstr "The IBAN number must start with 'RO'"
 

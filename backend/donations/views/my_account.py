@@ -1,3 +1,4 @@
+import datetime
 from collections import OrderedDict
 from typing import List, Optional
 
@@ -13,7 +14,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.utils.decorators import method_decorator
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_lazy as _, ngettext_lazy
 from django_q.tasks import async_task
 
 from redirectioneaza.common.cache import cache_decorator
@@ -130,7 +131,7 @@ class MyAccountView(BaseVisibleTemplateView):
             "years": list(grouped_donors.keys()),
         }
 
-        download_expired = not now.date() > settings.DONATIONS_LIMIT + timezone.timedelta(
+        download_expired = not now.date() > settings.DONATIONS_LIMIT + datetime.timedelta(
             days=settings.TIMEDELTA_DONATIONS_LIMIT_DOWNLOAD_DAYS
         )
 
@@ -145,12 +146,27 @@ class MyAccountView(BaseVisibleTemplateView):
             last_job_date = ngo_jobs[0].date_created
             last_job_status = ngo_jobs[0].status
 
-            timedelta = timezone.timedelta(0)
+            timedelta = datetime.timedelta(0)
             if last_job_status != JobStatusChoices.ERROR:
-                timedelta = timezone.timedelta(minutes=settings.TIMEDELTA_FORMS_DOWNLOAD_MINUTES)
+                timedelta = datetime.timedelta(minutes=settings.TIMEDELTA_FORMS_DOWNLOAD_MINUTES)
 
             if last_job_date > now - timedelta:
                 last_job_was_recent = True
+
+        time_between_retries = settings.TIMEDELTA_FORMS_DOWNLOAD_MINUTES
+        period_between_retries = ngettext_lazy(
+            "%(time)d minute",
+            "%(time)d minutes",
+            time_between_retries,
+        ) % {"time": time_between_retries}
+
+        if time_between_retries >= 60:
+            time_between_retries = time_between_retries // 60
+            period_between_retries = ngettext_lazy(
+                "%(time)d hour",
+                "%(time)d hours",
+                time_between_retries,
+            ) % {"time": time_between_retries}
 
         has_signed_form = user_ngo.is_accepting_forms if user_ngo else False
 
@@ -173,7 +189,7 @@ class MyAccountView(BaseVisibleTemplateView):
             "disable_new_download": disable_forms_download,
             "disable_past_download": disable_past_download,
             "contact_email": settings.CONTACT_EMAIL_ADDRESS,
-            "minutes_between_retries": settings.TIMEDELTA_FORMS_DOWNLOAD_MINUTES,
+            "period_between_retries": period_between_retries,
             "has_signed_form": has_signed_form,
             "current_year": now.year,
             "ngo_url": ngo_url,
