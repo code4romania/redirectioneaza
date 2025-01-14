@@ -52,17 +52,14 @@ RUN python3 -m pip install --upgrade pip setuptools && \
     python3 -m pip install -r ./requirements-dev.txt
 
 # install the frontend libraries:
-COPY ./backend/package.json ./backend/bower.json /var/www/redirect/backend/
-RUN npm install -g npm bower && \
-    bower install --allow-root --config.interactive=false
+COPY ./backend/assets assets
+COPY ./backend/templates templates
+COPY ./backend/package.json ./backend/postcss.config.js ./backend/vite.config.js ./backend/tailwind.config.js ./
+
+RUN npm i
 
 # copy the backend source code:
 COPY ./backend/ /var/www/redirect/backend/
-RUN rm -rf ./_appengine_legacy
-
-RUN npm ci
-
-USER root
 
 
 # Make sure scripts in .local are usable:
