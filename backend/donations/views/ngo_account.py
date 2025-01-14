@@ -1,3 +1,4 @@
+import datetime
 from collections import OrderedDict
 from typing import List, Optional
 
@@ -19,13 +20,46 @@ from django_q.tasks import async_task
 from redirectioneaza.common.cache import cache_decorator
 from users.models import User
 
+from ..common.validation.registration_number import clean_registration_number, extract_vat_id, ngo_id_number_validator
 from ..models.donors import Donor
 from ..models.jobs import Job, JobStatusChoices
-from ..models.ngos import Ngo, ngo_id_number_validator
+from ..models.ngos import Ngo
 from .api import CheckNgoUrl
 from .base import BaseVisibleTemplateView
 
 UserModel = get_user_model()
+
+
+def validate_iban_number(bank_account) -> Optional[str]:
+    if not bank_account:
+        return None
+
+    if len(bank_account) != 24:
+        return _("The IBAN number must have 24 characters")
+
+    if not bank_account.isalnum():
+        return _("The IBAN number must contain only letters and digits")
+
+    if not bank_account.startswith("RO"):
+        return _("The IBAN number must start with 'RO'")
+
+    return None
+
+
+def validate_registration_number(ngo, registration_number) -> Optional[str]:
+    try:
+        ngo_id_number_validator(registration_number)
+    except ValidationError:
+        return f'CIF "{registration_number}" pare incorect'
+
+    reg_num_query: QuerySet[Ngo] = Ngo.objects.filter(registration_number=registration_number)
+    if ngo.pk:
+        reg_num_query = reg_num_query.exclude(pk=ngo.pk)
+
+    if reg_num_query.exists():
+        return f'CIF "{registration_number}" este înregistrat deja'
+
+    return ""
 
 
 class MyAccountDetailsView(BaseVisibleTemplateView):
@@ -130,7 +164,7 @@ class MyAccountView(BaseVisibleTemplateView):
             "years": list(grouped_donors.keys()),
         }
 
-        download_expired = not now.date() > settings.DONATIONS_LIMIT + timezone.timedelta(
+        download_expired = not now.date() > settings.DONATIONS_LIMIT + datetime.timedelta(
             days=settings.TIMEDELTA_DONATIONS_LIMIT_DOWNLOAD_DAYS
         )
 
@@ -145,9 +179,9 @@ class MyAccountView(BaseVisibleTemplateView):
             last_job_date = ngo_jobs[0].date_created
             last_job_status = ngo_jobs[0].status
 
-            timedelta = timezone.timedelta(0)
+            timedelta = datetime.timedelta(0)
             if last_job_status != JobStatusChoices.ERROR:
-                timedelta = timezone.timedelta(minutes=settings.TIMEDELTA_FORMS_DOWNLOAD_MINUTES)
+                timedelta = datetime.timedelta(minutes=settings.TIMEDELTA_FORMS_DOWNLOAD_MINUTES)
 
             if last_job_date > now - timedelta:
                 last_job_was_recent = True
@@ -186,7 +220,7 @@ def delete_prefilled_form(ngo_id):
     return Ngo.delete_prefilled_form(ngo_id)
 
 
-class NgoDetailsView(BaseVisibleTemplateView):
+class NewNgoDetailsView(BaseVisibleTemplateView):
     template_name = "ngo-account/organization-data.html"
     title = _("Organization details")
 
@@ -196,6 +230,10 @@ class NgoDetailsView(BaseVisibleTemplateView):
         user: User = self.request.user
         ngo: Ngo = user.ngo if user.ngo else None
 
+        has_ngohub = None
+        if ngo:
+            has_ngohub = ngo.ngohub_org_id is not None
+
         context.update(
             {
                 "title": "Date organizație",
@@ -203,15 +241,9 @@ class NgoDetailsView(BaseVisibleTemplateView):
                 "user": user,
                 "ngo": ngo,
                 "ngo_url": self.request.build_absolute_uri(reverse("twopercent", kwargs={"ngo_url": ngo.slug})),
-            }
-        )
-
-        if not ngo:
-            return context
-
-        context.update(
-            {
-                "has_ngohub": ngo.ngohub_org_id is not None,
+                # XXX: Temporarily disabled
+                "has_ngohub": has_ngohub,
+                # "has_ngohub": False,  # has_ngohub,
             }
         )
 
@@ -221,15 +253,133 @@ class NgoDetailsView(BaseVisibleTemplateView):
     def get(self, request, *args, **kwargs):
         user = request.user
 
-        if user.has_perm("users.can_view_old_dashboard"):
-            return redirect(reverse("admin-ngos"))
-
         if not user.is_authenticated or not user.ngo:
             return redirect(reverse("contul-meu"))
 
         context = self.get_context_data(**kwargs)
 
         return render(request, self.template_name, context)
+
+    @method_decorator(login_required(login_url=reverse_lazy("login")))
+    def post(self, request, *args, **kwargs):
+        post = request.POST
+        user = request.user
+
+        if not user.is_authenticated:
+            raise PermissionDenied()
+
+        context = self.get_context_data()
+
+        # TODO: move this to two separate pages
+        # TODO: add all the fields
+        current_tab = post.get("current-tab", "organization-data")
+        context["current_tab"] = current_tab
+
+        errors: List[str] = []
+
+        ngo: Ngo = user.ngo
+
+        must_refresh_prefilled_form = False
+        is_new_ngo = False
+
+        if not ngo:
+            is_new_ngo = True
+
+            ngo = Ngo()
+
+            ngo.is_verified = False
+            ngo.is_active = True
+
+        is_fully_editable = ngo.ngohub_org_id is None
+
+        if is_fully_editable:
+            registration_number = clean_registration_number(post.get("cif", ""))
+            registration_number_errors: str = validate_registration_number(ngo, registration_number)
+
+            if registration_number_errors:
+                errors.append(registration_number_errors)
+
+            vat_information = extract_vat_id(registration_number)
+
+            if ngo.registration_number != vat_information["registration_number"]:
+                ngo.registration_number = vat_information["registration_number"]
+                must_refresh_prefilled_form = True
+
+            if ngo.vat_id != vat_information["vat_id"]:
+                ngo.vat_id = vat_information["vat_id"]
+                must_refresh_prefilled_form = True
+
+            ngo_name = post.get("name", "").strip()
+            if ngo.name != ngo_name:
+                ngo.name = ngo_name
+
+            ngo.phone = post.get("contact-phone", "").strip()
+            ngo.email = post.get("contact-email", "").strip()
+
+            ngo.website = post.get("website", "").strip()
+            ngo.address = post.get("address", "").strip()
+            ngo.county = post.get("county", "").strip()
+            ngo.active_region = post.get("active-region", "").strip()
+
+        ngo.display_email = post.get("display-email", "").strip() == "on"
+        ngo.display_phone = post.get("display-phone", "").strip() == "on"
+
+        if errors:
+            return render(request, self.template_name, context)
+
+        if is_new_ngo:
+            user.ngo = ngo
+            user.save()
+        elif must_refresh_prefilled_form:
+            async_task("donations.views.ngo_account.delete_prefilled_form", ngo.id)
+
+        return render(request, self.template_name, context)
+
+
+class NgoDetailsView(BaseVisibleTemplateView):
+    template_name = "ngo-account/organization-data.html"
+    title = _("Organization details")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # user: User = self.request.user
+        # ngo: Ngo = user.ngo if user.ngo else None
+        #
+        # context.update(
+        #     {
+        #         "title": "Date organizație",
+        #         "counties": settings.FORM_COUNTIES_NATIONAL,
+        #         "user": user,
+        #         "ngo": ngo,
+        #         "ngo_url": self.request.build_absolute_uri(reverse("twopercent", kwargs={"ngo_url": ngo.slug})),
+        #     }
+        # )
+        #
+        # if not ngo:
+        #     return context
+        #
+        # context.update(
+        #     {
+        #         "has_ngohub": ngo.ngohub_org_id is not None,
+        #     }
+        # )
+
+        return context
+
+    # @method_decorator(login_required(login_url=reverse_lazy("login")))
+    # def get(self, request, *args, **kwargs):
+    #     user = request.user
+    #
+    #     if user.has_perm("users.can_view_old_dashboard"):
+    #         return redirect(reverse("admin-ngos"))
+    #
+    #     if not user.is_authenticated or not user.ngo:
+    #         return redirect(reverse("contul-meu"))
+    #
+    #     context = self.get_context_data(**kwargs)
+    #
+    #     return render(request, self.template_name, context)
 
     @method_decorator(login_required(login_url=reverse_lazy("login")))
     def post(self, request, *args, **kwargs):
@@ -328,7 +478,7 @@ class NgoDetailsView(BaseVisibleTemplateView):
 
         # Delete the NGO's old prefilled form
         if must_refresh_prefilled_form:
-            async_task("donations.views.my_account.delete_prefilled_form", ngo.id)
+            async_task("donations.views.ngo_account.delete_prefilled_form", ngo.id)
 
         if is_new_ngo:
             user.ngo = ngo

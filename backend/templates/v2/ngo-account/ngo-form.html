@@ -1,19 +1,27 @@
 {% load i18n %}
 
 <div>
-  <form>
+  <form method="post" enctype="multipart/form-data" action="{% url 'organization' %}">
     {% csrf_token %}
 
     {% include "ngo-account/components/form-title.html" with hide_ngohub_button=True %}
 
-    <div class="grid grid-cols-1 gap-6">
+    <fieldset>
+      <div class="grid grid-cols-1 gap-12">
 
-      {% trans "Oficial name" as input_title %}
-      {% include "components/input.html" with input_id="page_name" input_type="text" input_name="page_name" placeholder="Organization name" is_required=True is_disabled=True %}
+        <input type="hidden" name="current-tab" value="form">
 
-      {% trans "IBAN on form" as input_title %}
-      {% include "components/input.html" with input_id="iban" input_type="text" input_name="iban" placeholder="RO001234567812345678" is_required=True %}
+        {% trans "Titlu formular" as input_title %}
+        {% include "components/input/input.html" with input_id="page_name" input_type="text" input_name="page_name" placeholder="Organization name" is_required=True is_disabled=True value=ngo.name %}
 
-    </div>
+        {% trans "Form description" as input_title %}
+        {% include "components/input/textarea.html" with input_id="description" input_title=input_title input_type="textarea" input_name="description" is_required=True value=ngo.description %}
+
+        {% trans "IBAN on form" as input_title %}
+        {% include "components/input/input.html" with input_id="iban" input_type="text" input_name="iban" placeholder="RO001234567812345678" is_required=True %}
+
+      </div>
+    </fieldset>
+
   </form>
 </div>

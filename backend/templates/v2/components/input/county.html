@@ -1,0 +1,37 @@
+{% extends 'components/input/base.html' %}
+
+{% block input %}
+
+  <select
+    id="{{ input_id }}"
+    name="{{ input_name }}"
+    autocomplete="address-level1"
+    {% if is_required %}required{% endif %}
+    {% if is_required %}required{% endif %}
+    {% if value %}value="{{ value }}"{% endif %}
+    {% if is_disabled %}disabled{% endif %}
+    class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-400 sm:text-sm/6">
+
+    <option value="" class="select-placeholder">
+      {{ input_title }}
+    </option>
+    <optgroup label="București">
+      {% for sector in '123456'|make_list %}
+        <option
+          value="{{ forloop.counter }}"
+          {% if number == county %}selected{% endif %}>
+          Sector {{ forloop.counter }}
+        </option>
+      {% endfor %}
+    </optgroup>
+    {% for county_name in counties %}
+      <option
+        value="{{ county_name }}"
+        {% if county_name == county %}selected{% endif %}>
+        {{ county_name }}
+      </option>
+    {% endfor %}
+  </select>
+
+
+{% endblock %}

@@ -50,13 +50,13 @@ from donations.views.api import (
     UpdateFromNgohub,
 )
 from donations.views.cron import CustomExport, NgoExport, NgoRemoveForms
-from donations.views.my_account import (
+from donations.views.ngo_account import (
     ArchiveDownloadLinkView,
     MyAccountDetailsView,
     MyAccountView,
-    NgoDetailsView,
+    NewNgoDetailsView,
 )
-from donations.views.ngo import DonationSucces, FormSignature, OwnFormDownloadLinkHandler, TwoPercentHandler
+from donations.views.redirections import DonationSucces, FormSignature, OwnFormDownloadLinkHandler, TwoPercentHandler
 from donations.views.site import (
     AboutHandler,
     HealthCheckHandler,
@@ -108,7 +108,7 @@ urlpatterns = (
         path("password/", SetPasswordView.as_view(), name="password"),
         # my account
         path("contul-meu/", MyAccountView.as_view(), name="contul-meu"),
-        path("organizatia/", NgoDetailsView.as_view(), name="organization"),
+        path("organizatia/", NewNgoDetailsView.as_view(), name="organization"),
         path("asociatia/", RedirectView.as_view(pattern_name="organization", permanent=True)),
         path("date-cont/", MyAccountDetailsView.as_view(), name="date-contul-meu"),
         path(

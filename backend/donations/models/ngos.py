@@ -1,7 +1,6 @@
 import logging
 import re
 from functools import partial
-from typing import List, Tuple
 
 from django.conf import settings
 from django.core.cache import cache
@@ -13,15 +12,12 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from donations.common.models_hashing import hash_id_secret
+from donations.common.validation.registration_number import REGISTRATION_NUMBER_REGEX_WITH_VAT, ngo_id_number_validator
 
 ALL_NGOS_CACHE_KEY = "ALL_NGOS"
 ALL_NGO_IDS_CACHE_KEY = "ALL_NGO_IDS"
 FRONTPAGE_NGOS_KEY = "FRONTPAGE_NGOS"
 FRONTPAGE_STATS_KEY = "FRONTPAGE_NGOS_STATS"
-
-REGISTRATION_NUMBER_REGEX = r"^([A-Z]{2}|)\d{2,10}$"
-REGISTRATION_NUMBER_REGEX_SANS_VAT = r"^\d{2,10}$"
-REGISTRATION_NUMBER_REGEX_WITH_VAT = r"^[A-Z]{2}\d{2,10}$"
 
 logger = logging.getLogger(__name__)
 
@@ -56,47 +52,6 @@ def ngo_slug_validator(value):
 
     if not value.islower():
         raise ValidationError(error_message)
-
-
-def ngo_id_number_validator(value):
-    reg_num: str = "".join([char for char in value.upper() if char.isalnum()])
-
-    if reg_num == len(reg_num) * "0":
-        raise ValidationError(_("The ID number cannot be all zeros"))
-
-    if not re.match(REGISTRATION_NUMBER_REGEX, reg_num):
-        raise ValidationError(_("The ID number format is not valid"))
-
-    if re.match(REGISTRATION_NUMBER_REGEX_WITH_VAT, reg_num):
-        reg_num = value[2:]
-
-    if not reg_num.isdigit():
-        raise ValidationError(_("The ID number must contain only digits"))
-
-    if 2 > len(reg_num) or len(reg_num) > 10:
-        raise ValidationError(_("The ID number must be between 2 and 10 digits long"))
-
-    if not settings.ENABLE_FULL_CUI_VALIDATION:
-        return
-
-    control_key: str = "753217532"
-
-    reversed_key: List[int] = [int(digit) for digit in control_key[::-1]]
-    reversed_cif: List[int] = [int(digit) for digit in reg_num[::-1]]
-
-    cif_control_digit: int = reversed_cif.pop(0)
-
-    cif_key_pairs: Tuple[int, ...] = tuple(
-        cif_digit * key_digit for cif_digit, key_digit in zip(reversed_cif, reversed_key)
-    )
-    control_result: int = sum(cif_key_pairs) * 10 % 11
-
-    if control_result == cif_control_digit:
-        return
-    elif control_result == 10 and cif_control_digit == 0:
-        return
-
-    raise ValidationError(_("The ID number is not valid"))
 
 
 class NgoActiveManager(models.Manager):
@@ -194,10 +149,12 @@ class Ngo(models.Model):
         db_index=True,
     )
 
-    # originally: tel
     phone = models.CharField(verbose_name=_("telephone"), blank=True, null=False, default="", max_length=30)
-
     email = models.EmailField(verbose_name=_("email"), blank=True, null=False, default="", db_index=True)
+
+    display_email = models.BooleanField(verbose_name=_("display email"), db_index=True, default=False)
+    display_phone = models.BooleanField(verbose_name=_("display phone"), db_index=True, default=False)
+
     website = models.URLField(verbose_name=_("website"), blank=True, null=False, default="")
 
     # originally: verified
@@ -282,6 +239,10 @@ class Ngo(models.Model):
 
         if commit:
             self.save()
+
+    @property
+    def full_registration_number(self):
+        return f"{self.vat_id}{self.registration_number}" if self.vat_id else self.registration_number
 
     @staticmethod
     def delete_prefilled_form(ngo_id):

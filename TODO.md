@@ -1,6 +1,17 @@
 # Things to do to make the front-end work properly
 
 
+## Dockerfile
+
+### Files:
+
+- `docker/dockerfiles/Dockerfile.dev`
+
+### Issues:
+
+- [ ] NPM doesn't install packages properly and uses local packages instead
+
+
 ## Donation form
 
 ### Files:
@@ -41,3 +52,5 @@
 - [ ] The disabled form fields need to be styled properly
 - [ ] Connect the form to the BE properly
 - [ ] Check the data for changes when switching tabs
+- [ ] The "save" & "get from NGO Hub" buttons should be styled the same
+- [ ] Max characters validation for description & other fields
