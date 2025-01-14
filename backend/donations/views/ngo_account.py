@@ -550,8 +550,6 @@ class OldNgoDetailsView(BaseVisibleTemplateView):
         if errors:
             return render(request, self.template_name, context)
 
-        ngo.other_emails = ""
-
         if request.user.has_perm("users.can_view_old_dashboard"):
             ngo.is_verified = post.get("ong-verificat") == "on"
             ngo.is_active = post.get("ong-activ") == "on"
