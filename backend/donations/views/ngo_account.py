@@ -30,7 +30,7 @@ from .base import BaseVisibleTemplateView
 UserModel = get_user_model()
 
 
-def validate_iban_number(bank_account) -> Optional[str]:
+def validate_iban(bank_account) -> Optional[str]:
     if not bank_account:
         return None
 
@@ -220,17 +220,116 @@ def delete_prefilled_form(ngo_id):
     return Ngo.delete_prefilled_form(ngo_id)
 
 
-class NgoBaseView(BaseVisibleTemplateView): ...
+class NgoBaseView(BaseVisibleTemplateView):
+    title = _("Organization details")
+    tab_title = None
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        user: User = self.request.user
+        ngo: Ngo = user.ngo if user.ngo else None
+
+        context.update(
+            {
+                "user": user,
+                "ngo": ngo,
+                "title": self.title,
+                "current_tab": self.tab_title,
+            }
+        )
+
+        return context
+
+    @method_decorator(login_required(login_url=reverse_lazy("login")))
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+
+        return render(request, self.template_name, context)
 
 
 class NgoFormsView(NgoBaseView):
     template_name = "ngo-account/ngo-form.html"
-    title = _("Organization details")
+    title = _("Organization forms")
+    tab_title = "form"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        ngo: Ngo = context["ngo"]
+
+        ngo_url = ""
+        if ngo:
+            ngo_url = self.request.build_absolute_uri(reverse("twopercent", kwargs={"ngo_url": ngo.slug}))
+
+        context.update(
+            {
+                "ngo_url": ngo_url,
+            }
+        )
+
+        return context
+
+    @method_decorator(login_required(login_url=reverse_lazy("login")))
+    def get(self, request, *args, **kwargs):
+        user = request.user
+
+        if not user.ngo:
+            return redirect(reverse("organization-presentation"))
+
+        return super().get(request, *args, **kwargs)
+
+    @method_decorator(login_required(login_url=reverse_lazy("login")))
+    def post(self, request, *args, **kwargs):
+        post = request.POST
+        user = request.user
+
+        if not user.is_authenticated:
+            raise PermissionDenied()
+
+        context = self.get_context_data()
+
+        errors: List[str] = []
+
+        ngo: Ngo = user.ngo
+
+        must_refresh_prefilled_form = False
+
+        ngo_slug = post.get("organization-slug", "").strip().lower()
+        ngo_slug_errors = CheckNgoUrl.validate_ngo_slug(user, ngo_slug)
+        ngo.slug = ngo_slug
+
+        if isinstance(ngo_slug_errors, HttpResponseBadRequest):
+            errors.append(_("The URL is already used"))
+
+        bank_account = post.get("iban", "").strip().upper().replace(" ", "").replace("<", "").replace(">", "")[:34]
+        bank_account_errors: str = validate_iban(bank_account)
+        if ngo.bank_account != bank_account:
+            ngo.bank_account = bank_account
+            must_refresh_prefilled_form = True
+
+        ngo.description = post.get("description", "").strip()
+
+        if bank_account_errors:
+            errors.append(bank_account_errors)
+
+        if errors:
+            return render(request, self.template_name, context)
+
+        ngo.save()
+
+        if must_refresh_prefilled_form:
+            async_task("donations.views.my_account.delete_prefilled_form", ngo.id)
+
+        context["ngo"] = ngo
+
+        return render(request, self.template_name, context)
 
 
 class NgoDetailsView(NgoBaseView):
     template_name = "ngo-account/ngo-presentation.html"
     title = _("Organization details")
+    tab_title = "presentation"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -244,29 +343,12 @@ class NgoDetailsView(NgoBaseView):
 
         context.update(
             {
-                "title": "Date organizație",
                 "counties": settings.FORM_COUNTIES_NATIONAL,
-                "user": user,
-                "ngo": ngo,
-                "ngo_url": self.request.build_absolute_uri(reverse("twopercent", kwargs={"ngo_url": ngo.slug})),
-                # XXX: Temporarily disabled
                 "has_ngohub": has_ngohub,
-                # "has_ngohub": False,  # has_ngohub,
             }
         )
 
         return context
-
-    @method_decorator(login_required(login_url=reverse_lazy("login")))
-    def get(self, request, *args, **kwargs):
-        user = request.user
-
-        if not user.is_authenticated or not user.ngo:
-            return redirect(reverse("contul-meu"))
-
-        context = self.get_context_data(**kwargs)
-
-        return render(request, self.template_name, context)
 
     @method_decorator(login_required(login_url=reverse_lazy("login")))
     def post(self, request, *args, **kwargs):
@@ -277,11 +359,6 @@ class NgoDetailsView(NgoBaseView):
             raise PermissionDenied()
 
         context = self.get_context_data()
-
-        # TODO: move this to two separate pages
-        # TODO: add all the fields
-        current_tab = post.get("current-tab", "organization-data")
-        context["current_tab"] = current_tab
 
         errors: List[str] = []
 
@@ -335,59 +412,62 @@ class NgoDetailsView(NgoBaseView):
         if errors:
             return render(request, self.template_name, context)
 
+        ngo.save()
+
         if is_new_ngo:
             user.ngo = ngo
             user.save()
         elif must_refresh_prefilled_form:
             async_task("donations.views.ngo_account.delete_prefilled_form", ngo.id)
 
+        context["ngo"] = ngo
+
         return render(request, self.template_name, context)
 
 
 class OldNgoDetailsView(BaseVisibleTemplateView):
-    template_name = "ngo-account/organization-data.html"
+    template_name = "ngo/ngo-details.html"
     title = _("Organization details")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        # user: User = self.request.user
-        # ngo: Ngo = user.ngo if user.ngo else None
-        #
-        # context.update(
-        #     {
-        #         "title": "Date organizație",
-        #         "counties": settings.FORM_COUNTIES_NATIONAL,
-        #         "user": user,
-        #         "ngo": ngo,
-        #         "ngo_url": self.request.build_absolute_uri(reverse("twopercent", kwargs={"ngo_url": ngo.slug})),
-        #     }
-        # )
-        #
-        # if not ngo:
-        #     return context
-        #
-        # context.update(
-        #     {
-        #         "has_ngohub": ngo.ngohub_org_id is not None,
-        #     }
-        # )
+        user: User = self.request.user
+        ngo: Ngo = user.ngo if user.ngo else None
+
+        context.update(
+            {
+                "title": "Date organizație",
+                "counties": settings.FORM_COUNTIES_NATIONAL,
+                "user": user,
+                "ngo": ngo,
+            }
+        )
+
+        if not ngo:
+            return context
+
+        context.update(
+            {
+                "has_ngohub": ngo.ngohub_org_id is not None,
+            }
+        )
 
         return context
 
-    # @method_decorator(login_required(login_url=reverse_lazy("login")))
-    # def get(self, request, *args, **kwargs):
-    #     user = request.user
-    #
-    #     if user.has_perm("users.can_view_old_dashboard"):
-    #         return redirect(reverse("admin-ngos"))
-    #
-    #     if not user.is_authenticated or not user.ngo:
-    #         return redirect(reverse("contul-meu"))
-    #
-    #     context = self.get_context_data(**kwargs)
-    #
-    #     return render(request, self.template_name, context)
+    @method_decorator(login_required(login_url=reverse_lazy("login")))
+    def get(self, request, *args, **kwargs):
+        user = request.user
+
+        if user.has_perm("users.can_view_old_dashboard"):
+            return redirect(reverse("admin-ngos"))
+
+        if not user.is_authenticated or not user.ngo:
+            return redirect(reverse("contul-meu"))
+
+        context = self.get_context_data(**kwargs)
+
+        return render(request, self.template_name, context)
 
     @method_decorator(login_required(login_url=reverse_lazy("login")))
     def post(self, request, *args, **kwargs):
@@ -486,7 +566,7 @@ class OldNgoDetailsView(BaseVisibleTemplateView):
 
         # Delete the NGO's old prefilled form
         if must_refresh_prefilled_form:
-            async_task("donations.views.ngo_account.delete_prefilled_form", ngo.id)
+            async_task("donations.views.my_account.delete_prefilled_form", ngo.id)
 
         if is_new_ngo:
             user.ngo = ngo

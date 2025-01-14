@@ -9,7 +9,7 @@
 
 ### Issues:
 
-- [ ] NPM doesn't install packages properly and uses local packages instead
+  - [ ] NPM doesn't install packages properly and uses local packages instead
 
 
 ## Donation form
@@ -21,11 +21,11 @@
 
 ### Issues:
 
-- [ ] The modal doesn't disappear when clicked outside it
-- [ ] Checks need to be done before the button to open the modal is clicked
-- [ ] Connect BE & FE for the donation form
-- [ ] Why is `x-trap.inert.noscroll="modalIsOpen"` displaying as a warning?
-- [ ] Figure out how to disable the signature script on other pages
+  - [ ] The modal doesn't disappear when clicked outside it
+  - [ ] Checks need to be done before the button to open the modal is clicked
+  - [ ] Connect BE & FE for the donation form
+  - [ ] Why is `x-trap.inert.noscroll="modalIsOpen"` displaying as a warning?
+  - [ ] Figure out how to disable the signature script on other pages
 
 
 ## Login
@@ -37,8 +37,8 @@
 
 ### Issues:
 
-- [ ] The user isn't redirected to Cognito for login
-- [ ] The error pages need to be styled properly
+  - [ ] The user isn't redirected to Cognito for login
+  - [ ] The error pages need to be styled properly
 
 
 ## Organization Data / NGO Profile
@@ -49,8 +49,9 @@
 
 ### Issues:
 
-- [ ] The disabled form fields need to be styled properly
-- [ ] Connect the form to the BE properly
-- [ ] Check the data for changes when switching tabs
-- [ ] The "save" & "get from NGO Hub" buttons should be styled the same
-- [ ] Max characters validation for description & other fields
+  - [ ] The disabled form fields need to be styled properly
+  - [ ] Connect the form to the BE properly
+  - [ ] Check the data for changes when switching tabs
+  - [ ] The "save" & "get from NGO Hub" buttons should be styled the same
+  - [ ] Max characters validation for description & other fields
+  - [ ] The logo upload doesn't work properly

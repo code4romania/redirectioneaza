@@ -30,8 +30,13 @@
 
             {% url "organization-presentation" as target_url %}
             {% include "ngo-account/components/tab.html" with tab_title=tab_presentation target="presentation" %}
+
             {% url "organization-forms" as target_url %}
-            {% include "ngo-account/components/tab.html" with tab_title=tab_form target="form" %}
+            {% if ngo %}
+              {% include "ngo-account/components/tab.html" with tab_title=tab_form target="form" %}
+            {% else %}
+              {% include "ngo-account/components/tab.html" with tab_title=tab_form target="form" is_disabled=True %}
+            {% endif %}
 
           </nav>
         </div>

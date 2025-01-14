@@ -16,56 +16,51 @@
         <fieldset>
           <div class="p-4 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
 
-            <input type="hidden" name="current-tab" value="presentation">
+            {% comment %}
+              TODO: Ideally, this should be two rows on the first column and one on the second, but the grid system is not allowing it.
+            {% endcomment %}
 
             <div class="grid sm:col-span-6 sm:col-start-1 gap-6">
-              {% trans "Organization URL" as input_title %}
-              {% include "components/input/input.html" with input_id="organization-url" input_title=input_title input_type="text" input_name="organization-url" is_required=true value=ngo.slug %}
-            </div>
-
-            <hr class="w-full sm:col-span-6 border-gray-400 my-5">
-
-            <div class="grid sm:col-span-4 sm:col-start-1 gap-6">
               {% trans "Name" as input_title %}
               {% include "components/input/input.html" with input_id="name" input_title=input_title input_type="text" input_name="name" is_required=True is_disabled=disable_ngohub_fields value=ngo.name %}
             </div>
 
-            <div class="grid sm:col-span-4 sm:col-start-1 gap-6">
+            <div class="grid sm:col-span-6 sm:col-start-1 gap-6">
               {% trans "CUI/CIF" as input_title %}
               {% include "components/input/input.html" with input_id="cif" input_title=input_title input_type="text" input_name="cif" is_required=True is_disabled=disable_ngohub_fields value=ngo.full_registration_number %}
             </div>
 
-            <div class="grid sm:col-span-4 sm:col-start-1 gap-6">
+            <div class="grid sm:col-span-6 sm:col-start-1 gap-6">
               {% trans "Logo" as input_title %}
-              {% include "components/input/input.html" with input_id="logo" input_title=input_title input_type="file" input_name="logo" is_required=True is_disabled=disable_ngohub_fields value=ngo.logo %}
+              {% include "components/input/image.html" with input_id="logo" input_title=input_title input_type="file" input_name="logo" is_required=False is_disabled=disable_ngohub_fields image=ngo.logo %}
             </div>
 
-            <div class="grid sm:col-span-4 sm:col-start-1 gap-6">
+            <div class="grid sm:col-span-6 sm:col-start-1 gap-6">
               {% trans "Organization website" as input_title %}
               {% include "components/input/input.html" with input_id="website" input_title=input_title input_type="url" input_name="website" is_required=True is_disabled=disable_ngohub_fields value=ngo.website %}
             </div>
 
-            <div class="grid sm:col-span-3 sm:col-start-1 gap-6">
+            <div class="grid sm:col-span-4 sm:col-start-1 gap-6">
               {% trans "Organization contact e-mail" as input_title %}
               {% include "components/input/input.html" with input_id="contact-email" input_title=input_title input_type="email" input_name="contact-email" is_required=True is_disabled=disable_ngohub_fields value=ngo.email %}
             </div>
 
-            <div class="grid sm:col-span-3 gap-6">
+            <div class="grid sm:col-span-2 gap-6">
               {% trans "Display e-mail in the profile" as input_title %}
               <div class="mt-8 flex gap-3">
                 {% include "components/input/checkbox.html" with input_id="display-email" input_title=input_title input_name="display-email" input_value=ngo.display_email %}
               </div>
             </div>
 
-            <div class="grid sm:col-span-3 sm:col-start-1 gap-6">
+            <div class="grid sm:col-span-4 sm:col-start-1 gap-6">
               {% trans "Organization contact phone" as input_title %}
-              {% include "components/input/input.html" with input_id="contact-phone" input_title=input_title input_type="tel" input_name="contact-phone" is_required=True is_disabled=disable_ngohub_fields value=ngo.phone %}
+              {% include "components/input/input.html" with input_id="contact-phone" input_title=input_title input_type="tel" input_name="contact-phone" is_required=False is_disabled=disable_ngohub_fields value=ngo.phone %}
             </div>
 
-            <div class="grid sm:col-span-3 gap-6">
+            <div class="grid sm:col-span-2 gap-6">
               {% trans "Display phone in the profile" as input_title %}
               <div class="mt-8 flex gap-3">
-                {% include "components/input/checkbox.html" with input_id="display-phone" input_title=input_title input_name="display-phone" input_value=ngo.display_email %}
+                {% include "components/input/checkbox.html" with input_id="display-phone" input_title=input_title input_name="display-phone" input_value=ngo.display_phone %}
               </div>
             </div>
 

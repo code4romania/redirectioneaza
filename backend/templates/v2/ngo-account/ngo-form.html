@@ -14,7 +14,10 @@
       <fieldset>
         <div class="grid grid-cols-1 gap-12">
 
-          <input type="hidden" name="current-tab" value="form">
+          {% trans "Organization URL" as input_title %}
+          {% include "components/input/input.html" with input_id="organization-slug" input_title=input_title input_type="text" input_name="organization-slug" is_required=true value=ngo.slug %}
+
+          <hr class="w-full border-gray-400">
 
           {% trans "Titlu formular" as input_title %}
           {% include "components/input/input.html" with input_id="page_name" input_type="text" input_name="page_name" placeholder="Organization name" is_required=True is_disabled=True value=ngo.name %}
@@ -23,7 +26,7 @@
           {% include "components/input/textarea.html" with input_id="description" input_title=input_title input_type="textarea" input_name="description" is_required=True value=ngo.description %}
 
           {% trans "IBAN on form" as input_title %}
-          {% include "components/input/input.html" with input_id="iban" input_type="text" input_name="iban" placeholder="RO001234567812345678" is_required=True %}
+          {% include "components/input/input.html" with input_id="iban" input_type="text" input_name="iban" placeholder="RO001234567812345678" is_required=True value=ngo.bank_account %}
 
         </div>
       </fieldset>
