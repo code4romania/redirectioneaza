@@ -54,7 +54,9 @@ from donations.views.ngo_account import (
     ArchiveDownloadLinkView,
     MyAccountDetailsView,
     MyAccountView,
-    NewNgoDetailsView,
+    NgoDetailsView,
+    NgoFormsView,
+    OldNgoDetailsView,
 )
 from donations.views.redirections import DonationSucces, FormSignature, OwnFormDownloadLinkHandler, TwoPercentHandler
 from donations.views.site import (
@@ -108,8 +110,10 @@ urlpatterns = (
         path("password/", SetPasswordView.as_view(), name="password"),
         # my account
         path("contul-meu/", MyAccountView.as_view(), name="contul-meu"),
-        path("organizatia/", NewNgoDetailsView.as_view(), name="organization"),
-        path("asociatia/", RedirectView.as_view(pattern_name="organization", permanent=True)),
+        path("organizatia/", OldNgoDetailsView.as_view(), name="organization-old"),
+        path("organizatia/prezentare/", NgoDetailsView.as_view(), name="organization-presentation"),
+        path("organizatia/formulare/", NgoFormsView.as_view(), name="organization-forms"),
+        path("asociatia/", RedirectView.as_view(pattern_name="organization-old", permanent=True)),
         path("date-cont/", MyAccountDetailsView.as_view(), name="date-contul-meu"),
         path(
             "contul-meu/eroare/aplicatie-lipsa/",

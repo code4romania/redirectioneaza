@@ -220,8 +220,16 @@ def delete_prefilled_form(ngo_id):
     return Ngo.delete_prefilled_form(ngo_id)
 
 
-class NewNgoDetailsView(BaseVisibleTemplateView):
-    template_name = "ngo-account/organization-data.html"
+class NgoBaseView(BaseVisibleTemplateView): ...
+
+
+class NgoFormsView(NgoBaseView):
+    template_name = "ngo-account/ngo-form.html"
+    title = _("Organization details")
+
+
+class NgoDetailsView(NgoBaseView):
+    template_name = "ngo-account/ngo-presentation.html"
     title = _("Organization details")
 
     def get_context_data(self, **kwargs):
@@ -336,7 +344,7 @@ class NewNgoDetailsView(BaseVisibleTemplateView):
         return render(request, self.template_name, context)
 
 
-class NgoDetailsView(BaseVisibleTemplateView):
+class OldNgoDetailsView(BaseVisibleTemplateView):
     template_name = "ngo-account/organization-data.html"
     title = _("Organization details")
 

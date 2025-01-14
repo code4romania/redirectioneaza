@@ -28,27 +28,18 @@
             class="flex space-x-4"
             aria-label="Tabs">
 
+            {% url "organization-presentation" as target_url %}
             {% include "ngo-account/components/tab.html" with tab_title=tab_presentation target="presentation" %}
+            {% url "organization-forms" as target_url %}
             {% include "ngo-account/components/tab.html" with tab_title=tab_form target="form" %}
 
           </nav>
         </div>
 
         <div class="rounded-md  border-gray-600 border mt-8 p-4">
-          <div
-            id="presentation"
-            x-show="activeTab === 'presentation'"
-            class="">
-            {% include "ngo-account/ngo-presentation.html" with title=tab_presentation %}
+          <div id="{{ active_tab }}">
+            {% block organization_form %}{% endblock %}
           </div>
-
-          <div
-            id="form"
-            x-show="activeTab === 'form'"
-            class="">
-            {% include "ngo-account/ngo-form.html" with title=tab_form %}
-          </div>
-
         </div>
 
       </div>
