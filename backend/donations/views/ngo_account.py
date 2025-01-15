@@ -632,7 +632,7 @@ class OldNgoDetailsView(BaseVisibleTemplateView):
 
 
 class NgoRedirectionsView(ListView):
-    template_name = "ngo-account/redirections/base.html"
+    template_name = "ngo-account/redirections/main.html"
     title = _("Redirections")
     context_object_name = "redirections"
     paginate_by = 8
@@ -674,6 +674,47 @@ class NgoRedirectionsView(ListView):
                     "two_years",
                     "is_anonymous",
                     "has_signed",
+                )
+            )
+
+        return redirections
+
+
+class NgoArchivesView(ListView):
+    template_name = "ngo-account/archives/main.html"
+    title = _("Forms export history ")
+    context_object_name = "archive_jobs"
+    paginate_by = 8
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        user: User = self.request.user
+        ngo: Ngo = user.ngo if user.ngo else None
+
+        context.update(
+            {
+                "user": user,
+                "ngo": ngo,
+                "title": self.title,
+            }
+        )
+
+        return context
+
+    def get_queryset(self):
+        user: User = self.request.user
+        ngo: Ngo = user.ngo if user.ngo else None
+
+        redirections = Job.objects.none()
+        if ngo:
+            redirections = (
+                ngo.jobs.all()
+                .order_by("-date_created")
+                .values(
+                    "pk",
+                    "date_created",
+                    "status",
                 )
             )
 

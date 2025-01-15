@@ -3,6 +3,7 @@ from django.contrib import admin
 from django.urls import path
 
 from donations.views.ngo_account import (
+    NgoArchivesView,
     NgoDetailsView,
     NgoFormsView,
     NgoRedirectionsView,
@@ -15,4 +16,5 @@ urlpatterns = [
     path("prezentare/", NgoDetailsView.as_view(), name="organization-presentation"),
     path("formulare/", NgoFormsView.as_view(), name="organization-forms"),
     path("redirectionari/", NgoRedirectionsView.as_view(), name="organization-redirections"),
+    path("exporturi/", NgoArchivesView.as_view(), name="organization-archives"),
 ]

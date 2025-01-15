@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-15 14:48+0200\n"
+"POT-Creation-Date: 2025-01-15 16:18+0200\n"
 "PO-Revision-Date: 2024-02-28 15:45+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -40,12 +40,12 @@ msgid "Has NGO Hub account"
 msgstr "Has NGO Hub account"
 
 #: donations/admin.py:67 donations/admin.py:85
-#: templates/v2/ngo-account/redirections/list-item.html:39
+#: templates/v2/ngo-account/redirections/list-items.html:45
 msgid "Yes"
 msgstr "Yes"
 
 #: donations/admin.py:67 donations/admin.py:85
-#: templates/v2/ngo-account/redirections/list-item.html:41
+#: templates/v2/ngo-account/redirections/list-items.html:47
 msgid "No"
 msgstr "No"
 
@@ -144,8 +144,8 @@ msgstr "File"
 msgid "Form"
 msgstr "Form"
 
-#: donations/admin.py:312
-#: templates/v2/ngo-account/redirections/list-header.html:26
+#: donations/admin.py:312 templates/v2/ngo-account/archives/list-header.html:14
+#: templates/v2/ngo-account/redirections/list-header.html:29
 msgid "Status"
 msgstr "Status"
 
@@ -318,10 +318,12 @@ msgid "New"
 msgstr "New"
 
 #: donations/models/jobs.py:19
+#: templates/v2/ngo-account/archives/list-items.html:32
 msgid "Error"
 msgstr "Error"
 
 #: donations/models/jobs.py:20
+#: templates/v2/ngo-account/archives/list-items.html:28
 msgid "Done"
 msgstr "Done"
 
@@ -362,7 +364,7 @@ msgstr "slug"
 
 #: donations/models/ngos.py:93
 #: templates/v2/ngo-account/my-organization/ngo-presentation.html:25
-#: templates/v2/ngo-account/redirections/list-header.html:8
+#: templates/v2/ngo-account/redirections/list-header.html:11
 msgid "Name"
 msgstr "Name"
 
@@ -677,8 +679,8 @@ msgstr "NGO Hub organization ID"
 msgid "The URL is already used"
 msgstr "The URL is already used"
 
-#: donations/views/ngo_account.py:636
-#: templates/v2/ngo-account/redirections/base.html:10
+#: donations/views/ngo_account.py:636 donations/views/ngo_account.py:685
+#: templates/v2/ngo-account/redirections/main.html:10
 #, fuzzy
 #| msgid "Options"
 msgid "Redirections"
@@ -1253,7 +1255,7 @@ msgid "Email"
 msgstr "email"
 
 #: templates/v2/form/donation.html:77
-#: templates/v2/ngo-account/redirections/list-header.html:17
+#: templates/v2/ngo-account/redirections/list-header.html:20
 #, fuzzy
 #| msgid "street number"
 msgid "Phone number"
@@ -1308,6 +1310,50 @@ msgstr ""
 #| msgid "Sign In Error"
 msgid "Send form"
 msgstr "Sign In Error"
+
+#: templates/v2/ngo-account/archives/list-header.html:11
+#, fuzzy
+#| msgid "date created"
+msgid "Date generated"
+msgstr "date created"
+
+#: templates/v2/ngo-account/archives/list-header.html:17
+msgid "Download link"
+msgstr ""
+
+#: templates/v2/ngo-account/archives/list-items.html:7
+msgid "No archives were generated"
+msgstr ""
+
+#: templates/v2/ngo-account/archives/list-items.html:30
+#, fuzzy
+#| msgid "Work in progress"
+msgid "In progress"
+msgstr "Work in progress"
+
+#: templates/v2/ngo-account/archives/list-items.html:37
+msgid "Download"
+msgstr ""
+
+#: templates/v2/ngo-account/archives/listing.html:18
+#, fuzzy
+#| msgid "Imports"
+msgid "exports"
+msgstr "Imports"
+
+#: templates/v2/ngo-account/archives/main.html:10
+msgid "Forms export history"
+msgstr ""
+
+#: templates/v2/ngo-account/archives/main.html:14
+msgid ""
+"\n"
+"        Here you can find the archives of forms that have been exported.\n"
+"        If are collecting signed forms,\n"
+"        the archive containing those forms will also contain the documents "
+"for the ANAF dynamic PDF.\n"
+"      "
+msgstr ""
 
 #: templates/v2/ngo-account/components/form-title.html:11
 #, fuzzy
@@ -1403,72 +1449,45 @@ msgstr "NGO Hub organization ID"
 msgid "Active region"
 msgstr "active region"
 
-#: templates/v2/ngo-account/redirections/base.html:14
-msgid ""
-"Here you can find the redirection forms filled in, which you can export."
-msgstr ""
-
-#: templates/v2/ngo-account/redirections/base.html:31
-#, fuzzy, python-format
-#| msgid "Options"
-msgid "%(counter)s redirection form"
-msgid_plural "%(counter)s redirection forms"
-msgstr[0] "Options"
-msgstr[1] "Options"
-
-#: templates/v2/ngo-account/redirections/base.html:55
-#, fuzzy
-#| msgid "Generate donations archive"
-msgid "Generate ANAF Archive"
-msgstr "Generate donations archive"
-
-#: templates/v2/ngo-account/redirections/base.html:74
-msgid "Download table"
-msgstr ""
-
-#: templates/v2/ngo-account/redirections/list-header.html:5
-msgid "#"
-msgstr ""
-
-#: templates/v2/ngo-account/redirections/list-header.html:11
+#: templates/v2/ngo-account/redirections/list-header.html:14
 msgid "Locality, County"
 msgstr ""
 
-#: templates/v2/ngo-account/redirections/list-header.html:14
+#: templates/v2/ngo-account/redirections/list-header.html:17
 #, fuzzy
 #| msgid "email"
 msgid "E-mail"
 msgstr "email"
 
-#: templates/v2/ngo-account/redirections/list-header.html:20
+#: templates/v2/ngo-account/redirections/list-header.html:23
 #, fuzzy
 #| msgid "two years"
 msgid "2 years"
 msgstr "two years"
 
-#: templates/v2/ngo-account/redirections/list-header.html:23
+#: templates/v2/ngo-account/redirections/list-header.html:26
 #, fuzzy
 #| msgid "date finished"
 msgid "Date filled"
 msgstr "date finished"
 
-#: templates/v2/ngo-account/redirections/list-item.html:7
+#: templates/v2/ngo-account/redirections/list-items.html:7
 #, fuzzy
 #| msgid "Options"
 msgid "No redirections found"
 msgstr "Options"
 
-#: templates/v2/ngo-account/redirections/list-item.html:27
+#: templates/v2/ngo-account/redirections/list-items.html:33
 msgid "This person does not wish to share their contact details."
 msgstr ""
 
-#: templates/v2/ngo-account/redirections/list-item.html:49
+#: templates/v2/ngo-account/redirections/list-items.html:55
 #, fuzzy
 #| msgid "Sign In"
 msgid "Signed"
 msgstr "Sign In"
 
-#: templates/v2/ngo-account/redirections/list-item.html:51
+#: templates/v2/ngo-account/redirections/list-items.html:57
 #, fuzzy
 #| msgid "has signed"
 msgid "Unsigned"
@@ -1480,6 +1499,25 @@ msgstr "has signed"
 msgid "donations"
 msgstr "Donations"
 
+#: templates/v2/ngo-account/redirections/main.html:14
+msgid ""
+"Here you can find the redirection forms filled in, which you can export."
+msgstr ""
+
+#: templates/v2/ngo-account/redirections/main.html:31
+#, fuzzy, python-format
+#| msgid "Options"
+msgid "%(counter)s redirection form"
+msgid_plural "%(counter)s redirection forms"
+msgstr[0] "Options"
+msgstr[1] "Options"
+
+#: templates/v2/ngo-account/redirections/main.html:57
+#, fuzzy
+#| msgid "Generate donations archive"
+msgid "Generate ANAF Archive"
+msgstr "Generate donations archive"
+
 #: templates/v2/public/all-ngos.html:23
 #, fuzzy
 #| msgid "NGO Hub organization ID"
@@ -1487,13 +1525,17 @@ msgid "organizations"
 msgstr "NGO Hub organization ID"
 
 #: templates/v2/public/components/pagination.html:11
-#: templates/v2/public/components/pagination.html:39
+#: templates/v2/public/components/pagination.html:41
 msgid "Previous"
 msgstr ""
 
 #: templates/v2/public/components/pagination.html:18
-#: templates/v2/public/components/pagination.html:69
+#: templates/v2/public/components/pagination.html:71
 msgid "Next"
+msgstr ""
+
+#: templates/v2/public/components/pagination.html:33
+msgid "per page"
 msgstr ""
 
 #: templates/v2/redirect/footer.html:77
@@ -1718,9 +1760,6 @@ msgstr "Group"
 
 #~ msgid "Import"
 #~ msgstr "Import"
-
-#~ msgid "Imports"
-#~ msgstr "Imports"
 
 #~ msgid "logo url"
 #~ msgstr "logo url"

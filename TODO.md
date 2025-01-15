@@ -21,6 +21,7 @@
 
 ### Issues:
 
+  - [ ] Complete the flow (add a `success & download` page)
   - [ ] The modal doesn't disappear when clicked outside it
   - [ ] Checks need to be done before the button to open the modal is clicked
   - [ ] Connect BE & FE for the donation form
@@ -69,3 +70,15 @@
   - [ ] Django template: the `nr. crt./#` column from `list-header.html` & `list-items.html` should be calculated properly
   - [ ] Make the generate archive button work
   - [ ] Make the download table button work
+
+
+## Organization's archives
+
+### Files:
+
+- `templates/v2/ngo-account/archives/**`
+
+### Issues:
+
+  - [ ] Same issue with the pagination as in the `redirections` page
+  - [ ] Align the table elements better (it's the same table as in the `redirections` page but with different columns)

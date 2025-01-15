@@ -6,17 +6,17 @@
       <table class="min-w-full divide-y divide-gray-300">
 
         <thead>
-        {% include "ngo-account/redirections/list-header.html" %}
+        {% include "ngo-account/archives/list-header.html" %}
         </thead>
 
         <tbody class="divide-y divide-gray-200">
-        {% include "ngo-account/redirections/list-items.html" %}
+        {% include "ngo-account/archives/list-items.html" %}
         </tbody>
 
       </table>
     </div>
 
-    {% trans "donations" as paginated_type %}
+    {% trans "exports" as paginated_type %}
     {% include "public/components/pagination.html" with page_obj=page_obj paginated_type=paginated_type %}
 
   </div>

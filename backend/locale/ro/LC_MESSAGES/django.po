@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-15 14:48+0200\n"
+"POT-Creation-Date: 2025-01-15 16:18+0200\n"
 "PO-Revision-Date: 2024-03-07 11:27+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -41,12 +41,12 @@ msgid "Has NGO Hub account"
 msgstr "Are cont NGO Hub"
 
 #: donations/admin.py:67 donations/admin.py:85
-#: templates/v2/ngo-account/redirections/list-item.html:39
+#: templates/v2/ngo-account/redirections/list-items.html:45
 msgid "Yes"
 msgstr "Da"
 
 #: donations/admin.py:67 donations/admin.py:85
-#: templates/v2/ngo-account/redirections/list-item.html:41
+#: templates/v2/ngo-account/redirections/list-items.html:47
 msgid "No"
 msgstr "Nu"
 
@@ -146,8 +146,8 @@ msgstr "Fișier"
 msgid "Form"
 msgstr "Formular"
 
-#: donations/admin.py:312
-#: templates/v2/ngo-account/redirections/list-header.html:26
+#: donations/admin.py:312 templates/v2/ngo-account/archives/list-header.html:14
+#: templates/v2/ngo-account/redirections/list-header.html:29
 msgid "Status"
 msgstr "Stare"
 
@@ -320,10 +320,12 @@ msgid "New"
 msgstr "Nou"
 
 #: donations/models/jobs.py:19
+#: templates/v2/ngo-account/archives/list-items.html:32
 msgid "Error"
 msgstr "Eroare"
 
 #: donations/models/jobs.py:20
+#: templates/v2/ngo-account/archives/list-items.html:28
 msgid "Done"
 msgstr "Gata"
 
@@ -365,7 +367,7 @@ msgstr "adresă"
 
 #: donations/models/ngos.py:93
 #: templates/v2/ngo-account/my-organization/ngo-presentation.html:25
-#: templates/v2/ngo-account/redirections/list-header.html:8
+#: templates/v2/ngo-account/redirections/list-header.html:11
 msgid "Name"
 msgstr "Nume"
 
@@ -655,8 +657,8 @@ msgstr "Formulare organizație"
 msgid "The URL is already used"
 msgstr "URL-ul este deja folosit"
 
-#: donations/views/ngo_account.py:636
-#: templates/v2/ngo-account/redirections/base.html:10
+#: donations/views/ngo_account.py:636 donations/views/ngo_account.py:685
+#: templates/v2/ngo-account/redirections/main.html:10
 msgid "Redirections"
 msgstr "Redirecționări"
 
@@ -1215,7 +1217,7 @@ msgid "Email"
 msgstr "Email"
 
 #: templates/v2/form/donation.html:77
-#: templates/v2/ngo-account/redirections/list-header.html:17
+#: templates/v2/ngo-account/redirections/list-header.html:20
 msgid "Phone number"
 msgstr "Număr de telefon"
 
@@ -1258,6 +1260,50 @@ msgstr "Resetează"
 #: templates/v2/form/signature.html:75
 msgid "Send form"
 msgstr "Trimite formularul"
+
+#: templates/v2/ngo-account/archives/list-header.html:11
+msgid "Date generated"
+msgstr "Data generării"
+
+#: templates/v2/ngo-account/archives/list-header.html:17
+msgid "Download link"
+msgstr "Link de descărcare"
+
+#: templates/v2/ngo-account/archives/list-items.html:7
+msgid "No archives were generated"
+msgstr "Nu s-au generat arhive"
+
+#: templates/v2/ngo-account/archives/list-items.html:30
+msgid "In progress"
+msgstr "În curs"
+
+#: templates/v2/ngo-account/archives/list-items.html:37
+msgid "Download"
+msgstr "Descarcă"
+
+#: templates/v2/ngo-account/archives/listing.html:18
+msgid "exports"
+msgstr "exporturi"
+
+#: templates/v2/ngo-account/archives/main.html:10
+msgid "Forms export history"
+msgstr "Istoric export formulare"
+
+#: templates/v2/ngo-account/archives/main.html:14
+msgid ""
+"\n"
+"        Here you can find the archives of forms that have been exported.\n"
+"        If are collecting signed forms,\n"
+"        the archive containing those forms will also contain the documents "
+"for the ANAF dynamic PDF.\n"
+"      "
+msgstr ""
+"\n"
+"        Aici găsești arhivele formularelor care au fost exportate.\n"
+"        Dacă colectezi formulare semnate,\n"
+"        arhiva care conține acele formulare va conține și documentele pentru "
+"PDF-ul dinamic ANAF.\n"
+"      "
 
 #: templates/v2/ngo-account/components/form-title.html:11
 msgid "Get from NGO Hub"
@@ -1333,61 +1379,35 @@ msgstr "Adresa organizației"
 msgid "Active region"
 msgstr "Regiune activă"
 
-#: templates/v2/ngo-account/redirections/base.html:14
-msgid ""
-"Here you can find the redirection forms filled in, which you can export."
-msgstr ""
-"Mai jos găsești o formularele de redirecționare completate, pe care le poți "
-"exporta."
-
-#: templates/v2/ngo-account/redirections/base.html:31
-msgid "%(counter)s redirection form"
-msgid_plural "%(counter)s redirection forms"
-msgstr[0] "%(counter)s formular de redirecționare"
-msgstr[1] "%(counter)s formulare de redirecționare"
-msgstr[2] "%(counter)s de formulare de redirecționare"
-
-#: templates/v2/ngo-account/redirections/base.html:55
-msgid "Generate ANAF Archive"
-msgstr "Generează arhiva ANAF"
-
-#: templates/v2/ngo-account/redirections/base.html:74
-msgid "Download table"
-msgstr "Descarcă tabelul"
-
-#: templates/v2/ngo-account/redirections/list-header.html:5
-msgid "#"
-msgstr "#"
-
-#: templates/v2/ngo-account/redirections/list-header.html:11
+#: templates/v2/ngo-account/redirections/list-header.html:14
 msgid "Locality, County"
 msgstr "Oraș, Județ"
 
-#: templates/v2/ngo-account/redirections/list-header.html:14
+#: templates/v2/ngo-account/redirections/list-header.html:17
 msgid "E-mail"
 msgstr "E-mail"
 
-#: templates/v2/ngo-account/redirections/list-header.html:20
+#: templates/v2/ngo-account/redirections/list-header.html:23
 msgid "2 years"
 msgstr "2 ani"
 
-#: templates/v2/ngo-account/redirections/list-header.html:23
+#: templates/v2/ngo-account/redirections/list-header.html:26
 msgid "Date filled"
 msgstr "Data completării"
 
-#: templates/v2/ngo-account/redirections/list-item.html:7
+#: templates/v2/ngo-account/redirections/list-items.html:7
 msgid "No redirections found"
 msgstr "Nu s-au găsit redirecționări"
 
-#: templates/v2/ngo-account/redirections/list-item.html:27
+#: templates/v2/ngo-account/redirections/list-items.html:33
 msgid "This person does not wish to share their contact details."
 msgstr "Această persoană nu dorește să-și împărtășească datele de contact."
 
-#: templates/v2/ngo-account/redirections/list-item.html:49
+#: templates/v2/ngo-account/redirections/list-items.html:55
 msgid "Signed"
 msgstr "Semnat"
 
-#: templates/v2/ngo-account/redirections/list-item.html:51
+#: templates/v2/ngo-account/redirections/list-items.html:57
 msgid "Unsigned"
 msgstr "Nesemnat"
 
@@ -1395,19 +1415,42 @@ msgstr "Nesemnat"
 msgid "donations"
 msgstr "donații"
 
+#: templates/v2/ngo-account/redirections/main.html:14
+msgid ""
+"Here you can find the redirection forms filled in, which you can export."
+msgstr ""
+"Mai jos găsești o formularele de redirecționare completate, pe care le poți "
+"exporta."
+
+#: templates/v2/ngo-account/redirections/main.html:31
+#, python-format
+msgid "%(counter)s redirection form"
+msgid_plural "%(counter)s redirection forms"
+msgstr[0] "%(counter)s formular de redirecționare"
+msgstr[1] "%(counter)s formulare de redirecționare"
+msgstr[2] "%(counter)s de formulare de redirecționare"
+
+#: templates/v2/ngo-account/redirections/main.html:57
+msgid "Generate ANAF Archive"
+msgstr "Generează arhiva ANAF"
+
 #: templates/v2/public/all-ngos.html:23
 msgid "organizations"
 msgstr "organizații"
 
 #: templates/v2/public/components/pagination.html:11
-#: templates/v2/public/components/pagination.html:39
+#: templates/v2/public/components/pagination.html:41
 msgid "Previous"
 msgstr "Precedent"
 
 #: templates/v2/public/components/pagination.html:18
-#: templates/v2/public/components/pagination.html:69
+#: templates/v2/public/components/pagination.html:71
 msgid "Next"
 msgstr "Următor"
+
+#: templates/v2/public/components/pagination.html:33
+msgid "per page"
+msgstr "pe pagină"
 
 #: templates/v2/redirect/footer.html:77
 msgid "Code for Romania"
@@ -1528,6 +1571,9 @@ msgstr "parolă veche"
 msgid "Group"
 msgstr "Grup"
 
+#~ msgid "#"
+#~ msgstr "#"
+
 #~ msgid "Oficial name"
 #~ msgstr "Nume oficial"
 
@@ -1611,9 +1657,6 @@ msgstr "Grup"
 
 #~ msgid "Import"
 #~ msgstr "Import"
-
-#~ msgid "Imports"
-#~ msgstr "Importuri"
 
 #~ msgid "logo url"
 #~ msgstr "url logo"

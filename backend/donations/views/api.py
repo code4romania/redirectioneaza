@@ -1,3 +1,4 @@
+import datetime
 import logging
 from datetime import date
 from typing import Dict, List
@@ -187,21 +188,23 @@ class GetNgoForms(BaseTemplateView):
         if not request.user.is_authenticated:
             return redirect(reverse("login"))
 
+        redirect_url = reverse("organization-archives")
+
         ngo = request.user.ngo
         if not ngo:
-            return redirect(reverse("contul-meu"))
+            return redirect(redirect_url)
 
         if not ngo.is_active:
-            return redirect(reverse("contul-meu"))
+            return redirect(redirect_url)
 
         try:
             latest_job: Job = Job.objects.filter(ngo=ngo).latest("date_created")
 
-            form_retry_threshold = timezone.now() - timezone.timedelta(
+            form_retry_threshold = timezone.now() - datetime.timedelta(
                 minutes=settings.TIMEDELTA_FORMS_DOWNLOAD_MINUTES
             )
             if latest_job.status != JobStatusChoices.ERROR and latest_job.date_created > form_retry_threshold:
-                return redirect(reverse("contul-meu"))
+                return redirect(redirect_url)
 
         except Job.DoesNotExist:
             pass
@@ -212,10 +215,10 @@ class GetNgoForms(BaseTemplateView):
             day=settings.DONATIONS_LIMIT_DAY,
         )
 
-        if timezone.now().date() > DONATION_LIMIT + timezone.timedelta(
+        if timezone.now().date() > DONATION_LIMIT + datetime.timedelta(
             days=settings.TIMEDELTA_DONATIONS_LIMIT_DOWNLOAD_DAYS
         ):
-            return redirect(reverse("contul-meu"))
+            return redirect(redirect_url)
 
         new_job: Job = Job(ngo=ngo, owner=request.user)
         new_job.save()
@@ -227,7 +230,7 @@ class GetNgoForms(BaseTemplateView):
             new_job.status = JobStatusChoices.ERROR
             new_job.save()
 
-        return redirect(reverse("contul-meu"))
+        return redirect(redirect_url)
 
 
 @method_decorator(login_required(login_url=reverse_lazy("login")), name="dispatch")
