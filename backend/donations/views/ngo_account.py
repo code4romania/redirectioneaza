@@ -169,7 +169,7 @@ class MyAccountView(BaseVisibleTemplateView):
         )
 
         ngo_url = ""
-        if user_ngo:
+        if user_ngo and user_ngo.slug:
             ngo_url = request.build_absolute_uri(reverse("twopercent", kwargs={"ngo_url": user_ngo.slug}))
 
         ngo_jobs = user_ngo.jobs.all()[:10] if user_ngo else None
@@ -259,14 +259,10 @@ class NgoFormsView(NgoBaseView):
         ngo: Ngo = context["ngo"]
 
         ngo_url = ""
-        if ngo:
+        if ngo and ngo.slug:
             ngo_url = self.request.build_absolute_uri(reverse("twopercent", kwargs={"ngo_url": ngo.slug}))
 
-        context.update(
-            {
-                "ngo_url": ngo_url,
-            }
-        )
+        context["ngo_url"] = ngo_url
 
         return context
 

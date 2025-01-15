@@ -5,7 +5,6 @@ from typing import Dict, List, Union
 from django.conf import settings
 from django.db.models import QuerySet
 from django.http import HttpResponse
-from django.shortcuts import render
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
@@ -14,17 +13,14 @@ from partners.models import DisplayOrderingChoices
 from redirectioneaza.common.cache import cache_decorator
 
 from ..models.donors import Donor
-from ..models.ngos import ALL_NGO_IDS_CACHE_KEY, FRONTPAGE_NGOS_KEY, FRONTPAGE_STATS_KEY, Ngo
+from ..models.ngos import FRONTPAGE_NGOS_KEY, FRONTPAGE_STATS_KEY, Ngo
+from .base import BaseVisibleTemplateView
 from .common import SearchMixin
 
 
-class HomePage(TemplateView):
+class HomePage(BaseVisibleTemplateView):
     template_name = "public/home.html"
-
-    @staticmethod
-    @cache_decorator(timeout=settings.TIMEOUT_CACHE_LONG, cache_key_prefix=ALL_NGO_IDS_CACHE_KEY)
-    def _get_list_of_ngo_ids() -> list:
-        return list(Ngo.active.values_list("id", flat=True))
+    title = "redirectioneaza.ro"
 
     @cache_decorator(timeout=settings.TIMEOUT_CACHE_SHORT, cache_key_prefix=FRONTPAGE_STATS_KEY)
     def _get_stats(self, now: datetime = None, ngo_queryset: QuerySet = None) -> List[Dict[str, Union[str, int]]]:
@@ -50,15 +46,25 @@ class HomePage(TemplateView):
             },
         ]
 
-    def get(self, request, *args, **kwargs):
+    @cache_decorator(timeout=settings.TIMEOUT_CACHE_SHORT, cache_key_prefix=FRONTPAGE_NGOS_KEY)
+    def _get_random_ngos(self, ngo_queryset: QuerySet, num_ngos: int):
+        all_ngo_ids = list(Ngo.active.values_list("id", flat=True))
+        return ngo_queryset.filter(id__in=random.sample(all_ngo_ids, num_ngos))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        request = self.request
         now = timezone.now()
 
-        context = {
-            "title": "redirectioneaza.ro",
-            "limit": settings.DONATIONS_LIMIT,
-            "month_limit": settings.DONATIONS_LIMIT_MONTH_NAME,
-            "current_year": now.year,
-        }
+        context.update(
+            {
+                "title": "redirectioneaza.ro",
+                "limit": settings.DONATIONS_LIMIT,
+                "month_limit": settings.DONATIONS_LIMIT_MONTH_NAME,
+                "current_year": now.year,
+            }
+        )
 
         if partner := request.partner:
             partner_ngos = partner.ngos.all()
@@ -84,20 +90,12 @@ class HomePage(TemplateView):
             context["stats"] = self._get_stats(now, ngo_queryset)
             context["ngos"] = self._get_random_ngos(ngo_queryset, num_ngos=min(4, ngo_queryset.count()))
 
-        return render(request, self.template_name, context)
-
-    @cache_decorator(timeout=settings.TIMEOUT_CACHE_SHORT, cache_key_prefix=FRONTPAGE_NGOS_KEY)
-    def _get_random_ngos(self, ngo_queryset: QuerySet, num_ngos: int):
-        all_ngo_ids = self._get_list_of_ngo_ids()
-        return ngo_queryset.filter(id__in=random.sample(all_ngo_ids, num_ngos))
+        return context
 
 
-class AboutHandler(TemplateView):
+class AboutHandler(BaseVisibleTemplateView):
     template_name = "public/about.html"
-
-    def get(self, request, *args, **kwargs):
-        context = {"title": "Despre redirectioneaza.ro"}
-        return render(request, self.template_name, context)
+    title = _("About redirectioneaza.ro")
 
 
 class NgoListHandler(SearchMixin):
@@ -126,34 +124,31 @@ class NgoListHandler(SearchMixin):
         return context
 
 
-class NoteHandler(TemplateView):
+class NoteHandler(BaseVisibleTemplateView):
     template_name = "public/note.html"
+    title = _("Information notice")
 
-    def get(self, request, *args, **kwargs):
-        context = {
-            "title": "Notă de informare",
-            "contact_email": settings.CONTACT_EMAIL_ADDRESS,
-        }
-        return render(request, self.template_name, context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["contact_email"] = settings.CONTACT_EMAIL_ADDRESS
+
+        return context
 
 
-class PolicyHandler(TemplateView):
+class PolicyHandler(BaseVisibleTemplateView):
     template_name = "public/policy.html"
-
-    def get(self, request, *args, **kwargs):
-        context = {"title": "Politica de confidențialitate"}
-        return render(request, self.template_name, context)
+    title = _("Privacy policy")
 
 
-class TermsHandler(TemplateView):
+class TermsHandler(BaseVisibleTemplateView):
     template_name = "public/terms.html"
+    title = _("Terms & conditions")
 
-    def get(self, request, *args, **kwargs):
-        context = {
-            "title": "Termeni și condiții",
-            "contact_email": settings.CONTACT_EMAIL_ADDRESS,
-        }
-        return render(request, self.template_name, context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["contact_email"] = settings.CONTACT_EMAIL_ADDRESS
+
+        return context
 
 
 class HealthCheckHandler(TemplateView):
