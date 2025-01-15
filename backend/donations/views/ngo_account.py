@@ -249,7 +249,7 @@ class NgoBaseView(BaseVisibleTemplateView):
 
 
 class NgoFormsView(NgoBaseView):
-    template_name = "ngo-account/ngo-form.html"
+    template_name = "ngo-account/my-organization/ngo-form.html"
     title = _("Organization forms")
     tab_title = "form"
 
@@ -323,7 +323,7 @@ class NgoFormsView(NgoBaseView):
 
 
 class NgoDetailsView(NgoBaseView):
-    template_name = "ngo-account/ngo-presentation.html"
+    template_name = "ngo-account/my-organization/ngo-presentation.html"
     title = _("Organization details")
     tab_title = "presentation"
 
