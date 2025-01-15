@@ -12,10 +12,8 @@
 
 [See the project live][link-production]
 
-Give a short introduction of your project. Let this section explain the objectives or the motivation behind this
-project.
 
-[Contributing](#contributing) | [Built with](#built-with) | [Deployment](#deployment) | [Feedback](#feedback) | [License](#license) | [About Code for Romania](#about-code-for-romania)
+[Contributing](#contributing) | [Built with](#built-with) | [Feedback](#feedback) | [License](#license) | [About Code for Romania](#about-code-for-romania)
 
 ## Contributing
 
@@ -29,7 +27,7 @@ happening_ in detail.
 
 If you would like to suggest new functionality, open an Issue and mark it as a __[Feature request]__. Please be specific
 about why you think this functionality will be of use. If you can, please include some visual description of what you
-would like the UI to look like if you are suggesting new UI elements.
+would like the UI to look like if you’re suggesting new UI elements.
 
 ## Built With
 
@@ -55,46 +53,45 @@ would like the UI to look like if you are suggesting new UI elements.
 The project has been configured to work with the following databases:
 
 - [PostgreSQL](https://www.postgresql.org/)
-- [MySQL](https://www.mysql.com/)
-- [SQLite](https://www.sqlite.org/index.html)
 
 ## Development
 
-### Compiling the CSS with less
+### Deployment without Docker
 
-Go to the `backend/` folder and run the following commands:
+#### Prerequisites
 
-```bash
-nvm use --lts || nvm install --lts
-
-npm i -g less@2.7.3 less-plugin-clean-css@1.5.1 bower@1.8.14
-
-bower install
-
-cp -r bower_components/  static_extras/
-
-pushd static_extras/
-
-lessc css/main.less > css/main.css --clean-css="--s1 --advanced --compatibility=ie8"
-
-rm -rf bower_components/
-
-popd
-```
-
-or, in a one-liner:
-
-```bash
-pushd backend/ && nvm use --lts || nvm install --lts && npm i -g less@2.7.3 less-plugin-clean-css@1.5.1 && cp -r bower_components/  static_extras/ && pushd static_extras/ && lessc css/main.less > css/main.css --clean-css="--s1 --advanced --compatibility=ie8" && rm -rf bower_components/ && popd && popd
-```
-
-## Deployment
-
-### With Docker
+- Python 3.12
+- [NVM](https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating)
+- a PostgreSQL 16.2 database (can be run with Docker)
 
 1. Go to the root of the project
 2. Run `cp .env.example .env` to create the environment file
-3. Run `make run` to start the containers with an SQLite database
+3. Set up the Node.js environment
+   1. Go to the `backend` directory
+   2. Run `nvm use || nvm install` to install the Node.js version specified in the `.nvmrc` file
+   3. Run `npm install` to install the Node.js dependencies
+4. Set up the Python environment
+   1. Create a virtual environment and activate it with `python3 -m venv venv && source venv/bin/activate`
+   2. Go to the `backend` directory
+   3. Run `pip install -r requirements-dev.txt` to install the Python dependencies
+
+#### Running the project
+
+1. Run the Django project in one terminal
+   1. Go to the `backend` directory
+   2. Run `source venv/bin/activate` to activate the Python virtual environment
+   3. Run `django-admin runserver localhost:8000` to start the Django development server
+2. Run the frontend in another terminal
+   1. Go to the `backend` directory
+   2. Run `nvm use` to use the Node.js version specified in the `.nvmrc` file
+   3. Run `npm run dev` to start the frontend development server
+
+
+### Deployment With Docker
+
+1. Go to the root of the project
+2. Run `cp .env.example .env` to create the environment file
+3. Run `make run` to start the containers with an PostgreSQL database
 4. Open http://localhost:8080 in your browser
 
 ## Feedback
