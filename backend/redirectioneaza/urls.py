@@ -54,8 +54,6 @@ from donations.views.ngo_account import (
     ArchiveDownloadLinkView,
     MyAccountDetailsView,
     MyAccountView,
-    NgoDetailsView,
-    NgoFormsView,
     OldNgoDetailsView,
 )
 from donations.views.redirections import DonationSucces, FormSignature, OwnFormDownloadLinkHandler, TwoPercentHandler
@@ -111,8 +109,7 @@ urlpatterns = (
         # my account
         path("contul-meu/", MyAccountView.as_view(), name="contul-meu"),
         path("organizatia-old/", OldNgoDetailsView.as_view(), name="organization-old"),
-        path("organizatia-mea/prezentare/", NgoDetailsView.as_view(), name="organization-presentation"),
-        path("organizatia-mea/formulare/", NgoFormsView.as_view(), name="organization-forms"),
+        path("organizatia-mea/", include("donations.urls_ngo_account")),
         path("organizatia/", RedirectView.as_view(pattern_name="organization-presentation", permanent=True)),
         path("asociatia/", RedirectView.as_view(pattern_name="organization-old", permanent=True)),
         path("date-cont/", MyAccountDetailsView.as_view(), name="date-contul-meu"),

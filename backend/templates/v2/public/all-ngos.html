@@ -20,8 +20,8 @@
     </form>
 
     <div class="grid gap-x-8 gap-y-16 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-10 xl:gap-y-20">
-      {% include "public/components/pagination.html" with page_obj=page_obj %}
-
+      {% trans "organizations" as paginated_type %}
+      {% include "public/components/pagination.html" with page_obj=page_obj paginated_type=paginated_type show_pagination_count=True %}
 
       {% for ngo in ngos %}
         {% include "public/components/ngo-card.html" with ngo=ngo %}

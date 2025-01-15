@@ -15,6 +15,7 @@ from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
+from django.views.generic import ListView
 from django_q.tasks import async_task
 
 from redirectioneaza.common.cache import cache_decorator
@@ -628,3 +629,52 @@ class OldNgoDetailsView(BaseVisibleTemplateView):
         new_owner.save()
 
         return {"success": "Owner changed successfully"}
+
+
+class NgoRedirectionsView(ListView):
+    template_name = "ngo-account/redirections/base.html"
+    title = _("Redirections")
+    context_object_name = "redirections"
+    paginate_by = 8
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        user: User = self.request.user
+        ngo: Ngo = user.ngo if user.ngo else None
+
+        context.update(
+            {
+                "user": user,
+                "ngo": ngo,
+                "title": self.title,
+            }
+        )
+
+        return context
+
+    def get_queryset(self):
+        user: User = self.request.user
+        ngo: Ngo = user.ngo if user.ngo else None
+
+        redirections = Donor.objects.none()
+        if ngo:
+            redirections = (
+                ngo.donor_set.all()
+                .order_by("-date_created")
+                .values(
+                    "id",
+                    "f_name",
+                    "l_name",
+                    "city",
+                    "county",
+                    "email",
+                    "phone",
+                    "date_created",
+                    "two_years",
+                    "is_anonymous",
+                    "has_signed",
+                )
+            )
+
+        return redirections

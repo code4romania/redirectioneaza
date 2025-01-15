@@ -45,7 +45,7 @@
 
 ### Files:
 
-- `templates/v2/ngo-account/**`
+- `templates/v2/ngo-account/my-organizations/**`
 
 ### Issues:
 
@@ -55,3 +55,17 @@
   - [ ] The "save" & "get from NGO Hub" buttons should be styled the same
   - [ ] Max characters validation for description & other fields
   - [ ] The logo upload doesn't work properly
+
+
+## Organization's redirections
+
+### Files:
+
+- `templates/v2/ngo-account/redirections/**`
+
+### Issues:
+
+  - [ ] The pagination doesn't show up properly (it should be right-aligned)
+  - [ ] Django template: the `nr. crt./#` column from `list-header.html` & `list-items.html` should be calculated properly
+  - [ ] Make the generate archive button work
+  - [ ] Make the download table button work

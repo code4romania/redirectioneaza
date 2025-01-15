@@ -1,0 +1,63 @@
+{% load i18n %}
+
+{% if redirections|length == 0 %}
+
+  <tr class="text-sm text-gray-600">
+    <td class="py-4 pl-4 pr-3 font-medium text-gray-900 sm:pl-0" colspan="5">
+      {% trans "No redirections found" %}
+    </td>
+  </tr>
+
+{% else %}
+
+  {% for redirection in redirections %}
+    <tr class="text-sm text-gray-600">
+
+      {% comment %}
+        The `forloop.counter` should be (forloop.counter + (page_obj.number * page_obj.paginator.per_page))
+        <td class="whitespace-nowrap py-4 pl-4 pr-3 font-medium text-gray-900 sm:pl-0">
+          {{ forloop.counter }}
+        </td>
+      {% endcomment %}
+      <td class="whitespace-normal px-1 py-4">
+        {{ redirection.f_name }} {{ redirection.l_name }}
+      </td>
+      <td class="whitespace-nowrap px-1 py-4">
+        {{ redirection.city }}
+        <br>
+        <strong>{{ redirection.county }}</strong>
+      </td>
+      {% if redirection.is_anonymous %}
+        <td class="whitespace-normal px-1 py-4 col-span-2 text-gray-500" colspan="2">
+          {% trans "This person does not wish to share their contact details." %}
+        </td>
+      {% else %}
+        <td class="whitespace-nowrap px-1 py-4">
+          {{ redirection.email }}
+        </td>
+        <td class="whitespace-nowrap px-1 py-4">
+          {{ redirection.phone }}
+        </td>
+      {% endif %}
+      <td class="whitespace-nowrap px-1 py-4">
+        {% if redirection.two_years %}
+          {% trans "Yes" %}
+        {% else %}
+          {% trans "No" %}
+        {% endif %}
+      </td>
+      <td class="whitespace-nowrap px-1 py-4">
+        {{ redirection.date_created|date:"SHORT_DATE_FORMAT" }}
+      </td>
+      <td class="whitespace-nowrap px-1 py-4">
+        {% if redirection.has_signed %}
+          {% trans "Signed" %}
+        {% else %}
+          {% trans "Unsigned" %}
+        {% endif %}
+      </td>
+
+    </tr>
+  {% endfor %}
+
+{% endif %}

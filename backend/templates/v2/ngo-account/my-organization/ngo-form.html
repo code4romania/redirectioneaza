@@ -2,7 +2,7 @@
 
 {% load i18n %}
 
-{% block organization_form %}
+{% block content %}
 
   <div>
     <form method="post" enctype="multipart/form-data" action="{% url 'organization-forms' %}">
@@ -19,7 +19,7 @@
 
           <hr class="w-full border-gray-400">
 
-          {% trans "Titlu formular" as input_title %}
+          {% trans "Form title" as input_title %}
           {% include "components/input/input.html" with input_id="page_name" input_type="text" input_name="page_name" placeholder="Organization name" is_required=True is_disabled=True value=ngo.name %}
 
           {% trans "Form description" as input_title %}
