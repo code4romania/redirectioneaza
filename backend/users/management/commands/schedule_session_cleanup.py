@@ -35,7 +35,6 @@ class Command(BaseCommand):
             "django.core.management.call_command",
             "clearsessions",
             name=self.schedule_name,
-            schedule_type=Schedule.CRON,
-            cron="37 5 * * *",
+            schedule_type=Schedule.DAILY,
             repeats=-1,
         )
