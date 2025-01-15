@@ -183,10 +183,6 @@ module "ecs_redirectioneaza" {
       valueFrom = aws_secretsmanager_secret.app_encrypt_key.arn
     },
     {
-      name      = "DATABASE_ENGINE"
-      valueFrom = "${aws_secretsmanager_secret.rds.arn}:engine::"
-    },
-    {
       name      = "DATABASE_NAME"
       valueFrom = "${aws_secretsmanager_secret.rds.arn}:database::"
     },

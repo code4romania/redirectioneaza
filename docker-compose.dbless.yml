@@ -7,6 +7,5 @@ services:
       file: docker-compose.base.yml
       service: redirect_dev_base
     environment:
-      - "DATABASE_ENGINE=postgres"
       - "DATABASE_HOST=127.0.0.1"
       - "DATABASE_PORT=5432"

@@ -23,7 +23,6 @@ env = environ.Env(
     USE_PROXY_FORWARDED_HOST=(bool, False),
     PROXY_SSL_HEADER=(str, "HTTP_CLOUDFRONT_FORWARDED_PROTO"),
     # db settings
-    DATABASE_ENGINE=(str, "sqlite3"),
     DATABASE_NAME=(str, "default"),
     DATABASE_USER=(str, "root"),
     DATABASE_PASSWORD=(str, ""),

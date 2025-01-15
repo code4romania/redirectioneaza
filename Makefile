@@ -6,13 +6,6 @@ help:                                            ## Display a help message detai
 
 ## [Managing the project]
 ### Stopping the containers and dropping the databases
-stop-sqlite:                                     ## stops the sqlite dev project
-	docker compose down -t 60
-
-drop-sqlite:                                     ## drops the sqlite dev project
-	docker compose down -v -t 60
-	rm -rf ./backend/.db_sqlite
-
 stop-psql:                                       ## stops the psql dev project
 	docker compose -f docker-compose.psql.yml down -t 60
 
@@ -26,12 +19,6 @@ drop-prod:                                       ## drops the prod project
 	docker compose -f docker-compose.prod.yml down -v -t 60
 
 ### Building & starting the containers
-up-sqlite:                                       ## run the project with sqlite
-	docker compose up --build
-
-upd-sqlite:                                      ## run the project with sqlite in detached mode
-	docker compose up -d --build
-
 up-psql:                                         ## run the project with psql
 	docker compose -f docker-compose.psql.yml up --build
 
@@ -44,15 +31,9 @@ up-prod:                                         ## run the project with psql in
 upd-prod:                                        ## run the project with psql in production in detached mode
 	docker compose -f docker-compose.prod.yml up -d --build
 
-### Using the SQLite database
-run-sqlite: stop-psql up-sqlite                  ## run the project with sqlite and stop the psql project beforehand
-rund-sqlite: stop-psql upd-sqlite                ## run the project with sqlite in detached mode and stop the psql project beforehand
-redo-sqlite: drop-sqlite up-sqlite               ## delete the db and rerun the project with sqlite
-redod-sqlite: drop-sqlite upd-sqlite             ## delete the db and rerun the project with sqlite in detached mode
-
 ### Using the PostgreSQL database
-run-psql: stop-sqlite up-psql                    ## run the project with psql and stop the sqlite project beforehand
-rund-psql: stop-sqlite upd-psql                  ## run the project with psql in detached mode and stop the project project beforehand
+run-psql: up-psql                                ## run the project with psql and stop the prod config beforehand
+rund-psql: upd-psql                              ## run the project with psql in detached mode and stop the project project beforehand
 redo-psql: drop-psql up-psql                     ## delete the db and rerun the project with psql
 redod-psql: drop-psql upd-psql                   ## delete the db and rerun the project with psql in detached mode
 
@@ -63,14 +44,14 @@ redo-prod: drop-prod up-prod                     ## delete the db and rerun the 
 redod-prod: drop-prod upd-prod                   ## delete the db and rerun the project with prod in detached mode
 
 ### Other run options
-run: run-sqlite                                  ## set the default run command to sqlite
-redo: redo-sqlite                                ## set the default redo command to sqlite
-rund: rund-sqlite                                ## set the default run command to sqlite
-redod: redod-sqlite                              ## set the default redo command to sqlite
+run: run-psql                                    ## set the default run command to psql
+redo: redo-psql                                  ## set the default redo command to psql
+rund: rund-psql                                  ## set the default run command to psql
+redod: redod-psql                                ## set the default redo command to psql
 
-stop: stop-sqlite stop-psql stop-prod            ## stop all running projects
+stop: stop-psql stop-prod                        ## stop all running projects
 
-drop: drop-sqlite drop-psql drop-prod            ## drop all databases
+drop: drop-psql drop-prod                        ## drop all databases
 
 
 ## [Monitoring the containers]
