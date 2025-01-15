@@ -7,6 +7,7 @@ from django.core.cache import cache
 from django.core.exceptions import ValidationError
 from django.core.files.storage import storages
 from django.db import models
+from django.db.models import Q
 from django.db.models.functions import Lower
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
@@ -56,7 +57,16 @@ def ngo_slug_validator(value):
 
 class NgoActiveManager(models.Manager):
     def get_queryset(self):
-        return super().get_queryset().filter(is_active=True)
+        return (
+            super()
+            .get_queryset()
+            .filter(
+                is_active=True,
+            )
+            .exclude(
+                Q(slug__isnull=True) | Q(slug__exact="") | Q(bank_account__isnull=True) | Q(bank_account__exact=""),
+            )
+        )
 
 
 class NgoHubManager(models.Manager):
