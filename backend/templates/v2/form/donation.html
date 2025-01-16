@@ -48,6 +48,9 @@
 
           <fieldset class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-5">
 
+            {# TODO: reCAPTCHA doesn't work right now #}
+            <div class="g-recaptcha" data-sitekey="{{ captcha_public_key }}" data-size="invisible" data-callback="onSubmit"></div>
+
             <div class="sm:col-span-2 sm:col-start-1 mt-2">
               {% trans "Last name" as input_title %}
               {% include "components/input/input.html" with input_id="last_name" input_type="text" input_name="last_name" input_autocomplete="family-name" is_required=True %}

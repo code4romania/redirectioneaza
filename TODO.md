@@ -17,6 +17,7 @@
 ### Issues
 
   - [ ] Mark the mandatory fields properly
+  - [ ] Set up captcha validation (set the `g-recaptcha-response` input, see `twopercent.js:183`)
   - [ ] Complete the flow (add a `success & download` page)
   - [ ] The modal doesn't disappear when clicked outside it
   - [ ] Checks need to be done before the button to open the modal is clicked
