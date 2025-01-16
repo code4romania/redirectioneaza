@@ -88,7 +88,7 @@ The project has been configured to work with the following databases:
 
 #### Compiling the old CSS with less
 
-Go to the `backend/` folder and run the following commands:
+Go to the root of the project and run the following commands:
 
 ```bash
 pushd backend/

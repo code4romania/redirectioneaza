@@ -1,0 +1,25 @@
+{
+  "name": "redirectioneaza",
+  "version": "0.0.0",
+  "analytics": false,
+  "authors": [
+    "Andrei Onel",
+    "Daniel Ursache",
+    "Tudor Amariei"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.5",
+    "jquery": "~2.1.4",
+    "less": "~2.5.1",
+    "bootswatch": "~3.3.5",
+    "fontawesome": "~4.4.0"
+  }
+}
