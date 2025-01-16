@@ -10,6 +10,7 @@ from .environment import env
 SECRET_KEY = env.str("SECRET_KEY")
 SECRET_KEY_HASH = hashlib.blake2s(SECRET_KEY.encode()).hexdigest()
 OLD_SESSION_KEY = env.str("OLD_SESSION_KEY")
+ALLOW_OLD_PASSWORDS = env.bool("ALLOW_OLD_PASSWORDS")
 
 # SECURITY WARNING: don't run with debug turned on in production
 DEBUG = env.bool("DEBUG")

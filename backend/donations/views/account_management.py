@@ -122,7 +122,7 @@ class LoginView(BaseVisibleTemplateView):
                 return redirect(reverse("admin-index"))
 
             return redirect(reverse("contul-meu"))
-        else:
+        elif settings.ALLOW_OLD_PASSWORDS:
             # Check the old password authentication and migrate it to the new method
             user_model = get_user_model()
             try:

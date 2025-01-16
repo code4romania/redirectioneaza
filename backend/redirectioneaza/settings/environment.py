@@ -12,6 +12,7 @@ env = environ.Env(
     ENVIRONMENT=(str, "production"),
     DATA_UPLOAD_MAX_NUMBER_FIELDS=(int, 1000),
     OLD_SESSION_KEY=(str, ""),
+    ALLOW_OLD_PASSWORDS=(bool, True),
     SESSION_COOKIE_SECURE=(bool, True),
     LOG_LEVEL=(str, "WARNING"),
     ENABLE_CACHE=(bool, True),
