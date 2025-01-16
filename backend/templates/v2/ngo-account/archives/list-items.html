@@ -13,12 +13,10 @@
   {% for archive in archive_jobs %}
     <tr class="text-sm text-gray-600">
 
-      {% comment %}
-        The `forloop.counter` should be (forloop.counter + (page_obj.number * page_obj.paginator.per_page))
-        <td class="whitespace-nowrap py-4 pl-4 pr-3 font-medium text-gray-900 sm:pl-0">
-          {{ forloop.counter }}
-        </td>
-      {% endcomment %}
+      <td class="whitespace-nowrap py-4 pl-4 pr-3 font-medium text-gray-900 sm:pl-0">
+        {{ forloop.counter0|add:archive_jobs.start_index }}
+      </td>
+      
       <td class="whitespace-normal py-4 pl-4 pr-3 font-medium text-gray-900 sm:pl-0">
         {{ archive.date_created|date:"SHORT_DATE_FORMAT" }}
       </td>
