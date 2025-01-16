@@ -5,14 +5,18 @@
 {% block content %}
 
   <div>
-    <form method="post" enctype="multipart/form-data" action="{% url 'organization-forms' %}">
+    <form
+      method="post"
+      enctype="multipart/form-data"
+      action="{% url 'my-organization:forms' %}">
+
       {% csrf_token %}
 
       {% trans "Form Data" as title %}
       {% include "ngo-account/components/form-title.html" with hide_ngohub_button=True %}
 
       <fieldset>
-        <div class="grid grid-cols-1 gap-12">
+        <div class="p-4 grid grid-cols-1 gap-x-6 gap-y-8">
 
           {% trans "Organization URL" as input_title %}
           {% include "components/input/input.html" with input_id="organization-slug" input_title=input_title input_type="text" input_name="organization-slug" is_required=true value=ngo.slug %}

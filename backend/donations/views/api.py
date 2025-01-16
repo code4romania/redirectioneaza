@@ -188,7 +188,7 @@ class GetNgoForms(BaseTemplateView):
         if not request.user.is_authenticated:
             return redirect(reverse("login"))
 
-        redirect_url = reverse("organization-archives")
+        redirect_url = reverse("my-organization:archives")
 
         ngo = request.user.ngo
         if not ngo:
