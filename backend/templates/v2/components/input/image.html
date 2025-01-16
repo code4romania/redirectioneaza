@@ -4,7 +4,7 @@
 
 {% block input %}
 
-  <div class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+  <div class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10  {% if is_disabled %} cursor-not-allowed opacity-70 {% endif %}">
     <div class="text-center">
 
       <div class="mx-auto h-12 w-12 rounded-full size-12 text-gray-300">
@@ -21,7 +21,7 @@
       </div>
       <div class="mt-4 flex text-sm/6 text-gray-600">
         <label
-          class="relative rounded-md bg-white font-semibold text-amber-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-amber-600 focus-within:ring-offset-2 {% if not is_disabled %}cursor-pointer hover:text-amber-500{% endif %}">
+          class="relative rounded-md bg-white font-semibold {% if is_disabled %} cursor-not-allowed {% else %} text-amber-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-amber-600 focus-within:ring-offset-2 cursor-pointer hover:text-amber-500 {% endif %}  ">
           <span>
             {% if is_disabled %}
               {% trans "Upload a logo in NGO Hub" %}
@@ -34,7 +34,7 @@
             name="file-upload"
             type="file"
             {% if is_disabled %}disabled{% endif %}
-            class="sr-only">
+            class="sr-only disabled:bg-gray-500">
         </label>
       </div>
 
