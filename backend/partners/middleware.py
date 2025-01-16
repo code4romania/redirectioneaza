@@ -53,7 +53,7 @@ class PartnerDomainMiddleware:
         try:
             subdomain = PartnerDomainMiddleware.extract_subdomain(request.get_host(), settings.APEX_DOMAIN)
         except InvalidSubdomain:
-            raise Http404
+            raise Http404(f"Invalid APEX_DOMAIN: {settings.APEX_DOMAIN}")
 
         logger.debug("Subdomain %s", subdomain or "None")
         if not subdomain:
