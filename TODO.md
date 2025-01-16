@@ -72,10 +72,10 @@
 
 ### Issues
 
-  - [ ] The pagination doesn't show up properly (it should be right-aligned)
+  ~~The pagination doesn't show up properly (it should be right-aligned)~~  (fixed because we have the "items/page" element)
   - [ ] Django template: the `nr. crt./#` column from `list-header.html` & `list-items.html` should be calculated properly
   - [x] Make the generate archive button work
-  - [ ] Make the download table button work
+  ~~Make the download table button work~~  (delayed because the feature requires a new BE feature)
 
 
 ## Organization's archives
@@ -91,7 +91,7 @@
 
 ### Issues
 
-  - [ ] Same issue with the pagination as in the `redirections` page
+  ~~Same issue with the pagination as in the `redirections` page~~  (fixed because we have the "items/page" element)
   - [ ] Align the table elements better (it's the same table as in the `redirections` page but with different columns)
 
 
