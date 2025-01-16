@@ -16,14 +16,15 @@
 
 ### Issues
 
-  - [ ] Mark the mandatory fields properly
+  - [x] Mark the mandatory fields properly @idormenco
   - [ ] Set up captcha validation (set the `g-recaptcha-response` input, see `twopercent.js:183`)
-  - [ ] Complete the flow (add a `success & download` page)
-  - [ ] The modal doesn't disappear when clicked outside it
-  - [ ] Checks need to be done before the button to open the modal is clicked
-  - [ ] Connect BE & FE for the donation form
-  - [ ] Why is `x-trap.inert.noscroll="modalIsOpen"` displaying as a warning?
-  - [ ] Figure out how to disable the signature script on other pages
+    - make the captcha do its own work @tamariei
+  - [ ] Complete the flow (add a `success & download` page) @tamariei
+  - [ ] Add a button to close the modal @idormenco
+  - [ ] Checks need to be done before the button to open the modal is clicked or change the flow @idormenco
+  - [ ] Connect BE & FE for the donation form @tamarei
+  - [x] Why is `x-trap.inert.noscroll="modalIsOpen"` displaying as a warning?
+  - [ ] Figure out how to disable the signature script on other pages @idormenco
 
 
 ## Login
@@ -35,8 +36,8 @@
 
 ### Issues
 
-  - [ ] The user isn't redirected to Cognito for login
-  - [ ] The error pages need to be styled properly
+  - [x] The user isn't redirected to Cognito for login
+  - [ ] The error pages need to be styled properly @tamariei & @danniel
 
 
 ## Organization Data / NGO Profile
@@ -53,11 +54,11 @@
 
 ### Issues
 
-  - [ ] Mark the mandatory fields properly
-  - [ ] The disabled form fields need to be styled properly
-  - [ ] Connect the form to the BE properly
+  - [x] Mark the mandatory fields properly @idormenco
+  - [x] The disabled form fields need to be styled properly @idormenco
+  - [ ] Connect the form to the BE properly @tamariei
   - [ ] Check the data for changes when switching tabs
-  - [ ] The "save" & "get from NGO Hub" buttons should be styled the same
+  - [x] The "save" & "get from NGO Hub" buttons should be styled the same @idormenco
   - [ ] Max characters validation for description & other fields
   - [ ] The logo upload doesn't work properly
 
@@ -106,4 +107,4 @@
 
 ### Issues
 
-  - [ ] NPM doesn't install packages properly and uses local packages instead
+  - [ ] NPM doesn't install packages properly and uses local packages instead @idormenco
