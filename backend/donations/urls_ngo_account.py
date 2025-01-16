@@ -16,5 +16,5 @@ urlpatterns = [
     path("prezentare/", NgoDetailsView.as_view(), name="organization-presentation"),
     path("formulare/", NgoFormsView.as_view(), name="organization-forms"),
     path("redirectionari/", NgoRedirectionsView.as_view(), name="organization-redirections"),
-    path("exporturi/", NgoArchivesView.as_view(), name="organization-archives"),
+    path("arhive/", NgoArchivesView.as_view(), name="organization-archives"),
 ]

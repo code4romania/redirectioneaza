@@ -1,25 +1,20 @@
 # Things to do to make the front-end work properly
 
 
-## Dockerfile
-
-### Files:
-
-- `docker/dockerfiles/Dockerfile.dev`
-
-### Issues:
-
-  - [ ] NPM doesn't install packages properly and uses local packages instead
-
-
 ## Donation form
 
-### Files:
+### Pages
+
+- no login necessary
+- you need a valid NGO
+- /<ngo-slug>/
+
+### Files
 
 - `templates/v2/form/donation.html`
 - `templates/v2/form/signature.html`
 
-### Issues:
+### Issues
 
   - [ ] Complete the flow (add a `success & download` page)
   - [ ] The modal doesn't disappear when clicked outside it
@@ -31,12 +26,12 @@
 
 ## Login
 
-### Files:
+### Files
 
 - `templates/v2/socialaccount/login.html`
 - `templates/v2/account/errors/login/**`
 
-### Issues:
+### Issues
 
   - [ ] The user isn't redirected to Cognito for login
   - [ ] The error pages need to be styled properly
@@ -44,11 +39,17 @@
 
 ## Organization Data / NGO Profile
 
-### Files:
+### Pages
 
-- `templates/v2/ngo-account/my-organizations/**`
+- login as: NGO
+- /organizatia-mea/prezentare/
+- /organizatia-mea/formulare/
 
-### Issues:
+### Files
+
+- `templates/v2/ngo-account/my-organization/*.html`
+
+### Issues
 
   - [ ] The disabled form fields need to be styled properly
   - [ ] Connect the form to the BE properly
@@ -60,25 +61,46 @@
 
 ## Organization's redirections
 
-### Files:
+### Pages
+
+- login as: NGO
+- /organizatia-mea/redirectionari/
+
+### Files
 
 - `templates/v2/ngo-account/redirections/**`
 
-### Issues:
+### Issues
 
   - [ ] The pagination doesn't show up properly (it should be right-aligned)
   - [ ] Django template: the `nr. crt./#` column from `list-header.html` & `list-items.html` should be calculated properly
-  - [ ] Make the generate archive button work
+  - [x] Make the generate archive button work
   - [ ] Make the download table button work
 
 
 ## Organization's archives
 
-### Files:
+### Pages
+
+- login as: NGO
+- /organizatia-mea/arhive/
+
+### Files
 
 - `templates/v2/ngo-account/archives/**`
 
-### Issues:
+### Issues
 
   - [ ] Same issue with the pagination as in the `redirections` page
   - [ ] Align the table elements better (it's the same table as in the `redirections` page but with different columns)
+
+
+## Production-ready Dockerfile
+
+### Files
+
+- `docker/dockerfiles/Dockerfile.dev`
+
+### Issues
+
+  - [ ] NPM doesn't install packages properly and uses local packages instead
