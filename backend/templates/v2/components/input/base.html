@@ -1,7 +1,7 @@
 <label>
 
   <span class="block text-sm/6 font-medium text-gray-500 mb-1">
-    {{ input_title }}
+    {{ input_title }}{% if is_required %}<span class='text-red-500'>*</span>{% endif %}
   </span>
 
   {% block input %}{% endblock %}

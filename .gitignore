@@ -430,3 +430,5 @@ dist
 
 # GeoLite city database
 */GeoLite2-City/*
+.idea
+/backend/.idea

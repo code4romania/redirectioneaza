@@ -52,27 +52,27 @@
             <div class="g-recaptcha" data-sitekey="{{ captcha_public_key }}" data-size="invisible" data-callback="onSubmit"></div>
 
             <div class="sm:col-span-2 sm:col-start-1 mt-2">
-              {% trans "Last name" as input_title %}
+              {% trans "Last name" as input_title %}<span class='text-red-500'>*</span>
               {% include "components/input/input.html" with input_id="last_name" input_type="text" input_name="last_name" input_autocomplete="family-name" is_required=True %}
             </div>
 
             <div class="sm:col-span-2 mt-2">
-              {% trans "First name" as input_title %}
+              {% trans "First name" as input_title %}<span class='text-red-500'>*</span>
               {% include "components/input/input.html" with input_id="first_name" input_type="text" input_name="first_name" input_autocomplete="given-name" is_required=True %}
             </div>
 
             <div class="sm:col-span-1 mt-2">
-              {% trans "Father's initial" as input_title %}
+              {% trans "Father's initial" as input_title %}<span class='text-red-500'>*</span>
               {% include "components/input/input.html" with input_id="initial" input_type="text" input_name="initial" is_required=True %}
             </div>
 
             <div class="sm:col-span-4 mt-2">
-              {% trans "Personal identification number" as input_title %}
+              {% trans "Personal identification number" as input_title %}<span class='text-red-500'>*</span>
               {% include "components/input/input.html" with input_id="cnp" input_type="text" input_name="cnp" is_required=True %}
             </div>
 
             <div class="sm:col-span-2 mt-2">
-              {% trans "Email" as input_title %}
+              {% trans "Email" as input_title %}<span class='text-red-500'>*</span>
               {% include "components/input/input.html" with input_id="email_address" input_type="email" input_name="email_address" input_autocomplete="email" is_required=True %}
             </div>
 
@@ -92,12 +92,12 @@
             </h2>
 
             <div class="sm:col-span-4 sm:col-start-1 mt-2">
-              {% trans "Street name" as input_title %}
+              {% trans "Street name" as input_title %}<span class='text-red-500'>*</span>
               {% include "components/input/input.html" with input_id="street_name" input_type="text" input_name="street_name" input_autocomplete="address-line1" is_required=True %}
             </div>
 
             <div class="sm:col-span-1 mt-2">
-              {% trans "Number" as input_title %}
+              {% trans "Number" as input_title %}<span class='text-red-500'>*</span>
               {% include "components/input/input.html" with input_id="street_number" input_type="text" input_name="street_number" is_required=True %}
             </div>
 
@@ -122,12 +122,12 @@
             </div>
 
             <div class="sm:col-span-3 sm:col-start-1 mt-2">
-              {% trans "County" as input_title %}
+              {% trans "County" as input_title %} <span class='text-red-500'>*</span>
               {% include "components/input/county.html" with input_id="county" input_name="county" is_required=True %}
             </div>
 
             <div class="sm:col-span-3 mt-2">
-              {% trans "Locality" as input_title %}
+              {% trans "Locality" as input_title %}<span class='text-red-500'>*</span>
               {% include "components/input/input.html" with input_id="locality" input_type="text" input_name="locality" input_autocomplete="address-level2" is_required=True %}
             </div>
 
