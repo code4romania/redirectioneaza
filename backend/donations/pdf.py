@@ -15,6 +15,9 @@ from reportlab.pdfgen import canvas
 from reportlab.pdfgen.canvas import Canvas
 from svglib.svglib import svg2rlg
 
+from donations.models.donors import Donor
+from donations.models.ngos import Ngo
+
 abs_path = os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir))
 # TODO: we might need to rethink this; we should not hardcode the path to static_extras
 font_path = abs_path + "/static_extras/font/opensans.ttf"
@@ -37,7 +40,7 @@ def format_ngo_account(ngo_account: str):
     return account
 
 
-def add_donor_data(c: Canvas, person: Dict):
+def add_person_data(c: Canvas, person: Dict):
     donor_block_x = 681
 
     # the first name
@@ -145,7 +148,7 @@ def add_donor_data(c: Canvas, person: Dict):
     c.setFontSize(default_font_size)
 
 
-def add_ngo_data(c, ong):
+def add_ong_data(c, ong):
     start_ong_y = 449
 
     # the x mark
@@ -228,9 +231,9 @@ def create_pdf(person: Dict, ong: Dict):
 
     # DRAW DONOR DATA
     if person.get("first_name"):
-        add_donor_data(c, person)
+        add_person_data(c, person)
 
-    add_ngo_data(c, ong)
+    add_ong_data(c, ong)
 
     c.save()
 
@@ -292,3 +295,221 @@ def add_signature(pdf, image):
     packet.close()
 
     return output_stream
+
+
+def add_ngo_data(c: Canvas, ngo: Ngo):
+    start_ngo_y = 449
+
+    # the x mark
+    c.drawString(219, start_ngo_y, "x")
+
+    # the cif code
+    c.setFontSize(9)
+    c.drawString(250, start_ngo_y - 41, ngo.full_registration_number)
+
+    # the name
+    org_name = ngo.name
+    if len(org_name) > 79:
+        c.setFontSize(9)
+    elif len(org_name) > 65:
+        c.setFontSize(12)
+
+    c.drawString(186, start_ngo_y - 64, org_name.encode("utf-8"))
+
+    c.setFontSize(11)
+
+    # the bank account
+    account = format_ngo_account(ngo.bank_account)
+    c.drawString(110, start_ngo_y - 86, account)
+
+    c.drawString(146, start_ngo_y - 108, "3,5%")
+
+
+def add_donor_data(c: Canvas, donor: Donor):
+    donor_block_y = 681
+
+    # the first name
+    first_name = donor.f_name
+    if len(first_name) > 18:
+        c.setFontSize(12)
+
+    c.drawString(75, donor_block_y - 22, first_name)
+    c.setFontSize(default_font_size)
+
+    # father's initial
+    c.drawString(300, donor_block_y, donor.initial)
+
+    # the last name
+    last_name = donor.l_name
+    if len(last_name) > 34:
+        c.setFontSize(10)
+
+    c.drawString(75, donor_block_y, last_name)
+
+    # =======================================
+    # THIRD ROW
+    #
+    third_row_x = donor_block_y - 45
+
+    # the street
+    donor_address: Dict = donor.get_address()
+
+    street = donor_address["str"]
+    if len(street) > 40:
+        c.setFontSize(8)
+    elif 36 < len(street) < 41:
+        c.setFontSize(10)
+    elif 24 < len(street) < 36:
+        c.setFontSize(11)
+
+    c.drawString(67, third_row_x, street)
+    c.setFontSize(default_font_size)
+
+    # număr
+    street_number = donor_address["nr"]
+    if len(street_number) > 5:
+        c.setFontSize(8)
+    elif len(street_number) > 3:
+        c.setFontSize(10)
+
+    c.drawString(289, third_row_x, street_number)
+    c.setFontSize(default_font_size)
+
+    #
+    # =======================================
+
+    # =======================================
+    # FOURTH ROW
+    fourth_row_x = donor_block_y - 67
+
+    c.setFontSize(14)
+    # bloc
+    c.drawString(49, fourth_row_x, donor_address.get("bl", ""))
+    # scara
+    c.drawString(108, fourth_row_x, donor_address.get("sc", ""))
+
+    # etaj
+    c.drawString(150, fourth_row_x, donor_address.get("et", ""))
+
+    # apartament
+    c.drawString(185, fourth_row_x, donor_address.get("ap", ""))
+
+    # județ
+    county = donor.county
+    if len(county) <= 12:
+        c.setFontSize(12)
+    else:
+        c.setFontSize(8)
+
+    c.drawString(255, fourth_row_x, county)
+    c.setFontSize(default_font_size)
+    #
+    # =======================================
+
+    # oras
+    c.drawString(69, donor_block_y - 90, donor.city)
+
+    c.setFontSize(16)
+
+    # cnp
+    start_x = 336
+    cnp = donor.get_cnp()
+    for letter in cnp:
+        c.drawString(start_x, donor_block_y - 10, letter)
+        start_x += 18.5
+
+    # email
+    start_email_x = 368
+    email = donor.email
+    if email:
+        if len(email) < 32:
+            c.setFontSize(12)
+        elif len(email) < 40:
+            c.setFontSize(10)
+        else:
+            c.setFontSize(8)
+
+        c.drawString(start_email_x, third_row_x + 14, email)
+
+    # telephone
+    phone_number = donor.phone
+    if phone_number:
+        c.setFontSize(12)
+        c.drawString(start_email_x, third_row_x - 15, phone_number)
+
+    c.setFontSize(default_font_size)
+
+    if donor.two_years:
+        c.drawString(325, donor_block_y - 253, "x")
+
+
+def create_full_pdf(donor: Donor, signature: str):
+    """method used to create the pdf
+
+    donor: Donor object with the person's data
+    signature: base64 encoded string of the signature svg
+    """
+
+    # packet = StringIO()
+    # we could also use StringIO
+    packet = tempfile.TemporaryFile(mode="w+b")
+
+    c: Canvas = canvas.Canvas(packet, A4)
+    width, height = A4
+
+    # add the image as a background
+
+    background = ImageReader(form_image_path)
+    c.drawImage(background, 0, 0, width=width, height=height)
+
+    c.setFont("OpenSans", default_font_size)
+    c.setFontSize(default_font_size)
+
+    # the year
+    # this is the previous year
+    year = str(datetime.now().year - 1)
+    start_x = 305
+    for letter in year:
+        c.drawString(start_x, 736, letter)
+        start_x += 18
+
+    # DRAW DONOR DATA
+    add_donor_data(c, donor)
+
+    add_ngo_data(c, donor.ngo)
+
+    if not signature:
+        c.save()
+
+        # go to the beginning of the file
+        packet.seek(0)
+        # packet.type = "application/pdf"
+        return packet
+
+    # add the image as a background
+    # remove the header added by JavaScript
+    signature = signature.split(",")[1]
+
+    # make sure the string has the right padding
+    signature = signature + "=" * (-len(signature) % 4)
+    base_image = base64.b64decode(signature)
+    byte_image = BytesIO(base_image)
+    # make this a svg2rlg object
+    drawing = svg2rlg(byte_image)
+
+    new_height = 30
+    scaled_down = new_height / drawing.height
+
+    # we want to scale the image down and stil keep its aspect ratio
+    # the image might have dimensions of 750 x 200
+    drawing.scale(scaled_down, scaled_down)
+
+    # add it to the PDF
+    renderPDF.draw(drawing, c, 166, 134)
+
+    c.save()
+
+    # go to the beginning of the file
+    packet.seek(0)
+
+    return packet

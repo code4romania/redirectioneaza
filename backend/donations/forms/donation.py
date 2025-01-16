@@ -1,35 +1,40 @@
 from django import forms
+from django.conf import settings
 from django.utils.translation import gettext_lazy as _
+from django_recaptcha.fields import ReCaptchaField
+from django_recaptcha.widgets import ReCaptchaV2Invisible
 from localflavor.ro.forms import ROCNPField
 
-from donations.models.donors import Donor
 
+class DonationForm(forms.Form):
+    l_name = forms.CharField(max_length=100, label=_("Last name"), required=True)
+    f_name = forms.CharField(max_length=100, label=_("First name"), required=True)
+    initial = forms.CharField(max_length=1, label=_("Initial"), required=True)
+    cnp = ROCNPField(label="CNP", required=True)
 
-class DonorInputForm(forms.ModelForm):
-    street = forms.CharField(max_length=100, label=_("Street"))
-    street_number = forms.CharField(max_length=10, label=_("Number"))
-    block = forms.CharField(max_length=10, label=_("Building"), required=False)
+    email_address = forms.EmailField(label=_("Email"), required=True)
+    phone_number = forms.CharField(max_length=20, label=_("Phone"), required=False)
+
+    street_name = forms.CharField(max_length=100, label=_("Street"), required=True)
+    street_number = forms.CharField(max_length=10, label=_("Number"), required=True)
+    flat = forms.CharField(max_length=10, label=_("Building"), required=False)
     entrance = forms.CharField(max_length=10, label=_("Entrance"), required=False)
     floor = forms.CharField(max_length=10, label=_("Floor"), required=False)
     apartment = forms.CharField(max_length=10, label=_("Apartment"), required=False)
-    terms = forms.BooleanField(label=_("Terms"), required=True)
 
-    ngo_id = forms.IntegerField(widget=forms.HiddenInput(), required=False)
-    cnp = ROCNPField(label="CNP")
+    county = forms.CharField(max_length=100, label=_("County"), required=True)
+    locality = forms.CharField(max_length=100, label=_("Locality"), required=True)
 
-    class Meta:
-        model = Donor
-        fields = [
-            "l_name",
-            "f_name",
-            "initial",
-            "city",
-            "county",
-            "phone",
-            "email",
-            "is_anonymous",
-            "two_years",
-        ]
+    two_years = forms.BooleanField(label=_("Two years"), required=False)
+    agree_contact = forms.BooleanField(label=_("Agree contact"), required=True)
+    agree_terms = forms.BooleanField(label=_("Agree terms"), required=True)
+
+    signature = forms.CharField(label=_("Signature"), required=False)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if settings.RECAPTCHA_ENABLED:
+            self.fields["captcha_token"] = ReCaptchaField(widget=ReCaptchaV2Invisible)
 
     @staticmethod
     def _clean_checkbox(value):
@@ -37,11 +42,14 @@ class DonorInputForm(forms.ModelForm):
             return True
         return False
 
-    def clean_is_anonymous(self):
-        return self._clean_checkbox(self.cleaned_data["is_anonymous"])
-
     def clean_two_years(self):
         return self._clean_checkbox(self.cleaned_data["two_years"])
 
+    def clean_agree_contact(self):
+        return not self._clean_checkbox(self.cleaned_data["agree_contact"])
+
     def clean_terms(self):
-        return self._clean_checkbox(self.cleaned_data["terms"])
+        return self._clean_checkbox(self.cleaned_data["agree_terms"])
+
+    def clean_signature(self):
+        return self.cleaned_data["signature"]

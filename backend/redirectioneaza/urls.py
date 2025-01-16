@@ -56,7 +56,12 @@ from donations.views.ngo_account import (
     MyAccountView,
     OldNgoDetailsView,
 )
-from donations.views.redirections import DonationSucces, FormSignature, OwnFormDownloadLinkHandler, TwoPercentHandler
+from donations.views.redirections import (
+    DonationSucces,
+    FormSignature,
+    NewTwoPercentHandler,
+    OwnFormDownloadLinkHandler,
+)
 from donations.views.site import (
     AboutHandler,
     HealthCheckHandler,
@@ -166,7 +171,7 @@ urlpatterns = (
         re_path(r"^(?P<ngo_url>[\w-]+)/doilasuta/", RedirectView.as_view(pattern_name="twopercent", permanent=True)),
         re_path(r"^(?P<ngo_url>[\w-]+)/semnatura/", FormSignature.as_view(), name="ngo-twopercent-signature"),
         re_path(r"^(?P<ngo_url>[\w-]+)/succes/", DonationSucces.as_view(), name="ngo-twopercent-success"),
-        re_path(r"^(?P<ngo_url>[\w-]+)/$", TwoPercentHandler.as_view(), name="twopercent"),
+        re_path(r"^(?P<ngo_url>[\w-]+)/$", NewTwoPercentHandler.as_view(), name="twopercent"),
         # Skip the login provider selector page and redirect to Cognito
         path(
             "allauth/login/",

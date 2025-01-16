@@ -30,7 +30,7 @@
         </h1>
 
         <p class="text-sm text-gray-400">
-          {% blocktrans trimmed %}
+          {% blocktrans %}
             Since 2022, form 230 can be submitted online.
             Fill in the form with the data from your ID,
             sign it online, and it will be automatically sent to the organization.
@@ -56,16 +56,19 @@
             <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-5">
 
               {# TODO: reCAPTCHA doesn't work right now #}
-              <div class="g-recaptcha" data-sitekey="{{ captcha_public_key }}" data-size="invisible" data-callback="onSubmit"></div>
+              <div
+                class="g-recaptcha"
+                data-sitekey="{{ captcha_public_key }}"
+                data-callback="onSubmit"></div>
 
               <div class="sm:col-span-2 sm:col-start-1 mt-2">
                 {% trans "Last name" as input_title %}
-                {% include "components/input/input.html" with input_id="last_name" input_type="text" input_name="last_name" input_autocomplete="family-name" is_required=True %}
+                {% include "components/input/input.html" with input_id="l_name" input_type="text" input_name="l_name" input_autocomplete="family-name" is_required=True %}
               </div>
 
               <div class="sm:col-span-2 mt-2">
                 {% trans "First name" as input_title %}
-                {% include "components/input/input.html" with input_id="first_name" input_type="text" input_name="first_name" input_autocomplete="given-name" is_required=True %}
+                {% include "components/input/input.html" with input_id="f_name" input_type="text" input_name="f_name" input_autocomplete="given-name" is_required=True %}
               </div>
 
               <div class="sm:col-span-1 mt-2">
@@ -75,7 +78,7 @@
 
               <div class="sm:col-span-4 mt-2">
                 {% trans "Personal identification number" as input_title %}
-                {% include "components/input/input.html" with input_id="cnp" input_type="text" input_name="cnp" is_required=True %}
+                {% include "components/input/input.html" with input_id="cnp" input_type="text" input_name="cnp" is_required=True maxlength=13 %}
               </div>
 
               <div class="sm:col-span-2 mt-2">
@@ -145,18 +148,18 @@
                   <span class="block text-sm/6 font-medium text-gray-500">
                     {{ input_title }}<span class='text-red-500'>*</span>
                   </span>
-                <div class="w-full flex">
-  
-                    <img id="signature-preview" class="border mt-1 border-gray-300 rounded-md" width="580" height="200" />
-       
+                  <div class="w-full flex">
+
+                    <img id="signature-preview" class="border mt-1 border-gray-300 rounded-md" width="580" height="200"/>
+
                     <div class="items-center hidden text-center xl:flex gap-x-6 py-10">
 
                       {% if ngo.is_accepting_forms %}
                         <div
                           x-data="{modalIsOpen: false}"
                           class="w-full"
-                          >
-          
+                        >
+
                           {% comment %}
                             When clicking the "Sign" button, check if all the required fields are filled in, then show the modal.
                           {% endcomment %}
@@ -166,11 +169,12 @@
                             type="button"
                             class="w-4 h-4 ml-4">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                              <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+                              <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"/>
                             </svg>
-                            
+
                           </button>
-          
+
                           <div
                             x-cloak
                             x-show="modalIsOpen"
@@ -182,21 +186,21 @@
                             aria-modal="true"
                             aria-labelledby="defaultModalTitle"
                             class="fixed inset-0 z- flex items-end justify-center bg-black/20 p-4 pb-8 backdrop-blur-md sm:items-center lg:p-8">
-          
+
                             <div
                               x-show="modalIsOpen"
                               x-transition:enter="transition ease-out duration-200 delay-100 motion-reduce:transition-opacity" x-transition:enter-start="opacity-0 scale-50" x-transition:enter-end="opacity-100 scale-100"
                               class="flex max-w-lg flex-col gap-4 overflow-hidden rounded-md border border-neutral-300 bg-white text-neutral-600 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-300">
                               {% include "form/signature.html" %}
-          
+
                             </div>
-          
+
                           </div>
                         </div>
                       {% endif %}
-          
+
                     </div>
-                </div>
+                  </div>
                 </label>
               </div>
             </div>
@@ -208,14 +212,14 @@
               <div>
                 {% trans "I want my redirection to be valid for two years" as input_title %}
                 <div class="mt-8 flex gap-3">
-                  {% include "components/input/checkbox.html" with input_id="two-years" input_title=input_title input_name="two-years" %}
+                  {% include "components/input/checkbox.html" with input_id="two_years" input_title=input_title input_name="two_years" %}
                 </div>
               </div>
 
               <div>
                 {% trans "I agree that this NGO may contact me in the future with details about the projects implemented" as input_title %}
                 <div class="mt-8 flex gap-3">
-                  {% include "components/input/checkbox.html" with input_id="agree-contact" input_title=input_title input_name="agree-contact" %}
+                  {% include "components/input/checkbox.html" with input_id="agree_contact" input_title=input_title input_name="agree_contact" %}
                 </div>
               </div>
 
@@ -232,7 +236,7 @@
                   </a>.
                 {% endblocktranslate %}
                 <div class="mt-8 flex gap-3">
-                  {% include "components/input/checkbox.html" with input_id="agree-terms" input_title=input_title input_name="agree-terms" %}
+                  {% include "components/input/checkbox.html" with input_id="agree_terms" input_title=input_title input_name="agree_terms" %}
                 </div>
               </div>
             </div>
@@ -242,12 +246,12 @@
           <div class="items-center hidden text-center xl:flex gap-x-6 py-10">
 
             <button type="submit"
-              class="w-full text-center outline outline-amber-300 bg-amber-300 sm:text-base text-sm sm:px-6 sm:py-2 px-2 py-1 shadow-sm rounded-full text-gray-900 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
+                    class="w-full text-center outline outline-amber-300 bg-amber-300 sm:text-base text-sm sm:px-6 sm:py-2 px-2 py-1 shadow-sm rounded-full text-gray-900 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
               {% trans "Send form" %}
             </button>
-            
+
             <button type="submit"
-              class="w-full text-center outline outline-amber-300 bg-white sm:text-base text-sm sm:px-6 sm:py-2 px-2 py-1 shadow-sm rounded-full text-gray-900 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
+                    class="w-full text-center outline outline-amber-300 bg-white sm:text-base text-sm sm:px-6 sm:py-2 px-2 py-1 shadow-sm rounded-full text-gray-900 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
               {% trans "Continue without signing" %}
             </button>
 
