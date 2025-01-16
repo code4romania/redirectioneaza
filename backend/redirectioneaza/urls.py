@@ -109,8 +109,8 @@ urlpatterns = (
         # my account
         path("contul-meu/", MyAccountView.as_view(), name="contul-meu"),
         path("organizatia-old/", OldNgoDetailsView.as_view(), name="organization-old"),
-        path("organizatia-mea/", include("donations.urls_ngo_account")),
-        path("organizatia/", RedirectView.as_view(pattern_name="organization-presentation", permanent=True)),
+        path("organizatia-mea/", include(("donations.urls_ngo_account", "donations"), namespace="my-organization")),
+        path("organizatia/", RedirectView.as_view(pattern_name="my-organization:presentation", permanent=True)),
         path("asociatia/", RedirectView.as_view(pattern_name="organization-old", permanent=True)),
         path("date-cont/", MyAccountDetailsView.as_view(), name="date-contul-meu"),
         path(

@@ -5,7 +5,11 @@
 {% block content %}
 
   <div>
-    <form method="post" enctype="multipart/form-data" action="{% url 'organization-forms' %}">
+    <form
+      method="post"
+      enctype="multipart/form-data"
+      action="{% url 'my-organization:forms' %}">
+
       {% csrf_token %}
 
       {% trans "Form Data" as title %}

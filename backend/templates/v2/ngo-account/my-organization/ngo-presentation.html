@@ -5,7 +5,11 @@
 {% block content %}
 
   <div>
-    <form method="post" enctype="multipart/form-data" action="{% url 'organization-presentation' %}">
+    <form
+      method="post"
+      enctype="multipart/form-data"
+      action="{% url 'my-organization:presentation' %}">
+
       {% csrf_token %}
 
       {% with disable_ngohub_fields=has_ngohub %}

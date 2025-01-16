@@ -272,7 +272,7 @@ class NgoFormsView(NgoBaseView):
         user = request.user
 
         if not user.ngo:
-            return redirect(reverse("organization-presentation"))
+            return redirect(reverse("my-organization:presentation"))
 
         return super().get(request, *args, **kwargs)
 
