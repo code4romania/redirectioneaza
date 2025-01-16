@@ -200,7 +200,7 @@
                   x-cloak
                   x-show="modalIsOpen"
                   x-transition.opacity.duration.100ms
-                  x-trap.inert.noscroll="modalIsOpen"
+                  x-trap.noscroll="modalIsOpen"
                   @keydown.esc.window="modalIsOpen = false"
                   @click.self="modalIsOpen = false"
                   role="dialog"
