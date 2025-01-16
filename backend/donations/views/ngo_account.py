@@ -682,7 +682,7 @@ class NgoRedirectionsView(ListView):
 
 class NgoArchivesView(ListView):
     template_name = "ngo-account/archives/main.html"
-    title = _("Forms export history ")
+    title = _("Archives history ")
     context_object_name = "archive_jobs"
     paginate_by = 8
 
