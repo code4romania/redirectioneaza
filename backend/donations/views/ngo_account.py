@@ -253,6 +253,7 @@ class NgoFormsView(NgoBaseView):
     template_name = "ngo-account/my-organization/ngo-form.html"
     title = _("Organization forms")
     tab_title = "form"
+    sidebar_item_target = "data"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -263,7 +264,12 @@ class NgoFormsView(NgoBaseView):
         if ngo and ngo.slug:
             ngo_url = self.request.build_absolute_uri(reverse("twopercent", kwargs={"ngo_url": ngo.slug}))
 
-        context["ngo_url"] = ngo_url
+        context.update(
+            {
+                "ngo_url": ngo_url,
+                "active_item": self.sidebar_item_target,
+            }
+        )
 
         return context
 
@@ -327,6 +333,7 @@ class NgoDetailsView(NgoBaseView):
     template_name = "ngo-account/my-organization/ngo-presentation.html"
     title = _("Organization details")
     tab_title = "presentation"
+    sidebar_item_target = "data"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -342,6 +349,7 @@ class NgoDetailsView(NgoBaseView):
             {
                 "counties": settings.FORM_COUNTIES_NATIONAL,
                 "has_ngohub": has_ngohub,
+                "active_item": self.sidebar_item_target,
             }
         )
 
@@ -636,6 +644,7 @@ class NgoRedirectionsView(ListView):
     title = _("Redirections")
     context_object_name = "redirections"
     paginate_by = 8
+    sidebar_item_target = "redirections"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -648,6 +657,7 @@ class NgoRedirectionsView(ListView):
                 "user": user,
                 "ngo": ngo,
                 "title": self.title,
+                "active_item": self.sidebar_item_target,
             }
         )
 
@@ -685,6 +695,7 @@ class NgoArchivesView(ListView):
     title = _("Archives history ")
     context_object_name = "archive_jobs"
     paginate_by = 8
+    sidebar_item_target = "archives"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -697,6 +708,7 @@ class NgoArchivesView(ListView):
                 "user": user,
                 "ngo": ngo,
                 "title": self.title,
+                "active_item": self.sidebar_item_target,
             }
         )
 

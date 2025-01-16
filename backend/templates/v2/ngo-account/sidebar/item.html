@@ -1,0 +1,20 @@
+<a
+  @click="activeItem = '{{ item_target }}'"
+  href="{{ item_url }}"
+  class="group flex gap-x-3 rounded-md p-2 py-4 text-sm/6 font-semibold text-gray-700 hover:bg-gray-50 hover:text-amber-600"
+  :class="activeItem === '{{ item_target }}' ? {
+      'bg-amber-200': true,
+      'hover:bg-amber-300': true,
+      'font-extrabold': true
+    } : {
+      'hover:bg-gray-50': true
+    }"
+>
+  <svg class="size-6 shrink-0 text-gray-400 group-hover:text-amber-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      d="{{ item_icon }}"/>
+  </svg>
+  {{ item_title }}
+</a>
