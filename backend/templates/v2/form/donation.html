@@ -137,6 +137,68 @@
                 {% include "components/input/input.html" with input_id="locality" input_type="text" input_name="locality" input_autocomplete="address-level2" is_required=True %}
               </div>
 
+              <div class="sm:col-span-6 sm:col-start-1 mt-2">
+                {% trans "Signature" as input_title %}
+                <input id="signature-input" type="hidden" name="signature">
+
+                <label>
+                  <span class="block text-sm/6 font-medium text-gray-500">
+                    {{ input_title }}<span class='text-red-500'>*</span>
+                  </span>
+                <div class="w-full flex">
+  
+                    <img id="signature-preview" class="border mt-1 border-gray-300 rounded-md" width="580" height="200" />
+       
+                    <div class="items-center hidden text-center xl:flex gap-x-6 py-10">
+
+                      {% if ngo.is_accepting_forms %}
+                        <div
+                          x-data="{modalIsOpen: false}"
+                          class="w-full"
+                          >
+          
+                          {% comment %}
+                            When clicking the "Sign" button, check if all the required fields are filled in, then show the modal.
+                          {% endcomment %}
+                          <button
+                            id="signature-open"
+                            @click="modalIsOpen = true"
+                            type="button"
+                            class="w-4 h-4 ml-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+                            </svg>
+                            
+                          </button>
+          
+                          <div
+                            x-cloak
+                            x-show="modalIsOpen"
+                            x-transition.opacity.duration.100ms
+                            x-trap.inert.noscroll="modalIsOpen"
+                            @keydown.esc.window="modalIsOpen = false"
+                            @click.self="modalIsOpen = false"
+                            role="dialog"
+                            aria-modal="true"
+                            aria-labelledby="defaultModalTitle"
+                            class="fixed inset-0 z- flex items-end justify-center bg-black/20 p-4 pb-8 backdrop-blur-md sm:items-center lg:p-8">
+          
+                            <div
+                              x-show="modalIsOpen"
+                              x-transition:enter="transition ease-out duration-200 delay-100 motion-reduce:transition-opacity" x-transition:enter-start="opacity-0 scale-50" x-transition:enter-end="opacity-100 scale-100"
+                              class="flex max-w-lg flex-col gap-4 overflow-hidden rounded-md border border-neutral-300 bg-white text-neutral-600 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-300">
+                              {% include "form/signature.html" %}
+          
+                            </div>
+          
+                          </div>
+                        </div>
+                      {% endif %}
+          
+                    </div>
+                </div>
+                </label>
+              </div>
             </div>
 
             <hr class="sm:col-span-6 border-t border-gray-400 border-1">
@@ -179,51 +241,12 @@
 
           <div class="items-center hidden text-center xl:flex gap-x-6 py-10">
 
-            {% if ngo.is_accepting_forms %}
-              <div
-                x-data="{modalIsOpen: false}"
-                class="w-full">
-
-                {% comment %}
-                  When clicking the "Sign" button, check if all the required fields are filled in, then show the modal.
-                {% endcomment %}
-                <button
-                  id="signature-open"
-                  @click="modalIsOpen = true"
-                  type="button"
-                  class="w-full text-center outline outline-amber-300 bg-amber-300 sm:text-base text-sm sm:px-6 sm:py-2 px-2 py-1 shadow-sm rounded-full text-gray-900 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
-                  {% trans "Sign" %}
-                </button>
-
-
-                <div
-                  x-cloak
-                  x-show="modalIsOpen"
-                  x-transition.opacity.duration.100ms
-                  x-trap.noscroll="modalIsOpen"
-                  @keydown.esc.window="modalIsOpen = false"
-                  @click.self="modalIsOpen = false"
-                  role="dialog"
-                  aria-modal="true"
-                  aria-labelledby="defaultModalTitle"
-                  class="fixed inset-0 z-30 flex items-end justify-center bg-black/20 p-4 pb-8 backdrop-blur-md sm:items-center lg:p-8">
-
-                  <div
-                    x-show="modalIsOpen"
-                    x-transition:enter="transition ease-out duration-200 delay-100 motion-reduce:transition-opacity" x-transition:enter-start="opacity-0 scale-50" x-transition:enter-end="opacity-100 scale-100"
-                    class="flex max-w-lg flex-col gap-4 overflow-hidden rounded-md border border-neutral-300 bg-white text-neutral-600 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-300">
-
-
-                    {% include "form/signature.html" %}
-
-                  </div>
-
-                </div>
-              </div>
-            {% endif %}
-
-            <button
-              type="submit"
+            <button type="submit"
+              class="w-full text-center outline outline-amber-300 bg-amber-300 sm:text-base text-sm sm:px-6 sm:py-2 px-2 py-1 shadow-sm rounded-full text-gray-900 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
+              {% trans "Send form" %}
+            </button>
+            
+            <button type="submit"
               class="w-full text-center outline outline-amber-300 bg-white sm:text-base text-sm sm:px-6 sm:py-2 px-2 py-1 shadow-sm rounded-full text-gray-900 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
               {% trans "Continue without signing" %}
             </button>

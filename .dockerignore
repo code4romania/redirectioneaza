@@ -1,0 +1,10 @@
+_appengine_legacy
+
+.db_sqlite/*
+
+**/media
+**/static
+**/bower_components
+**/dist
+
+**/node_modules

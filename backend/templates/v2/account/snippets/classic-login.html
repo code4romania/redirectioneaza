@@ -31,11 +31,11 @@
 
   <div class="overflow-hidden bg-white rounded-lg drop-shadow ring-1 ring-gray-200 max-w-[448px] mx-auto">
     <div class="grid gap-6 px-10 py-8">
-      {% include "account/components/email-input.html" %}
+      {% include "account/components/email-input.html" with max_length=320 %}
 
       <div>
         {% trans "Password" as password_label %}
-        {% include "account/components/password-input.html" with field_label=password_label input_name="password" %}
+        {% include "account/components/password-input.html" with field_label=password_label input_name="password" max_length=150 %}
 
         <div class="flex items-center justify-end mt-4">
           <a href="{% url 'forgot' %}" class="text-sm/6 text-cyan-700">Ți-ai uitat parola?</a>

@@ -53,14 +53,14 @@
         </label>
       </div>
 
-      {% include "account/components/email-input.html" %}
+      {% include "account/components/email-input.html" with max_length=320 %}
 
       {% trans "Password" as password_label %}
       {% trans "Confirm password" as password_confirm_label %}
 
-      {% include "account/components/password-input.html" with field_label=password_label input_name="password" password_type="new" %}
+      {% include "account/components/password-input.html" with field_label=password_label input_name="password" password_type="new" max_length=150 %}
 
-      {% include "account/components/password-input.html" with field_label=password_confirm_label input_name="password_confirm" password_type="new" %}
+      {% include "account/components/password-input.html" with field_label=password_confirm_label input_name="password_confirm" password_type="new" max_length=150 %}
 
       <div class="space-y-5">
         <div class="flex gap-3">
