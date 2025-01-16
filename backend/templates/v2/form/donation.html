@@ -44,91 +44,135 @@
           {% endblocktrans %}
         </p>
 
-        <form>
+        <form
+          action="{% url 'twopercent' ngo_url=ngo.slug %}"
+          role="form"
+          method="post">
 
-          <fieldset class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-5">
+          {% csrf_token %}
 
-            {# TODO: reCAPTCHA doesn't work right now #}
-            <div class="g-recaptcha" data-sitekey="{{ captcha_public_key }}" data-size="invisible" data-callback="onSubmit"></div>
+          <fieldset>
 
-            <div class="sm:col-span-2 sm:col-start-1 mt-2">
-              {% trans "Last name" as input_title %}<span class='text-red-500'>*</span>
-              {% include "components/input/input.html" with input_id="last_name" input_type="text" input_name="last_name" input_autocomplete="family-name" is_required=True %}
+            <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-5">
+
+              {# TODO: reCAPTCHA doesn't work right now #}
+              <div class="g-recaptcha" data-sitekey="{{ captcha_public_key }}" data-size="invisible" data-callback="onSubmit"></div>
+
+              <div class="sm:col-span-2 sm:col-start-1 mt-2">
+                {% trans "Last name" as input_title %}
+                {% include "components/input/input.html" with input_id="last_name" input_type="text" input_name="last_name" input_autocomplete="family-name" is_required=True %}
+              </div>
+
+              <div class="sm:col-span-2 mt-2">
+                {% trans "First name" as input_title %}
+                {% include "components/input/input.html" with input_id="first_name" input_type="text" input_name="first_name" input_autocomplete="given-name" is_required=True %}
+              </div>
+
+              <div class="sm:col-span-1 mt-2">
+                {% trans "Father's initial" as input_title %}
+                {% include "components/input/input.html" with input_id="initial" input_type="text" input_name="initial" maxlength=1 is_required=True %}
+              </div>
+
+              <div class="sm:col-span-4 mt-2">
+                {% trans "Personal identification number" as input_title %}
+                {% include "components/input/input.html" with input_id="cnp" input_type="text" input_name="cnp" is_required=True %}
+              </div>
+
+              <div class="sm:col-span-2 mt-2">
+                {% trans "Email" as input_title %}
+                {% include "components/input/input.html" with input_id="email_address" input_type="email" input_name="email_address" input_autocomplete="email" is_required=True %}
+              </div>
+
+              <div class="sm:col-span-2 mt-2">
+                {% trans "Phone number" as input_title %}
+                {% include "components/input/input.html" with input_id="phone_number" input_type="tel" input_name="phone_number" input_autocomplete="tel-national" %}
+              </div>
             </div>
 
-            <div class="sm:col-span-2 mt-2">
-              {% trans "First name" as input_title %}<span class='text-red-500'>*</span>
-              {% include "components/input/input.html" with input_id="first_name" input_type="text" input_name="first_name" input_autocomplete="given-name" is_required=True %}
+            <hr class="border-t border-gray-200 border-1">
+
+            <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+
+              <h2 class="-mt-5 col-span-full text-base/7 font-semibold text-gray-900">
+                {% trans "Home address" %}
+              </h2>
+
+              <div class="sm:col-span-4 sm:col-start-1 mt-2">
+                {% trans "Street name" as input_title %}
+                {% include "components/input/input.html" with input_id="street_name" input_type="text" input_name="street_name" input_autocomplete="address-line1" is_required=True %}
+              </div>
+
+              <div class="sm:col-span-1 mt-2">
+                {% trans "Number" as input_title %}
+                {% include "components/input/input.html" with input_id="street_number" input_type="text" input_name="street_number" is_required=True %}
+              </div>
+
+              <div class="sm:col-span-1 mt-2">
+                {% trans "Flat" as input_title %}
+                {% include "components/input/input.html" with input_id="flat" input_type="text" input_name="flat" input_autocomplete="address-line2" maxlength=5 %}
+              </div>
+
+              <div class="sm:col-span-2 sm:col-start-1 mt-2">
+                {% trans "Entrance" as input_title %}
+                {% include "components/input/input.html" with input_id="entrance" input_type="text" input_name="entrance" input_autocomplete="address-line3" maxlength=5 %}
+              </div>
+
+              <div class="sm:col-span-2 mt-2">
+                {% trans "Floor" as input_title %}
+                {% include "components/input/input.html" with input_id="floor" input_type="text" input_name="floor" input_autocomplete="address-line4" maxlength=5 %}
+              </div>
+
+              <div class="sm:col-span-2 mt-2">
+                {% trans "Apartment" as input_title %}
+                {% include "components/input/input.html" with input_id="apartment" input_type="text" input_name="apartment" input_autocomplete="address-line5" maxlength=5 %}
+              </div>
+
+              <div class="sm:col-span-3 sm:col-start-1 mt-2">
+                {% trans "County" as input_title %}
+                {% include "components/input/county.html" with input_id="county" input_name="county" is_required=True %}
+              </div>
+
+              <div class="sm:col-span-3 mt-2">
+                {% trans "Locality" as input_title %}
+                {% include "components/input/input.html" with input_id="locality" input_type="text" input_name="locality" input_autocomplete="address-level2" is_required=True %}
+              </div>
+
             </div>
 
-            <div class="sm:col-span-1 mt-2">
-              {% trans "Father's initial" as input_title %}<span class='text-red-500'>*</span>
-              {% include "components/input/input.html" with input_id="initial" input_type="text" input_name="initial" is_required=True %}
-            </div>
+            <hr class="sm:col-span-6 border-t border-gray-400 border-1">
 
-            <div class="sm:col-span-4 mt-2">
-              {% trans "Personal identification number" as input_title %}<span class='text-red-500'>*</span>
-              {% include "components/input/input.html" with input_id="cnp" input_type="text" input_name="cnp" is_required=True %}
-            </div>
+            <div class="-mt-10 grid grid-cols-1 gap-x-6">
 
-            <div class="sm:col-span-2 mt-2">
-              {% trans "Email" as input_title %}<span class='text-red-500'>*</span>
-              {% include "components/input/input.html" with input_id="email_address" input_type="email" input_name="email_address" input_autocomplete="email" is_required=True %}
-            </div>
+              <div>
+                {% trans "I want my redirection to be valid for two years" as input_title %}
+                <div class="mt-8 flex gap-3">
+                  {% include "components/input/checkbox.html" with input_id="two-years" input_title=input_title input_name="two-years" %}
+                </div>
+              </div>
 
-            <div class="sm:col-span-2 mt-2">
-              {% trans "Phone number" as input_title %}
-              {% include "components/input/input.html" with input_id="phone_number" input_type="tel" input_name="phone_number" input_autocomplete="tel-national" %}
-            </div>
+              <div>
+                {% trans "I agree that this NGO may contact me in the future with details about the projects implemented" as input_title %}
+                <div class="mt-8 flex gap-3">
+                  {% include "components/input/checkbox.html" with input_id="agree-contact" input_title=input_title input_name="agree-contact" %}
+                </div>
+              </div>
 
-          </fieldset>
-
-          <hr class="border-t border-gray-200 border-1">
-
-          <fieldset class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-
-            <h2 class="-mt-5 col-span-full text-base/7 font-semibold text-gray-900">
-              {% trans "Home address" %}
-            </h2>
-
-            <div class="sm:col-span-4 sm:col-start-1 mt-2">
-              {% trans "Street name" as input_title %}<span class='text-red-500'>*</span>
-              {% include "components/input/input.html" with input_id="street_name" input_type="text" input_name="street_name" input_autocomplete="address-line1" is_required=True %}
-            </div>
-
-            <div class="sm:col-span-1 mt-2">
-              {% trans "Number" as input_title %}<span class='text-red-500'>*</span>
-              {% include "components/input/input.html" with input_id="street_number" input_type="text" input_name="street_number" is_required=True %}
-            </div>
-
-            <div class="sm:col-span-1 mt-2">
-              {% trans "Flat" as input_title %}
-              {% include "components/input/input.html" with input_id="flat" input_type="text" input_name="flat" input_autocomplete="address-line2" %}
-            </div>
-
-            <div class="sm:col-span-2 sm:col-start-1 mt-2">
-              {% trans "Entrance" as input_title %}
-              {% include "components/input/input.html" with input_id="entrance" input_type="text" input_name="entrance" input_autocomplete="address-line3" %}
-            </div>
-
-            <div class="sm:col-span-2 mt-2">
-              {% trans "Floor" as input_title %}
-              {% include "components/input/input.html" with input_id="floor" input_type="text" input_name="floor" input_autocomplete="address-line4" %}
-            </div>
-
-            <div class="sm:col-span-2 mt-2">
-              {% trans "Apartment" as input_title %}
-              {% include "components/input/input.html" with input_id="apartment" input_type="text" input_name="apartment" input_autocomplete="address-line5" %}
-            </div>
-
-            <div class="sm:col-span-3 sm:col-start-1 mt-2">
-              {% trans "County" as input_title %} <span class='text-red-500'>*</span>
-              {% include "components/input/county.html" with input_id="county" input_name="county" is_required=True %}
-            </div>
-
-            <div class="sm:col-span-3 mt-2">
-              {% trans "Locality" as input_title %}<span class='text-red-500'>*</span>
-              {% include "components/input/input.html" with input_id="locality" input_type="text" input_name="locality" input_autocomplete="address-level2" is_required=True %}
+              <div>
+                {% url 'terms' as terms_url %}
+                {% url 'policy' as policy_url %}
+                {% blocktranslate asvar input_title trimmed %}
+                  I agree with
+                  <a href="{{ terms_url }}">
+                    the Terms of the application
+                  </a>.
+                  <a href="{{ policy_url }}">
+                    the Privacy Policy
+                  </a>.
+                {% endblocktranslate %}
+                <div class="mt-8 flex gap-3">
+                  {% include "components/input/checkbox.html" with input_id="agree-terms" input_title=input_title input_name="agree-terms" %}
+                </div>
+              </div>
             </div>
 
           </fieldset>

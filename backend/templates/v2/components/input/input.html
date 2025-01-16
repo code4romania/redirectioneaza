@@ -6,6 +6,7 @@
     id="{{ input_id }}"
     type="{{ input_type }}"
     name="{{ input_name }}"
+    {% if maxlength %}maxlength="{{ maxlength }}"{% endif %}
     {% if input_autocomplete %}autocomplete="{{ input_autocomplete }}"{% endif %}
     {% if is_required %}required{% endif %}
     {% if value %}value="{{ value }}"{% endif %}
