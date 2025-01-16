@@ -41,7 +41,7 @@ would like the UI to look like if you’re suggesting new UI elements.
 
 ### Frontend framework
 
-- HTML + CSS + JS + Bootstrap
+- HTML + TailwindCSS + AlpineJS
 
 ### Package managers
 
@@ -85,6 +85,38 @@ The project has been configured to work with the following databases:
    1. Go to the `backend` directory
    2. Run `nvm use` to use the Node.js version specified in the `.nvmrc` file
    3. Run `npm run dev` to start the frontend development server
+
+#### Compiling the old CSS with less
+
+Go to the `backend/` folder and run the following commands:
+
+```bash
+pushd backend/
+
+nvm use --lts || nvm install --lts
+
+npm i -g less@2.7.3 less-plugin-clean-css@1.5.1 bower@1.8.14
+
+bower install
+
+cp -r bower_components/  static_extras/
+
+pushd static_extras/
+
+lessc css/main.less > css/main.css --clean-css="--s1 --advanced --compatibility=ie8"
+
+rm -rf bower_components/
+
+popd
+
+popd
+```
+
+or, in a one-liner:
+
+```bash
+pushd backend/ && nvm use --lts || nvm install --lts && npm i -g less@2.7.3 less-plugin-clean-css@1.5.1 && cp -r bower_components/  static_extras/ && pushd static_extras/ && lessc css/main.less > css/main.css --clean-css="--s1 --advanced --compatibility=ie8" && rm -rf bower_components/ && popd && popd
+```
 
 
 ### Deployment With Docker
