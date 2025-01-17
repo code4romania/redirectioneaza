@@ -6,7 +6,7 @@ from django.conf import settings
 from django.db.models import QuerySet
 from django.http import HttpResponse
 from django.utils import timezone
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_lazy as _, ngettext_lazy
 from django.views.generic import TemplateView
 
 from partners.models import DisplayOrderingChoices
@@ -31,14 +31,22 @@ class HomePage(BaseVisibleTemplateView):
             ngo_queryset = Ngo.active
 
         start_of_year = datetime(now.year, 1, 1, 0, 0, 0, tzinfo=now.tzinfo)
+
+        forms_filled_count = Donor.objects.filter(date_created__gte=start_of_year).count()
+        pluralized_title = ngettext_lazy(
+            "form filled in",
+            "forms filled in",
+            forms_filled_count,
+        )
+
         return [
             {
                 "title": _("organizations registered in the platform"),
                 "value": ngo_queryset.count(),
             },
             {
-                "title": _("forms filled in") + " " + str(start_of_year.year),
-                "value": Donor.objects.filter(date_created__gte=start_of_year).count(),
+                "title": pluralized_title + " " + str(start_of_year.year),
+                "value": forms_filled_count,
             },
             {
                 "title": _("redirected to NGOs through the platform"),

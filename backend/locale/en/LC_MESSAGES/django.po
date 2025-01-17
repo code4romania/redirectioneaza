@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-17 17:12+0200\n"
+"POT-Creation-Date: 2025-01-17 17:24+0200\n"
 "PO-Revision-Date: 2024-02-28 15:45+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -749,53 +749,53 @@ msgstr "Options"
 msgid "Archives history "
 msgstr ""
 
-#: donations/views/redirections.py:412
+#: donations/views/redirections.py:411
 #, fuzzy
 #| msgid "Successful tasks"
 msgid "Successful redirection"
 msgstr "Successful tasks"
 
-#: donations/views/redirections.py:604 donations/views/redirections.py:619
+#: donations/views/redirections.py:603 donations/views/redirections.py:618
 msgid "Formularul tău de redirecționare"
 msgstr "Formularul tău de redirecționare"
 
-#: donations/views/redirections.py:611
+#: donations/views/redirections.py:610
 msgid "Un nou formular de redirecționare"
 msgstr "Un nou formular de redirecționare"
 
-#: donations/views/site.py:36
+#: donations/views/site.py:37
+msgid "form filled in"
+msgid_plural "forms filled in"
+msgstr[0] "form filled in"
+msgstr[1] "forms filled in"
+
+#: donations/views/site.py:44
 msgid "organizations registered in the platform"
 msgstr ""
 
-#: donations/views/site.py:40
-#, fuzzy
-#| msgid "form with prefilled ngo data"
-msgid "forms filled in"
-msgstr "form with prefilled ngo data"
-
-#: donations/views/site.py:44
+#: donations/views/site.py:52
 msgid "redirected to NGOs through the platform"
 msgstr ""
 
-#: donations/views/site.py:45
+#: donations/views/site.py:53
 msgid "> €2 million"
 msgstr ""
 
-#: donations/views/site.py:98
+#: donations/views/site.py:106
 #, fuzzy
 #| msgid "Welcome to redirectioneaza.ro"
 msgid "About redirectioneaza.ro"
 msgstr "Welcome to redirectioneaza.ro"
 
-#: donations/views/site.py:129 templates/v2/redirect/footer.html:179
+#: donations/views/site.py:137 templates/v2/redirect/footer.html:179
 msgid "Information notice"
 msgstr ""
 
-#: donations/views/site.py:140 templates/v2/redirect/footer.html:169
+#: donations/views/site.py:148 templates/v2/redirect/footer.html:169
 msgid "Privacy policy"
 msgstr ""
 
-#: donations/views/site.py:145 templates/v2/redirect/footer.html:174
+#: donations/views/site.py:153 templates/v2/redirect/footer.html:174
 msgid "Terms & conditions"
 msgstr ""
 
@@ -1375,74 +1375,74 @@ msgstr ""
 msgid "An image saying \"Thank you\" for your redirection"
 msgstr ""
 
-#: templates/v2/form/success.html:24
+#: templates/v2/form/success.html:25
 #, fuzzy
 #| msgid "Options"
 msgid "Download your redirection form"
 msgstr "Options"
 
-#: templates/v2/form/success.html:34
+#: templates/v2/form/success.html:36
 msgid ""
 "Thank you for your redirection! Your form has been sent to the NGO, and you "
 "have also received a copy of it by email."
 msgstr ""
 
-#: templates/v2/form/success.html:40
+#: templates/v2/form/success.html:42
 msgid ""
 "Together we are better, stronger and braver. Together we can make a positive "
 "change in our society, that is why we need as many people like you as "
 "possible."
 msgstr ""
 
-#: templates/v2/form/success.html:46
+#: templates/v2/form/success.html:48
 msgid ""
 "If you want to support the organization further, tell your friends to visit "
 "<a href=\"https://redirectioneaza.ro/\">redirectioneaza.ro</a>."
 msgstr ""
 
-#: templates/v2/form/success.html:54
+#: templates/v2/form/success.html:56
 msgid "The first step was filling in the form. Now, here are the next steps:"
 msgstr ""
 
-#: templates/v2/form/success.html:60
+#: templates/v2/form/success.html:62
 msgid "Step 2."
 msgstr ""
 
-#: templates/v2/form/success.html:61
+#: templates/v2/form/success.html:63
 msgid "Print the form and sign it."
 msgstr ""
 
-#: templates/v2/form/success.html:65
+#: templates/v2/form/success.html:67
 msgid "Step 3."
 msgstr ""
 
-#: templates/v2/form/success.html:66
+#: templates/v2/form/success.html:68
 msgid "Then, you have the following options:"
 msgstr ""
 
-#: templates/v2/form/success.html:73
+#: templates/v2/form/success.html:75
 msgid ""
 "You either scan it and send it by e-mail to the NGO and they will take care "
 "of submitting it. The NGO's e-mail address is:"
 msgstr ""
 
-#: templates/v2/form/success.html:79
+#: templates/v2/form/success.html:81
 msgid ""
 "Or you send it by post with <strong>registered mail</strong> to the ANAF "
 "unit you belong to."
 msgstr ""
 
-#: templates/v2/form/success.html:84
+#: templates/v2/form/success.html:86
 msgid "Search for the office you belong to in this list;"
 msgstr ""
 
-#: templates/v2/form/success.html:91
+#: templates/v2/form/success.html:93
 msgid ""
 "Or you send it by post or courier to the NGO's address, and they will take "
 "care of submitting it. Their address is:"
 msgstr ""
 
-#: templates/v2/form/success.html:95
+#: templates/v2/form/success.html:97
 #, fuzzy
 #| msgid "county"
 msgid "the county"
