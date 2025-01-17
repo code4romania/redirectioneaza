@@ -14,9 +14,9 @@
     <tr class="text-sm text-gray-600">
 
       <td class="whitespace-nowrap py-4 pl-4 pr-3 font-medium text-gray-900 sm:pl-0">
-        {{ forloop.counter0|add:archive_jobs.start_index }}
+        {{ forloop.counter0|add:page_obj.start_index }}
       </td>
-      
+
       <td class="whitespace-normal py-4 pl-4 pr-3 font-medium text-gray-900 sm:pl-0">
         {{ archive.date_created|date:"SHORT_DATE_FORMAT" }}
       </td>
