@@ -36,20 +36,5 @@ class DonationForm(forms.Form):
         if settings.RECAPTCHA_ENABLED:
             self.fields["captcha_token"] = ReCaptchaField(widget=ReCaptchaV2Invisible)
 
-    @staticmethod
-    def _clean_checkbox(value):
-        if value == "on":
-            return True
-        return False
-
-    def clean_two_years(self):
-        return self._clean_checkbox(self.cleaned_data["two_years"])
-
     def clean_agree_contact(self):
-        return not self._clean_checkbox(self.cleaned_data["agree_contact"])
-
-    def clean_terms(self):
-        return self._clean_checkbox(self.cleaned_data["agree_terms"])
-
-    def clean_signature(self):
-        return self.cleaned_data["signature"]
+        return not self.cleaned_data["agree_contact"]
