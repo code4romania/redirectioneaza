@@ -27,16 +27,16 @@
         </h1>
       </div>
 
-      <div class="text text-center text-lg">
+      <div class="text text-center text-xl">
 
         <div class="mt-10 max-w-2xl">
           {% if donor.has_signed %}
 
-            <p>
+            <h2 class="text-xl font-semibold">
               {% blocktranslate trimmed %}
                 Thank you for your redirection! Your form has been sent to the NGO, and you have also received a copy of it by email.
               {% endblocktranslate %}
-            </p>
+            </h2>
 
             <p>
               {% blocktranslate trimmed %}
@@ -44,7 +44,7 @@
               {% endblocktranslate %}
             </p>
 
-            <p>
+            <p class="font-semibold">
               {% blocktranslate trimmed %}
                 If you want to support the organization further, tell your friends to visit <a href="https://redirectioneaza.ro/">redirectioneaza.ro</a>.
               {% endblocktranslate %}
@@ -52,7 +52,7 @@
 
           {% else %}
 
-            <h2 class="text-xl font-semibold">
+            <h2 class="text-2xl font-semibold">
               {% trans "The first step was filling in the form. Now, here are the next steps:" %}
             </h2>
 
@@ -69,7 +69,6 @@
 
                 <ol type="A">
 
-                  {# if the ngo agreed to receive forms through email #}
                   {% if ngo.is_accepting_forms %}
                     <li class="py-2">
                       {% trans "You either scan it and send it by e-mail to the NGO and they will take care of submitting it. The NGO's e-mail address is:" %}
