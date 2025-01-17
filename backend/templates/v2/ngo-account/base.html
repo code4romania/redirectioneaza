@@ -3,15 +3,20 @@
 {% load i18n static %}
 
 {% block content_container %}
-  <main class="bg-gray-50 py-8">
+  <div class="bg-gray-50 flex">
 
-    <div class="container max-w-4xl px-0 pb-6">
-      {% block page_heading %}{% endblock %}
-    </div>
+    {% include "ngo-account/sidebar/main.html" %}
 
-    <div class="container max-w-4xl bg-white py-4 rounded-lg">
-      {% block content %}{% endblock %}
-    </div>
-  </main>
+    <main class="px-4 sm:px-6 lg:px-8 py-10">
+      <div class="container px-0 pb-6">
+        {% block page_heading %}{% endblock %}
+      </div>
+
+      <div class="container bg-white py-4 rounded-lg">
+        {% block content %}{% endblock %}
+      </div>
+    </main>
+
+  </div>
 {% endblock %}
 

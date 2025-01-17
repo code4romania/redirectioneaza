@@ -23,16 +23,22 @@
       <td class="whitespace-nowrap px-1 py-4">
         {% if archive.status == "done" %}
           {% trans "Done" %}
-        {% elif archive.status == "new" %}
+          {% elif archive.status == "new" %}
           {% trans "In progress" %}
-        {% elif archive.status == "error" %}
+          {% elif archive.status == "error" %}
           {% trans "Error" %}
         {% endif %}
       </td>
       <td class="whitespace-nowrap px-1 py-4">
-        <a href="{% url 'admin-download-link' job_id=archive.pk %}">
-          {% trans "Download" %}
-        </a>
+        {% if archive.status == "done" %}
+          <a href="{% url 'admin-download-link' job_id=archive.pk %}">
+            {% trans "Download" %}
+          </a>
+        {% else %}
+          <p>
+            —
+          </p>
+        {% endif %}
       </td>
 
     </tr>

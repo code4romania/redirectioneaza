@@ -15,7 +15,7 @@ from ipware import get_client_ip
 
 from redirectioneaza.common.messaging import send_email
 
-from ..forms.donation import DonationForm
+from ..forms.redirection import DonationForm
 from ..models.donors import Donor
 from ..models.ngos import Ngo
 from ..pdf import add_signature, create_full_pdf, create_pdf
@@ -175,7 +175,7 @@ class FormSignature(TemplateView):
 
 
 class TwoPercentHandler(TemplateView):
-    template_name = "form/donation.html"
+    template_name = "form/redirection.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -453,7 +453,7 @@ class TwoPercentHandler(TemplateView):
 
 
 class NewTwoPercentHandler(TemplateView):
-    template_name = "form/donation.html"
+    template_name = "form/redirection.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

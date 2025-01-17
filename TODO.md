@@ -11,7 +11,7 @@
 
 ### Files
 
-- `templates/v2/form/donation.html`
+- `templates/v2/form/redirection.html`
 - `templates/v2/form/signature.html`
 
 ### Issues
