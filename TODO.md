@@ -16,15 +16,18 @@
 
 ### Issues
 
-  - [x] Mark the mandatory fields properly @idormenco
+  - [ ] Properly style the errors coming from BE
   - [ ] Set up captcha validation (set the `g-recaptcha-response` input, see `twopercent.js:183`)
     - make the captcha do its own work @tamariei
-  - [ ] Complete the flow (add a `success & download` page) @tamariei
-  - [ ] Add a button to close the modal @idormenco
-  - [ ] Checks need to be done before the button to open the modal is clicked or change the flow @idormenco
-  - [ ] Connect BE & FE for the donation form @tamarei
+  - [ ] When clearing the signature, the empty `src` is displayed for the `<img>`
+  - [ ] Resize the signature preview to fit the `<img>` container
+  - [x] Mark the mandatory fields properly @idormenco
+  - [x] Complete the flow (add a `success & download` page) @tamariei
+  - [x] Add a button to close the modal @idormenco
+  - [x] Checks need to be done before the button to open the modal is clicked or change the flow @idormenco
+  - [x] Connect BE & FE for the donation form @tamarei
   - [x] Why is `x-trap.inert.noscroll="modalIsOpen"` displaying as a warning?
-  - [ ] Figure out how to disable the signature script on other pages @idormenco
+  - [x] Figure out how to disable the signature script on other pages @idormenco
 
 
 ## Login
@@ -56,7 +59,7 @@
 
   - [x] Mark the mandatory fields properly @idormenco
   - [x] The disabled form fields need to be styled properly @idormenco
-  - [ ] Connect the form to the BE properly @tamariei
+  - [x] Connect the form to the BE properly @tamariei
   - [ ] Check the data for changes when switching tabs
   - [x] The "save" & "get from NGO Hub" buttons should be styled the same @idormenco
   - [ ] Max characters validation for description & other fields

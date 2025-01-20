@@ -85,10 +85,10 @@
         class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
         <!-- Close button -->
         <button type="button" @click="modalIsOpen = false"
-          class="absolute top-3 right-3 text-gray-400 hover:text-gray-600 focus:outline-none" aria-label="Close">
+                class="absolute top-3 right-3 text-gray-400 hover:text-gray-600 focus:outline-none" aria-label="Close">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-            stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+               stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
           </svg>
         </button>
         <div class="text-center sm:mt-5">
@@ -108,12 +108,21 @@
         </div>
 
         <div class="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
-          <button id="signature-reset" type="button" data-action="reset" @click="clearSignature"
+          <button
+            id="signature-reset"
+            type="button"
+            data-action="reset"
+            @click="clearSignature"
             class="w-full text-center outline outline-amber-300 bg-white sm:text-base text-sm sm:px-6 sm:py-2 px-2 py-1 shadow-sm rounded-full text-gray-900 hover:bg-amber-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
             {% trans "Reset" %}
           </button>
-          <button id="signature-save" type="button" data-action="send" @click="saveSignature"
-            x-on:click="modalIsOpen=false" aria-label="Close"
+          <button
+            id="signature-save"
+            type="button"
+            data-action="send"
+            @click="saveSignature"
+            x-on:click="modalIsOpen=false"
+            aria-label="Close"
             class="w-full text-center outline outline-amber-300 bg-amber-300 sm:text-base text-sm sm:px-6 sm:py-2 px-2 py-1 shadow-sm rounded-full text-gray-900 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
             {% trans "Ok" %}
           </button>
