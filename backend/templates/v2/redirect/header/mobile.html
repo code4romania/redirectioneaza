@@ -1,0 +1,58 @@
+{% load i18n static %}
+
+<nav
+  class="absolute inset-x-0 z-50 transition origin-top transform bg-white shadow-lg top-full xl:hidden"
+  role="navigation"
+  aria-modal="true"
+  x-show="menuOpen"
+  x-cloak>
+
+  <div class="container">
+    <div class="divide-y divide-gray-500/10">
+
+      {% if header_content.admin_menu %}
+
+        <div class="grid gap-2 py-3">
+
+          {% for admin_menu_item in header_content.admin_menu %}
+
+            {% include "redirect/header/mobile-item.html" with menu_item=admin_menu_item %}
+
+          {% endfor %}
+
+        </div>
+
+      {% endif %}
+
+      {% if header_content.main_menu %}
+
+        <div class="grid gap-2 py-3">
+
+          {% for main_menu_item in header_content.main_menu %}
+
+            {% include "redirect/header/mobile-item.html" with menu_item=main_menu_item %}
+
+          {% endfor %}
+
+        </div>
+
+      {% endif %}
+
+      {% if header_content.auth_menu %}
+
+        <div class="grid items-center justify-center grid-cols-2 gap-2 py-3 -mx-3 text-center">
+
+          {% for auth_menu_item in header_content.auth_menu %}
+
+            {% include "redirect/header/mobile-item.html" with menu_item=auth_menu_item %}
+
+          {% endfor %}
+
+        </div>
+
+      {% endif %}
+
+    </div>
+  </div>
+
+</nav>

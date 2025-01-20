@@ -1,6 +1,6 @@
 <a
   @click="activeItem = '{{ item_target }}'"
-  href="{% url item_url %}"
+  href="{{ item_url }}"
   class="group flex gap-x-3 rounded-md p-2 py-4 text-sm/6 font-semibold text-gray-700 hover:bg-gray-50 hover:text-amber-600"
   :class="activeItem === '{{ item_target }}' ? {
       'bg-amber-200': true,

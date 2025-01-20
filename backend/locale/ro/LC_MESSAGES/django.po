@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-17 17:24+0200\n"
+"POT-Creation-Date: 2025-01-20 12:10+0200\n"
 "PO-Revision-Date: 2024-03-07 11:27+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -661,15 +661,15 @@ msgstr "data completării"
 msgid "duration"
 msgstr "perioadă"
 
-#: donations/views/ngo_account.py:39 donations/views/ngo_account.py:605
+#: donations/views/ngo_account.py:39 donations/views/ngo_account.py:606
 msgid "The IBAN number must have 24 characters"
 msgstr "IBAN-ul trebuie să aibă 24 de cifre"
 
-#: donations/views/ngo_account.py:42 donations/views/ngo_account.py:608
+#: donations/views/ngo_account.py:42 donations/views/ngo_account.py:609
 msgid "The IBAN number must contain only letters and digits"
 msgstr "IBAN-ul trebuie să conțină doar litere și cifre"
 
-#: donations/views/ngo_account.py:45 donations/views/ngo_account.py:611
+#: donations/views/ngo_account.py:45 donations/views/ngo_account.py:612
 msgid "The IBAN number must start with 'RO'"
 msgstr "IBAN-ul trebuie să înceapă cu 'RO'"
 
@@ -685,27 +685,25 @@ msgstr "Descarcă arhiva"
 msgid "My Account"
 msgstr "Contul meu"
 
-#: donations/views/ngo_account.py:225 donations/views/ngo_account.py:334
-#: donations/views/ngo_account.py:435
+#: donations/views/ngo_account.py:225 donations/views/ngo_account.py:335
+#: donations/views/ngo_account.py:436
 msgid "Organization details"
 msgstr "Detalii organizație"
 
-#: donations/views/ngo_account.py:254
+#: donations/views/ngo_account.py:255
 msgid "Organization forms"
 msgstr "Formulare organizație"
 
-#: donations/views/ngo_account.py:306 donations/views/ngo_account.py:552
+#: donations/views/ngo_account.py:307 donations/views/ngo_account.py:553
 msgid "The URL is already used"
 msgstr "URL-ul este deja folosit"
 
-#: donations/views/ngo_account.py:644
+#: donations/views/ngo_account.py:645 redirectioneaza/context_processors.py:179
 #: templates/v2/ngo-account/redirections/main.html:10
-#: templates/v2/ngo-account/sidebar/main.html:81
-#: templates/v2/ngo-account/sidebar/main.html:143
 msgid "Redirections"
 msgstr "Redirecționări"
 
-#: donations/views/ngo_account.py:695
+#: donations/views/ngo_account.py:696
 msgid "Archives history "
 msgstr "Istoric arhive"
 
@@ -867,6 +865,57 @@ msgstr ""
 msgid "Subdomain must have between 3 and 100 characters."
 msgstr "Subdomeniul trebuie să aibă între 3 și 100 de caractere."
 
+#: redirectioneaza/context_processors.py:42
+#: templates/v2/redirect/footer.html:105
+msgid "About"
+msgstr "Despre"
+
+#: redirectioneaza/context_processors.py:46
+msgid "For donors"
+msgstr "Pentru contribuabili"
+
+#: redirectioneaza/context_processors.py:55
+#: templates/v2/redirect/footer.html:128
+msgid "Discover organizations"
+msgstr "Descoperă organizații"
+
+#: redirectioneaza/context_processors.py:75
+#: redirectioneaza/context_processors.py:114
+#: redirectioneaza/settings/unfold.py:53
+msgid "Frequently asked questions"
+msgstr "Întrebări frecvente"
+
+#: redirectioneaza/context_processors.py:91
+#: templates/v2/redirect/footer.html:151
+msgid "For organizations"
+msgstr "Pentru organizații"
+
+#: redirectioneaza/context_processors.py:131
+#: redirectioneaza/context_processors.py:146
+msgid "Register Organization"
+msgstr "Înregistrează ONG"
+
+#: redirectioneaza/context_processors.py:141
+msgid "Log in"
+msgstr "Autentificare"
+
+#: redirectioneaza/context_processors.py:154
+msgid "Log out"
+msgstr "Deconectare"
+
+#: redirectioneaza/context_processors.py:159
+msgid "My organization"
+msgstr "Organizația mea"
+
+#: redirectioneaza/context_processors.py:173
+#: templates/v2/ngo-account/my-organization/base.html:13
+msgid "Organization Data"
+msgstr "Date organizație"
+
+#: redirectioneaza/context_processors.py:185
+msgid "Archive History"
+msgstr "Istoric arhive"
+
 #: redirectioneaza/settings/app_configs.py:34
 msgid "January"
 msgstr "Ianuarie"
@@ -967,10 +1016,6 @@ msgstr "Tablou de bord"
 #: redirectioneaza/settings/unfold.py:45
 msgid "Donation exports"
 msgstr "Exporturi de donații"
-
-#: redirectioneaza/settings/unfold.py:53
-msgid "Frequently asked questions"
-msgstr "Întrebări frecvente"
 
 #: redirectioneaza/settings/unfold.py:70 redirectioneaza/settings/unfold.py:73
 #: users/apps.py:8
@@ -1372,7 +1417,7 @@ msgstr "Pasul 3."
 msgid "Then, you have the following options:"
 msgstr "Apoi, ai următoarele opțiuni:"
 
-#: templates/v2/form/success.html:75
+#: templates/v2/form/success.html:74
 msgid ""
 "You either scan it and send it by e-mail to the NGO and they will take care "
 "of submitting it. The NGO's e-mail address is:"
@@ -1380,7 +1425,7 @@ msgstr ""
 "Fie îl scanezi și îl trimiți pe email la ONG și ei se vor ocupa de depunerea "
 "lui. Adresa de email a ONG-ului este:"
 
-#: templates/v2/form/success.html:81
+#: templates/v2/form/success.html:80
 msgid ""
 "Or you send it by post with <strong>registered mail</strong> to the ANAF "
 "unit you belong to."
@@ -1388,11 +1433,11 @@ msgstr ""
 "Sau îl trimiți prin poștă cu <strong>scrisoare recomandată</strong> la "
 "unitatea ANAF din care faci parte."
 
-#: templates/v2/form/success.html:86
+#: templates/v2/form/success.html:85
 msgid "Search for the office you belong to in this list;"
 msgstr "Caută oficiul din care faci parte în această listă;"
 
-#: templates/v2/form/success.html:93
+#: templates/v2/form/success.html:92
 msgid ""
 "Or you send it by post or courier to the NGO's address, and they will take "
 "care of submitting it. Their address is:"
@@ -1400,7 +1445,7 @@ msgstr ""
 "Sau îl trimiți prin poștă sau curier la adresa ONG-ului, iar ei se vor ocupa "
 "de depunerea lui. Adresa lor este:"
 
-#: templates/v2/form/success.html:97
+#: templates/v2/form/success.html:96
 msgid "the county"
 msgstr "județul"
 
@@ -1460,10 +1505,6 @@ msgstr "Descarcă din NGO Hub"
 #: templates/v2/ngo-account/components/form-title.html:38
 msgid "Save changes"
 msgstr "Salvează modificările"
-
-#: templates/v2/ngo-account/my-organization/base.html:13
-msgid "Organization Data"
-msgstr "Date organizație"
 
 #: templates/v2/ngo-account/my-organization/base.html:17
 msgid "Fill out the organization's profile on redirectioneaza.ro"
@@ -1582,20 +1623,6 @@ msgstr[2] "%(counter)s de formulare de redirecționare"
 msgid "Generate ANAF Archive"
 msgstr "Generează arhiva ANAF"
 
-#: templates/v2/ngo-account/sidebar/main.html:44
-msgid "Close sidebar"
-msgstr "Închide bara laterală"
-
-#: templates/v2/ngo-account/sidebar/main.html:73
-#: templates/v2/ngo-account/sidebar/main.html:136
-msgid "Organization data"
-msgstr "Date organizație"
-
-#: templates/v2/ngo-account/sidebar/main.html:89
-#: templates/v2/ngo-account/sidebar/main.html:150
-msgid "Archive History"
-msgstr "Istoric arhive"
-
 #: templates/v2/public/all-ngos.html:25
 msgid "organizations"
 msgstr "organizații"
@@ -1634,25 +1661,13 @@ msgstr "redirectioneaza.ro"
 msgid "Home"
 msgstr "Acasă"
 
-#: templates/v2/redirect/footer.html:105
-msgid "About"
-msgstr "Despre"
-
 #: templates/v2/redirect/footer.html:123
 msgid "For contributors"
 msgstr "Pentru contribuabili"
 
-#: templates/v2/redirect/footer.html:128
-msgid "Discover organizations"
-msgstr "Descoperă organizații"
-
 #: templates/v2/redirect/footer.html:143 templates/v2/redirect/footer.html:156
 msgid "FAQ"
 msgstr "Întrebări frecvente"
-
-#: templates/v2/redirect/footer.html:151
-msgid "For organizations"
-msgstr "Pentru organizații"
 
 #: templates/v2/redirect/footer.html:164
 msgid "Useful links"
@@ -1732,6 +1747,18 @@ msgstr "parolă veche"
 #: users/models.py:208
 msgid "Group"
 msgstr "Grup"
+
+#~ msgid "My forms"
+#~ msgstr "Formularele mele"
+
+#~ msgid "Archives"
+#~ msgstr "Arhive"
+
+#~ msgid "Organization data"
+#~ msgstr "Date organizație"
+
+#~ msgid "Close sidebar"
+#~ msgstr "Închide bara laterală"
 
 #~ msgid "Terms"
 #~ msgstr "Termeni"
