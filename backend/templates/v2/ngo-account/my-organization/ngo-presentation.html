@@ -41,7 +41,7 @@
 
             <div class="grid sm:col-span-6 sm:col-start-1 gap-6">
               {% trans "Organization website" as input_title %}
-              {% include "components/input/input.html" with input_id="website" input_title=input_title input_type="url" input_name="website" is_required=True is_disabled=disable_ngohub_fields value=ngo.website %}
+              {% include "components/input/input.html" with input_id="website" input_title=input_title input_type="url" input_name="website" is_disabled=disable_ngohub_fields value=ngo.website %}
             </div>
 
             <div class="grid sm:col-span-4 sm:col-start-1 gap-6">
@@ -58,7 +58,7 @@
 
             <div class="grid sm:col-span-4 sm:col-start-1 gap-6">
               {% trans "Organization contact phone" as input_title %}
-              {% include "components/input/input.html" with input_id="contact-phone" input_title=input_title input_type="tel" input_name="contact-phone" is_required=False is_disabled=disable_ngohub_fields value=ngo.phone %}
+              {% include "components/input/input.html" with input_id="contact-phone" input_title=input_title input_type="tel" input_name="contact-phone" is_disabled=disable_ngohub_fields value=ngo.phone %}
             </div>
 
             <div class="grid sm:col-span-2 gap-6">
