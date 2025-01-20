@@ -19,6 +19,7 @@ def headers(request: HttpRequest) -> Dict[str, Dict[str, List[Dict[str, str]]]]:
                     "admin_menu": [{...}, {...}, ...],
                     "main_menu": [{...}, {...}, ...],
                     "auth_menu": [{...}, {...}, ...],
+                    "settings_menu": [{...}, {...}, ...],
                 }
             }
 
@@ -34,8 +35,6 @@ def headers(request: HttpRequest) -> Dict[str, Dict[str, List[Dict[str, str]]]]:
 
     if request.partner:
         return {}
-
-    admin_header_menu = []
 
     main_header_menu = [
         {
@@ -162,6 +161,7 @@ def headers(request: HttpRequest) -> Dict[str, Dict[str, List[Dict[str, str]]]]:
             },
         ]
 
+    admin_header_menu = []
     if user.is_authenticated and user.ngo:
         admin_header_menu = [
             # {
@@ -171,7 +171,7 @@ def headers(request: HttpRequest) -> Dict[str, Dict[str, List[Dict[str, str]]]]:
             # },
             {
                 "title": _("Organization Data"),
-                "target": "organization-data",
+                "target": "org-data",
                 "url": reverse("my-organization:presentation"),
                 "icon": "M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z",
             },
@@ -189,10 +189,22 @@ def headers(request: HttpRequest) -> Dict[str, Dict[str, List[Dict[str, str]]]]:
             },
         ]
 
+    settings_menu_content = []
+    if user.is_authenticated and user.ngo:
+        settings_menu_content = [
+            {
+                "title": _("Settings"),
+                "target": "org-settings",
+                "url": reverse("my-organization:settings"),
+                "icon": "M4.5 12a7.5 7.5 0 0 0 15 0m-15 0a7.5 7.5 0 1 1 15 0m-15 0H3m16.5 0H21m-1.5 0H12m-8.457 3.077 1.41-.513m14.095-5.13 1.41-.513M5.106 17.785l1.15-.964m11.49-9.642 1.149-.964M7.501 19.795l.75-1.3m7.5-12.99.75-1.3m-6.063 16.658.26-1.477m2.605-14.772.26-1.477m0 17.726-.26-1.477M10.698 4.614l-.26-1.477M16.5 19.794l-.75-1.299M7.5 4.205 12 12m6.894 5.785-1.149-.964M6.256 7.178l-1.15-.964m15.352 8.864-1.41-.513M4.954 9.435l-1.41-.514M12.002 12l-3.75 6.495",
+            },
+        ]
+
     return {
         "header_content": {
             "admin_menu": admin_header_menu,
             "main_menu": main_header_menu,
             "auth_menu": auth_menu_content,
+            "settings_menu": settings_menu_content,
         }
     }

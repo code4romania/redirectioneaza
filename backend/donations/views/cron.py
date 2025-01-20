@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 
 class CustomExport(TemplateView):
-    def get(self, request):
+    def get(self, request, *args, **kwargs):
         if not request.user.is_superuser:
             raise PermissionDenied()
 
@@ -85,7 +85,7 @@ class CustomExport(TemplateView):
 
 
 class NgoExport(TemplateView):
-    def get(self, request):
+    def get(self, request, *args, **kwargs):
         if not request.user.is_superuser:
             raise PermissionDenied()
 
@@ -116,7 +116,7 @@ class NgoExport(TemplateView):
 
 
 class NgoRemoveForms(TemplateView):
-    def get(self, request):
+    def get(self, request, *args, **kwargs):
         if not request.user.is_superuser:
             raise PermissionDenied()
 

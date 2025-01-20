@@ -87,7 +87,7 @@ class LoginView(BaseVisibleTemplateView):
         if request.user.is_authenticated:
             if request.user.has_perm("users.can_view_old_dashboard"):
                 return redirect(reverse("admin-index"))
-            return redirect(reverse("contul-meu"))
+            return redirect(reverse("my-organization:dashboard"))
 
         context = self.get_context_data(**kwargs)
 
@@ -121,7 +121,7 @@ class LoginView(BaseVisibleTemplateView):
             if user.has_perm("users.can_view_old_dashboard"):
                 return redirect(reverse("admin-index"))
 
-            return redirect(reverse("contul-meu"))
+            return redirect(reverse("my-organization:dashboard"))
         elif settings.ALLOW_OLD_PASSWORDS:
             # Check the old password authentication and migrate it to the new method
             user_model = get_user_model()
@@ -136,7 +136,7 @@ class LoginView(BaseVisibleTemplateView):
                 django_login(request, user)
                 if user.has_perm("users.can_view_old_dashboard"):
                     return redirect(reverse("admin-index"))
-                return redirect(reverse("contul-meu"))
+                return redirect(reverse("my-organization:dashboard"))
 
         logger.warning("Invalid email or password: {0}".format(email))
         context["email"] = email
@@ -177,7 +177,7 @@ class SetPasswordView(BaseVisibleTemplateView):
 
         django_login(request, user)
 
-        return redirect(reverse("contul-meu"))
+        return redirect(reverse("my-organization:dashboard"))
 
 
 class SignupView(BaseVisibleTemplateView):
@@ -186,7 +186,7 @@ class SignupView(BaseVisibleTemplateView):
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect(reverse("contul-meu"))
+            return redirect(reverse("my-organization:dashboard"))
 
         context = self.get_context_data(**kwargs)
 
@@ -269,7 +269,7 @@ class SignupView(BaseVisibleTemplateView):
         django_login(request, user)
 
         # redirect to my account
-        return redirect(reverse("contul-meu"))
+        return redirect(reverse("my-organization:dashboard"))
 
 
 class VerificationView(BaseVisibleTemplateView):
@@ -310,7 +310,7 @@ class VerificationView(BaseVisibleTemplateView):
             user.is_verified = True
             user.clear_token(commit=False)
             user.save()
-            return redirect(reverse("contul-meu"))
+            return redirect(reverse("my-organization:dashboard"))
 
         if verification_type == "p":
             # supply user to the page

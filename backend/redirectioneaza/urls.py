@@ -49,12 +49,9 @@ from donations.views.api import (
     SearchNgosApi,
     UpdateFromNgohub,
 )
-from donations.views.cron import CustomExport, NgoExport, NgoRemoveForms
+from donations.views.cron import NgoRemoveForms
 from donations.views.ngo_account import (
     ArchiveDownloadLinkView,
-    MyAccountDetailsView,
-    MyAccountView,
-    OldNgoDetailsView,
 )
 from donations.views.redirections import (
     OwnFormDownloadLinkHandler,
@@ -110,13 +107,13 @@ urlpatterns = (
             name="verification",
         ),
         path("password/", SetPasswordView.as_view(), name="password"),
-        # my account
-        path("contul-meu/", MyAccountView.as_view(), name="contul-meu"),
-        path("organizatia-old/", OldNgoDetailsView.as_view(), name="organization-old"),
+        # organization account management
         path("organizatia-mea/", include(("donations.urls_ngo_account", "donations"), namespace="my-organization")),
-        path("organizatia/", RedirectView.as_view(pattern_name="my-organization:presentation", permanent=True)),
-        path("asociatia/", RedirectView.as_view(pattern_name="organization-old", permanent=True)),
-        path("date-cont/", MyAccountDetailsView.as_view(), name="date-contul-meu"),
+        # old organization account management urls
+        path("contul-meu/", RedirectView.as_view(pattern_name="my-organization:dashboard", permanent=True)),
+        path("organizatia/", RedirectView.as_view(pattern_name="my-organization:dashboard", permanent=True)),
+        path("asociatia/", RedirectView.as_view(pattern_name="my-organization:dashboard", permanent=True)),
+        path("date-cont/", RedirectView.as_view(pattern_name="my-organization:settings", permanent=True)),
         path(
             "contul-meu/eroare/aplicatie-lipsa/",
             StaticPageView.as_view(template_name="account/errors/login/app_missing.html"),
@@ -144,8 +141,8 @@ urlpatterns = (
         path("api/search/", SearchNgosApi.as_view(), name="api-search-ngos"),
         # Cron routes
         path("cron/ngos/remove-form/", NgoRemoveForms.as_view(), name="cron-ngo-remove-form"),
-        path("cron/ngos/export/", NgoExport.as_view(), name="cron-ngo-export"),
-        path("cron/export/custom/", CustomExport.as_view(), name="cron-custom-export"),
+        # path("cron/ngos/export/", NgoExport.as_view(), name="cron-ngo-export"),
+        # path("cron/export/custom/", CustomExport.as_view(), name="cron-custom-export"),
         # Django Admin
         path("admin/django/", RedirectView.as_view(pattern_name="admin:index", permanent=True)),
         path("admin/avansat/login/", RedirectView.as_view(pattern_name="login", permanent=True)),

@@ -30,8 +30,8 @@ logger = logging.getLogger(__name__)
 
 class UpdateFromNgohub(BaseTemplateView):
     def post(self, request, *args, **kwargs):
-        redirect_success = redirect(reverse("organization-old"))
-        redirect_error = redirect(reverse("organization-old"))
+        redirect_success = redirect(reverse("my-organization:archives"))
+        redirect_error = redirect(reverse("home"))
 
         user = request.user
 

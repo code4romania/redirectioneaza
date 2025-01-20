@@ -1,8 +1,8 @@
-from django.contrib.auth import get_user_model
-from django.urls import reverse
-from django.contrib import messages
-from django.template.loader import render_to_string
 from django.conf import settings
+from django.contrib import messages
+from django.contrib.auth import get_user_model
+from django.template.loader import render_to_string
+from django.urls import reverse
 
 from .admin_dashboard import callback as admin_callback
 
@@ -28,4 +28,4 @@ def callback(request, context):
     if user.is_admin:
         return admin_callback(request, context)
 
-    return {"redirect": reverse("contul-meu")}
+    return {"redirect": reverse("my-organization:dashboard")}

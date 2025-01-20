@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-20 12:10+0200\n"
+"POT-Creation-Date: 2025-01-20 15:19+0200\n"
 "PO-Revision-Date: 2024-03-07 11:27+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -194,13 +194,15 @@ msgstr "Parolele nu se potrivesc"
 
 #: donations/forms/redirection.py:10
 #: templates/v2/account/snippets/register-form.html:45
-#: templates/v2/form/redirection.html:65
+#: templates/v2/form/redirection.html:112
+#: templates/v2/ngo-account/settings/main.html:62
 msgid "Last name"
 msgstr "Nume"
 
 #: donations/forms/redirection.py:11
 #: templates/v2/account/snippets/register-form.html:31
-#: templates/v2/form/redirection.html:70
+#: templates/v2/form/redirection.html:121
+#: templates/v2/ngo-account/settings/main.html:57
 msgid "First name"
 msgstr "Prenume"
 
@@ -208,7 +210,7 @@ msgstr "Prenume"
 msgid "Initial"
 msgstr "Inițială"
 
-#: donations/forms/redirection.py:15 templates/v2/form/redirection.html:85
+#: donations/forms/redirection.py:15 templates/v2/form/redirection.html:148
 msgid "Email"
 msgstr "Email"
 
@@ -220,7 +222,7 @@ msgstr "Telefon"
 msgid "Street"
 msgstr "Strada"
 
-#: donations/forms/redirection.py:19 templates/v2/form/redirection.html:109
+#: donations/forms/redirection.py:19 templates/v2/form/redirection.html:204
 msgid "Number"
 msgstr "Număr"
 
@@ -228,26 +230,26 @@ msgstr "Număr"
 msgid "Building"
 msgstr "Bloc"
 
-#: donations/forms/redirection.py:21 templates/v2/form/redirection.html:119
+#: donations/forms/redirection.py:21 templates/v2/form/redirection.html:240
 msgid "Entrance"
 msgstr "Scara"
 
-#: donations/forms/redirection.py:22 templates/v2/form/redirection.html:124
+#: donations/forms/redirection.py:22 templates/v2/form/redirection.html:258
 msgid "Floor"
 msgstr "Etaj"
 
-#: donations/forms/redirection.py:23 templates/v2/form/redirection.html:129
+#: donations/forms/redirection.py:23 templates/v2/form/redirection.html:276
 msgid "Apartment"
 msgstr "Apartament"
 
 #: donations/forms/redirection.py:25
 #: donations/views/dashboard/ngo_dashboard.py:56
-#: templates/v2/form/redirection.html:134
+#: templates/v2/form/redirection.html:291
 #: templates/v2/ngo-account/my-organization/ngo-presentation.html:78
 msgid "County"
 msgstr "Județ"
 
-#: donations/forms/redirection.py:26 templates/v2/form/redirection.html:139
+#: donations/forms/redirection.py:26 templates/v2/form/redirection.html:299
 msgid "Locality"
 msgstr "Localitate"
 
@@ -263,7 +265,7 @@ msgstr "Acord contact"
 msgid "Agree terms"
 msgstr "Acord termeni"
 
-#: donations/forms/redirection.py:32 templates/v2/form/redirection.html:144
+#: donations/forms/redirection.py:32 templates/v2/form/redirection.html:317
 msgid "Signature"
 msgstr "Semnătura"
 
@@ -661,49 +663,45 @@ msgstr "data completării"
 msgid "duration"
 msgstr "perioadă"
 
-#: donations/views/ngo_account.py:39 donations/views/ngo_account.py:606
+#: donations/views/ngo_account.py:33
 msgid "The IBAN number must have 24 characters"
 msgstr "IBAN-ul trebuie să aibă 24 de cifre"
 
-#: donations/views/ngo_account.py:42 donations/views/ngo_account.py:609
+#: donations/views/ngo_account.py:36
 msgid "The IBAN number must contain only letters and digits"
 msgstr "IBAN-ul trebuie să conțină doar litere și cifre"
 
-#: donations/views/ngo_account.py:45 donations/views/ngo_account.py:612
+#: donations/views/ngo_account.py:39
 msgid "The IBAN number must start with 'RO'"
 msgstr "IBAN-ul trebuie să înceapă cu 'RO'"
 
-#: donations/views/ngo_account.py:68
-msgid "My Account Details"
-msgstr "Detaliile contului meu"
-
-#: donations/views/ngo_account.py:94
+#: donations/views/ngo_account.py:61
 msgid "Download archive"
 msgstr "Descarcă arhiva"
 
-#: donations/views/ngo_account.py:131
-msgid "My Account"
-msgstr "Contul meu"
-
-#: donations/views/ngo_account.py:225 donations/views/ngo_account.py:335
-#: donations/views/ngo_account.py:436
+#: donations/views/ngo_account.py:101 donations/views/ngo_account.py:144
 msgid "Organization details"
 msgstr "Detalii organizație"
 
-#: donations/views/ngo_account.py:255
+#: donations/views/ngo_account.py:245
 msgid "Organization forms"
 msgstr "Formulare organizație"
 
-#: donations/views/ngo_account.py:307 donations/views/ngo_account.py:553
+#: donations/views/ngo_account.py:297
 msgid "The URL is already used"
 msgstr "URL-ul este deja folosit"
 
-#: donations/views/ngo_account.py:645 redirectioneaza/context_processors.py:179
+#: donations/views/ngo_account.py:325
+#: templates/v2/ngo-account/settings/main.html:10
+msgid "Organization settings"
+msgstr "Setări organizație"
+
+#: donations/views/ngo_account.py:369 redirectioneaza/context_processors.py:179
 #: templates/v2/ngo-account/redirections/main.html:10
 msgid "Redirections"
 msgstr "Redirecționări"
 
-#: donations/views/ngo_account.py:696
+#: donations/views/ngo_account.py:419
 msgid "Archives history "
 msgstr "Istoric arhive"
 
@@ -865,56 +863,60 @@ msgstr ""
 msgid "Subdomain must have between 3 and 100 characters."
 msgstr "Subdomeniul trebuie să aibă între 3 și 100 de caractere."
 
-#: redirectioneaza/context_processors.py:42
+#: redirectioneaza/context_processors.py:41
 #: templates/v2/redirect/footer.html:105
 msgid "About"
 msgstr "Despre"
 
-#: redirectioneaza/context_processors.py:46
+#: redirectioneaza/context_processors.py:45
 msgid "For donors"
 msgstr "Pentru contribuabili"
 
-#: redirectioneaza/context_processors.py:55
+#: redirectioneaza/context_processors.py:54
 #: templates/v2/redirect/footer.html:128
 msgid "Discover organizations"
 msgstr "Descoperă organizații"
 
-#: redirectioneaza/context_processors.py:75
-#: redirectioneaza/context_processors.py:114
+#: redirectioneaza/context_processors.py:74
+#: redirectioneaza/context_processors.py:113
 #: redirectioneaza/settings/unfold.py:53
 msgid "Frequently asked questions"
 msgstr "Întrebări frecvente"
 
-#: redirectioneaza/context_processors.py:91
+#: redirectioneaza/context_processors.py:90
 #: templates/v2/redirect/footer.html:151
 msgid "For organizations"
 msgstr "Pentru organizații"
 
-#: redirectioneaza/context_processors.py:131
-#: redirectioneaza/context_processors.py:146
+#: redirectioneaza/context_processors.py:130
+#: redirectioneaza/context_processors.py:145
 msgid "Register Organization"
 msgstr "Înregistrează ONG"
 
-#: redirectioneaza/context_processors.py:141
+#: redirectioneaza/context_processors.py:140
 msgid "Log in"
 msgstr "Autentificare"
 
-#: redirectioneaza/context_processors.py:154
+#: redirectioneaza/context_processors.py:153
 msgid "Log out"
 msgstr "Deconectare"
 
-#: redirectioneaza/context_processors.py:159
+#: redirectioneaza/context_processors.py:158
 msgid "My organization"
 msgstr "Organizația mea"
 
 #: redirectioneaza/context_processors.py:173
-#: templates/v2/ngo-account/my-organization/base.html:13
+#: templates/v2/ngo-account/my-organization/base.html:12
 msgid "Organization Data"
 msgstr "Date organizație"
 
 #: redirectioneaza/context_processors.py:185
 msgid "Archive History"
 msgstr "Istoric arhive"
+
+#: redirectioneaza/context_processors.py:196
+msgid "Settings"
+msgstr "Setări"
 
 #: redirectioneaza/settings/app_configs.py:34
 msgid "January"
@@ -1273,11 +1275,11 @@ msgstr "Încarcă un logo în NGO Hub"
 msgid "Upload an image"
 msgstr "Încarcă o imagine"
 
-#: templates/v2/form/redirection.html:29
+#: templates/v2/form/redirection.html:84
 msgid "Redirect easily and quickly"
 msgstr "Redirecționează simplu și rapid"
 
-#: templates/v2/form/redirection.html:33
+#: templates/v2/form/redirection.html:88
 msgid ""
 "Since 2022, form 230 can be submitted online. Fill in the form with the data "
 "from your ID, sign it online, and it will be automatically sent to the "
@@ -1293,36 +1295,36 @@ msgstr ""
 "că vei imprima, semna formularul de mână și îl vei trimite către ONG prin "
 "poștă sau email, sau îl vei depune direct la ANAF."
 
-#: templates/v2/form/redirection.html:75
+#: templates/v2/form/redirection.html:130
 msgid "Father's initial"
 msgstr "Inițiala tatălui"
 
-#: templates/v2/form/redirection.html:80
+#: templates/v2/form/redirection.html:139
 msgid "Personal identification number"
 msgstr "CNP"
 
-#: templates/v2/form/redirection.html:90
+#: templates/v2/form/redirection.html:160
 #: templates/v2/ngo-account/redirections/list-header.html:17
 msgid "Phone number"
 msgstr "Număr de telefon"
 
-#: templates/v2/form/redirection.html:100
+#: templates/v2/form/redirection.html:180
 msgid "Home address"
 msgstr "Adresă de domiciliu"
 
-#: templates/v2/form/redirection.html:104
+#: templates/v2/form/redirection.html:187
 msgid "Street name"
 msgstr "Stradă"
 
-#: templates/v2/form/redirection.html:114
+#: templates/v2/form/redirection.html:223
 msgid "Flat"
 msgstr "Bloc"
 
-#: templates/v2/form/redirection.html:214
+#: templates/v2/form/redirection.html:383
 msgid "I want my redirection to be valid for two years"
 msgstr "Doresc ca redirecționarea să se realizeze pe o perioadă de 2 ani"
 
-#: templates/v2/form/redirection.html:221
+#: templates/v2/form/redirection.html:390
 msgid ""
 "I agree that this NGO may contact me in the future with details about the "
 "projects implemented"
@@ -1330,7 +1332,7 @@ msgstr ""
 "Sunt de acord ca acest ONG să mă contacteze pe viitor cu detalii despre "
 "proiectele implementate"
 
-#: templates/v2/form/redirection.html:230
+#: templates/v2/form/redirection.html:399
 #, python-format
 msgid ""
 "I agree with <a href=\"%(terms_url)s\"> the Terms of the application </a>. "
@@ -1339,27 +1341,27 @@ msgstr ""
 "Sunt de acord cu <a href=\"%(terms_url)s\"> Termenii aplicației</a> și cu <a "
 "href=\"%(policy_url)s\">Politica de confidențialitate</a>."
 
-#: templates/v2/form/redirection.html:251
+#: templates/v2/form/redirection.html:418
 msgid "Send form"
 msgstr "Trimite formularul"
 
-#: templates/v2/form/redirection.html:256
+#: templates/v2/form/redirection.html:423
 msgid "Continue without signing"
 msgstr "Continuă fără a semna"
 
-#: templates/v2/form/signature.html:98
+#: templates/v2/form/signature.html:96
 msgid "Add signature"
 msgstr "Adaugă semnătura"
 
-#: templates/v2/form/signature.html:102
+#: templates/v2/form/signature.html:100
 msgid "Draw your signature in the canvas below."
 msgstr "Desenează semnătura în câmpul de mai jos."
 
-#: templates/v2/form/signature.html:115
+#: templates/v2/form/signature.html:117
 msgid "Reset"
 msgstr "Resetează"
 
-#: templates/v2/form/signature.html:120
+#: templates/v2/form/signature.html:127
 msgid "Ok"
 msgstr "Ok"
 
@@ -1506,16 +1508,16 @@ msgstr "Descarcă din NGO Hub"
 msgid "Save changes"
 msgstr "Salvează modificările"
 
-#: templates/v2/ngo-account/my-organization/base.html:17
+#: templates/v2/ngo-account/my-organization/base.html:16
 msgid "Fill out the organization's profile on redirectioneaza.ro"
 msgstr "Completează profilul organizației pe redirectioneaza.ro"
 
-#: templates/v2/ngo-account/my-organization/base.html:22
+#: templates/v2/ngo-account/my-organization/base.html:21
 #: templates/v2/ngo-account/my-organization/ngo-presentation.html:17
 msgid "Presentation Data"
 msgstr "Date prezentare"
 
-#: templates/v2/ngo-account/my-organization/base.html:23
+#: templates/v2/ngo-account/my-organization/base.html:22
 #: templates/v2/ngo-account/my-organization/ngo-form.html:15
 msgid "Form Data"
 msgstr "Date formular"
@@ -1622,6 +1624,31 @@ msgstr[2] "%(counter)s de formulare de redirecționare"
 #: templates/v2/ngo-account/redirections/main.html:57
 msgid "Generate ANAF Archive"
 msgstr "Generează arhiva ANAF"
+
+#: templates/v2/ngo-account/settings/main.html:15
+msgid ""
+"Some of the settings here are managed by the NGO Hub platform. If you need "
+"to change them, make the updates on NGO Hub."
+msgstr ""
+"Unele dintre setările de aici sunt gestionate de platforma NGO Hub. Dacă ai "
+"nevoie să le modifici, fă actualizările pe NGO Hub."
+
+#: templates/v2/ngo-account/settings/main.html:20
+msgid "Here you can manage your organization's settings."
+msgstr ""
+"Aici poți gestiona setările organizației tale."
+
+#: templates/v2/ngo-account/settings/main.html:39
+msgid "User Account Details"
+msgstr "Detaliile contului utilizatorului"
+
+#: templates/v2/ngo-account/settings/main.html:46
+msgid "E-mail address"
+msgstr "Adresă de email"
+
+#: templates/v2/ngo-account/settings/main.html:52
+msgid "Full name"
+msgstr "Nume complet"
 
 #: templates/v2/public/all-ngos.html:25
 msgid "organizations"
@@ -1747,6 +1774,9 @@ msgstr "parolă veche"
 #: users/models.py:208
 msgid "Group"
 msgstr "Grup"
+
+#~ msgid "My Account"
+#~ msgstr "Contul meu"
 
 #~ msgid "My forms"
 #~ msgstr "Formularele mele"

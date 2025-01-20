@@ -3,44 +3,42 @@
 {% load i18n static %}
 
 {% block page_heading %}
-  {% with current_tab|default:"presentation" as active_tab %}
 
-    <div
-      x-data="{ activeTab: '{{ active_tab }}' }"
-      class="max-w-none">
+  <div
+    x-data="{ activeTab: '{{ active_tab }}' }"
+    class="max-w-none">
 
-      <h1 class="text-2xl text-gray-900 font-semibold">
-        {% trans "Organization Data" %}
-      </h1>
+    <h1 class="text-2xl text-gray-900 font-semibold">
+      {% trans "Organization Data" %}
+    </h1>
 
-      <p class="text-lg pt-2 mt-2 text-gray-500">
-        {% blocktrans trimmed %}
-          Fill out the organization's profile on redirectioneaza.ro
-        {% endblocktrans %}
-      </p>
+    <p class="text-lg pt-2 mt-2 text-gray-500">
+      {% blocktrans trimmed %}
+        Fill out the organization's profile on redirectioneaza.ro
+      {% endblocktrans %}
+    </p>
 
-      {% trans "Presentation Data" as tab_presentation %}
-      {% trans "Form Data" as tab_form %}
+    {% trans "Presentation Data" as tab_presentation %}
+    {% trans "Form Data" as tab_form %}
 
-      <div class="pt-2 mt-2">
-        <nav
-          class="flex space-x-4"
-          aria-label="Tabs">
+    <div class="pt-2 mt-2">
+      <nav
+        class="flex space-x-4"
+        aria-label="Tabs">
 
-          {% url "my-organization:presentation" as target_url %}
-          {% include "ngo-account/components/tab.html" with tab_title=tab_presentation target="presentation" %}
+        {% url "my-organization:presentation" as target_url %}
+        {% include "ngo-account/components/tab.html" with tab_title=tab_presentation target="presentation" %}
 
-          {% url "my-organization:forms" as target_url %}
-          {% if ngo %}
-            {% include "ngo-account/components/tab.html" with tab_title=tab_form target="form" %}
-          {% else %}
-            {% include "ngo-account/components/tab.html" with tab_title=tab_form target="form" is_disabled=True %}
-          {% endif %}
+        {% url "my-organization:forms" as target_url %}
+        {% if ngo %}
+          {% include "ngo-account/components/tab.html" with tab_title=tab_form target="form" %}
+        {% else %}
+          {% include "ngo-account/components/tab.html" with tab_title=tab_form target="form" is_disabled=True %}
+        {% endif %}
 
-        </nav>
-      </div>
+      </nav>
     </div>
+  </div>
 
-  {% endwith %}
 
 {% endblock %}
