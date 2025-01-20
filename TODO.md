@@ -57,13 +57,14 @@
 
 ### Issues
 
+  - [ ] The desktop sidebar isn't displayed properly
+  - [ ] Check the data for changes when switching tabs
+  - [ ] Max characters validation for description & other fields
+  - [ ] The logo upload doesn't work properly
   - [x] Mark the mandatory fields properly @idormenco
   - [x] The disabled form fields need to be styled properly @idormenco
   - [x] Connect the form to the BE properly @tamariei
-  - [ ] Check the data for changes when switching tabs
   - [x] The "save" & "get from NGO Hub" buttons should be styled the same @idormenco
-  - [ ] Max characters validation for description & other fields
-  - [ ] The logo upload doesn't work properly
 
 
 ## Organization's redirections
@@ -79,8 +80,8 @@
 
 ### Issues
 
-  ~~The pagination doesn't show up properly (it should be right-aligned)~~  (fixed because we have the "items/page" element)
   - [ ] Django template: the `nr. crt./#` column from `list-header.html` & `list-items.html` should be calculated properly
+  ~~The pagination doesn't show up properly (it should be right-aligned)~~  (fixed because we have the "items/page" element)
   - [x] Make the generate archive button work
   ~~Make the download table button work~~  (delayed because the feature requires a new BE feature)
 
@@ -98,8 +99,8 @@
 
 ### Issues
 
-  ~~Same issue with the pagination as in the `redirections` page~~  (fixed because we have the "items/page" element)
   - [ ] Align the table elements better (it's the same table as in the `redirections` page but with different columns)
+  ~~Same issue with the pagination as in the `redirections` page~~  (fixed because we have the "items/page" element)
 
 
 ## Production-ready Dockerfile
