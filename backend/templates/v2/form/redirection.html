@@ -57,7 +57,7 @@
           successClass: "has-success"
         });
 
-        
+
       },
       onSubmit() {
         var valid = this.pristine.validate();
@@ -103,57 +103,57 @@
     {% csrf_token %}
 
     <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-5">
-    
+
       {# TODO: reCAPTCHA doesn't work right now #}
       <div class="g-recaptcha" data-sitekey="{{ captcha_public_key }}" data-callback="onSubmit"></div>
 
       <div class="form-group sm:col-span-2 sm:col-start-1">
-        <label for="l_name" class="block text-sm/6 font-medium text-gray-500 mb-1">{% trans "Last name" %} <span class='text-red-500'>*</span>
+        <label for="l_name" class="block text-sm/6 font-medium text-gray-500 mb-1">{% trans "Last name" %} <span class='text-red-600'>*</span>
         </label>
         <div class="mt-1 relative rounded-md shadow-sm">
-          <input type="text" id="l_name" class="block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-400 sm:text-sm/6 disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-gray-500" required maxlength="100"/>
+          <input type="text" id="l_name" class="block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-400 sm:text-sm/6 disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-gray-200" required maxlength="100"/>
         </div>
       </div>
       <div class="form-group sm:col-span-2">
-        <label for="f_name" class="block text-sm/6 font-medium text-gray-500 mb-1">{% trans "First name" %} <span class='text-red-500'>*</span>
+        <label for="f_name" class="block text-sm/6 font-medium text-gray-500 mb-1">{% trans "First name" %} <span class='text-red-600'>*</span>
         </label>
         <div class="mt-1 relative rounded-md shadow-sm">
-          <input type="text" id="f_name" class="block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-400 sm:text-sm/6 disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-gray-500" required maxlength="100" />
+          <input type="text" id="f_name" class="block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-400 sm:text-sm/6 disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-gray-200" required maxlength="100" />
         </div>
       </div>
       <div class="form-group sm:col-span-1">
-        <label for="initial" class="block text-sm/6 font-medium text-gray-500 mb-1">{% trans "Father's initial" %} <span class='text-red-500'>*</span>
+        <label for="initial" class="block text-sm/6 font-medium text-gray-500 mb-1">{% trans "Father's initial" %} <span class='text-red-600'>*</span>
         </label>
         <div class="mt-1 relative rounded-md shadow-sm">
-          <input type="text" id="initial" class="block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-400 sm:text-sm/6 disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-gray-500" required maxlength="1" />
+          <input type="text" id="initial" class="block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-400 sm:text-sm/6 disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-gray-200" required maxlength="1" />
         </div>
       </div>
       <div class="form-group sm:col-span-4">
-        <label for="cnp" class="block text-sm/6 font-medium text-gray-500 mb-1">{% trans "Personal identification number" %} <span class='text-red-500'>*</span>
+        <label for="cnp" class="block text-sm/6 font-medium text-gray-500 mb-1">{% trans "Personal identification number" %} <span class='text-red-600'>*</span>
         </label>
         <div class="mt-1 relative rounded-md shadow-sm">
-          <input type="text" id="cnp" class="block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-400 sm:text-sm/6 disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-gray-500" required />
+          <input type="text" id="cnp" class="block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-400 sm:text-sm/6 disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-gray-200" required />
         </div>
       </div>
       <div class="form-group sm:col-span-2">
-        <label for="email_address" class="block text-sm/6 font-medium text-gray-500 mb-1">{% trans "Email" %} <span class='text-red-500'>*</span>
+        <label for="email_address" class="block text-sm/6 font-medium text-gray-500 mb-1">{% trans "Email" %} <span class='text-red-600'>*</span>
         </label>
         <div class="mt-1 relative rounded-md shadow-sm">
-          <input type="email" id="email_address" autocomplete="email" class="block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-400 sm:text-sm/6 disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-gray-500" required />
+          <input type="email" id="email_address" autocomplete="email" class="block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-400 sm:text-sm/6 disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-gray-200" required />
         </div>
       </div>
       <div class="form-group sm:col-span-2">
         <label
           for="phone_number"
           class="block text-sm/6 font-medium text-gray-500 mb-1"
-        >{% trans "Phone number" %} <span class='text-red-500'>*</span>
+        >{% trans "Phone number" %} <span class='text-red-600'>*</span>
         </label>
         <div class="mt-1 relative rounded-md shadow-sm">
           <input
             type="text"
             id="phone_number"
             autocomplete="tel-national"
-            class="block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-400 sm:text-sm/6 disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-gray-500"
+            class="block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-400 sm:text-sm/6 disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-gray-200"
             maxlength="20"
             required
           />
@@ -173,14 +173,14 @@
         <label
           for="street_name"
           class="block text-sm/6 font-medium text-gray-500 mb-1"
-        >{% trans "Street name" %} <span class='text-red-500'>*</span>
+        >{% trans "Street name" %} <span class='text-red-600'>*</span>
         </label>
         <div class="mt-1 relative rounded-md shadow-sm">
           <input
             type="text"
             id="street_name"
             autocomplete="address-line1"
-            class="block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-400 sm:text-sm/6 disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-gray-500"
+            class="block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-400 sm:text-sm/6 disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-gray-200"
             required
           />
         </div>
@@ -190,14 +190,14 @@
         <label
           for="street_number"
           class="block text-sm/6 font-medium text-gray-500 mb-1"
-        >{% trans "Number" %} <span class='text-red-500'>*</span>
+        >{% trans "Number" %} <span class='text-red-600'>*</span>
         </label>
         <div class="mt-1 relative rounded-md shadow-sm">
           <input
             type="text"
             id="street_number"
             autocomplete="address-line1"
-            class="block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-400 sm:text-sm/6 disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-gray-500"
+            class="block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-400 sm:text-sm/6 disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-gray-200"
             required
             maxlength="10"
           />
@@ -216,7 +216,7 @@
             type="text"
             id="flat"
             autocomplete="address-line2"
-            class="block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-400 sm:text-sm/6 disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-gray-500"
+            class="block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-400 sm:text-sm/6 disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-gray-200"
             maxlength="10"
           />
         </div>
@@ -226,16 +226,16 @@
         <label
           for="entrance"
           class="block text-sm/6 font-medium text-gray-500 mb-1"
-        >{% trans "Entrance" %} <span class='text-red-500'>*</span>
+        >{% trans "Entrance" %} <span class='text-red-600'>*</span>
         </label>
         <div class="mt-1 relative rounded-md shadow-sm">
           <input
             type="text"
             id="entrance"
             autocomplete="address-line3"
-            class="block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-400 sm:text-sm/6 disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-gray-500"
+            class="block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-400 sm:text-sm/6 disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-gray-200"
             maxlength="10"
-            required            
+            required
           />
         </div>
       </div>
@@ -244,14 +244,14 @@
         <label
           for="floor"
           class="block text-sm/6 font-medium text-gray-500 mb-1"
-        >{% trans "Floor" %} <span class='text-red-500'>*</span>
+        >{% trans "Floor" %} <span class='text-red-600'>*</span>
         </label>
         <div class="mt-1 relative rounded-md shadow-sm">
           <input
             type="text"
             id="floor"
             autocomplete="address-line4"
-            class="block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-400 sm:text-sm/6 disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-gray-500"
+            class="block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-400 sm:text-sm/6 disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-gray-200"
             maxlength="10"
             required
           />
@@ -262,14 +262,14 @@
         <label
           for="apartment"
           class="block text-sm/6 font-medium text-gray-500 mb-1"
-        >{% trans "Apartment" %} <span class='text-red-500'>*</span>
+        >{% trans "Apartment" %} <span class='text-red-600'>*</span>
         </label>
         <div class="mt-1 relative rounded-md shadow-sm">
           <input
             type="text"
             id="apartment"
             autocomplete="address-line5"
-            class="block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-400 sm:text-sm/6 disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-gray-500"
+            class="block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-400 sm:text-sm/6 disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-gray-200"
             maxlength="10"
             required
           />
@@ -285,14 +285,14 @@
         <label
           for="locality"
           class="block text-sm/6 font-medium text-gray-500 mb-1"
-        >{% trans "Locality" %} <span class='text-red-500'>*</span>
+        >{% trans "Locality" %} <span class='text-red-600'>*</span>
         </label>
         <div class="mt-1 relative rounded-md shadow-sm">
           <input
             type="text"
             id="locality"
             autocomplete="address-level2"
-            class="block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-400 sm:text-sm/6 disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-gray-500"
+            class="block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-400 sm:text-sm/6 disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-gray-200"
             maxlength="100"
             required
           />
@@ -312,11 +312,11 @@
             <button @click="modalIsOpen = true" type="button" class="cursor-pointer whitespace-nowrap rounded-md bg-black px-4 py-2 text-center text-sm font-medium tracking-wide text-neutral-100 transition hover:opacity-75 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black active:opacity-100 active:outline-offset-0 dark:bg-white dark:text-black dark:focus-visible:outline-white">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
-              </svg>              
+              </svg>
             </button>
             <div x-cloak x-show="modalIsOpen" x-transition.opacity.duration.200ms x-trap.inert.noscroll="modalIsOpen" @keydown.esc.window="modalIsOpen = false" @click.self="modalIsOpen = false" class="fixed inset-0 z-30 flex items-end justify-center bg-black/20 p-4 pb-8 backdrop-blur-md sm:items-center lg:p-8" role="dialog" aria-modal="true" aria-labelledby="defaultModalTitle">
                 <!-- Modal Dialog -->
-                <div x-show="modalIsOpen" x-transition:enter="transition ease-out duration-200 delay-100 motion-reduce:transition-opacity" x-transition:enter-start="opacity-0 scale-50" x-transition:enter-end="opacity-100 scale-100" 
+                <div x-show="modalIsOpen" x-transition:enter="transition ease-out duration-200 delay-100 motion-reduce:transition-opacity" x-transition:enter-start="opacity-0 scale-50" x-transition:enter-end="opacity-100 scale-100"
                   class="flex max-w-lg flex-col gap-4 overflow-hidden rounded-md border border-neutral-300 bg-white text-neutral-600 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-300">
                   {% include "form/signature.html" %}
                 </div>
@@ -327,7 +327,7 @@
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
               </svg>
-                      
+
             </button>
           </div>
         </div>
