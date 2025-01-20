@@ -16,6 +16,7 @@
 
 ### Issues
 
+  - [ ] The signature isn't initialized before `x-data` is called
   - [ ] Properly style the errors coming from BE
   - [ ] Set up captcha validation (set the `g-recaptcha-response` input, see `twopercent.js:183`)
     - make the captcha do its own work @tamariei

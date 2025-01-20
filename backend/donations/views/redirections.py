@@ -480,6 +480,7 @@ class RedirectionHandler(TemplateView):
                 "counties": settings.FORM_COUNTIES,
                 "limit": settings.DONATIONS_LIMIT,
                 "month_limit": settings.DONATIONS_LIMIT_MONTH_NAME,
+                "captcha_public_key": settings.RECAPTCHA_PUBLIC_KEY,
                 "ngo_website_description": "",
                 "ngo_website": "",
             }
@@ -522,8 +523,12 @@ class RedirectionHandler(TemplateView):
         now = timezone.now()
         can_donate = not now.date() > settings.DONATIONS_LIMIT
 
-        context["can_donate"] = can_donate
-        context["is_admin"] = request.user.is_staff  # TODO: check this
+        context.update(
+            {
+                "can_donate": can_donate,
+                "is_admin": request.user.is_staff,
+            }
+        )
 
         return context
 

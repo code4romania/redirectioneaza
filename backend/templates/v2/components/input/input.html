@@ -3,16 +3,16 @@
 {% block input %}
 
   <input
-    id="{{ input_id }}"
-    type="{{ input_type }}"
-    name="{{ input_name }}"
-    {% if maxlength %}maxlength="{{ maxlength }}"{% endif %}
-    {% if input_autocomplete %}autocomplete="{{ input_autocomplete }}"{% endif %}
-    {% if is_required %}required{% endif %}
-    {% if value %}value="{{ value }}"{% endif %}
-    {% if placeholder %}placeholder="{{ placeholder }}"{% endif %}
-    {% if is_disabled %}disabled{% endif %}
-    {% if max_length %}maxlength="{{ max_length }}"{% endif %}
-    class="block w-full rounded-md px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-400 sm:text-sm/6 disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-gray-200">
+        id="{{ input_id }}"
+        name="{{ input_name }}"
+        type="{{ input_type }}"
+        class="relative block w-full appearance-none rounded-lg px-[calc(theme(spacing[3.5])-1px)] py-[calc(theme(spacing[2.5])-1px)] sm:px-[calc(theme(spacing[3])-1px)] sm:py-[calc(theme(spacing[1.5])-1px)] text-base/6 text-zinc-950 placeholder:text-zinc-500 sm:text-sm/6 border border-zinc-950/10 hover:border-zinc-950/20 bg-transparent focus:outline-none aria-[invalid]:border-red-500 aria-[invalid]:hover:border-red-500 disabled:border-zinc-950/20"
+        {% if max_length %}maxlength="{{ max_length }}"{% endif %}
+        {% if input_autocomplete %}autocomplete="{{ input_autocomplete }}"{% endif %}
+        {% if is_required %}required{% endif %}
+        {% if value %}value="{{ value }}"{% endif %}
+        {% if placeholder %}placeholder="{{ placeholder }}"{% endif %}
+        {% if is_disabled %}disabled{% endif %}
+        />
 
 {% endblock %}

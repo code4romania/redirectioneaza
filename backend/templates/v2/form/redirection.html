@@ -12,74 +12,131 @@
   {% endif %}
 
   <meta property="og:type" content="website"/>
+
+  <script src="https://cdn.jsdelivr.net/npm/signature_pad@5.0.4/dist/signature_pad.umd.min.js" async></script>
+
   <script src="https://www.google.com/recaptcha/api.js?hl=ro" async defer></script>
+
+  <script type="text/javascript" src="{% static 'js/pristine.min.js' %}"></script>
+
+  {# Register error messages for Pristine #}
+  <script>
+
+    const errorMessages = {
+      required: "Acest câmp este obligatoriu",
+      email: "Acest câmp necesită o adresă de e-mail validă",
+      number: "Acest câmp necesită un număr",
+      integer: "Acest câmp necesită o valoare întreagă",
+      url: "Acest câmp necesită un URL valid",
+      tel: "Acest câmp necesită un număr de telefon valid",
+      maxlength: "Lungimea acestui câmp trebuie să fie < ${1}",
+      minlength: "Lungimea acestui câmp trebuie să fie > ${1}",
+      min: "Valoarea minimă pentru acest câmp este ${1}",
+      max: "Valoarea maximă pentru acest câmp este ${1}",
+      pattern: "Vă rugăm să respectați formatul solicitat",
+      equals: "Cele două câmpuri nu se potrivesc",
+      default: "Vă rugăm să introduceți o valoare corectă"
+    };
+
+    Pristine.addMessages('en', errorMessages);
+  </script>
+
+  <script>
+    let formValidation = function () {
+      return {
+        form: undefined,
+        pristine: undefined,
+        init() {
+          this.form = document.getElementById("two-percent-form");
+
+          this.pristine = new Pristine(this.form, {
+            errorTextClass: "mt-2 text-sm text-red-600",
+            errorClass: "has-error",
+            successClass: "has-success"
+          });
+
+
+        },
+        onSubmit() {
+          let valid = this.pristine.validate();
+          if (valid === false) {
+            console.log(this.pristine.getErrors());
+          } else {
+            this.form.submit();
+          }
+        }
+      };
+    };
+
+    function clearSignature() {
+      const signatureInput = document.getElementById("signature-input");
+      const signaturePreview = document.getElementById("signature-preview");
+
+      signatureInput.value = "";
+      signaturePreview.src = "";
+    }
+  </script>
+
+  <script>
+    function signaturePad() {
+      return {
+        signaturePad: null,
+        signatureInput: null,
+        signaturePreview: null,
+        canvas: null,
+        resizeCanvas() {
+          // Only run when the canvas is visible
+          if (this.canvas.offsetWidth === 0 || this.canvas.offsetHeight === 0) {
+            return;
+          }
+
+          const ratio = Math.max(window.devicePixelRatio || 1, 1);
+
+          // This part causes the canvas to be cleared
+          this.canvas.width = this.canvas.offsetWidth * ratio;
+          this.canvas.height = this.canvas.offsetHeight * ratio;
+
+          this.canvas.getContext("2d").scale(ratio, ratio);
+
+          this.signaturePad.clear();
+        },
+
+        init() {
+          this.canvas = document.getElementById('signatureCanvas');
+
+          this.signatureInput = document.getElementById("signature-input");
+          this.signaturePreview = document.getElementById("signature-preview");
+
+          this.signaturePad = new SignaturePad(this.canvas, {
+            backgroundColor: 'transparent'
+          });
+
+          this.signaturePad.fromDataURL(this.signatureInput.value);
+
+          // When the canvas offsetWidth or offsetHeight changes, resize the canvas
+          new ResizeObserver(() => this.resizeCanvas()).observe(this.canvas);
+        },
+        saveSignature() {
+          if (!this.signaturePad.isEmpty()) {
+            this.signatureInput.value = this.signaturePad.toDataURL('image/svg+xml');
+            this.signaturePreview.src = this.signaturePad.toDataURL('image/svg+xml');
+          }
+        },
+        clearSignature() {
+          this.signaturePad.clear();
+        }
+      };
+    }
+  </script>
 {% endblock %}
 
 {% block content %}
   {% if can_donate %}
 
-    <script src="https://www.google.com/recaptcha/api.js?hl=ro" async defer></script>
-
-    <script type="text/javascript" src="{% static 'js/pristine.min.js' %}"></script>
-    {# Register error messages for Pristine #}
-    {% block errorMessages %}
-      <script>
-
-        const errorMessages = {
-          required: "Acest câmp este obligatoriu",
-          email: "Acest câmp necesită o adresă de e-mail validă",
-          number: "Acest câmp necesită un număr",
-          integer: "Acest câmp necesită o valoare întreagă",
-          url: "Acest câmp necesită un URL valid",
-          tel: "Acest câmp necesită un număr de telefon valid",
-          maxlength: "Lungimea acestui câmp trebuie să fie < ${1}",
-          minlength: "Lungimea acestui câmp trebuie să fie > ${1}",
-          min: "Valoarea minimă pentru acest câmp este ${1}",
-          max: "Valoarea maximă pentru acest câmp este ${1}",
-          pattern: "Vă rugăm să respectați formatul solicitat",
-          equals: "Cele două câmpuri nu se potrivesc",
-          default: "Vă rugăm să introduceți o valoare corectă"
-        };
-
-        Pristine.addMessages('en', errorMessages);
-      </script>
-    {% endblock %}
-    <script>
-      var formValidation = function () {
-        return {
-          form: undefined,
-          pristine: undefined,
-          init() {
-            this.form = document.getElementById("two-percent-form");
-
-            this.pristine = new Pristine(this.form, {
-              errorTextClass: "mt-2 text-sm text-red-600",
-              errorClass: "has-error",
-              successClass: "has-success"
-            });
-
-
-          },
-          onSubmit() {
-            var valid = this.pristine.validate();
-            if (valid === false) {
-              console.log(this.pristine.getErrors());
-            }
-          }
-        };
-      };
-
-      function clearSignature() {
-        const signatureInput = document.getElementById("signature-input");
-        const signaturePreview = document.getElementById("signature-preview");
-
-        signatureInput.value = "";
-        signaturePreview.src = "";
-      }
-    </script>
 
     <div x-data="formValidation()" x-init="init()" class="container max-w-4xl">
       <div class="prose prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-700">
+
         <h1>
           {% trans "Redirect easily and quickly" %}
         </h1>
@@ -99,217 +156,238 @@
           {% endblocktrans %}
         </p>
 
-        <form x-on:submit.prevent="onSubmit()" id="two-percent-form" class="w-full"
-              action="{% url 'twopercent' ngo_url=ngo.slug %}" role="form" method="post">
+        <form
+          x-on:submit.prevent="onSubmit()"
+          id="two-percent-form"
+          class="w-full py-10"
+          action="{% url 'twopercent' ngo_url=ngo.slug %}"
+          role="form"
+          method="post">
+
           {% csrf_token %}
 
-          <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-5">
+          <fieldset class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-5">
 
-            {# TODO: reCAPTCHA doesn't work right now #}
-            <div class="g-recaptcha" data-sitekey="{{ captcha_public_key }}" data-callback="onSubmit"></div>
+            <legend class="my-5 col-span-full text-base/7 font-semibold text-gray-900 hidden">
+              {% trans "Personal data" %}
+            </legend>
 
-            <div class="form-group sm:col-span-2 sm:col-start-1">
-              {% trans "Last name" as input_label %}
-
-              {% include "components/input/input_v2.html" with input_name="l_name" max_length=100 is_required=True %}
+            <div class="sm:col-span-2 sm:col-start-1">
+              {% trans "Last name" as input_title %}
+              {% include "components/input/input.html" with input_id="l_name" input_name="l_name" input_type="text" max_length=100 is_required=True input_autocomplete="family-name" %}
             </div>
-            <div class="form-group sm:col-span-2">
-              {% trans "First name" as input_label %}
 
-              {% include "components/input/input_v2.html" with input_name="f_name" max_length=100 is_required=True %}
+            <div class="sm:col-span-2">
+              {% trans "First name" as input_title %}
+              {% include "components/input/input.html" with input_id="f_name" input_name="f_name" input_type="text" max_length=100 is_required=True input_autocomplete="given-name" %}
             </div>
-            <div class="form-group sm:col-span-1">
-              {% trans "Father's initial" as input_label %}
 
-              {% include "components/input/input_v2.html" with input_name="initial" max_length=1 is_required=True %}
+            <div class="sm:col-span-1">
+              {% trans "Father's initial" as input_title %}
+              {% include "components/input/input.html" with input_id="initial" input_name="initial" input_type="text" max_length=1 is_required=True %}
             </div>
-            <div class="form-group sm:col-span-2">
-              {% trans "Personal identification number" as input_label %}
 
-              {% include "components/input/input_v2.html" with input_name="cnp" max_length=13 is_required=True %}
+            <div class="sm:col-span-4 sm:col-start-1">
+              {% trans "Personal identification number" as input_title %}
+              {% include "components/input/input.html" with input_id="cnp" input_name="cnp" input_type="text" max_length=13 is_required=True %}
             </div>
-            <div class="form-group sm:col-span-2">
-              {% trans "Email" as input_label %}
 
-              {% include "components/input/input_v2.html" with input_name="email" max_length=254 is_required=True %}
+            <div class="sm:col-span-2 sm:col-start-1">
+              {% trans "Email" as input_title %}
+              {% include "components/input/input.html" with input_id="email" input_name="email" input_type="email" max_length=254 is_required=True input_autocomplete="email" %}
             </div>
-            <div class="form-group sm:col-span-1">
-              {% trans "Phone number" as input_label %}
 
-              {% include "components/input/input_v2.html" with input_name="phone_number" max_length=20 is_required=True input_autocomplete="tel-national" %}
+            <div class="sm:col-span-2">
+              {% trans "Phone number" as input_title %}
+              {% include "components/input/input.html" with input_id="phone_number" input_name="phone_number" input_type="tel" max_length=15 is_required=True input_autocomplete="tel-national" %}
             </div>
-          </div>
 
-          <hr class="border-t border-gray-200 border-1">
+          </fieldset>
 
-          <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+          <hr class="border border-gray-200 border-1">
 
-            <h2 class="mt-5 col-span-full text-base/7 font-semibold text-gray-900">
+          <fieldset class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-4">
+
+            <legend class="my-5 col-span-full text-base/7 font-semibold text-gray-900">
               {% trans "Home address" %}
-            </h2>
+            </legend>
 
-            <div class="form-group sm:col-span-4 sm:col-start-1">
-              {% trans "Street name" as input_label %}
-
-              {% include "components/input/input_v2.html" with input_name="street_name" max_length=100 is_required=True input_autocomplete="address-line1" %}
+            <div class="sm:col-span-3 sm:col-start-1">
+              {% trans "Street name" as input_title %}
+              {% include "components/input/input.html" with input_id="street_name" input_name="street_name" max_length=100 is_required=True input_autocomplete="address-line1" %}
             </div>
 
-            <div class="form-group sm:col-span-1">
-              {% trans "Number" as input_label %}
-
-              {% include "components/input/input_v2.html" with input_name="street_number" max_length=10 is_required=True input_autocomplete="address-line1" %}
+            <div class="sm:col-span-1">
+              {% trans "Number" as input_title %}
+              {% include "components/input/input.html" with input_id="street_number" input_name="street_number" max_length=10 is_required=True input_autocomplete="address-line1" %}
             </div>
 
-            <div class="form-group sm:col-span-1">
-              {% trans "Flat" as input_label %}
-
-              {% include "components/input/input_v2.html" with input_name="flat" max_length=10 is_required=True input_autocomplete="address-line2" %}
+            <div class="sm:col-span-1 sm:col-start-1">
+              {% trans "Flat" as input_title %}
+              {% include "components/input/input.html" with input_id="flat" input_name="flat" max_length=10 is_required=True input_autocomplete="address-line2" %}
             </div>
 
-            <div class="form-group sm:col-span-1 sm:col-start-1">
-              {% trans "Entrance" as input_label %}
-
-              {% include "components/input/input_v2.html" with input_name="entrance" max_length=10 is_required=True input_autocomplete="address-line3" %}
+            <div class="sm:col-span-1">
+              {% trans "Entrance" as input_title %}
+              {% include "components/input/input.html" with input_id="entrance" input_name="entrance" max_length=10 is_required=True input_autocomplete="address-line3" %}
             </div>
 
-            <div class="form-group sm:col-span-2">
-              {% trans "Floor" as input_label %}
-
-              {% include "components/input/input_v2.html" with input_name="floor" max_length=10 is_required=True input_autocomplete="address-line4" %}
+            <div class="sm:col-span-1">
+              {% trans "Floor" as input_title %}
+              {% include "components/input/input.html" with input_id="floor" input_name="floor" max_length=10 is_required=True input_autocomplete="address-line4" %}
             </div>
 
-            <div class="form-group sm:col-span-2">
-              {% trans "Apartment" as input_label %}
-
-              {% include "components/input/input_v2.html" with input_name="apartment" max_length=10 is_required=True input_autocomplete="address-line5" %}
+            <div class="sm:col-span-1">
+              {% trans "Apartment" as input_title %}
+              {% include "components/input/input.html" with input_id="apartment" input_name="apartment" max_length=10 is_required=True input_autocomplete="address-line5" %}
             </div>
 
-            <div class="form-group sm:col-span-3 sm:col-start-1">
+            <div class="sm:col-span-2 sm:col-start-1">
               {% trans "County" as input_title %}
               {% include "components/input/county.html" with input_id="county" input_name="county" is_required=True %}
             </div>
 
-            <div class="form-group sm:col-span-3">
-              {% trans "Locality" as input_label %}
+            <div class="sm:col-span-2">
+              {% trans "Locality" as input_title %}
 
-              {% include "components/input/input_v2.html" with input_name="locality" max_length=10 is_required=True input_autocomplete="address-level2" %}
+              {% include "components/input/input.html" with input_id="locality" input_name="locality" max_length=10 is_required=True input_autocomplete="address-level2" %}
             </div>
 
-            <div class="form-group sm:col-span-6 sm:col-start-1">
-              <label
-                for="signature-input"
-                class="block text-sm/6 font-medium text-gray-500 mb-1"
-              >{% trans "Signature" %}
-              </label>
-              <div class="mt-1 flex">
-                <input id="signature-input" type="hidden" name="signature" required>
-                <img
-                  id="signature-preview"
-                  class="border mt-1 border-gray-300 rounded-md"
-                  width="580"
-                  height="200"/>
+          </fieldset>
 
-                <div x-data="{modalIsOpen: false}">
-                  <button
-                    @click="modalIsOpen = true"
-                    type="button"
-                    class="cursor-pointer whitespace-nowrap rounded-md px-4 py-2 text-center text-sm font-medium tracking-wide transition hover:opacity-75 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black active:opacity-100 active:outline-offset-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"/>
-                    </svg>
-                  </button>
+          <fieldset class="grid grid-cols-1 gap-x-6 gap-y-8 mt-10">
+
+            <legend class="my-5 text-base/7 font-semibold text-gray-900 hidden">
+              {% trans "Handwritten signature" %}
+            </legend>
+
+            <label
+              for="signature-input"
+              class="block text-sm/6 font-medium text-gray-500 mb-1"
+            >{% trans "Signature" %}
+            </label>
+            <div class="mt-1 flex">
+              <input id="signature-input" type="hidden" name="signature" required>
+              <img
+                id="signature-preview"
+                class="border mt-1 border-gray-300 rounded-md"
+                width="580"
+                height="200"/>
+
+              <div x-data="{modalIsOpen: false}">
+
+                <button
+                  @click="modalIsOpen = true"
+                  type="button"
+                  class="cursor-pointer whitespace-nowrap rounded-md px-4 py-2 text-center text-sm font-medium tracking-wide transition hover:opacity-75 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black active:opacity-100 active:outline-offset-0">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"/>
+                  </svg>
+                </button>
+
+                <div
+                  x-cloak
+                  x-show="modalIsOpen"
+                  x-transition.opacity.duration.200ms
+                  x-trap.noscroll="modalIsOpen"
+                  @keydown.esc.window="modalIsOpen = false"
+                  @click.self="modalIsOpen = false"
+                  class="fixed inset-0 z-30 flex items-end justify-center bg-black/20 p-4 pb-8 backdrop-blur-md sm:items-center lg:p-8" role="dialog" aria-modal="true" aria-labelledby="defaultModalTitle">
+                  <!-- Modal Dialog -->
                   <div
-                    x-cloak
                     x-show="modalIsOpen"
-                    x-transition.opacity.duration.200ms
-                    x-trap.noscroll="modalIsOpen"
-                    @keydown.esc.window="modalIsOpen = false"
-                    @click.self="modalIsOpen = false"
-                    class="fixed inset-0 z-30 flex items-end justify-center bg-black/20 p-4 pb-8 backdrop-blur-md sm:items-center lg:p-8" role="dialog" aria-modal="true" aria-labelledby="defaultModalTitle">
-                    <!-- Modal Dialog -->
-                    <div
-                      x-show="modalIsOpen"
-                      x-transition:enter="transition ease-out duration-200 delay-100 motion-reduce:transition-opacity"
-                      x-transition:enter-start="opacity-0 scale-50"
-                      x-transition:enter-end="opacity-100 scale-100"
-                      class="flex max-w-lg flex-col gap-4 overflow-hidden rounded-md border border-neutral-300 bg-white text-neutral-600">
-                      {% include "form/signature.html" %}
-                    </div>
+                    x-transition:enter="transition ease-out duration-200 delay-100 motion-reduce:transition-opacity"
+                    x-transition:enter-start="opacity-0 scale-50"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    class="flex max-w-lg flex-col gap-4 overflow-hidden rounded-md border border-neutral-300 bg-white text-neutral-600">
+                    {% include "form/signature.html" %}
                   </div>
                 </div>
 
-                <div>
-                  <button
-                    @click="clearSignature"
-                    type="button"
-                    class="cursor-pointer whitespace-nowrap rounded-md px-4 py-2 text-center text-sm font-medium tracking-wide transition hover:opacity-75 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black active:opacity-100 active:outline-offset-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/>
-                    </svg>
-                  </button>
-                </div>
+              </div>
+
+              <div>
+                <button
+                  @click="clearSignature"
+                  type="button"
+                  class="cursor-pointer whitespace-nowrap rounded-md px-4 py-2 text-center text-sm font-medium tracking-wide transition hover:opacity-75 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black active:opacity-100 active:outline-offset-0">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/>
+                  </svg>
+                </button>
               </div>
             </div>
 
-          </div>
+          </fieldset>
 
-          <hr class="border-t border-gray-200 border-1">
+          <hr class="border border-gray-200 border-1">
 
+          <fieldset class="-mt-10 grid grid-cols-1 gap-x-6">
 
-          <div class="-mt-10 grid grid-cols-1 gap-x-6">
+            <legend class="my-5 text-base/7 font-semibold text-gray-900 hidden">
+              {% trans "Data sharing information" %}
+            </legend>
 
-            <div>
-              {% trans "I want my redirection to be valid for two years" as input_title %}
-              <div class="mt-8 flex gap-3">
-                {% include "components/input/checkbox.html" with input_id="two_years" input_title=input_title input_name="two_years" %}
-              </div>
+            {% trans "I want my redirection to be valid for two years" as input_title %}
+            <div class="mt-8 flex gap-3">
+              {% include "components/input/checkbox.html" with input_id="two_years" input_name="two_years" %}
             </div>
 
-            <div class="form-group">
-              {% trans "I agree that this NGO may contact me in the future with details about the projects implemented" as input_title %}
-              <div class="mt-8 flex gap-3">
-                {% include "components/input/checkbox.html" with input_id="agree_contact" input_title=input_title input_name="agree_contact" is_required=True %}
-              </div>
+            {% trans "I agree that this NGO may contact me in the future with details about the projects implemented" as input_title %}
+            <div class="mt-8 flex gap-3">
+              {% include "components/input/checkbox.html" with input_id="agree_contact" input_name="agree_contact" is_required=True %}
             </div>
 
-            <div class="form-group">
-              {% url 'terms' as terms_url %}
-              {% url 'policy' as policy_url %}
-              {% blocktranslate asvar input_title trimmed %}
-                I agree with
-                <a href="{{ terms_url }}">
-                  the Terms of the application
-                </a>.
-                <a href="{{ policy_url }}">
-                  the Privacy Policy
-                </a>.
-              {% endblocktranslate %}
-              <div class="mt-8 flex gap-3">
-                {% include "components/input/checkbox.html" with input_id="agree_terms" input_title=input_title input_name="agree_terms" is_required=True %}
-              </div>
+            {% url 'terms' as terms_url %}
+            {% url 'policy' as policy_url %}
+            {% blocktranslate asvar input_title trimmed %}
+              I agree with
+              <a href="{{ terms_url }}">
+                the Terms of the application
+              </a>.
+              <a href="{{ policy_url }}">
+                the Privacy Policy
+              </a>.
+            {% endblocktranslate %}
+            <div class="mt-8 flex gap-3">
+              {% include "components/input/checkbox.html" with input_id="agree_terms" input_name="agree_terms" is_required=True %}
             </div>
-          </div>
 
+          </fieldset>
+
+          <fieldset class="grid grid-cols-1 gap-x-6 gap-y-8 mt-10">
+
+            <legend class="my-5 text-base/7 font-semibold text-gray-900 hidden">
+              {% trans "Captcha" %}
+            </legend>
+
+            <div class="g-recaptcha" data-sitekey="{{ captcha_public_key }}" data-callback="onSubmit"></div>
+
+          </fieldset>
 
           <div class="flex float-end space-x-4 items-center text-center mt-4">
-            <button id="submit-button" type="submit"
-                    class="h-9 px-4 py-2 text-center outline outline-amber-300 bg-amber-300 text-sm shadow-sm rounded-full text-gray-900 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
+
+            <button
+              id="submit-button" type="submit"
+              class="h-9 px-4 py-2 text-center outline outline-amber-300 bg-amber-300 text-sm shadow-sm rounded-full text-gray-900 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
               {% trans "Send form" %}
             </button>
 
-            <button type="submit"
-                    class="h-9 px-4 py-2 text-center outline outline-amber-300 bg-white text-sm shadow-sm rounded-full text-gray-900 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
+            <button
+              type="submit"
+              class="h-9 px-4 py-2 text-center outline outline-amber-300 bg-white text-sm shadow-sm rounded-full text-gray-900 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
               {% trans "Continue without signing" %}
             </button>
 
           </div>
         </form>
+
       </div>
     </div>
 

@@ -1,5 +1,5 @@
-<div class="flex h-6 shrink-0 items-center">
-  <div class="group grid size-4 grid-cols-1">
+<div class="form-group flex h-6 shrink-0 items-center">
+  <div class="group grid size-4">
     <input
       id="{{ input_id }}"
       type="checkbox"
@@ -22,5 +22,6 @@
 <label for="{{ input_id }}">
   <span class="block text-sm/6 font-medium text-gray-500 text-sm/6font-medium">
     {{ input_title }}
+    {% if is_required %}<span class='text-red-600'>*</span>{% endif %}
   </span>
 </label>

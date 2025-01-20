@@ -1,59 +1,5 @@
 {% load i18n static %}
 
-<script src="https://cdn.jsdelivr.net/npm/signature_pad@5.0.4/dist/signature_pad.umd.min.js" async defer></script>
-
-<script>
-  function signaturePad() {
-    return {
-      signaturePad: null,
-      signatureInput: null,
-      signaturePreview: null,
-      canvas: null,
-      resizeCanvas() {
-        // Only run when the canvas is visible
-        if (this.canvas.offsetWidth === 0 || this.canvas.offsetHeight === 0) {
-          return;
-        }
-
-        const ratio = Math.max(window.devicePixelRatio || 1, 1);
-
-        // This part causes the canvas to be cleared
-        this.canvas.width = this.canvas.offsetWidth * ratio;
-        this.canvas.height = this.canvas.offsetHeight * ratio;
-
-        this.canvas.getContext("2d").scale(ratio, ratio);
-
-        this.signaturePad.clear();
-      },
-
-      init() {
-        this.canvas = document.getElementById('signatureCanvas');
-
-        this.signatureInput = document.getElementById("signature-input");
-        this.signaturePreview = document.getElementById("signature-preview");
-
-        this.signaturePad = new SignaturePad(this.canvas, {
-          backgroundColor: 'transparent'
-        });
-
-        this.signaturePad.fromDataURL(this.signatureInput.value);
-
-        // When the canvas offsetWidth or offsetHeight changes, resize the canvas
-        new ResizeObserver(() => this.resizeCanvas()).observe(this.canvas);
-      },
-      saveSignature() {
-        if (!this.signaturePad.isEmpty()) {
-          this.signatureInput.value = this.signaturePad.toDataURL('image/svg+xml');
-          this.signaturePreview.src = this.signaturePad.toDataURL('image/svg+xml');
-        }
-      },
-      clearSignature() {
-        this.signaturePad.clear();
-      }
-    };
-  }
-</script>
-
 
 <div x-data="signaturePad()" class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
   <!--
