@@ -3,7 +3,7 @@ local_tools/*
 !local_tools/requirements.txt
 
 
-static_extras/
+static_extras/**
 !static_extras/css/**
 !static_extras/js/**
 !static_extras/images/**

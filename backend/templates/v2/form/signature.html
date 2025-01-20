@@ -37,9 +37,7 @@
         });
 
         this.signaturePad.fromDataURL(this.signatureInput.value);
-
-        console.log(this.signatureInput.value);
-      
+              
         // When the canvas offsetWidth or offsetHeight changes, resize the canvas
         new ResizeObserver(() => this.resizeCanvas()).observe(this.canvas);
       },
