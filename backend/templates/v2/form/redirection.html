@@ -56,6 +56,8 @@
           errorClass: "border-red-600",
           successClass: "has-success"
         });
+
+        
       },
       onSubmit() {
         var valid = this.pristine.validate();
@@ -345,10 +347,10 @@
         </div>
       </div>
 
-      <div>
+      <div class="form-group">
         {% trans "I agree that this NGO may contact me in the future with details about the projects implemented" as input_title %}
         <div class="mt-8 flex gap-3">
-          {% include "components/input/checkbox.html" with input_id="agree_contact" input_title=input_title input_name="agree_contact" is_required=True%}
+          {% include "components/input/checkbox.html" with input_id="agree_contact" input_title=input_title input_name="agree_contact" is_required=True %}
         </div>
       </div>
 
