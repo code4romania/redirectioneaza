@@ -532,7 +532,7 @@ class RedirectionHandler(TemplateView):
         errors = {"fields": [], "server": False}
 
         try:
-            ngo = Ngo.objects.get(slug=ngo_url)
+            ngo = Ngo.active.get(slug=ngo_url)
         except Ngo.DoesNotExist:
             raise Http404
 
@@ -542,7 +542,7 @@ class RedirectionHandler(TemplateView):
         form = DonationForm(post)
         if not form.is_valid():
             errors["fields"] = form.errors
-            return self.return_error(request, ngo, errors, is_ajax)
+            return self.return_error(request, errors, is_ajax)
 
         signature: str = form.cleaned_data["signature"]
 
@@ -635,7 +635,7 @@ class RedirectionHandler(TemplateView):
         else:
             return redirect(url)
 
-    def return_error(self, request, ngo, errors, is_ajax):
+    def return_error(self, request, errors, is_ajax):
         if is_ajax:
             return JsonResponse(errors)
 
