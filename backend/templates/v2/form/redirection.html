@@ -214,7 +214,7 @@
 
             <div class="sm:col-span-2">
               {% trans "Phone number" as input_title %}
-              {% include "components/input/input.html" with input_id="phone_number" input_name="phone_number" input_type="tel" max_length=15 is_required=True input_autocomplete="tel-national" %}
+              {% include "components/input/input.html" with input_id="phone_number" input_name="phone_number" input_type="tel" max_length=15 is_required=False input_autocomplete="tel-national" %}
             </div>
 
           </fieldset>
@@ -239,27 +239,27 @@
 
             <div class="sm:col-span-1 sm:col-start-1">
               {% trans "Flat" as input_title %}
-              {% include "components/input/input.html" with input_id="flat" input_name="flat" max_length=10 is_required=True input_autocomplete="address-line2" %}
+              {% include "components/input/input.html" with input_id="flat" input_name="flat" max_length=10 is_required=False input_autocomplete="address-line2" %}
             </div>
 
             <div class="sm:col-span-1">
               {% trans "Entrance" as input_title %}
-              {% include "components/input/input.html" with input_id="entrance" input_name="entrance" max_length=10 is_required=True input_autocomplete="address-line3" %}
+              {% include "components/input/input.html" with input_id="entrance" input_name="entrance" max_length=10 is_required=False input_autocomplete="address-line3" %}
             </div>
 
             <div class="sm:col-span-1">
               {% trans "Floor" as input_title %}
-              {% include "components/input/input.html" with input_id="floor" input_name="floor" max_length=10 is_required=True input_autocomplete="address-line4" %}
+              {% include "components/input/input.html" with input_id="floor" input_name="floor" max_length=10 is_required=False input_autocomplete="address-line4" %}
             </div>
 
             <div class="sm:col-span-1">
               {% trans "Apartment" as input_title %}
-              {% include "components/input/input.html" with input_id="apartment" input_name="apartment" max_length=10 is_required=True input_autocomplete="address-line5" %}
+              {% include "components/input/input.html" with input_id="apartment" input_name="apartment" max_length=10 is_required=False input_autocomplete="address-line5" %}
             </div>
 
             <div class="sm:col-span-2 sm:col-start-1">
               {% trans "County" as input_title %}
-              {% include "components/input/county.html" with input_id="county" input_name="county" is_required=True %}
+              {% include "components/input/county.html" with input_id="county" input_name="county" is_required=True input_autocomplete="address-level1" %}
             </div>
 
             <div class="sm:col-span-2">

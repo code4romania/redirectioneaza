@@ -473,11 +473,16 @@ class RedirectionHandler(TemplateView):
             request.session.pop("has_cnp", None)
             # also we can use request.session.clear(), but it might delete the logged-in user's session
 
+        now = timezone.now()
+        can_donate = not now.date() > settings.DONATIONS_LIMIT
+
         context.update(
             {
                 "title": ngo.name,
                 "ngo": ngo,
+                "can_donate": can_donate,
                 "counties": settings.FORM_COUNTIES,
+                "is_admin": request.user.is_staff,
                 "limit": settings.DONATIONS_LIMIT,
                 "month_limit": settings.DONATIONS_LIMIT_MONTH_NAME,
                 "captcha_public_key": settings.RECAPTCHA_PUBLIC_KEY,
@@ -519,16 +524,6 @@ class RedirectionHandler(TemplateView):
                 context["ngo_website"] = None
         else:
             context["ngo_website"] = None
-
-        now = timezone.now()
-        can_donate = not now.date() > settings.DONATIONS_LIMIT
-
-        context.update(
-            {
-                "can_donate": can_donate,
-                "is_admin": request.user.is_staff,
-            }
-        )
 
         return context
 
@@ -644,18 +639,12 @@ class RedirectionHandler(TemplateView):
         if is_ajax:
             return JsonResponse(errors)
 
-        context = {
-            "title": ngo.name,
-            "ngo": ngo,
-            "counties": settings.FORM_COUNTIES,
-            "limit": settings.DONATIONS_LIMIT,
-            "errors": errors,
-        }
-
-        now = timezone.now()
-        can_donate = not now.date() > settings.DONATIONS_LIMIT
-
-        context["can_donate"] = can_donate
+        context = self.get_context_data()
+        context.update(
+            {
+                "errors": errors,
+            }
+        )
 
         for key in self.request.POST:
             context[key] = self.request.POST[key]
