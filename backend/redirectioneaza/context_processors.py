@@ -154,12 +154,24 @@ def headers(request: HttpRequest) -> Dict[str, Dict[str, List[Dict[str, str]]]]:
                 "url": reverse("logout"),
                 "style": "auth-normal",
             },
-            {
-                "title": _("My organization"),
-                "url": reverse("my-organization:presentation"),
-                "style": "auth-highlight",
-            },
         ]
+
+        if user.is_admin:
+            auth_menu_content.append(
+                {
+                    "title": _("Admin"),
+                    "url": reverse("admin:index"),
+                    "style": "auth-highlight",
+                }
+            )
+        else:
+            auth_menu_content.append(
+                {
+                    "title": _("My Organization"),
+                    "url": reverse("my-organization:dashboard"),
+                    "style": "auth-highlight",
+                }
+            )
 
     admin_header_menu = []
     if user.is_authenticated and user.ngo:
