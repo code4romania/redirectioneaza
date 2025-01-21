@@ -1276,10 +1276,8 @@ msgid "Upload an image"
 msgstr "Încarcă o imagine"
 
 #: templates/v2/form/confirmation.html:42
-#, fuzzy
-#| msgid "Continue without signing"
 msgid "Continue without signing?"
-msgstr "Continuă fără a semna"
+msgstr "Continui fără să semnezi?"
 
 #: templates/v2/form/confirmation.html:46
 msgid ""
@@ -1320,8 +1318,6 @@ msgstr ""
 "poștă sau email, sau îl vei depune direct la ANAF."
 
 #: templates/v2/form/redirection.html:184
-#, fuzzy
-#| msgid "Personal identification"
 msgid "Personal data"
 msgstr "Informații personale"
 
@@ -1351,14 +1347,12 @@ msgid "Flat"
 msgstr "Bloc"
 
 #: templates/v2/form/redirection.html:273
-#, fuzzy
-#| msgid "Add signature"
 msgid "Handwritten signature"
-msgstr "Adaugă semnătura"
+msgstr "Semnătură olografă"
 
 #: templates/v2/form/redirection.html:346
 msgid "Data sharing information"
-msgstr ""
+msgstr "Informații privind partajarea datelor"
 
 #: templates/v2/form/redirection.html:349
 msgid "I want my redirection to be valid for two years"
@@ -1383,13 +1377,11 @@ msgstr ""
 
 #: templates/v2/form/redirection.html:379
 msgid "Captcha"
-msgstr ""
+msgstr "Captcha"
 
 #: templates/v2/form/redirection.html:392
-#, fuzzy
-#| msgid "Download unsigned form"
 msgid "Send signed form"
-msgstr "Descarcă formular nesemnat"
+msgstr "Trimite formularul semnat"
 
 #: templates/v2/form/redirection.html:399
 msgid "Continue without signing"
