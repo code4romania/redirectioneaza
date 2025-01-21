@@ -189,32 +189,32 @@
 
             <div class="sm:col-span-2 sm:col-start-1">
               {% trans "Last name" as input_title %}
-              {% include "components/input/input.html" with input_id="l_name" input_name="l_name" input_type="text" max_length=100 is_required=True input_autocomplete="family-name" %}
+              {% include "components/input/input.html" with input_id="l_name" input_name="l_name" input_type="text" max_length=100 is_required=True input_autocomplete="family-name" field=redirection_form.l_name %}
             </div>
 
             <div class="sm:col-span-2">
               {% trans "First name" as input_title %}
-              {% include "components/input/input.html" with input_id="f_name" input_name="f_name" input_type="text" max_length=100 is_required=True input_autocomplete="given-name" %}
+              {% include "components/input/input.html" with input_id="f_name" input_name="f_name" input_type="text" max_length=100 is_required=True input_autocomplete="given-name" field=redirection_form.f_name %}
             </div>
 
             <div class="sm:col-span-1">
               {% trans "Father's initial" as input_title %}
-              {% include "components/input/input.html" with input_id="initial" input_name="initial" input_type="text" max_length=1 is_required=True %}
+              {% include "components/input/input.html" with input_id="initial" input_name="initial" input_type="text" max_length=1 is_required=True field=redirection_form.initial %}
             </div>
 
             <div class="sm:col-span-4 sm:col-start-1">
               {% trans "Personal identification number" as input_title %}
-              {% include "components/input/input.html" with input_id="cnp" input_name="cnp" input_type="text" max_length=13 is_required=True %}
+              {% include "components/input/input.html" with input_id="cnp" input_name="cnp" input_type="text" max_length=13 is_required=True field=redirection_form.cnp %}
             </div>
 
             <div class="sm:col-span-2 sm:col-start-1">
               {% trans "Email" as input_title %}
-              {% include "components/input/input.html" with input_id="email_address" input_name="email_address" input_type="email" max_length=254 is_required=True input_autocomplete="email" %}
+              {% include "components/input/input.html" with input_id="email_address" input_name="email_address" input_type="email" max_length=254 is_required=True input_autocomplete="email" field=redirection_form.email_address %}
             </div>
 
             <div class="sm:col-span-2">
               {% trans "Phone number" as input_title %}
-              {% include "components/input/input.html" with input_id="phone_number" input_name="phone_number" input_type="tel" max_length=15 is_required=False input_autocomplete="tel-national" %}
+              {% include "components/input/input.html" with input_id="phone_number" input_name="phone_number" input_type="tel" max_length=15 is_required=False input_autocomplete="tel-national" field=redirection_form.phone_number %}
             </div>
 
           </fieldset>
@@ -229,43 +229,43 @@
 
             <div class="sm:col-span-3 sm:col-start-1">
               {% trans "Street name" as input_title %}
-              {% include "components/input/input.html" with input_id="street_name" input_name="street_name" max_length=100 is_required=True input_autocomplete="address-line1" %}
+              {% include "components/input/input.html" with input_id="street_name" input_name="street_name" max_length=100 is_required=True input_autocomplete="address-line1" field=redirection_form.street_name %}
             </div>
 
             <div class="sm:col-span-1">
               {% trans "Number" as input_title %}
-              {% include "components/input/input.html" with input_id="street_number" input_name="street_number" max_length=10 is_required=True input_autocomplete="address-line1" %}
+              {% include "components/input/input.html" with input_id="street_number" input_name="street_number" max_length=10 is_required=True input_autocomplete="address-line1" field=redirection_form.street_number %}
             </div>
 
             <div class="sm:col-span-1 sm:col-start-1">
               {% trans "Flat" as input_title %}
-              {% include "components/input/input.html" with input_id="flat" input_name="flat" max_length=10 is_required=False input_autocomplete="address-line2" %}
+              {% include "components/input/input.html" with input_id="flat" input_name="flat" max_length=10 is_required=False input_autocomplete="address-line2" field=redirection_form.flat %}
             </div>
 
             <div class="sm:col-span-1">
               {% trans "Entrance" as input_title %}
-              {% include "components/input/input.html" with input_id="entrance" input_name="entrance" max_length=10 is_required=False input_autocomplete="address-line3" %}
+              {% include "components/input/input.html" with input_id="entrance" input_name="entrance" max_length=10 is_required=False input_autocomplete="address-line3" field=redirection_form.entrance %}
             </div>
 
             <div class="sm:col-span-1">
               {% trans "Floor" as input_title %}
-              {% include "components/input/input.html" with input_id="floor" input_name="floor" max_length=10 is_required=False input_autocomplete="address-line4" %}
+              {% include "components/input/input.html" with input_id="floor" input_name="floor" max_length=10 is_required=False input_autocomplete="address-line4" field=redirection_form.floor %}
             </div>
 
             <div class="sm:col-span-1">
               {% trans "Apartment" as input_title %}
-              {% include "components/input/input.html" with input_id="apartment" input_name="apartment" max_length=10 is_required=False input_autocomplete="address-line5" %}
+              {% include "components/input/input.html" with input_id="apartment" input_name="apartment" max_length=10 is_required=False input_autocomplete="address-line5" field=redirection_form.apartment %}
             </div>
 
             <div class="sm:col-span-2 sm:col-start-1">
               {% trans "County" as input_title %}
-              {% include "components/input/county.html" with input_id="county" input_name="county" is_required=True input_autocomplete="address-level1" %}
+              {% include "components/input/county.html" with input_id="county" input_name="county" is_required=True input_autocomplete="address-level1" field=redirection_form.county %}
             </div>
 
             <div class="sm:col-span-2">
               {% trans "Locality" as input_title %}
 
-              {% include "components/input/input.html" with input_id="locality" input_name="locality" max_length=10 is_required=True input_autocomplete="address-level2" %}
+              {% include "components/input/input.html" with input_id="locality" input_name="locality" max_length=10 is_required=True input_autocomplete="address-level2" field=redirection_form.locality %}
             </div>
 
           </fieldset>
@@ -354,12 +354,12 @@
 
             {% trans "I want my redirection to be valid for two years" as input_title %}
             <div class="mt-8 flex gap-3">
-              {% include "components/input/checkbox.html" with input_id="two_years" input_name="two_years" %}
+              {% include "components/input/checkbox.html" with input_id="two_years" input_name="two_years" field=redirection_form.two_years %}
             </div>
 
             {% trans "I agree that this NGO may contact me in the future with details about the projects implemented" as input_title %}
             <div class="mt-8 flex gap-3">
-              {% include "components/input/checkbox.html" with input_id="agree_contact" input_name="agree_contact" is_required=True %}
+              {% include "components/input/checkbox.html" with input_id="agree_contact" input_name="agree_contact" is_required=True field=redirection_form.agree_contact %}
             </div>
 
             {% url 'terms' as terms_url %}
@@ -374,7 +374,7 @@
               </a>.
             {% endblocktranslate %}
             <div class="mt-8 flex gap-3">
-              {% include "components/input/checkbox.html" with input_id="agree_terms" input_name="agree_terms" is_required=True %}
+              {% include "components/input/checkbox.html" with input_id="agree_terms" input_name="agree_terms" is_required=True field=redirection_form.agree_terms %}
             </div>
 
           </fieldset>
@@ -428,6 +428,11 @@
             </button>
 
           </div>
+
+        {% comment %}
+          TODO: add non-field errors to the form:
+          {{ redirection_form.non_field_errors }}
+        {% endcomment %}
 
         </form>
 

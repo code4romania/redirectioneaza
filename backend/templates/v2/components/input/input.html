@@ -10,9 +10,11 @@
         {% if max_length %}maxlength="{{ max_length }}"{% endif %}
         {% if input_autocomplete %}autocomplete="{{ input_autocomplete }}"{% endif %}
         {% if is_required %}required{% endif %}
-        {% if value %}value="{{ value }}"{% endif %}
+        value="{% if value %}{{ value }}{% elif field and field.value %}{{ field.value }}{% endif %}"
         {% if placeholder %}placeholder="{{ placeholder }}"{% endif %}
         {% if is_disabled %}disabled{% endif %}
+        {# TODO: Display the errors in a `data-pristine-required-message` property, if they exist #}
+        {% if field and field.errors %}data-pristine-required-message="{{ field.errors|join:", " }}"{% endif %}
         />
 
 {% endblock %}
