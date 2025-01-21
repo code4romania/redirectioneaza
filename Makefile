@@ -7,10 +7,10 @@ help:                                            ## Display a help message detai
 ## [Managing the project]
 ### Stopping the containers and dropping the databases
 stop-psql:                                       ## stops the psql dev project
-	docker compose -f docker-compose.psql.yml down -t 60
+	docker compose -f docker-compose.yml down -t 60
 
 drop-psql:                                       ## drops the psql dev project
-	docker compose -f docker-compose.psql.yml down -v -t 60
+	docker compose -f docker-compose.yml down -v -t 60
 
 stop-prod:                                       ## stops the prod project
 	docker compose -f docker-compose.prod.yml down -t 60
@@ -20,10 +20,10 @@ drop-prod:                                       ## drops the prod project
 
 ### Building & starting the containers
 up-psql:                                         ## run the project with psql
-	docker compose -f docker-compose.psql.yml up --build
+	docker compose -f docker-compose.yml up --build
 
 upd-psql:                                        ## run the project with psql in detached mode
-	docker compose -f docker-compose.psql.yml up -d --build
+	docker compose -f docker-compose.yml up -d --build
 
 up-prod:                                         ## run the project with psql in production
 	docker compose -f docker-compose.prod.yml up --build
@@ -118,7 +118,7 @@ requirements-update:                             ## run pip compile and rebuild 
 ## [Clean-up]
 clean-docker:                                    ## stop docker containers and remove orphaned images and volumes
 	docker compose down -t 60
-	docker compose -f docker-compose.psql.yml down -t 60
+	docker compose -f docker-compose.yml down -t 60
 	docker compose -f docker-compose.prod.yml down -t 60
 	docker system prune -f
 
