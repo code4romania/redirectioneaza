@@ -107,11 +107,23 @@
           this.signatureInput = document.getElementById("signature-input");
           this.signaturePreview = document.getElementById("signature-preview");
 
-          this.signaturePad = new SignaturePad(this.canvas, {
-            backgroundColor: 'transparent'
-          });
+          try {
+            this.signaturePad = new SignaturePad(this.canvas, {
+              backgroundColor: 'transparent'
+            });
+          } catch (e) {
+            if (e instanceof ReferenceError) {
+              // SignaturePad is not available yet so retry the init soon
+              setTimeout(() => this.init(), 1000);
+              return;
+            } else {
+              throw e;
+            }
+          }
 
-          this.signaturePad.fromDataURL(this.signatureInput.value);
+          if (this.signatureInput.value) {
+            this.signaturePad.fromDataURL(this.signatureInput.value);
+          }
 
           // When the canvas offsetWidth or offsetHeight changes, resize the canvas
           new ResizeObserver(() => this.resizeCanvas()).observe(this.canvas);
