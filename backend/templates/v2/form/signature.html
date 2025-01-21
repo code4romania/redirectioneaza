@@ -66,7 +66,7 @@
             id="signature-reset"
             type="button"
             data-action="reset"
-            @click="clearSignature"
+            @click="clearSignature()"
             class="w-full text-center outline outline-amber-300 bg-white sm:text-base text-sm sm:px-6 sm:py-2 px-2 py-1 shadow-sm rounded-full text-gray-900 hover:bg-amber-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
             {% trans "Reset" %}
           </button>
@@ -74,7 +74,7 @@
             id="signature-save"
             type="button"
             data-action="send"
-            @click="saveSignature"
+            @click="saveSignature()"
             x-on:click="signatureModalIsOpen=false"
             aria-label="Close"
             class="w-full text-center outline outline-amber-300 bg-amber-300 sm:text-base text-sm sm:px-6 sm:py-2 px-2 py-1 shadow-sm rounded-full text-gray-900 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">

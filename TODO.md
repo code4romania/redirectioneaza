@@ -27,7 +27,7 @@
   - [x] Add a button to close the modal @idormenco
   - [x] Checks need to be done before the button to open the modal is clicked or change the flow @idormenco
   - [x] Connect BE & FE for the donation form @tamarei
-  - [x] Why is `x-trap.inert.noscroll="modalIsOpen"` displaying as a warning?
+  - [x] Why is `x-trap.inert.noscroll="signatureModalIsOpen"` displaying as a warning?
   - [x] Figure out how to disable the signature script on other pages @idormenco
 
 
