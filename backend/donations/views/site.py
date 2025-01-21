@@ -161,5 +161,11 @@ class TermsHandler(BaseVisibleTemplateView):
 
 class HealthCheckHandler(TemplateView):
     def get(self, request, *args, **kwargs):
-        # return HttpResponse(str(request.headers))
-        return HttpResponse("OK")
+        response = {
+            "status": "OK",
+            "version": settings.VERSION,
+            "revision": settings.REVISION,
+            "environment": settings.ENVIRONMENT,
+        }
+
+        return HttpResponse(content=response, content_type="application/json")
