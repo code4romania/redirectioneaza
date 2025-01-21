@@ -541,8 +541,7 @@ class RedirectionHandler(TemplateView):
 
         form = DonationForm(post)
         if not form.is_valid():
-            errors["fields"] = form.errors
-            return self.return_error(request, errors, is_ajax)
+            return self.return_error(request, form, is_ajax, ngo_url=ngo_url)
 
         signature: str = form.cleaned_data["signature"]
 
@@ -635,16 +634,12 @@ class RedirectionHandler(TemplateView):
         else:
             return redirect(url)
 
-    def return_error(self, request, errors, is_ajax):
+    def return_error(self, request, form, is_ajax, ngo_url):
         if is_ajax:
-            return JsonResponse(errors)
+            return JsonResponse(form.errors)
 
-        context = self.get_context_data()
-        context.update(
-            {
-                "errors": errors,
-            }
-        )
+        context = self.get_context_data(ngo_url=ngo_url)
+        context.update({"redirection_form": form})
 
         for key in self.request.POST:
             context[key] = self.request.POST[key]
