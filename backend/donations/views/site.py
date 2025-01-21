@@ -1,3 +1,4 @@
+import json
 import random
 from datetime import datetime
 from typing import Dict, List, Union
@@ -168,4 +169,7 @@ class HealthCheckHandler(TemplateView):
             "environment": settings.ENVIRONMENT,
         }
 
-        return HttpResponse(content=response, content_type="application/json")
+        return HttpResponse(
+            content=json.dumps(response).encode("utf-8"),
+            content_type="application/json",
+        )
