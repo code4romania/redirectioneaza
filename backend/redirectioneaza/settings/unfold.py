@@ -84,7 +84,7 @@ SIDEBAR_NAVIGATION = [
         ],
     },
     {
-        "title": _("Django Q"),
+        "title": _("Background Tasks"),
         "items": [
             {
                 "title": _("Failed tasks"),
