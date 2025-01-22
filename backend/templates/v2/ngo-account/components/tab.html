@@ -4,7 +4,6 @@
   </p>
 {% else %}
   <a
-    @click="activeTab = '{{ target }}'"
     class="rounded-md px-3 py-2 text-base font-semibold text-gray-800 hover:text-amber-400 no-underline"
     :class="activeTab === '{{ target }}' ? {
     'bg-amber-200': true,

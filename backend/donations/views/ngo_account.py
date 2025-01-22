@@ -222,6 +222,8 @@ class NgoDetailsView(NgoBaseTemplateView):
             ngo.county = post.get("county", "").strip()
             ngo.active_region = post.get("active-region", "").strip()
 
+        ngo.is_accepting_forms = post.get("is_accepting_forms", "").strip() == "on"
+
         ngo.display_email = post.get("display-email", "").strip() == "on"
         ngo.display_phone = post.get("display-phone", "").strip() == "on"
 

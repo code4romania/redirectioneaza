@@ -2,10 +2,57 @@
 
 {% load i18n %}
 
-{% block content %}
 
-  <div>
+
+{% block content %}
+<script>
+  let ngoFormDataForm = function () {
+    return {
+      form: undefined,
+      pristine: undefined,
+      isFormSubmitting: false,
+      init() {
+        this.form = document.getElementById("ngo-form-data-form");
+
+        this.pristine = new Pristine(this.form, {
+          errorTextClass: "mt-2 text-sm text-red-600",
+          errorClass: "has-error",
+          successClass: "has-success"
+        });
+
+        this.form.addEventListener('submit', (e) => {
+          e.preventDefault();
+
+          this.isFormSubmitting = true;
+          var valid = this.pristine.validate();
+
+          if(valid){
+            this.form.submit();
+          }
+        });
+
+        // Event listener for the
+        // 'beforeunload' event
+        window.addEventListener('beforeunload', (event) => {
+          // Check if the form is being submitted
+          if (this.isFormSubmitting) {
+            return; // Allow navigation without showing the confirmation dialog
+          }
+          
+          if(hasChangedFields(this.pristine.fields.map(field => field.input))){
+            if(!confirm('Are you sure you want to leave?')){
+              event.preventDefault();
+            }
+          }
+        });
+      }
+    };
+  };
+
+  </script>
+  <div x-data="ngoFormDataForm()" x-init="init()">
     <form
+      id="ngo-form-data-form"
       method="post"
       enctype="multipart/form-data"
       action="{% url 'my-organization:forms' %}">
@@ -19,7 +66,7 @@
         <div class="p-4 grid grid-cols-1 gap-x-6 gap-y-8">
 
           {% trans "Organization URL" as input_title %}
-          {% include "components/input/input.html" with input_id="organization-slug" input_title=input_title input_type="text" input_name="organization-slug" is_required=True value=ngo.slug %}
+          {% include "components/input/input.html" with input_id="organization-slug" input_title=input_title input_type="text" input_name="organization-slug" is_required=True value=ngo.slug max_length=150 %}
 
           <hr class="w-full border-gray-400">
 
@@ -30,7 +77,7 @@
           {% include "components/input/textarea.html" with input_id="description" input_title=input_title input_type="textarea" input_name="description" is_required=True value=ngo.description %}
 
           {% trans "IBAN on form" as input_title %}
-          {% include "components/input/input.html" with input_id="iban" input_type="text" input_name="iban" placeholder="RO001234567812345678" is_required=True value=ngo.bank_account %}
+          {% include "components/input/input.html" with input_id="iban" input_type="text" input_name="iban" placeholder="RO001234567812345678" is_required=True value=ngo.bank_account max_length=100 %}
 
         </div>
       </fieldset>

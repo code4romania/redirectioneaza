@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-22 13:22+0200\n"
+"POT-Creation-Date: 2025-01-22 15:48+0200\n"
 "PO-Revision-Date: 2024-02-28 15:45+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -70,7 +70,7 @@ msgid "Activity"
 msgstr "Activity"
 
 #: donations/admin.py:152
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:39
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:56
 msgid "Logo"
 msgstr "Logo"
 
@@ -192,7 +192,7 @@ msgstr "Passwords do not match"
 
 #: donations/forms/redirection.py:10
 #: templates/v2/account/snippets/register-form.html:45
-#: templates/v2/form/redirection.html:191
+#: templates/v2/form/redirection.html:195
 #: templates/v2/ngo-account/settings/main.html:62
 #, fuzzy
 #| msgid "last name"
@@ -201,7 +201,7 @@ msgstr "last name"
 
 #: donations/forms/redirection.py:11
 #: templates/v2/account/snippets/register-form.html:31
-#: templates/v2/form/redirection.html:196
+#: templates/v2/form/redirection.html:200
 #: templates/v2/ngo-account/settings/main.html:57
 #, fuzzy
 #| msgid "first name"
@@ -214,7 +214,7 @@ msgstr "first name"
 msgid "Initial"
 msgstr "initial"
 
-#: donations/forms/redirection.py:15 templates/v2/form/redirection.html:211
+#: donations/forms/redirection.py:15 templates/v2/form/redirection.html:215
 #, fuzzy
 #| msgid "email"
 msgid "Email"
@@ -230,7 +230,7 @@ msgstr "phone"
 msgid "Street"
 msgstr "Street"
 
-#: donations/forms/redirection.py:19 templates/v2/form/redirection.html:236
+#: donations/forms/redirection.py:19 templates/v2/form/redirection.html:240
 msgid "Number"
 msgstr "Number"
 
@@ -238,26 +238,27 @@ msgstr "Number"
 msgid "Building"
 msgstr "Building"
 
-#: donations/forms/redirection.py:21 templates/v2/form/redirection.html:246
+#: donations/forms/redirection.py:21 templates/v2/form/redirection.html:250
 msgid "Entrance"
 msgstr "Entrance"
 
-#: donations/forms/redirection.py:22 templates/v2/form/redirection.html:251
+#: donations/forms/redirection.py:22 templates/v2/form/redirection.html:255
 msgid "Floor"
 msgstr "Floor"
 
-#: donations/forms/redirection.py:23 templates/v2/form/redirection.html:256
+#: donations/forms/redirection.py:23 templates/v2/form/redirection.html:260
 msgid "Apartment"
 msgstr "Apartment"
 
 #: donations/forms/redirection.py:25
 #: donations/views/dashboard/ngo_dashboard.py:56
-#: templates/v2/form/redirection.html:261
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:78
+#: templates/v2/form/redirection-header.html:43
+#: templates/v2/form/redirection.html:265
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:95
 msgid "County"
 msgstr "County"
 
-#: donations/forms/redirection.py:26 templates/v2/form/redirection.html:266
+#: donations/forms/redirection.py:26 templates/v2/form/redirection.html:270
 msgid "Locality"
 msgstr ""
 
@@ -277,7 +278,7 @@ msgstr "Contact"
 msgid "Agree terms"
 msgstr ""
 
-#: donations/forms/redirection.py:32 templates/v2/form/redirection.html:282
+#: donations/forms/redirection.py:32 templates/v2/form/redirection.html:286
 #, fuzzy
 #| msgid "Sign In"
 msgid "Signature"
@@ -428,7 +429,7 @@ msgid "slug"
 msgstr "slug"
 
 #: donations/models/ngos.py:93
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:29
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:46
 #: templates/v2/ngo-account/redirections/list-header.html:8
 msgid "Name"
 msgstr "Name"
@@ -1379,11 +1380,23 @@ msgstr ""
 msgid "Continue"
 msgstr ""
 
-#: templates/v2/form/redirection.html:155
+#: templates/v2/form/redirection-header.html:46
+#, fuzzy
+#| msgid "active region"
+msgid "Active region:"
+msgstr "active region"
+
+#: templates/v2/form/redirection-header.html:53
+#, fuzzy
+#| msgid "description"
+msgid "Description"
+msgstr "description"
+
+#: templates/v2/form/redirection.html:159
 msgid "Redirect easily and quickly"
 msgstr ""
 
-#: templates/v2/form/redirection.html:159
+#: templates/v2/form/redirection.html:163
 msgid ""
 "Since 2022, form 230 can be submitted online. Fill in the form with the data "
 "from your ID, sign it online, and it will be automatically sent to the "
@@ -1393,91 +1406,91 @@ msgid ""
 "submit it directly to ANAF."
 msgstr ""
 
-#: templates/v2/form/redirection.html:187
+#: templates/v2/form/redirection.html:191
 #, fuzzy
 #| msgid "description"
 msgid "Personal data"
 msgstr "description"
 
-#: templates/v2/form/redirection.html:201
+#: templates/v2/form/redirection.html:205
 #, fuzzy
 #| msgid "initial"
 msgid "Father's initial"
 msgstr "initial"
 
-#: templates/v2/form/redirection.html:206
+#: templates/v2/form/redirection.html:210
 msgid "Personal identification number"
 msgstr ""
 
-#: templates/v2/form/redirection.html:216
+#: templates/v2/form/redirection.html:220
 #: templates/v2/ngo-account/redirections/list-header.html:17
 #, fuzzy
 #| msgid "street number"
 msgid "Phone number"
 msgstr "street number"
 
-#: templates/v2/form/redirection.html:227
+#: templates/v2/form/redirection.html:231
 #, fuzzy
 #| msgid "address"
 msgid "Home address"
 msgstr "address"
 
-#: templates/v2/form/redirection.html:231
+#: templates/v2/form/redirection.html:235
 #, fuzzy
 #| msgid "street name"
 msgid "Street name"
 msgstr "street name"
 
-#: templates/v2/form/redirection.html:241
+#: templates/v2/form/redirection.html:245
 msgid "Flat"
 msgstr ""
 
-#: templates/v2/form/redirection.html:276
+#: templates/v2/form/redirection.html:280
 msgid "Handwritten signature"
 msgstr ""
 
-#: templates/v2/form/redirection.html:316
+#: templates/v2/form/redirection.html:320
 #, fuzzy
 #| msgid "Sign In"
 msgid "Signature modal"
 msgstr "Sign In"
 
-#: templates/v2/form/redirection.html:352
+#: templates/v2/form/redirection.html:356
 msgid "Data sharing information"
 msgstr ""
 
-#: templates/v2/form/redirection.html:355
+#: templates/v2/form/redirection.html:359
 msgid "I want my redirection to be valid for two years"
 msgstr ""
 
-#: templates/v2/form/redirection.html:360
+#: templates/v2/form/redirection.html:364
 msgid ""
 "I agree that this NGO may contact me in the future with details about the "
 "projects implemented"
 msgstr ""
 
-#: templates/v2/form/redirection.html:367
+#: templates/v2/form/redirection.html:371
 #, python-format
 msgid ""
 "I agree with <a href=\"%(terms_url)s\"> the Terms of the application </a>. "
 "<a href=\"%(policy_url)s\"> the Privacy Policy </a>."
 msgstr ""
 
-#: templates/v2/form/redirection.html:385
+#: templates/v2/form/redirection.html:389
 msgid "Captcha"
 msgstr ""
 
-#: templates/v2/form/redirection.html:403
+#: templates/v2/form/redirection.html:407
 msgid "Confirm sending without signature modal"
 msgstr ""
 
-#: templates/v2/form/redirection.html:419
+#: templates/v2/form/redirection.html:423
 #, fuzzy
 #| msgid "Sign In Error"
 msgid "Send signed form"
 msgstr "Sign In Error"
 
-#: templates/v2/form/redirection.html:427
+#: templates/v2/form/redirection.html:431
 #, fuzzy
 #| msgid "Login through NGO Hub"
 msgid "Continue without signing"
@@ -1671,43 +1684,53 @@ msgstr "description"
 msgid "IBAN on form"
 msgstr ""
 
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:34
-msgid "CUI/CIF"
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:27
+msgid "I want to receive the completed forms by email"
 msgstr ""
 
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:44
-#, fuzzy
-#| msgid "NGO Hub organization ID"
-msgid "Organization website"
-msgstr "NGO Hub organization ID"
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:32
+msgid ""
+"By selecting this option, I confirm that the NGO has an SPV account to "
+"submit the forms"
+msgstr ""
 
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:49
-#, fuzzy
-#| msgid "NGO Hub organization ID"
-msgid "Organization contact e-mail"
-msgstr "NGO Hub organization ID"
-
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:54
-msgid "Display e-mail in the profile"
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:51
+msgid "CUI/CIF"
 msgstr ""
 
 #: templates/v2/ngo-account/my-organization/ngo-presentation.html:61
 #, fuzzy
 #| msgid "NGO Hub organization ID"
-msgid "Organization contact phone"
+msgid "Organization website"
 msgstr "NGO Hub organization ID"
 
 #: templates/v2/ngo-account/my-organization/ngo-presentation.html:66
+#, fuzzy
+#| msgid "NGO Hub organization ID"
+msgid "Organization contact e-mail"
+msgstr "NGO Hub organization ID"
+
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:71
+msgid "Display e-mail in the profile"
+msgstr ""
+
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:78
+#, fuzzy
+#| msgid "NGO Hub organization ID"
+msgid "Organization contact phone"
+msgstr "NGO Hub organization ID"
+
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:83
 msgid "Display phone in the profile"
 msgstr ""
 
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:73
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:90
 #, fuzzy
 #| msgid "NGO Hub organization ID"
 msgid "Organization address"
 msgstr "NGO Hub organization ID"
 
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:83
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:100
 #, fuzzy
 #| msgid "active region"
 msgid "Active region"

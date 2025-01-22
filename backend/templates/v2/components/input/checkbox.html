@@ -1,27 +1,21 @@
-<div class="form-group flex h-6 shrink-0 items-center">
-  <div class="group grid size-4">
-    <input
-      id="{{ input_id }}"
-      type="checkbox"
-      name="{{ input_name }}"
-      {% if is_required %}required{% endif %}
-      {% if input_value == True %}checked{% endif %}
-      class="col-start-1 row-start-1 appearance-none rounded border border-gray-300 bg-white checked:border-amber-600 checked:bg-amber-600 indeterminate:border-amber-600 indeterminate:bg-amber-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600 disabled:border-gray-300 disabled:bg-gray-200 disabled:checked:bg-gray-100 forced-colors:appearance-auto aria-[invalid]:border-red-500 aria-[invalid]:hover:border-red-500 disabled:border-zinc-950/20 disabled:bg-zinc-950/5 disabled:text-zinc-950/50 disabled:cursor-not-allowed">
+<div class="form-group w-full">
+  <label for="{{ input_id }}" class="flex cursor-pointer items-center gap-2 text-sm font-medium text-neutral-600 [&:has(input:checked)]:text-neutral-900  [&:has(input:disabled)]:opacity-75 [&:has(input:disabled)]:cursor-not-allowed">
+    <div class="relative flex items-center">
+        <input 
+          id="{{ input_id }}"
+          name="{{ input_name }}"
+          type="checkbox" 
+          class="before:content[''] peer relative size-4 cursor-pointer appearance-none overflow-hidden rounded border border-neutral-300 bg-neutral-50 before:absolute before:inset-0 checked:border-black checked:before:bg-black focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-neutral-800 checked:focus:outline-black active:outline-offset-0 disabled:cursor-not-allowed"
+          {% if is_required %}required{% endif %}
+          {% if input_value == True %}checked{% endif %}
+          {% if is_disabled %}disabled{% endif %}
+          {% if input_value == True %}input-original-value="true"{%else%} input-original-value="false" {% endif %}
 
-    <svg
-      class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-[:disabled]:stroke-gray-950/25"
-      viewBox="0 0 14 14"
-      fill="none">
-      <path class="opacity-0 group-has-[:checked]:opacity-100" d="M3 8L6 11L11 3.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      <path class="opacity-0 group-has-[:indeterminate]:opacity-100" d="M3 7H11" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-
-  </div>
+        />
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor" fill="none" stroke-width="4" class="pointer-events-none invisible absolute left-1/2 top-1/2 size-3 -translate-x-1/2 -translate-y-1/2 text-neutral-100 peer-checked:visible">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/>
+        </svg>
+    </div>
+    <span>{{ input_title }}{% if is_required %}<span class='text-red-600'>*</span>{% endif %}</span>
+  </label>
 </div>
-
-<label for="{{ input_id }}">
-  <span class="block text-sm/6 font-medium text-gray-500 text-sm/6font-medium">
-    {{ input_title }}
-    {% if is_required %}<span class='text-red-600'>*</span>{% endif %}
-  </span>
-</label>
