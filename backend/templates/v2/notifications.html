@@ -11,7 +11,7 @@
             From: "opacity-100"
             To: "opacity-0"
         -->
-        <div x-data="{showNotification: true}" x-init="setTimeout(() => showNotification = false, 5000)" x-show="showNotification" class="pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg bg-white shadow-lg ring-1 ring-black/5">
+        <div x-data="{showNotification: true}" x-init="setTimeout(() => showNotification = false, 5000)" x-show="showNotification" x-transition:enter="transform ease-out duration-300 transition" x-transition:enter-start="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2" x-transition:enter-end="translate-y-0 opacity-100 sm:translate-x-0" x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg bg-white ring-1 shadow-lg ring-black/5">
         <div class="p-4">
             <div class="flex items-start">
             <div class="shrink-0">
@@ -35,7 +35,7 @@
         </div>
         </div>
 
-        <div x-data="{showNotification: true}" x-init="setTimeout(() => showNotification = false, 5000)" x-show="showNotification" class="pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg bg-white shadow-lg ring-1 ring-black/5">
+        <div x-data="{showNotification: true}" x-init="setTimeout(() => showNotification = false, 5000)" x-show="showNotification" x-show="showNotification" x-transition:enter="transform ease-out duration-300 transition" x-transition:enter-start="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2" x-transition:enter-end="translate-y-0 opacity-100 sm:translate-x-0" x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg bg-white ring-1 shadow-lg ring-black/5">
         <div class="p-4">
             <div class="flex items-start">
             <div class="shrink-0">
