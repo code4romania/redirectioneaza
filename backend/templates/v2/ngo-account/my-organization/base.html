@@ -3,7 +3,29 @@
 {% load i18n static %}
 
 {% block page_heading %}
+  <script>
 
+    function hasChangedFields(fieldsArray) {
+      return fieldsArray.some(function(field) {
+        let inputValue = undefined;
+        let originalValue = field.getAttribute('input-original-value');
+
+        if(field.type === 'checkbox'){
+          inputValue = field.checked;
+          originalValue = originalValue?.toLowerCase() === 'true';
+        } else {
+          inputValue = field.value;
+        }
+
+        // it is an empty field received from backend or new form
+        if((originalValue === undefined ||originalValue === null ) && inputValue === ''){
+          return false;
+        }
+
+        return inputValue !== originalValue
+      });
+    }
+  </script>
   <div
     x-data="{ activeTab: '{{ active_tab }}' }"
     class="max-w-none">

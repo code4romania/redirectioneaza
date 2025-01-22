@@ -8,8 +8,10 @@
     autocomplete="address-level1"
     {% if is_required %}required{% endif %}
     {% if value %}value="{{ value }}"{% endif %}
+    {% if value %}input-original-value="{{ value }}" {% endif %}
+
     {% if is_disabled %}disabled{% endif %}
-    class="relative block w-full appearance-none rounded-lg px-[calc(theme(spacing[3.5])-1px)] py-[calc(theme(spacing[2.5])-1px)] sm:px-[calc(theme(spacing[3])-1px)] sm:py-[calc(theme(spacing[1.5])-1px)] text-base/6 text-zinc-950 placeholder:text-zinc-500 sm:text-sm/6 border border-zinc-950/10 hover:border-zinc-950/20 bg-transparent focus:outline-none aria-[invalid]:border-red-500 aria-[invalid]:hover:border-red-500 disabled:border-zinc-950/20">
+    class="flex h-9 w-full rounded-md border border-gray-300 bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm aria-[invalid]:border-red-500 aria-[invalid]:hover:border-red-500">
 
     <option value="" class="select-placeholder">
       {{ input_title }}

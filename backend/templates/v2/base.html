@@ -69,6 +69,29 @@
 {% block scripts %}
 {% endblock %}
 
+{# Register error messages for Pristine #}
+<script type="text/javascript" src="{% static 'js/pristine.min.js' %}"></script>
+<script>
+  const errorMessages = {
+    required: "Acest câmp este obligatoriu",
+    email: "Acest câmp necesită o adresă de e-mail validă",
+    number: "Acest câmp necesită un număr",
+    integer: "Acest câmp necesită o valoare întreagă",
+    url: "Acest câmp necesită un URL valid",
+    tel: "Acest câmp necesită un număr de telefon valid",
+    maxlength: "Lungimea acestui câmp trebuie să fie < ${1}",
+    minlength: "Lungimea acestui câmp trebuie să fie > ${1}",
+    min: "Valoarea minimă pentru acest câmp este ${1}",
+    max: "Valoarea maximă pentru acest câmp este ${1}",
+    pattern: "Vă rugăm să respectați formatul solicitat",
+    equals: "Cele două câmpuri nu se potrivesc",
+    default: "Vă rugăm să introduceți o valoare corectă"
+  };
+
+  Pristine.addMessages('en', errorMessages);
+</script>
+
+
 {% block analytics %}
   {% if GOOGLE_ANALYTICS_ID %}
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ GOOGLE_ANALYTICS_ID }}"></script>

@@ -17,31 +17,6 @@
 
   <script src="https://www.google.com/recaptcha/api.js?hl=ro" async defer></script>
 
-  <script type="text/javascript" src="{% static 'js/pristine.min.js' %}"></script>
-
-  {# Register error messages for Pristine #}
-  <script>
-
-    const errorMessages = {
-      required: "Acest câmp este obligatoriu",
-      email: "Acest câmp necesită o adresă de e-mail validă",
-      number: "Acest câmp necesită un număr",
-      integer: "Acest câmp necesită o valoare întreagă",
-      url: "Acest câmp necesită un URL valid",
-      tel: "Acest câmp necesită un număr de telefon valid",
-      maxlength: "Lungimea acestui câmp trebuie să fie < ${1}",
-      minlength: "Lungimea acestui câmp trebuie să fie > ${1}",
-      min: "Valoarea minimă pentru acest câmp este ${1}",
-      max: "Valoarea maximă pentru acest câmp este ${1}",
-      pattern: "Vă rugăm să respectați formatul solicitat",
-      equals: "Cele două câmpuri nu se potrivesc",
-      default: "Vă rugăm să introduceți o valoare corectă"
-    };
-
-    Pristine.addMessages('en', errorMessages);
-    
-  </script>
-
   <script>
     let twoPercentForm = function () {
       return {
@@ -181,32 +156,32 @@
 
             <div class="sm:col-span-3 sm:col-start-1">
               {% trans "Street name" as input_title %}
-              {% include "components/input/input.html" with input_id="street_name" input_name="street_name" max_length=100 is_required=True input_autocomplete="address-line1" %}
+              {% include "components/input/input.html" with input_id="street_name" input_name="street_name" input_type="text" max_length=100 is_required=True input_autocomplete="address-line1" %}
             </div>
 
             <div class="sm:col-span-1">
               {% trans "Number" as input_title %}
-              {% include "components/input/input.html" with input_id="street_number" input_name="street_number" max_length=10 is_required=True input_autocomplete="address-line1" %}
+              {% include "components/input/input.html" with input_id="street_number" input_name="street_number" input_type="text" max_length=10 is_required=True input_autocomplete="address-line1" %}
             </div>
 
             <div class="sm:col-span-1 sm:col-start-1">
               {% trans "Flat" as input_title %}
-              {% include "components/input/input.html" with input_id="flat" input_name="flat" max_length=10 is_required=False input_autocomplete="address-line2" %}
+              {% include "components/input/input.html" with input_id="flat" input_name="flat" input_type="text" max_length=10 is_required=False input_autocomplete="address-line2" %}
             </div>
 
             <div class="sm:col-span-1">
               {% trans "Entrance" as input_title %}
-              {% include "components/input/input.html" with input_id="entrance" input_name="entrance" max_length=10 is_required=False input_autocomplete="address-line3" %}
+              {% include "components/input/input.html" with input_id="entrance" input_name="entrance" input_type="text" max_length=10 is_required=False input_autocomplete="address-line3" %}
             </div>
 
             <div class="sm:col-span-1">
               {% trans "Floor" as input_title %}
-              {% include "components/input/input.html" with input_id="floor" input_name="floor" max_length=10 is_required=False input_autocomplete="address-line4" %}
+              {% include "components/input/input.html" with input_id="floor" input_name="floor" input_type="text" max_length=10 is_required=False input_autocomplete="address-line4" %}
             </div>
 
             <div class="sm:col-span-1">
               {% trans "Apartment" as input_title %}
-              {% include "components/input/input.html" with input_id="apartment" input_name="apartment" max_length=10 is_required=False input_autocomplete="address-line5" %}
+              {% include "components/input/input.html" with input_id="apartment" input_name="apartment" input_type="text" max_length=10 is_required=False input_autocomplete="address-line5" %}
             </div>
 
             <div class="sm:col-span-2 sm:col-start-1">
@@ -217,7 +192,7 @@
             <div class="sm:col-span-2">
               {% trans "Locality" as input_title %}
 
-              {% include "components/input/input.html" with input_id="locality" input_name="locality" max_length=10 is_required=True input_autocomplete="address-level2" %}
+              {% include "components/input/input.html" with input_id="locality" input_name="locality" input_type="text" max_length=10 is_required=True input_autocomplete="address-level2" %}
             </div>
 
           </fieldset>

@@ -9,6 +9,8 @@
           {% if is_required %}required{% endif %}
           {% if input_value == True %}checked{% endif %}
           {% if is_disabled %}disabled{% endif %}
+          {% if input_value == True %}input-original-value="true"{%else%} input-original-value="false" {% endif %}
+
         />
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor" fill="none" stroke-width="4" class="pointer-events-none invisible absolute left-1/2 top-1/2 size-3 -translate-x-1/2 -translate-y-1/2 text-neutral-100 peer-checked:visible">
             <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/>
