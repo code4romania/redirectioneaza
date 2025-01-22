@@ -21,7 +21,7 @@
       </div>
       <div class="mt-4 flex text-sm/6 text-gray-600">
         <label
-          class="relative rounded-md bg-white font-semibold {% if is_disabled %} cursor-not-allowed {% else %} text-amber-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-amber-600 focus-within:ring-offset-2 cursor-pointer hover:text-amber-500 {% endif %}  ">
+          class="relative rounded-md bg-white font-semibold {% if is_disabled %} cursor-not-allowed {% else %} text-amber-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-amber-600 focus-within:ring-offset-2 cursor-pointer hover:text-amber-500 {% endif %}">
           <span>
             {% if is_disabled %}
               {% trans "Upload a logo in NGO Hub" %}
@@ -34,7 +34,7 @@
             name="file-upload"
             type="file"
             {% if is_disabled %}disabled{% endif %}
-            class="sr-only disabled:bg-gray-200">
+            class="sr-only disabled:border-zinc-950/20 disabled:bg-zinc-950/5 disabled:text-zinc-950/50 disabled:cursor-not-allowed">
         </label>
       </div>
 
