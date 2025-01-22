@@ -21,6 +21,7 @@ from ..models.jobs import Job
 from ..models.ngos import Ngo
 from .api import CheckNgoUrl
 from .base import BaseContextPropertiesMixin, BaseVisibleTemplateView
+from .common import get_ngo_archive_download_status
 
 UserModel = get_user_model()
 
@@ -384,6 +385,8 @@ class NgoRedirectionsView(NgoBaseListView):
                 "title": self.title,
             }
         )
+
+        context.update(get_ngo_archive_download_status(ngo))
 
         return context
 

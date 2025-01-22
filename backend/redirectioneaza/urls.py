@@ -42,8 +42,8 @@ from donations.views.admin import (
 )
 from donations.views.api import (
     CheckNgoUrl,
+    DownloadNgoForms,
     GetNgoForm,
-    GetNgoForms,
     GetUploadUrl,
     NgosApi,
     SearchNgosApi,
@@ -136,7 +136,7 @@ urlpatterns = (
         #
         path("api/ngo/upload-url/", GetUploadUrl.as_view(), name="api-ngo-upload-url"),
         path("api/ngo/form/<ngo_url>/", GetNgoForm.as_view(), name="api-ngo-form-url"),
-        path("api/ngo/forms/download/", GetNgoForms.as_view(), name="api-ngo-forms"),
+        path("api/ngo/forms/download/", DownloadNgoForms.as_view(), name="api-ngo-forms"),
         #
         path("api/search/", SearchNgosApi.as_view(), name="api-search-ngos"),
         # Cron routes
