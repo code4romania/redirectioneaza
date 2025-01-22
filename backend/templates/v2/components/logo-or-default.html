@@ -1,0 +1,12 @@
+{% load static %}
+
+<img
+  class="{% if logo_class %}{{ logo_class }}{% else %}object-contain w-full{% endif %}"
+
+  {% if ngo_logo %}
+  src="{{ ngo_logo.url }}"
+  {% else %}
+  src="{% static 'images/placeholder.png' %}"
+  {% endif %}
+
+  alt="{% if logo_alt %}{{ logo_alt }}{% endif %}">
