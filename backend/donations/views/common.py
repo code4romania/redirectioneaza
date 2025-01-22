@@ -66,7 +66,7 @@ def get_ngo_archive_download_status(ngo: Ngo):
 
 
 def get_is_over_donation_archival_limit() -> bool:
-    if timezone.now().date() > settings.DONATION_LIMIT + datetime.timedelta(
+    if timezone.now().date() > settings.DONATIONS_LIMIT + datetime.timedelta(
         days=settings.TIMEDELTA_DONATIONS_LIMIT_DOWNLOAD_DAYS
     ):
         return True
