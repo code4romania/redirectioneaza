@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-22 11:53+0200\n"
+"POT-Creation-Date: 2025-01-22 13:22+0200\n"
 "PO-Revision-Date: 2024-02-28 15:45+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -748,7 +748,8 @@ msgstr "The URL is already used"
 msgid "Organization settings"
 msgstr "NGO Hub organization ID"
 
-#: donations/views/ngo_account.py:370 redirectioneaza/context_processors.py:191
+#: donations/views/ngo_account.py:370 redirectioneaza/context_processors.py:177
+#: redirectioneaza/context_processors.py:213
 #: templates/v2/ngo-account/redirections/main.html:10
 #, fuzzy
 #| msgid "Options"
@@ -970,32 +971,34 @@ msgstr "Login through NGO Hub"
 msgid "Log in"
 msgstr ""
 
-#: redirectioneaza/context_processors.py:153
-msgid "Log out"
-msgstr ""
-
-#: redirectioneaza/context_processors.py:162
+#: redirectioneaza/context_processors.py:154
 msgid "Admin"
 msgstr ""
 
-#: redirectioneaza/context_processors.py:170
+#: redirectioneaza/context_processors.py:162
 #, fuzzy
 #| msgid "NGO Hub organization ID"
 msgid "My Organization"
 msgstr "NGO Hub organization ID"
 
-#: redirectioneaza/context_processors.py:185
+#: redirectioneaza/context_processors.py:171
+#: redirectioneaza/context_processors.py:207
 #: templates/v2/ngo-account/my-organization/base.html:12
 #, fuzzy
 #| msgid "NGO Hub organization ID"
 msgid "Organization Data"
 msgstr "NGO Hub organization ID"
 
-#: redirectioneaza/context_processors.py:197
+#: redirectioneaza/context_processors.py:183
+#: redirectioneaza/context_processors.py:219
 msgid "Archive History"
 msgstr ""
 
-#: redirectioneaza/context_processors.py:208
+#: redirectioneaza/context_processors.py:189
+msgid "Log out"
+msgstr ""
+
+#: redirectioneaza/context_processors.py:230
 msgid "Settings"
 msgstr ""
 

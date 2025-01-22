@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-22 11:53+0200\n"
+"POT-Creation-Date: 2025-01-22 13:22+0200\n"
 "PO-Revision-Date: 2024-03-07 11:27+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -563,17 +563,17 @@ msgstr "Verificare"
 #, python-format
 msgid "%(time)d hour"
 msgid_plural "%(time)d hours"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%(time)d oră"
+msgstr[1] "%(time)d ore"
+msgstr[2] "%(time)d de ore"
 
 #: donations/views/common.py:46
 #, python-format
 msgid "%(time)d minute"
 msgid_plural "%(time)d minutes"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%(time)d minut"
+msgstr[1] "%(time)d minute"
+msgstr[2] "%(time)d de minute"
 
 #: donations/views/dashboard/admin_dashboard.py:55
 msgid "Donations this year"
@@ -712,7 +712,8 @@ msgstr "URL-ul este deja folosit"
 msgid "Organization settings"
 msgstr "Setări organizație"
 
-#: donations/views/ngo_account.py:370 redirectioneaza/context_processors.py:191
+#: donations/views/ngo_account.py:370 redirectioneaza/context_processors.py:177
+#: redirectioneaza/context_processors.py:213
 #: templates/v2/ngo-account/redirections/main.html:10
 msgid "Redirections"
 msgstr "Redirecționări"
@@ -913,30 +914,30 @@ msgstr "Înregistrează ONG"
 msgid "Log in"
 msgstr "Autentificare"
 
-#: redirectioneaza/context_processors.py:153
-msgid "Log out"
-msgstr "Deconectare"
+#: redirectioneaza/context_processors.py:154
+msgid "Admin"
+msgstr "Admin"
 
 #: redirectioneaza/context_processors.py:162
-msgid "Admin"
-msgstr ""
-
-#: redirectioneaza/context_processors.py:170
-#, fuzzy
-#| msgid "My organization"
 msgid "My Organization"
 msgstr "Organizația mea"
 
-#: redirectioneaza/context_processors.py:185
+#: redirectioneaza/context_processors.py:171
+#: redirectioneaza/context_processors.py:207
 #: templates/v2/ngo-account/my-organization/base.html:12
 msgid "Organization Data"
 msgstr "Date organizație"
 
-#: redirectioneaza/context_processors.py:197
+#: redirectioneaza/context_processors.py:183
+#: redirectioneaza/context_processors.py:219
 msgid "Archive History"
 msgstr "Istoric arhive"
 
-#: redirectioneaza/context_processors.py:208
+#: redirectioneaza/context_processors.py:189
+msgid "Log out"
+msgstr "Deconectare"
+
+#: redirectioneaza/context_processors.py:230
 msgid "Settings"
 msgstr "Setări"
 
@@ -1086,8 +1087,7 @@ msgstr "Aplicația nu este activată"
 
 #: templates/v2/account/errors/login/app_missing.html:10
 msgid "The application is not activated for this user/organization."
-msgstr ""
-"Aplicația nu este activată pentru acest utilizator/această organizație."
+msgstr "Aplicația nu este activată pentru acest utilizator/această organizație."
 
 #: templates/v2/account/errors/login/app_missing.html:14
 msgid ""
@@ -1302,12 +1302,6 @@ msgid "Continue without signing?"
 msgstr "Continui fără să semnezi?"
 
 #: templates/v2/form/confirmation.html:39
-#, fuzzy
-#| msgid ""
-#| "If you continue without signing online, your form will be generated, and "
-#| "you will be able to download the PDF, but it will not reach the NGO. We "
-#| "rely on you to print, sign the form by hand, and send it to the NGO by "
-#| "post or email, or you will submit it to ANAF by yourself."
 msgid ""
 "If you continue without signing online, your form will be generated, and you "
 "will be able to download the PDF, but it will not reach the NGO. We rely on "
@@ -1321,11 +1315,11 @@ msgstr ""
 
 #: templates/v2/form/confirmation.html:55
 msgid "Back"
-msgstr ""
+msgstr "Înapoi"
 
 #: templates/v2/form/confirmation.html:64
 msgid "Continue"
-msgstr ""
+msgstr "Continuă"
 
 #: templates/v2/form/redirection.html:155
 msgid "Redirect easily and quickly"
@@ -1381,10 +1375,8 @@ msgid "Handwritten signature"
 msgstr "Semnătură olografă"
 
 #: templates/v2/form/redirection.html:316
-#, fuzzy
-#| msgid "Signature"
 msgid "Signature modal"
-msgstr "Semnătura"
+msgstr "Modal de semnătură"
 
 #: templates/v2/form/redirection.html:352
 msgid "Data sharing information"
@@ -1417,7 +1409,7 @@ msgstr "Captcha"
 
 #: templates/v2/form/redirection.html:403
 msgid "Confirm sending without signature modal"
-msgstr ""
+msgstr "Modal de confirmare trimitere fără de semnătură"
 
 #: templates/v2/form/redirection.html:419
 msgid "Send signed form"
@@ -1710,10 +1702,9 @@ msgid ""
 "depending on the number of donors, you can currently download one archive "
 "every %(period_between_retries)s."
 msgstr ""
-"Deoarece operația de descărcare a declarațiilor poate dura mai mult timp, "
-"în funcție de numărul de donatori, momentan puteți descărca o singură arhivă "
-"la fiecare %(period_between_retries)s."
-
+"Deoarece operația de descărcare a declarațiilor poate dura mai mult timp, în "
+"funcție de numărul de donatori, momentan puteți descărca o singură arhivă la "
+"fiecare %(period_between_retries)s."
 
 #: templates/v2/ngo-account/settings/main.html:15
 msgid ""
