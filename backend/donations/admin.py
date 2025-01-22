@@ -8,6 +8,7 @@ from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 from unfold.admin import ModelAdmin
+from unfold.decorators import action as unfold_action
 
 from redirectioneaza.common.admin import HasNgoFilter
 from users.models import User
@@ -183,7 +184,7 @@ class NgoAdmin(ModelAdmin):
             f'<a data-popup="yes" id="ngo_donor_list" class="related-widget-wrapper-link" href="{link_url}?ngo_id={obj.id}&_popup=1" target="_blank">{link_name}</a>'
         )
 
-    @admin.action(description=_("Generate donations archive"))
+    @unfold_action(description=_("Generate donations archive"))
     def generate_donations_archive(self, request, queryset: QuerySet[Ngo]):
         ngo_names: List[str] = []
 
@@ -208,7 +209,7 @@ class NgoAdmin(ModelAdmin):
 
         self.message_user(request, message)
 
-    @admin.action(description=_("Clean up registration numbers"))
+    @unfold_action(description=_("Clean up registration numbers"))
     def clean_registration_numbers(self, request, queryset: QuerySet[Ngo]):
         result = call_command("registration_numbers_cleanup")
 
@@ -217,14 +218,14 @@ class NgoAdmin(ModelAdmin):
         else:
             self.message_user(request, _("Registration numbers are clean."), level="SUCCESS")
 
-    @admin.action(description=_("Update from NGO Hub synchronously"))
+    @unfold_action(description=_("Update from NGO Hub synchronously"))
     def update_from_ngohub_sync(self, request, queryset: QuerySet[Ngo]):
         for ngo in queryset:
             update_organization(ngo.id, update_method="sync")
 
         self.message_user(request, _("NGOs updated from NGO Hub."))
 
-    @admin.action(description=_("Update from NGO Hub asynchronously"))
+    @unfold_action(description=_("Update from NGO Hub asynchronously"))
     def update_from_ngohub_async(self, request, queryset: QuerySet[Ngo]):
         for ngo in queryset:
             update_organization(ngo.id, update_method="async")
