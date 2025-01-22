@@ -11,7 +11,7 @@
             From: "opacity-100"
             To: "opacity-0"
         -->
-        <div x-data="{showNotification: true}" x-show="showNotification" class="pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg bg-white shadow-lg ring-1 ring-black/5">
+        <div x-data="{showNotification: true}" x-init="setTimeout(() => showNotification = false, 5000)" x-show="showNotification" class="pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg bg-white shadow-lg ring-1 ring-black/5">
         <div class="p-4">
             <div class="flex items-start">
             <div class="shrink-0">
@@ -35,7 +35,7 @@
         </div>
         </div>
 
-        <div x-data="{showNotification: true}" x-show="showNotification" class="pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg bg-white shadow-lg ring-1 ring-black/5">
+        <div x-data="{showNotification: true}" x-init="setTimeout(() => showNotification = false, 5000)" x-show="showNotification" class="pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg bg-white shadow-lg ring-1 ring-black/5">
         <div class="p-4">
             <div class="flex items-start">
             <div class="shrink-0">
