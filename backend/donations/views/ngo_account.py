@@ -21,6 +21,7 @@ from ..models.jobs import Job
 from ..models.ngos import Ngo
 from .api import CheckNgoUrl
 from .base import BaseContextPropertiesMixin, BaseVisibleTemplateView
+from .common import get_ngo_archive_download_status
 
 UserModel = get_user_model()
 
@@ -221,6 +222,8 @@ class NgoDetailsView(NgoBaseTemplateView):
             ngo.county = post.get("county", "").strip()
             ngo.active_region = post.get("active-region", "").strip()
 
+        ngo.is_accepting_forms = post.get("is_accepting_forms", "").strip() == "on"
+
         ngo.display_email = post.get("display-email", "").strip() == "on"
         ngo.display_phone = post.get("display-phone", "").strip() == "on"
 
@@ -384,6 +387,8 @@ class NgoRedirectionsView(NgoBaseListView):
                 "title": self.title,
             }
         )
+
+        context.update(get_ngo_archive_download_status(ngo))
 
         return context
 

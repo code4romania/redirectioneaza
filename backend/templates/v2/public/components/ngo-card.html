@@ -1,13 +1,7 @@
-{% load static %}
-
 <article class="relative flex flex-col items-center justify-start gap-6 pb-6 overflow-hidden bg-white border border-gray-200 drop-shadow rounded-3xl">
   <div class="w-full px-3 py-4 shrink-0">
     <div class="aspect-w-3 aspect-h-2">
-      {% if ngo.logo %}
-        <img class="object-contain w-full" src="{{ ngo.logo.url }}" alt="">
-      {% else %}
-        <img class="object-contain w-full" src="{% static 'images/placeholder.png' %}" alt="">
-      {% endif %}
+      {% include "components/logo-or-default.html" with ngo_logo=ngo.logo %}
     </div>
   </div>
 

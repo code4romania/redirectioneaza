@@ -14,95 +14,7 @@
       <div class="items-center hidden text-center xl:flex gap-x-6">
 
         {% for menu_item in header_content.main_menu %}
-          {% if menu_item.url %}
-
-            <a
-              class="text-gray-900 hover:text-cyan-600 active:text-cyan-700"
-              href="{{ menu_item.url }}">
-              {{ menu_item.title }}
-            </a>
-
-          {% elif menu_item.content %}
-
-            <div
-              x-data="{ itemOpen: false }"
-              x-on:click.outside="itemOpen = false"
-              class="relative text-left">
-              <button
-                type="button"
-                x-on:click="itemOpen = !itemOpen"
-                class="inline-flex items-center w-full text-gray-900 hover:text-cyan-600 active:text-cyan-700 gap-x-1">
-
-                      <span class="text-left ">
-                        {{ menu_item.title }}
-                      </span>
-
-                <svg class="size-5 shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
-                  <path
-                    fill-rule="evenodd"
-                    d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
-                    clip-rule="evenodd"></path>
-                </svg>
-              </button>
-
-              <div
-                x-cloak
-                x-show="itemOpen"
-                x-transition:enter="transition ease-out duration-200"
-                x-transition:enter-start="opacity-0 translate-y-1"
-                x-transition:enter-end="opacity-100 translate-y-0"
-                x-transition:leave="transition ease-in duration-150"
-                x-transition:leave-start="opacity-100 translate-y-0"
-                x-transition:leave-end="opacity-0 translate-y-1"
-                class="absolute z-10 flex w-screen px-4 mt-5 -translate-x-1/2 left-1/2 max-w-max">
-
-                <div class="flex-auto w-screen max-w-md overflow-hidden bg-white shadow-lg rounded-3xl text-sm/6 ring-1 ring-gray-900/5">
-                  {% if menu_item.subtitle %}
-                    <div class="w-full p-8 pb-4 text-slate-500">
-                      {{ menu_item.subtitle }}
-                    </div>
-                  {% endif %}
-
-                  <div class="p-4">
-
-                    {% for dropdown_item in menu_item.content %}
-
-                      <div class="relative flex p-3 rounded-lg group gap-x-4 hover:bg-gray-50">
-                        <img src="{% static 'images/icons/'|add:dropdown_item.icon|add:'.svg' %}" alt="icon" class="size-6 text-cyan-700"/>
-
-                        <div>
-                          <a href="{{ dropdown_item.url }}" class="font-semibold text-gray-900">
-                            {{ dropdown_item.title }}
-                            <span class="absolute inset-0"></span>
-                          </a>
-                          <p class="text-gray-600">{{ dropdown_item.subtitle }}</p>
-                        </div>
-                      </div>
-
-                    {% endfor %}
-
-                  </div>
-
-                  {% if menu_item.call_to_action %}
-
-                    <a href="{{ menu_item.call_to_action.url }}" class="flex py-3 font-semibold text-gray-900 gap-x-4 px-7 bg-gray-50 hover:bg-gray-100">
-                      <svg class="flex-none text-gray-400 size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
-                        <path
-                          fill-rule="evenodd"
-                          d="M2 10a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm6.39-2.908a.75.75 0 0 1 .766.027l3.5 2.25a.75.75 0 0 1 0 1.262l-3.5 2.25A.75.75 0 0 1 8 12.25v-4.5a.75.75 0 0 1 .39-.658Z"
-                          clip-rule="evenodd"></path>
-                      </svg>
-                      {{ menu_item.call_to_action.title }}
-                    </a>
-
-
-                  {% endif %}
-                </div>
-              </div>
-            </div>
-            <!-- END FLYOUT -->
-
-          {% endif %}
+          {% include "redirect/header/desktop-item.html" with item=menu_item %}
         {% endfor %}
 
       </div>
@@ -124,15 +36,7 @@
     <div class="items-center hidden text-center xl:flex gap-x-6">
       {% for auth_item in header_content.auth_menu %}
 
-        <a
-          {% if auth_item.style == "auth-highlight" %}
-            class="px-2 py-1 text-sm text-gray-900 rounded-full shadow-sm bg-amber-300 sm:text-base sm:px-6 sm:py-2 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
-          {% else %}
-            class="text-gray-900 hover:text-cyan-600 active:text-cyan-700"
-          {% endif %}
-            href="{{ auth_item.url }}">
-          {{ auth_item.title }}
-        </a>
+          {% include "redirect/header/desktop-item.html" with item=auth_item %}
 
       {% endfor %}
     </div>

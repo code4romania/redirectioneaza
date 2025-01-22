@@ -1,11 +1,12 @@
 from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
+from unfold.admin import ModelAdmin
 
 from frequent_questions.models import Question, Section
 
 
 @admin.register(Section)
-class SectionAdmin(ImportExportModelAdmin):
+class SectionAdmin(ImportExportModelAdmin, ModelAdmin):
     list_display = ("title", "order")
     list_editable = ("order",)
 
@@ -27,7 +28,7 @@ class SectionAdmin(ImportExportModelAdmin):
 
 
 @admin.register(Question)
-class QuestionAdmin(ImportExportModelAdmin):
+class QuestionAdmin(ImportExportModelAdmin, ModelAdmin):
     list_display = ("title", "section", "order")
     list_editable = ("order",)
 
