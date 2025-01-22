@@ -4,6 +4,7 @@ from urllib.parse import urlparse
 
 from django.conf import settings
 from django.core.files import File
+from django.contrib import messages
 from django.http import Http404, JsonResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
@@ -541,6 +542,7 @@ class RedirectionHandler(TemplateView):
 
         form = DonationForm(post)
         if not form.is_valid():
+            messages.error(request, _("There are some errors on the redirection form."))
             return self.return_error(request, form, is_ajax, ngo_url=ngo_url)
 
         signature: str = form.cleaned_data["signature"]
