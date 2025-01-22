@@ -123,6 +123,7 @@ class AdminNewNgoHandler(TemplateView):
         return render(request, self.template_name, context)
 
 
+# TODO: refactor this to use the same template as the my-org page
 class AdminNgoHandler(TemplateView):
     template_name = "admin2/ngo.html"
 
