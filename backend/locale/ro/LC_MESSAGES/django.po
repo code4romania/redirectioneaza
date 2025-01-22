@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-21 10:46+0200\n"
+"POT-Creation-Date: 2025-01-22 11:53+0200\n"
 "PO-Revision-Date: 2024-03-07 11:27+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -55,7 +55,7 @@ msgid "Has owner"
 msgstr "Are utilizator"
 
 #: donations/admin.py:133 donations/admin.py:178 donations/apps.py:8
-#: donations/views/dashboard/admin_dashboard.py:139
+#: donations/views/dashboard/admin_dashboard.py:142
 #: redirectioneaza/settings/unfold.py:24 redirectioneaza/settings/unfold.py:33
 msgid "Donations"
 msgstr "Donații"
@@ -194,14 +194,14 @@ msgstr "Parolele nu se potrivesc"
 
 #: donations/forms/redirection.py:10
 #: templates/v2/account/snippets/register-form.html:45
-#: templates/v2/form/redirection.html:188
+#: templates/v2/form/redirection.html:191
 #: templates/v2/ngo-account/settings/main.html:62
 msgid "Last name"
 msgstr "Nume"
 
 #: donations/forms/redirection.py:11
 #: templates/v2/account/snippets/register-form.html:31
-#: templates/v2/form/redirection.html:193
+#: templates/v2/form/redirection.html:196
 #: templates/v2/ngo-account/settings/main.html:57
 msgid "First name"
 msgstr "Prenume"
@@ -210,7 +210,7 @@ msgstr "Prenume"
 msgid "Initial"
 msgstr "Inițială"
 
-#: donations/forms/redirection.py:15 templates/v2/form/redirection.html:208
+#: donations/forms/redirection.py:15 templates/v2/form/redirection.html:211
 msgid "Email"
 msgstr "Email"
 
@@ -222,7 +222,7 @@ msgstr "Telefon"
 msgid "Street"
 msgstr "Strada"
 
-#: donations/forms/redirection.py:19 templates/v2/form/redirection.html:233
+#: donations/forms/redirection.py:19 templates/v2/form/redirection.html:236
 msgid "Number"
 msgstr "Număr"
 
@@ -230,26 +230,26 @@ msgstr "Număr"
 msgid "Building"
 msgstr "Bloc"
 
-#: donations/forms/redirection.py:21 templates/v2/form/redirection.html:243
+#: donations/forms/redirection.py:21 templates/v2/form/redirection.html:246
 msgid "Entrance"
 msgstr "Scara"
 
-#: donations/forms/redirection.py:22 templates/v2/form/redirection.html:248
+#: donations/forms/redirection.py:22 templates/v2/form/redirection.html:251
 msgid "Floor"
 msgstr "Etaj"
 
-#: donations/forms/redirection.py:23 templates/v2/form/redirection.html:253
+#: donations/forms/redirection.py:23 templates/v2/form/redirection.html:256
 msgid "Apartment"
 msgstr "Apartament"
 
 #: donations/forms/redirection.py:25
 #: donations/views/dashboard/ngo_dashboard.py:56
-#: templates/v2/form/redirection.html:258
+#: templates/v2/form/redirection.html:261
 #: templates/v2/ngo-account/my-organization/ngo-presentation.html:78
 msgid "County"
 msgstr "Județ"
 
-#: donations/forms/redirection.py:26 templates/v2/form/redirection.html:263
+#: donations/forms/redirection.py:26 templates/v2/form/redirection.html:266
 msgid "Locality"
 msgstr "Localitate"
 
@@ -265,7 +265,7 @@ msgstr "Acord contact"
 msgid "Agree terms"
 msgstr "Acord termeni"
 
-#: donations/forms/redirection.py:32 templates/v2/form/redirection.html:279
+#: donations/forms/redirection.py:32 templates/v2/form/redirection.html:282
 msgid "Signature"
 msgstr "Semnătura"
 
@@ -277,11 +277,11 @@ msgstr "salariu"
 msgid "pension"
 msgstr "pensie"
 
-#: donations/models/donors.py:56 donations/views/donations_download.py:168
+#: donations/models/donors.py:56 donations/views/donations_download.py:167
 msgid "last name"
 msgstr "nume"
 
-#: donations/models/donors.py:57 donations/views/donations_download.py:169
+#: donations/models/donors.py:57 donations/views/donations_download.py:168
 msgid "first name"
 msgstr "prenume"
 
@@ -289,16 +289,16 @@ msgstr "prenume"
 msgid "initials"
 msgstr "inițiale"
 
-#: donations/models/donors.py:60 donations/views/donations_download.py:171
+#: donations/models/donors.py:60 donations/views/donations_download.py:170
 msgid "CNP"
 msgstr "CNP"
 
-#: donations/models/donors.py:63 donations/views/donations_download.py:176
+#: donations/models/donors.py:63 donations/views/donations_download.py:175
 msgid "city"
 msgstr "oraș"
 
 #: donations/models/donors.py:71 donations/models/ngos.py:146
-#: donations/views/donations_download.py:175
+#: donations/views/donations_download.py:174
 msgid "county"
 msgstr "județ"
 
@@ -311,7 +311,7 @@ msgid "telephone"
 msgstr "telefon"
 
 #: donations/models/donors.py:82 donations/models/ngos.py:163
-#: donations/views/donations_download.py:174
+#: donations/views/donations_download.py:173
 msgid "email"
 msgstr "email"
 
@@ -339,7 +339,7 @@ msgstr "Dacă utilizatorul dorește să doneze pentru 2 ani"
 msgid "Geo IP"
 msgstr "Geo IP"
 
-#: donations/models/donors.py:110 donations/views/donations_download.py:184
+#: donations/models/donors.py:110 donations/views/donations_download.py:183
 msgid "filename"
 msgstr "nume fișier"
 
@@ -559,34 +559,50 @@ msgstr "Confirmare cont redirectioneaza.ro"
 msgid "Verification"
 msgstr "Verificare"
 
-#: donations/views/dashboard/admin_dashboard.py:52
+#: donations/views/common.py:40
+#, python-format
+msgid "%(time)d hour"
+msgid_plural "%(time)d hours"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: donations/views/common.py:46
+#, python-format
+msgid "%(time)d minute"
+msgid_plural "%(time)d minutes"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: donations/views/dashboard/admin_dashboard.py:55
 msgid "Donations this year"
 msgstr "Donații anul acesta"
 
-#: donations/views/dashboard/admin_dashboard.py:56
-#: donations/views/dashboard/admin_dashboard.py:63
-#: donations/views/dashboard/admin_dashboard.py:70
-#: donations/views/dashboard/admin_dashboard.py:78
-#: donations/views/dashboard/admin_dashboard.py:145
-#: donations/views/dashboard/admin_dashboard.py:155
-#: donations/views/dashboard/admin_dashboard.py:165
+#: donations/views/dashboard/admin_dashboard.py:59
+#: donations/views/dashboard/admin_dashboard.py:66
+#: donations/views/dashboard/admin_dashboard.py:73
+#: donations/views/dashboard/admin_dashboard.py:81
+#: donations/views/dashboard/admin_dashboard.py:148
+#: donations/views/dashboard/admin_dashboard.py:158
+#: donations/views/dashboard/admin_dashboard.py:168
 msgid "View all"
 msgstr "Vezi toate"
 
-#: donations/views/dashboard/admin_dashboard.py:60
+#: donations/views/dashboard/admin_dashboard.py:63
 msgid "Donations all-time"
 msgstr "Donații totale"
 
-#: donations/views/dashboard/admin_dashboard.py:66
-#: donations/views/dashboard/admin_dashboard.py:149
+#: donations/views/dashboard/admin_dashboard.py:69
+#: donations/views/dashboard/admin_dashboard.py:152
 msgid "NGOs registered"
 msgstr "ONG-uri înregistrate"
 
-#: donations/views/dashboard/admin_dashboard.py:74
+#: donations/views/dashboard/admin_dashboard.py:77
 msgid "NGOs from NGO Hub"
 msgstr "ONG-uri din NGO Hub"
 
-#: donations/views/dashboard/admin_dashboard.py:159
+#: donations/views/dashboard/admin_dashboard.py:162
 msgid "NGOs with forms"
 msgstr "ONG-uri cu formulare"
 
@@ -611,97 +627,97 @@ msgstr "Donații în %d"
 msgid "Documents ready for download"
 msgstr "Documentele sunt gata pentru descărcare"
 
-#: donations/views/donations_download.py:167
+#: donations/views/donations_download.py:166
 msgid "no."
 msgstr "nr. crt."
 
-#: donations/views/donations_download.py:170
+#: donations/views/donations_download.py:169
 msgid "initial"
 msgstr "inițială"
 
-#: donations/views/donations_download.py:172
+#: donations/views/donations_download.py:171
 msgid "duplicate"
 msgstr "duplicat"
 
-#: donations/views/donations_download.py:173
+#: donations/views/donations_download.py:172
 msgid "phone"
 msgstr "telefon"
 
-#: donations/views/donations_download.py:177
+#: donations/views/donations_download.py:176
 msgid "full address"
 msgstr "adresă completă"
 
-#: donations/views/donations_download.py:178
+#: donations/views/donations_download.py:177
 msgid "street name"
 msgstr "strada"
 
-#: donations/views/donations_download.py:179
+#: donations/views/donations_download.py:178
 msgid "street number"
 msgstr "număr"
 
-#: donations/views/donations_download.py:180
+#: donations/views/donations_download.py:179
 msgid "building"
 msgstr "bloc"
 
-#: donations/views/donations_download.py:181
+#: donations/views/donations_download.py:180
 msgid "entrance"
 msgstr "scara"
 
-#: donations/views/donations_download.py:182
+#: donations/views/donations_download.py:181
 msgid "floor"
 msgstr "etaj"
 
-#: donations/views/donations_download.py:183
+#: donations/views/donations_download.py:182
 msgid "apartment"
 msgstr "apartament"
 
-#: donations/views/donations_download.py:185
+#: donations/views/donations_download.py:184
 msgid "date"
 msgstr "data completării"
 
-#: donations/views/donations_download.py:186
+#: donations/views/donations_download.py:185
 msgid "duration"
 msgstr "perioadă"
 
-#: donations/views/ngo_account.py:33
+#: donations/views/ngo_account.py:34
 msgid "The IBAN number must have 24 characters"
 msgstr "IBAN-ul trebuie să aibă 24 de cifre"
 
-#: donations/views/ngo_account.py:36
+#: donations/views/ngo_account.py:37
 msgid "The IBAN number must contain only letters and digits"
 msgstr "IBAN-ul trebuie să conțină doar litere și cifre"
 
-#: donations/views/ngo_account.py:39
+#: donations/views/ngo_account.py:40
 msgid "The IBAN number must start with 'RO'"
 msgstr "IBAN-ul trebuie să înceapă cu 'RO'"
 
-#: donations/views/ngo_account.py:61
+#: donations/views/ngo_account.py:62
 msgid "Download archive"
 msgstr "Descarcă arhiva"
 
-#: donations/views/ngo_account.py:101 donations/views/ngo_account.py:144
+#: donations/views/ngo_account.py:102 donations/views/ngo_account.py:145
 msgid "Organization details"
 msgstr "Detalii organizație"
 
-#: donations/views/ngo_account.py:245
+#: donations/views/ngo_account.py:246
 msgid "Organization forms"
 msgstr "Formulare organizație"
 
-#: donations/views/ngo_account.py:297
+#: donations/views/ngo_account.py:298
 msgid "The URL is already used"
 msgstr "URL-ul este deja folosit"
 
-#: donations/views/ngo_account.py:325
+#: donations/views/ngo_account.py:326
 #: templates/v2/ngo-account/settings/main.html:10
 msgid "Organization settings"
 msgstr "Setări organizație"
 
-#: donations/views/ngo_account.py:369 redirectioneaza/context_processors.py:179
+#: donations/views/ngo_account.py:370 redirectioneaza/context_processors.py:191
 #: templates/v2/ngo-account/redirections/main.html:10
 msgid "Redirections"
 msgstr "Redirecționări"
 
-#: donations/views/ngo_account.py:419
+#: donations/views/ngo_account.py:422
 msgid "Archives history "
 msgstr "Istoric arhive"
 
@@ -709,46 +725,46 @@ msgstr "Istoric arhive"
 msgid "Successful redirection"
 msgstr "Redirecționare reușită"
 
-#: donations/views/redirections.py:608 donations/views/redirections.py:623
+#: donations/views/redirections.py:602 donations/views/redirections.py:617
 msgid "Formularul tău de redirecționare"
 msgstr "Formularul tău de redirecționare"
 
-#: donations/views/redirections.py:615
+#: donations/views/redirections.py:609
 msgid "Un nou formular de redirecționare"
 msgstr "Un nou formular de redirecționare"
 
-#: donations/views/site.py:37
+#: donations/views/site.py:38
 msgid "form filled in"
 msgid_plural "forms filled in"
 msgstr[0] "formular completat în"
 msgstr[1] "formulare completate în"
 msgstr[2] "de formulare completate în"
 
-#: donations/views/site.py:44
+#: donations/views/site.py:45
 msgid "organizations registered in the platform"
 msgstr "organizații înregistrate în platformă"
 
-#: donations/views/site.py:52
+#: donations/views/site.py:53
 msgid "redirected to NGOs through the platform"
 msgstr "redirecționați către ONG-uri prin redirectioneaza.ro"
 
-#: donations/views/site.py:53
+#: donations/views/site.py:54
 msgid "> €2 million"
 msgstr "> 2 milioane €"
 
-#: donations/views/site.py:106
+#: donations/views/site.py:107
 msgid "About redirectioneaza.ro"
 msgstr "Despre redirectioneaza.ro"
 
-#: donations/views/site.py:137 templates/v2/redirect/footer.html:179
+#: donations/views/site.py:138 templates/v2/redirect/footer.html:179
 msgid "Information notice"
 msgstr "Notă de informare"
 
-#: donations/views/site.py:148 templates/v2/redirect/footer.html:169
+#: donations/views/site.py:149 templates/v2/redirect/footer.html:169
 msgid "Privacy policy"
 msgstr "Politica de confidențialitate"
 
-#: donations/views/site.py:153 templates/v2/redirect/footer.html:174
+#: donations/views/site.py:154 templates/v2/redirect/footer.html:174
 msgid "Terms & conditions"
 msgstr "Termeni și condiții"
 
@@ -901,20 +917,26 @@ msgstr "Autentificare"
 msgid "Log out"
 msgstr "Deconectare"
 
-#: redirectioneaza/context_processors.py:158
-msgid "My organization"
+#: redirectioneaza/context_processors.py:162
+msgid "Admin"
+msgstr ""
+
+#: redirectioneaza/context_processors.py:170
+#, fuzzy
+#| msgid "My organization"
+msgid "My Organization"
 msgstr "Organizația mea"
 
-#: redirectioneaza/context_processors.py:173
+#: redirectioneaza/context_processors.py:185
 #: templates/v2/ngo-account/my-organization/base.html:12
 msgid "Organization Data"
 msgstr "Date organizație"
 
-#: redirectioneaza/context_processors.py:185
+#: redirectioneaza/context_processors.py:197
 msgid "Archive History"
 msgstr "Istoric arhive"
 
-#: redirectioneaza/context_processors.py:196
+#: redirectioneaza/context_processors.py:208
 msgid "Settings"
 msgstr "Setări"
 
@@ -1275,33 +1297,41 @@ msgstr "Încarcă un logo în NGO Hub"
 msgid "Upload an image"
 msgstr "Încarcă o imagine"
 
-#: templates/v2/form/confirmation.html:42
+#: templates/v2/form/confirmation.html:35
 msgid "Continue without signing?"
 msgstr "Continui fără să semnezi?"
 
-#: templates/v2/form/confirmation.html:46
+#: templates/v2/form/confirmation.html:39
+#, fuzzy
+#| msgid ""
+#| "If you continue without signing online, your form will be generated, and "
+#| "you will be able to download the PDF, but it will not reach the NGO. We "
+#| "rely on you to print, sign the form by hand, and send it to the NGO by "
+#| "post or email, or you will submit it to ANAF by yourself."
 msgid ""
 "If you continue without signing online, your form will be generated, and you "
 "will be able to download the PDF, but it will not reach the NGO. We rely on "
 "you to print, sign the form by hand, and send it to the NGO by post or "
-"email, or you will submit it to ANAF by yourself."
+"email, or you will submit it independently to ANAF."
 msgstr ""
-"Dacă mergi mai departe fără să semnezi online, formularul tău va fi generat și vei putea să descarci PDF-ul, însă acesta nu va ajunge la ONG. "
-"Ne bazăm pe tine că vei imprima, semna formularul de mână și îl vei trimite către ONG prin poștă sau email, sau îl vei depune singur la ANAF."
+"Dacă mergi mai departe fără să semnezi online, formularul tău va fi generat "
+"și vei putea să descarci PDF-ul, însă acesta nu va ajunge la ONG. Ne bazăm "
+"pe tine că vei imprima, semna formularul de mână și îl vei trimite către ONG "
+"prin poștă sau email, sau îl vei depune singur la ANAF."
 
-#: templates/v2/form/confirmation.html:62 templates/v2/form/signature.html:63
-msgid "Reset"
-msgstr "Resetează"
+#: templates/v2/form/confirmation.html:55
+msgid "Back"
+msgstr ""
 
-#: templates/v2/form/confirmation.html:72 templates/v2/form/signature.html:73
-msgid "Ok"
-msgstr "Ok"
+#: templates/v2/form/confirmation.html:64
+msgid "Continue"
+msgstr ""
 
-#: templates/v2/form/redirection.html:153
+#: templates/v2/form/redirection.html:155
 msgid "Redirect easily and quickly"
 msgstr "Redirecționează simplu și rapid"
 
-#: templates/v2/form/redirection.html:157
+#: templates/v2/form/redirection.html:159
 msgid ""
 "Since 2022, form 230 can be submitted online. Fill in the form with the data "
 "from your ID, sign it online, and it will be automatically sent to the "
@@ -1317,48 +1347,54 @@ msgstr ""
 "că vei imprima, semna formularul de mână și îl vei trimite către ONG prin "
 "poștă sau email, sau îl vei depune direct la ANAF."
 
-#: templates/v2/form/redirection.html:184
+#: templates/v2/form/redirection.html:187
 msgid "Personal data"
 msgstr "Informații personale"
 
-#: templates/v2/form/redirection.html:198
+#: templates/v2/form/redirection.html:201
 msgid "Father's initial"
 msgstr "Inițiala tatălui"
 
-#: templates/v2/form/redirection.html:203
+#: templates/v2/form/redirection.html:206
 msgid "Personal identification number"
 msgstr "CNP"
 
-#: templates/v2/form/redirection.html:213
+#: templates/v2/form/redirection.html:216
 #: templates/v2/ngo-account/redirections/list-header.html:17
 msgid "Phone number"
 msgstr "Număr de telefon"
 
-#: templates/v2/form/redirection.html:224
+#: templates/v2/form/redirection.html:227
 msgid "Home address"
 msgstr "Adresă de domiciliu"
 
-#: templates/v2/form/redirection.html:228
+#: templates/v2/form/redirection.html:231
 msgid "Street name"
 msgstr "Stradă"
 
-#: templates/v2/form/redirection.html:238
+#: templates/v2/form/redirection.html:241
 msgid "Flat"
 msgstr "Bloc"
 
-#: templates/v2/form/redirection.html:273
+#: templates/v2/form/redirection.html:276
 msgid "Handwritten signature"
 msgstr "Semnătură olografă"
 
-#: templates/v2/form/redirection.html:346
+#: templates/v2/form/redirection.html:316
+#, fuzzy
+#| msgid "Signature"
+msgid "Signature modal"
+msgstr "Semnătura"
+
+#: templates/v2/form/redirection.html:352
 msgid "Data sharing information"
 msgstr "Informații privind partajarea datelor"
 
-#: templates/v2/form/redirection.html:349
+#: templates/v2/form/redirection.html:355
 msgid "I want my redirection to be valid for two years"
 msgstr "Doresc ca redirecționarea să se realizeze pe o perioadă de 2 ani"
 
-#: templates/v2/form/redirection.html:354
+#: templates/v2/form/redirection.html:360
 msgid ""
 "I agree that this NGO may contact me in the future with details about the "
 "projects implemented"
@@ -1366,7 +1402,7 @@ msgstr ""
 "Sunt de acord ca acest ONG să mă contacteze pe viitor cu detalii despre "
 "proiectele implementate"
 
-#: templates/v2/form/redirection.html:361
+#: templates/v2/form/redirection.html:367
 #, python-format
 msgid ""
 "I agree with <a href=\"%(terms_url)s\"> the Terms of the application </a>. "
@@ -1375,25 +1411,37 @@ msgstr ""
 "Sunt de acord cu <a href=\"%(terms_url)s\"> Termenii aplicației</a> și cu <a "
 "href=\"%(policy_url)s\">Politica de confidențialitate</a>."
 
-#: templates/v2/form/redirection.html:379
+#: templates/v2/form/redirection.html:385
 msgid "Captcha"
 msgstr "Captcha"
 
-#: templates/v2/form/redirection.html:392
+#: templates/v2/form/redirection.html:403
+msgid "Confirm sending without signature modal"
+msgstr ""
+
+#: templates/v2/form/redirection.html:419
 msgid "Send signed form"
 msgstr "Trimite formularul semnat"
 
-#: templates/v2/form/redirection.html:399
+#: templates/v2/form/redirection.html:427
 msgid "Continue without signing"
 msgstr "Continuă fără a semna"
 
-#: templates/v2/form/signature.html:42
+#: templates/v2/form/signature.html:50
 msgid "Add signature"
 msgstr "Adaugă semnătura"
 
-#: templates/v2/form/signature.html:46
+#: templates/v2/form/signature.html:54
 msgid "Draw your signature in the canvas below."
 msgstr "Desenează semnătura în câmpul de mai jos."
+
+#: templates/v2/form/signature.html:71
+msgid "Reset"
+msgstr "Resetează"
+
+#: templates/v2/form/signature.html:81
+msgid "Ok"
+msgstr "Ok"
 
 #: templates/v2/form/success.html:14
 msgid "An image saying \"Thank you\" for your redirection"
@@ -1651,9 +1699,21 @@ msgstr[0] "%(counter)s formular de redirecționare"
 msgstr[1] "%(counter)s formulare de redirecționare"
 msgstr[2] "%(counter)s de formulare de redirecționare"
 
-#: templates/v2/ngo-account/redirections/main.html:57
+#: templates/v2/ngo-account/redirections/main.html:61
 msgid "Generate ANAF Archive"
 msgstr "Generează arhiva ANAF"
+
+#: templates/v2/ngo-account/redirections/main.html:66
+#, python-format
+msgid ""
+"Because the download operation of the redirections can take longer, "
+"depending on the number of donors, you can currently download one archive "
+"every %(period_between_retries)s."
+msgstr ""
+"Deoarece operația de descărcare a declarațiilor poate dura mai mult timp, "
+"în funcție de numărul de donatori, momentan puteți descărca o singură arhivă "
+"la fiecare %(period_between_retries)s."
+
 
 #: templates/v2/ngo-account/settings/main.html:15
 msgid ""

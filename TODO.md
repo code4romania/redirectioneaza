@@ -81,6 +81,7 @@
 
 ### Issues
 
+  - [ ] Prettify the "limit between donations' download" message (is active if `{% if last_job_was_recent %}` is true)
   - [ ] Django template: the `nr. crt./#` column from `list-header.html` & `list-items.html` should be calculated properly
   ~~The pagination doesn't show up properly (it should be right-aligned)~~  (fixed because we have the "items/page" element)
   - [x] Make the generate archive button work
