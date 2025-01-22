@@ -20,6 +20,27 @@
         <fieldset>
           <div class="p-4 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
 
+            <div class="grid sm:col-span-6 sm:col-start-1 gap-6">
+              <div class="grid-rows-2">
+
+                <div class="mt-8 flex gap-3">
+                  {% trans "I want to receive the completed forms by email" as input_title %}
+                  {% include "components/input/checkbox.html" with input_id="is_accepting_forms" input_title=input_title input_name="is_accepting_forms" input_value=ngo.is_accepting_forms %}
+                </div>
+
+                <p class="text-xs text-gray-500 pt-2">
+                  {% trans "By selecting this option, I confirm that the NGO has an SPV account to submit the forms" %}
+                </p>
+
+                <p class="text-xs text-gray-500 pt-2">
+                  {% trans "
+                </p>
+
+              </div>
+            </div>
+
+            <hr class="w-full sm:col-span-6 border-gray-400">
+
             {% comment %}
               TODO: Ideally, this should be two rows on the first column and one on the second, but the grid system is not allowing it.
             {% endcomment %}
