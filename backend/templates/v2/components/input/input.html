@@ -15,9 +15,8 @@
         value="{% if value %}{{ value }}{% elif field and field.value %}{{ field.value }}{% endif %}"
         {% if placeholder %}placeholder="{{ placeholder }}"{% endif %}
         {% if is_disabled %}disabled{% endif %}
-        {# TODO: Display the errors in a `data-pristine-required-message` property, if they exist #}
-        {% if field and field.errors %}data-pristine-required-message="{{ field.errors|join:", " }}"{% endif %}
         {% if value %}input-original-value="{{ value }}"{% endif %}
         />
-
+        
+        {% if field and field.errors %} <div class="pristine-error mt-2 text-sm text-red-600" style="" id="error-{{ input_id }}" role="alert">{{ field.errors|join:", " }}</div>{% endif %}
 {% endblock %}
