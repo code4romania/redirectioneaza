@@ -61,6 +61,10 @@
   </main>
 {% endblock %}
 
+{% block notification_container %}
+  {% include "notification_messages.html" %}
+{% endblock %}
+
 {% block footer %}
   {% include "redirect/footer.html" %}
 {% endblock %}
