@@ -16,7 +16,8 @@
         {% if placeholder %}placeholder="{{ placeholder }}"{% endif %}
         {% if is_disabled %}disabled{% endif %}
         {% if value %}input-original-value="{{ value }}"{% endif %}
+        {% if data_pristine_equals %}data-pristine-equals="{{data_pristine_equals}}"{% endif %}
         />
         
-        {% if field and field.errors %} <div class="pristine-error mt-2 text-sm text-red-600" style="" id="error-{{ input_id }}" role="alert">{{ field.errors|join:", " }}</div>{% endif %}
+        {% if field and field.errors %} <div class="pristine-error mt-2 text-sm text-red-600" style="" id="error-{{ input_id }}" role="alert">{{ field.errors }}</div>{% endif %}
 {% endblock %}

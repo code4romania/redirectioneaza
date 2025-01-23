@@ -13,9 +13,7 @@ let ngoPresentationForm = function() {
             this.form = document.getElementById("ngo-presentation-form");
 
             this.pristine = new Pristine(this.form, {
-                errorTextClass: "mt-2 text-sm text-red-600",
-                errorClass: "has-error",
-                successClass: "has-success"
+                errorTextClass: "mt-2 text-sm text-red-600"
             });
 
             this.form.addEventListener('submit', (e) => {

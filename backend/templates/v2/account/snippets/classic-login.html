@@ -3,7 +3,35 @@
 {% load socialaccount %}
 {% load static %}
 
-<form id='login-form' action="/login/" role="form" method="post">
+  <script>
+    let loginForm = function () {
+      return {
+        form: undefined,
+        pristine: undefined,
+        init() {
+          this.form = document.getElementById("login-form");
+
+          this.pristine = new Pristine(this.form, {
+            errorTextClass: "mt-2 text-sm text-red-600",
+          });
+
+         
+        this.form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          var valid = this.pristine.validate();
+          this.isFormSubmitting = true;
+
+          if (valid) {
+              this.form.submit();
+          }
+      });
+        }
+      };
+    };
+
+  </script>
+
+<form id='login-form' action="/login/" role="form" method="post" x-data="loginForm()" x-init="init()">
   <div class="text-center">
     <header class="flex flex-col items-center justify-center">
       <img src="{% static 'images/logo-smaller.png' %}" alt="Redirectioneaza logo" class="w-auto h-24 mb-6"/>
@@ -31,11 +59,12 @@
 
   <div class="overflow-hidden bg-white rounded-lg drop-shadow ring-1 ring-gray-200 max-w-[448px] mx-auto">
     <div class="grid gap-6 px-10 py-8">
-      {% include "account/components/email-input.html" with max_length=320 %}
+      {% trans "Email address" as email_label %} 
+      {% include "account/components/email-input.html" with input_title=email_label input_name="email" %}
 
       <div>
         {% trans "Password" as password_label %}
-        {% include "account/components/password-input.html" with field_label=password_label input_name="password" max_length=150 %}
+        {% include "account/components/password-input.html" with input_title=password_label input_name="password" max_length=150 %}
 
         <div class="flex items-center justify-end mt-4">
           <a href="{% url 'forgot' %}" class="text-sm/6 text-cyan-700">Ți-ai uitat parola?</a>

@@ -231,15 +231,6 @@
         <div class="g-recaptcha" data-sitekey="{{ captcha_public_key }}" data-size="invisible" data-callback="onSubmit"></div>
       </div>
 
-      <div id="invalid-form-alert" class="row hidden">
-        <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
-          <div class="alert alert-dismissible alert-danger">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            <strong>Oops! </strong><span>Se pare că formularul conține câmpuri invalide.</span>
-          </div>
-        </div>
-      </div>
-
       {% if not errors and ngo.account and ngo.cif %}
         <div class="row donation-note">
           {# info about saved data #}
