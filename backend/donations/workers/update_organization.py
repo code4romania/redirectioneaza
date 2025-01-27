@@ -13,6 +13,7 @@ from ngohub.models.organization import Organization, OrganizationGeneral
 from pycognito import Cognito
 from requests import Response
 
+from donations.common.validation.slug_url import clean_slug
 from donations.models.ngos import Ngo
 from redirectioneaza.common.cache import cache_decorator
 
@@ -106,7 +107,7 @@ def update_local_ngo_with_ngohub_data(ngo: Ngo, ngohub_ngo: Organization) -> Dic
     ngo.name = ngohub_general_data.alias or ngohub_general_data.name
 
     if not ngo.slug:
-        ngo.slug = ngo.name.lower().replace(" ", "-")
+        ngo.slug = clean_slug(ngo.name)
 
     if ngo.description is None:
         ngo.description = ngohub_general_data.description or ""
@@ -132,11 +133,9 @@ def update_local_ngo_with_ngohub_data(ngo: Ngo, ngohub_ngo: Organization) -> Dic
         active_region = f"{ngohub_ngo.activity_data.area} ({','.join(counties)})"
     ngo.active_region = active_region
 
-    if not ngo.phone:
-        ngo.phone = ngohub_general_data.contact.phone
-
-    ngo.email = ngohub_general_data.contact.email
-    ngo.website = ngohub_general_data.website
+    ngo.phone = ngohub_general_data.phone
+    ngo.email = ngohub_general_data.email
+    ngo.website = ngohub_general_data.website or ""
 
     ngo.is_social_service_viable = ngohub_ngo.activity_data.is_social_service_viable
     ngo.is_verified = True
