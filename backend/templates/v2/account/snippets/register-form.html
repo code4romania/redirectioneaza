@@ -14,7 +14,7 @@
 
         this.form.addEventListener('submit', (e) => {
           e.preventDefault();
-          var valid = this.pristine.validate();
+          let valid = this.pristine.validate();
           this.isFormSubmitting = true;
 
           if (valid) {

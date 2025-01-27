@@ -55,7 +55,7 @@
           this.signatureInput.value = this.signaturePad.toDataURL('image/svg+xml');
           this.signaturePreview.src = this.signaturePad.toDataURL('image/svg+xml');
 
-          var event = new Event('input');
+          let event = new Event('input');
           this.signatureInput.dispatchEvent(event);
         }
       },
