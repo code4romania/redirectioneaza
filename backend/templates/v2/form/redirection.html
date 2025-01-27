@@ -141,7 +141,7 @@
 
               <div class="sm:col-span-4 sm:col-start-1">
                 {% trans "Personal identification number" as input_title %}
-                {% include "components/input/input.html" with input_id="cnp" input_name="cnp" input_type="text" max_length=13 is_required=True field=redirection_form.cnp %}
+                {% include "components/input/input.html" with input_id="cnp" input_name="cnp" input_type="text" pattern="/\d{13}/i" min_length=13 max_length=13 is_required=True field=redirection_form.cnp %}
               </div>
 
               <div class="sm:col-span-2 sm:col-start-1">
@@ -151,7 +151,7 @@
 
               <div class="sm:col-span-2">
                 {% trans "Phone number" as input_title %}
-                {% include "components/input/input.html" with input_id="phone_number" input_name="phone_number" input_type="tel" max_length=15 is_required=False input_autocomplete="tel-national" field=redirection_form.phone_number %}
+                {% include "components/input/input.html" with input_id="phone_number" input_name="phone_number" input_type="tel" max_length=20 is_required=False input_autocomplete="tel-national" field=redirection_form.phone_number %}
               </div>
 
             </fieldset>
