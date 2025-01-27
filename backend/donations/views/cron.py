@@ -4,6 +4,7 @@ import logging
 from datetime import datetime
 
 from django.core.exceptions import PermissionDenied
+from django.db import IntegrityError
 from django.http import HttpResponse
 from django.utils import timezone
 from django.views.generic import TemplateView
@@ -130,7 +131,12 @@ class NgoRemoveForms(TemplateView):
         # loop through them and remove the form_url
         # this will force an update on it when downloaded again
         for ngo in ngos:
-            ngo.prefilled_form.delete()
-            total_removed += 1
+            try:
+                ngo.prefilled_form.delete()
+                total_removed += 1
+            except IntegrityError as e:
+                logger.error("IntegrityError removing `form_url` from ngo {0}: {1}".format(ngo.id, e))
+            except Exception as e:
+                logger.error("Error removing `form_url` from ngo {0}: {1}".format(ngo.id, e))
 
         return HttpResponse("Removed {} form files".format(total_removed))
