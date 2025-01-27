@@ -12,16 +12,6 @@ UserModel = get_user_model()
 def callback(request, context):
     user: UserModel = request.user
 
-    messages.warning(
-        request,
-        render_to_string(
-            "admin/announcements/work_in_progress.html",
-            context={
-                "contact_email": settings.CONTACT_EMAIL_ADDRESS,
-            },
-        ),
-    )
-
     if not user or not user.is_authenticated:
         return context
 
