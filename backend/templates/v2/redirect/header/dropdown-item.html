@@ -38,7 +38,7 @@
     x-transition:leave-end="opacity-0 translate-y-1"
     class="absolute z-10 flex w-screen px-4 mt-5 -translate-x-1/2 left-1/2 max-w-max">
 
-    <div class="flex-auto w-screen max-w-md overflow-hidden bg-white shadow-lg rounded-3xl text-sm/6 ring-1 ring-gray-900/5">
+    <div class="flex-auto {% if item.content_size == 'small' %}max-w-xs{% else %}w-screen max-w-md{% endif %} overflow-hidden bg-white shadow-lg rounded-3xl text-sm/6 ring-1 ring-gray-900/5">
       {% if item.subtitle %}
         <div class="w-full p-8 pb-4 text-slate-500">
           {{ item.subtitle }}
@@ -49,28 +49,36 @@
 
         {% for dropdown_item in item.content %}
 
-          <div class="relative flex p-3 rounded-lg group gap-x-4 hover:bg-gray-50">
+          {% if dropdown_item.separator %}
 
-            {% if dropdown_item.static_icon %}
-              <img src="{% static 'images/icons/'|add:dropdown_item.static_icon|add:'.svg' %}" alt="icon" class="size-6 text-cyan-700"/>
-            {% elif dropdown_item.icon %}
-              <svg class="size-6 shrink-0 text-gray-400 group-hover:text-amber-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="{{ dropdown_item.icon }}"/>
-              </svg>
-            {% endif %}
+            <hr class="my-3 border-gray-200"/>
 
-            <div>
-              <a href="{{ dropdown_item.url }}" class="font-semibold text-gray-900">
-                {{ dropdown_item.title }}
-                <span class="absolute inset-0"></span>
-              </a>
-              <p class="text-gray-600">{{ dropdown_item.subtitle }}</p>
+          {% else %}
+
+            <div class="relative flex p-3 rounded-lg group gap-x-4 hover:bg-gray-50">
+
+              {% if dropdown_item.static_icon %}
+                <img src="{% static 'images/icons/'|add:dropdown_item.static_icon|add:'.svg' %}" alt="icon" class="size-6 text-cyan-700"/>
+              {% elif dropdown_item.icon %}
+                <svg class="size-6 shrink-0 text-gray-400 group-hover:text-amber-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="{{ dropdown_item.icon }}"/>
+                </svg>
+              {% endif %}
+
+              <div>
+                <a href="{{ dropdown_item.url }}" class="font-semibold text-gray-900">
+                  {{ dropdown_item.title }}
+                  <span class="absolute inset-0"></span>
+                </a>
+                <p class="text-gray-600">{{ dropdown_item.subtitle }}</p>
+              </div>
+
             </div>
 
-          </div>
+          {% endif %}
 
         {% endfor %}
 
