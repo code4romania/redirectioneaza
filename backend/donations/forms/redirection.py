@@ -7,23 +7,23 @@ from localflavor.ro.forms import ROCNPField
 
 
 class DonationForm(forms.Form):
-    l_name = forms.CharField(max_length=100, label=_("Last name"), required=True)
-    f_name = forms.CharField(max_length=100, label=_("First name"), required=True)
+    l_name = forms.CharField(max_length=100, label=_("Last name"), required=True, strip=True)
+    f_name = forms.CharField(max_length=100, label=_("First name"), required=True, strip=True)
     initial = forms.CharField(max_length=1, label=_("Initial"), required=True)
     cnp = ROCNPField(label="CNP", required=True)
 
     email_address = forms.EmailField(label=_("Email"), required=True)
-    phone_number = forms.CharField(max_length=20, label=_("Phone"), required=False)
+    phone_number = forms.CharField(max_length=20, label=_("Phone"), required=False, strip=True)
 
-    street_name = forms.CharField(max_length=100, label=_("Street"), required=True)
-    street_number = forms.CharField(max_length=10, label=_("Number"), required=True)
-    flat = forms.CharField(max_length=10, label=_("Building"), required=False)
-    entrance = forms.CharField(max_length=10, label=_("Entrance"), required=False)
-    floor = forms.CharField(max_length=10, label=_("Floor"), required=False)
-    apartment = forms.CharField(max_length=10, label=_("Apartment"), required=False)
+    street_name = forms.CharField(max_length=100, label=_("Street"), required=True, strip=True)
+    street_number = forms.CharField(max_length=10, label=_("Number"), required=True, strip=True)
+    flat = forms.CharField(max_length=10, label=_("Building"), required=False, strip=True)
+    entrance = forms.CharField(max_length=10, label=_("Entrance"), required=False, strip=True)
+    floor = forms.CharField(max_length=10, label=_("Floor"), required=False, strip=True)
+    apartment = forms.CharField(max_length=10, label=_("Apartment"), required=False, strip=True)
 
     county = forms.CharField(max_length=100, label=_("County"), required=True)
-    locality = forms.CharField(max_length=100, label=_("Locality"), required=True)
+    locality = forms.CharField(max_length=100, label=_("Locality"), required=True, strip=True)
 
     two_years = forms.BooleanField(label=_("Two years"), required=False)
     agree_contact = forms.BooleanField(label=_("Agree contact"), required=True)
