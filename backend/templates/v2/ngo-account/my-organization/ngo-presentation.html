@@ -12,6 +12,34 @@
       enctype="multipart/form-data"
       action="{% url 'my-organization:presentation' %}">
 
+      {% if not ngo.is_accepting_forms %}
+        {% blocktranslate trimmed asvar banner_message %}
+          <p>
+            Your organization is not accepting forms by e-mail.
+            This means that users will have to download and print the form, fill it in,
+            and send it to the organization's address or to their ANAF office.
+          </p>
+        {% endblocktranslate %}
+        {% include "components/info-banner.html" with style="warning" banner_message=banner_message %}
+      {% endif %}
+
+      {% if has_ngohub %}
+        {% blocktranslate trimmed asvar banner_message %}
+          <p>
+            The information below is displayed on your organization's page on redirectioneaza.ro.
+          </p>
+          <p>
+            Some information (marked with **) is automatically taken from your organization's account on NGO HUB,
+            and can be edited from your organization's administrator account,
+            in NGO HUB.
+          </p>
+        {% endblocktranslate %}
+        {% trans "Go to NGO Hub" as banner_cta_message %}
+        {% with "https://app.ngohub.ro/organizations/"|add:ngo.ngohub_org_id|add:"general" as banner_url %}
+          {% include "components/info-banner.html" with style="info" banner_message=banner_message banner_cta_message=banner_cta_message banner_cta_url=banner_url %}
+        {% endwith %}
+      {% endif %}
+
       {% csrf_token %}
 
       {% with disable_ngohub_fields=has_ngohub %}
