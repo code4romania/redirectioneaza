@@ -59,8 +59,14 @@
             this.confirmationModalIsOpen = true;
           }
         },
+        sendFormWithoutSignatureField() {
+          this.validateSignature = false;
+          if (this.pristine.validate()) {
+            this.form.submit();
+          }
+        },
         clearSignature() {
-          // dispatch a input event when we clear the signature so it will revalidate the form
+          // dispatch an input event when we clear the signature so it will revalidate the form
           this.signaturePreview.src = "";
           this.signatureInput.value = "";
 
@@ -201,85 +207,89 @@
 
             </fieldset>
 
-            <fieldset class="grid grid-cols-1 gap-x-6 gap-y-8 mt-10">
+            {% if ngo.is_accepting_forms %}
 
-              <legend class="my-5 text-base/7 font-semibold text-gray-900 hidden">
-                {% trans "Handwritten signature" %}
-              </legend>
+              <fieldset class="grid grid-cols-1 gap-x-6 gap-y-8 mt-10">
 
-              <label
-                for="signature-input"
-                class="block text-sm/6 font-medium text-gray-500 mb-1"
-              >{% trans "Signature" %}
-              </label>
+                <legend class="my-5 text-base/7 font-semibold text-gray-900 hidden">
+                  {% trans "Handwritten signature" %}
+                </legend>
 
-              <div class="mt-1 flex flex-col form-group">
-                <input id="signature-input" type="text" name="signature" class="hidden">
-                <div class="flex">
+                <label
+                  for="signature-input"
+                  class="block text-sm/6 font-medium text-gray-500 mb-1"
+                >{% trans "Signature" %}
+                </label>
 
-                  <img
-                    id="signature-preview"
-                    class="border mt-1 border-gray-300 rounded-md"
-                    width="580"
-                    height="200"/>
-
+                <div class="mt-1 flex flex-col form-group">
+                  <input id="signature-input" type="text" name="signature" class="hidden">
                   <div class="flex">
-                    <div>
-                      <button
-                        @click="signatureModalIsOpen = true"
-                        type="button"
-                        class="cursor-pointer whitespace-nowrap rounded-md px-4 py-2 text-center text-sm font-medium tracking-wide transition hover:opacity-75 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black active:opacity-100 active:outline-offset-0">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"/>
-                        </svg>
-                      </button>
 
-                      <div
-                        x-cloak
-                        x-show="signatureModalIsOpen"
-                        x-transition.opacity.duration.200ms
-                        x-trap.noscroll="signatureModalIsOpen"
-                        @keydown.esc.window="signatureModalIsOpen = false"
-                        @click.self="signatureModalIsOpen = false"
-                        class="fixed inset-0 z-30 flex items-end justify-center bg-black/20 p-4 pb-8 backdrop-blur-md sm:items-center lg:p-8"
-                        role="dialog"
-                        aria-modal="true"
-                        aria-labelledby="{% trans "Signature modal" %}">
-                        <!-- Modal Dialog -->
+                    <img
+                      id="signature-preview"
+                      class="border mt-1 border-gray-300 rounded-md"
+                      width="580"
+                      height="200"/>
+
+                    <div class="flex">
+                      <div>
+                        <button
+                          @click="signatureModalIsOpen = true"
+                          type="button"
+                          class="cursor-pointer whitespace-nowrap rounded-md px-4 py-2 text-center text-sm font-medium tracking-wide transition hover:opacity-75 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black active:opacity-100 active:outline-offset-0">
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"/>
+                          </svg>
+                        </button>
+
                         <div
+                          x-cloak
                           x-show="signatureModalIsOpen"
-                          x-transition:enter="transition ease-out duration-200 delay-100 motion-reduce:transition-opacity"
-                          x-transition:enter-start="opacity-0 scale-50"
-                          x-transition:enter-end="opacity-100 scale-100"
-                          class="flex max-w-lg flex-col gap-4 overflow-hidden rounded-md border border-neutral-300 bg-white text-neutral-600">
-                          {% include "form/signature.html" %}
+                          x-transition.opacity.duration.200ms
+                          x-trap.noscroll="signatureModalIsOpen"
+                          @keydown.esc.window="signatureModalIsOpen = false"
+                          @click.self="signatureModalIsOpen = false"
+                          class="fixed inset-0 z-30 flex items-end justify-center bg-black/20 p-4 pb-8 backdrop-blur-md sm:items-center lg:p-8"
+                          role="dialog"
+                          aria-modal="true"
+                          aria-labelledby="{% trans "Signature modal" %}">
+                          <!-- Modal Dialog -->
+                          <div
+                            x-show="signatureModalIsOpen"
+                            x-transition:enter="transition ease-out duration-200 delay-100 motion-reduce:transition-opacity"
+                            x-transition:enter-start="opacity-0 scale-50"
+                            x-transition:enter-end="opacity-100 scale-100"
+                            class="flex max-w-lg flex-col gap-4 overflow-hidden rounded-md border border-neutral-300 bg-white text-neutral-600">
+                            {% include "form/signature.html" %}
+                          </div>
                         </div>
+
                       </div>
 
+                      <div>
+                        <button
+                          @click="clearSignature()"
+                          type="button"
+                          class="cursor-pointer whitespace-nowrap rounded-md px-4 py-2 text-center text-sm font-medium tracking-wide transition hover:opacity-75 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black active:opacity-100 active:outline-offset-0">
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/>
+                          </svg>
+                        </button>
+                      </div>
                     </div>
 
-                    <div>
-                      <button
-                        @click="clearSignature()"
-                        type="button"
-                        class="cursor-pointer whitespace-nowrap rounded-md px-4 py-2 text-center text-sm font-medium tracking-wide transition hover:opacity-75 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black active:opacity-100 active:outline-offset-0">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/>
-                        </svg>
-                      </button>
-                    </div>
                   </div>
-
                 </div>
-              </div>
 
-            </fieldset>
+              </fieldset>
+
+            {% endif %}
 
             <hr class="border border-gray-200 border-1">
 
@@ -322,7 +332,7 @@
                 {% trans "Captcha" %}
               </legend>
 
-              <div class="g-recaptcha" data-sitekey="{{ captcha_public_key }}" data-callback="onSubmit"></div>
+              <div id=g-recaptcha" class="g-recaptcha" data-sitekey="{{ captcha_public_key }}" data-callback="onSubmit"></div>
 
             </fieldset>
 
@@ -349,21 +359,36 @@
                 </div>
               </div>
 
-              <button
-                id="submit-with-signature"
-                type="button"
-                @click="sendSignedForm()"
-                class="h-9 px-4 py-2 text-center outline outline-amber-300 bg-amber-300 text-sm shadow-sm rounded-full text-gray-900 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
-                {% trans "Send signed form" %}
-              </button>
+              {% if ngo.is_accepting_forms %}
 
-              <button
-                id="show-confirmation-modal"
-                @click="sendUnsignedForm()"
-                type="button"
-                class="h-9 px-4 py-2 text-center outline outline-amber-300 bg-white text-sm shadow-sm rounded-full text-gray-900 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
-                {% trans "Continue without signing" %}
-              </button>
+                <button
+                  id="submit-with-signature"
+                  type="button"
+                  @click="sendSignedForm()"
+                  class="h-9 px-4 py-2 text-center outline outline-amber-300 bg-amber-300 text-sm shadow-sm rounded-full text-gray-900 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
+                  {% trans "Send signed form" %}
+                </button>
+
+
+                <button
+                  id="show-confirmation-modal"
+                  @click="sendUnsignedForm()"
+                  type="button"
+                  class="h-9 px-4 py-2 text-center outline outline-amber-300 bg-white text-sm shadow-sm rounded-full text-gray-900 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
+                  {% trans "Continue without signing" %}
+                </button>
+
+              {% else %}
+
+                <button
+                  id="submit-ngo-without-signature"
+                  @click="sendFormWithoutSignatureField()"
+                  type="button"
+                  class="h-9 px-4 py-2 text-center outline outline-amber-300 bg-amber-300 text-sm shadow-sm rounded-full text-gray-900 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
+                  {% trans "Send the form" %}
+                </button>
+
+              {% endif %}
 
             </div>
 
