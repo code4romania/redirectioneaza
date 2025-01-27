@@ -13,6 +13,7 @@ from ngohub.models.organization import Organization, OrganizationGeneral
 from pycognito import Cognito
 from requests import Response
 
+from donations.common.validation.slug_url import clean_slug
 from donations.models.ngos import Ngo
 from redirectioneaza.common.cache import cache_decorator
 
@@ -106,7 +107,7 @@ def update_local_ngo_with_ngohub_data(ngo: Ngo, ngohub_ngo: Organization) -> Dic
     ngo.name = ngohub_general_data.alias or ngohub_general_data.name
 
     if not ngo.slug:
-        ngo.slug = ngo.name.lower().replace(" ", "-")
+        ngo.slug = clean_slug(ngo.name)
 
     if ngo.description is None:
         ngo.description = ngohub_general_data.description or ""
