@@ -7,7 +7,8 @@ from django.conf import settings
 from django.db.models import QuerySet
 from django.http import HttpResponse
 from django.utils import timezone
-from django.utils.translation import gettext_lazy as _, ngettext_lazy
+from django.utils.translation import gettext_lazy as _
+from django.utils.translation import ngettext_lazy
 from django.views.generic import TemplateView
 
 from partners.models import DisplayOrderingChoices
@@ -103,7 +104,7 @@ class HomePage(BaseVisibleTemplateView):
 
 
 class AboutHandler(BaseVisibleTemplateView):
-    template_name = "public/about.html"
+    template_name = "public/articles/about.html"
     title = _("About redirectioneaza.ro")
 
 
@@ -134,7 +135,7 @@ class NgoListHandler(SearchMixin):
 
 
 class NoteHandler(BaseVisibleTemplateView):
-    template_name = "public/note.html"
+    template_name = "public/articles/note.html"
     title = _("Information notice")
 
     def get_context_data(self, **kwargs):
@@ -145,12 +146,12 @@ class NoteHandler(BaseVisibleTemplateView):
 
 
 class PolicyHandler(BaseVisibleTemplateView):
-    template_name = "public/policy.html"
+    template_name = "public/articles/policy.html"
     title = _("Privacy policy")
 
 
 class TermsHandler(BaseVisibleTemplateView):
-    template_name = "public/terms.html"
+    template_name = "public/articles/terms.html"
     title = _("Terms & conditions")
 
     def get_context_data(self, **kwargs):
