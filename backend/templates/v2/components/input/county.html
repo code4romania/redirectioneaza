@@ -16,22 +16,25 @@
     <option value="" class="select-placeholder">
       {{ input_title }}
     </option>
+
     <optgroup label="București">
       {% for sector in '123456'|make_list %}
         <option
           value="{{ forloop.counter }}"
-          {% if number == county %}selected{% endif %}>
+          {% if number == value %}selected{% endif %}>
           Sector {{ forloop.counter }}
         </option>
       {% endfor %}
     </optgroup>
+
     {% for county_name in counties %}
       <option
         value="{{ county_name }}"
-        {% if county_name == county %}selected{% endif %}>
+        {% if county_name == value %}selected{% endif %}>
         {{ county_name }}
       </option>
     {% endfor %}
+
   </select>
 
 

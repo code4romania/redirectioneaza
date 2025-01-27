@@ -3,49 +3,9 @@
 {% load i18n %}
 
 {% block content %}
-<script>
-let ngoPresentationForm = function() {
-    return {
-        form: undefined,
-        pristine: undefined,
-        isFormSubmitting: false,
-        init() {
-            this.form = document.getElementById("ngo-presentation-form");
+  {% include "ngo-account/components/ngo-switch-tab-script.html" with form_id="ngo-presentation-form" %}
 
-            this.pristine = new Pristine(this.form, {
-                errorTextClass: "mt-2 text-sm text-red-600"
-            });
-
-            this.form.addEventListener('submit', (e) => {
-                e.preventDefault();
-                var valid = this.pristine.validate();
-                this.isFormSubmitting = true;
-
-                if (valid) {
-                    this.form.submit();
-                }
-            });
-
-            // Event listener for the 
-            // 'beforeunload' event
-            window.addEventListener('beforeunload', (event) => {
-                // Check if the form is being submitted
-                if (this.isFormSubmitting) {
-                    return; // Allow navigation without showing the confirmation dialog
-                }
-
-                if(hasChangedFields(this.pristine.fields.map(field => field.input))){
-                  if(!confirm('Are you sure you want to leave?')){
-                    event.preventDefault();
-                  }
-                }
-            });
-
-        }
-    };
-}; </script>
-
-  <div x-data="ngoPresentationForm()" x-init="init()">
+  <div x-data="ngoForm()" x-init="init()">
     <form
       id="ngo-presentation-form"
       method="post"
@@ -117,7 +77,7 @@ let ngoPresentationForm = function() {
 
             <div class="grid sm:col-span-4 sm:col-start-1 gap-6">
               {% trans "Organization contact phone" as input_title %}
-              {% include "components/input/input.html" with input_id="contact-phone" input_title=input_title input_type="tel" input_name="contact-phone" is_disabled=disable_ngohub_fields value=ngo.phone max_length=30%}
+              {% include "components/input/input.html" with input_id="contact-phone" input_title=input_title input_type="tel" input_name="contact-phone" is_disabled=disable_ngohub_fields value=ngo.phone max_length=30 %}
             </div>
 
             <div class="grid sm:col-span-2 gap-6">
