@@ -58,42 +58,6 @@ def validate_registration_number(ngo, registration_number) -> Optional[str]:
     return ""
 
 
-class ArchiveDownloadLinkView(BaseVisibleTemplateView):
-    title = _("Download archive")
-
-    @method_decorator(login_required(login_url=reverse_lazy("login")))
-    def get(self, request: HttpRequest, job_id, *args, **kwargs):
-        user: User = request.user
-
-        if user.has_perm("users.can_view_old_dashboard"):
-            # The admin can always get the download link
-            try:
-                job = Job.objects.get(pk=job_id)
-            except Job.DoesNotExist:
-                raise Http404
-
-        elif not user.ngo:
-            # Users without NGOs don't have any download links anyway
-            raise Http404
-
-        else:
-            # Check that the current user's NGO is active
-            if not user.ngo.is_active:
-                raise Http404
-
-            # Check that the requested job belongs to the current user
-            try:
-                job = Job.objects.get(pk=job_id, ngo=user.ngo, owner=user)
-            except Job.DoesNotExist:
-                raise Http404
-
-        # Check that the job has a zip file
-        if not job.zip:
-            raise Http404
-
-        return redirect(job.zip.url)
-
-
 def delete_prefilled_form(ngo_id):
     return Ngo.delete_prefilled_form(ngo_id)
 
@@ -464,3 +428,40 @@ class NgoArchivesView(NgoBaseListView):
             )
 
         return redirections
+
+
+# TODO: Figure out how to optimize it and if it does anything else than redirecting to the zip file
+class ArchiveDownloadLinkView(BaseVisibleTemplateView):
+    title = _("Download archive")
+
+    @method_decorator(login_required(login_url=reverse_lazy("login")))
+    def get(self, request: HttpRequest, job_id, *args, **kwargs):
+        user: User = request.user
+
+        if user.has_perm("users.can_view_old_dashboard"):
+            # The admin can always get the download link
+            try:
+                job = Job.objects.get(pk=job_id)
+            except Job.DoesNotExist:
+                raise Http404
+
+        elif not user.ngo:
+            # Users without NGOs don't have any download links anyway
+            raise Http404
+
+        else:
+            # Check that the current user's NGO is active
+            if not user.ngo.is_active:
+                raise Http404
+
+            # Check that the requested job belongs to the current user
+            try:
+                job = Job.objects.get(pk=job_id, ngo=user.ngo, owner=user)
+            except Job.DoesNotExist:
+                raise Http404
+
+        # Check that the job has a zip file
+        if not job.zip:
+            raise Http404
+
+        return redirect(job.zip.url)

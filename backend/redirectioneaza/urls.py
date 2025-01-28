@@ -29,17 +29,6 @@ from donations.views.account_management import (
     SignupView,
     VerificationView,
 )
-from donations.views.admin import (
-    AdminHome,
-    AdminNewNgoHandler,
-    AdminNgoHandler,
-    AdminNgosListByDate,
-    AdminNgosListByForms,
-    AdminNgosListByFormsNow,
-    AdminNgosListByFormsPrevious,
-    AdminNgosListByName,
-    UserAccounts,
-)
 from donations.views.api import (
     CheckNgoUrl,
     DownloadNgoForms,
@@ -141,28 +130,15 @@ urlpatterns = (
         path("api/search/", SearchNgosApi.as_view(), name="api-search-ngos"),
         # Cron routes
         path("cron/ngos/remove-form/", NgoRemoveForms.as_view(), name="cron-ngo-remove-form"),
-        # path("cron/ngos/export/", NgoExport.as_view(), name="cron-ngo-export"),
-        # path("cron/export/custom/", CustomExport.as_view(), name="cron-custom-export"),
         # Django Admin
-        path("admin/django/", RedirectView.as_view(pattern_name="admin:index", permanent=True)),
+        path("admin/", admin.site.urls),
+        path("admin/login/", RedirectView.as_view(pattern_name="login", permanent=True)),
         path("admin/avansat/login/", RedirectView.as_view(pattern_name="login", permanent=True)),
-        path("admin/avansat/", admin.site.urls),
+        path("admin/avansat/", RedirectView.as_view(pattern_name="admin:index", permanent=True)),
+        path("admin/django/", RedirectView.as_view(pattern_name="admin:index", permanent=True)),
         # ADMIN HANDLERS
-        path("admin/ong-nou/", AdminNewNgoHandler.as_view(), name="admin-ong-nou"),
-        path("admin/conturi/", UserAccounts.as_view(), name="admin-users"),
-        path("admin/orgs/date/", AdminNgosListByDate.as_view(), name="admin-ngos-by-date"),
-        path("admin/orgs/name/", AdminNgosListByName.as_view(), name="admin-ngos-by-name"),
-        path("admin/orgs/forms/", AdminNgosListByForms.as_view(), name="admin-ngos-by-forms"),
-        path("admin/orgs/forms-current/", AdminNgosListByFormsNow.as_view(), name="admin-ngos-by-forms-now"),
-        path("admin/orgs/forms-previous/", AdminNgosListByFormsPrevious.as_view(), name="admin-ngos-by-forms-prev"),
-        path(
-            "admin/organizatii/",
-            RedirectView.as_view(pattern_name="admin-ngos-by-date", permanent=True),
-            name="admin-ngos",
-        ),
-        path("admin/<ngo_url>/", AdminNgoHandler.as_view(), name="admin-ong"),
+        path("admin/organizatii/", RedirectView.as_view(pattern_name="admin:index", permanent=True)),
         path("admin/download/<job_id>/", ArchiveDownloadLinkView.as_view(), name="admin-download-link"),
-        path("admin/", AdminHome.as_view(), name="admin-index"),  # name was "admin"
         # must always be the last set of urls
         re_path(r"^(?P<ngo_url>[\w-]+)/doilasuta/", RedirectView.as_view(pattern_name="twopercent", permanent=True)),
         # re_path(r"^(?P<ngo_url>[\w-]+)/semnatura/", FormSignature.as_view(), name="ngo-twopercent-signature"),
