@@ -140,7 +140,7 @@ class NgoBaseListView(NgoBaseView, ListView):
         return super().get(request, *args, **kwargs)
 
 
-class NgoDetailsView(NgoBaseTemplateView):
+class NgoPresentationView(NgoBaseTemplateView):
     template_name = "ngo-account/my-organization/ngo-presentation.html"
     title = _("Organization details")
     tab_title = "presentation"
@@ -156,10 +156,15 @@ class NgoDetailsView(NgoBaseTemplateView):
         if ngo:
             has_ngohub = ngo.ngohub_org_id is not None
 
+        ngohub_url = ""
+        if has_ngohub:
+            ngohub_url = f"{settings.NGOHUB_APP_BASE}organizations/{ngo.ngohub_org_id}/general"
+
         context.update(
             {
                 "counties": settings.FORM_COUNTIES_NATIONAL,
                 "has_ngohub": has_ngohub,
+                "ngohub_url": ngohub_url,
                 "active_tab": self.tab_title,
             }
         )

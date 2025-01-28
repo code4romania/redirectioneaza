@@ -35,9 +35,7 @@
           </p>
         {% endblocktranslate %}
         {% trans "Go to NGO Hub" as banner_cta_message %}
-        {% with "https://app.ngohub.ro/organizations/"|add:ngo.ngohub_org_id|add:"general" as banner_url %}
-          {% include "components/info-banner.html" with style="info" banner_message=banner_message banner_cta_message=banner_cta_message banner_cta_url=banner_url %}
-        {% endwith %}
+        {% include "components/info-banner.html" with style="info" banner_message=banner_message banner_cta_message=banner_cta_message banner_cta_url=ngohub_url %}
       {% endif %}
 
       {% csrf_token %}
