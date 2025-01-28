@@ -5,7 +5,14 @@
 {% block content %}
   {% include "ngo-account/components/ngo-switch-tab-script.html" with form_id="ngo-presentation-form" %}
 
+  {% if has_ngohub and not hide_ngohub_button %}
+    <form id="refresh-ngohub-form" method="post" action="{% url 'api-ngohub-refresh' %}" hidden>
+      {% csrf_token %}
+    </form>
+  {% endif %}
+
   <div x-data="ngoForm()" x-init="init()">
+
     <form
       id="ngo-presentation-form"
       method="post"
@@ -111,10 +118,15 @@
             </div>
           </div>
 
-          <div class="grid gap-x-6 gap-y-2 md:gap-y-8 md:grid-cols-6">
+          <div class="grid gap-x-6 gap-y-2 md:gap-y-8 md:grid-cols-8">
             <div class="sm:col-span-4">
               {% trans "Organization address" as input_title %}
               {% include "components/input/input.html" with input_id="address" input_title=input_title input_type="text" input_name="address" is_required=True is_disabled=disable_ngohub_fields value=ngo.address %}
+            </div>
+
+            <div class="sm:col-span-2">
+              {% trans "Locality" as input_title %}
+              {% include "components/input/input.html" with input_id="locality" input_title=input_title input_type="text" input_name="locality" is_disabled=disable_ngohub_fields value=ngo.locality %}
             </div>
 
             <div class="sm:col-span-2">

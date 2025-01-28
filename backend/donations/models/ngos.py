@@ -142,6 +142,14 @@ class Ngo(models.Model):
     )
 
     address = models.TextField(verbose_name=_("address"), blank=True, null=False, default="")
+    locality = models.CharField(
+        verbose_name=_("locality"),
+        blank=True,
+        null=False,
+        default="",
+        max_length=100,
+        db_index=True,
+    )
     county = models.CharField(
         verbose_name=_("county"),
         blank=True,
