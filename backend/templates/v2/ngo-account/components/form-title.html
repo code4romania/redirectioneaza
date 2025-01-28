@@ -1,47 +1,47 @@
 {% load i18n %}
 
-<div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-4">
+<div class="grid grid-cols-1 mt-10 gap-x-6 gap-y-3 md:grid-cols-3 lg:grid-cols-4">
 
-  <h2 class="sm:col-span-2 text-2xl text-bold text-gray-900">
+  <h2 class="text-2xl text-gray-900 lg:col-span-2 text-bold">
     {{ title }}
   </h2>
 
-  {% if has_ngohub and not hide_ngohub_button %}
-    <div class="sm:col-span-1 sm:col-start-3">
-      {% trans "Get from NGO Hub" as button_title %}
-      {% url 'api-ngohub-refresh' as refresh_button %}
+  <div class="grid items-center justify-end gap-2 sm:flex md:col-span-2">
+    {% if has_ngohub and not hide_ngohub_button %}
+      <div>
+        {% trans "Get from NGO Hub" as button_title %}
+        {% url 'api-ngohub-refresh' as refresh_button %}
+        <button
+          type="submit"
+          formaction="{% url 'api-ngohub-refresh' %}"
+          name="refresh-with-ngohub"
+          formmethod="post"
+          class="w-full px-3 py-2 text-sm font-semibold text-gray-800 no-underline border-2 rounded-md border-amber-300 bg-amber-300 hover:bg-amber-200">
+          <div class="flex items-center justify-center gap-x-1.5">
+            <div>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                class="size-5">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+              </svg>
+            </div>
+            <span>
+              {{ button_title }}
+            </span>
+          </div>
+        </button>
+      </div>
+    {% endif %}
+
+    <div>
+      {% trans "Save changes" as button_title %}
       <button
         type="submit"
-        formaction="{% url 'api-ngohub-refresh' %}"
-        name="refresh-with-ngohub"
-        formmethod="post"
-        class="w-full rounded-md px-3 py-2 text-sm font-semibold text-gray-800 border-amber-300 border-2 bg-amber-300 hover:bg-amber-200 no-underline">
-        <div class="flex items-center justify-between">
-          <div> 
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-              class="size-6">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
-            </svg></div>
-          <span>
-            {{ button_title }}
-          </span>
-     
-      </div>
-        
+        class="w-full px-3 py-2 text-sm font-semibold text-gray-800 no-underline border-2 rounded-md border-amber-300 bg-amber-300 hover:bg-amber-200">
+        {{ button_title }}
       </button>
     </div>
-
-  {% endif %}
-
-  <div class="sm:col-span-1 sm:col-start-4">
-    {% trans "Save changes" as button_title %}
-    <button
-      type="submit"
-      class="w-full rounded-md px-3 py-2 text-sm font-semibold text-gray-800 border-amber-300 border-2 bg-amber-300 hover:bg-amber-200 no-underline">
-      {{ button_title }}
-    </button>
   </div>
 </div>
 
-<hr class="w-full border-gray-400 my-5">
+<hr class="w-full my-5 border-gray-400">

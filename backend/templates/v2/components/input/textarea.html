@@ -5,7 +5,7 @@
   <textarea
     id="{{ input_id }}"
     name="{{ input_name }}"
-    rows="{% if input_rows %}{{ input_rows }}{% else %}3{% endif %}"
+    rows="{% if input_rows %}{{ input_rows }}{% else %}5{% endif %}"
     {% if is_required %}required{% endif %}
     {% if is_disabled %}disabled{% endif %}
     {% if value %}input-original-value="{{ value }}"{% endif %}

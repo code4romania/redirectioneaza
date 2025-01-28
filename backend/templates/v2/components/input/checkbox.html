@@ -1,5 +1,5 @@
-<div class="form-group w-full">
-  <label for="{{ input_id }}" class="flex cursor-pointer items-center gap-2 text-sm font-medium text-neutral-600 [&:has(input:checked)]:text-neutral-900  [&:has(input:disabled)]:opacity-75 [&:has(input:disabled)]:cursor-not-allowed">
+<div class="w-full form-group">
+  <label for="{{ input_id }}" class="flex cursor-pointer items-center gap-2 text-sm font-medium text-neutral-600 [&:has(input:checked)]:text-neutral-900 [&:has(input:disabled)]:opacity-75 [&:has(input:disabled)]:cursor-not-allowed">
     <div class="relative flex items-center">
         <input
           id="{{ input_id }}"
@@ -9,11 +9,7 @@
           {% if value or field and field.value %}checked{% endif %}
           {% if is_disabled %}disabled{% endif %}
           {% if value == True %}input-original-value="true"{%else%} input-original-value="false" {% endif %}
-          class="col-start-1 row-start-1 bg-white border border-gray-300 rounded appearance-none checked:border-amber-300 checked:bg-amber-300 indeterminate:border-amber-300 indeterminate:bg-amber-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300 disabled:border-gray-300 disabled:bg-gray-200 disabled:checked:bg-gray-100 forced-colors:appearance-auto">
-          <svg class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-[:disabled]:stroke-gray-950/25" viewBox="0 0 14 14" fill="none">
-            <path class="opacity-0 group-has-[:checked]:opacity-100" d="M3 8L6 11L11 3.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-            <path class="opacity-0 group-has-[:indeterminate]:opacity-100" d="M3 7H11" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-          </svg>
+          class="col-start-1 row-start-1 bg-white border border-gray-300 rounded appearance-none checked:hover:bg-amber-500 hover:border-amber-500 checked:border-amber-300 checked:bg-amber-300 indeterminate:border-amber-300 indeterminate:bg-amber-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300 disabled:border-gray-300 disabled:bg-gray-200 disabled:checked:bg-gray-100 forced-colors:appearance-auto">
     </div>
     <span>{{ input_title }}{% if is_required %}<span class='text-red-600'>*</span>{% endif %}</span>
   </label>
