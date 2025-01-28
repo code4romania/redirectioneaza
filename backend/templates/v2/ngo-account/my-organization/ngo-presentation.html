@@ -53,7 +53,7 @@
 
                 <div class="mt-8 flex gap-3">
                   {% trans "I want to receive the completed forms by email" as input_title %}
-                  {% include "components/input/checkbox.html" with input_id="is_accepting_forms" input_title=input_title input_name="is_accepting_forms" input_value=ngo.is_accepting_forms %}
+                  {% include "components/input/checkbox.html" with input_id="is_accepting_forms" input_title=input_title input_name="is_accepting_forms" value=ngo.is_accepting_forms %}
                 </div>
 
                 <p class="text-xs text-gray-500 pt-2">
@@ -97,7 +97,7 @@
             <div class="grid sm:col-span-2 gap-6">
               {% trans "Display e-mail in the profile" as input_title %}
               <div class="mt-8 flex gap-3">
-                {% include "components/input/checkbox.html" with input_id="display-email" input_title=input_title input_name="display-email" input_value=ngo.display_email %}
+                {% include "components/input/checkbox.html" with input_id="display-email" input_title=input_title input_name="display-email" value=ngo.display_email %}
               </div>
             </div>
 
@@ -109,7 +109,7 @@
             <div class="grid sm:col-span-2 gap-6">
               {% trans "Display phone in the profile" as input_title %}
               <div class="mt-8 flex gap-3">
-                {% include "components/input/checkbox.html" with input_id="display-phone" input_title=input_title input_name="display-phone" input_value=ngo.display_phone %}
+                {% include "components/input/checkbox.html" with input_id="display-phone" input_title=input_title input_name="display-phone" value=ngo.display_phone %}
               </div>
             </div>
 
