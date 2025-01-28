@@ -29,7 +29,7 @@ class DonationForm(forms.Form):
     agree_contact = forms.BooleanField(label=_("Agree contact"), required=True)
     agree_terms = forms.BooleanField(label=_("Agree terms"), required=True)
 
-    signature = forms.CharField(label=_("Signature"), required=False)
+    signature = forms.CharField(label=_("Signature"), max_length=1_000_000, required=False)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

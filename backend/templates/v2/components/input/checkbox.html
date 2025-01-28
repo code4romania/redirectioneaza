@@ -1,12 +1,12 @@
 <div class="form-group w-full">
   <label for="{{ input_id }}" class="flex cursor-pointer items-center gap-2 text-sm font-medium text-neutral-600 [&:has(input:checked)]:text-neutral-900  [&:has(input:disabled)]:opacity-75 [&:has(input:disabled)]:cursor-not-allowed">
     <div class="relative flex items-center">
-        <input 
+        <input
           id="{{ input_id }}"
           name="{{ input_name }}"
-          type="checkbox" 
+          type="checkbox"
           {% if is_required %}required{% endif %}
-          {% if input_value == True %}checked{% endif %}
+          {% if value or field and field.value %}checked{% endif %}
           {% if is_disabled %}disabled{% endif %}
           {% if input_value == True %}input-original-value="true"{%else%} input-original-value="false" {% endif %}
           class="col-start-1 row-start-1 bg-white border border-gray-300 rounded appearance-none checked:border-amber-300 checked:bg-amber-300 indeterminate:border-amber-300 indeterminate:bg-amber-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300 disabled:border-gray-300 disabled:bg-gray-200 disabled:checked:bg-gray-100 forced-colors:appearance-auto">
