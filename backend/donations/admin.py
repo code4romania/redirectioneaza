@@ -1,14 +1,20 @@
 import logging
 from typing import List
 
+from django import forms
 from django.contrib import admin
+from django.contrib.auth import get_user_model
 from django.core.management import call_command
+from django.db import transaction
 from django.db.models import QuerySet
-from django.urls import reverse
+from django.http import HttpRequest
+from django.shortcuts import redirect, render
+from django.urls import reverse, reverse_lazy
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 from unfold.admin import ModelAdmin
 from unfold.decorators import action as unfold_action
+from unfold.widgets import UnfoldAdminSelectWidget
 
 from redirectioneaza.common.admin import HasNgoFilter
 from users.models import User
@@ -19,6 +25,29 @@ from .models.ngos import Ngo
 from .workers.update_organization import update_organization
 
 logger = logging.getLogger(__name__)
+
+UserModel = get_user_model()
+
+
+class ChangeNgoOwnerForm(forms.Form):
+    existing_user = forms.ModelChoiceField(
+        queryset=User.objects.filter(
+            is_active=True,
+            is_staff=False,
+            is_ngohub_user=False,
+            ngo__isnull=True,
+        ),
+        label=_("Existing User"),
+        help_text=_("Select the new owner of the NGO. You can only select active users that don't have an NGO."),
+        widget=UnfoldAdminSelectWidget,
+    )
+
+    # TODO: create the flow to create a new user from the admin
+    # new_user_email = forms.EmailField(
+    #     label=_("New User Email"),
+    #     help_text=_("Enter the email of the new owner of the NGO. The user will be created."),
+    #     widget=UnfoldAdminEmailInputWidget,
+    # )
 
 
 class NgoPartnerInline(admin.TabularInline):
@@ -122,6 +151,8 @@ class NgoAdmin(ModelAdmin):
 
     readonly_fields = ("date_created", "date_updated", "get_donations_link")
 
+    actions_detail = ("change_owner",)
+
     actions = (
         "generate_donations_archive",
         "clean_registration_numbers",
@@ -182,6 +213,70 @@ class NgoAdmin(ModelAdmin):
         link_url = reverse("admin:donations_donor_changelist")
         return format_html(
             f'<a data-popup="yes" id="ngo_donor_list" class="related-widget-wrapper-link" href="{link_url}?ngo_id={obj.id}&_popup=1" target="_blank">{link_name}</a>'
+        )
+
+    @transaction.atomic
+    def _change_owner(self, ngo: Ngo, new_owner: UserModel):
+        if new_owner.ngo:
+            return {
+                "status": "ERROR",
+                "message": _("This user already has an NGO."),
+            }
+
+        if new_owner.is_staff or new_owner.is_superuser:
+            return {
+                "status": "ERROR",
+                "message": _("This user is a staff member."),
+            }
+
+        if new_owner.is_ngohub_user:
+            return {
+                "status": "ERROR",
+                "message": _("This user is an NGO Hub user."),
+            }
+
+        old_user = UserModel.objects.get(ngo=ngo)
+        old_user.ngo = None
+        new_owner.ngo = ngo
+
+        old_user.save()
+        new_owner.save()
+
+        return {
+            "status": "SUCCESS",
+            "message": _("Owner changed successfully."),
+        }
+
+    @unfold_action(description=_("Change owner"))
+    def change_owner(self, request: HttpRequest, object_id):
+        ngo = Ngo.objects.get(id=object_id)
+
+        if request.method == "POST":
+            form = ChangeNgoOwnerForm(request.POST)
+
+            if form.is_valid():
+                new_owner = form.cleaned_data["existing_user"]
+
+                result = self._change_owner(ngo, new_owner)
+
+                self.message_user(request, result["message"], level=result["status"])
+
+                if result["status"] == "SUCCESS":
+                    return redirect(reverse_lazy("admin:app_model_change", args=[object_id]))
+            else:
+                self.message_user(request, _("The form is not valid."), level="ERROR")
+        else:
+            form = ChangeNgoOwnerForm()
+
+        return render(
+            request,
+            "admin/forms/action.html",
+            {
+                "form": form,
+                "object": ngo,
+                "title": _("Change owner of NGO '%(name)s'") % {"name": ngo.name},
+                **self.admin_site.each_context(request),
+            },
         )
 
     @unfold_action(description=_("Generate donations archive"))
