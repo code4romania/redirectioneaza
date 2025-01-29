@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n text_format %}
 
 <div class="mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8 pb-10">
   <div class="lg:grid lg:grid-cols-3 lg:items-start lg:gap-x-8">
@@ -36,6 +36,28 @@
       <h1 class="text-3xl font-bold tracking-tight text-gray-900">
         {{ ngo.name }}
       </h1>
+
+      {% comment %}
+        <div class="mt-6">
+          <h3 class="sr-only">
+            {% trans "Active region" %}
+          </h3>
+
+          <div class="space-y-6 text-base text-gray-500 font-semibold">
+            <p>
+              {% trans "Active region:" %}
+
+              {% if ngo.locality %}
+                {{ ngo.locality }},
+              {% endif %}
+
+              {% blocktranslate trimmed %}
+                {{ ngo.county|to_county }} county
+              {% endblocktranslate %}
+            </p>
+          </div>
+        </div>
+      {% endcomment %}
 
       <div class="mt-6">
         <h3 class="sr-only">

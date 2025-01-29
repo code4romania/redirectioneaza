@@ -259,6 +259,22 @@ class Ngo(models.Model):
             self.save()
 
     @property
+    def can_receive_forms(self):
+        if not self.is_active:
+            return False
+
+        mandatory_fields = (
+            self.name,
+            self.registration_number,
+            self.bank_account,
+        )
+
+        if not all(mandatory_fields):
+            return False
+
+        return True
+
+    @property
     def full_registration_number(self):
         return f"{self.vat_id}{self.registration_number}" if self.vat_id else self.registration_number
 

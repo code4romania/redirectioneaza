@@ -75,12 +75,19 @@ class RedirectionHandler(TemplateView):
         ngo_url = kwargs.get("ngo_url", "")
 
         try:
-            ngo = Ngo.objects.get(slug=ngo_url)
+            ngo: Ngo = Ngo.objects.get(slug=ngo_url)
         except Ngo.DoesNotExist:
-            ngo = None
+            raise Http404
+
+        context.update(
+            {
+                "title": ngo.name,
+                "ngo": ngo,
+            }
+        )
 
         # if we didn't find it or the ngo doesn't have an active page
-        if ngo is None or not ngo.is_active:
+        if ngo is None or not ngo.can_receive_forms:
             raise Http404
 
         # if we still have a cookie from an old session, remove it
@@ -92,25 +99,23 @@ class RedirectionHandler(TemplateView):
             # also we can use request.session.clear(), but it might delete the logged-in user's session
 
         now = timezone.now()
-        can_donate = not now.date() > settings.DONATIONS_LIMIT
+        is_donation_period_active = not now.date() > settings.DONATIONS_LIMIT
+        donation_status = "open" if is_donation_period_active else "closed"
 
         context.update(
             {
-                "title": ngo.name,
-                "ngo": ngo,
-                "can_donate": can_donate,
-                "counties": settings.FORM_COUNTIES,
+                "donation_status": donation_status,
                 "is_admin": request.user.is_staff,
                 "limit": settings.DONATIONS_LIMIT,
                 "month_limit": settings.DONATIONS_LIMIT_MONTH_NAME,
-                "captcha_public_key": settings.RECAPTCHA_PUBLIC_KEY,
-                "ngo_website_description": "",
-                "ngo_website": "",
             }
         )
+        if donation_status == "closed":
+            return context
 
-        # the ngo website
-        ngo_website = ngo.website if ngo.website else None
+        ngo_website_description = ""
+        ngo_website = ngo.website if ngo.website else ""
+
         if ngo_website:
             # try and parse the url to see if it's valid
             try:
@@ -122,26 +127,33 @@ class RedirectionHandler(TemplateView):
                 # if we have a netloc, then the URL is valid
                 # use the netloc as the website name
                 if url_dict.netloc:
-                    context["ngo_website_description"] = url_dict.netloc
-                    context["ngo_website"] = url_dict.geturl()
+                    ngo_website_description = url_dict.netloc
+                    ngo_website = url_dict.geturl()
 
                 # of we don't have the netloc, when parsing the url
                 # urlparse might send it to path
                 # move that to netloc and remove the path
                 elif url_dict.path:
                     url_dict = url_dict._replace(netloc=url_dict.path)
-                    context["ngo_website_description"] = url_dict.path
+                    ngo_website_description = url_dict.path
 
                     url_dict = url_dict._replace(path="")
 
-                    context["ngo_website"] = url_dict.geturl()
+                    ngo_website = url_dict.geturl()
                 else:
                     raise
 
             except Exception:
-                context["ngo_website"] = None
-        else:
-            context["ngo_website"] = None
+                ngo_website = None
+
+        context.update(
+            {
+                "counties": settings.FORM_COUNTIES,
+                "captcha_public_key": settings.RECAPTCHA_PUBLIC_KEY,
+                "ngo_website_description": ngo_website_description,
+                "ngo_website": ngo_website,
+            }
+        )
 
         return context
 
