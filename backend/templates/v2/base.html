@@ -43,7 +43,7 @@
   {% block assets %}
   {% endblock %}
 </head>
-<body>
+<body class="flex flex-col min-h-screen">
 
 {# block for special css #}
 {% block css %}
@@ -55,7 +55,7 @@
 {% endblock %}
 
 {% block content_container %}
-  <main class="py-16">
+  <main class="flex-1 py-16">
     {% block content %}
     {% endblock %}
   </main>

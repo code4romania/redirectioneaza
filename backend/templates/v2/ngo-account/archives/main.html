@@ -4,13 +4,13 @@
 
 {% block page_heading %}
 
-  <div class="container">
+  <div>
 
-    <h1 class="text-2xl text-gray-900 font-semibold">
+    <h1 class="text-2xl font-semibold text-gray-900">
       {% trans "Archives history" %}
     </h1>
 
-    <p class="text-lg pt-2 mt-2 text-gray-500">
+    <p class="pt-2 mt-2 text-lg text-gray-500">
       {% blocktrans %}
         Here you can find the archives of forms that have been exported.
         If are collecting signed forms,
@@ -24,7 +24,7 @@
 
 
 {% block content %}
-  <div class="px-4 sm:px-6 lg:px-8">
+  <div>
     {% include "ngo-account/archives/listing.html" %}
   </div>
 {% endblock %}

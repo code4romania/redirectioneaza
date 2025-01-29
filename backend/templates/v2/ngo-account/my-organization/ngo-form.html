@@ -18,12 +18,12 @@
       {% include "ngo-account/components/form-title.html" with hide_ngohub_button=True %}
 
       <fieldset>
-        <div class="p-4 grid grid-cols-1 gap-x-6 gap-y-8">
+        <div class="flex flex-col gap-8 py-4">
 
           {% trans "Organization URL" as input_title %}
           {% include "components/input/input.html" with input_id="organization-slug" input_title=input_title input_type="text" input_name="organization-slug" is_required=True value=ngo.slug max_length=150 %}
 
-          <hr class="w-full border-gray-400">
+          <hr class="w-full border-gray-200">
 
           {% trans "Form title" as input_title %}
           {% include "components/input/input.html" with input_id="page_name" input_type="text" input_name="page_name" placeholder="Organization name" is_required=True is_disabled=True value=ngo.name %}

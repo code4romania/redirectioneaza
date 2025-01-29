@@ -7,14 +7,17 @@ import "@fontsource/inter/latin-ext-600-italic.css";
 import "@fontsource/inter/latin-ext-800.css";
 import "@fontsource/inter/latin-ext-800-italic.css";
 import './main.css';
+import 'tippy.js/dist/tippy.css';
 
 import Alpine from 'alpinejs';
 import collapse from '@alpinejs/collapse';
-import focus from '@alpinejs/focus'
+import focus from '@alpinejs/focus';
+import Tooltip from '@ryangjchandler/alpine-tooltip';
 import ngoSearch from './ngoSearch';
 
 Alpine.plugin(collapse);
 Alpine.plugin(focus);
+Alpine.plugin(Tooltip);
 
 Alpine.data('ngoSearch', ngoSearch);
 

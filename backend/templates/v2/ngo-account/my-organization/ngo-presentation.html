@@ -17,7 +17,8 @@
       id="ngo-presentation-form"
       method="post"
       enctype="multipart/form-data"
-      action="{% url 'my-organization:presentation' %}">
+      action="{% url 'my-organization:presentation' %}"
+      class="grid gap-5">
 
       {% if not ngo.is_accepting_forms %}
         {% blocktranslate trimmed asvar banner_message %}
@@ -52,7 +53,7 @@
         {% trans "Presentation Data" as title %}
         {% include "ngo-account/components/form-title.html" %}
 
-        <div class="flex flex-col gap-8 p-4">
+        <div class="flex flex-col gap-8 py-4">
           <div class="px-6 py-4 border border-gray-200 rounded bg-gray-50">
             <div class="flex gap-3">
               {% trans "I want to receive the completed forms by email" as input_title %}
@@ -63,8 +64,6 @@
               {% trans "By selecting this option, I confirm that the NGO has an SPV account to submit the forms" %}
             </p>
           </div>
-
-          <!-- <hr class="w-full border-gray-400"> -->
 
           {% comment %}
             TODO: Ideally, this should be two rows on the first column and one on the second, but the grid system is not allowing it.
