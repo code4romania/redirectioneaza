@@ -14,12 +14,16 @@ import collapse from '@alpinejs/collapse';
 import focus from '@alpinejs/focus';
 import Tooltip from '@ryangjchandler/alpine-tooltip';
 import ngoSearch from './ngoSearch';
+import signature from './signature';
+import twoPercentForm from './twoPercentForm';
 
 Alpine.plugin(collapse);
 Alpine.plugin(focus);
 Alpine.plugin(Tooltip);
 
 Alpine.data('ngoSearch', ngoSearch);
+Alpine.data('signature', signature);
+Alpine.data('twoPercentForm', twoPercentForm);
 
 window.Alpine = Alpine;
 

@@ -3,14 +3,14 @@
 <div
   x-data="{ itemOpen: false }"
   x-on:click.outside="itemOpen = false"
-  class="relative text-left py-2">
+  class="relative py-2 text-left">
 
   <button
     x-on:click="itemOpen = !itemOpen"
     {% if item.style == "auth-highlight" %}
-    class="inline-flex items-center gap-x-1 text-gray-900 px-6 py-2 hover:text-amber-600 hover:bg-amber-200 active:text-amber-400 rounded-full shadow-sm bg-amber-300"
+    class="inline-flex items-center px-6 py-2 text-gray-900 rounded-full shadow-sm gap-x-1 hover:text-amber-600 hover:bg-amber-200 active:text-amber-400 bg-amber-300"
     {% else %}
-    class="inline-flex items-center gap-x-1 text-gray-900 w-full  hover:text-cyan-600 active:text-cyan-700"
+    class="inline-flex items-center w-full text-gray-900 gap-x-1 hover:text-cyan-600 active:text-cyan-700"
     {% endif %}
     type="button">
 
@@ -60,7 +60,7 @@
               {% if dropdown_item.static_icon %}
                 <img src="{% static 'images/icons/'|add:dropdown_item.static_icon|add:'.svg' %}" alt="icon" class="size-6 text-cyan-700"/>
               {% elif dropdown_item.icon %}
-                <svg class="size-6 shrink-0 text-gray-400 group-hover:text-amber-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+                <svg class="text-gray-400 size-6 shrink-0 group-hover:text-amber-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
                   <path
                     stroke-linecap="round"
                     stroke-linejoin="round"
