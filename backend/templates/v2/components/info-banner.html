@@ -1,4 +1,4 @@
-<div class="pt-4">
+<div class="pt-4 text-lg">
   <div
     {% if style == "info" %}
       class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded relative"
@@ -38,9 +38,17 @@
           </strong>
         {% endif %}
 
-        <span class="block sm:inline">
-        {{ banner_message }}
-      </span>
+        <div class="block sm:inline">
+          {{ banner_message }}
+
+          {% if banner_list %}
+            <ul class="list-disc list-inside">
+              {% for item in banner_list %}
+                <li>{{ item }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
 
         {% if banner_cta_message and banner_cta_url %}
           <a href="{{ banner_cta_url }}" class="font-semibold underline">

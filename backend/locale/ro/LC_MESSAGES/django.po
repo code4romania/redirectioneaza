@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-29 11:26+0200\n"
+"POT-Creation-Date: 2025-01-29 14:32+0200\n"
 "PO-Revision-Date: 2024-03-07 11:27+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -74,7 +74,7 @@ msgstr "Donații"
 
 #: donations/admin.py:169 donations/admin.py:354 donations/admin.py:404
 #: donations/models/donors.py:52 donations/models/jobs.py:28
-#: donations/models/ngos.py:227 partners/admin.py:12 users/models.py:72
+#: donations/models/ngos.py:229 partners/admin.py:12 users/models.py:72
 msgid "NGO"
 msgstr "ONG"
 
@@ -345,20 +345,20 @@ msgstr "CNP"
 msgid "city"
 msgstr "oraș"
 
-#: donations/models/donors.py:71 donations/models/ngos.py:154
+#: donations/models/donors.py:71 donations/models/ngos.py:156
 #: donations/views/donations_download.py:174
 msgid "county"
 msgstr "județ"
 
-#: donations/models/donors.py:78 donations/models/ngos.py:144
+#: donations/models/donors.py:78 donations/models/ngos.py:146
 msgid "address"
 msgstr "adresă"
 
-#: donations/models/donors.py:81 donations/models/ngos.py:170
+#: donations/models/donors.py:81 donations/models/ngos.py:172
 msgid "telephone"
 msgstr "telefon"
 
-#: donations/models/donors.py:82 donations/models/ngos.py:171
+#: donations/models/donors.py:82 donations/models/ngos.py:173
 #: donations/views/donations_download.py:173
 msgid "email"
 msgstr "email"
@@ -400,7 +400,7 @@ msgid "PDF file"
 msgstr "fișier PDF"
 
 #: donations/models/donors.py:121 donations/models/jobs.py:52
-#: donations/models/ngos.py:203 partners/models.py:54 users/models.py:88
+#: donations/models/ngos.py:205 partners/models.py:54 users/models.py:88
 msgid "date created"
 msgstr "data creării"
 
@@ -450,7 +450,7 @@ msgstr "sarcină"
 msgid "jobs"
 msgstr "joburi"
 
-#: donations/models/ngos.py:49
+#: donations/models/ngos.py:51
 #, python-format
 msgid ""
 "%(value)s is not a valid identifier. The identifier must look like %(sample)s"
@@ -458,97 +458,97 @@ msgstr ""
 "%(value)s nu este un identificator valid. Identificatorul trebuie să arate "
 "%(sample)s"
 
-#: donations/models/ngos.py:84
+#: donations/models/ngos.py:86
 msgid "slug"
-msgstr "adresă"
+msgstr "URL organizație"
 
-#: donations/models/ngos.py:93
+#: donations/models/ngos.py:95
 #: templates/v2/ngo-account/my-organization/ngo-presentation.html:75
 #: templates/v2/ngo-account/redirections/list-header.html:8
 msgid "Name"
 msgstr "Nume"
 
-#: donations/models/ngos.py:94
+#: donations/models/ngos.py:96
 msgid "description"
 msgstr "descriere"
 
-#: donations/models/ngos.py:98
+#: donations/models/ngos.py:100
 msgid "NGO Hub organization ID"
 msgstr "ID organizație în NGO Hub"
 
-#: donations/models/ngos.py:104 donations/models/ngos.py:105
+#: donations/models/ngos.py:106 donations/models/ngos.py:107
 msgid "Last NGO Hub update"
 msgstr "Ultima actualizare din NGO Hub"
 
-#: donations/models/ngos.py:109
+#: donations/models/ngos.py:111
 msgid "logo"
 msgstr "logo"
 
-#: donations/models/ngos.py:117
+#: donations/models/ngos.py:119
 msgid "bank account"
 msgstr "cont bancar"
 
-#: donations/models/ngos.py:122
+#: donations/models/ngos.py:124
 msgid "registration number"
 msgstr "număr de înregistrare"
 
-#: donations/models/ngos.py:131
+#: donations/models/ngos.py:133
 msgid "VAT ID"
 msgstr "COD TVA"
 
-#: donations/models/ngos.py:139
+#: donations/models/ngos.py:141
 msgid "registration validation failed"
 msgstr "validarea înregistrării a eșuat"
 
-#: donations/models/ngos.py:146
+#: donations/models/ngos.py:148
 msgid "locality"
 msgstr "localitate"
 
-#: donations/models/ngos.py:162
+#: donations/models/ngos.py:164
 msgid "active region"
 msgstr "regiune activă"
 
-#: donations/models/ngos.py:173
+#: donations/models/ngos.py:175
 msgid "display email"
 msgstr "afișează email"
 
-#: donations/models/ngos.py:174
+#: donations/models/ngos.py:176
 msgid "display phone"
 msgstr "afișează telefon"
 
-#: donations/models/ngos.py:176
+#: donations/models/ngos.py:178
 msgid "website"
 msgstr "website"
 
-#: donations/models/ngos.py:179 users/models.py:80
+#: donations/models/ngos.py:181 users/models.py:80
 msgid "is verified"
 msgstr "este verificat"
 
-#: donations/models/ngos.py:183
+#: donations/models/ngos.py:185
 msgid "has special status"
 msgstr "are statut special"
 
-#: donations/models/ngos.py:187
+#: donations/models/ngos.py:189
 msgid "is accepting forms"
 msgstr "acceptă formulare"
 
-#: donations/models/ngos.py:190 partners/models.py:38
+#: donations/models/ngos.py:192 partners/models.py:38
 msgid "is active"
 msgstr "este activ"
 
-#: donations/models/ngos.py:194
+#: donations/models/ngos.py:196
 msgid "form with prefilled ngo data"
 msgstr "formular cu datele ONG-ului completate"
 
-#: donations/models/ngos.py:201
+#: donations/models/ngos.py:203
 msgid "Filename cache"
 msgstr "Cache nume fișier"
 
-#: donations/models/ngos.py:204 partners/models.py:55 users/models.py:89
+#: donations/models/ngos.py:206 partners/models.py:55 users/models.py:89
 msgid "date updated"
 msgstr "data actualizării"
 
-#: donations/models/ngos.py:228 partners/admin.py:13 partners/models.py:52
+#: donations/models/ngos.py:230 partners/admin.py:13 partners/models.py:52
 #: redirectioneaza/settings/unfold.py:27
 msgid "NGOs"
 msgstr "ONG-uri"
@@ -985,7 +985,7 @@ msgstr "Organizația mea"
 
 #: redirectioneaza/context_processors.py:171
 #: redirectioneaza/context_processors.py:219
-#: templates/v2/ngo-account/my-organization/base.html:11
+#: templates/v2/ngo-account/my-organization/base.html:26
 msgid "Organization Data"
 msgstr "Date organizație"
 
@@ -1399,21 +1399,7 @@ msgstr ""
 "amber-600\">1 ianuarie</span> și <span class=\"text-"
 "amber-600\">%(limit.day)s %(month_limit)s</span> al anului curent."
 
-#: templates/v2/form/redirection-header.html:42
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:140
-msgid "Active region"
-msgstr "Regiune activă"
-
-#: templates/v2/form/redirection-header.html:47
-msgid "Active region:"
-msgstr "Regiune activă:"
-
-#: templates/v2/form/redirection-header.html:53
-#, python-format
-msgid "%(ngo.county|to_county)s county"
-msgstr "județul %(ngo.county|to_county)s"
-
-#: templates/v2/form/redirection-header.html:62
+#: templates/v2/form/redirection-header.html:65
 msgid "Description"
 msgstr "Descriere"
 
@@ -1699,16 +1685,26 @@ msgstr "Descarcă din NGO Hub"
 msgid "Save changes"
 msgstr "Salvează modificările"
 
-#: templates/v2/ngo-account/my-organization/base.html:15
+#: templates/v2/ngo-account/my-organization/base.html:8
+msgid ""
+"<p> Your organization can't currently receive forms because not all the "
+"required information has been filled in. Please make sure the following "
+"fields are filled in: </p>"
+msgstr ""
+"<p>Organizația ta nu poate primi formulare în prezent deoarece nu toate "
+"informațiile necesare au fost completate. Te rugăm să te asiguri că următoarele "
+"câmpuri sunt completate:</p>"
+
+#: templates/v2/ngo-account/my-organization/base.html:30
 msgid "Fill out the organization's profile on redirectioneaza.ro"
 msgstr "Completează profilul organizației pe redirectioneaza.ro"
 
-#: templates/v2/ngo-account/my-organization/base.html:20
+#: templates/v2/ngo-account/my-organization/base.html:35
 #: templates/v2/ngo-account/my-organization/ngo-presentation.html:52
 msgid "Presentation Data"
 msgstr "Date prezentare"
 
-#: templates/v2/ngo-account/my-organization/base.html:21
+#: templates/v2/ngo-account/my-organization/base.html:36
 #: templates/v2/ngo-account/my-organization/ngo-form.html:17
 msgid "Form Data"
 msgstr "Date formular"
@@ -1794,6 +1790,10 @@ msgstr "Afișează telefonul în profil"
 #: templates/v2/ngo-account/my-organization/ngo-presentation.html:124
 msgid "Organization address"
 msgstr "Adresa organizației"
+
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:140
+msgid "Active region"
+msgstr "Regiune activă"
 
 #: templates/v2/ngo-account/redirections/list-header.html:11
 msgid "Locality, County"
@@ -2013,6 +2013,13 @@ msgstr "parolă veche"
 #: users/models.py:208
 msgid "Group"
 msgstr "Grup"
+
+#~ msgid "Active region:"
+#~ msgstr "Regiune activă:"
+
+#, python-format
+#~ msgid "%(ngo.county|to_county)s county"
+#~ msgstr "județul %(ngo.county|to_county)s"
 
 #~ msgid "Submit form"
 #~ msgstr "Trimite formularul"

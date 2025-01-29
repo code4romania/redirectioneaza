@@ -87,7 +87,7 @@ class RedirectionHandler(TemplateView):
         )
 
         # if we didn't find it or the ngo doesn't have an active page
-        if ngo is None or not ngo.can_receive_forms:
+        if ngo is None or not ngo.can_receive_forms():
             raise Http404
 
         # if we still have a cookie from an old session, remove it

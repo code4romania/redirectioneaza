@@ -1,6 +1,7 @@
 import logging
 import re
 from functools import partial
+from typing import List
 
 from django.conf import settings
 from django.core.cache import cache
@@ -9,6 +10,7 @@ from django.core.files.storage import storages
 from django.db import models
 from django.db.models import Q
 from django.db.models.functions import Lower
+from django.db.models.query_utils import DeferredAttribute
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
@@ -259,17 +261,39 @@ class Ngo(models.Model):
             self.save()
 
     @property
+    def mandatory_fields(self):
+
+        # noinspection PyTypeChecker
+        field_names: List[DeferredAttribute] = [
+            Ngo.name,
+            Ngo.slug,
+            Ngo.description,
+            Ngo.registration_number,
+            Ngo.bank_account,
+        ]
+
+        return [field.field for field in field_names]
+
+    @property
+    def mandatory_fields_names(self):
+        return [field.verbose_name for field in self.mandatory_fields]
+
+    @property
+    def mandatory_fields_names_lower(self):
+        return [field.lower() for field in self.mandatory_fields_names]
+
+    @property
+    def mandatory_fields_names_capitalize(self):
+        return [field.capitalize() for field in self.mandatory_fields_names]
+
+    def mandatory_fields_values(self):
+        return [getattr(self, field.name) for field in self.mandatory_fields]
+
     def can_receive_forms(self):
         if not self.is_active:
             return False
 
-        mandatory_fields = (
-            self.name,
-            self.registration_number,
-            self.bank_account,
-        )
-
-        if not all(mandatory_fields):
+        if not all(self.mandatory_fields_values()):
             return False
 
         return True

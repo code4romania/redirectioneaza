@@ -3,6 +3,21 @@
 {% load i18n static %}
 
 {% block page_heading %}
+  {% if not ngo.can_receive_forms %}
+
+    {% blocktranslate trimmed asvar banner_message %}
+      <p>
+        Your organization can't currently receive forms because not all the required information has been filled in.
+        Please make sure the following fields are filled in:
+      </p>
+    {% endblocktranslate %}
+
+    <div class="py-6">
+      {% include "components/info-banner.html" with style="error" banner_message=banner_message banner_list=ngo.mandatory_fields_names_capitalize %}
+    </div>
+
+  {% endif %}
+
   <div
     x-data="{ activeTab: '{{ active_tab }}' }"
     class="max-w-none">
