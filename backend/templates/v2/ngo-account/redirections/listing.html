@@ -1,23 +1,16 @@
+{% extends "ngo-account/base-listing.html" %}
+
 {% load i18n %}
 
-<div class="flow-root">
-  <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-    <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-      <table class="min-w-full text-center divide-y divide-gray-300">
+{% block table_header %}
+  {% include "ngo-account/redirections/list-header.html" %}
+{% endblock %}
 
-        <thead>
-          {% include "ngo-account/redirections/list-header.html" %}
-        </thead>
+{% block table_body %}
+  {% include "ngo-account/redirections/list-items.html" %}
+{% endblock %}
 
-        <tbody class="divide-y divide-gray-200">
-          {% include "ngo-account/redirections/list-items.html" %}
-        </tbody>
-
-      </table>
-    </div>
-
-    {% trans "donations" as paginated_type %}
-    {% include "public/components/pagination.html" with page_obj=page_obj paginated_type=paginated_type %}
-
-  </div>
-</div>
+{% block pagination %}
+  {% trans "donations" as paginated_type %}
+  {% include "public/components/pagination.html" with page_obj=page_obj paginated_type=paginated_type %}
+{% endblock %}

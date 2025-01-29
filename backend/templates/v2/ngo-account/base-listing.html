@@ -1,0 +1,20 @@
+<div class="flow-root">
+  <div class="overflow-x-auto">
+    <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+      <table class="min-w-full text-center divide-y divide-gray-300">
+
+        <thead>
+          {% block table_header %}{% endblock %}
+        </thead>
+
+        <tbody class="divide-y divide-gray-200">
+          {% block table_body %}{% endblock %}
+        </tbody>
+
+      </table>
+    </div>
+
+    {% block pagination %}{% endblock %}
+
+  </div>
+</div>
