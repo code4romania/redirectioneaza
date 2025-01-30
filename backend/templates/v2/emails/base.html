@@ -8,28 +8,29 @@
 
   <title>{{ title }}</title>
 
+  <style>{% include "emails/styles.css" %}</style>
 </head>
 
-<body style="font-family:Inter, Arial, sans-serif;background-color:#f4f4f4;margin:0;padding:0;">
+<body>
 <div style="margin:auto auto 3rem;text-align:left;background:#ffffff;width:75%;max-width:600px;">
 
-  <div style="background:#ecfeff;padding:20px;margin-top:0;">
-    <img
-        src="{% static 'images/logo.png' %}"
-        alt="Redirecționează logo"
-        style="width:50%;margin:0 ;display:block;">
-  </div>
+  <nav>
+    {% include "emails/base-header.html" %}
+  </nav>
 
-  <div style="padding:20px;">
-    <h2 style="color:#000000;">
-      {% block header %}{% endblock %}
-    </h2>
-  </div>
+  <header>
+    <h1>
+      {% block heading %}{% endblock %}
+    </h1>
+  </header>
 
-  {% block content %}{% endblock %}
+  <main>
+    {% block content %}{% endblock %}
+  </main>
 
-  {% include "emails/base-footer.html" %}
-
+  <footer>
+    {% include "emails/base-footer.html" %}
+  </footer>
 </div>
 </body>
 
