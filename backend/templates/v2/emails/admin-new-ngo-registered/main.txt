@@ -1,3 +1,5 @@
+{% load i18n %}
+
 {% trans "A new NGO has registered on redirectioneaza.ro" %}
 
 - {% trans "NGO name" %}: {{ ngo.name }}

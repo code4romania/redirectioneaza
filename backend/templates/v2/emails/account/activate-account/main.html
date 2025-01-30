@@ -1,0 +1,32 @@
+{% extends "emails/base.html" %}
+
+{% load i18n %}
+
+{% block heading %}
+  {% trans "Hello," %}
+  {{ first_name }},
+{% endblock %}
+
+{% block content %}
+
+  <p>
+    {% blocktrans trimmed %}
+      Welcome to redirectioneaza.ro!
+    {% endblocktrans %}
+  </p>
+
+  <p>
+    {% blocktrans trimmed %}
+      We're happy to have you on the platform!
+      To activate your account, you have to confirm your email address by clicking the button below.
+    {% endblocktrans %}
+  </p>
+
+  {% trans "Activate your account" as button_title %}
+  {% include "emails/components/button-with-backup.html" with title=button_title url=button_url %}
+
+  {% blocktrans trimmed %}
+    Thank you for being part of this community!
+  {% endblocktrans %}
+
+{% endblock %}

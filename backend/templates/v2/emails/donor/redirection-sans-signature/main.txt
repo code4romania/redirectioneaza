@@ -1,0 +1,52 @@
+{% load i18n %}
+
+{% trans "You're one step closer to redirecting your income tax to the cause you believe in" %}
+
+{% blocktrans trimmed %}
+  Thank you for choosing to support {{ ngo_name }}!
+  You can download the completed form by clicking the button below.
+{% endblocktrans %}
+
+{{ form_url }}
+
+
+{% trans "The next steps" %}
+
+{% blocktranslate trimmed %}
+  To complete the redirection,
+  print and sign the form,
+  then send it by courier or mail to the NGO's address,
+  and they will take care of the submission,
+  or you can hand it over personally to a representative of the organization.
+{% endblocktranslate %}
+
+{% trans "The organization's contact info" %}
+
+- {% trans "Name" %}: {{ ngo_name }}
+- {% trans "Address" %}: {{ ngo_address }}
+- {% trans "Email" %}: {{ ngo_email }}
+
+{% trans "Do you want to give an extra helping hand?" %}
+
+{% blocktrans trimmed %}
+  If you want to be a true civic superhero,
+  you can help the organization collect more forms!
+  Here's how:
+{% endblocktrans %}
+
+{% blocktranslate trimmed %}
+  Share the
+  <a href="{{ ngo_url }}">organization's page</a>
+  on social networks
+  and encourage your friends to complete the form online for the organization you believe in,
+  simply and safely,
+  on redirectioneaza.ro.
+{% endblocktranslate %}
+
+{% blocktranslate trimmed %}
+  Download the form 230 template for {{ ngo_name }},
+  print multiple copies and convince your colleagues,
+  friends or family to complete it.
+{% endblocktranslate %}
+
+{% trans "Thank you for your involvement!" %}

@@ -1,0 +1,28 @@
+{% extends "emails/base.html" %}
+
+{% load i18n %}
+
+{% block heading %}
+  {% trans "Hello," %}
+  {{ first_name }},
+{% endblock %}
+
+{% block content %}
+
+  <p>
+    {% blocktrans trimmed %}
+      We received a request to reset your password on redirectioneaza.ro.
+      You can reset your password by clicking the button below.
+    {% endblocktrans %}
+  </p>
+
+  {% trans "Reset password" as button_title %}
+  {% include "emails/components/button-with-backup.html" with title=button_title url=button_url %}
+
+  <p>
+    {% blocktrans trimmed %}
+      If you didn't request a password reset, you can ignore this email.
+    {% endblocktrans %}
+  </p>
+
+{% endblock %}
