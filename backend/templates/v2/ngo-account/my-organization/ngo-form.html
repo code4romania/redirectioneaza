@@ -21,18 +21,18 @@
         <div class="flex flex-col gap-8 py-4">
 
           {% trans "Organization URL" as input_title %}
-          {% include "components/input/input.html" with input_id="organization-slug" input_title=input_title input_type="text" input_name="organization-slug" is_required=True value=ngo.slug max_length=150 %}
+          {% include "components/input/input.html" with input_id="slug" input_type="text" input_name="slug" is_required=True value=ngo.slug field=ngo_form.slug max_length=150 %}
 
           <hr class="w-full border-gray-200">
 
           {% trans "Form title" as input_title %}
-          {% include "components/input/input.html" with input_id="page_name" input_type="text" input_name="page_name" placeholder="Organization name" is_required=True is_disabled=True value=ngo.name %}
+          {% include "components/input/input.html" with input_id="form_title" input_type="text" input_name="form_title" placeholder="Organization name" is_required=True is_disabled=True value=ngo.name %}
 
           {% trans "Form description" as input_title %}
-          {% include "components/input/textarea.html" with input_id="description" input_title=input_title input_type="textarea" input_name="description" is_required=True value=ngo.description %}
+          {% include "components/input/textarea.html" with input_id="description" input_type="textarea" input_name="description" is_required=True value=ngo.description field=ngo_form.description %}
 
           {% trans "IBAN on form" as input_title %}
-          {% include "components/input/input.html" with input_id="iban" input_type="text" input_name="iban" placeholder="RO001234567812345678" is_required=True value=ngo.bank_account max_length=100 %}
+          {% include "components/input/input.html" with input_id="iban" input_type="text" input_name="iban" placeholder="RO00 1234 5678 1234 5678" is_required=True value=ngo.bank_account field=ngo_form.iban max_length=48 %}
 
         </div>
       </fieldset>

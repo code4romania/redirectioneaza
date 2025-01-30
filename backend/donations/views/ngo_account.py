@@ -1,11 +1,12 @@
 from typing import List, Optional
 
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied, ValidationError
 from django.db.models import QuerySet
-from django.http import Http404, HttpRequest, HttpResponseBadRequest
+from django.http import Http404, HttpRequest
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
@@ -15,7 +16,8 @@ from django_q.tasks import async_task
 
 from users.models import User
 
-from ..common.validation.registration_number import clean_registration_number, extract_vat_id, ngo_id_number_validator
+from ..common.validation.registration_number import extract_vat_id, ngo_id_number_validator
+from ..forms.ngo_account import NgoFormForm, NgoPresentationForm
 from ..models.donors import Donor
 from ..models.jobs import Job
 from ..models.ngos import Ngo
@@ -162,15 +164,15 @@ class NgoPresentationView(NgoBaseTemplateView):
 
         is_fully_editable = ngo.ngohub_org_id is None
 
+        form = NgoPresentationForm(post, is_fully_editable=is_fully_editable)
+        if not form.is_valid():
+            messages.error(request, _("There are some errors on the presentation form."))
+            context.update({"ngo_presentation": form})
+
+            return render(request, self.template_name, context)
+
         if is_fully_editable:
-            registration_number = clean_registration_number(post.get("cif", ""))
-            registration_number_errors: str = validate_registration_number(ngo, registration_number)
-
-            if registration_number_errors:
-                errors.append(registration_number_errors)
-
-            vat_information = extract_vat_id(registration_number)
-
+            vat_information = extract_vat_id(form.cleaned_data["cif"])
             if ngo.registration_number != vat_information["registration_number"]:
                 ngo.registration_number = vat_information["registration_number"]
                 must_refresh_prefilled_form = True
@@ -179,22 +181,21 @@ class NgoPresentationView(NgoBaseTemplateView):
                 ngo.vat_id = vat_information["vat_id"]
                 must_refresh_prefilled_form = True
 
-            ngo_name = post.get("name", "").strip()
-            if ngo.name != ngo_name:
-                ngo.name = ngo_name
+            if ngo.name != form.cleaned_data["name"]:
+                ngo.name = form.cleaned_data["name"]
+                must_refresh_prefilled_form = True
 
-            ngo.phone = post.get("contact-phone", "").strip()
-            ngo.email = post.get("contact-email", "").strip()
+            ngo.phone = form.cleaned_data["contact_phone"]
+            ngo.email = form.cleaned_data["contact_email"]
 
-            ngo.website = post.get("website", "").strip()
-            ngo.address = post.get("address", "").strip()
-            ngo.county = post.get("county", "").strip()
-            ngo.active_region = post.get("active-region", "").strip()
+            ngo.website = form.cleaned_data["website"]
+            ngo.address = form.cleaned_data["address"]
+            ngo.county = form.cleaned_data["county"]
+            ngo.active_region = form.cleaned_data["active_region"]
 
-        ngo.is_accepting_forms = post.get("is_accepting_forms", "").strip() == "on"
-
-        ngo.display_email = post.get("display-email", "").strip() == "on"
-        ngo.display_phone = post.get("display-phone", "").strip() == "on"
+        ngo.is_accepting_forms = form.cleaned_data["is_accepting_forms"]
+        ngo.display_email = form.cleaned_data["display_email"]
+        ngo.display_phone = form.cleaned_data["display_phone"]
 
         if errors:
             return render(request, self.template_name, context)
@@ -261,23 +262,32 @@ class NgoFormsView(NgoBaseTemplateView):
 
         must_refresh_prefilled_form = False
 
-        ngo_slug = post.get("organization-slug", "").strip().lower()
-        ngo_slug_errors = CheckNgoUrl.validate_ngo_slug(user, ngo_slug)
-        ngo.slug = ngo_slug
+        form = NgoFormForm(post)
 
-        if isinstance(ngo_slug_errors, HttpResponseBadRequest):
-            errors.append(_("The URL is already used"))
+        if not form.is_valid():
+            messages.error(request, _("There are some errors on the redirection form."))
+            context.update({"ngo_form": form})
+            return render(request, self.template_name, context)
 
-        bank_account = post.get("iban", "").strip().upper().replace(" ", "").replace("<", "").replace(">", "")[:34]
-        bank_account_errors: str = validate_iban(bank_account)
-        if ngo.bank_account != bank_account:
-            ngo.bank_account = bank_account
-            must_refresh_prefilled_form = True
+        slug_has_errors = False
 
-        ngo.description = post.get("description", "").strip()
+        form_slug = form.cleaned_data["slug"]
+        if CheckNgoUrl().check_slug_is_blocked(form_slug):
+            slug_has_errors = True
+            form.add_error("slug", ValidationError(_("The URL is blocked")))
 
-        if bank_account_errors:
-            errors.append(bank_account_errors)
+        if CheckNgoUrl().check_slug_is_reused(form_slug, user):
+            slug_has_errors = True
+            form.add_error("slug", ValidationError(_("The URL is already used")))
+
+        if slug_has_errors:
+            context["ngo_form"] = form
+            return render(request, self.template_name, context)
+
+        ngo.slug = form_slug
+
+        ngo.bank_account = form.cleaned_data["iban"]
+        ngo.description = form.cleaned_data["description"]
 
         if errors:
             return render(request, self.template_name, context)

@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import BadRequest, PermissionDenied
 from django.core.files import File
 from django.core.management import call_command
+from django.db.models import QuerySet
 from django.http import Http404, HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
@@ -75,6 +76,29 @@ class CheckNgoUrl(BaseTemplateView):
 
     def get(self, request, ngo_url, *args, **kwargs):
         return self.validate_ngo_slug(request.user, ngo_url)
+
+    @classmethod
+    def check_slug_is_blocked(cls, slug):
+        if slug.lower() in cls.ngo_url_block_list:
+            return True
+
+        return False
+
+    @classmethod
+    def check_slug_is_reused(cls, slug, user):
+        ngo_queryset: QuerySet[Ngo] = Ngo.objects
+
+        try:
+            if user.ngo:
+                ngo_queryset = ngo_queryset.exclude(id=user.ngo.id)
+        except AttributeError:
+            # Anonymous users don't have the .ngo attribute
+            pass
+
+        if ngo_queryset.filter(slug=slug.lower()).count():
+            return True
+
+        return False
 
     @classmethod
     def validate_ngo_slug(cls, user, slug):

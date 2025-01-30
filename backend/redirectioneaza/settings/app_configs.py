@@ -120,6 +120,8 @@ try:
 except IndexError:
     pass
 
+FORM_COUNTIES_CHOICES = [(county, county) for county in FORM_COUNTIES]
+
 FORM_COUNTIES_NATIONAL = deepcopy(FORM_COUNTIES)
 FORM_COUNTIES_NATIONAL.insert(0, "Național")
 
