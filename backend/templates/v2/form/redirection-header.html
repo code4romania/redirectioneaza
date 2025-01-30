@@ -11,17 +11,19 @@
 
       <div class="mx-auto mt-6 hidden w-full max-w-2xl sm:block lg:max-w-none font-semibold">
 
-        <a href="{{ ngo_website }}" class="hover:text-amber-600">
-          {{ ngo_website_description }}
-        </a>
+        {% if ngo_website %}
+          <a href="{{ ngo_website }}" class="hover:text-amber-600">
+            {{ ngo_website_description }}
+          </a>
+        {% endif %}
 
-        {% if ngo.display_email %}
+        {% if ngo.display_email and ngo.email%}
           <a href="mailto:{{ ngo.email }}" class="hover:text-amber-600">
             {{ ngo.email }}
           </a>
         {% endif %}
 
-        {% if ngo.display_phone %}
+        {% if ngo.display_phone and ngo.phone %}
           <a href="tel:{{ ngo.phone }}" class="hover:text-amber-600">
             {{ ngo.phone }}
           </a>
