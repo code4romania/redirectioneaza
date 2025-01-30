@@ -174,3 +174,29 @@ class HealthCheckHandler(TemplateView):
             content=json.dumps(response).encode("utf-8"),
             content_type="application/json",
         )
+
+
+class EmailDemoHandler(BaseVisibleTemplateView):
+    template_name = "emails"
+    title = "Email demo"
+
+    def get_context_data(self, **kwargs):
+        email_path = kwargs.get("email_path_str")
+        if not email_path:
+            raise ValueError("Email path is required")
+        email_path = email_path.replace("_", "/")
+        self.template_name = f"{self.template_name}/{email_path}.html"
+
+        context = super().get_context_data(**kwargs)
+
+        context.update(
+            {
+                "contact_email": settings.CONTACT_EMAIL_ADDRESS,
+            }
+        )
+
+        query_params = self.request.GET.items()
+        for key, value in query_params:
+            context[key] = value
+
+        return context

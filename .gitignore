@@ -3,11 +3,14 @@ local_tools/*
 !local_tools/requirements.txt
 
 
-static_extras/
-static_extras/**
-!static_extras/css/**
-!static_extras/js/**
-!static_extras/images/**
+
+backend/static_extras/bootstrap/
+backend/static_extras/bootswatch/
+backend/static_extras/bower_components/
+backend/static_extras/fontawesome/
+backend/static_extras/jquery/
+backend/static_extras/less/
+backend/static_extras/tailwind/
 
 # env files
 .env

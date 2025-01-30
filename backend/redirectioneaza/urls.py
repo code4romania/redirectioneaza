@@ -50,6 +50,7 @@ from donations.views.redirections import (
 )
 from donations.views.site import (
     AboutHandler,
+    EmailDemoHandler,
     HealthCheckHandler,
     HomePage,
     NgoListHandler,
@@ -160,6 +161,13 @@ urlpatterns = (
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 )
+
+if settings.DEBUG:
+    urlpatterns.extend(
+        [
+            path("email-demo/<email_path_str>/", EmailDemoHandler.as_view(), name="email-demo"),
+        ]
+    )
 
 # Custom views for errors
 handler400 = create_error_view(error_code=400)
