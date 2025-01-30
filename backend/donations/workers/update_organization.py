@@ -184,7 +184,11 @@ def create_organization_for_user(user, ngohub_org_data: Organization) -> Ngo:
     Create a blank organization for the given user.
     The data regarding the organization will be added from NGO Hub.
     """
-    ngo = Ngo(registration_number=ngohub_org_data.general_data.cui, ngohub_org_id=ngohub_org_data.id)
+    ngo = Ngo(
+        registration_number=ngohub_org_data.general_data.cui,
+        ngohub_org_id=ngohub_org_data.id,
+        is_accepting_forms=True,
+    )
     ngo.save()
 
     update_local_ngo_with_ngohub_data(ngo, ngohub_org_data)
