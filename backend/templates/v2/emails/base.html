@@ -11,7 +11,7 @@
 </head>
 
 <body style="font-family:Inter, Arial, sans-serif;background-color:#f4f4f4;margin:0;padding:0;">
-<div style="margin:auto auto 3rem;text-align:left;background:#ffffff;width:75%;">
+<div style="margin:auto auto 3rem;text-align:left;background:#ffffff;width:75%;max-width:600px;">
 
   <div style="background:#ecfeff;padding:20px;margin-top:0;">
     <img
@@ -28,89 +28,7 @@
 
   {% block content %}{% endblock %}
 
-  <div
-      style="background:#000000;font-size:12px;color:#fff;margin-top:20px;padding:20px 40px;display: flex;flex-direction: column;flex-wrap: nowrap;justify-content: flex-start;align-items: center;align-content: center;">
-
-    <div style="padding: 0 10px;">
-      <div
-          style="display:flex;flex-direction:row;flex-wrap:nowrap;justify-content:normal;align-items:normal;align-content:normal;">
-
-        <div style="margin:0 10px;">
-          <p>
-            {% trans "Solution designed, developed and managed pro-bono by" %}
-          </p>
-        </div>
-
-        <div style="margin:0 10px;">
-          <a
-              href="https://www.code4.ro"
-              style="text-decoration:none;"
-              target="_blank">
-            <img
-                src="{% static 'images/code4romania-inversed.png' %}"
-                width="100"
-                alt="Code for Romania">
-          </a>
-        </div>
-
-      </div>
-      <hr style="width:100%;border:0;border-top:1px solid #fff;margin:10px 0;">
-
-    </div>
-
-    <div>
-      <p>
-        {% trans "If you have any questions, please contact us at" %}
-        <a
-            style="color:#fff;text-decoration:underline;"
-            href="mailto:{{ contact_email }}">
-          {{ contact_email }}
-        </a>
-      </p>
-    </div>
-
-    <div style="margin:auto 0;">
-
-      <a
-          href="https://www.facebook.com/code4romania"
-          style="margin:0 10px;text-decoration: none"
-          target="_blank">
-        <img
-            src="{% static 'images/social-icons/facebook-white.png' %}"
-            width="25px"
-            alt="Facebook">
-      </a>
-
-      <a
-          href="https://instagram.com/code4romania"
-          style="margin:0 10px;text-decoration: none"
-          target="_blank">
-        <img
-            src="{% static 'images/social-icons/instagram-white.png' %}"
-            width="25px"
-            alt="Instagram">
-      </a>
-
-      <a
-          href="https://github.com/code4romania/redirectioneaza"
-          style="margin:0 10px;text-decoration: none"
-          target="_blank">
-        <img
-            src="{% static 'images/social-icons/github-white.png' %}"
-            width="25px"
-            alt="GitHub">
-      </a>
-
-    </div>
-
-    <div>
-      <p>
-        © {% now "Y" %} Code for Romania.
-        {% trans "All rights reserved." %}
-      </p>
-    </div>
-
-  </div>
+  {% include "emails/base-footer.html" %}
 
 </div>
 </body>
