@@ -39,6 +39,7 @@ from donations.views.api import (
     UpdateFromNgohub,
 )
 from donations.views.cron import NgoRemoveForms
+from donations.views.errors import create_error_view
 from donations.views.ngo_account import (
     ArchiveDownloadLinkView,
 )
@@ -159,3 +160,9 @@ urlpatterns = (
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 )
+
+# Custom views for errors
+handler400 = create_error_view(error_code=400)
+handler403 = create_error_view(error_code=403)
+handler404 = create_error_view(error_code=404)
+handler500 = create_error_view(error_code=500)
