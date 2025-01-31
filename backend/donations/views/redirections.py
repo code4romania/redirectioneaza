@@ -13,7 +13,7 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 from ipware import get_client_ip
 
-from redirectioneaza.common.messaging import send_email
+from redirectioneaza.common.messaging import extend_email_context, send_email
 
 from ..forms.redirection import DonationForm
 from ..models.donors import Donor
@@ -161,7 +161,7 @@ class RedirectionHandler(TemplateView):
         post = self.request.POST
 
         try:
-            ngo = Ngo.active.get(slug=ngo_url)
+            ngo: Ngo = Ngo.active.get(slug=ngo_url)
         except Ngo.DoesNotExist:
             raise Http404
 
@@ -227,33 +227,52 @@ class RedirectionHandler(TemplateView):
         # set the donor id in cookie
         request.session["donor_id"] = str(new_donor.pk)
 
+        mail_context = {"action_url": request.build_absolute_uri(new_donor.form_url)}
+        mail_context.update(extend_email_context(request))
+
+        donor_email_context = mail_context.copy()
+        donor_email_context.update(
+            {
+                "ngo_url": request.build_absolute_uri(reverse("twopercent", kwargs={"ngo_url": ngo_url})),
+            }
+        )
+
         # send and email to the donor with a link to the PDF file
         if signature:
             send_email(
-                subject=_("Formularul tău de redirecționare"),
-                to_emails=[new_donor.email],
-                html_template="email/signed-form/signed_form.html",
-                text_template="email/signed-form/signed_form_text.txt",
-                context={"form_url": new_donor.form_url},
-            )
-            send_email(
                 subject=_("Un nou formular de redirecționare"),
                 to_emails=[ngo.email],
-                html_template="email/ngo-signed-form/signed_form.html",
-                text_template="email/ngo-signed-form/signed_form_text.txt",
-                context={"form_url": new_donor.form_url},
+                html_template="emails/ngo/new-form-received/main.html",
+                text_template="emails/ngo/new-form-received/main.txt",
+                context=mail_context,
             )
-        else:
             send_email(
                 subject=_("Formularul tău de redirecționare"),
                 to_emails=[new_donor.email],
-                html_template="email/twopercent-form/twopercent_form.html",
-                text_template="email/twopercent-form/twopercent_form_text.txt",
-                context={
-                    "name": new_donor.f_name,
-                    "form_url": new_donor.form_url,
-                    "ngo": ngo,
-                },
+                html_template="emails/donor/redirection-with-signature/main.html",
+                text_template="emails/donor/redirection-with-signature/main.txt",
+                context=donor_email_context,
+            )
+        else:
+            ngo_address = ngo.address
+            if ngo.locality:
+                ngo_address += f", {ngo.locality}"
+            if ngo.county:
+                ngo_address += f", {ngo.county}"
+
+            donor_email_context.update(
+                {
+                    "ngo_name": ngo.name,
+                    "ngo_address": ngo_address,
+                    "ngo_email": ngo.email,
+                }
+            )
+            send_email(
+                subject=_("Formularul tău de redirecționare"),
+                to_emails=[new_donor.email],
+                html_template="emails/donor/redirection-sans-signature/main.html",
+                text_template="emails/donor/redirection-sans-signature/main.txt",
+                context=donor_email_context,
             )
 
         url = reverse("ngo-twopercent-success", kwargs={"ngo_url": ngo_url})

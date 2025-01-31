@@ -56,8 +56,6 @@
 
                     {% block content %}{% endblock %}
 
-                    {{ action_url }}
-
                     {% if action_url  %}
                       {% include "emails/components/subcopy.html" with title=action_title url=action_url %}
                     {% endif %}

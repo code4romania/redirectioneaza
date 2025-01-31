@@ -4,6 +4,7 @@ from django.urls import path
 from django.views.generic import RedirectView
 
 from donations.views.ngo_account import (
+    ArchiveDownloadLinkView,
     NgoArchivesView,
     NgoFormsView,
     NgoPresentationView,
@@ -23,4 +24,5 @@ urlpatterns = [
     path("redirectionari/", NgoRedirectionsView.as_view(), name="redirections"),
     path("arhive/", NgoArchivesView.as_view(), name="archives"),
     path("settings/", NgoSettingsView.as_view(), name="settings"),
+    path("arhiva/<job_id>/", ArchiveDownloadLinkView.as_view(), name="archive-download-link"),
 ]

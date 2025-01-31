@@ -31,7 +31,7 @@
       </td>
       <td class="px-1 py-4 whitespace-nowrap">
         {% if archive.status == "done" %}
-          <a href="{% url 'admin-download-link' job_id=archive.pk %}">
+          <a href="{% url 'my-organization:archive-download-link' job_id=archive.pk %}">
             {% trans "Download" %}
           </a>
         {% else %}

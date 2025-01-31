@@ -2,6 +2,7 @@ import logging
 import uuid
 
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth import authenticate, get_user_model, login, logout
 from django.db import IntegrityError
 from django.http import Http404, HttpRequest
@@ -10,7 +11,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from redirectioneaza.common.messaging import send_email
+from redirectioneaza.common.messaging import extend_email_context, send_email
 
 from ..forms.account import ForgotPasswordForm, LoginForm, RegisterForm, ResetPasswordForm
 from .base import BaseVisibleTemplateView
@@ -37,7 +38,7 @@ class ForgotPasswordView(BaseVisibleTemplateView):
 
         form = ForgotPasswordForm(request.POST)
         if not form.is_valid():
-            context["errors"] = form.errors
+            context["form"] = form
             return render(request, self.template_name, context)
 
         try:
@@ -46,38 +47,43 @@ class ForgotPasswordView(BaseVisibleTemplateView):
             user = None
 
         if user and not user.is_ngohub_user:
-            self._send_password_reset_email(user)
+            self._send_password_reset_email(request, user)
         elif user.is_ngohub_user:
             # TODO: send an e-mail to the user
             #       notify them that they should log in through NGO Hub
             pass
 
-        context["found"] = _("If the email address is valid, you will receive an email with instructions.")
+        messages.success(
+            request,
+            _("If the email address is valid, you will receive an email with instructions."),
+        )
 
         return render(request, self.template_name, context)
 
-    def _send_password_reset_email(self, user: UserModel):
+    def _send_password_reset_email(self, request: HttpRequest, user: UserModel):
+        verification_url = request.build_absolute_uri(
+            reverse(
+                "verification",
+                kwargs={
+                    "verification_type": "p",
+                    "user_id": user.id,
+                    "signup_token": user.refresh_token(),
+                },
+            )
+        )
+
         template_context = {
-            "name": user.first_name,
-            "url": "{}://{}{}".format(
-                self.request.scheme,
-                self.request.get_host(),
-                reverse(
-                    "verification",
-                    kwargs={
-                        "verification_type": "p",
-                        "user_id": user.id,
-                        "signup_token": user.refresh_token(),
-                    },
-                ),
-            ),
+            "first_name": user.first_name,
+            "action_url": verification_url,
             "contact_email": settings.CONTACT_EMAIL_ADDRESS,
         }
+        template_context.update(extend_email_context(request))
+
         send_email(
             subject=_("Reset redirectioneaza.ro password"),
             to_emails=[user.email],
-            text_template="email/reset/reset_password.txt",
-            html_template="email/reset/reset_password.html",
+            text_template="emails/account/reset-password/main.txt",
+            html_template="emails/account/reset-password/main.html",
             context=template_context,
         )
 
@@ -229,30 +235,28 @@ class SignupView(BaseVisibleTemplateView):
             context.update({"nume": first_name, "prenume": last_name, "email": email})
             return render(request, self.template_name, context)
 
-        token = user.refresh_token()
-        verification_url = "https://{}{}".format(
-            self.request.get_host(),
+        verification_url = request.build_absolute_uri(
             reverse(
                 "verification",
                 kwargs={
                     "verification_type": "v",
                     "user_id": user.id,
-                    "signup_token": token,
+                    "signup_token": user.refresh_token(),
                 },
-            ),
+            )
         )
 
         template_values = {
-            "name": user.last_name,
-            "url": verification_url,
-            "host": self.request.get_host(),
+            "first_name": user.first_name,
+            "action_url": verification_url,
         }
+        template_values.update(extend_email_context(request))
 
         send_email(
             subject=_("Welcome to redirectioneaza.ro"),
             to_emails=[user.email],
-            text_template="email/signup/signup_text.txt",
-            html_template="email/signup/signup_inline.html",
+            text_template="emails/account/activate-account/main.txt",
+            html_template="emails/account/activate-account/main.html",
             context=template_values,
         )
 
@@ -296,8 +300,6 @@ class VerificationView(BaseVisibleTemplateView):
         else:
             # user.clear_token()
             pass
-
-        django_login(request, user)
 
         if verification_type == "v":
             user.is_verified = True

@@ -2,8 +2,6 @@
 
 {% trans "Hello," %} {{ first_name }},
 
-{% block content %}
-
 {% blocktrans trimmed %}
   Welcome to redirectioneaza.ro!
 {% endblocktrans %}

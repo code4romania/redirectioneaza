@@ -2,8 +2,6 @@
 
 {% trans "Hello," %} {{ first_name }},
 
-{% block content %}
-
 {% blocktrans trimmed %}
   We received a request to reset your password on redirectioneaza.ro.
   You can reset your password by clicking the button below.

@@ -24,7 +24,8 @@ from donations.common.validation.registration_number import REGISTRATION_NUMBER_
 from donations.models.donors import Donor
 from donations.models.jobs import Job, JobDownloadError, JobStatusChoices
 from donations.models.ngos import Ngo
-from redirectioneaza.common.messaging import send_email
+from redirectioneaza.common.app_url import build_uri
+from redirectioneaza.common.messaging import extend_email_context, send_email
 
 logger = logging.getLogger(__name__)
 
@@ -59,12 +60,17 @@ def download_donations_job(job_id: int = 0):
             job.save()
             return
 
+    mail_context = {
+        "action_url": build_uri(reverse("my-organization:archive-download-link", kwargs={"job_id": job.id})),
+    }
+    mail_context.update(extend_email_context())
+
     send_email(
         subject=_("Documents ready for download"),
         to_emails=[job.ngo.email],
-        text_template="email/zipped_forms/zipped_forms.txt",
-        html_template="email/zipped_forms/zipped_forms.html",
-        context={"link": reverse("admin-download-link", kwargs={"job_id": job.id})},
+        html_template="emails/ngo/download-archive/main.html",
+        text_template="emails/ngo/download-archive/main.txt",
+        context=mail_context,
     )
 
 

@@ -41,9 +41,6 @@ from donations.views.api import (
 )
 from donations.views.cron import NgoRemoveForms
 from donations.views.errors import create_error_view
-from donations.views.ngo_account import (
-    ArchiveDownloadLinkView,
-)
 from donations.views.redirections import (
     OwnFormDownloadLinkHandler,
     RedirectionHandler,
@@ -142,7 +139,6 @@ urlpatterns = (
         path("admin/django/", RedirectView.as_view(pattern_name="admin:index", permanent=True)),
         # ADMIN HANDLERS
         path("admin/organizatii/", RedirectView.as_view(pattern_name="admin:index", permanent=True)),
-        path("admin/download/<job_id>/", ArchiveDownloadLinkView.as_view(), name="admin-download-link"),
         # must always be the last set of urls
         re_path(r"^(?P<ngo_url>[\w-]+)/doilasuta/", RedirectView.as_view(pattern_name="twopercent", permanent=True)),
         # re_path(r"^(?P<ngo_url>[\w-]+)/semnatura/", FormSignature.as_view(), name="ngo-twopercent-signature"),

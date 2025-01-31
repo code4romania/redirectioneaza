@@ -3,11 +3,25 @@ from typing import Dict, List
 
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
+from django.http import HttpRequest
 from django.template.loader import get_template, render_to_string
+from django.templatetags.static import static
 from django.utils.translation import gettext_lazy as _
 from django_q.tasks import async_task
 
+from redirectioneaza.common.app_url import build_uri
+
 logger = logging.getLogger(__name__)
+
+
+def extend_email_context(request: HttpRequest = None) -> Dict:
+    return {
+        "logo_code4romania": build_uri(static("images/code4romania.png"), request),
+        "logo_instagram": build_uri(static("images/social-icons/instagram.png"), request),
+        "logo_facebook": build_uri(static("images/social-icons/facebook.png"), request),
+        "logo_github": build_uri(static("images/social-icons/github.png"), request),
+        "logo_redirect": build_uri(static("images/logo.png"), request),
+    }
 
 
 def send_email(subject: str, to_emails: List[str], text_template: str, html_template: str, context: Dict):
