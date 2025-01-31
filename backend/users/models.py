@@ -1,8 +1,6 @@
-import hashlib
 import hmac
 import uuid
 
-from django.conf import settings
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import AbstractUser, Group, UserManager
 from django.db import models
@@ -83,10 +81,8 @@ class User(AbstractUser):
 
     token_timestamp = models.DateTimeField(verbose_name=_("validation token timestamp"), blank=True, null=True)
 
-    old_password = models.CharField(verbose_name=_("old password"), max_length=128, blank=True, null=True)
-
-    date_created = models.DateTimeField(verbose_name=_("date created"), db_index=True, auto_now_add=timezone.now)
-    date_updated = models.DateTimeField(verbose_name=_("date updated"), db_index=True, auto_now=timezone.now)
+    date_created = models.DateTimeField(verbose_name=_("date created"), db_index=True, auto_now_add=True)
+    date_updated = models.DateTimeField(verbose_name=_("date updated"), db_index=True, auto_now=True)
 
     objects = CustomUserManager()
 
@@ -143,43 +139,6 @@ class User(AbstractUser):
 
         if commit:
             self.save()
-
-    @staticmethod
-    def old_hash_password(password, method, salt=None, pepper=None):
-        """
-        Implement the old password hashing algorithm from webapp2
-        """
-        if method == "plain":
-            return password
-
-        method = getattr(hashlib, method, None)
-        if not method:
-            return None
-
-        if salt:
-            h = hmac.new(salt.encode("utf8"), password.encode("utf8"), method)
-        else:
-            h = method(password)
-
-        if pepper:
-            h = hmac.new(pepper.encode("utf8"), h.hexdigest().encode("utf8"), method)
-
-        return h.hexdigest()
-
-    def check_old_password(self, password: str = ""):
-        """
-        Validate the user password input based on the old webapp2 algorithm
-        """
-        if not password:
-            return False
-
-        if not self.old_password or self.old_password.count("$") < 2:
-            return False
-
-        pepper = settings.OLD_SESSION_KEY
-        hash_val, method, salt = self.old_password.split("$", 2)
-
-        return hmac.compare_digest(self.old_hash_password(password, method, salt, pepper), hash_val)
 
     @staticmethod
     def create_admin_login_url(next_url=""):

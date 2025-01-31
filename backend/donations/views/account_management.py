@@ -120,33 +120,20 @@ class LoginView(BaseVisibleTemplateView):
         password = form.cleaned_data["password"]
 
         user = authenticate(email=email, password=password)
-        if user is not None:
-            django_login(request, user)
-            if user.has_perm("users.can_view_old_dashboard"):
-                return redirect(reverse("admin-index"))
+        if user is None:
+            logger.warning("Invalid email or password: {0}".format(email))
 
-            return redirect(reverse("my-organization:dashboard"))
-        elif settings.ALLOW_OLD_PASSWORDS:
-            # Check the old password authentication and migrate it to the new method
-            user_model = get_user_model()
-            try:
-                user = user_model.objects.get(email=email)
-            except user_model.DoesNotExist:
-                user = None
+            context["email"] = email
+            context["errors"] = _("It seems that this email and password combination is incorrect.")
 
-            if user and user.check_old_password(password):
-                user.set_password(password)
-                user.save()
-                django_login(request, user)
-                if user.has_perm("users.can_view_old_dashboard"):
-                    return redirect(reverse("admin-index"))
-                return redirect(reverse("my-organization:dashboard"))
+            return render(request, self.template_name, context)
 
-        logger.warning("Invalid email or password: {0}".format(email))
-        context["email"] = email
-        context["errors"] = _("It seems that this email and password combination is incorrect.")
+        # TODO: check if the account is verified before authenticating
+        django_login(request, user)
+        if user.has_perm("users.can_view_old_dashboard"):
+            return redirect(reverse("admin-index"))
 
-        return render(request, self.template_name, context)
+        return redirect(reverse("my-organization:dashboard"))
 
 
 class LogoutView(BaseVisibleTemplateView):
