@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-31 11:42+0200\n"
+"POT-Creation-Date: 2025-01-31 13:15+0200\n"
 "PO-Revision-Date: 2024-03-07 11:27+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -367,15 +367,19 @@ msgstr "Apartament"
 msgid "Two years"
 msgstr "Doi ani"
 
-#: donations/forms/redirection.py:29
+#: donations/forms/redirection.py:29 donations/models/donors.py:92
+msgid "ANAF GDPR"
+msgstr "ANAF GDPR"
+
+#: donations/forms/redirection.py:30
 msgid "Agree contact"
 msgstr "Acord contact"
 
-#: donations/forms/redirection.py:30
+#: donations/forms/redirection.py:31
 msgid "Agree terms"
 msgstr "Acord termeni"
 
-#: donations/forms/redirection.py:32 templates/v2/form/signature.html:7
+#: donations/forms/redirection.py:33 templates/v2/form/signature.html:7
 msgid "Signature"
 msgstr "Semnătura"
 
@@ -433,13 +437,9 @@ msgstr "anonim"
 msgid "If the user would like the ngo to see the donation"
 msgstr "Dacă utilizatorul dorește ca ONG-ul să vadă donația"
 
-#: donations/models/donors.py:92
-msgid "ANAF GDPR"
-msgstr ""
-
 #: donations/models/donors.py:94
 msgid "If the user agrees for ANAF to share their data with the NGO"
-msgstr ""
+msgstr "Dacă utilizatorul este de acord ca ANAF să împărtășească datele cu ONG-ul"
 
 #: donations/models/donors.py:99
 msgid "income type"
@@ -677,7 +677,11 @@ msgstr "Înregistrare prin NGO Hub"
 msgid "Welcome to redirectioneaza.ro"
 msgstr "Confirmare cont redirectioneaza.ro"
 
-#: donations/views/account_management.py:287
+#: donations/views/account_management.py:278
+msgid "Account created"
+msgstr "Cont creat"
+
+#: donations/views/account_management.py:289
 msgid "Verification"
 msgstr "Verificare"
 
@@ -825,7 +829,7 @@ msgstr "Există erori în formularul de prezentare."
 msgid "Organization forms"
 msgstr "Formulare organizație"
 
-#: donations/views/ngo_account.py:268 donations/views/redirections.py:174
+#: donations/views/ngo_account.py:268 donations/views/redirections.py:173
 msgid "There are some errors on the redirection form."
 msgstr "Există erori în formularul de redirecționare."
 
@@ -1285,6 +1289,15 @@ msgstr "Confirmă parola"
 msgid "Change password"
 msgstr "Schimbă parola"
 
+#: templates/v2/account/signup-confirmation.html:8
+msgid "Your account has been successfully created"
+msgstr "Contul tău a fost creat cu succes"
+
+#: templates/v2/account/signup-confirmation.html:12
+msgid "Please check your email for a confirmation link, then log in."
+msgstr "Te rugăm să verifici emailul pentru un link de confirmare, apoi te "
+"poți conecta."
+
 #: templates/v2/account/snippets/errors.html:6
 msgid "Error!"
 msgstr "Eroare!"
@@ -1441,12 +1454,12 @@ msgstr "Încarcă o imagine"
 #: templates/v2/emails/ngo/download-archive/main.html:6
 #: templates/v2/emails/ngo/download-archive/main.txt:3
 msgid "Hello,"
-msgstr ""
+msgstr "Salut,"
 
 #: templates/v2/emails/account/activate-account/main.html:13
 #: templates/v2/emails/account/activate-account/main.txt:7
 msgid "Welcome to redirectioneaza.ro!"
-msgstr ""
+msgstr "Bine ai venit pe redirectioneaza.ro!"
 
 #: templates/v2/emails/account/activate-account/main.html:19
 #: templates/v2/emails/account/activate-account/main.txt:11
@@ -1454,17 +1467,19 @@ msgid ""
 "We're happy to have you on the platform! To activate your account, you have "
 "to confirm your email address by clicking the button below."
 msgstr ""
+"Suntem bucuroși să te avem pe platformă! Pentru a-ți activa contul, trebuie "
+"să-ți confirmi adresa de email apăsând butonul de mai jos."
 
 #: templates/v2/emails/account/activate-account/main.html:25
 msgid "Activate your account"
-msgstr ""
+msgstr "Activează-ți contul"
 
 #: templates/v2/emails/account/activate-account/main.html:28
 #: templates/v2/emails/account/activate-account/main.txt:18
 #: templates/v2/emails/ngo/download-archive/main.html:21
 #: templates/v2/emails/ngo/download-archive/main.txt:11
 msgid "Thank you for being part of this community!"
-msgstr ""
+msgstr "Mulțumim că faci parte din această comunitate!"
 
 #: templates/v2/emails/account/reset-password/main.html:13
 #: templates/v2/emails/account/reset-password/main.txt:7
@@ -1472,48 +1487,51 @@ msgid ""
 "We received a request to reset your password on redirectioneaza.ro. You can "
 "reset your password by clicking the button below."
 msgstr ""
+"Am primit o cerere de resetare a parolei tale pe redirectioneaza.ro. Poți să-ți "
+"resetezi parola apăsând butonul de mai jos."
 
 #: templates/v2/emails/account/reset-password/main.html:23
 #: templates/v2/emails/account/reset-password/main.txt:14
 msgid "If you didn't request a password reset, you can ignore this email."
-msgstr ""
+msgstr "Dacă nu ai cerut resetarea parolei, poți ignora acest email."
 
 #: templates/v2/emails/admin-new-ngo-registered/main.html:6
 #: templates/v2/emails/admin-new-ngo-registered/main.txt:3
 msgid "A new NGO has registered on redirectioneaza.ro"
-msgstr ""
+msgstr "Un nou ONG s-a înregistrat pe redirectioneaza.ro"
 
 #: templates/v2/emails/admin-new-ngo-registered/main.html:14
 #: templates/v2/emails/admin-new-ngo-registered/main.txt:5
 msgid "NGO name"
-msgstr ""
+msgstr "Nume ONG"
 
 #: templates/v2/emails/admin-new-ngo-registered/main.html:22
 #: templates/v2/emails/admin-new-ngo-registered/main.txt:6
 msgid "NGO email"
-msgstr ""
+msgstr "Email ONG"
 
 #: templates/v2/emails/admin-new-ngo-registered/main.html:30
 #: templates/v2/emails/admin-new-ngo-registered/main.txt:7
 msgid "NGO ID"
-msgstr ""
+msgstr "ID ONG"
 
 #: templates/v2/emails/base-footer.html:12
 msgid "If you have any questions, please contact us at"
-msgstr ""
+msgstr "Dacă ai întrebări, te rugăm să ne contactezi la"
 
 #: templates/v2/emails/base-footer.html:48
 msgid "All rights reserved."
-msgstr ""
+msgstr "Toate drepturile rezervate."
 
 #: templates/v2/emails/base-header.html:5
 msgid "Redirecționează logo"
-msgstr ""
+msgstr "Logo Redirecționează"
 
 #: templates/v2/emails/components/button-with-backup.html:9
 msgid ""
 "If the button above does not work, you can also click on the following link:"
 msgstr ""
+"Dacă butonul de mai sus nu funcționează, poți apăsa și pe următorul link:"
 
 #: templates/v2/emails/donor/redirection-sans-signature/main.html:6
 #: templates/v2/emails/donor/redirection-sans-signature/main.txt:3
@@ -1521,6 +1539,8 @@ msgid ""
 "You're one step closer to redirecting your income tax to the cause you "
 "believe in"
 msgstr ""
+"Ești un pas mai aproape de a redirecționa impozitul pe venit către cauza în "
+"care crezi"
 
 #: templates/v2/emails/donor/redirection-sans-signature/main.html:12
 #: templates/v2/emails/donor/redirection-sans-signature/main.txt:5
@@ -1529,17 +1549,19 @@ msgid ""
 "Thank you for choosing to support %(ngo_name)s! You can download the "
 "completed form by clicking the button below."
 msgstr ""
+"Mulțumim că ai ales să susții %(ngo_name)s! Poți descărca formularul "
+"completat apăsând butonul de mai jos."
 
 #: templates/v2/emails/donor/redirection-sans-signature/main.html:18
 #: templates/v2/emails/donor/redirection-with-signature/main.html:20
 #: templates/v2/emails/ngo/new-form-received/main.html:19
 msgid "Download form"
-msgstr ""
+msgstr "Descarcă formular"
 
 #: templates/v2/emails/donor/redirection-sans-signature/main.html:22
 #: templates/v2/emails/donor/redirection-sans-signature/main.txt:13
 msgid "The next steps"
-msgstr ""
+msgstr "Următorii pași"
 
 #: templates/v2/emails/donor/redirection-sans-signature/main.html:26
 #: templates/v2/emails/donor/redirection-sans-signature/main.txt:15
@@ -1549,18 +1571,21 @@ msgid ""
 "submission, or you can hand it over personally to a representative of the "
 "organization."
 msgstr ""
+"Pentru a finaliza redirecționarea, tipărește și semnează formularul, apoi "
+"trimite-l prin curier sau poștă la adresa ONG-ului, iar ei se vor ocupa de "
+"depunere, sau îl poți preda personal organizației."
 
 #: templates/v2/emails/donor/redirection-sans-signature/main.html:36
 #: templates/v2/emails/donor/redirection-sans-signature/main.txt:23
 msgid "The organization's contact info"
-msgstr ""
+msgstr "Informații de contact ale organizației"
 
 #: templates/v2/emails/donor/redirection-sans-signature/main.html:55
 #: templates/v2/emails/donor/redirection-sans-signature/main.txt:29
 #: templates/v2/emails/donor/redirection-with-signature/main.html:24
 #: templates/v2/emails/donor/redirection-with-signature/main.txt:15
 msgid "Do you want to give an extra helping hand?"
-msgstr ""
+msgstr "Vrei să dai o mână de ajutor în plus?"
 
 #: templates/v2/emails/donor/redirection-sans-signature/main.html:59
 #: templates/v2/emails/donor/redirection-sans-signature/main.txt:31
@@ -1570,6 +1595,8 @@ msgid ""
 "If you want to be a true civic superhero, you can help the organization "
 "collect more forms! Here's how:"
 msgstr ""
+"Dacă vrei să fii un adevărat super erou civic, poți ajuta organizația să "
+"strângă mai multe formulare! Iată cum:"
 
 #: templates/v2/emails/donor/redirection-sans-signature/main.html:68
 #: templates/v2/emails/donor/redirection-sans-signature/main.txt:37
@@ -1581,6 +1608,9 @@ msgid ""
 "and encourage your friends to complete the form online for the organization "
 "you believe in, simply and safely, on redirectioneaza.ro."
 msgstr ""
+"Împărtășește <a href=\"%(ngo_url)s\">pagina organizației</a> pe rețelele de "
+"socializare și încurajează-ți prietenii să completeze formularul online pentru "
+"organizația în care crezi, simplu și în siguranță, pe redirectioneaza.ro."
 
 #: templates/v2/emails/donor/redirection-sans-signature/main.html:78
 #: templates/v2/emails/donor/redirection-sans-signature/main.txt:46
@@ -1591,18 +1621,20 @@ msgid ""
 "Download the form 230 template for %(ngo_name)s, print multiple copies and "
 "convince your colleagues, friends or family to complete it."
 msgstr ""
+"Descarcă modelul formularului 230 pentru %(ngo_name)s, tipărește mai multe "
+"copii și să-i convingi pe colegii, prietenii sau familia ta să-l completeze."
 
 #: templates/v2/emails/donor/redirection-sans-signature/main.html:87
 #: templates/v2/emails/donor/redirection-sans-signature/main.txt:52
 #: templates/v2/emails/donor/redirection-with-signature/main.html:56
 #: templates/v2/emails/donor/redirection-with-signature/main.txt:38
 msgid "Thank you for your involvement!"
-msgstr ""
+msgstr "Mulțumim pentru implicare!"
 
 #: templates/v2/emails/donor/redirection-with-signature/main.html:6
 #: templates/v2/emails/donor/redirection-with-signature/main.txt:3
 msgid "Good news! You have just redirected a part of your income tax!"
-msgstr ""
+msgstr "Vești bune! Ai redirecționat o parte din impozitul pe venit!"
 
 #: templates/v2/emails/donor/redirection-with-signature/main.html:12
 #: templates/v2/emails/donor/redirection-with-signature/main.txt:5
@@ -1612,6 +1644,9 @@ msgid ""
 "organization, so you don't have to worry about anything else. You can see "
 "the form you have filled in by clicking the button below."
 msgstr ""
+"Mulțumim că ai ales să susții %(ngo_name)s! Formularul tău a ajuns la "
+"organizație, așa că nu mai trebuie să-ți faci griji. Poți vedea formularul "
+"pe care l-ai completat apăsând butonul de mai jos."
 
 #: templates/v2/emails/ngo/download-archive/main.html:12
 #: templates/v2/emails/ngo/download-archive/main.txt:5
@@ -1619,11 +1654,13 @@ msgid ""
 "We have received your request and have created an archive with all the "
 "information you need."
 msgstr ""
+"Am primit cererea ta și am creat un arhivă cu toate informațiile de care ai "
+"nevoie."
 
 #: templates/v2/emails/ngo/new-form-received/main.html:6
 #: templates/v2/emails/ngo/new-form-received/main.txt:3
 msgid "Good news! You have a new redirection form"
-msgstr ""
+msgstr "Vești bune! Ai un nou formular de redirecționare"
 
 #: templates/v2/emails/ngo/new-form-received/main.html:12
 #: templates/v2/emails/ngo/new-form-received/main.txt:5
@@ -1632,6 +1669,9 @@ msgid ""
 "income tax. You can access the completed form by clicking the button below. "
 "Remember to submit it to ANAF to complete the process!"
 msgstr ""
+"Un nou super erou a decis să susțină organizația ta redirecționând impozitul "
+"pe venit. Poți accesa formularul completat apăsând butonul de mai jos. Nu "
+"uita să-l depui la ANAF pentru a finaliza procesul!"
 
 #: templates/v2/form/confirmation.html:35
 msgid "Continue without signing?"
@@ -1739,7 +1779,9 @@ msgid ""
 "identification data (name, surname, and personal identification code/tax "
 "identification number), as well as the amount directed."
 msgstr ""
-"Sunt de acord ca ANAF să comunice entității beneficiare datele mele de identificare (nume, prenume și cod numeric personal/număr de identificare fiscală), precum și suma direcționată."
+"Sunt de acord ca ANAF să comunice entității beneficiare datele mele de "
+"identificare (nume, prenume și cod numeric personal/număr de identificare "
+"fiscală), precum și suma direcționată."
 
 #: templates/v2/form/redirection-open.html:163
 msgid ""
