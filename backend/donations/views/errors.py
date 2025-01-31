@@ -2,7 +2,7 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 
 
-def create_error_view(error_code: int) -> HttpResponse:
+def create_error_view(error_code: int) -> callable:
     """
     Return a callable for handling different error codes
     """
