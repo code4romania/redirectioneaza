@@ -24,18 +24,4 @@ TEMPLATES = [
             ],
         },
     },
-    {
-        # The original v1 templates which use the Jinja engine
-        "BACKEND": "django.template.backends.jinja2.Jinja2",
-        "DIRS": [os.path.abspath(os.path.join(BASE_DIR, "templates", "v1"))],
-        "APP_DIRS": False,
-        "OPTIONS": {
-            "environment": "redirectioneaza.jinja2.environment",
-            "context_processors": [
-                "partners.context_processors.custom_subdomain",
-                "users.context_processors.get_admin_properties",
-                "donations.context_processors.default_ngo_logo",
-            ],
-        },
-    },
 ]

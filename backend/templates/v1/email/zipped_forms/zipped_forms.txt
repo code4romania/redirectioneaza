@@ -1,3 +1,0 @@
-Arhiva cu formularele organizației a fost generată și este disponibilă la următorul URL:
-
-https://redirectioneaza.ro{{ link }}
