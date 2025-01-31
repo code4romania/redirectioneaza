@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-31 17:01+0200\n"
+"POT-Creation-Date: 2025-01-31 18:02+0200\n"
 "PO-Revision-Date: 2024-02-28 15:45+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -1457,70 +1457,75 @@ msgstr "To access your account, you need to authenticate through NGO Hub."
 
 #: templates/v2/account/snippets/third-party.html:36
 msgid ""
-"If you're a non-profit organization, you can benefit from all the solutions "
-"in the NGO-dedicated ecosystem through NGO Hub. To access redirectioneaza.ro "
-"through your NGO Hub account, make sure:"
+"Use your NGO Hub account to access redirectioneaza.ro and other applications "
+"dedicated to civil society, all in one place."
 msgstr ""
 
-#: templates/v2/account/snippets/third-party.html:49
+#: templates/v2/account/snippets/third-party.html:60
+msgid "To access redirectioneaza.ro through your NGO Hub account, make sure:"
+msgstr ""
+
+#: templates/v2/account/snippets/third-party.html:72
 msgid "You have an active account in NGO Hub"
 msgstr ""
 
-#: templates/v2/account/snippets/third-party.html:51
+#: templates/v2/account/snippets/third-party.html:74
 #, fuzzy
 #| msgid "Login through NGO Hub"
 msgid "Register your organization in NGO Hub"
 msgstr "Login through NGO Hub"
 
-#: templates/v2/account/snippets/third-party.html:55
+#: templates/v2/account/snippets/third-party.html:78
 msgid ""
 "If you don't have an account in NGO Hub, you can create one for free. Learn "
-"more about the benefits of NGO Hub"
+"more about the"
 msgstr ""
 
-#: templates/v2/account/snippets/third-party.html:59
-msgid "here"
-msgstr ""
+#: templates/v2/account/snippets/third-party.html:82
+#, fuzzy
+#| msgid "NGOs from NGO Hub"
+msgid "benefits of NGO Hub"
+msgstr "NGOs from NGO Hub"
 
-#: templates/v2/account/snippets/third-party.html:67
+#: templates/v2/account/snippets/third-party.html:92
 msgid "You have activated the Redirecționează platform in your NGO Hub account"
 msgstr ""
 
-#: templates/v2/account/snippets/third-party.html:69
+#: templates/v2/account/snippets/third-party.html:94
 msgid "Activate the Redirecționează application in your NGO Hub account"
 msgstr ""
 
-#: templates/v2/account/snippets/third-party.html:74
+#: templates/v2/account/snippets/third-party.html:99
 msgid ""
 "Check with your organization's administrator if access to this platform is "
 "correctly configured."
 msgstr ""
 
-#: templates/v2/account/snippets/third-party.html:76
+#: templates/v2/account/snippets/third-party.html:101
 msgid ""
 "Look for the Redirecționează application in the All applications section. It "
 "is one of the many applications offered for free to non-profit organizations "
 "in Romania."
 msgstr ""
 
-#: templates/v2/account/snippets/third-party.html:85
+#: templates/v2/account/snippets/third-party.html:112
 msgid ""
 "You have access permission from the organization's administrator in NGO Hub"
 msgstr ""
 
-#: templates/v2/account/snippets/third-party.html:87
+#: templates/v2/account/snippets/third-party.html:114
 #, fuzzy
 #| msgid "To access your account, you need to authenticate through NGO Hub."
 msgid "Give access to your colleagues in NGO Hub"
 msgstr "To access your account, you need to authenticate through NGO Hub."
 
-#: templates/v2/account/snippets/third-party.html:92
+#: templates/v2/account/snippets/third-party.html:119
 msgid ""
 "Check with your organization's administrator if they have given you access "
 "to the Redirecționează application."
 msgstr ""
 
-#: templates/v2/account/snippets/third-party.html:94
+#: templates/v2/account/snippets/third-party.html:121
 msgid ""
 "In NGO Hub, each of your colleagues can have their own account. Make sure "
 "you give your colleagues access to the applications they work with every day."
@@ -1616,7 +1621,7 @@ msgstr ""
 msgid "If you have any questions, please contact us at"
 msgstr ""
 
-#: templates/v2/emails/base-footer.html:50
+#: templates/v2/emails/base-footer.html:49
 msgid "All rights reserved."
 msgstr ""
 

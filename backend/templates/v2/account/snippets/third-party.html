@@ -34,17 +34,40 @@
 
     <p>
       {% blocktrans trimmed %}
-        If you're a non-profit organization, you can benefit from all the solutions in the NGO-dedicated ecosystem through NGO Hub.
-        To access redirectioneaza.ro through your NGO Hub account, make sure:
+        Use your NGO Hub account to access redirectioneaza.ro and other applications dedicated to civil society, all in one place.
       {% endblocktrans %}
     </p>
   </div>
 
   <div class="mx-auto mt-8 max-w-[368px]">
+
+    <div id="allauth-login-form-container" class="flex my-6 justify-stretch">
+      <a
+        class="w-full px-2 py-1 text-sm text-center text-gray-900 rounded-full shadow-sm bg-amber-300 sm:text-base sm:px-6 sm:py-2 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
+        href="{{ form_action }}"
+        {% if account_button_is_external %}target="_blank"{% endif %}
+      >
+        {{ account_button }}
+      </a>
+    </div>
+  </div>
+
+  <div class="mx-auto mt-8 p-4 max-w-md bg-gray-50">
+
     <dl class="grid gap-8 text-gray-500 text-base/7">
+      <div class="relative px-4 text-gray-900">
+        <p>
+          {% blocktrans trimmed %}
+            To access redirectioneaza.ro through your NGO Hub account, make sure:
+          {% endblocktrans %}
+        </p>
+      </div>
+
       <div class="relative pl-9">
         <dt class="font-medium text-gray-900">
-          <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="absolute left-0 text-cyan-700 top-1 size-5"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="absolute left-0 text-cyan-700 top-1 size-5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/>
+          </svg>
           {% if page_type == "login" %}
             {% trans "You have an active account in NGO Hub" %}
           {% else %}
@@ -54,15 +77,17 @@
         <dd class="mt-2">
           {% blocktrans trimmed %}
             If you don't have an account in NGO Hub, you can create one for free.
-            Learn more about the benefits of NGO Hub
+            Learn more about the
           {% endblocktrans %}
-          <a class="text-base font-normal text-cyan-700" href="{{ ngohub_site }}">{% trans "here" %}</a>.
+          <a class="text-base font-normal text-cyan-700" href="{{ ngohub_site }}">{% trans "benefits of NGO Hub" %}</a>.
         </dd>
       </div>
 
       <div class="relative pl-9">
-        <dt class="font-semibold text-gray-900">
-          <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="absolute left-0 text-cyan-700 top-1 size-5"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+        <dt class="font-medium text-gray-900">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="absolute left-0 text-cyan-700 top-1 size-5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/>
+          </svg>
           {% if page_type == "login" %}
             {% trans "You have activated the Redirecționează platform in your NGO Hub account" %}
           {% else %}
@@ -79,8 +104,10 @@
       </div>
 
       <div class="relative pl-9">
-        <dt class="font-semibold text-gray-900">
-          <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="absolute left-0 text-cyan-700 top-1 size-5"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+        <dt class="font-medium text-gray-900">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="absolute left-0 text-cyan-700 top-1 size-5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/>
+          </svg>
           {% if page_type == "login" %}
             {% trans "You have access permission from the organization's administrator in NGO Hub" %}
           {% else %}
@@ -101,15 +128,6 @@
       </div>
     </dl>
 
-    <div id="allauth-login-form-container" class="flex mt-6 justify-stretch">
-      <a
-        class="w-full px-2 py-1 text-sm text-center text-gray-900 rounded-full shadow-sm bg-amber-300 sm:text-base sm:px-6 sm:py-2 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
-        href="{{ form_action }}"
-        {% if account_button_is_external %}target="_blank"{% endif %}
-      >
-        {{ account_button }}
-      </a>
-    </div>
   </div>
 </section>
 
