@@ -269,11 +269,13 @@ class SignupView(BaseVisibleTemplateView):
             context=template_values,
         )
 
-        # login the user after signup
-        django_login(request, user)
-
         # redirect to my account
         return redirect(reverse("my-organization:dashboard"))
+
+
+class SignupConfirmationView(BaseVisibleTemplateView):
+    template_name = "account/signup-confirmation.html"
+    title = _("Account created")
 
 
 class VerificationView(BaseVisibleTemplateView):

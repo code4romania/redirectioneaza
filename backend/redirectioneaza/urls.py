@@ -26,6 +26,7 @@ from donations.views.account_management import (
     LoginView,
     LogoutView,
     SetPasswordView,
+    SignupConfirmationView,
     SignupView,
     VerificationView,
 )
@@ -86,6 +87,7 @@ urlpatterns = (
         path("faq/", (FAQHandler.as_view()), name="faq"),
         # account management
         path("cont-nou/", SignupView.as_view(), name="signup"),
+        path("confirmare-cont/", SignupConfirmationView.as_view(), name="signup-confirmation"),
         path("ong/", RedirectView.as_view(pattern_name="signup", permanent=True)),
         path("pentru-ong-uri/", RedirectView.as_view(pattern_name="signup", permanent=True)),
         path("login/", LoginView.as_view(), name="login"),

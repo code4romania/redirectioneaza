@@ -1,0 +1,15 @@
+{% extends "public/articles/base.html" %}
+
+{% load i18n %}
+
+{% block article_content %}
+
+  <h1>
+    {% trans "Your account has been successfully created" %}
+  </h1>
+
+  <p>
+    {% trans "Please check your email for a confirmation link, then log in." %}
+  </p>
+
+{% endblock article_content %}
