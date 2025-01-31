@@ -9,7 +9,7 @@ class BaseContextPropertiesMixin:
     user_model = get_user_model()
 
     def _get_checked_property(self, property_name: str, default_value: str) -> Any:
-        is_production: bool = settings.ENVIRONMENT == "development"
+        is_production: bool = bool(settings.ENVIRONMENT != "development")
 
         if not hasattr(self, property_name) and not is_production:
             raise AttributeError(f"Property '{property_name}' is missing in '{self.__class__.__name__}'.")
