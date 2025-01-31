@@ -15,8 +15,8 @@
   </p>
 
 
-  {% trans "Download archive" as button_title %}
-  {% include "emails/components/button-with-backup.html" with title=button_title url=button_url %}
+  {% trans "Download archive" as action_title %}
+  {% include "emails/components/action.html" with title=action_title url=action_url %}
 
   {% blocktrans trimmed %}
     Thank you for being part of this community!

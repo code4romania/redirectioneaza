@@ -13,7 +13,7 @@
   To activate your account, you have to confirm your email address by clicking the button below.
 {% endblocktrans %}
 
-{{ button_url }}
+{{ action_url }}
 
 {% blocktrans trimmed %}
   Thank you for being part of this community!

@@ -7,7 +7,7 @@
   You can download the completed form by clicking the button below.
 {% endblocktrans %}
 
-{{ form_url }}
+{{ action_url }}
 
 
 {% trans "The next steps" %}

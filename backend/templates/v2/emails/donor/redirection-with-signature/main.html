@@ -17,8 +17,8 @@
     {% endblocktrans %}
   </p>
 
-  {% trans "Download form" as button_title %}
-  {% include "emails/components/button-with-backup.html" with title=button_title url=form_url %}
+  {% trans "Download form" as action_title %}
+  {% include "emails/components/action.html" with title=action_title url=action_url %}
 
   <h2>
     {% trans "Do you want to give an extra helping hand?" %}

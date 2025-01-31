@@ -1,50 +1,56 @@
 {% load i18n static %}
 
-<div>
-  <img
-    src="{% static 'images/code4romania.png' %}"
-    alt="Redirecționează logo"
-    style="margin:0;display:block;max-height:24px;width:auto;">
-</div>
+<tr>
+  <td>
+    <table class="footer" width="570" cellpadding="0" cellspacing="0" role="presentation">
+      <tr>
+        <td class="content-cell">
+          <a
+            href="https://www.code4.ro/"
+            target="_blank"
+            style="margin:0;display:inline-block;">
+            <img
+              src="{% static 'images/code4romania.png' %}"
+              alt="Redirecționează logo"
+              style="margin:0;display:block;height:32px;width:auto;">
+          </a>
 
-<div>
-  <p>
-    {% trans "If you have any questions, please contact us at" %}
-    <a
-      href="mailto:{{ contact_email }}">
-      {{ contact_email }}
-    </a>
-  </p>
-</div>
+          <p>
+            {% trans "If you have any questions, please contact us at" %}
+            <a
+              href="mailto:{{ contact_email }}">
+              {{ contact_email }}
+            </a>
+          </p>
 
-{% comment %}
-  <div style="margin:auto 0;">
 
-    {# TODO: add the images for the social sites #}
-    <a
-      href="https://www.facebook.com/code4romania"
-      style="margin:0 10px;text-decoration:none;color:inherit;"
-      target="_blank">
-    </a>
+          <div class="icons">
+            {# TODO: add the images for the social sites #}
+            <a
+              href="https://www.facebook.com/code4romania"
+              target="_blank">
+              <img src="" alt="">
+            </a>
 
-    <a
-      href="https://instagram.com/code4romania"
-      style="margin:0 10px;text-decoration:none;color:inherit;"
-      target="_blank">
-    </a>
+            <a
+              href="https://instagram.com/code4romania"
+              target="_blank">
+              <img src="" alt="">
+            </a>
 
-    <a
-      href="https://github.com/code4romania/redirectioneaza"
-      style="margin:0 10px;text-decoration:none;color:inherit;"
-      target="_blank">
-    </a>
+            <a
+              href="https://github.com/code4romania/redirectioneaza"
+              target="_blank">
+              <img src="" alt="">
+            </a>
+          </div>
 
-  </div>
-{% endcomment %}
-
-<div>
-  <p>
-    © {% now "Y" %} Code for Romania.
-    {% trans "All rights reserved." %}
-  </p>
-</div>
+          <p>
+            © {% now "Y" %} Code for Romania.
+            {% trans "All rights reserved." %}
+          </p>
+        </td>
+      </tr>
+    </table>
+  </td>
+</tr>

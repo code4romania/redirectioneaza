@@ -1,0 +1,14 @@
+{% load i18n %}
+
+<table class="subcopy" width="100%" cellpadding="0" cellspacing="0" role="presentation">
+  <tr>
+    <td>
+      {% blocktrans trimmed %}
+        <p>
+          If you're having trouble clicking the {{ title }} button, copy and paste the URL below into your web browser:
+          <a href="{{ url }}" class="break-all">{{ url }}</a>
+        </p>
+      {% endblocktrans %}
+    </td>
+  </tr>
+</table>

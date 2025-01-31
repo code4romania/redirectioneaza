@@ -6,7 +6,7 @@
   We have received your request and have created an archive with all the information you need.
 {% endblocktrans %}
 
-{{ button_url }}
+{{ action_url }}
 
 {% blocktrans trimmed %}
   Thank you for being part of this community!

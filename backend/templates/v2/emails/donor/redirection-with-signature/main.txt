@@ -9,7 +9,7 @@
   You can see the form you have filled in by clicking the button below.
 {% endblocktrans %}
 
-{{ form_url }}
+{{ action_url }}
 
 
 {% trans "Do you want to give an extra helping hand?" %}

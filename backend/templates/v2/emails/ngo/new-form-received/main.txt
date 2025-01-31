@@ -8,4 +8,4 @@
   Remember to submit it to ANAF to complete the process!
 {% endblocktrans %}
 
-{{ form_url }}
+{{ action_url }}

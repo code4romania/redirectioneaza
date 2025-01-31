@@ -9,7 +9,7 @@
   You can reset your password by clicking the button below.
 {% endblocktrans %}
 
-{{ button_url }}
+{{ action_url }}
 
 {% blocktrans trimmed %}
   If you didn't request a password reset, you can ignore this email.

@@ -15,8 +15,8 @@
     {% endblocktrans %}
   </p>
 
-  {% trans "Download form" as button_title %}
-  {% include "emails/components/button-with-backup.html" with title=button_title url=form_url %}
+  {% trans "Download form" as action_title %}
+  {% include "emails/components/action.html" with title=action_title url=action_url %}
 
   <h2>
     {% trans "The next steps" %}
@@ -36,20 +36,26 @@
     {% trans "The organization's contact info" %}
   </h2>
 
-  <ul style="list-style-type: none; padding: 0;">
-    <li>
-      {% trans "Name" %}:
-      {{ ngo_name }}
-    </li>
-    <li>
-      {% trans "Address" %}:
-      {{ ngo_address }}
-    </li>
-    <li>
-      {% trans "Email" %}:
-      <a href="mailto:{{ ngo_email }}">{{ ngo_email }}</a>
-    </li>
-  </ul>
+  {% blocktrans trimmed asvar panel %}
+    <dl>
+      <div>
+        <dt>Name:</dt>
+        <dd>{{ ngo_name }}</dd>
+      </div>
+
+      <div>
+        <dt>Address:</dt>
+        <dd>{{ ngo_address }}</dd>
+      </div>
+
+      <div>
+        <dt>Email:</dt>
+        <dd><a href="mailto:{{ ngo_email }}">{{ ngo_email }}</a></dd>
+      </div>
+    </dl>
+  {% endblocktrans %}
+
+  {% include "emails/components/panel.html" with content=panel %}
 
   <h2>
     {% trans "Do you want to give an extra helping hand?" %}
