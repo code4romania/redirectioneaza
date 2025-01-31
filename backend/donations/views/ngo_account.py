@@ -164,7 +164,7 @@ class NgoPresentationView(NgoBaseTemplateView):
 
         is_fully_editable = ngo.ngohub_org_id is None
 
-        form = NgoPresentationForm(post, is_fully_editable=is_fully_editable)
+        form = NgoPresentationForm(post, files=request.FILES, is_fully_editable=is_fully_editable)
         if not form.is_valid():
             messages.error(request, _("There are some errors on the presentation form."))
             context.update({"ngo_presentation": form})
@@ -187,6 +187,8 @@ class NgoPresentationView(NgoBaseTemplateView):
 
             ngo.phone = form.cleaned_data["contact_phone"]
             ngo.email = form.cleaned_data["contact_email"]
+
+            ngo.logo = form.cleaned_data["logo"]
 
             ngo.website = form.cleaned_data["website"]
             ngo.address = form.cleaned_data["address"]

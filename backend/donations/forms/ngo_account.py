@@ -30,16 +30,35 @@ class NgoPresentationForm(forms.Form):
         super().__init__(*args, **kwargs)
 
         if not is_fully_editable:
-            self.fields["name"].widget.attrs["disabled"] = True
-            self.fields["cif"].widget.attrs["disabled"] = True
-            self.fields["logo"].widget.attrs["disabled"] = True
-            self.fields["website"].widget.attrs["disabled"] = True
-            self.fields["contact_email"].widget.attrs["disabled"] = True
-            self.fields["contact_phone"].widget.attrs["disabled"] = True
-            self.fields["address"].widget.attrs["disabled"] = True
-            self.fields["locality"].widget.attrs["disabled"] = True
-            self.fields["county"].widget.attrs["disabled"] = True
-            self.fields["active_region"].widget.attrs["disabled"] = True
+            ngohub_fields = [
+                "name",
+                "cif",
+                "logo",
+                "website",
+                "contact_email",
+                "contact_phone",
+                "address",
+                "locality",
+                "county",
+                "active_region",
+            ]
+            for field_name in ngohub_fields:
+                self.fields[field_name].required = False
+
+    def clean_logo(self):
+        logo = self.cleaned_data.get("logo")
+        if not logo:
+            return None
+
+        # allowed types: PNG, JPG, GIF, HEIF
+        allowed_types = ["image/jpeg", "image/png", "image/gif", "image/heif"]
+        if logo.content_type not in allowed_types:
+            raise forms.ValidationError(_("The logo type is not supported."))
+
+        if logo.size > 2 * settings.MEBIBYTE:
+            raise forms.ValidationError(_("The logo size is too large."))
+
+        return logo
 
 
 class NgoFormForm(forms.Form):
