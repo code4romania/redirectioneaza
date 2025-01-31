@@ -88,6 +88,11 @@ class Donor(models.Model):
         default=True,
         help_text=_("If the user would like the ngo to see the donation"),
     )
+    anaf_gdpr = models.BooleanField(
+        verbose_name=_("ANAF GDPR"),
+        default=False,
+        help_text=_("If the user agrees for ANAF to share their data with the NGO"),
+    )
 
     # originally: "income"
     income_type = models.CharField(

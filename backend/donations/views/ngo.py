@@ -356,6 +356,7 @@ class TwoPercentHandler(TemplateView):
             email=donor_dict["email"],
             is_anonymous=donor_dict["anonymous"],
             income_type=donor_dict["income"],
+            anaf_gdpr=donor_dict["gdpr"],
             two_years=two_years,
             ngo=ngo,
         )
