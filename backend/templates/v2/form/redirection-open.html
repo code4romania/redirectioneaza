@@ -1,27 +1,23 @@
 {% load i18n %}
 
-<div x-data="twoPercentForm" class="container max-w-4xl">
-  <div class="prose prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-700">
+<div x-data="twoPercentForm" class="max-w-3xl">
+  <h2 class="mb-5 text-2xl font-bold tracking-tight text-gray-900">
+    {% trans "Redirect easily and quickly" %}
+  </h2>
 
-    <h2>
-      {% trans "Redirect easily and quickly" %}
-    </h2>
+  {% blocktranslate trimmed asvar banner_message %}
+      Since 2022, form 230 can be submitted online.
+      Fill in the form with the data from your ID,
+      sign it online, and it will be automatically sent to the organization.
 
-    <p class="text-sm text-gray-400">
-      {% blocktrans trimmed %}
-        Since 2022, form 230 can be submitted online.
-        Fill in the form with the data from your ID,
-        sign it online, and it will be automatically sent to the organization.
+      Alternatively, your form will be generated, and you will be able to download the PDF,
+      but it will not reach the NGO.
 
-        Alternatively, your form will be generated, and you will be able to download the PDF,
-        but it will not reach the NGO.
-
-        We rely on you to print, sign the form by hand,
-        and send it to the NGO by mail or email,
-        or submit it directly to ANAF.
-      {% endblocktrans %}
-    </p>
-  </div>
+      We rely on you to print, sign the form by hand,
+      and send it to the NGO by mail or email,
+      or submit it directly to ANAF.
+  {% endblocktranslate %}
+  {% include "components/info-banner.html" with style="info" banner_message=banner_message %}
 
   <form
     id="two-percent-form"
@@ -34,7 +30,7 @@
 
     <fieldset class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-5">
 
-      <legend class="hidden my-5 font-semibold text-gray-900 col-span-full text-base/7">
+      <legend class="sr-only">
         {% trans "Personal data" %}
       </legend>
 
@@ -70,7 +66,7 @@
 
     </fieldset>
 
-    <hr class="border border-gray-200">
+    <hr class="border-t border-gray-200">
 
     <fieldset class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-4">
 
@@ -123,7 +119,7 @@
 
     {% if ngo.is_accepting_forms %}
 
-      <hr class="border border-gray-200">
+      <hr class="border-t border-gray-200">
 
       <fieldset class="grid grid-cols-1 gap-x-6 gap-y-8">
 
@@ -158,7 +154,7 @@
         {% include "components/input/checkbox.html" with input_id="anaf_gdpr" input_name="anaf_gdpr" field=redirection_form.anaf_gdpr %}
       </div>
 
-      <hr class="flex gap-3 mt-4 border border-gray-200">
+      <hr class="flex gap-3 mt-4 border-t border-gray-200">
 
       {% trans "I agree that this NGO may contact me in the future with details about the projects implemented" as input_title %}
       <div class="flex gap-3 mt-4">
@@ -182,18 +178,15 @@
 
     </fieldset>
 
-    <fieldset class="grid grid-cols-1 mt-10 gap-x-6 gap-y-8">
-
-      <legend class="hidden my-5 font-semibold text-gray-900 text-base/7">
+    <fieldset>
+      <legend class="sr-only">
         {% trans "Captcha" %}
       </legend>
 
       <div id=g-recaptcha" class="g-recaptcha" data-sitekey="{{ captcha_public_key }}" data-callback="onSubmit"></div>
-
     </fieldset>
 
-    <div class="flex items-center mt-4 space-x-4 text-center float-end">
-
+    <div class="flex flex-col gap-4 text-center sm:items-center sm:flex-row">
       <div
         x-cloak
         x-show="confirmationModalIsOpen"
@@ -221,7 +214,7 @@
           id="submit-with-signature"
           type="button"
           @click="sendSignedForm()"
-          class="px-4 py-2 text-sm text-center text-gray-900 rounded-full shadow-sm h-9 outline outline-amber-300 bg-amber-300 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
+          class="px-4 py-2 text-sm text-center text-gray-900 rounded-full shadow-sm outline outline-amber-300 bg-amber-300 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
           {% trans "Send signed form" %}
         </button>
 
@@ -230,7 +223,7 @@
           id="show-confirmation-modal"
           @click="sendUnsignedForm()"
           type="button"
-          class="px-4 py-2 text-sm text-center text-gray-900 bg-white rounded-full shadow-sm h-9 outline outline-amber-300 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
+          class="px-4 py-2 text-sm text-center text-gray-900 bg-white rounded-full shadow-sm outline outline-amber-300 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
           {% trans "Continue without signing" %}
         </button>
 

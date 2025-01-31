@@ -1,4 +1,4 @@
-<div class="text-lg">
+<div class="text-sm">
   <div
     {% if style == "info" %}
       class="relative px-4 py-3 text-blue-700 bg-blue-100 border border-blue-400 rounded"
@@ -13,10 +13,10 @@
     {% endif %}
       role="alert">
 
-    <div class="flex items-start">
+    <div class="flex items-start gap-3">
 
-      <div class="pl-1 pr-3">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+      <div class="shrink-0">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
           {% if style == "info" %}
             <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"/>
           {% elif style == "success" %}
@@ -38,11 +38,11 @@
           </strong>
         {% endif %}
 
-        <div class="block sm:inline">
+        <div>
           {{ banner_message }}
 
           {% if banner_list %}
-            <ul class="list-disc list-inside">
+            <ul class="pl-5 list-disc">
               {% for item in banner_list %}
                 <li>{{ item }}</li>
               {% endfor %}
@@ -51,7 +51,8 @@
         </div>
 
         {% if banner_cta_message and banner_cta_url %}
-          <a href="{{ banner_cta_url }}" class="font-semibold underline">
+        <div class="mt-4">
+          <a href="{{ banner_cta_url }}" class="font-semibold hover:underline">
             {{ banner_cta_message }}
           </a>
         {% endif %}

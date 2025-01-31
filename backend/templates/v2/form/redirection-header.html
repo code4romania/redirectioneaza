@@ -1,79 +1,74 @@
 {% load i18n text_format %}
 
-<div class="mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8 pb-10">
-  <div class="lg:grid lg:grid-cols-3 lg:items-start lg:gap-x-8">
+<div class="flex flex-col gap-8 mb-10 sm:flex-row">
 
-    <div class="flex flex-col lg:col-span-1">
+  <div class="max-w-48 shrink-0 grow-0">
+    {% include "components/logo-or-default.html" with ngo_logo=ngo.logo %}
+  </div>
 
-      <div>
-        {% include "components/logo-or-default.html" with ngo_logo=ngo.logo %}
-      </div>
+  <div class="">
+    <h1 class="text-3xl font-bold tracking-tight text-gray-900">
+      {{ ngo.name }}
+    </h1>
 
-      <div class="mx-auto mt-6 hidden w-full max-w-2xl sm:block lg:max-w-none font-semibold">
-
-        {% if ngo_website %}
+    <ul class="flex gap-4 mt-1 text-sm font-medium">
+      {% if ngo_website %}
+        <li>
           <a href="{{ ngo_website }}" class="hover:text-amber-600">
             {{ ngo_website_description }}
           </a>
-        {% endif %}
+        </li>
+      {% endif %}
 
-        {% if ngo.display_email and ngo.email%}
+      {% if ngo.display_email and ngo.email%}
+        <li>
           <a href="mailto:{{ ngo.email }}" class="hover:text-amber-600">
             {{ ngo.email }}
           </a>
-        {% endif %}
+        </li>
+      {% endif %}
 
-        {% if ngo.display_phone and ngo.phone %}
+      {% if ngo.display_phone and ngo.phone %}
+        <li>
           <a href="tel:{{ ngo.phone }}" class="hover:text-amber-600">
             {{ ngo.phone }}
           </a>
-        {% endif %}
+        </li>
+      {% endif %}
+    </ul>
 
-      </div>
-
-    </div>
-
-    <div class="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0 lg:col-span-2">
-
-      <h1 class="text-3xl font-bold tracking-tight text-gray-900">
-        {{ ngo.name }}
-      </h1>
-
-      {% comment %}
-        <div class="mt-6">
-          <h3 class="sr-only">
-            {% trans "Active region" %}
-          </h3>
-
-          <div class="space-y-6 text-base text-gray-500 font-semibold">
-            <p>
-              {% trans "Active region:" %}
-
-              {% if ngo.locality %}
-                {{ ngo.locality }},
-              {% endif %}
-
-              {% blocktranslate trimmed %}
-                {{ ngo.county|to_county }} county
-              {% endblocktranslate %}
-            </p>
-          </div>
-        </div>
-      {% endcomment %}
-
+    {% comment %}
       <div class="mt-6">
         <h3 class="sr-only">
-          {% trans "Description" %}
+          {% trans "Active region" %}
         </h3>
 
-        <div class="space-y-6 text-base text-gray-500">
+        <div class="space-y-6 text-base font-semibold text-gray-500">
           <p>
-            {{ ngo.description }}
+            {% trans "Active region:" %}
+
+            {% if ngo.locality %}
+              {{ ngo.locality }},
+            {% endif %}
+
+            {% blocktranslate trimmed %}
+              {{ ngo.county|to_county }} county
+            {% endblocktranslate %}
           </p>
         </div>
       </div>
+    {% endcomment %}
 
+    <div class="mt-6">
+      <h3 class="sr-only">
+        {% trans "Description" %}
+      </h3>
+
+      <div class="text-base font-normal prose-sm prose text-gray-500 sm:prose-base max-w-none">
+        {{ ngo.description }}
+      </div>
     </div>
 
   </div>
+
 </div>
