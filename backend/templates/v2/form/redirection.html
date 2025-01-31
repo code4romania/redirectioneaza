@@ -33,4 +33,9 @@
     {% endif %}
 
   </div>
+
+  {% if donation_status == "open" %}
+    {% include "components/redirection-cta.html" %}
+  {% endif %}
+
 {% endblock %}

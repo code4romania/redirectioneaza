@@ -249,30 +249,3 @@
   </form>
 
 </div>
-
-<aside class="px-6 py-16 sm:px-6 sm:py-32 lg:px-8">
-  <div class="max-w-2xl mx-auto text-center">
-
-    <h2 class="text-4xl font-semibold tracking-tight text-gray-900 text-balance sm:text-5xl">
-      {% trans "Download a template" %}
-    </h2>
-
-    <p class="max-w-xl py-4 mx-auto mb-10 text-xl text-gray-600 text-pretty sm:text-3xl">
-      {% blocktranslate trimmed %}
-        If you want to fill in the form by hand, you can download the template.
-        Print it, fill it in, sign it, and send it yourself.
-      {% endblocktranslate %}
-
-      <a href="{% url 'faq' %}" class="text-amber-900">
-        {% trans "Check the FAQ for more details." %}
-      </a>
-    </p>
-
-    <a
-      href="{{ ngo.prefilled_form }}"
-      class="py-3 font-semibold text-center text-gray-900 rounded-md shadow-sm px-7 bg-amber-300 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
-      {% trans "Download here" %}
-    </a>
-
-  </div>
-</aside>
