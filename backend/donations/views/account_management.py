@@ -269,8 +269,8 @@ class SignupView(BaseVisibleTemplateView):
             context=template_values,
         )
 
-        # redirect to my account
-        return redirect(reverse("my-organization:dashboard"))
+        # redirect to registration confirmation page
+        return redirect(reverse("signup-confirmation"))
 
 
 class SignupConfirmationView(BaseVisibleTemplateView):
