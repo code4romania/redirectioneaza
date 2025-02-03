@@ -5,7 +5,6 @@ from django.http import Http404
 
 from .models import Partner
 
-
 logger = logging.getLogger(__name__)
 
 

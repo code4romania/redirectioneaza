@@ -71,7 +71,8 @@
       </div>
 
       <div class="grid grid-cols-2 mt-16 gap-y-10 gap-x-8 xl:col-span-3 xl:grid-cols-5 xl:mt-0">
-        <div>
+        <div {% if custom_subdomain %}class="xl:col-start-3{% endif %}">
+
           <h3 class="font-semibold text-gray-900 text-sm/6">
             {% trans "Code for Romania" %}
           </h3>
@@ -87,6 +88,7 @@
               </a>
             </li>
           </ul>
+
         </div>
 
         <div>
@@ -113,48 +115,57 @@
               </li>
 
             {% endcomment %}
-          </ul>
-        </div>
-
-        <div>
-          <h3 class="font-semibold text-gray-900 text-sm/6">
-            {% trans "For contributors" %}
-          </h3>
-          <ul role="list" class="mt-6 space-y-4">
-            <li>
-              <a href="{% url 'organizations' %}" class="text-gray-600 text-sm/6 hover:text-gray-900">
-                {% trans "Discover organizations" %}
-              </a>
-            </li>
-            {% comment %}
-
+            {% if custom_subdomain %}
               <li>
-                <a href="{% url 'how-it-works' %}" class="text-gray-600 text-sm/6 hover:text-gray-900">
-                  {% trans 'How does it work?' %}
+                <a href="{% url 'faq' %}" class="text-gray-600 text-sm/6 hover:text-gray-900">
+                  {% trans "FAQ" %}
                 </a>
               </li>
-
-            {% endcomment %}
-            <li>
-              <a href="{% url 'faq' %}" class="text-gray-600 text-sm/6 hover:text-gray-900">
-                {% trans "FAQ" %}
-              </a>
-            </li>
+            {% endif %}
           </ul>
         </div>
 
-        <div>
-          <h3 class="font-semibold text-gray-900 text-sm/6">
-            {% trans "For organizations" %}
-          </h3>
-          <ul role="list" class="mt-6 space-y-4">
-            <li>
-              <a href="{% url 'faq' %}" class="text-gray-600 text-sm/6 hover:text-gray-900">
-                {% trans "FAQ" %}
-              </a>
-            </li>
-          </ul>
-        </div>
+        {% if not custom_subdomain %}
+          <div>
+            <h3 class="font-semibold text-gray-900 text-sm/6">
+              {% trans "For contributors" %}
+            </h3>
+            <ul role="list" class="mt-6 space-y-4">
+              <li>
+                <a href="{% url 'organizations' %}" class="text-gray-600 text-sm/6 hover:text-gray-900">
+                  {% trans "Discover organizations" %}
+                </a>
+              </li>
+              {% comment %}
+
+                <li>
+                  <a href="{% url 'how-it-works' %}" class="text-gray-600 text-sm/6 hover:text-gray-900">
+                    {% trans 'How does it work?' %}
+                  </a>
+                </li>
+
+              {% endcomment %}
+              <li>
+                <a href="{% url 'faq' %}" class="text-gray-600 text-sm/6 hover:text-gray-900">
+                  {% trans "FAQ" %}
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="font-semibold text-gray-900 text-sm/6">
+              {% trans "For organizations" %}
+            </h3>
+            <ul role="list" class="mt-6 space-y-4">
+              <li>
+                <a href="{% url 'faq' %}" class="text-gray-600 text-sm/6 hover:text-gray-900">
+                  {% trans "FAQ" %}
+                </a>
+              </li>
+            </ul>
+          </div>
+        {% endif %}
 
         <div>
           <h3 class="font-semibold text-gray-900 text-sm/6">
@@ -179,10 +190,15 @@
           </ul>
         </div>
       </div>
+
     </div>
 
     <div class="pt-8 mt-8 border-t border-gray-900/10">
-      <p class="text-gray-600 text-sm/6">&copy; 2024 Code for Romania. Organizație neguvernamentală independentă, neafiliată politic și apolitică.</p>
+      <p class="text-gray-600 text-sm/6">
+        &copy; {% now "Y" %}
+        Code for Romania.
+        {% trans "Independent Non-profit organization, politically unaffiliated, and apolitical." %}
+      </p>
     </div>
   </div>
 </footer>

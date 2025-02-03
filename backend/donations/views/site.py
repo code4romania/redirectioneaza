@@ -11,7 +11,7 @@ from django.utils.translation import gettext_lazy as _
 from django.utils.translation import ngettext_lazy
 from django.views.generic import TemplateView
 
-from partners.models import DisplayOrderingChoices
+from partners.models import DisplayOrderingChoices, Partner
 from redirectioneaza.common.cache import cache_decorator
 
 from ..models.donors import Donor
@@ -61,6 +61,24 @@ class HomePage(BaseVisibleTemplateView):
         all_ngo_ids = list(Ngo.active.values_list("id", flat=True))
         return ngo_queryset.filter(id__in=random.sample(all_ngo_ids, num_ngos))
 
+    def _partner_response(self, context: Dict, partner: Partner):
+        partner_ngos = partner.ngos.all()
+        if partner.display_ordering == DisplayOrderingChoices.ALPHABETICAL:
+            partner_ngos = partner_ngos.order_by("name")
+        elif partner.display_ordering == DisplayOrderingChoices.NEWEST:
+            partner_ngos = partner_ngos.order_by("-date_created")
+        elif partner.display_ordering == DisplayOrderingChoices.RANDOM:
+            random.shuffle(list(partner_ngos))
+        context.update(
+            {
+                "company_name": partner.name,
+                "custom_header": partner.has_custom_header,
+                "custom_note": partner.has_custom_note,
+                "ngos": partner_ngos,
+            }
+        )
+        return context
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
@@ -76,29 +94,14 @@ class HomePage(BaseVisibleTemplateView):
             }
         )
 
-        if partner := request.partner:
-            partner_ngos = partner.ngos.all()
+        partner: Partner = request.partner
+        if partner:
+            return self._partner_response(context, partner)
 
-            if partner.display_ordering == DisplayOrderingChoices.ALPHABETICAL:
-                partner_ngos = partner_ngos.order_by("name")
-            elif partner.display_ordering == DisplayOrderingChoices.NEWEST:
-                partner_ngos = partner_ngos.order_by("-date_created")
-            elif partner.display_ordering == DisplayOrderingChoices.RANDOM:
-                random.shuffle(list(partner_ngos))
+        ngo_queryset = Ngo.active
 
-            context.update(
-                {
-                    "company_name": partner.name,
-                    "custom_header": partner.has_custom_header,
-                    "custom_note": partner.has_custom_note,
-                    "ngos": partner_ngos,
-                }
-            )
-        else:
-            ngo_queryset = Ngo.active
-
-            context["stats"] = self._get_stats(now, ngo_queryset)
-            context["ngos"] = self._get_random_ngos(ngo_queryset, num_ngos=min(4, ngo_queryset.count()))
+        context["stats"] = self._get_stats(now, ngo_queryset)
+        context["ngos"] = self._get_random_ngos(ngo_queryset, num_ngos=min(4, ngo_queryset.count()))
 
         return context
 

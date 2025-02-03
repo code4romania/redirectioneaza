@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-31 18:02+0200\n"
+"POT-Creation-Date: 2025-02-03 11:08+0200\n"
 "PO-Revision-Date: 2024-02-28 15:45+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -962,21 +962,21 @@ msgstr ""
 msgid "> €2 million"
 msgstr ""
 
-#: donations/views/site.py:108
+#: donations/views/site.py:112
 #, fuzzy
 #| msgid "Welcome to redirectioneaza.ro"
 msgid "About redirectioneaza.ro"
 msgstr "Welcome to redirectioneaza.ro"
 
-#: donations/views/site.py:139 templates/v2/redirect/footer.html:179
+#: donations/views/site.py:143 templates/v2/redirect/footer.html:180
 msgid "Information notice"
 msgstr ""
 
-#: donations/views/site.py:150 templates/v2/redirect/footer.html:169
+#: donations/views/site.py:154 templates/v2/redirect/footer.html:170
 msgid "Privacy policy"
 msgstr ""
 
-#: donations/views/site.py:155 templates/v2/redirect/footer.html:174
+#: donations/views/site.py:159 templates/v2/redirect/footer.html:175
 msgid "Terms & conditions"
 msgstr ""
 
@@ -1100,7 +1100,7 @@ msgid "Subdomain must have between 3 and 100 characters."
 msgstr "Subdomain must have between 3 and 100 characters."
 
 #: redirectioneaza/context_processors.py:40
-#: templates/v2/redirect/footer.html:105
+#: templates/v2/redirect/footer.html:106
 msgid "About"
 msgstr ""
 
@@ -1111,7 +1111,7 @@ msgid "For donors"
 msgstr "donors"
 
 #: redirectioneaza/context_processors.py:53
-#: templates/v2/redirect/footer.html:128
+#: templates/v2/redirect/footer.html:129
 msgid "Discover organizations"
 msgstr ""
 
@@ -1124,7 +1124,7 @@ msgid "Frequently asked questions"
 msgstr "Frequently Asked Questions"
 
 #: redirectioneaza/context_processors.py:89
-#: templates/v2/redirect/footer.html:151
+#: templates/v2/redirect/footer.html:152
 #, fuzzy
 #| msgid "NGO Hub organization ID"
 msgid "For organizations"
@@ -2295,6 +2295,43 @@ msgstr ""
 msgid "organizations"
 msgstr "NGO Hub organization ID"
 
+#: templates/v2/public/components/home/explore.html:7
+msgid "Explore the NGOs"
+msgstr ""
+
+#: templates/v2/public/components/home/explore.html:9
+msgid "Explore NGOs"
+msgstr ""
+
+#: templates/v2/public/components/home/explore.html:13
+msgid "Choose the organization you want to redirect to!"
+msgstr ""
+
+#: templates/v2/public/components/home/hero.html:12
+#, python-format
+msgid "Redirect 3.5%% of your tax to one of the NGOs"
+msgstr ""
+
+#: templates/v2/public/components/home/hero.html:14
+msgid "You decide what happens"
+msgstr ""
+
+#: templates/v2/public/components/home/hero.html:20
+msgid "supported by"
+msgstr ""
+
+#: templates/v2/public/components/home/hero.html:23
+#, python-format
+msgid "with 3.5%% of the income tax"
+msgstr ""
+
+#: templates/v2/public/components/home/hero.html:30
+msgid ""
+"Without costing you anything extra, by redirecting, you give a little extra "
+"power to an NGO to do good in your name. You can opt for the redistribution "
+"of the amount until"
+msgstr ""
+
 #: templates/v2/public/components/pagination.html:11
 #: templates/v2/public/components/pagination.html:41
 msgid "Previous"
@@ -2309,40 +2346,46 @@ msgstr ""
 msgid "per page"
 msgstr ""
 
-#: templates/v2/redirect/footer.html:77
+#: templates/v2/redirect/footer.html:78
 msgid "Code for Romania"
 msgstr ""
 
-#: templates/v2/redirect/footer.html:82
+#: templates/v2/redirect/footer.html:83
 msgid "About Code for Romania"
 msgstr ""
 
-#: templates/v2/redirect/footer.html:87
+#: templates/v2/redirect/footer.html:88
 msgid "Support our projects"
 msgstr ""
 
-#: templates/v2/redirect/footer.html:95
+#: templates/v2/redirect/footer.html:96
 #, fuzzy
 #| msgid "Welcome to redirectioneaza.ro"
 msgid "redirectioneaza.ro"
 msgstr "Welcome to redirectioneaza.ro"
 
-#: templates/v2/redirect/footer.html:100
+#: templates/v2/redirect/footer.html:101
 msgid "Home"
 msgstr ""
 
-#: templates/v2/redirect/footer.html:123
+#: templates/v2/redirect/footer.html:124
 #, fuzzy
 #| msgid "donors"
 msgid "For contributors"
 msgstr "donors"
 
-#: templates/v2/redirect/footer.html:143 templates/v2/redirect/footer.html:156
+#: templates/v2/redirect/footer.html:144 templates/v2/redirect/footer.html:157
 msgid "FAQ"
 msgstr ""
 
-#: templates/v2/redirect/footer.html:164
+#: templates/v2/redirect/footer.html:165
 msgid "Useful links"
+msgstr ""
+
+#: templates/v2/redirect/footer.html:194
+msgid ""
+"Independent Non-profit organization, politically unaffiliated, and "
+"apolitical."
 msgstr ""
 
 #: templates/v2/socialaccount/login.html:31

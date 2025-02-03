@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-31 18:02+0200\n"
+"POT-Creation-Date: 2025-02-03 11:08+0200\n"
 "PO-Revision-Date: 2024-03-07 11:27+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -897,19 +897,19 @@ msgstr "redirecționați către ONG-uri prin redirectioneaza.ro"
 msgid "> €2 million"
 msgstr "> 2 milioane €"
 
-#: donations/views/site.py:108
+#: donations/views/site.py:112
 msgid "About redirectioneaza.ro"
 msgstr "Despre redirectioneaza.ro"
 
-#: donations/views/site.py:139 templates/v2/redirect/footer.html:179
+#: donations/views/site.py:143 templates/v2/redirect/footer.html:180
 msgid "Information notice"
 msgstr "Notă de informare"
 
-#: donations/views/site.py:150 templates/v2/redirect/footer.html:169
+#: donations/views/site.py:154 templates/v2/redirect/footer.html:170
 msgid "Privacy policy"
 msgstr "Politica de confidențialitate"
 
-#: donations/views/site.py:155 templates/v2/redirect/footer.html:174
+#: donations/views/site.py:159 templates/v2/redirect/footer.html:175
 msgid "Terms & conditions"
 msgstr "Termeni și condiții"
 
@@ -1025,7 +1025,7 @@ msgid "Subdomain must have between 3 and 100 characters."
 msgstr "Subdomeniul trebuie să aibă între 3 și 100 de caractere."
 
 #: redirectioneaza/context_processors.py:40
-#: templates/v2/redirect/footer.html:105
+#: templates/v2/redirect/footer.html:106
 msgid "About"
 msgstr "Despre"
 
@@ -1034,7 +1034,7 @@ msgid "For donors"
 msgstr "Pentru contribuabili"
 
 #: redirectioneaza/context_processors.py:53
-#: templates/v2/redirect/footer.html:128
+#: templates/v2/redirect/footer.html:129
 msgid "Discover organizations"
 msgstr "Descoperă organizații"
 
@@ -1045,7 +1045,7 @@ msgid "Frequently asked questions"
 msgstr "Întrebări frecvente"
 
 #: redirectioneaza/context_processors.py:89
-#: templates/v2/redirect/footer.html:151
+#: templates/v2/redirect/footer.html:152
 msgid "For organizations"
 msgstr "Pentru organizații"
 
@@ -1369,11 +1369,13 @@ msgid ""
 "Use your NGO Hub account to access redirectioneaza.ro and other applications "
 "dedicated to civil society, all in one place."
 msgstr ""
-"Folosește contul NGO Hub pentru a accesa redirectioneaza.ro și alte aplicații dedicate societății civile, toate într-un singur loc."
+"Folosește contul NGO Hub pentru a accesa redirectioneaza.ro și alte "
+"aplicații dedicate societății civile, toate într-un singur loc."
 
 #: templates/v2/account/snippets/third-party.html:60
 msgid "To access redirectioneaza.ro through your NGO Hub account, make sure:"
-msgstr "Pentru a accesa redirectioneaza.ro prin contul tău NGO Hub, asigură-te că:"
+msgstr ""
+"Pentru a accesa redirectioneaza.ro prin contul tău NGO Hub, asigură-te că:"
 
 #: templates/v2/account/snippets/third-party.html:72
 msgid "You have an active account in NGO Hub"
@@ -2208,6 +2210,46 @@ msgstr "Închide"
 msgid "organizations"
 msgstr "organizații"
 
+#: templates/v2/public/components/home/explore.html:7
+msgid "Explore the NGOs"
+msgstr "Explorează ONG-urile"
+
+#: templates/v2/public/components/home/explore.html:9
+msgid "Explore NGOs"
+msgstr "Explorează ONG-uri"
+
+#: templates/v2/public/components/home/explore.html:13
+msgid "Choose the organization you want to redirect to!"
+msgstr "Alege organizația către care vrei să redirecționezi!"
+
+#: templates/v2/public/components/home/hero.html:12
+#, python-format
+msgid "Redirect 3.5%% of your tax to one of the NGOs"
+msgstr "Redirecționează 3.5%% din impozitul tău către unul dintre ONG-urile"
+
+#: templates/v2/public/components/home/hero.html:14
+msgid "You decide what happens"
+msgstr "Tu decizi ce se întâmplă"
+
+#: templates/v2/public/components/home/hero.html:20
+msgid "supported by"
+msgstr "susținute de"
+
+#: templates/v2/public/components/home/hero.html:23
+#, python-format
+msgid "with 3.5%% of the income tax"
+msgstr "cu 3.5%% din impozitul pe venit"
+
+#: templates/v2/public/components/home/hero.html:30
+msgid ""
+"Without costing you anything extra, by redirecting, you give a little extra "
+"power to an NGO to do good in your name. You can opt for the redistribution "
+"of the amount until"
+msgstr ""
+"Fără să te coste nimic în plus, redirecționând, oferi un strop de putere în "
+"plus unui ONG care să facă bine și în numele tău. Poți opta pentru "
+"redistribuirea sumei până pe"
+
 #: templates/v2/public/components/pagination.html:11
 #: templates/v2/public/components/pagination.html:41
 msgid "Previous"
@@ -2222,37 +2264,43 @@ msgstr "Următor"
 msgid "per page"
 msgstr "pe pagină"
 
-#: templates/v2/redirect/footer.html:77
+#: templates/v2/redirect/footer.html:78
 msgid "Code for Romania"
 msgstr "Code for Romania"
 
-#: templates/v2/redirect/footer.html:82
+#: templates/v2/redirect/footer.html:83
 msgid "About Code for Romania"
 msgstr "Despre Code for Romania"
 
-#: templates/v2/redirect/footer.html:87
+#: templates/v2/redirect/footer.html:88
 msgid "Support our projects"
 msgstr "Susține proiectele noastre"
 
-#: templates/v2/redirect/footer.html:95
+#: templates/v2/redirect/footer.html:96
 msgid "redirectioneaza.ro"
 msgstr "redirectioneaza.ro"
 
-#: templates/v2/redirect/footer.html:100
+#: templates/v2/redirect/footer.html:101
 msgid "Home"
 msgstr "Acasă"
 
-#: templates/v2/redirect/footer.html:123
+#: templates/v2/redirect/footer.html:124
 msgid "For contributors"
 msgstr "Pentru contribuabili"
 
-#: templates/v2/redirect/footer.html:143 templates/v2/redirect/footer.html:156
+#: templates/v2/redirect/footer.html:144 templates/v2/redirect/footer.html:157
 msgid "FAQ"
 msgstr "Întrebări frecvente"
 
-#: templates/v2/redirect/footer.html:164
+#: templates/v2/redirect/footer.html:165
 msgid "Useful links"
 msgstr "Linkuri utile"
+
+#: templates/v2/redirect/footer.html:194
+msgid ""
+"Independent Non-profit organization, politically unaffiliated, and "
+"apolitical."
+msgstr "Organizație neguvernamentală independentă, neafiliată politic și apolitică."
 
 #: templates/v2/socialaccount/login.html:31
 msgid "Redirecting to authentication..."

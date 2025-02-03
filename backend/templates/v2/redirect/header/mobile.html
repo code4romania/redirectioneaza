@@ -10,20 +10,6 @@
   <div class="container">
     <div class="divide-y divide-gray-500/10">
 
-      {% if header_content.admin_menu %}
-
-        <div class="grid gap-2 py-3">
-
-          {% for admin_menu_item in header_content.admin_menu %}
-
-            {% include "redirect/header/mobile-item.html" with menu_item=admin_menu_item %}
-
-          {% endfor %}
-
-        </div>
-
-      {% endif %}
-
       {% if header_content.main_menu %}
 
         <div class="grid gap-2 py-3">
