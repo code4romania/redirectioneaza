@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-04 10:07+0200\n"
+"POT-Creation-Date: 2025-02-04 12:53+0200\n"
 "PO-Revision-Date: 2024-02-28 15:45+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -63,131 +63,132 @@ msgstr "No"
 msgid "Has owner"
 msgstr "Has owner"
 
-#: donations/admin.py:165 donations/admin.py:210 donations/apps.py:8
+#: donations/admin.py:165 donations/admin.py:232 donations/apps.py:8
 #: donations/views/dashboard/admin_dashboard.py:142
+#: redirectioneaza/context_processors/headers.py:67
 #: redirectioneaza/settings/unfold.py:24 redirectioneaza/settings/unfold.py:33
 msgid "Donations"
 msgstr "Donations"
 
-#: donations/admin.py:169 donations/admin.py:354 donations/admin.py:404
+#: donations/admin.py:169 donations/admin.py:376 donations/admin.py:426
 #: donations/models/donors.py:52 donations/models/jobs.py:28
 #: donations/models/ngos.py:239 partners/admin.py:12 users/models.py:70
 msgid "NGO"
 msgstr "NGO"
 
-#: donations/admin.py:173
+#: donations/admin.py:182
 msgid "Activity"
 msgstr "Activity"
 
-#: donations/admin.py:184 donations/forms/ngo_account.py:13
+#: donations/admin.py:193 donations/forms/ngo_account.py:13
 #: templates/v2/ngo-account/my-organization/ngo-presentation.html:85
 msgid "Logo"
 msgstr "Logo"
 
-#: donations/admin.py:188
+#: donations/admin.py:197 redirectioneaza/context_processors/headers.py:44
 msgid "Contact"
 msgstr "Contact"
 
-#: donations/admin.py:201
+#: donations/admin.py:213
 msgid "Details"
 msgstr "Details"
 
-#: donations/admin.py:205 donations/admin.py:380 donations/admin.py:416
+#: donations/admin.py:222 donations/admin.py:402 donations/admin.py:438
 msgid "Date"
 msgstr "Date"
 
-#: donations/admin.py:212
+#: donations/admin.py:234
 msgid "Open the NGO donor list"
 msgstr "Open the NGO donor list"
 
-#: donations/admin.py:223
+#: donations/admin.py:245
 msgid "This user already has an NGO."
 msgstr ""
 
-#: donations/admin.py:229
+#: donations/admin.py:251
 msgid "This user is a staff member."
 msgstr ""
 
-#: donations/admin.py:235
+#: donations/admin.py:257
 msgid "This user is an NGO Hub user."
 msgstr ""
 
-#: donations/admin.py:247
+#: donations/admin.py:269
 msgid "Owner changed successfully."
 msgstr ""
 
-#: donations/admin.py:250
+#: donations/admin.py:272
 #, fuzzy
 #| msgid "old password"
 msgid "Change owner"
 msgstr "old password"
 
-#: donations/admin.py:267
+#: donations/admin.py:289
 #, fuzzy
 #| msgid "The ID number format is not valid"
 msgid "The form is not valid."
 msgstr "The ID number format is not valid"
 
-#: donations/admin.py:277
+#: donations/admin.py:299
 #, python-format
 msgid "Change owner of NGO '%(name)s'"
 msgstr ""
 
-#: donations/admin.py:282
+#: donations/admin.py:304
 msgid "Generate donations archive"
 msgstr "Generate donations archive"
 
-#: donations/admin.py:301
+#: donations/admin.py:323
 msgid "The donations archive has been generated for the following NGOs: "
 msgstr "The donations archive has been generated for the following NGOs: "
 
-#: donations/admin.py:303
+#: donations/admin.py:325
 msgid ""
 "The donations archive could not be generated for any of the selected NGOs."
 msgstr ""
 "The donations archive could not be generated for any of the selected NGOs."
 
-#: donations/admin.py:307
+#: donations/admin.py:329
 msgid "Clean up registration numbers"
 msgstr "Clean up registration numbers"
 
-#: donations/admin.py:314
+#: donations/admin.py:336
 msgid "Registration numbers are clean."
 msgstr "Registration numbers are clean."
 
-#: donations/admin.py:316
+#: donations/admin.py:338
 msgid "Update from NGO Hub synchronously"
 msgstr "Update from NGO Hub synchronously"
 
-#: donations/admin.py:321
+#: donations/admin.py:343
 msgid "NGOs updated from NGO Hub."
 msgstr "NGOs updated from NGO Hub."
 
-#: donations/admin.py:323
+#: donations/admin.py:345
 msgid "Update from NGO Hub asynchronously"
 msgstr "Update from NGO Hub asynchronously"
 
-#: donations/admin.py:328
+#: donations/admin.py:350
 msgid "NGOs are being updated from NGO Hub."
 msgstr "NGOs are being updated from NGO Hub."
 
-#: donations/admin.py:358
+#: donations/admin.py:380
 msgid "Identity"
 msgstr "Identity"
 
-#: donations/admin.py:372
+#: donations/admin.py:394
 msgid "Info"
 msgstr "Info"
 
-#: donations/admin.py:376 donations/admin.py:412
+#: donations/admin.py:398 donations/admin.py:434
 msgid "File"
 msgstr "File"
 
-#: donations/admin.py:388
+#: donations/admin.py:410
 msgid "Form"
 msgstr "Form"
 
-#: donations/admin.py:408 templates/v2/ngo-account/archives/list-header.html:11
+#: donations/admin.py:430 templates/v2/ngo-account/archives/list-header.html:11
 #: templates/v2/ngo-account/redirections/list-header.html:26
 msgid "Status"
 msgstr "Status"
@@ -460,11 +461,11 @@ msgstr "county"
 msgid "address"
 msgstr "address"
 
-#: donations/models/donors.py:81 donations/models/ngos.py:182
+#: donations/models/donors.py:81 donations/models/ngos.py:183
 msgid "telephone"
 msgstr "telephone"
 
-#: donations/models/donors.py:82 donations/models/ngos.py:183
+#: donations/models/donors.py:82 donations/models/ngos.py:182
 #: donations/views/donations_download.py:179
 msgid "email"
 msgstr "email"
@@ -656,6 +657,7 @@ msgid "date updated"
 msgstr "date updated"
 
 #: donations/models/ngos.py:240 partners/admin.py:13 partners/models.py:52
+#: redirectioneaza/context_processors/headers.py:63
 #: redirectioneaza/settings/unfold.py:27
 msgid "NGOs"
 msgstr "NGOs"
@@ -688,7 +690,7 @@ msgid "Your redirectioneaza.ro account"
 msgstr "Welcome to redirectioneaza.ro"
 
 #: donations/views/account_management.py:108
-#: templates/v2/socialaccount/login.html:5
+#: templates/v2/socialaccount/login.html:6
 msgid "Sign In"
 msgstr "Sign In"
 
@@ -920,7 +922,7 @@ msgid "Organization settings"
 msgstr "NGO Hub organization ID"
 
 #: donations/views/ngo_account.py:353
-#: redirectioneaza/context_processors/headers.py:77
+#: redirectioneaza/context_processors/headers.py:94
 #: templates/v2/ngo-account/redirections/main.html:10
 #, fuzzy
 #| msgid "Options"
@@ -1049,6 +1051,7 @@ msgid "Metadata"
 msgstr "Metadata"
 
 #: partners/apps.py:8 partners/models.py:62
+#: redirectioneaza/context_processors/headers.py:71
 #: redirectioneaza/settings/unfold.py:39
 msgid "Partners"
 msgstr "Partners"
@@ -1117,173 +1120,221 @@ msgstr ""
 
 #: redirectioneaza/context_processors/headers.py:17
 msgid ""
-"Încă nu te-ai hotărât cu privire la cauza pe care vrei să o susții? "
-"Descoperă organizațiile către care poți redirecționa prin platformă."
+"Still undecided about the cause you want to support? Discover the "
+"organizations you can redirect to through the platform."
 msgstr ""
 
-#: redirectioneaza/context_processors/headers.py:30
-#: redirectioneaza/context_processors/headers.py:40
+#: redirectioneaza/context_processors/headers.py:22
+msgid "How it works"
+msgstr ""
+
+#: redirectioneaza/context_processors/headers.py:25
+msgid ""
+"What is the 230 form? Who can redirect? How can you contribute? What are the "
+"rules?"
+msgstr ""
+
+#: redirectioneaza/context_processors/headers.py:28
+#: redirectioneaza/context_processors/headers.py:38
 #: redirectioneaza/settings/unfold.py:53
 #, fuzzy
 #| msgid "Frequently Asked Questions"
 msgid "Frequently asked questions"
 msgstr "Frequently Asked Questions"
 
-#: redirectioneaza/context_processors/headers.py:34
+#: redirectioneaza/context_processors/headers.py:32
 msgid ""
-"Cum poți crea un cont pentru organizația ta? Probleme în utilizarea "
-"platformei? Găsește răspunsurile la întrebările tale."
+"How can you create an account for your organization? Issues using the "
+"platform? Find the answers to your questions."
 msgstr ""
 
-#: redirectioneaza/context_processors/headers.py:43
+#: redirectioneaza/context_processors/headers.py:41
 msgid ""
-"Ce se întâmplă cu datele tale? Ce altceva? Găsește răspunsurile la "
-"întrebările tale."
+"What happens with your data? What else? Find the answers to your questions."
 msgstr ""
 
-#: redirectioneaza/context_processors/headers.py:61
-msgid "Admin"
+#: redirectioneaza/context_processors/headers.py:47
+msgid "The contact form for donors."
 msgstr ""
 
-#: redirectioneaza/context_processors/headers.py:71
+#: redirectioneaza/context_processors/headers.py:50
+#, fuzzy
+#| msgid "User Link"
+msgid "User guide"
+msgstr "User Link"
+
+#: redirectioneaza/context_processors/headers.py:54
+msgid ""
+"Find out how you can use redirectioneaza.ro to collect the 230 forms for "
+"your organization and discover the features."
+msgstr ""
+
+#: redirectioneaza/context_processors/headers.py:59
+#, fuzzy
+#| msgid "Dashboard"
+msgid "Admin Dashboard"
+msgstr "Dashboard"
+
+#: redirectioneaza/context_processors/headers.py:75
+#, fuzzy
+#| msgid "Options"
+msgid "FAQ Questions"
+msgstr "Options"
+
+#: redirectioneaza/context_processors/headers.py:79
+#: redirectioneaza/settings/unfold.py:70 redirectioneaza/settings/unfold.py:73
+#: users/apps.py:8
+msgid "Users"
+msgstr "Users"
+
+#: redirectioneaza/context_processors/headers.py:83
+#: redirectioneaza/settings/unfold.py:13 redirectioneaza/settings/unfold.py:16
+msgid "Dashboard"
+msgstr "Dashboard"
+
+#: redirectioneaza/context_processors/headers.py:88
 #: templates/v2/ngo-account/my-organization/base.html:26
 #, fuzzy
 #| msgid "NGO Hub organization ID"
 msgid "Organization Data"
 msgstr "NGO Hub organization ID"
 
-#: redirectioneaza/context_processors/headers.py:83
+#: redirectioneaza/context_processors/headers.py:100
 msgid "Archive History"
 msgstr ""
 
-#: redirectioneaza/context_processors/headers.py:89
+#: redirectioneaza/context_processors/headers.py:106
 msgid "Settings"
 msgstr ""
 
-#: redirectioneaza/context_processors/headers.py:95
+#: redirectioneaza/context_processors/headers.py:112
 msgid "Log in"
 msgstr ""
 
-#: redirectioneaza/context_processors/headers.py:100
-#: redirectioneaza/context_processors/headers.py:152
+#: redirectioneaza/context_processors/headers.py:117
+#: redirectioneaza/context_processors/headers.py:169
 #, fuzzy
 #| msgid "Login through NGO Hub"
 msgid "Register Organization"
 msgstr "Login through NGO Hub"
 
-#: redirectioneaza/context_processors/headers.py:105
+#: redirectioneaza/context_processors/headers.py:122
 msgid "Log out"
 msgstr ""
 
-#: redirectioneaza/context_processors/headers.py:124
+#: redirectioneaza/context_processors/headers.py:141
 #, fuzzy
 #| msgid "donors"
 msgid "For donors"
 msgstr "donors"
 
-#: redirectioneaza/context_processors/headers.py:139
+#: redirectioneaza/context_processors/headers.py:156
 #: templates/v2/redirect/footer.html:161
 #, fuzzy
 #| msgid "NGO Hub organization ID"
 msgid "For organizations"
 msgstr "NGO Hub organization ID"
 
-#: redirectioneaza/context_processors/headers.py:183
+#: redirectioneaza/context_processors/headers.py:182
+msgid "Admin"
+msgstr ""
+
+#: redirectioneaza/context_processors/headers.py:209
 #, fuzzy
 #| msgid "NGO Hub organization ID"
 msgid "My Organization"
 msgstr "NGO Hub organization ID"
 
-#: redirectioneaza/settings/app_configs.py:34
+#: redirectioneaza/settings/app_configs.py:35
 msgid "January"
 msgstr "January"
 
-#: redirectioneaza/settings/app_configs.py:35
+#: redirectioneaza/settings/app_configs.py:36
 msgid "Jan"
 msgstr "Jan"
 
-#: redirectioneaza/settings/app_configs.py:38
+#: redirectioneaza/settings/app_configs.py:39
 msgid "February"
 msgstr "February"
 
-#: redirectioneaza/settings/app_configs.py:39
+#: redirectioneaza/settings/app_configs.py:40
 msgid "Feb"
 msgstr "Feb"
 
-#: redirectioneaza/settings/app_configs.py:42
+#: redirectioneaza/settings/app_configs.py:43
 msgid "March"
 msgstr "March"
 
-#: redirectioneaza/settings/app_configs.py:43
+#: redirectioneaza/settings/app_configs.py:44
 msgid "Mar"
 msgstr "Mar"
 
-#: redirectioneaza/settings/app_configs.py:46
+#: redirectioneaza/settings/app_configs.py:47
 msgid "April"
 msgstr "April"
 
-#: redirectioneaza/settings/app_configs.py:47
+#: redirectioneaza/settings/app_configs.py:48
 msgid "Apr"
 msgstr "Apr"
 
-#: redirectioneaza/settings/app_configs.py:50
 #: redirectioneaza/settings/app_configs.py:51
+#: redirectioneaza/settings/app_configs.py:52
 msgid "May"
 msgstr "May"
 
-#: redirectioneaza/settings/app_configs.py:54
+#: redirectioneaza/settings/app_configs.py:55
 msgid "June"
 msgstr "June"
 
-#: redirectioneaza/settings/app_configs.py:55
+#: redirectioneaza/settings/app_configs.py:56
 msgid "Jun"
 msgstr "Jun"
 
-#: redirectioneaza/settings/app_configs.py:58
+#: redirectioneaza/settings/app_configs.py:59
 msgid "July"
 msgstr "July"
 
-#: redirectioneaza/settings/app_configs.py:59
+#: redirectioneaza/settings/app_configs.py:60
 msgid "Jul"
 msgstr "Jul"
 
-#: redirectioneaza/settings/app_configs.py:62
+#: redirectioneaza/settings/app_configs.py:63
 msgid "August"
 msgstr "August"
 
-#: redirectioneaza/settings/app_configs.py:63
+#: redirectioneaza/settings/app_configs.py:64
 msgid "Aug"
 msgstr "Aug"
 
-#: redirectioneaza/settings/app_configs.py:66
+#: redirectioneaza/settings/app_configs.py:67
 msgid "September"
 msgstr "September"
 
-#: redirectioneaza/settings/app_configs.py:67
+#: redirectioneaza/settings/app_configs.py:68
 msgid "Sep"
 msgstr "Sep"
 
-#: redirectioneaza/settings/app_configs.py:70
+#: redirectioneaza/settings/app_configs.py:71
 msgid "October"
 msgstr "October"
 
-#: redirectioneaza/settings/app_configs.py:71
+#: redirectioneaza/settings/app_configs.py:72
 msgid "Oct"
 msgstr "Oct"
 
-#: redirectioneaza/settings/app_configs.py:74
+#: redirectioneaza/settings/app_configs.py:75
 msgid "November"
 msgstr "November"
 
-#: redirectioneaza/settings/app_configs.py:75
+#: redirectioneaza/settings/app_configs.py:76
 msgid "Nov"
 msgstr "Nov"
 
-#: redirectioneaza/settings/app_configs.py:78
+#: redirectioneaza/settings/app_configs.py:79
 msgid "December"
 msgstr "December"
 
-#: redirectioneaza/settings/app_configs.py:79
+#: redirectioneaza/settings/app_configs.py:80
 msgid "Dec"
 msgstr "Dec"
 
@@ -1292,18 +1343,9 @@ msgstr "Dec"
 msgid "Background Tasks"
 msgstr ""
 
-#: redirectioneaza/settings/unfold.py:13 redirectioneaza/settings/unfold.py:16
-msgid "Dashboard"
-msgstr "Dashboard"
-
 #: redirectioneaza/settings/unfold.py:45
 msgid "Donation exports"
 msgstr "Donation exports"
-
-#: redirectioneaza/settings/unfold.py:70 redirectioneaza/settings/unfold.py:73
-#: users/apps.py:8
-msgid "Users"
-msgstr "Users"
 
 #: redirectioneaza/settings/unfold.py:79 users/models.py:168
 msgid "Groups"
@@ -2358,27 +2400,44 @@ msgstr ""
 
 #: templates/v2/public/components/home/hero.html:12
 #, python-format
+msgid "Redirect 3.5%% of your income tax"
+msgstr ""
+
+#: templates/v2/public/components/home/hero.html:13
+msgid "to a cause of your choice"
+msgstr ""
+
+#: templates/v2/public/components/home/hero.html:15
+#, python-format
 msgid "Redirect 3.5%% of your tax to one of the NGOs"
 msgstr ""
 
-#: templates/v2/public/components/home/hero.html:14
+#: templates/v2/public/components/home/hero.html:16
+#, python-format
+msgid "supported by %(company_name)s"
+msgstr ""
+
+#: templates/v2/public/components/home/hero.html:21
 msgid "You decide what happens"
 msgstr ""
 
-#: templates/v2/public/components/home/hero.html:20
-msgid "supported by"
-msgstr ""
-
-#: templates/v2/public/components/home/hero.html:23
+#: templates/v2/public/components/home/hero.html:22
 #, python-format
 msgid "with 3.5%% of the income tax"
 msgstr ""
 
-#: templates/v2/public/components/home/hero.html:30
+#: templates/v2/public/components/home/hero.html:40
 msgid ""
 "Without costing you anything extra, by redirecting, you give a little extra "
 "power to an NGO to do good in your name. You can opt for the redistribution "
 "of the amount until"
+msgstr ""
+
+#: templates/v2/public/components/home/hero.html:51
+msgid ""
+"If your favorite NGO is not on this page, check the full list of "
+"organizations on <a class=\"underline text-cyan-700\" href=\"https://"
+"redirectioneaza.ro\">redirectioneaza.ro</a>."
 msgstr ""
 
 #: templates/v2/public/components/pagination.html:11
@@ -2432,11 +2491,11 @@ msgstr "donors"
 msgid "Useful links"
 msgstr ""
 
-#: templates/v2/socialaccount/login.html:31
+#: templates/v2/socialaccount/login.html:33
 msgid "Redirecting to authentication..."
 msgstr "Redirecting to authentication..."
 
-#: templates/v2/socialaccount/login.html:47
+#: templates/v2/socialaccount/login.html:49
 msgid "or click here to sign in"
 msgstr "or click here to sign in"
 
