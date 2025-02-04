@@ -15,7 +15,9 @@
       class="hidden"
       {% if redirection_form.signature.value %}value="{{ redirection_form.signature.value }}"{% endif %}>
 
-    <div class="flex gap-4">
+    <div
+      x-data="{signatureModalIsOpen: false}"
+      class="flex gap-4">
 
       <button
         @click="signatureModalIsOpen = true"

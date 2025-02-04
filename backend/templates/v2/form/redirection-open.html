@@ -6,16 +6,16 @@
   </h2>
 
   {% blocktranslate trimmed asvar banner_message %}
-      Since 2022, form 230 can be submitted online.
-      Fill in the form with the data from your ID,
-      sign it online, and it will be automatically sent to the organization.
+    Since 2022, form 230 can be submitted online.
+    Fill in the form with the data from your ID,
+    sign it online, and it will be automatically sent to the organization.
 
-      Alternatively, your form will be generated, and you will be able to download the PDF,
-      but it will not reach the NGO.
+    Alternatively, your form will be generated, and you will be able to download the PDF,
+    but it will not reach the NGO.
 
-      We rely on you to print, sign the form by hand,
-      and send it to the NGO by mail or email,
-      or submit it directly to ANAF.
+    We rely on you to print, sign the form by hand,
+    and send it to the NGO by mail or email,
+    or submit it directly to ANAF.
   {% endblocktranslate %}
   {% include "components/info-banner.html" with style="info" banner_message=banner_message %}
 
@@ -186,7 +186,9 @@
       <div id=g-recaptcha" class="g-recaptcha" data-sitekey="{{ captcha_public_key }}" data-callback="onSubmit"></div>
     </fieldset>
 
-    <div class="flex flex-col gap-4 text-center sm:items-center sm:flex-row">
+    <div
+      x-data="{confirmationModalIsOpen: false}"
+      class="flex flex-col gap-4 text-center sm:items-center sm:flex-row">
       <div
         x-cloak
         x-show="confirmationModalIsOpen"
