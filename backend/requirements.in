@@ -17,7 +17,7 @@ pycognito~=2024.5.1
 django-recaptcha~=4.0.0
 
 # NGO Hub integration
-ngohub~=0.0.9
+ngohub~=0.0.10
 
 # encrypting data
 cryptography~=44.0.0

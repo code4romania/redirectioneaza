@@ -10,12 +10,12 @@ asgiref==3.8.1
     #   django-allauth
 blessed==1.20.0
     # via -r requirements.in
-boto3==1.36.10
+boto3==1.36.12
     # via
     #   django-ses
     #   django-storages
     #   pycognito
-botocore==1.36.10
+botocore==1.36.12
     # via
     #   boto3
     #   s3transfer
@@ -56,7 +56,7 @@ django-allauth==65.3.1
     # via -r requirements.in
 django-environ==0.11.2
     # via -r requirements.in
-django-import-export==4.3.4
+django-import-export==4.3.5
     # via -r requirements.in
 django-ipware==7.0.1
     # via -r requirements.in
@@ -94,7 +94,7 @@ jmespath==1.0.1
     #   botocore
 lxml==5.3.0
     # via svglib
-ngohub==0.0.9
+ngohub==0.0.10
     # via -r requirements.in
 packaging==24.2
     # via gunicorn
