@@ -72,8 +72,8 @@ class HomePage(BaseVisibleTemplateView):
         context.update(
             {
                 "company_name": partner.name,
-                "custom_header": partner.has_custom_header,
-                "custom_note": partner.has_custom_note,
+                "has_custom_header": partner.has_custom_header,
+                "has_custom_note": partner.has_custom_note,
                 "ngos": partner_ngos,
             }
         )

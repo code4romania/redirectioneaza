@@ -21,6 +21,7 @@ env = environ.Env(
     TIMEDELTA_DONATIONS_LIMIT_DOWNLOAD_DAYS=(int, 31),
     IS_CONTAINERIZED=(bool, False),
     RECAPTCHA_ENABLED=(bool, True),
+    FORCE_PARTNER=(bool, False),
     # proxy headers
     USE_PROXY_FORWARDED_HOST=(bool, False),
     PROXY_SSL_HEADER=(str, "HTTP_CLOUDFRONT_FORWARDED_PROTO"),

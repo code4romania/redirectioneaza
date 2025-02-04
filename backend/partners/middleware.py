@@ -26,7 +26,7 @@ class PartnerDomainMiddleware:
         # Drop the port number (if present)
         host = host.split(":", maxsplit=1)[0]
 
-        # Drop the www. prefix (if present)
+        # Drop the `www.` prefix (if present)
         if host[:4] == "www.":
             host = host[4:]
 
@@ -40,6 +40,27 @@ class PartnerDomainMiddleware:
 
         return subdomain
 
+    def _get_partner_from_subdomain(self, request):
+        if settings.FORCE_PARTNER:
+            return Partner.active.first()
+
+        try:
+            subdomain = PartnerDomainMiddleware.extract_subdomain(request.get_host(), settings.APEX_DOMAIN)
+        except InvalidSubdomain:
+            raise Http404(f"Invalid APEX_DOMAIN: {settings.APEX_DOMAIN}")
+
+        logger.debug("Subdomain %s", subdomain or "None")
+
+        if not subdomain:
+            partner = None
+        else:
+            try:
+                partner = Partner.active.get(subdomain=subdomain)
+            except Partner.DoesNotExist:
+                partner = None
+
+        return partner
+
     def __init__(self, get_response):
         self.get_response = get_response
 
@@ -49,19 +70,7 @@ class PartnerDomainMiddleware:
             return self.get_response(request)
 
         logger.debug("Request host %s", request.get_host())
-        try:
-            subdomain = PartnerDomainMiddleware.extract_subdomain(request.get_host(), settings.APEX_DOMAIN)
-        except InvalidSubdomain:
-            raise Http404(f"Invalid APEX_DOMAIN: {settings.APEX_DOMAIN}")
-
-        logger.debug("Subdomain %s", subdomain or "None")
-        if not subdomain:
-            partner = None
-        else:
-            try:
-                partner = Partner.active.get(subdomain=subdomain)
-            except Partner.DoesNotExist:
-                partner = None
+        partner = self._get_partner_from_subdomain(request)
 
         request.partner = partner
         logger.debug("Request partner %s", request.partner or "None")
