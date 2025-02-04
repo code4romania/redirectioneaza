@@ -158,7 +158,7 @@
 
       {% trans "I agree that this NGO may contact me in the future with details about the projects implemented" as input_title %}
       <div class="flex gap-3 mt-4">
-        {% include "components/input/checkbox.html" with input_id="agree_contact" input_name="agree_contact" is_required=True field=redirection_form.agree_contact %}
+        {% include "components/input/checkbox.html" with input_id="agree_contact" input_name="agree_contact" is_required=False field=redirection_form.agree_contact %}
       </div>
 
       {% url 'terms' as terms_url %}

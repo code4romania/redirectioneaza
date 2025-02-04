@@ -27,7 +27,7 @@ class DonationForm(forms.Form):
 
     two_years = forms.BooleanField(label=_("Two years"), required=False)
     anaf_gdpr = forms.BooleanField(label=_("ANAF GDPR"), required=False)
-    agree_contact = forms.BooleanField(label=_("Agree contact"), required=True)
+    agree_contact = forms.BooleanField(label=_("Agree contact"), required=False)
     agree_terms = forms.BooleanField(label=_("Agree terms"), required=True)
 
     signature = forms.CharField(label=_("Signature"), max_length=1_000_000, required=False)
