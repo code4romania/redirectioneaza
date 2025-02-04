@@ -167,7 +167,16 @@ class NgoAdmin(ModelAdmin):
         ),
         (
             _("NGO"),
-            {"fields": ("slug", "name", "registration_number", "description")},
+            {
+                "fields": (
+                    "vat_id",
+                    "registration_number",
+                    "ngohub_org_id",
+                    "slug",
+                    "name",
+                    "description",
+                )
+            },
         ),
         (
             _("Activity"),
@@ -189,21 +198,34 @@ class NgoAdmin(ModelAdmin):
             {
                 "fields": (
                     "address",
+                    "locality",
                     "county",
                     "active_region",
-                    "phone",
-                    "website",
                     "email",
+                    "display_email",
+                    "phone",
+                    "display_phone",
+                    "website",
                 )
             },
         ),
         (
             _("Details"),
-            {"fields": ("bank_account", "prefilled_form")},
+            {
+                "fields": (
+                    "bank_account",
+                    "prefilled_form",
+                )
+            },
         ),
         (
             _("Date"),
-            {"fields": ("date_created", "date_updated")},
+            {
+                "fields": (
+                    "date_created",
+                    "date_updated",
+                )
+            },
         ),
     )
 

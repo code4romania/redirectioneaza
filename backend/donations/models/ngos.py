@@ -179,8 +179,8 @@ class Ngo(models.Model):
         db_index=True,
     )
 
-    phone = models.CharField(verbose_name=_("telephone"), blank=True, null=False, default="", max_length=30)
     email = models.EmailField(verbose_name=_("email"), blank=True, null=False, default="", db_index=True)
+    phone = models.CharField(verbose_name=_("telephone"), blank=True, null=False, default="", max_length=30)
 
     display_email = models.BooleanField(verbose_name=_("display email"), db_index=True, default=False)
     display_phone = models.BooleanField(verbose_name=_("display phone"), db_index=True, default=False)
