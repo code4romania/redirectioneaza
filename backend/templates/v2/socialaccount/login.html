@@ -1,9 +1,11 @@
 {% extends "socialaccount/base_entrance.html" %}
-{% load i18n %}
-{% load allauth %}
+
+{% load allauth i18n %}
+
 {% block head_title %}
   {% trans "Sign In" %}
 {% endblock head_title %}
+
 {% block content %}
 
   {% comment %}
@@ -34,7 +36,7 @@
       x-data="{ show: false }"
       x-show="show"
       x-init="$el.querySelector('button').click()"
-      x-init="setTimeout(() => show = true, 10000)">
+      x-init="setTimeout(() => show = true, 5000)">
 
       {% element form method="post" no_visible_fields=True %}
         {% slot actions %}
