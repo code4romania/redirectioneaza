@@ -46,12 +46,11 @@ class ForgotPasswordView(BaseVisibleTemplateView):
         except self.user_model.DoesNotExist:
             user = None
 
-        if user and not user.is_ngohub_user:
-            self._send_password_reset_email(request, user)
-        elif user.is_ngohub_user:
-            # TODO: send an e-mail to the user
-            #       notify them that they should log in through NGO Hub
-            pass
+        if user:
+            if not (user.is_ngohub_user or user.ngo and user.ngo.ngohub_org_id):
+                self._send_password_reset_email(request, user)
+            else:
+                self._send_ngohub_notification(request, user)
 
         messages.success(
             request,
@@ -84,6 +83,22 @@ class ForgotPasswordView(BaseVisibleTemplateView):
             to_emails=[user.email],
             text_template="emails/account/reset-password/main.txt",
             html_template="emails/account/reset-password/main.html",
+            context=template_context,
+        )
+
+    def _send_ngohub_notification(self, request: HttpRequest, user: UserModel):
+        template_context = {
+            "first_name": user.first_name,
+            "contact_email": settings.CONTACT_EMAIL_ADDRESS,
+            "ngohub_site": settings.NGOHUB_APP_BASE,
+        }
+        template_context.update(extend_email_context(request))
+
+        send_email(
+            subject=_("Your redirectioneaza.ro account"),
+            to_emails=[user.email],
+            text_template="emails/account/ngohub-notification/main.txt",
+            html_template="emails/account/ngohub-notification/main.html",
             context=template_context,
         )
 

@@ -1,0 +1,32 @@
+{% extends "emails/base.html" %}
+
+{% load i18n %}
+
+{% block heading %}
+  {% trans "Hello," %}
+  {{ first_name }},
+{% endblock %}
+
+{% block content %}
+
+  <p>
+    {% blocktrans trimmed %}
+      We received a request to reset your password on redirectioneaza.ro,
+      but your account is connected through NGO Hub.
+    {% endblocktrans %}
+  </p>
+
+  <p>
+    {% blocktrans trimmed %}
+      To log in to your account or manage your password, you will have to log in through
+      <a href="{{ ngohub_site }}">your NGO Hub account</a>.
+    {% endblocktrans %}
+  </p>
+
+  <p>
+    {% blocktrans trimmed %}
+      If you didn't request a password reset, you can ignore this email.
+    {% endblocktrans %}
+  </p>
+
+{% endblock %}

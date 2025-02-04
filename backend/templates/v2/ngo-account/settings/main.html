@@ -50,7 +50,7 @@
           {% if has_ngohub %}
             <div class="col-span-2">
               {% trans "Full name" as input_title %}
-              {% include "components/input/input.html" with input_id="full_name" input_type="text" input_name="full_name" placeholder=input_title is_required=True value=user.first_name is_disabled=has_ngohub %}
+              {% include "components/input/input.html" with input_id="full_name" input_type="text" input_name="full_name" placeholder=input_title is_required=True value=user.first_name is_disabled=True %}
             </div>
           {% else %}
             <div class="col-span-1">

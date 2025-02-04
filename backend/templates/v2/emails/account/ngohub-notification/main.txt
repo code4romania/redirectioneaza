@@ -1,0 +1,17 @@
+{% load i18n %}
+
+{% trans "Hello," %} {{ first_name }},
+
+{% blocktrans trimmed %}
+  We received a request to reset your password on redirectioneaza.ro,
+  but your account is connected through NGO Hub.
+{% endblocktrans %}
+
+{% blocktrans trimmed %}
+  To log in to your account or manage your password, you will have to log in through your NGO Hub account.
+{% endblocktrans %}
+{{ ngohub_site }}
+
+{% blocktrans trimmed %}
+  If you didn't request a password reset, you can ignore this email.
+{% endblocktrans %}
