@@ -4,6 +4,8 @@ from django.utils.translation import gettext_lazy as _
 from localflavor.generic.forms import IBANFormField
 from localflavor.ro.forms import ROCIFField
 
+from donations.common.validation.phone_number import validate_phone_number
+
 
 class NgoPresentationForm(forms.Form):
     is_accepting_forms = forms.BooleanField(label=_("Is accepting forms"), required=False)
@@ -59,6 +61,16 @@ class NgoPresentationForm(forms.Form):
             raise forms.ValidationError(_("The logo size is too large."))
 
         return logo
+
+    def clean_contact_phone(self):
+        raw_phone_number = self.cleaned_data["contact_phone"]
+
+        phone_number_validation = validate_phone_number(raw_phone_number)
+
+        if phone_number_validation["status"] == "error":
+            raise forms.ValidationError(phone_number_validation["result"])
+
+        return phone_number_validation["result"]
 
 
 class NgoFormForm(forms.Form):
