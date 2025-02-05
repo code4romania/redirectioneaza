@@ -6,9 +6,21 @@ from phonenumbers.phonenumber import PhoneNumber
 
 
 def validate_phone_number(raw_phone_number) -> Dict[str, str]:
-    try:
-        phone_number: PhoneNumber = phonenumbers.parse(raw_phone_number)
-    except phonenumbers.NumberParseException:
+    if raw_phone_number.startswith("+"):
+        try:
+            phone_number: PhoneNumber = phonenumbers.parse(raw_phone_number)
+        except phonenumbers.NumberParseException as e:
+            if e.error_type == phonenumbers.NumberParseException.INVALID_COUNTRY_CODE:
+                return {
+                    "status": "error",
+                    "result": _("Invalid country code"),
+                }
+
+            return {
+                "status": "error",
+                "result": _("Unknown phone number format"),
+            }
+    else:
         try:
             phone_number: PhoneNumber = phonenumbers.parse(raw_phone_number, region="RO")
         except phonenumbers.NumberParseException:
