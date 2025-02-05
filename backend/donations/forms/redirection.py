@@ -5,6 +5,8 @@ from django_recaptcha.fields import ReCaptchaField
 from django_recaptcha.widgets import ReCaptchaV2Invisible
 from localflavor.ro.forms import ROCNPField
 
+from donations.common.validation.phone_number import validate_phone_number
+
 
 class DonationForm(forms.Form):
     l_name = forms.CharField(max_length=100, label=_("Last name"), required=True, strip=True)
@@ -12,7 +14,8 @@ class DonationForm(forms.Form):
     initial = forms.CharField(max_length=1, label=_("Initial"), required=True)
     cnp = ROCNPField(label="CNP", required=True)
 
-    email_address = forms.EmailField(label=_("Email"), required=True)
+    # limit the email address to 200 characters because that is the limit in ANAF's form
+    email_address = forms.EmailField(label=_("Email"), max_length=200, required=True)
     phone_number = forms.CharField(max_length=20, label=_("Phone"), required=False, strip=True)
 
     street_name = forms.CharField(max_length=100, label=_("Street"), required=True, strip=True)
@@ -39,3 +42,13 @@ class DonationForm(forms.Form):
 
     def clean_agree_contact(self):
         return not self.cleaned_data["agree_contact"]
+
+    def clean_phone_number(self):
+        raw_phone_number = self.cleaned_data["phone_number"]
+
+        phone_number_validation = validate_phone_number(raw_phone_number)
+
+        if phone_number_validation["status"] == "error":
+            raise forms.ValidationError(phone_number_validation["result"])
+
+        return phone_number_validation["result"]

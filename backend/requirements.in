@@ -44,6 +44,7 @@ django-storages[s3]~=1.14.4
 
 # locale data
 django-localflavor~=4.0.0
+phonenumbers~=8.13
 
 # pdf creation
 reportlab~=4.2.5
