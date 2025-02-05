@@ -65,6 +65,9 @@ class NgoPresentationForm(forms.Form):
     def clean_contact_phone(self):
         raw_phone_number = self.cleaned_data["contact_phone"]
 
+        if not raw_phone_number:
+            return raw_phone_number
+
         phone_number_validation = validate_phone_number(raw_phone_number)
 
         if phone_number_validation["status"] == "error":
