@@ -237,6 +237,7 @@ class RedirectionHandler(TemplateView):
         donor_email_context.update(
             {
                 "ngo_url": request.build_absolute_uri(reverse("twopercent", kwargs={"ngo_url": ngo_url})),
+                "ngo_name": ngo.name,
             }
         )
 
@@ -265,7 +266,6 @@ class RedirectionHandler(TemplateView):
 
             donor_email_context.update(
                 {
-                    "ngo_name": ngo.name,
                     "ngo_address": ngo_address,
                     "ngo_email": ngo.email,
                 }

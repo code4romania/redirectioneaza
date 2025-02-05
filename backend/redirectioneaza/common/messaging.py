@@ -16,6 +16,7 @@ logger = logging.getLogger(__name__)
 
 def extend_email_context(request: HttpRequest = None) -> Dict:
     return {
+        "contact_email": settings.CONTACT_EMAIL_ADDRESS,
         "logo_code4romania": build_uri(static("images/code4romania.png"), request),
         "logo_instagram": build_uri(static("images/social-icons/instagram.png"), request),
         "logo_facebook": build_uri(static("images/social-icons/facebook.png"), request),
