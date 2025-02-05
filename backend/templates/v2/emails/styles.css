@@ -78,7 +78,6 @@ img {
 /* Layout */
 
 .wrapper {
-  -premailer-cellpadding: 0;
   -premailer-cellspacing: 0;
   -premailer-width: 100%;
   background-color: #f8fafc;
@@ -88,7 +87,6 @@ img {
 }
 
 .content {
-  -premailer-cellpadding: 0;
   -premailer-cellspacing: 0;
   -premailer-width: 100%;
   margin: 0;
@@ -103,7 +101,6 @@ img {
 }
 
 
-
 /* Logo */
 
 .logo {
@@ -115,7 +112,7 @@ img {
 /* Body */
 
 .body {
-  -premailer-cellpadding: 0;
+
   -premailer-cellspacing: 0;
   -premailer-width: 100%;
   background-color: #f8fafc;
@@ -127,7 +124,7 @@ img {
 }
 
 .inner-body {
-  -premailer-cellpadding: 0;
+
   -premailer-cellspacing: 0;
   -premailer-width: 570px;
   background-color: #ffffff;
@@ -156,7 +153,7 @@ img {
 /* Footer */
 
 .footer {
-  -premailer-cellpadding: 0;
+
   -premailer-cellspacing: 0;
   -premailer-width: 570px;
   margin: 0 auto;
@@ -198,7 +195,6 @@ img {
 /* Tables */
 
 .table table {
-  -premailer-cellpadding: 0;
   -premailer-cellspacing: 0;
   -premailer-width: 100%;
   margin: 30px auto;
@@ -227,7 +223,6 @@ img {
 /* Buttons */
 
 .action {
-  -premailer-cellpadding: 0;
   -premailer-cellspacing: 0;
   -premailer-width: 100%;
   margin: 30px auto;
