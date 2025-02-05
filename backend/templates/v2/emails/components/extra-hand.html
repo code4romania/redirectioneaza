@@ -1,0 +1,34 @@
+{% load i18n %}
+
+<h2>
+  {% trans "Do you want to give an extra helping hand?" %}
+</h2>
+
+<p>
+  {% blocktrans trimmed %}
+    If you want to be a true civic superhero,
+    you can help the organization collect more forms!
+    Here's how:
+  {% endblocktrans %}
+</p>
+
+<ul style="list-style: disc outside;">
+  <li>
+    {% blocktranslate trimmed %}
+      Share the
+      <a href="{{ ngo_url }}">organization's page</a>
+      on social networks
+      and encourage your friends to complete the form online for the organization you believe in,
+      simply and safely,
+      on redirectioneaza.ro.
+    {% endblocktranslate %}
+  </li>
+  <li>
+    {% blocktranslate trimmed %}
+      Download the form 230 template for
+      <a href="{{ ngo_url }}">{{ ngo_name }}</a>,
+      print multiple copies and convince your colleagues,
+      friends or family to complete it.
+    {% endblocktranslate %}
+  </li>
+</ul>

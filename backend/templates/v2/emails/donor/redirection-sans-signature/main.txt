@@ -13,12 +13,13 @@
 {% trans "The next steps" %}
 
 {% blocktranslate trimmed %}
-  To complete the redirection,
-  print and sign the form,
-  then send it by courier or mail to the NGO's address,
-  and they will take care of the submission,
-  or you can hand it over personally to a representative of the organization.
+  To complete the redirection, all you need to do is print the form, sign it,
+  and then choose one of the following options:
 {% endblocktranslate %}
+
+- {% trans "Send it to the beneficiary NGO, which will then take care of submitting it to ANAF." %}
+- {% trans "Send it or submit it directly to the tax office (ANAF) in the area where you are domiciled, until {{ limit.day }} {{ month_limit }} {{ limit.year }}." %}
+
 
 {% trans "The organization's contact info" %}
 
@@ -26,27 +27,6 @@
 - {% trans "Address" %}: {{ ngo_address }}
 - {% trans "Email" %}: {{ ngo_email }}
 
-{% trans "Do you want to give an extra helping hand?" %}
-
-{% blocktrans trimmed %}
-  If you want to be a true civic superhero,
-  you can help the organization collect more forms!
-  Here's how:
-{% endblocktrans %}
-
-{% blocktranslate trimmed %}
-  Share the
-  <a href="{{ ngo_url }}">organization's page</a>
-  on social networks
-  and encourage your friends to complete the form online for the organization you believe in,
-  simply and safely,
-  on redirectioneaza.ro.
-{% endblocktranslate %}
-
-{% blocktranslate trimmed %}
-  Download the form 230 template for {{ ngo_name }},
-  print multiple copies and convince your colleagues,
-  friends or family to complete it.
-{% endblocktranslate %}
+{% include "emails/components/extra-hand.txt" %}
 
 {% trans "Thank you for your involvement!" %}

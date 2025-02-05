@@ -268,6 +268,8 @@ class RedirectionHandler(TemplateView):
                 {
                     "ngo_address": ngo_address,
                     "ngo_email": ngo.email,
+                    "month_limit": settings.DONATIONS_LIMIT_MONTH_NAME,
+                    "limit": settings.DONATIONS_LIMIT,
                 }
             )
             send_email(

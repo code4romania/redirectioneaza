@@ -29,6 +29,7 @@ blockquote {
 ol li + li,
 ul li + li {
   margin-top: 1em;
+  font-size: 16px;
 }
 
 a {
@@ -232,6 +233,9 @@ img {
   font-size: 14px;
 }
 
+.action a {
+  color: #334155;
+}
 
 /* text-align: center;  */
 .button {
@@ -283,6 +287,7 @@ img {
   background-color: #ecfeff;
   color: #000;
   padding: 16px;
+  font-size: 16px;
 }
 
 .panel-content p {
