@@ -79,10 +79,13 @@ class RedirectionHandler(TemplateView):
         except Ngo.DoesNotExist:
             raise Http404
 
+        absolute_path = request.build_absolute_uri(reverse("twopercent", kwargs={"ngo_url": ngo_url}))
+
         context.update(
             {
                 "title": ngo.name,
                 "ngo": ngo,
+                "absolute_path": absolute_path,
             }
         )
 

@@ -1,0 +1,23 @@
+{% load i18n %}
+
+<div
+  x-data="{ input: '{{ clipboard_input }}', showConfirmation: false }"
+  class="{{ div_classes }}">
+  <a
+    type="button"
+    @click="navigator.clipboard.writeText(input); showConfirmation = true; setTimeout(() => showConfirmation = false, 5000)"
+    class="{{ button_classes }}">
+    {% trans "Copy the link" %}
+  </a>
+
+  <div
+    x-show="showConfirmation"
+    @click.away="showConfirmation = false"
+    class="fixed top-3 right-3 z-20 pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg bg-white ring-1 shadow-lg ring-black/5"
+    style="display: none;">
+
+    {% trans "Copied the link" as message %}
+    {% include "components/notifications/message.html" with message_text=message %}
+
+  </div>
+</div>

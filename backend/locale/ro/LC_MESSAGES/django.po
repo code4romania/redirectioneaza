@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-05 11:25+0200\n"
+"POT-Creation-Date: 2025-02-05 13:25+0200\n"
 "PO-Revision-Date: 2024-03-07 11:27+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -83,7 +83,7 @@ msgstr "ONG"
 msgid "Activity"
 msgstr "Activitate"
 
-#: donations/admin.py:193 donations/forms/ngo_account.py:13
+#: donations/admin.py:193 donations/forms/ngo_account.py:15
 #: templates/v2/ngo-account/my-organization/ngo-presentation.html:85
 msgid "Logo"
 msgstr "Logo"
@@ -193,6 +193,19 @@ msgstr "Formular"
 msgid "Status"
 msgstr "Stare"
 
+#: donations/common/validation/phone_number.py:16
+msgid "Invalid country code"
+msgstr "Cod de țară invalid"
+
+#: donations/common/validation/phone_number.py:21
+msgid "Unknown phone number format"
+msgstr "Format necunoscut pentru numărul de telefon"
+
+#: donations/common/validation/phone_number.py:29
+#: donations/common/validation/phone_number.py:35
+msgid "Invalid phone number"
+msgstr "Număr de telefon invalid"
+
 #: donations/common/validation/registration_number.py:72
 msgid "The ID number cannot be all zeros"
 msgstr "Numărul de identificare nu poate fi format doar din zerouri"
@@ -234,157 +247,157 @@ msgstr "Numele este obligatoriu"
 msgid "Passwords do not match"
 msgstr "Parolele nu se potrivesc"
 
-#: donations/forms/ngo_account.py:9
+#: donations/forms/ngo_account.py:11
 msgid "Is accepting forms"
 msgstr "Acceptă formulare"
 
-#: donations/forms/ngo_account.py:11 donations/models/ngos.py:105
+#: donations/forms/ngo_account.py:13 donations/models/ngos.py:105
 #: templates/v2/emails/donor/redirection-sans-signature/main.txt:25
 #: templates/v2/ngo-account/my-organization/ngo-presentation.html:75
 #: templates/v2/ngo-account/redirections/list-header.html:8
 msgid "Name"
 msgstr "Nume"
 
-#: donations/forms/ngo_account.py:12
+#: donations/forms/ngo_account.py:14
 #: templates/v2/ngo-account/my-organization/ngo-presentation.html:80
 msgid "CUI/CIF"
 msgstr "CUI/CIF"
 
-#: donations/forms/ngo_account.py:14
+#: donations/forms/ngo_account.py:16
 msgid "Website"
 msgstr "Website"
 
-#: donations/forms/ngo_account.py:16
+#: donations/forms/ngo_account.py:18
 msgid "Contact email"
 msgstr "Email de contact"
 
-#: donations/forms/ngo_account.py:17
+#: donations/forms/ngo_account.py:19
 msgid "Display email"
 msgstr "Afișează email"
 
-#: donations/forms/ngo_account.py:19
+#: donations/forms/ngo_account.py:21
 msgid "Contact phone"
 msgstr "Telefon de contact"
 
-#: donations/forms/ngo_account.py:20
+#: donations/forms/ngo_account.py:22
 msgid "Display phone"
 msgstr "Afișează telefon"
 
-#: donations/forms/ngo_account.py:22
+#: donations/forms/ngo_account.py:24
 #: templates/v2/emails/donor/redirection-sans-signature/main.txt:26
 msgid "Address"
 msgstr "Adresă"
 
-#: donations/forms/ngo_account.py:23 donations/forms/redirection.py:26
+#: donations/forms/ngo_account.py:25 donations/forms/redirection.py:29
 #: templates/v2/form/redirection-open.html:113
 #: templates/v2/ngo-account/my-organization/ngo-presentation.html:129
 msgid "Locality"
 msgstr "Localitate"
 
-#: donations/forms/ngo_account.py:24 donations/forms/redirection.py:25
+#: donations/forms/ngo_account.py:26 donations/forms/redirection.py:28
 #: donations/views/dashboard/ngo_dashboard.py:56
 #: templates/v2/form/redirection-open.html:108
 #: templates/v2/ngo-account/my-organization/ngo-presentation.html:134
 msgid "County"
 msgstr "Județ"
 
-#: donations/forms/ngo_account.py:25
+#: donations/forms/ngo_account.py:27
 #: templates/v2/ngo-account/my-organization/ngo-presentation.html:140
 msgid "Active region"
 msgstr "Regiune activă"
 
-#: donations/forms/ngo_account.py:56
+#: donations/forms/ngo_account.py:58
 msgid "The logo type is not supported."
 msgstr "Extensia fișierului nu este suportată."
 
-#: donations/forms/ngo_account.py:59
+#: donations/forms/ngo_account.py:61
 msgid "The logo size is too large."
 msgstr "Mărimea imaginii este prea mare."
 
-#: donations/forms/ngo_account.py:65
+#: donations/forms/ngo_account.py:77
 msgid "Slug"
 msgstr "URL organizație"
 
-#: donations/forms/ngo_account.py:66
+#: donations/forms/ngo_account.py:78
 #: templates/v2/form/redirection-header.html:65
 msgid "Description"
 msgstr "Descriere"
 
-#: donations/forms/ngo_account.py:67
+#: donations/forms/ngo_account.py:79
 msgid "IBAN"
 msgstr "IBAN"
 
-#: donations/forms/redirection.py:10
+#: donations/forms/redirection.py:12
 #: templates/v2/account/snippets/register-form.html:61
 #: templates/v2/form/redirection-open.html:38
 #: templates/v2/ngo-account/settings/main.html:62
 msgid "Last name"
 msgstr "Nume"
 
-#: donations/forms/redirection.py:11
+#: donations/forms/redirection.py:13
 #: templates/v2/account/snippets/register-form.html:57
 #: templates/v2/form/redirection-open.html:43
 #: templates/v2/ngo-account/settings/main.html:57
 msgid "First name"
 msgstr "Prenume"
 
-#: donations/forms/redirection.py:12
+#: donations/forms/redirection.py:14
 msgid "Initial"
 msgstr "Inițială"
 
-#: donations/forms/redirection.py:15
+#: donations/forms/redirection.py:18
 #: templates/v2/account/snippets/register-form.html:66
 #: templates/v2/emails/donor/redirection-sans-signature/main.txt:27
 #: templates/v2/form/redirection-open.html:58
 msgid "Email"
 msgstr "Email"
 
-#: donations/forms/redirection.py:16
+#: donations/forms/redirection.py:19
 msgid "Phone"
 msgstr "Telefon"
 
-#: donations/forms/redirection.py:18
+#: donations/forms/redirection.py:21
 msgid "Street"
 msgstr "Strada"
 
-#: donations/forms/redirection.py:19 templates/v2/form/redirection-open.html:83
+#: donations/forms/redirection.py:22 templates/v2/form/redirection-open.html:83
 msgid "Number"
 msgstr "Număr"
 
-#: donations/forms/redirection.py:20
+#: donations/forms/redirection.py:23
 msgid "Building"
 msgstr "Bloc"
 
-#: donations/forms/redirection.py:21 templates/v2/form/redirection-open.html:93
+#: donations/forms/redirection.py:24 templates/v2/form/redirection-open.html:93
 msgid "Entrance"
 msgstr "Scara"
 
-#: donations/forms/redirection.py:22 templates/v2/form/redirection-open.html:98
+#: donations/forms/redirection.py:25 templates/v2/form/redirection-open.html:98
 msgid "Floor"
 msgstr "Etaj"
 
-#: donations/forms/redirection.py:23
+#: donations/forms/redirection.py:26
 #: templates/v2/form/redirection-open.html:103
 msgid "Apartment"
 msgstr "Apartament"
 
-#: donations/forms/redirection.py:28
+#: donations/forms/redirection.py:31
 msgid "Two years"
 msgstr "Doi ani"
 
-#: donations/forms/redirection.py:29 donations/models/donors.py:92
+#: donations/forms/redirection.py:32 donations/models/donors.py:92
 msgid "ANAF GDPR"
 msgstr "ANAF GDPR"
 
-#: donations/forms/redirection.py:30
+#: donations/forms/redirection.py:33
 msgid "Agree contact"
 msgstr "Acord contact"
 
-#: donations/forms/redirection.py:31
+#: donations/forms/redirection.py:34
 msgid "Agree terms"
 msgstr "Acord termeni"
 
-#: donations/forms/redirection.py:33 templates/v2/form/signature.html:7
+#: donations/forms/redirection.py:36 templates/v2/form/signature.html:7
 msgid "Signature"
 msgstr "Semnătura"
 
@@ -840,7 +853,7 @@ msgstr "Există erori în formularul de prezentare."
 msgid "Organization forms"
 msgstr "Formulare organizație"
 
-#: donations/views/ngo_account.py:270 donations/views/redirections.py:173
+#: donations/views/ngo_account.py:270 donations/views/redirections.py:176
 msgid "There are some errors on the redirection form."
 msgstr "Există erori în formularul de redirecționare."
 
@@ -876,11 +889,11 @@ msgstr "Descarcă arhiva"
 msgid "Successful redirection"
 msgstr "Redirecționare reușită"
 
-#: donations/views/redirections.py:243
+#: donations/views/redirections.py:246
 msgid "Un nou formular de redirecționare"
 msgstr "Un nou formular de redirecționare"
 
-#: donations/views/redirections.py:250 donations/views/redirections.py:271
+#: donations/views/redirections.py:253 donations/views/redirections.py:274
 msgid "Formularul tău de redirecționare"
 msgstr "Formularul tău de redirecționare"
 
@@ -1380,7 +1393,12 @@ msgid ""
 "the 230 forms. The platform is part of the NGO Hub ecosystem, along with "
 "other digital solutions created for the needs of non-profit organizations. "
 "And your organization can have access, for free!"
-msgstr "Punem la dispoziția societății civile redirectioneaza.ro, platforma prin care ONG-urile pot colecta mai ușor formularele 230. Platforma face parte din ecosistemul NGO Hub, alături de alte soluții digitale create pentru nevoile organizațiilor non-profit. Și organizația ta poate avea acces, gratuit! "
+msgstr ""
+"Punem la dispoziția societății civile redirectioneaza.ro, platforma prin "
+"care ONG-urile pot colecta mai ușor formularele 230. Platforma face parte "
+"din ecosistemul NGO Hub, alături de alte soluții digitale create pentru "
+"nevoile organizațiilor non-profit. Și organizația ta poate avea acces, "
+"gratuit! "
 
 #: templates/v2/account/snippets/cta-ngohub.html:32
 msgid "Register organization"
@@ -1533,6 +1551,14 @@ msgstr ""
 "În NGO Hub fiecare coleg de-al tău poate avea propriul său cont. Asigură-te "
 "că le oferi acces colegilor tăi la aplicațiile cu care lucrează zi de zi."
 
+#: templates/v2/components/copy-to-clipboard.html:10
+msgid "Copy the link"
+msgstr "Copiază linkul"
+
+#: templates/v2/components/copy-to-clipboard.html:19
+msgid "Copied the link"
+msgstr "Linkul a fost copiat"
+
 #: templates/v2/components/input/image.html:30
 msgid "Upload a logo in NGO Hub"
 msgstr "Încarcă un logo în NGO Hub"
@@ -1544,6 +1570,34 @@ msgstr "Încarcă o imagine"
 #: templates/v2/components/input/image.html:46
 msgid "PNG, JPG, GIF up to 2MB"
 msgstr "PNG, JPG, GIF până la 2MB"
+
+#: templates/v2/components/notifications/message.html:31
+msgid "Close"
+msgstr "Închide"
+
+#: templates/v2/components/redirection-cta.html:7
+msgid "Be a civic superhero"
+msgstr "Fii un super-erou civic"
+
+#: templates/v2/components/redirection-cta.html:36
+msgid "Share the page"
+msgstr "Distribuie pagina"
+
+#: templates/v2/components/redirection-cta.html:58
+msgid "Collect printed forms"
+msgstr "Colectează formulare tipărite"
+
+#: templates/v2/components/redirection-cta.html:68
+msgid "Download the form"
+msgstr "Descarcă formularul"
+
+#: templates/v2/components/redirection-cta.html:83
+msgid "Support redirectioneaza.ro"
+msgstr "Susține redirectioneaza.ro"
+
+#: templates/v2/components/redirection-cta.html:94
+msgid "Support the Infrastructure for Good"
+msgstr "Sprijină Infrastructura Binelui"
 
 #: templates/v2/emails/account/activate-account/main.html:6
 #: templates/v2/emails/account/activate-account/main.txt:3
@@ -2322,11 +2376,26 @@ msgstr "Adresă de email"
 msgid "Full name"
 msgstr "Nume complet"
 
-#: templates/v2/notification_messages.html:44
-msgid "Close"
-msgstr "Închide"
+#: templates/v2/public/all-ngos.html:9
+msgid "Explore organizations"
+msgstr "Explorează organizații"
 
-#: templates/v2/public/all-ngos.html:25
+#: templates/v2/public/all-ngos.html:13
+#: templates/v2/public/components/home/hero.html:40
+msgid ""
+"Without costing you anything extra, by redirecting, you give a little extra "
+"power to an NGO to do good in your name. You can opt for the redistribution "
+"of the amount until"
+msgstr ""
+"Fără să te coste nimic în plus, redirecționând, oferi un strop de putere în "
+"plus unui ONG care să facă bine și în numele tău. Poți opta pentru "
+"redistribuirea sumei până pe"
+
+#: templates/v2/public/all-ngos.html:34
+msgid "No organizations found."
+msgstr "Nu au fost găsite organizații"
+
+#: templates/v2/public/all-ngos.html:38
 msgid "organizations"
 msgstr "organizații"
 
@@ -2343,6 +2412,7 @@ msgid "Choose the organization you want to redirect to!"
 msgstr "Alege organizația către care vrei să redirecționezi!"
 
 #: templates/v2/public/components/home/hero-search.html:28
+#: templates/v2/public/components/ngo-search.html:5
 msgid "Search for an NGO by its name"
 msgstr "Caută un ONG după nume"
 
@@ -2373,16 +2443,6 @@ msgstr "Tu decizi ce se întâmplă"
 #, python-format
 msgid "with 3.5%% of the income tax"
 msgstr "cu 3.5%% din impozitul pe venit"
-
-#: templates/v2/public/components/home/hero.html:40
-msgid ""
-"Without costing you anything extra, by redirecting, you give a little extra "
-"power to an NGO to do good in your name. You can opt for the redistribution "
-"of the amount until"
-msgstr ""
-"Fără să te coste nimic în plus, redirecționând, oferi un strop de putere în "
-"plus unui ONG care să facă bine și în numele tău. Poți opta pentru "
-"redistribuirea sumei până pe"
 
 #: templates/v2/public/components/home/hero.html:51
 msgid ""
