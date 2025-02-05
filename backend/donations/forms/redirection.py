@@ -46,6 +46,9 @@ class DonationForm(forms.Form):
     def clean_phone_number(self):
         raw_phone_number = self.cleaned_data["phone_number"]
 
+        if not raw_phone_number:
+            return raw_phone_number
+
         phone_number_validation = validate_phone_number(raw_phone_number)
 
         if phone_number_validation["status"] == "error":
