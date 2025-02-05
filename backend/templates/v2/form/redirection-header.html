@@ -7,11 +7,11 @@
   </div>
 
   <div class="">
-    <h1 class="text-3xl font-bold tracking-tight text-gray-900">
+    <h1 class="text-3xl font-bold tracking-tight text-gray-900 pb-2">
       {{ ngo.name }}
     </h1>
 
-    <ul class="flex gap-4 mt-1 text-sm font-medium">
+    <ul class="flex flex-col lg:flex-row gap-2 lg:gap-4 mt-1 text-sm font-medium">
       {% if ngo_website %}
         <li>
           <a href="{{ ngo_website }}" class="hover:text-amber-600">

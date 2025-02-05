@@ -1,12 +1,15 @@
+{% load i18n %}
+
 <div class="relative pt-8 pb-4" x-data="ngoSearch" x-on:click.outside="close">
   <label class="relative grid grid-cols-1">
-    <span class="sr-only">Caută un ONG după nume sau CUI/CIF</span>
+    {% trans "Search for an NGO by its name" as search_title %}
+    <span class="sr-only">{{ search_title }}</span>
 
     <input
       type="text"
       name="q"
       class="border-none col-start-1 row-start-1 block w-full rounded-full bg-white py-1.5 pl-10 pr-3 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-300 sm:pl-9 sm:text-sm/6 focus:outline-none"
-      placeholder="Caută un ONG după nume sau CUI/CIF"
+      placeholder="{{ search_title }}"
       autocomplete="off"
     >
 

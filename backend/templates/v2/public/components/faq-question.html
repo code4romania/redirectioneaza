@@ -1,5 +1,6 @@
 <div
-  x-data="{ expanded: false }">
+  x-data="{ expanded: false }"
+  class="border-b border-gray-200 py-8">
 
   <dt>
     <!-- Expand/collapse question button -->
@@ -23,7 +24,7 @@
   </dt>
 
   <dd class="pr-12 mt-2" x-show="expanded">
-    <div class="text-gray-600 text-base/7">
+    <div class="text-gray-600 text-base/7 list-disc">
       {{ answer|safe }}
     </div>
   </dd>

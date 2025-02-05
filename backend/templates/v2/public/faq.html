@@ -19,7 +19,7 @@
             </a>
           </h2>
 
-          <dl class="grid gap-6 mt-8">
+          <dl class="grid mt-8">
             {% for question in section.questions %}
               {% include "public/components/faq-question.html" with question=question.title answer=question.answer %}
             {% endfor %}
