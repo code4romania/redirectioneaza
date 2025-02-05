@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-05 18:28+0200\n"
+"POT-Creation-Date: 2025-02-05 18:57+0200\n"
 "PO-Revision-Date: 2024-02-28 15:45+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -963,7 +963,7 @@ msgstr "Successful tasks"
 msgid "Un nou formular de redirecționare"
 msgstr "Un nou formular de redirecționare"
 
-#: donations/views/redirections.py:254 donations/views/redirections.py:276
+#: donations/views/redirections.py:254 donations/views/redirections.py:277
 msgid "Formularul tău de redirecționare"
 msgstr "Formularul tău de redirecționare"
 
@@ -1909,7 +1909,7 @@ msgstr ""
 #, python-format
 msgid ""
 "Send it or submit it directly to the tax office (ANAF) in the area where you "
-"are domiciled, until <strong>%(limit.day)s %(month_limit)s %(limit.year)s</"
+"are domiciled, until <strong>%(limit_day)s %(limit_month)s %(limit_year)s</"
 "strong>."
 msgstr ""
 

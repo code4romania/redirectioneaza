@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-05 18:28+0200\n"
+"POT-Creation-Date: 2025-02-05 18:57+0200\n"
 "PO-Revision-Date: 2024-03-07 11:27+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -893,7 +893,7 @@ msgstr "Redirecționare reușită"
 msgid "Un nou formular de redirecționare"
 msgstr "Un nou formular de redirecționare"
 
-#: donations/views/redirections.py:254 donations/views/redirections.py:276
+#: donations/views/redirections.py:254 donations/views/redirections.py:277
 msgid "Formularul tău de redirecționare"
 msgstr "Formularul tău de redirecționare"
 
@@ -1849,11 +1849,11 @@ msgstr ""
 #, python-format
 msgid ""
 "Send it or submit it directly to the tax office (ANAF) in the area where you "
-"are domiciled, until <strong>%(limit.day)s %(month_limit)s %(limit.year)s</"
+"are domiciled, until <strong>%(limit_day)s %(limit_month)s %(limit_year)s</"
 "strong>."
 msgstr ""
 "Îl trimiți sau depui direct la unitatea fiscală (ANAF) în raza căreia ai "
-"domiciliul, până pe <strong>%(limit.day)s %(month_limit)s %(limit.year)s</"
+"domiciliul, până pe <strong>%(limit_day)s %(limit_month)s %(limit_year)s</"
 "strong>."
 
 #: templates/v2/emails/donor/redirection-sans-signature/main.html:44
