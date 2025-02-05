@@ -81,6 +81,8 @@ class User(AbstractUser):
 
     token_timestamp = models.DateTimeField(verbose_name=_("validation token timestamp"), blank=True, null=True)
 
+    old_password = models.CharField(verbose_name=_("old password"), max_length=128, blank=True, null=True)
+
     date_created = models.DateTimeField(verbose_name=_("date created"), db_index=True, auto_now_add=True)
     date_updated = models.DateTimeField(verbose_name=_("date updated"), db_index=True, auto_now=True)
 
