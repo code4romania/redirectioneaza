@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-04 12:53+0200\n"
+"POT-Creation-Date: 2025-02-05 11:25+0200\n"
 "PO-Revision-Date: 2024-03-07 11:27+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -68,7 +68,7 @@ msgstr "Are utilizator"
 
 #: donations/admin.py:165 donations/admin.py:232 donations/apps.py:8
 #: donations/views/dashboard/admin_dashboard.py:142
-#: redirectioneaza/context_processors/headers.py:67
+#: redirectioneaza/context_processors/headers.py:69
 #: redirectioneaza/settings/unfold.py:24 redirectioneaza/settings/unfold.py:33
 msgid "Donations"
 msgstr "Donații"
@@ -619,7 +619,7 @@ msgid "date updated"
 msgstr "data actualizării"
 
 #: donations/models/ngos.py:240 partners/admin.py:13 partners/models.py:52
-#: redirectioneaza/context_processors/headers.py:63
+#: redirectioneaza/context_processors/headers.py:64
 #: redirectioneaza/settings/unfold.py:27
 msgid "NGOs"
 msgstr "ONG-uri"
@@ -858,7 +858,7 @@ msgid "Organization settings"
 msgstr "Setări organizație"
 
 #: donations/views/ngo_account.py:353
-#: redirectioneaza/context_processors/headers.py:94
+#: redirectioneaza/context_processors/headers.py:100
 #: templates/v2/ngo-account/redirections/main.html:10
 msgid "Redirections"
 msgstr "Redirecționări"
@@ -972,7 +972,7 @@ msgid "Metadata"
 msgstr "Metadate"
 
 #: partners/apps.py:8 partners/models.py:62
-#: redirectioneaza/context_processors/headers.py:71
+#: redirectioneaza/context_processors/headers.py:74
 #: redirectioneaza/settings/unfold.py:39
 msgid "Partners"
 msgstr "Parteneri"
@@ -1102,61 +1102,61 @@ msgstr ""
 msgid "Admin Dashboard"
 msgstr "Tablou de bord"
 
-#: redirectioneaza/context_processors/headers.py:75
+#: redirectioneaza/context_processors/headers.py:79
 msgid "FAQ Questions"
 msgstr "FAQ Întrebări"
 
-#: redirectioneaza/context_processors/headers.py:79
+#: redirectioneaza/context_processors/headers.py:84
 #: redirectioneaza/settings/unfold.py:70 redirectioneaza/settings/unfold.py:73
 #: users/apps.py:8
 msgid "Users"
 msgstr "Utilizatori"
 
-#: redirectioneaza/context_processors/headers.py:83
+#: redirectioneaza/context_processors/headers.py:89
 #: redirectioneaza/settings/unfold.py:13 redirectioneaza/settings/unfold.py:16
 msgid "Dashboard"
 msgstr "Tablou de bord"
 
-#: redirectioneaza/context_processors/headers.py:88
+#: redirectioneaza/context_processors/headers.py:94
 #: templates/v2/ngo-account/my-organization/base.html:26
 msgid "Organization Data"
 msgstr "Date organizație"
 
-#: redirectioneaza/context_processors/headers.py:100
+#: redirectioneaza/context_processors/headers.py:106
 msgid "Archive History"
 msgstr "Istoric arhive"
 
-#: redirectioneaza/context_processors/headers.py:106
+#: redirectioneaza/context_processors/headers.py:112
 msgid "Settings"
 msgstr "Setări"
 
-#: redirectioneaza/context_processors/headers.py:112
+#: redirectioneaza/context_processors/headers.py:118
 msgid "Log in"
 msgstr "Autentificare"
 
-#: redirectioneaza/context_processors/headers.py:117
-#: redirectioneaza/context_processors/headers.py:169
+#: redirectioneaza/context_processors/headers.py:123
+#: redirectioneaza/context_processors/headers.py:175
 msgid "Register Organization"
 msgstr "Înregistrează ONG"
 
-#: redirectioneaza/context_processors/headers.py:122
+#: redirectioneaza/context_processors/headers.py:128
 msgid "Log out"
 msgstr "Deconectare"
 
-#: redirectioneaza/context_processors/headers.py:141
+#: redirectioneaza/context_processors/headers.py:147
 msgid "For donors"
 msgstr "Pentru contribuabili"
 
-#: redirectioneaza/context_processors/headers.py:156
+#: redirectioneaza/context_processors/headers.py:162
 #: templates/v2/redirect/footer.html:161
 msgid "For organizations"
 msgstr "Pentru organizații"
 
-#: redirectioneaza/context_processors/headers.py:182
+#: redirectioneaza/context_processors/headers.py:188
 msgid "Admin"
 msgstr "Admin"
 
-#: redirectioneaza/context_processors/headers.py:209
+#: redirectioneaza/context_processors/headers.py:215
 msgid "My Organization"
 msgstr "Organizația mea"
 
@@ -1369,6 +1369,26 @@ msgid "Please check your email for a confirmation link, then log in."
 msgstr ""
 "Te rugăm să verifici emailul pentru un link de confirmare, apoi te poți "
 "conecta."
+
+#: templates/v2/account/snippets/cta-ngohub.html:15
+msgid "Do you represent an NGO? Join NGO Hub"
+msgstr "Reprezinți un ONG? Alătură-te NGO Hub"
+
+#: templates/v2/account/snippets/cta-ngohub.html:19
+msgid ""
+"We provide redirectioneaza.ro, through which NGOs can more easily collect "
+"the 230 forms. The platform is part of the NGO Hub ecosystem, along with "
+"other digital solutions created for the needs of non-profit organizations. "
+"And your organization can have access, for free!"
+msgstr "Punem la dispoziția societății civile redirectioneaza.ro, platforma prin care ONG-urile pot colecta mai ușor formularele 230. Platforma face parte din ecosistemul NGO Hub, alături de alte soluții digitale create pentru nevoile organizațiilor non-profit. Și organizația ta poate avea acces, gratuit! "
+
+#: templates/v2/account/snippets/cta-ngohub.html:32
+msgid "Register organization"
+msgstr "Înregistrează organizația"
+
+#: templates/v2/account/snippets/cta-ngohub.html:35
+msgid "Find out more"
+msgstr "Află mai multe"
 
 #: templates/v2/account/snippets/errors.html:6
 msgid "Error!"
@@ -1933,40 +1953,40 @@ msgstr ""
 msgid "Captcha"
 msgstr "Captcha"
 
-#: templates/v2/form/redirection-open.html:199
+#: templates/v2/form/redirection-open.html:201
 msgid "Confirm sending without signature modal"
 msgstr "Modal de confirmare trimitere fără de semnătură"
 
-#: templates/v2/form/redirection-open.html:218
+#: templates/v2/form/redirection-open.html:220
 msgid "Send signed form"
 msgstr "Trimite formularul semnat"
 
-#: templates/v2/form/redirection-open.html:227
+#: templates/v2/form/redirection-open.html:229
 msgid "Continue without signing"
 msgstr "Continuă fără a semna"
 
-#: templates/v2/form/redirection-open.html:237
+#: templates/v2/form/redirection-open.html:239
 #: templates/v3/admin/forms/action.html:25
 msgid "Send the form"
 msgstr "Trimite formularul"
 
-#: templates/v2/form/signature.html:55
+#: templates/v2/form/signature.html:57
 msgid "Signature modal"
 msgstr "Modal de semnătură"
 
-#: templates/v2/form/signature.html:109
+#: templates/v2/form/signature.html:111
 msgid "Add signature"
 msgstr "Adaugă semnătura"
 
-#: templates/v2/form/signature.html:113
+#: templates/v2/form/signature.html:115
 msgid "Draw your signature in the canvas below."
 msgstr "Desenează semnătura în câmpul de mai jos."
 
-#: templates/v2/form/signature.html:130
+#: templates/v2/form/signature.html:132
 msgid "Reset"
 msgstr "Resetează"
 
-#: templates/v2/form/signature.html:140
+#: templates/v2/form/signature.html:142
 msgid "Ok"
 msgstr "Ok"
 
@@ -2321,6 +2341,10 @@ msgstr "Explorează ONG-uri"
 #: templates/v2/public/components/home/explore.html:13
 msgid "Choose the organization you want to redirect to!"
 msgstr "Alege organizația către care vrei să redirecționezi!"
+
+#: templates/v2/public/components/home/hero-search.html:28
+msgid "Search for an NGO by its name"
+msgstr "Caută un ONG după nume"
 
 #: templates/v2/public/components/home/hero.html:12
 #, python-format
