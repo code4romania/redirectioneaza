@@ -27,7 +27,7 @@ class NgoPresentationForm(forms.Form):
     display_phone = forms.BooleanField(label=_("Display phone"), required=False)
 
     address = forms.CharField(label=_("Address"), max_length=255, required=True)
-    locality = forms.CharField(label=_("Locality"), max_length=255, required=False)
+    locality = forms.CharField(label=_("Locality"), max_length=100, required=False)
     county = forms.ChoiceField(label=_("County"), choices=settings.FORM_COUNTIES_CHOICES, required=True)
     active_region = forms.ChoiceField(label=_("Active region"), choices=settings.FORM_COUNTIES_CHOICES, required=True)
 

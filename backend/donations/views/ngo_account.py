@@ -193,6 +193,7 @@ class NgoPresentationView(NgoBaseTemplateView):
             ngo.website = form.cleaned_data["website"]
             ngo.address = form.cleaned_data["address"]
             ngo.county = form.cleaned_data["county"]
+            ngo.locality = form.cleaned_data["locality"]
             ngo.active_region = form.cleaned_data["active_region"]
 
         ngo.is_accepting_forms = form.cleaned_data["is_accepting_forms"]

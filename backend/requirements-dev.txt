@@ -137,7 +137,7 @@ lxml==5.3.0
     #   svglib
 mypy-extensions==1.0.0
     # via black
-ngohub==0.0.10
+ngohub==0.0.9
     # via -r /Users/tudoramariei/Work/c4ro/ngohub/redirectioneaza/backend/requirements.txt
 packaging==24.2
     # via
