@@ -25,7 +25,7 @@ cryptography~=44.0.0
 # django-q
 django-q2~=1.7.4
 blessed~=1.20.0  # optional requirement for django-q2
-psutil~=6.1.0  # optional requirement for django-q2
+psutil~=6.1.0
 
 # emails
 django-ses~=4.3.1

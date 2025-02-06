@@ -1,0 +1,12 @@
+#!/bin/sh -e
+
+touch /etc/crontab /etc/cron.*/*
+
+
+# Check if we have cron (Debian) or crond (Alpine)
+
+if ! type "cron" > /dev/null; then
+    crond -f
+else
+    cron -f
+fi
