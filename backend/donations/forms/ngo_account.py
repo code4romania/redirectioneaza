@@ -5,13 +5,18 @@ from localflavor.generic.forms import IBANFormField
 from localflavor.ro.forms import ROCIFField
 
 from donations.common.validation.phone_number import validate_phone_number
+from donations.models.ngos import Ngo
 
 
 class NgoPresentationForm(forms.Form):
     is_accepting_forms = forms.BooleanField(label=_("Is accepting forms"), required=False)
 
     name = forms.CharField(label=_("Name"), max_length=255, required=True)
-    cif = ROCIFField(label=_("CUI/CIF"), required=True)
+    if settings.ENABLE_FULL_CUI_VALIDATION:
+        cif = ROCIFField(label=_("CUI/CIF"), required=True)
+    else:
+        cif = forms.CharField(label=_("CUI/CIF"), max_length=10, min_length=2, required=True)
+
     logo = forms.ImageField(label=_("Logo"), required=False)
     website = forms.URLField(label=_("Website"), required=False)
 
@@ -22,12 +27,13 @@ class NgoPresentationForm(forms.Form):
     display_phone = forms.BooleanField(label=_("Display phone"), required=False)
 
     address = forms.CharField(label=_("Address"), max_length=255, required=True)
-    locality = forms.CharField(label=_("Locality"), max_length=255, required=False)
+    locality = forms.CharField(label=_("Locality"), max_length=100, required=False)
     county = forms.ChoiceField(label=_("County"), choices=settings.FORM_COUNTIES_CHOICES, required=True)
     active_region = forms.ChoiceField(label=_("Active region"), choices=settings.FORM_COUNTIES_CHOICES, required=True)
 
     def __init__(self, *args, **kwargs):
         is_fully_editable = kwargs.pop("is_fully_editable", True)
+        self.ngo = kwargs.pop("ngo")
 
         super().__init__(*args, **kwargs)
 
@@ -46,6 +52,14 @@ class NgoPresentationForm(forms.Form):
             ]
             for field_name in ngohub_fields:
                 self.fields[field_name].required = False
+
+    def clean_cif(self):
+        cif = self.cleaned_data.get("cif")
+
+        if Ngo.objects.filter(registration_number=cif).exclude(pk=self.ngo.pk).exists():
+            raise forms.ValidationError(_("An NGO with this CUI/CIF already exists."))
+
+        return cif
 
     def clean_logo(self):
         logo = self.cleaned_data.get("logo")

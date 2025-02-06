@@ -2351,7 +2351,7 @@ msgstr "Email de contact al organizației"
 
 #: templates/v2/ngo-account/my-organization/ngo-presentation.html:101
 msgid "Display e-mail in the profile"
-msgstr "Afișează email-ul în profil"
+msgstr "Afișează email-ul pe pagina publică"
 
 #: templates/v2/ngo-account/my-organization/ngo-presentation.html:110
 msgid "Organization contact phone"
@@ -2359,7 +2359,7 @@ msgstr "Telefon de contact al organizației"
 
 #: templates/v2/ngo-account/my-organization/ngo-presentation.html:115
 msgid "Display phone in the profile"
-msgstr "Afișează telefonul în profil"
+msgstr "Afișează telefonul pe pagina publică"
 
 #: templates/v2/ngo-account/my-organization/ngo-presentation.html:124
 msgid "Organization address"
