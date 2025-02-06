@@ -312,9 +312,6 @@ class VerificationView(BaseVisibleTemplateView):
         if not user or not user.verify_token(signup_token):
             logger.info('Could not find any user with id "%s" signup token "%s"', user_id, signup_token)
             raise Http404
-        else:
-            # user.clear_token()
-            pass
 
         if verification_type == "v":
             user.is_verified = True
