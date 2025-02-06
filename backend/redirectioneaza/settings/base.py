@@ -73,15 +73,15 @@ INSTALLED_APPS = [
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.humanize",
-    "django.contrib.sessions",
     "django.contrib.messages",
+    "django.contrib.sessions",
     "django.contrib.staticfiles",
     # third party apps:
-    "storages",
     "django_q",
     "django_recaptcha",
     "django_vite",
     "import_export",
+    "storages",
     "tinymce",
     # authentication
     "allauth",
@@ -90,10 +90,11 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.amazon_cognito",
     # custom apps:
     "donations",
-    "partners",
-    "users",
-    "importer",
     "frequent_questions",
+    "importer",
+    "partners",
+    "q_heartbeat",
+    "users",
 ]
 
 if not env.bool("USE_S3"):

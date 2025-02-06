@@ -58,7 +58,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y --no-install-recommends \
-    nginx gcc xz-utils gettext
+    cron nginx gcc xz-utils gettext
 
 # configure process manager
 ARG S6_OVERLAY_VERSION=3.2.0.2
