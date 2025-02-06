@@ -161,20 +161,24 @@
         {% include "components/input/checkbox.html" with input_id="agree_contact" input_name="agree_contact" is_required=False field=redirection_form.agree_contact %}
       </div>
 
-      {% url 'terms' as terms_url %}
-      {% url 'policy' as policy_url %}
-      {% blocktranslate asvar input_title trimmed %}
-        I agree with
-        <a href="{{ terms_url }}">
-          the Terms of the application
-        </a>.
-        <a href="{{ policy_url }}">
-          the Privacy Policy
-        </a>.
-      {% endblocktranslate %}
-      <div class="flex gap-3 mt-4">
-        {% include "components/input/checkbox.html" with input_id="agree_terms" input_name="agree_terms" is_required=True field=redirection_form.agree_terms %}
-      </div>
+      {% with href_class='underline text-cyan-700' %}
+        {% url 'terms' as terms_url %}
+        {% url 'policy' as policy_url %}
+
+        {% blocktranslate asvar input_title trimmed %}
+          I agree with
+          <a class="{{ href_class }}" href="{{ terms_url }}">
+            the Terms of the application
+          </a>.
+          <a class="{{ href_class }}" href="{{ policy_url }}">
+            the Privacy Policy
+          </a>.
+        {% endblocktranslate %}
+
+        <div class="flex gap-3 mt-4">
+          {% include "components/input/checkbox.html" with input_id="agree_terms" input_name="agree_terms" is_required=True field=redirection_form.agree_terms %}
+        </div>
+      {% endwith %}
 
     </fieldset>
 

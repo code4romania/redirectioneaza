@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-05 18:57+0200\n"
+"POT-Creation-Date: 2025-02-06 11:38+0200\n"
 "PO-Revision-Date: 2024-02-28 15:45+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -763,7 +763,13 @@ msgstr "Welcome to redirectioneaza.ro"
 msgid "Account created"
 msgstr "date created"
 
-#: donations/views/account_management.py:295
+#: donations/views/account_management.py:289
+#, fuzzy
+#| msgid "date created"
+msgid "Account verified"
+msgstr "date created"
+
+#: donations/views/account_management.py:300
 #, fuzzy
 #| msgid "description"
 msgid "Verification"
@@ -1476,6 +1482,20 @@ msgstr ""
 msgid "Please check your email for a confirmation link, then log in."
 msgstr ""
 
+#: templates/v2/account/signup-verification.html:8
+msgid "We have succesfully verified your account"
+msgstr ""
+
+#: templates/v2/account/signup-verification.html:12
+msgid "Go to the login page to access your account."
+msgstr ""
+
+#: templates/v2/account/signup-verification.html:16
+#, fuzzy
+#| msgid "Return to login"
+msgid "Go to login"
+msgstr "Return to login"
+
 #: templates/v2/account/snippets/cta-ngohub.html:15
 msgid "Do you represent an NGO? Join NGO Hub"
 msgstr ""
@@ -2095,34 +2115,35 @@ msgid ""
 "projects implemented"
 msgstr ""
 
-#: templates/v2/form/redirection-open.html:166
+#: templates/v2/form/redirection-open.html:167
 #, python-format
 msgid ""
-"I agree with <a href=\"%(terms_url)s\"> the Terms of the application </a>. "
-"<a href=\"%(policy_url)s\"> the Privacy Policy </a>."
+"I agree with <a class=\"%(href_class)s\" href=\"%(terms_url)s\"> the Terms "
+"of the application </a>. <a class=\"%(href_class)s\" "
+"href=\"%(policy_url)s\"> the Privacy Policy </a>."
 msgstr ""
 
-#: templates/v2/form/redirection-open.html:183
+#: templates/v2/form/redirection-open.html:185
 msgid "Captcha"
 msgstr ""
 
-#: templates/v2/form/redirection-open.html:201
+#: templates/v2/form/redirection-open.html:203
 msgid "Confirm sending without signature modal"
 msgstr ""
 
-#: templates/v2/form/redirection-open.html:220
+#: templates/v2/form/redirection-open.html:222
 #, fuzzy
 #| msgid "Sign In Error"
 msgid "Send signed form"
 msgstr "Sign In Error"
 
-#: templates/v2/form/redirection-open.html:229
+#: templates/v2/form/redirection-open.html:231
 #, fuzzy
 #| msgid "Login through NGO Hub"
 msgid "Continue without signing"
 msgstr "Login through NGO Hub"
 
-#: templates/v2/form/redirection-open.html:239
+#: templates/v2/form/redirection-open.html:241
 #: templates/v3/admin/forms/action.html:25
 #, fuzzy
 #| msgid "Sign In Error"
@@ -2534,6 +2555,12 @@ msgstr ""
 #: templates/v2/public/components/home/explore.html:13
 msgid "Choose the organization you want to redirect to!"
 msgstr ""
+
+#: templates/v2/public/components/home/explore.html:25
+#, fuzzy
+#| msgid "NGO Hub organization ID"
+msgid "See all organizations"
+msgstr "NGO Hub organization ID"
 
 #: templates/v2/public/components/home/hero-search.html:28
 #: templates/v2/public/components/ngo-search.html:5
