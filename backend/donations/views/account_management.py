@@ -284,6 +284,11 @@ class SignupConfirmationView(BaseVisibleTemplateView):
     title = _("Account created")
 
 
+class SignupVerificationView(BaseVisibleTemplateView):
+    template_name = "account/signup-verification.html"
+    title = _("Account verified")
+
+
 class VerificationView(BaseVisibleTemplateView):
     """
     handler used to:
@@ -317,7 +322,7 @@ class VerificationView(BaseVisibleTemplateView):
             user.is_verified = True
             user.clear_token(commit=False)
             user.save()
-            return redirect(reverse("my-organization:dashboard"))
+            return redirect(reverse("signup-verification"))
 
         if verification_type == "p":
             # supply user to the page

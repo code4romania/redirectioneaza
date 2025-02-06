@@ -1,0 +1,19 @@
+{% extends "public/articles/base.html" %}
+
+{% load i18n %}
+
+{% block article_content %}
+
+  <h1>
+    {% trans "We have succesfully verified your account" %}
+  </h1>
+
+  <p>
+    {% trans "Go to the login page to access your account." %}
+  </p>
+
+  {% url "login" as button_url %}
+  {% trans "Go to login" as button_title %}
+  {% include "components/buttons/link.html" %}
+
+{% endblock article_content %}
