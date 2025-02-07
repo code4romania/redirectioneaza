@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-07 08:05+0200\n"
+"POT-Creation-Date: 2025-02-07 14:12+0200\n"
 "PO-Revision-Date: 2024-03-07 11:27+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -689,31 +689,31 @@ msgstr "Deconectare"
 msgid "Set New Password"
 msgstr "Setare parolă nouă"
 
-#: donations/views/account_management.py:202
+#: donations/views/account_management.py:210
 msgid "New account"
 msgstr "Cont nou"
 
-#: donations/views/account_management.py:218
+#: donations/views/account_management.py:226
 msgid "Register new account"
 msgstr "Creează un cont în NGO Hub"
 
-#: donations/views/account_management.py:220
+#: donations/views/account_management.py:228
 msgid "Register through NGO Hub"
 msgstr "Înregistrare prin NGO Hub"
 
-#: donations/views/account_management.py:281
+#: donations/views/account_management.py:289
 msgid "Welcome to redirectioneaza.ro"
 msgstr "Confirmare cont redirectioneaza.ro"
 
-#: donations/views/account_management.py:294
+#: donations/views/account_management.py:302
 msgid "Account created"
 msgstr "Cont creat"
 
-#: donations/views/account_management.py:299
+#: donations/views/account_management.py:307
 msgid "Account verified"
 msgstr "Cont validat"
 
-#: donations/views/account_management.py:310
+#: donations/views/account_management.py:318
 msgid "Verification"
 msgstr "Verificare"
 
@@ -1348,16 +1348,16 @@ msgstr "Rol necunoscut"
 msgid "Your current role isn't supported."
 msgstr "Rolul tău actual nu este suportat."
 
-#: templates/v2/account/reset-password.html:14
+#: templates/v2/account/reset-password.html:16
 msgid "Password recovery"
 msgstr "Recuperare parolă"
 
-#: templates/v2/account/reset-password.html:24
+#: templates/v2/account/reset-password.html:26
 #: templates/v2/ngo-account/settings/main.html:46
 msgid "E-mail address"
 msgstr "Adresă de email"
 
-#: templates/v2/account/reset-password.html:28
+#: templates/v2/account/reset-password.html:30
 msgid ""
 "To recover your password, please enter the email address you registered with "
 "and then press the Send button."
@@ -1365,24 +1365,24 @@ msgstr ""
 "Pentru a-ți recupera parola, te rugăm să introduci adresa de email cu care "
 "te-ai înregistrat și apoi apasă butonul Trimite."
 
-#: templates/v2/account/reset-password.html:38
+#: templates/v2/account/reset-password.html:40
 msgid "Send"
 msgstr "Trimite"
 
-#: templates/v2/account/set-password.html:19
+#: templates/v2/account/set-password.html:16
 msgid "Set a new password"
 msgstr "Setează parolă nouă"
 
-#: templates/v2/account/set-password.html:30
+#: templates/v2/account/set-password.html:27
 msgid "New password"
 msgstr "Parolă nouă"
 
-#: templates/v2/account/set-password.html:31
+#: templates/v2/account/set-password.html:30
 #: templates/v2/account/snippets/register-form.html:72
 msgid "Confirm password"
 msgstr "Confirmă parola"
 
-#: templates/v2/account/set-password.html:40
+#: templates/v2/account/set-password.html:36
 msgid "Change password"
 msgstr "Schimbă parola"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-07 08:05+0200\n"
+"POT-Creation-Date: 2025-02-07 14:12+0200\n"
 "PO-Revision-Date: 2024-02-28 15:45+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -739,41 +739,41 @@ msgstr "Sign In"
 msgid "Set New Password"
 msgstr ""
 
-#: donations/views/account_management.py:202
+#: donations/views/account_management.py:210
 #, fuzzy
 #| msgid "bank account"
 msgid "New account"
 msgstr "bank account"
 
-#: donations/views/account_management.py:218
+#: donations/views/account_management.py:226
 #, fuzzy
 #| msgid "Create an account"
 msgid "Register new account"
 msgstr "Create an account"
 
-#: donations/views/account_management.py:220
+#: donations/views/account_management.py:228
 #, fuzzy
 #| msgid "Login through NGO Hub"
 msgid "Register through NGO Hub"
 msgstr "Login through NGO Hub"
 
-#: donations/views/account_management.py:281
+#: donations/views/account_management.py:289
 msgid "Welcome to redirectioneaza.ro"
 msgstr "Welcome to redirectioneaza.ro"
 
-#: donations/views/account_management.py:294
+#: donations/views/account_management.py:302
 #, fuzzy
 #| msgid "date created"
 msgid "Account created"
 msgstr "date created"
 
-#: donations/views/account_management.py:299
+#: donations/views/account_management.py:307
 #, fuzzy
 #| msgid "date created"
 msgid "Account verified"
 msgstr "date created"
 
-#: donations/views/account_management.py:310
+#: donations/views/account_management.py:318
 #, fuzzy
 #| msgid "description"
 msgid "Verification"
@@ -1437,49 +1437,49 @@ msgstr "Unknown role"
 msgid "Your current role isn't supported."
 msgstr "Your current role isn't supported."
 
-#: templates/v2/account/reset-password.html:14
+#: templates/v2/account/reset-password.html:16
 #, fuzzy
 #| msgid "Password is required"
 msgid "Password recovery"
 msgstr "Password is required"
 
-#: templates/v2/account/reset-password.html:24
+#: templates/v2/account/reset-password.html:26
 #: templates/v2/ngo-account/settings/main.html:46
 #, fuzzy
 #| msgid "Email address"
 msgid "E-mail address"
 msgstr "Email address"
 
-#: templates/v2/account/reset-password.html:28
+#: templates/v2/account/reset-password.html:30
 msgid ""
 "To recover your password, please enter the email address you registered with "
 "and then press the Send button."
 msgstr ""
 
-#: templates/v2/account/reset-password.html:38
+#: templates/v2/account/reset-password.html:40
 msgid "Send"
 msgstr ""
 
-#: templates/v2/account/set-password.html:19
+#: templates/v2/account/set-password.html:16
 #, fuzzy
 #| msgid "Reset password"
 msgid "Set a new password"
 msgstr "Reset password"
 
-#: templates/v2/account/set-password.html:30
+#: templates/v2/account/set-password.html:27
 #, fuzzy
 #| msgid "Reset password"
 msgid "New password"
 msgstr "Reset password"
 
-#: templates/v2/account/set-password.html:31
+#: templates/v2/account/set-password.html:30
 #: templates/v2/account/snippets/register-form.html:72
 #, fuzzy
 #| msgid "old password"
 msgid "Confirm password"
 msgstr "old password"
 
-#: templates/v2/account/set-password.html:40
+#: templates/v2/account/set-password.html:36
 #, fuzzy
 #| msgid "old password"
 msgid "Change password"
