@@ -17,7 +17,7 @@ from redirectioneaza.common.cache import cache_decorator
 from ..models.donors import Donor
 from ..models.ngos import FRONTPAGE_NGOS_KEY, FRONTPAGE_STATS_KEY, Ngo
 from .base import BaseVisibleTemplateView
-from .common import SearchMixin
+from .common import NgoSearchMixin
 
 
 class HomePage(BaseVisibleTemplateView):
@@ -111,7 +111,7 @@ class AboutHandler(BaseVisibleTemplateView):
     title = _("About redirectioneaza.ro")
 
 
-class NgoListHandler(SearchMixin):
+class NgoListHandler(NgoSearchMixin):
     template_name = "public/all-ngos.html"
     context_object_name = "ngos"
     queryset = Ngo.active
@@ -119,9 +119,7 @@ class NgoListHandler(SearchMixin):
     paginate_by = 8
 
     def get_queryset(self):
-        queryset = super().get_queryset()
-
-        queryset = self.search(queryset)
+        queryset = self.search()
 
         return queryset
 

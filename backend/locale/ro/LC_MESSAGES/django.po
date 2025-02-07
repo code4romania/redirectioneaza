@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-07 07:33+0200\n"
+"POT-Creation-Date: 2025-02-07 08:05+0200\n"
 "PO-Revision-Date: 2024-03-07 11:27+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -928,15 +928,15 @@ msgstr "> 2 milioane €"
 msgid "About redirectioneaza.ro"
 msgstr "Despre redirectioneaza.ro"
 
-#: donations/views/site.py:142 templates/v2/redirect/footer.html:190
+#: donations/views/site.py:140 templates/v2/redirect/footer.html:190
 msgid "Information notice"
 msgstr "Notă de informare"
 
-#: donations/views/site.py:153 templates/v2/redirect/footer.html:180
+#: donations/views/site.py:151 templates/v2/redirect/footer.html:180
 msgid "Privacy policy"
 msgstr "Politica de confidențialitate"
 
-#: donations/views/site.py:158 templates/v2/redirect/footer.html:185
+#: donations/views/site.py:156 templates/v2/redirect/footer.html:185
 msgid "Terms & conditions"
 msgstr "Termeni și condiții"
 
@@ -2502,8 +2502,8 @@ msgstr "Vezi toate organizațiile"
 
 #: templates/v2/public/components/home/hero-search.html:28
 #: templates/v2/public/components/ngo-search.html:5
-msgid "Search for an NGO by its name"
-msgstr "Caută un ONG după nume"
+msgid "Search for an NGO by its name or CUI/CIF"
+msgstr "Caută un ONG după nume sau CUI/CIF"
 
 #: templates/v2/public/components/home/hero.html:12
 #, python-format

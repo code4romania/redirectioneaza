@@ -1,5 +1,5 @@
 import datetime
-from typing import Dict
+from typing import Dict, List
 
 from django.conf import settings
 from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector, TrigramSimilarity
@@ -84,32 +84,45 @@ def get_ngo_response_item(ngo) -> Dict:
     }
 
 
-class SearchMixin(ListView):
-    def _configure_search_query(self, query: str, language_code: str) -> SearchQuery:
+class ConfigureSearch:
+    @staticmethod
+    def query(query: str, language_code: str) -> SearchQuery:
         if language_code == "ro":
             return SearchQuery(query, config="romanian_unaccent")
 
         return SearchQuery(query)
 
-    def _configure_search_vector(self, language_code: str) -> SearchVector:
+    @staticmethod
+    def vector(search_fields: List[str], language_code: str) -> SearchVector:
         if language_code == "ro":
-            return SearchVector("name", weight="A", config="romanian_unaccent")
+            return SearchVector(*search_fields, weight="A", config="romanian_unaccent")
 
-        return SearchVector("name", weight="A")
+        return SearchVector(*search_fields, weight="A")
 
-    def search(self, queryset: QuerySet) -> QuerySet:
+
+class SearchMixin(ListView):
+    def get_search_results(self, queryset: QuerySet, query: str, language_code: str) -> QuerySet:
+        raise NotImplementedError("You must add your own logic for searching")
+
+    def search(self) -> QuerySet:
         query: str = self.request.GET.get("q")
 
         if not query:
-            return queryset.all()
+            return self.queryset.all()
 
         language_code: str = settings.LANGUAGE_CODE
         if hasattr(self.request, "LANGUAGE_CODE") and self.request.LANGUAGE_CODE:
             language_code = self.request.LANGUAGE_CODE
         language_code = language_code.lower()
 
-        search_vector: SearchVector = self._configure_search_vector(language_code)
-        search_query: SearchQuery = self._configure_search_query(query, language_code)
+        return self.get_search_results(self.queryset, query, language_code)
+
+
+class NgoSearchMixin(SearchMixin):
+    def get_search_results(self, queryset: QuerySet, query: str, language_code: str) -> QuerySet:
+        search_fields = ["name", "registration_number"]
+        search_vector: SearchVector = ConfigureSearch.vector(search_fields, language_code)
+        search_query: SearchQuery = ConfigureSearch.query(query, language_code)
 
         ngos: QuerySet[Ngo] = (
             queryset.annotate(

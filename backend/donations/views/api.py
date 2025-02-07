@@ -21,7 +21,7 @@ from ..models.ngos import ALL_NGOS_CACHE_KEY, Ngo, ngo_slug_validator
 from ..pdf import create_ngo_pdf
 from ..workers.update_organization import update_organization
 from .base import BaseTemplateView
-from .common import SearchMixin, get_is_over_donation_archival_limit, get_ngo_response_item, get_was_last_job_recent
+from .common import NgoSearchMixin, get_is_over_donation_archival_limit, get_ngo_response_item, get_was_last_job_recent
 
 logger = logging.getLogger(__name__)
 
@@ -146,11 +146,12 @@ class NgosApi(TemplateView):
         return JsonResponse(response, safe=False)
 
 
-class SearchNgosApi(TemplateView, SearchMixin):
-    def get(self, request, *args, **kwargs):
-        queryset = Ngo.active
+class SearchNgosApi(TemplateView, NgoSearchMixin):
+    queryset = Ngo.active
 
-        ngos_queryset = self.search(queryset)
+    def get(self, request, *args, **kwargs):
+
+        ngos_queryset = self.search()
 
         response: List[Dict] = []
         for ngo in ngos_queryset:
