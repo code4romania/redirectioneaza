@@ -73,6 +73,8 @@ class ForgotPasswordForm(forms.Form, ReCaptchaMixin):
 
 
 class ResetPasswordForm(forms.Form, ReCaptchaMixin, TwoPasswordMixin):
+    token = forms.CharField(required=True, max_length=150)
+
     password = forms.CharField(widget=forms.PasswordInput(), required=True, max_length=150)
     password_confirm = forms.CharField(widget=forms.PasswordInput(), required=True, max_length=150)
 

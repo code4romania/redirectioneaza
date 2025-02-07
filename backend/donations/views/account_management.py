@@ -184,9 +184,17 @@ class SetPasswordView(BaseVisibleTemplateView):
 
         user = request.user
 
-        if not user:
-            logger.warning("Invalid user")
-            return redirect(reverse("login"))
+        if not user or user.is_anonymous:
+
+            if not form.cleaned_data.get("token"):
+                logger.warning("Invalid user")
+                return redirect(reverse("login"))
+
+            try:
+                user = self.user_model.objects.get(validation_token=form.cleaned_data["token"])
+            except self.user_model.DoesNotExist:
+                logger.warning("Invalid user")
+                return redirect(reverse("login"))
 
         user.set_password(form.cleaned_data["password"])
         user.clear_token(commit=False)
