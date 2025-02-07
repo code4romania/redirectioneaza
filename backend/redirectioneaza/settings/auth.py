@@ -4,7 +4,7 @@ from .environment import env
 
 # Login & Auth settings
 LOGIN_URL = reverse_lazy("login")
-LOGIN_REDIRECT_URL = reverse_lazy("home")
+LOGIN_REDIRECT_URL = reverse_lazy("my-organization:dashboard")
 LOGOUT_REDIRECT_URL = reverse_lazy("home")
 
 AWS_COGNITO_DOMAIN = env.str("AWS_COGNITO_DOMAIN")

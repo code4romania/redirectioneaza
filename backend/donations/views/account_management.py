@@ -116,7 +116,7 @@ class LoginView(BaseVisibleTemplateView):
         # if the user is logged in, then redirect
         if request.user.is_authenticated:
             if request.user.has_perm("users.can_view_old_dashboard"):
-                return redirect(reverse("admin-index"))
+                return redirect(reverse("admin:index"))
             return redirect(reverse("my-organization:dashboard"))
 
         context = self.get_context_data(**kwargs)
@@ -157,7 +157,7 @@ class LoginView(BaseVisibleTemplateView):
         # TODO: check if the account is verified before authenticating
         django_login(request, user)
         if user.has_perm("users.can_view_old_dashboard"):
-            return redirect(reverse("admin-index"))
+            return redirect(reverse("admin:index"))
 
         return redirect(reverse("my-organization:dashboard"))
 
