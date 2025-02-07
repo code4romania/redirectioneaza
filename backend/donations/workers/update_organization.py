@@ -15,9 +15,8 @@ from ngohub.models.organization import Organization, OrganizationGeneral
 from pycognito import Cognito
 from requests import Response
 
-from donations.common.validation.slug_url import clean_slug
+from donations.common.validation.slug_url import NgoSlugValidator, clean_slug
 from donations.models.ngos import Ngo
-from donations.views.api import CheckNgoSlug
 from redirectioneaza.common.cache import cache_decorator
 
 logger = logging.getLogger(__name__)
@@ -111,10 +110,10 @@ def update_local_ngo_with_ngohub_data(ngo: Ngo, ngohub_ngo: Organization) -> Dic
 
     if not ngo.slug:
         new_slug = clean_slug(ngo.name)
-        if CheckNgoSlug.check_slug_is_blocked(new_slug):
+        if NgoSlugValidator.is_blocked(new_slug):
             random_string = "".join(random.choices(string.ascii_lowercase + string.digits, k=5))
             new_slug = f"{new_slug}-{random_string}"
-        elif CheckNgoSlug.check_ngo_slug_is_reused(new_slug, ngo.pk):
+        elif NgoSlugValidator.is_reused(new_slug, ngo.pk):
             random_string = "".join(random.choices(string.ascii_lowercase + string.digits, k=5))
             new_slug = f"{new_slug}-{random_string}"
         ngo.slug = new_slug

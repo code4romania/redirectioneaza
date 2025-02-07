@@ -5,7 +5,6 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import BadRequest, PermissionDenied
 from django.core.files import File
 from django.core.management import call_command
-from django.db.models import QuerySet
 from django.http import Http404, HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
@@ -13,6 +12,7 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView
 
+from ..common.validation.slug_url import NgoSlugValidator
 from ..models.jobs import Job, JobStatusChoices
 from ..models.ngos import Ngo, ngo_slug_validator
 from ..pdf import create_ngo_pdf
@@ -39,89 +39,6 @@ class UpdateFromNgohub(BaseTemplateView):
 
 
 class CheckNgoSlug(BaseTemplateView):
-    ngo_url_block_list = (
-        "",
-        "TERMENI",
-        "admin",
-        "allauth",
-        "api",
-        "asociatia",
-        "asociatii",
-        "confirmare-cont",
-        "cont-nou",
-        "contul-meu",
-        "cron",
-        "date-cont",
-        "despre",
-        "doilasuta",
-        "donatie",
-        "download",
-        "email-demo",
-        "faq",
-        "forgot",
-        "health",
-        "login",
-        "logout",
-        "media",
-        "ngos",
-        "nota-de-informare",
-        "ong",
-        "organizatia",
-        "organizatia-mea",
-        "organizatie",
-        "organizatii",
-        "password",
-        "pentru-ong-uri",
-        "politica",
-        "recuperare-parola",
-        "semnatura",
-        "static",
-        "succes",
-        "redirectioneaza",
-        "termene-si-conditii",
-        "termeni",
-        "tinymce",
-        "validare-cont",
-        "verify",
-    )
-
-    def get(self, request, ngo_url, *args, **kwargs):
-        return self.validate_ngo_slug(request.user, ngo_url)
-
-    @classmethod
-    def check_slug_is_blocked(cls, slug):
-        if slug.lower() in cls.ngo_url_block_list:
-            return True
-
-        return False
-
-    @classmethod
-    def check_slug_is_reused(cls, slug, user):
-        ngo_queryset: QuerySet[Ngo] = Ngo.objects
-
-        try:
-            if user.ngo:
-                ngo_queryset = ngo_queryset.exclude(pk=user.ngo.pk)
-        except AttributeError:
-            # Anonymous users don't have the .ngo attribute
-            pass
-
-        if ngo_queryset.filter(slug=slug.lower()).exists():
-            return True
-
-        return False
-
-    @classmethod
-    def check_ngo_slug_is_reused(cls, slug, ngo_pk: int):
-        ngo_queryset: QuerySet[Ngo] = Ngo.objects
-
-        ngo_queryset = ngo_queryset.exclude(pk=ngo_pk)
-
-        if ngo_queryset.filter(slug=slug.lower()).exists():
-            return True
-
-        return False
-
     @classmethod
     def validate_ngo_slug(cls, user, slug):
         if not slug or not user and not user.is_staff:
@@ -130,19 +47,12 @@ class CheckNgoSlug(BaseTemplateView):
         if user.is_anonymous:
             raise PermissionDenied()
 
-        if ngo_slug_validator(slug) in cls.ngo_url_block_list:
+        slug = ngo_slug_validator(slug)
+
+        if NgoSlugValidator.is_blocked(slug):
             return HttpResponseBadRequest()
 
-        ngo_queryset = Ngo.objects
-
-        try:
-            if user.ngo:
-                ngo_queryset = ngo_queryset.exclude(id=user.ngo.id)
-        except AttributeError:
-            # Anonymous users don't have the .ngo attribute
-            pass
-
-        if ngo_queryset.filter(slug=slug.lower()).count():
+        if NgoSlugValidator.is_reused(slug, user.ngo.pk):
             return HttpResponseBadRequest()
 
         return HttpResponse()
