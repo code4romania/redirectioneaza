@@ -90,6 +90,11 @@ class NgoBaseTemplateView(NgoBaseView, BaseVisibleTemplateView):
 
     @method_decorator(login_required(login_url=reverse_lazy("login")))
     def get(self, request, *args, **kwargs):
+        user = request.user
+
+        if user.is_superuser:
+            return redirect(reverse("admin:index"))
+
         return super().get(request, *args, **kwargs)
 
 
