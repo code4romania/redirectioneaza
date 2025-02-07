@@ -45,12 +45,10 @@
     <div class="mb-6 font-medium prose prose-p:text-gray-700">
       <p>
         {% blocktrans trimmed %}
-          If your organization doesn't have an account on NGO Hub,
-          you can log in to redirectioneaza.ro using the same login details as in previous years.
-        {% endblocktrans %}
-        <br>
-        {% blocktrans trimmed %}
-          You can choose to create an account on NGO Hub at any time, without losing the data and forms collected in previous years.
+          Did you previously log in to redirectioneaza.ro?
+          You can use the same login details.
+          For access to more features and a simpler login,
+          you can switch to NGO Hub without losing your existing data and forms.
         {% endblocktrans %}
       </p>
     </div>
@@ -79,6 +77,6 @@
     </div>
   </div>
 
-      <div id=g-recaptcha" class="g-recaptcha" data-sitekey="{{ captcha_public_key }}" data-size="invisible" data-callback="onSubmit"></div>
+  <div id=g-recaptcha" class="g-recaptcha" data-sitekey="{{ captcha_public_key }}" data-size="invisible" data-callback="onSubmit"></div>
 </form>
 

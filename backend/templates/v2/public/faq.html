@@ -29,12 +29,16 @@
       {% endfor %}
 
       <div class="pt-20 pb-10 prose-sm prose prose-headings:text-cyan-700 prose-cyan">
-        <h2> Nu ai găsit ce căutai? </h2>
+        <h2>
+          {% trans "Couldn't find what you were looking for?" %}
+        </h2>
 
         <p>
-          Trimite-ne întrebarea ta la adresa de email
-          <a href="mailto:{{ contact_email }}">{{ contact_email }}</a>
-          și vom răspunde în cel mai scurt timp posibil.
+          {% blocktrans trimmed %}
+            Send us your question at
+            <a href="mailto:{{ contact_email }}">{{ contact_email }}</a>
+            and we will get back to you as soon as possible.
+          {% endblocktrans %}
         </p>
       </div>
     </article>

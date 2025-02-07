@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-07 15:13+0200\n"
+"POT-Creation-Date: 2025-02-07 15:26+0200\n"
 "PO-Revision-Date: 2024-03-07 11:27+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -928,15 +928,15 @@ msgstr "> 2 milioane €"
 msgid "About redirectioneaza.ro"
 msgstr "Despre redirectioneaza.ro"
 
-#: donations/views/site.py:140 templates/v2/redirect/footer.html:190
+#: donations/views/site.py:140 templates/v2/redirect/footer.html:195
 msgid "Information notice"
 msgstr "Notă de informare"
 
-#: donations/views/site.py:151 templates/v2/redirect/footer.html:180
+#: donations/views/site.py:151 templates/v2/redirect/footer.html:185
 msgid "Privacy policy"
 msgstr "Politica de confidențialitate"
 
-#: donations/views/site.py:156 templates/v2/redirect/footer.html:185
+#: donations/views/site.py:156 templates/v2/redirect/footer.html:190
 msgid "Terms & conditions"
 msgstr "Termeni și condiții"
 
@@ -1153,7 +1153,7 @@ msgstr "Setări"
 
 #: redirectioneaza/context_processors/headers.py:118
 msgid "Log in"
-msgstr "Autentificare"
+msgstr "Intră în cont ONG"
 
 #: redirectioneaza/context_processors/headers.py:123
 #: redirectioneaza/context_processors/headers.py:175
@@ -1304,7 +1304,7 @@ msgid "Successful tasks"
 msgstr "Task-uri reușite"
 
 #: templates/v2/account/components/password-input.html:4
-#: templates/v2/account/snippets/login-form.html:67
+#: templates/v2/account/snippets/login-form.html:65
 #: templates/v2/account/snippets/register-form.html:71
 msgid "Password"
 msgstr "Parola"
@@ -1443,21 +1443,12 @@ msgstr "Conectare cu email și parolă"
 
 #: templates/v2/account/snippets/login-form.html:47
 msgid ""
-"If your organization doesn't have an account on NGO Hub, you can log in to "
-"redirectioneaza.ro using the same login details as in previous years."
-msgstr ""
-"Dacă organizația ta nu are cont în NGO Hub, te poți autentifica pe "
-"redirectioneaza.ro folosind aceleași date de logare ca anii trecuți."
+"Did you previously log in to redirectioneaza.ro? You can use the same login "
+"details. For access to more features and a simpler login, you can switch to "
+"NGO Hub without losing your existing data and forms."
+msgstr "Te-ai mai conectat în trecut pe redirectioneaza.ro? Poți folosi aceleași date de autentificare. Pentru acces la mai multe funcționalități și o autentificare mai simplă, poți trece la NGO Hub fără să pierzi datele și formularele existente."
 
-#: templates/v2/account/snippets/login-form.html:52
-msgid ""
-"You can choose to create an account on NGO Hub at any time, without losing "
-"the data and forms collected in previous years."
-msgstr ""
-"Poți alege oricând să-ți creezi cont în NGO Hub, fără a pierde datele și "
-"formularele strânse anii trecuți. "
-
-#: templates/v2/account/snippets/login-form.html:63
+#: templates/v2/account/snippets/login-form.html:61
 msgid "Email address"
 msgstr "Adresă de email"
 
@@ -1731,7 +1722,7 @@ msgid "If you have any questions, please contact us at"
 msgstr "Dacă ai întrebări, te rugăm să ne contactezi la"
 
 #: templates/v2/emails/base-footer.html:50
-#: templates/v2/redirect/footer.html:203
+#: templates/v2/redirect/footer.html:208
 msgid ""
 "Independent Non-profit organization, politically unaffiliated, and "
 "apolitical."
@@ -2561,6 +2552,21 @@ msgstr "Următor"
 msgid "per page"
 msgstr "pe pagină"
 
+#: templates/v2/public/faq.html:33
+msgid "Couldn't find what you were looking for?"
+msgstr "Nu ai găsit ce căutai?"
+
+#: templates/v2/public/faq.html:37
+#, python-format
+msgid ""
+"Send us your question at <a href=\"mailto:"
+"%(contact_email)s\">%(contact_email)s</a> and we will get back to you as "
+"soon as possible."
+msgstr ""
+"Trimite-ne întrebarea ta la adresa de email <a href=\"mailto:"
+"{{ contact_email }}\">{{ contact_email }}</a> și vom răspunde în cel mai "
+"scurt timp posibil."
+
 #: templates/v2/redirect/footer.html:78
 msgid "Code for Romania"
 msgstr "Code for Romania"
@@ -2590,7 +2596,11 @@ msgstr "Întrebări frecvente"
 msgid "For contributors"
 msgstr "Pentru contribuabili"
 
-#: templates/v2/redirect/footer.html:175
+#: templates/v2/redirect/footer.html:171
+msgid "Technical support"
+msgstr "Suport tehnic"
+
+#: templates/v2/redirect/footer.html:180
 msgid "Useful links"
 msgstr "Linkuri utile"
 
@@ -2668,6 +2678,20 @@ msgstr "parolă veche"
 #: users/models.py:169
 msgid "Group"
 msgstr "Grup"
+
+#~ msgid ""
+#~ "If your organization doesn't have an account on NGO Hub, you can log in "
+#~ "to redirectioneaza.ro using the same login details as in previous years."
+#~ msgstr ""
+#~ "Dacă organizația ta nu are cont în NGO Hub, te poți autentifica pe "
+#~ "redirectioneaza.ro folosind aceleași date de logare ca anii trecuți."
+
+#~ msgid ""
+#~ "You can choose to create an account on NGO Hub at any time, without "
+#~ "losing the data and forms collected in previous years."
+#~ msgstr ""
+#~ "Poți alege oricând să-ți creezi cont în NGO Hub, fără a pierde datele și "
+#~ "formularele strânse anii trecuți. "
 
 #~ msgid "supported by"
 #~ msgstr "susținute de"
