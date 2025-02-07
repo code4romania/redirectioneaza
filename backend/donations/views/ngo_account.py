@@ -17,11 +17,11 @@ from django_q.tasks import async_task
 from users.models import User
 
 from ..common.validation.registration_number import extract_vat_id, ngo_id_number_validator
+from ..common.validation.slug_url import NgoSlugValidator
 from ..forms.ngo_account import NgoFormForm, NgoPresentationForm
 from ..models.donors import Donor
 from ..models.jobs import Job
 from ..models.ngos import Ngo
-from .api import CheckNgoSlug
 from .base import BaseContextPropertiesMixin, BaseVisibleTemplateView
 from .common import get_ngo_archive_download_status
 
@@ -275,11 +275,11 @@ class NgoFormsView(NgoBaseTemplateView):
         slug_has_errors = False
 
         form_slug = form.cleaned_data["slug"]
-        if CheckNgoSlug.check_slug_is_blocked(form_slug):
+        if NgoSlugValidator.is_blocked(form_slug):
             slug_has_errors = True
             form.add_error("slug", ValidationError(_("The URL is blocked")))
 
-        if CheckNgoSlug().check_slug_is_reused(form_slug, user):
+        if NgoSlugValidator.is_reused(form_slug, user):
             slug_has_errors = True
             form.add_error("slug", ValidationError(_("The URL is already used")))
 

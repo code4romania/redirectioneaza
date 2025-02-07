@@ -5,8 +5,8 @@ from localflavor.generic.forms import IBANFormField
 from localflavor.ro.forms import ROCIFField
 
 from donations.common.validation.phone_number import validate_phone_number
+from donations.common.validation.slug_url import NgoSlugValidator
 from donations.models.ngos import Ngo, ngo_slug_validator
-from donations.views.api import CheckNgoSlug
 
 
 class NgoPresentationForm(forms.Form):
@@ -113,7 +113,7 @@ class NgoFormForm(forms.Form):
         if Ngo.objects.filter(slug=slug).exclude(pk=self.ngo.pk).exists():
             raise forms.ValidationError(_("An NGO with this slug already exists."))
 
-        if CheckNgoSlug.check_slug_is_blocked(slug):
+        if NgoSlugValidator.is_blocked(slug):
             raise forms.ValidationError(_("This slug is not allowed."))
 
         return slug
