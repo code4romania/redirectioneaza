@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate, get_user_model, login, logout
 from django.db import IntegrityError
 from django.http import Http404, HttpRequest
 from django.shortcuts import redirect, render
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
@@ -61,6 +61,7 @@ class ForgotPasswordView(BaseVisibleTemplateView):
             "first_name": user.first_name,
             "contact_email": settings.CONTACT_EMAIL_ADDRESS,
             "ngohub_site": settings.NGOHUB_APP_BASE,
+            "action_url": reverse_lazy("allauth-login"),
         }
         template_context.update(extend_email_context(request))
 
@@ -126,7 +127,7 @@ class LoginView(BaseVisibleTemplateView):
                 "ngohub_site": settings.NGOHUB_HOME_BASE,
                 "account_button": _("Continue with NGO Hub"),
                 "section_title": _("I have an NGO Hub account"),
-                "form_action": reverse("amazon_cognito_login"),
+                "form_action": reverse("allauth-login"),
             }
         )
 

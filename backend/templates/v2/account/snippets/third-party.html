@@ -10,7 +10,7 @@
 
 {% if not form_action %}
   {% if SOCIALACCOUNT_ENABLED %}
-    {% url 'amazon_cognito_login' as form_action %}
+    {% url 'allauth-login' as form_action %}
   {% else %}
     {% url 'login' as form_action %}
   {% endif %}

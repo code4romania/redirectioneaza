@@ -21,7 +21,7 @@
         <div class="flex flex-col gap-8 py-4">
 
           {% trans "Organization URL" as input_title %}
-          {% include "components/input/input.html" with input_id="slug" input_type="text" input_name="slug" is_required=True value=ngo.slug field=ngo_form.slug max_length=150 %}
+          {% include "components/input/input.html" with input_id="slug" input_type="text" input_name="slug" is_required=True value=ngo.slug field=ngo_form.slug max_length=150 placeholder="numele-organizatiei" %}
 
           <hr class="w-full border-gray-200">
 

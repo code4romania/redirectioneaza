@@ -152,6 +152,7 @@ urlpatterns = (
                 url=f'/allauth{reverse("amazon_cognito_login", urlconf="allauth.urls")}',
                 permanent=True,
             ),
+            name="allauth-login",
         ),
         path("allauth/", include("allauth.urls")),
         path("tinymce/", include("tinymce.urls")),

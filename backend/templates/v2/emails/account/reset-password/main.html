@@ -19,10 +19,6 @@
   {% trans "Reset password" as action_title %}
   {% include "emails/components/action.html" with title=action_title url=action_url %}
 
-  <p>
-    {% blocktrans trimmed %}
-      If you didn't request a password reset, you can ignore this email.
-    {% endblocktrans %}
-  </p>
+  {% include "emails/account/ignore-email.html" %}
 
 {% endblock %}

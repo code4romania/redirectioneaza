@@ -5,7 +5,8 @@ from localflavor.generic.forms import IBANFormField
 from localflavor.ro.forms import ROCIFField
 
 from donations.common.validation.phone_number import validate_phone_number
-from donations.models.ngos import Ngo
+from donations.models.ngos import Ngo, ngo_slug_validator
+from donations.views.api import CheckNgoUrl
 
 
 class NgoPresentationForm(forms.Form):
@@ -91,10 +92,28 @@ class NgoPresentationForm(forms.Form):
 
 
 class NgoFormForm(forms.Form):
-    slug = forms.SlugField(label=_("Slug"), max_length=50, required=True)
+    slug = forms.CharField(label=_("Slug"), max_length=150, required=True)
     description = forms.CharField(label=_("Description"), widget=forms.Textarea, required=True)
 
     if settings.ENABLE_FULL_VALIDATION_IBAN:
         iban = IBANFormField(label=_("IBAN"), include_countries=("RO",), required=True)
     else:
         iban = forms.CharField(label=_("IBAN"), max_length=24, min_length=24, required=True)
+
+    def __init__(self, *args, **kwargs):
+        self.ngo = kwargs.pop("ngo")
+
+        super().__init__(*args, **kwargs)
+
+    def clean_slug(self):
+        slug = self.cleaned_data.get("slug").lower()
+
+        ngo_slug_validator(slug)
+
+        if Ngo.objects.filter(slug=slug).exclude(pk=self.ngo.pk).exists():
+            raise forms.ValidationError(_("An NGO with this slug already exists."))
+
+        if CheckNgoUrl.check_slug_is_blocked(slug):
+            raise forms.ValidationError(_("This slug is not allowed."))
+
+        return slug

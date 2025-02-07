@@ -265,7 +265,7 @@ class NgoFormsView(NgoBaseTemplateView):
 
         must_refresh_prefilled_form = False
 
-        form = NgoFormForm(post)
+        form = NgoFormForm(post, ngo=ngo)
 
         if not form.is_valid():
             messages.error(request, _("There are some errors on the redirection form."))
@@ -275,7 +275,7 @@ class NgoFormsView(NgoBaseTemplateView):
         slug_has_errors = False
 
         form_slug = form.cleaned_data["slug"]
-        if CheckNgoUrl().check_slug_is_blocked(form_slug):
+        if CheckNgoUrl.check_slug_is_blocked(form_slug):
             slug_has_errors = True
             form.add_error("slug", ValidationError(_("The URL is blocked")))
 

@@ -9,6 +9,4 @@
 
 {{ action_url }}
 
-{% blocktrans trimmed %}
-  If you didn't request a password reset, you can ignore this email.
-{% endblocktrans %}
+{% include "emails/account/ignore-email.html" %}

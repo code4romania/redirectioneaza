@@ -11,22 +11,17 @@
 
   <p>
     {% blocktrans trimmed %}
-      We received a request to reset your password on redirectioneaza.ro,
-      but your account is connected through NGO Hub.
+      We received a request to reset your password on redirectioneaza.ro.
+      Your account is managed through the NGO Hub platform.
+      To log in or manage your password,
+      please use your NGO Hub account credentials
+      and log in to redirectioneaza.ro through NGO Hub.
     {% endblocktrans %}
   </p>
 
-  <p>
-    {% blocktrans trimmed %}
-      To log in to your account or manage your password, you will have to log in through
-      <a href="{{ ngohub_site }}">your NGO Hub account</a>.
-    {% endblocktrans %}
-  </p>
+  {% trans "Continue with NGO Hub" as action_title %}
+  {% include "emails/components/action.html" with title=action_title url=action_url %}
 
-  <p>
-    {% blocktrans trimmed %}
-      If you didn't request a password reset, you can ignore this email.
-    {% endblocktrans %}
-  </p>
+  {% include "emails/account/ignore-email.html" %}
 
 {% endblock %}

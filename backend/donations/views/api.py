@@ -41,17 +41,23 @@ class UpdateFromNgohub(BaseTemplateView):
 class CheckNgoUrl(BaseTemplateView):
     ngo_url_block_list = (
         "",
+        "TERMENI",
         "admin",
+        "allauth",
         "api",
         "asociatia",
         "asociatii",
+        "confirmare-cont",
         "cont-nou",
         "contul-meu",
         "cron",
         "date-cont",
         "despre",
+        "doilasuta",
         "donatie",
         "download",
+        "email-demo",
+        "faq",
         "forgot",
         "health",
         "login",
@@ -60,14 +66,22 @@ class CheckNgoUrl(BaseTemplateView):
         "ngos",
         "nota-de-informare",
         "ong",
+        "organizatia",
+        "organizatia-mea",
         "organizatie",
         "organizatii",
-        "organizatia",
         "password",
         "pentru-ong-uri",
         "politica",
+        "recuperare-parola",
+        "semnatura",
         "static",
+        "succes",
+        "redirectioneaza",
+        "termene-si-conditii",
         "termeni",
+        "tinymce",
+        "validare-cont",
         "verify",
     )
 
@@ -127,7 +141,6 @@ class SearchNgosApi(TemplateView, NgoSearchMixin):
     queryset = Ngo.active
 
     def get(self, request, *args, **kwargs):
-
         ngos_queryset = self.search()
 
         response: List[Dict] = []
