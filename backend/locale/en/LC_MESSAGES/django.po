@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-07 16:18+0200\n"
+"POT-Creation-Date: 2025-02-07 17:30+0200\n"
 "PO-Revision-Date: 2024-02-28 15:45+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -1067,6 +1067,8 @@ msgid "Questions"
 msgstr "Options"
 
 #: frequent_questions/views.py:11 frequent_questions/views.py:17
+#: templates/v2/public/faq.html:11 templates/v2/redirect/footer.html:123
+#: templates/v2/redirect/footer.html:153 templates/v2/redirect/footer.html:166
 msgid "Frequently Asked Questions"
 msgstr "Frequently Asked Questions"
 
@@ -2637,11 +2639,11 @@ msgstr ""
 msgid "per page"
 msgstr ""
 
-#: templates/v2/public/faq.html:33
+#: templates/v2/public/faq.html:37
 msgid "Couldn't find what you were looking for?"
 msgstr ""
 
-#: templates/v2/public/faq.html:37
+#: templates/v2/public/faq.html:41
 #, python-format
 msgid ""
 "Send us your question at <a href=\"mailto:"
@@ -2669,11 +2671,6 @@ msgstr "Welcome to redirectioneaza.ro"
 
 #: templates/v2/redirect/footer.html:102
 msgid "Home"
-msgstr ""
-
-#: templates/v2/redirect/footer.html:123 templates/v2/redirect/footer.html:153
-#: templates/v2/redirect/footer.html:166
-msgid "FAQ"
 msgstr ""
 
 #: templates/v2/redirect/footer.html:133

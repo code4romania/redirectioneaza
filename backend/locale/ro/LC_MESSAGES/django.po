@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-07 16:18+0200\n"
+"POT-Creation-Date: 2025-02-07 17:30+0200\n"
 "PO-Revision-Date: 2024-03-07 11:27+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -982,6 +982,8 @@ msgid "Questions"
 msgstr "Întrebări"
 
 #: frequent_questions/views.py:11 frequent_questions/views.py:17
+#: templates/v2/public/faq.html:11 templates/v2/redirect/footer.html:123
+#: templates/v2/redirect/footer.html:153 templates/v2/redirect/footer.html:166
 msgid "Frequently Asked Questions"
 msgstr "Întrebări frecvente"
 
@@ -1691,7 +1693,8 @@ msgid ""
 "or check out the support page."
 msgstr ""
 "Dacă nu ai cerut schimbarea parolei, te rugăm să ignori acest mesaj. Pentru "
-"alte întrebări sau nelămuriri, scrie-ne cu încredere la %(contact_email)s sau consultă pagina de suport."
+"alte întrebări sau nelămuriri, scrie-ne cu încredere la %(contact_email)s "
+"sau consultă pagina de suport."
 
 #: templates/v2/emails/account/ngohub-notification/main.html:13
 #: templates/v2/emails/account/ngohub-notification/main.txt:5
@@ -2566,11 +2569,11 @@ msgstr "Următor"
 msgid "per page"
 msgstr "pe pagină"
 
-#: templates/v2/public/faq.html:33
+#: templates/v2/public/faq.html:37
 msgid "Couldn't find what you were looking for?"
 msgstr "Nu ai găsit ce căutai?"
 
-#: templates/v2/public/faq.html:37
+#: templates/v2/public/faq.html:41
 #, python-format
 msgid ""
 "Send us your question at <a href=\"mailto:"
@@ -2578,8 +2581,8 @@ msgid ""
 "soon as possible."
 msgstr ""
 "Trimite-ne întrebarea ta la adresa de email <a href=\"mailto:"
-"%(contact_email)s\">%(contact_email)s</a> și vom răspunde în cel mai "
-"scurt timp posibil."
+"%(contact_email)s\">%(contact_email)s</a> și vom răspunde în cel mai scurt "
+"timp posibil."
 
 #: templates/v2/redirect/footer.html:78
 msgid "Code for Romania"
@@ -2600,11 +2603,6 @@ msgstr "redirectioneaza.ro"
 #: templates/v2/redirect/footer.html:102
 msgid "Home"
 msgstr "Acasă"
-
-#: templates/v2/redirect/footer.html:123 templates/v2/redirect/footer.html:153
-#: templates/v2/redirect/footer.html:166
-msgid "FAQ"
-msgstr "Întrebări frecvente"
 
 #: templates/v2/redirect/footer.html:133
 msgid "For contributors"
@@ -2692,6 +2690,9 @@ msgstr "parolă veche"
 #: users/models.py:169
 msgid "Group"
 msgstr "Grup"
+
+#~ msgid "FAQ"
+#~ msgstr "Întrebări frecvente"
 
 #~ msgid "If you didn't request a password reset, you can ignore this email."
 #~ msgstr "Dacă nu ai cerut resetarea parolei, poți ignora acest email."
