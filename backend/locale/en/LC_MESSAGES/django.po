@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-07 14:12+0200\n"
+"POT-Creation-Date: 2025-02-07 15:13+0200\n"
 "PO-Revision-Date: 2024-02-28 15:45+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -193,16 +193,16 @@ msgstr "Form"
 msgid "Status"
 msgstr "Status"
 
-#: donations/common/validation/phone_number.py:16
+#: donations/common/validation/phone_number.py:17
 msgid "Invalid country code"
 msgstr ""
 
-#: donations/common/validation/phone_number.py:21
+#: donations/common/validation/phone_number.py:22
 msgid "Unknown phone number format"
 msgstr ""
 
-#: donations/common/validation/phone_number.py:29
-#: donations/common/validation/phone_number.py:35
+#: donations/common/validation/phone_number.py:30
+#: donations/common/validation/phone_number.py:36
 #, fuzzy
 #| msgid "street number"
 msgid "Invalid phone number"
@@ -304,13 +304,13 @@ msgstr "display ordering"
 msgid "Address"
 msgstr "address"
 
-#: donations/forms/ngo_account.py:30 donations/forms/redirection.py:28
+#: donations/forms/ngo_account.py:30 donations/forms/redirection.py:33
 #: templates/v2/form/redirection-open.html:113
 #: templates/v2/ngo-account/my-organization/ngo-presentation.html:129
 msgid "Locality"
 msgstr ""
 
-#: donations/forms/ngo_account.py:31 donations/forms/redirection.py:27
+#: donations/forms/ngo_account.py:31 donations/forms/redirection.py:32
 #: donations/views/dashboard/ngo_dashboard.py:56
 #: templates/v2/form/redirection-open.html:108
 #: templates/v2/ngo-account/my-organization/ngo-presentation.html:134
@@ -318,7 +318,7 @@ msgid "County"
 msgstr "County"
 
 #: donations/forms/ngo_account.py:32
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:140
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:145
 #, fuzzy
 #| msgid "active region"
 msgid "Active region"
@@ -349,11 +349,11 @@ msgstr ""
 msgid "Description"
 msgstr "description"
 
-#: donations/forms/ngo_account.py:96
+#: donations/forms/ngo_account.py:98 donations/forms/ngo_account.py:100
 msgid "IBAN"
 msgstr ""
 
-#: donations/forms/redirection.py:11
+#: donations/forms/redirection.py:12
 #: templates/v2/account/snippets/register-form.html:62
 #: templates/v2/form/redirection-open.html:38
 #: templates/v2/ngo-account/settings/main.html:62
@@ -362,7 +362,7 @@ msgstr ""
 msgid "Last name"
 msgstr "last name"
 
-#: donations/forms/redirection.py:12
+#: donations/forms/redirection.py:13
 #: templates/v2/account/snippets/register-form.html:58
 #: templates/v2/form/redirection-open.html:43
 #: templates/v2/ngo-account/settings/main.html:57
@@ -371,13 +371,13 @@ msgstr "last name"
 msgid "First name"
 msgstr "first name"
 
-#: donations/forms/redirection.py:13
+#: donations/forms/redirection.py:14
 #, fuzzy
 #| msgid "initial"
 msgid "Initial"
 msgstr "initial"
 
-#: donations/forms/redirection.py:17
+#: donations/forms/redirection.py:22
 #: templates/v2/account/snippets/register-form.html:67
 #: templates/v2/emails/donor/redirection-sans-signature/main.txt:28
 #: templates/v2/form/redirection-open.html:58
@@ -386,58 +386,58 @@ msgstr "initial"
 msgid "Email"
 msgstr "email"
 
-#: donations/forms/redirection.py:18
+#: donations/forms/redirection.py:23
 #, fuzzy
 #| msgid "phone"
 msgid "Phone"
 msgstr "phone"
 
-#: donations/forms/redirection.py:20
+#: donations/forms/redirection.py:25
 msgid "Street"
 msgstr "Street"
 
-#: donations/forms/redirection.py:21 templates/v2/form/redirection-open.html:83
+#: donations/forms/redirection.py:26 templates/v2/form/redirection-open.html:83
 msgid "Number"
 msgstr "Number"
 
-#: donations/forms/redirection.py:22
+#: donations/forms/redirection.py:27
 msgid "Building"
 msgstr "Building"
 
-#: donations/forms/redirection.py:23 templates/v2/form/redirection-open.html:93
+#: donations/forms/redirection.py:28 templates/v2/form/redirection-open.html:93
 msgid "Entrance"
 msgstr "Entrance"
 
-#: donations/forms/redirection.py:24 templates/v2/form/redirection-open.html:98
+#: donations/forms/redirection.py:29 templates/v2/form/redirection-open.html:98
 msgid "Floor"
 msgstr "Floor"
 
-#: donations/forms/redirection.py:25
+#: donations/forms/redirection.py:30
 #: templates/v2/form/redirection-open.html:103
 msgid "Apartment"
 msgstr "Apartment"
 
-#: donations/forms/redirection.py:30
+#: donations/forms/redirection.py:35
 #, fuzzy
 #| msgid "two years"
 msgid "Two years"
 msgstr "two years"
 
-#: donations/forms/redirection.py:31 donations/models/donors.py:92
+#: donations/forms/redirection.py:36 donations/models/donors.py:92
 msgid "ANAF GDPR"
 msgstr ""
 
-#: donations/forms/redirection.py:32
+#: donations/forms/redirection.py:37
 #, fuzzy
 #| msgid "Contact"
 msgid "Agree contact"
 msgstr "Contact"
 
-#: donations/forms/redirection.py:33
+#: donations/forms/redirection.py:38
 msgid "Agree terms"
 msgstr ""
 
-#: donations/forms/redirection.py:35 templates/v2/form/signature.html:7
+#: donations/forms/redirection.py:40 templates/v2/form/signature.html:7
 #, fuzzy
 #| msgid "Sign In"
 msgid "Signature"
@@ -1569,9 +1569,15 @@ msgstr ""
 msgid "I agree with"
 msgstr ""
 
-#: templates/v2/account/snippets/register-form.html:99
+#: templates/v2/account/snippets/register-form.html:98
 msgid "the terms of the platform"
 msgstr ""
+
+#: templates/v2/account/snippets/register-form.html:108
+#, fuzzy
+#| msgid "bank account"
+msgid "Create account"
+msgstr "bank account"
 
 #: templates/v2/account/snippets/third-party.html:4
 msgid "Go to account"

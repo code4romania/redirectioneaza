@@ -95,9 +95,7 @@
             <label for="agree" class="font-medium text-gray-900">
               <span class="block mb-2 font-medium text-gray-900 text-sm/6">
               {% trans "I agree with" %}
-              <a href="{% url 'terms' %}" class="font-semibold text-cyan-700">
-                {% trans "the terms of the platform" %}
-              </a>.
+              <a href="{% url 'terms' %}" class="font-semibold text-cyan-700">{% trans "the terms of the platform" %}</a>.
             </span>
             </label>
           </div>
@@ -107,7 +105,7 @@
       <button
         type="submit"
         class="w-full px-2 py-1 text-sm text-center text-gray-900 rounded-full shadow-sm bg-amber-300 sm:text-base sm:px-6 sm:py-2 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
-        Intră în cont
+        {% trans "Create account" %}
       </button>
     </div>
   </div>

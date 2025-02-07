@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-07 14:12+0200\n"
+"POT-Creation-Date: 2025-02-07 15:13+0200\n"
 "PO-Revision-Date: 2024-03-07 11:27+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -193,16 +193,16 @@ msgstr "Formular"
 msgid "Status"
 msgstr "Stare"
 
-#: donations/common/validation/phone_number.py:16
+#: donations/common/validation/phone_number.py:17
 msgid "Invalid country code"
 msgstr "Cod de țară invalid"
 
-#: donations/common/validation/phone_number.py:21
+#: donations/common/validation/phone_number.py:22
 msgid "Unknown phone number format"
 msgstr "Format necunoscut pentru numărul de telefon"
 
-#: donations/common/validation/phone_number.py:29
-#: donations/common/validation/phone_number.py:35
+#: donations/common/validation/phone_number.py:30
+#: donations/common/validation/phone_number.py:36
 msgid "Invalid phone number"
 msgstr "Număr de telefon invalid"
 
@@ -288,13 +288,13 @@ msgstr "Afișează telefon"
 msgid "Address"
 msgstr "Adresă"
 
-#: donations/forms/ngo_account.py:30 donations/forms/redirection.py:28
+#: donations/forms/ngo_account.py:30 donations/forms/redirection.py:33
 #: templates/v2/form/redirection-open.html:113
 #: templates/v2/ngo-account/my-organization/ngo-presentation.html:129
 msgid "Locality"
 msgstr "Localitate"
 
-#: donations/forms/ngo_account.py:31 donations/forms/redirection.py:27
+#: donations/forms/ngo_account.py:31 donations/forms/redirection.py:32
 #: donations/views/dashboard/ngo_dashboard.py:56
 #: templates/v2/form/redirection-open.html:108
 #: templates/v2/ngo-account/my-organization/ngo-presentation.html:134
@@ -302,7 +302,7 @@ msgid "County"
 msgstr "Județ"
 
 #: donations/forms/ngo_account.py:32
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:140
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:145
 msgid "Active region"
 msgstr "Regiune activă"
 
@@ -327,81 +327,81 @@ msgstr "URL organizație"
 msgid "Description"
 msgstr "Descriere"
 
-#: donations/forms/ngo_account.py:96
+#: donations/forms/ngo_account.py:98 donations/forms/ngo_account.py:100
 msgid "IBAN"
 msgstr "IBAN"
 
-#: donations/forms/redirection.py:11
+#: donations/forms/redirection.py:12
 #: templates/v2/account/snippets/register-form.html:62
 #: templates/v2/form/redirection-open.html:38
 #: templates/v2/ngo-account/settings/main.html:62
 msgid "Last name"
 msgstr "Nume"
 
-#: donations/forms/redirection.py:12
+#: donations/forms/redirection.py:13
 #: templates/v2/account/snippets/register-form.html:58
 #: templates/v2/form/redirection-open.html:43
 #: templates/v2/ngo-account/settings/main.html:57
 msgid "First name"
 msgstr "Prenume"
 
-#: donations/forms/redirection.py:13
+#: donations/forms/redirection.py:14
 msgid "Initial"
 msgstr "Inițială"
 
-#: donations/forms/redirection.py:17
+#: donations/forms/redirection.py:22
 #: templates/v2/account/snippets/register-form.html:67
 #: templates/v2/emails/donor/redirection-sans-signature/main.txt:28
 #: templates/v2/form/redirection-open.html:58
 msgid "Email"
 msgstr "Email"
 
-#: donations/forms/redirection.py:18
+#: donations/forms/redirection.py:23
 msgid "Phone"
 msgstr "Telefon"
 
-#: donations/forms/redirection.py:20
+#: donations/forms/redirection.py:25
 msgid "Street"
 msgstr "Strada"
 
-#: donations/forms/redirection.py:21 templates/v2/form/redirection-open.html:83
+#: donations/forms/redirection.py:26 templates/v2/form/redirection-open.html:83
 msgid "Number"
 msgstr "Număr"
 
-#: donations/forms/redirection.py:22
+#: donations/forms/redirection.py:27
 msgid "Building"
 msgstr "Bloc"
 
-#: donations/forms/redirection.py:23 templates/v2/form/redirection-open.html:93
+#: donations/forms/redirection.py:28 templates/v2/form/redirection-open.html:93
 msgid "Entrance"
 msgstr "Scara"
 
-#: donations/forms/redirection.py:24 templates/v2/form/redirection-open.html:98
+#: donations/forms/redirection.py:29 templates/v2/form/redirection-open.html:98
 msgid "Floor"
 msgstr "Etaj"
 
-#: donations/forms/redirection.py:25
+#: donations/forms/redirection.py:30
 #: templates/v2/form/redirection-open.html:103
 msgid "Apartment"
 msgstr "Apartament"
 
-#: donations/forms/redirection.py:30
+#: donations/forms/redirection.py:35
 msgid "Two years"
 msgstr "Doi ani"
 
-#: donations/forms/redirection.py:31 donations/models/donors.py:92
+#: donations/forms/redirection.py:36 donations/models/donors.py:92
 msgid "ANAF GDPR"
 msgstr "ANAF GDPR"
 
-#: donations/forms/redirection.py:32
+#: donations/forms/redirection.py:37
 msgid "Agree contact"
 msgstr "Acord contact"
 
-#: donations/forms/redirection.py:33
+#: donations/forms/redirection.py:38
 msgid "Agree terms"
 msgstr "Acord termeni"
 
-#: donations/forms/redirection.py:35 templates/v2/form/signature.html:7
+#: donations/forms/redirection.py:40 templates/v2/form/signature.html:7
 msgid "Signature"
 msgstr "Semnătura"
 
@@ -1477,9 +1477,13 @@ msgstr ""
 msgid "I agree with"
 msgstr "Sunt de acord cu"
 
-#: templates/v2/account/snippets/register-form.html:99
+#: templates/v2/account/snippets/register-form.html:98
 msgid "the terms of the platform"
 msgstr "Termenii și condițiile platformei"
+
+#: templates/v2/account/snippets/register-form.html:108
+msgid "Create account"
+msgstr "Creează cont"
 
 #: templates/v2/account/snippets/third-party.html:4
 msgid "Go to account"
