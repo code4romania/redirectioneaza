@@ -91,7 +91,8 @@ urlpatterns = (
         path("pentru-ong-uri/", RedirectView.as_view(pattern_name="signup", permanent=True)),
         path("login/", LoginView.as_view(), name="login"),
         path("logout/", LogoutView.as_view(), name="logout"),
-        path("forgot/", ForgotPasswordView.as_view(), name="forgot"),
+        path("recuperare-parola/", ForgotPasswordView.as_view(), name="forgot"),
+        path("forgot/", RedirectView.as_view(pattern_name="forgot", permanent=True)),
         # verification url: used for signup, and reset password
         path(
             "verify/<str:verification_type>/<uuid:user_id>-<uuid:signup_token>/",

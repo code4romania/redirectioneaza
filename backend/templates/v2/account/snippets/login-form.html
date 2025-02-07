@@ -3,17 +3,17 @@
 {% load socialaccount %}
 {% load static %}
 
-  <script>
-    let loginForm = function () {
-      return {
-        form: undefined,
-        pristine: undefined,
-        init() {
-          this.form = document.getElementById("login-form");
+<script>
+  let loginForm = function () {
+    return {
+      form: undefined,
+      pristine: undefined,
+      init() {
+        this.form = document.getElementById("login-form");
 
-          this.pristine = new Pristine(this.form, {
-            errorTextClass: "mt-2 text-sm text-red-600",
-          });
+        this.pristine = new Pristine(this.form, {
+          errorTextClass: "mt-2 text-sm text-red-600",
+        });
 
 
         this.form.addEventListener('submit', (e) => {
@@ -22,14 +22,15 @@
           this.isFormSubmitting = true;
 
           if (valid) {
-              this.form.submit();
+            this.form.submit();
           }
-      });
-        }
-      };
+        });
+      }
     };
+  };
+</script>
+<script src="https://www.google.com/recaptcha/api.js?hl=ro" async defer></script>
 
-  </script>
 
 <form id='login-form' action="/login/" role="form" method="post" x-data="loginForm()" x-init="init()">
   <div class="text-center">
@@ -77,5 +78,7 @@
       </button>
     </div>
   </div>
+
+      <div id=g-recaptcha" class="g-recaptcha" data-sitekey="{{ captcha_public_key }}" data-size="invisible" data-callback="onSubmit"></div>
 </form>
 

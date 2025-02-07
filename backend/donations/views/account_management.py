@@ -29,36 +29,6 @@ class ForgotPasswordView(BaseVisibleTemplateView):
     template_name = "account/reset-password.html"
     title = _("Reset password")
 
-    def get(self, request, *args, **kwargs):
-        context = self.get_context_data(**kwargs)
-        return render(request, self.template_name, context)
-
-    def post(self, request, *args, **kwargs):
-        context = self.get_context_data(**kwargs)
-
-        form = ForgotPasswordForm(request.POST)
-        if not form.is_valid():
-            context["form"] = form
-            return render(request, self.template_name, context)
-
-        try:
-            user = self.user_model.objects.get(email=form.cleaned_data["email"].lower().strip())
-        except self.user_model.DoesNotExist:
-            user = None
-
-        if user:
-            if not (user.is_ngohub_user or user.ngo and user.ngo.ngohub_org_id):
-                self._send_password_reset_email(request, user)
-            else:
-                self._send_ngohub_notification(request, user)
-
-        messages.success(
-            request,
-            _("If the email address is valid, you will receive an email with instructions."),
-        )
-
-        return render(request, self.template_name, context)
-
     def _send_password_reset_email(self, request: HttpRequest, user: UserModel):
         verification_url = request.build_absolute_uri(
             reverse(
@@ -102,10 +72,45 @@ class ForgotPasswordView(BaseVisibleTemplateView):
             context=template_context,
         )
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["captcha_public_key"] = settings.RECAPTCHA_PUBLIC_KEY
+        return context
+
+    def post(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+
+        form = ForgotPasswordForm(request.POST)
+        if not form.is_valid():
+            context["form"] = form
+            return render(request, self.template_name, context)
+
+        try:
+            user = self.user_model.objects.get(email=form.cleaned_data["email"].lower().strip())
+
+            if not (user.is_ngohub_user or user.ngo and user.ngo.ngohub_org_id):
+                self._send_password_reset_email(request, user)
+            else:
+                self._send_ngohub_notification(request, user)
+        except self.user_model.DoesNotExist:
+            pass
+
+        messages.success(
+            request,
+            _("If the email address is valid, you will receive an email with instructions."),
+        )
+
+        return render(request, self.template_name, context)
+
 
 class LoginView(BaseVisibleTemplateView):
     template_name = "account/login.html"
     title = _("Sign In")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["captcha_public_key"] = settings.RECAPTCHA_PUBLIC_KEY
+        return context
 
     def get(self, request, *args, **kwargs):
         # if the user is logged in, then redirect
@@ -195,6 +200,11 @@ class SetPasswordView(BaseVisibleTemplateView):
 class SignupView(BaseVisibleTemplateView):
     template_name = "account/register.html"
     title = _("New account")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["captcha_public_key"] = settings.RECAPTCHA_PUBLIC_KEY
+        return context
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:

@@ -18,15 +18,16 @@
           this.isFormSubmitting = true;
 
           if (valid) {
-              this.form.submit();
+            this.form.submit();
           }
-      });
+        });
       },
 
     };
   };
-
 </script>
+<script src="https://www.google.com/recaptcha/api.js?hl=ro" async defer></script>
+
 
 <form id='register-form' action="/cont-nou/" role="form" method="post" x-data="registerForm()" x-init="init()">
   <div class="text-center">
@@ -72,7 +73,7 @@
 
       {% include "account/components/password-input.html" with input_id="password-input" input_title=password_label input_name="password" password_type="new" max_length=150 %}
 
-      {% include "account/components/password-input.html" with input_title=password_confirm_label input_name="password_confirm" password_type="new" max_length=150 data_pristine_equals="#password-input"%}
+      {% include "account/components/password-input.html" with input_title=password_confirm_label input_name="password_confirm" password_type="new" max_length=150 data_pristine_equals="#password-input" %}
 
       <div class="space-y-5 form-group">
         <div class="flex gap-3">
@@ -110,4 +111,6 @@
       </button>
     </div>
   </div>
+
+  <div id=g-recaptcha" class="g-recaptcha" data-sitekey="{{ captcha_public_key }}" data-size="invisible" data-callback="onSubmit"></div>
 </form>

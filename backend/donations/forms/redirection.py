@@ -1,14 +1,13 @@
 from django import forms
-from django.conf import settings
 from django.utils.translation import gettext_lazy as _
-from django_recaptcha.fields import ReCaptchaField
-from django_recaptcha.widgets import ReCaptchaV2Invisible
+from django_recaptcha.widgets import ReCaptchaV2Checkbox
 from localflavor.ro.forms import ROCNPField
 
 from donations.common.validation.phone_number import validate_phone_number
+from donations.forms.common import ReCaptchaMixin
 
 
-class DonationForm(forms.Form):
+class DonationForm(forms.Form, ReCaptchaMixin):
     l_name = forms.CharField(max_length=100, label=_("Last name"), required=True, strip=True)
     f_name = forms.CharField(max_length=100, label=_("First name"), required=True, strip=True)
     initial = forms.CharField(max_length=1, label=_("Initial"), required=True)
@@ -36,9 +35,8 @@ class DonationForm(forms.Form):
     signature = forms.CharField(label=_("Signature"), max_length=1_000_000, required=False)
 
     def __init__(self, *args, **kwargs):
+        self.recaptcha_widget = ReCaptchaV2Checkbox
         super().__init__(*args, **kwargs)
-        if settings.RECAPTCHA_ENABLED:
-            self.fields["captcha_token"] = ReCaptchaField(widget=ReCaptchaV2Invisible)
 
     def clean_agree_contact(self):
         return not self.cleaned_data["agree_contact"]
