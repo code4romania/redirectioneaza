@@ -42,7 +42,7 @@
             </p>
           </div>
 
-          {% include "components/copy-to-clipboard.html" with clipboard_input=absolute_path div_classes="p-6 rounded-bl-2xl rounded-br-2xl bg-slate-50 md:px-8" button_classes="text-base font-medium text-cyan-700 hover:text-cyan-600 cursor-pointer" %}
+          {% include "components/copy-to-clipboard.html" with clipboard_input=absolute_path div_classes="p-6 rounded-bl-2xl rounded-br-2xl bg-slate-50 md:px-8" button_classes="text-base font-medium text-cyan-700 hover:text-cyan-800 cursor-pointer" %}
         </div>
 
         <div class="flex flex-col bg-white shadow-xl rounded-2xl">
@@ -64,7 +64,7 @@
             </p>
           </div>
           <div class="p-6 rounded-bl-2xl rounded-br-2xl bg-slate-50 md:px-8">
-            <a href="{% url "api-ngo-form-url" ngo_url=ngo.slug %}" class="text-base font-medium text-cyan-700 hover:text-cyan-600">
+            <a href="{% url "api-ngo-form-url" ngo_url=ngo.slug %}" class="text-base font-medium text-cyan-700 hover:text-cyan-800">
               {% trans "Download the form" %}
             </a>
           </div>
@@ -90,7 +90,7 @@
             </p>
           </div>
           <div class="p-6 rounded-bl-2xl rounded-br-2xl bg-slate-50 md:px-8">
-            <a href="https://code4.ro/doneaza" class="text-base font-medium text-cyan-700 hover:text-cyan-600" target="_blank">
+            <a href="https://code4.ro/doneaza" class="text-base font-medium text-cyan-700 hover:text-cyan-800" target="_blank">
               {% trans "Support the Infrastructure for Good" %}
             </a>
           </div>
