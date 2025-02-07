@@ -1,4 +1,5 @@
 from django import forms
+from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 from django_recaptcha.widgets import ReCaptchaV2Checkbox
 from localflavor.ro.forms import ROCNPField
@@ -11,7 +12,11 @@ class DonationForm(forms.Form, ReCaptchaMixin):
     l_name = forms.CharField(max_length=100, label=_("Last name"), required=True, strip=True)
     f_name = forms.CharField(max_length=100, label=_("First name"), required=True, strip=True)
     initial = forms.CharField(max_length=1, label=_("Initial"), required=True)
-    cnp = ROCNPField(label="CNP", required=True)
+
+    if settings.ENABLE_FULL_VALIDATION_CNP:
+        cnp = ROCNPField(label="CNP", required=True)
+    else:
+        cnp = forms.CharField(label="CNP", min_length=13, max_length=13, required=True)
 
     # limit the email address to 200 characters because that is the limit in ANAF's form
     email_address = forms.EmailField(label=_("Email"), max_length=200, required=True)

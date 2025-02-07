@@ -118,7 +118,10 @@ env = environ.Env(
     # Google Analytics:
     GOOGLE_ANALYTICS_ID=(str, ""),
     # App settings
-    ENABLE_FULL_CUI_VALIDATION=(bool, True),
+    ENABLE_FULL_VALIDATION_CUI=(bool, True),
+    ENABLE_FULL_VALIDATION_IBAN=(bool, True),
+    ENABLE_FULL_VALIDATION_PHONE=(bool, True),
+    ENABLE_FULL_VALIDATION_CNP=(bool, True),
 )
 
 environ.Env.read_env(ENV_FILE_PATH)

@@ -12,7 +12,7 @@ class NgoPresentationForm(forms.Form):
     is_accepting_forms = forms.BooleanField(label=_("Is accepting forms"), required=False)
 
     name = forms.CharField(label=_("Name"), max_length=255, required=True)
-    if settings.ENABLE_FULL_CUI_VALIDATION:
+    if settings.ENABLE_FULL_VALIDATION_CUI:
         cif = ROCIFField(label=_("CUI/CIF"), required=True)
     else:
         cif = forms.CharField(label=_("CUI/CIF"), max_length=10, min_length=2, required=True)
@@ -93,4 +93,8 @@ class NgoPresentationForm(forms.Form):
 class NgoFormForm(forms.Form):
     slug = forms.SlugField(label=_("Slug"), max_length=50, required=True)
     description = forms.CharField(label=_("Description"), widget=forms.Textarea, required=True)
-    iban = IBANFormField(label=_("IBAN"), include_countries=("RO",), required=True)
+
+    if settings.ENABLE_FULL_VALIDATION_IBAN:
+        iban = IBANFormField(label=_("IBAN"), include_countries=("RO",), required=True)
+    else:
+        iban = forms.CharField(label=_("IBAN"), max_length=24, min_length=24, required=True)

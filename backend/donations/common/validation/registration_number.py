@@ -83,7 +83,7 @@ def ngo_id_number_validator(value):
     if 2 > len(reg_num) or len(reg_num) > 10:
         raise ValidationError(_("The ID number must be between 2 and 10 digits long"))
 
-    if not settings.ENABLE_FULL_CUI_VALIDATION:
+    if not settings.ENABLE_FULL_VALIDATION_CUI:
         return
 
     control_key: str = "753217532"

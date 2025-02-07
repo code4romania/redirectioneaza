@@ -1,6 +1,7 @@
 from typing import Dict
 
 import phonenumbers
+from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 from phonenumbers.phonenumber import PhoneNumber
 
@@ -29,7 +30,7 @@ def validate_phone_number(raw_phone_number) -> Dict[str, str]:
                 "result": _("Invalid phone number"),
             }
 
-    if not phonenumbers.is_valid_number(phone_number):
+    if settings.ENABLE_FULL_VALIDATION_PHONE and not phonenumbers.is_valid_number(phone_number):
         return {
             "status": "error",
             "result": _("Invalid phone number"),
