@@ -36,7 +36,6 @@ from donations.views.api import (
     DownloadNgoForms,
     GetNgoForm,
     GetUploadUrl,
-    NgosApi,
     SearchNgosApi,
     UpdateFromNgohub,
 )
@@ -125,7 +124,6 @@ urlpatterns = (
         # APIs
         path("api/ngohub-refresh/", UpdateFromNgohub.as_view(), name="api-ngohub-refresh"),
         path("api/ngo/check-url/<ngo_url>/", CheckNgoUrl.as_view(), name="api-ngo-check-url"),
-        path("api/ngos/", NgosApi.as_view(), name="api-ngos"),
         #
         path("api/ngo/upload-url/", GetUploadUrl.as_view(), name="api-ngo-upload-url"),
         path("api/ngo/form/<ngo_url>/", GetNgoForm.as_view(), name="api-ngo-form-url"),

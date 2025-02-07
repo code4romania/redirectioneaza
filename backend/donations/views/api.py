@@ -1,7 +1,6 @@
 import logging
 from typing import Dict, List
 
-from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import BadRequest, PermissionDenied
 from django.core.files import File
@@ -14,10 +13,8 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView
 
-from redirectioneaza.common.cache import cache_decorator
-
 from ..models.jobs import Job, JobStatusChoices
-from ..models.ngos import ALL_NGOS_CACHE_KEY, Ngo, ngo_slug_validator
+from ..models.ngos import Ngo, ngo_slug_validator
 from ..pdf import create_ngo_pdf
 from ..workers.update_organization import update_organization
 from .base import BaseTemplateView
@@ -124,26 +121,6 @@ class CheckNgoUrl(BaseTemplateView):
             return HttpResponseBadRequest()
 
         return HttpResponse()
-
-
-class NgosApi(TemplateView):
-    @staticmethod
-    @cache_decorator(timeout=settings.TIMEOUT_CACHE_NORMAL, cache_key=ALL_NGOS_CACHE_KEY)
-    def _get_all_ngos() -> list:
-        return Ngo.active.order_by("name")
-
-    def get(self, request, *args, **kwargs):
-        # get all the visible ngos
-        ngos = self._get_all_ngos()
-
-        response = []
-        for ngo in ngos:
-            if not ngo.slug:
-                continue
-
-            response.append(get_ngo_response_item(ngo))
-
-        return JsonResponse(response, safe=False)
 
 
 class SearchNgosApi(TemplateView, NgoSearchMixin):
