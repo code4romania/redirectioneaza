@@ -107,7 +107,7 @@ class SearchMixin(ListView):
     def search(self) -> QuerySet:
         query: str = self.request.GET.get("q")
 
-        if not query:
+        if not query or len(query) < settings.SEARCH_QUERY_MIN_LENGTH:
             return self.queryset.all()
 
         language_code: str = settings.LANGUAGE_CODE

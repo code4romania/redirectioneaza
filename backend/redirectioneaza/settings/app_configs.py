@@ -137,3 +137,5 @@ FERNET_OBJECT = Fernet(urlsafe_b64encode(ENCRYPT_KEY.encode("utf-8")))
 FORCE_PARTNER = False
 if DEBUG:
     FORCE_PARTNER = env.bool("FORCE_PARTNER", False)
+
+SEARCH_QUERY_MIN_LENGTH = env.int("SEARCH_QUERY_MIN_LENGTH", 3)
