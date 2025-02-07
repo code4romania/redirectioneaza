@@ -21,7 +21,7 @@ from ..forms.ngo_account import NgoFormForm, NgoPresentationForm
 from ..models.donors import Donor
 from ..models.jobs import Job
 from ..models.ngos import Ngo
-from .api import CheckNgoUrl
+from .api import CheckNgoSlug
 from .base import BaseContextPropertiesMixin, BaseVisibleTemplateView
 from .common import get_ngo_archive_download_status
 
@@ -275,11 +275,11 @@ class NgoFormsView(NgoBaseTemplateView):
         slug_has_errors = False
 
         form_slug = form.cleaned_data["slug"]
-        if CheckNgoUrl.check_slug_is_blocked(form_slug):
+        if CheckNgoSlug.check_slug_is_blocked(form_slug):
             slug_has_errors = True
             form.add_error("slug", ValidationError(_("The URL is blocked")))
 
-        if CheckNgoUrl().check_slug_is_reused(form_slug, user):
+        if CheckNgoSlug().check_slug_is_reused(form_slug, user):
             slug_has_errors = True
             form.add_error("slug", ValidationError(_("The URL is already used")))
 

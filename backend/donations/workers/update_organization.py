@@ -1,5 +1,7 @@
 import logging
 import mimetypes
+import random
+import string
 import tempfile
 from typing import Dict, List, Optional, Union
 
@@ -15,6 +17,7 @@ from requests import Response
 
 from donations.common.validation.slug_url import clean_slug
 from donations.models.ngos import Ngo
+from donations.views.api import CheckNgoSlug
 from redirectioneaza.common.cache import cache_decorator
 
 logger = logging.getLogger(__name__)
@@ -107,7 +110,14 @@ def update_local_ngo_with_ngohub_data(ngo: Ngo, ngohub_ngo: Organization) -> Dic
     ngo.name = ngohub_general_data.alias or ngohub_general_data.name
 
     if not ngo.slug:
-        ngo.slug = clean_slug(ngo.name)
+        new_slug = clean_slug(ngo.name)
+        if CheckNgoSlug.check_slug_is_blocked(new_slug):
+            random_string = "".join(random.choices(string.ascii_lowercase + string.digits, k=5))
+            new_slug = f"{new_slug}-{random_string}"
+        elif CheckNgoSlug.check_ngo_slug_is_reused(new_slug, ngo.pk):
+            random_string = "".join(random.choices(string.ascii_lowercase + string.digits, k=5))
+            new_slug = f"{new_slug}-{random_string}"
+        ngo.slug = new_slug
 
     if ngo.description is None:
         ngo.description = ngohub_general_data.description or ""

@@ -38,7 +38,7 @@ class UpdateFromNgohub(BaseTemplateView):
         return redirect_success
 
 
-class CheckNgoUrl(BaseTemplateView):
+class CheckNgoSlug(BaseTemplateView):
     ngo_url_block_list = (
         "",
         "TERMENI",
@@ -101,12 +101,23 @@ class CheckNgoUrl(BaseTemplateView):
 
         try:
             if user.ngo:
-                ngo_queryset = ngo_queryset.exclude(id=user.ngo.id)
+                ngo_queryset = ngo_queryset.exclude(pk=user.ngo.pk)
         except AttributeError:
             # Anonymous users don't have the .ngo attribute
             pass
 
-        if ngo_queryset.filter(slug=slug.lower()).count():
+        if ngo_queryset.filter(slug=slug.lower()).exists():
+            return True
+
+        return False
+
+    @classmethod
+    def check_ngo_slug_is_reused(cls, slug, ngo_pk: int):
+        ngo_queryset: QuerySet[Ngo] = Ngo.objects
+
+        ngo_queryset = ngo_queryset.exclude(pk=ngo_pk)
+
+        if ngo_queryset.filter(slug=slug.lower()).exists():
             return True
 
         return False
