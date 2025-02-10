@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-10 22:22+0200\n"
+"POT-Creation-Date: 2025-02-10 23:13+0200\n"
 "PO-Revision-Date: 2024-03-07 11:27+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -1557,38 +1557,56 @@ msgstr ""
 "Dacă ești o organizație non-profit, poți beneficia gratuit de toate "
 "soluțiile din ecosistemul dedicat societății civile prin NGO Hub."
 
-#: backend/templates/v2/account/snippets/third-party.html:67
+#: backend/templates/v2/account/snippets/third-party.html:64
+msgid "You don't have an NGO HUB account?"
+msgstr "Nu ai cont pe NGO Hub"
+
+#: backend/templates/v2/account/snippets/third-party.html:65
+msgid "Register here"
+msgstr "Înregistrează-te aici"
+
+#: backend/templates/v2/account/snippets/third-party.html:68
+#: backend/templates/v2/account/snippets/third-party.html:168
+msgid "Log in problems?"
+msgstr "Ai probleme la conectare?"
+
+#: backend/templates/v2/account/snippets/third-party.html:70
+#: backend/templates/v2/account/snippets/third-party.html:170
+msgid "Check the support page"
+msgstr "Consultă pagina de suport"
+
+#: backend/templates/v2/account/snippets/third-party.html:81
 msgid "To access redirectioneaza.ro through your NGO Hub account, make sure:"
 msgstr ""
 "Pentru a accesa Redirecționează prin contul tău NGO Hub, asigură-te că:"
 
-#: backend/templates/v2/account/snippets/third-party.html:71
+#: backend/templates/v2/account/snippets/third-party.html:85
 msgid ""
 "To access redirectioneaza.ro through your NGO Hub account, follow the steps:"
 msgstr ""
 "Pentru a accesa Redirecționează prin contul tău NGO Hub, urmează pașii de "
 "mai jos:"
 
-#: backend/templates/v2/account/snippets/third-party.html:84
+#: backend/templates/v2/account/snippets/third-party.html:98
 msgid "You have an active account in NGO Hub"
 msgstr "Ai un cont activ în NGO Hub"
 
-#: backend/templates/v2/account/snippets/third-party.html:86
+#: backend/templates/v2/account/snippets/third-party.html:100
 msgid "Create an account for your organization in NGO Hub"
 msgstr "Creează un cont pentru organizația ta în NGO Hub"
 
-#: backend/templates/v2/account/snippets/third-party.html:91
+#: backend/templates/v2/account/snippets/third-party.html:105
 msgid ""
 "If you don't have an account in NGO Hub, you can create one for free. Learn "
 "more about the"
 msgstr ""
 "Dacă nu ai un cont în NGO Hub, poți crea unul gratuit. Află mai multe despre "
 
-#: backend/templates/v2/account/snippets/third-party.html:95
+#: backend/templates/v2/account/snippets/third-party.html:109
 msgid "benefits of NGO Hub"
 msgstr "beneficiile NGO Hub"
 
-#: backend/templates/v2/account/snippets/third-party.html:97
+#: backend/templates/v2/account/snippets/third-party.html:111
 msgid ""
 "Register your organization and discover all NGO Hub apps dedicated to the "
 "civic society. Simple and free."
@@ -1596,20 +1614,20 @@ msgstr ""
 "Înregistrează-ți organizația și descoperă toate aplicațiile din NGO Hub "
 "dedicate societății civile. Simplu și gratuit."
 
-#: backend/templates/v2/account/snippets/third-party.html:100
+#: backend/templates/v2/account/snippets/third-party.html:114
 msgid "Read more"
 msgstr "Citește mai multe"
 
-#: backend/templates/v2/account/snippets/third-party.html:111
+#: backend/templates/v2/account/snippets/third-party.html:125
 msgid "You have activated the Redirecționează platform in your NGO Hub account"
 msgstr "Ai activat platforma Redirecționează pentru organizația ta în NGO Hub"
 
-#: backend/templates/v2/account/snippets/third-party.html:113
+#: backend/templates/v2/account/snippets/third-party.html:127
 msgid ""
 "Activate the Redirecționează application for your organization in NGO Hub"
 msgstr "Activează aplicația Redirecționează din NGO Hub pentru organizația ta"
 
-#: backend/templates/v2/account/snippets/third-party.html:118
+#: backend/templates/v2/account/snippets/third-party.html:132
 msgid ""
 "Check with your organization's administrator if access to this platform is "
 "correctly configured."
@@ -1617,7 +1635,7 @@ msgstr ""
 "Verifică cu administratorul organizației tale dacă accesul la această "
 "platformă este configurat corect."
 
-#: backend/templates/v2/account/snippets/third-party.html:120
+#: backend/templates/v2/account/snippets/third-party.html:134
 msgid ""
 "Add the Redirecționează application for your organization in the All "
 "applications section of your administrator account. You and the team will be "
@@ -1627,17 +1645,17 @@ msgstr ""
 "organizația ta, din contul de administrator. Tu și echipa ta veți putea "
 "gestiona colectarea formularelor online."
 
-#: backend/templates/v2/account/snippets/third-party.html:131
+#: backend/templates/v2/account/snippets/third-party.html:145
 msgid ""
 "You have access permission from the organization's administrator in NGO Hub"
 msgstr ""
 "Ai permisiunea de acces din partea administratorului organizației din NGO Hub"
 
-#: backend/templates/v2/account/snippets/third-party.html:133
+#: backend/templates/v2/account/snippets/third-party.html:147
 msgid "Give access to your colleagues in NGO Hub"
 msgstr "Oferă acces colegilor tăi în NGO Hub"
 
-#: backend/templates/v2/account/snippets/third-party.html:138
+#: backend/templates/v2/account/snippets/third-party.html:152
 msgid ""
 "Check with your organization's administrator if they have given you access "
 "to the Redirecționează application. Read more in the"
@@ -1645,27 +1663,19 @@ msgstr ""
 "Verifică cu administratorul organizației tale dacă ți-a oferit acces în "
 "aplicația Redirecționează. Citește mai multe în"
 
-#: backend/templates/v2/account/snippets/third-party.html:140
+#: backend/templates/v2/account/snippets/third-party.html:154
 msgid ""
 "Add colleagues in NGO Hub by giving them redirectioneaza.ro accounts. For "
 "them to use the application, be sure to grant them access from the "
 "organization's administration account. Read more in the"
 msgstr ""
 "Adaugă colegi în NGO Hub, oferindu-le conturi pe redirectioneaza.ro. Ca ei "
-"să poată folosi aplicația, asigurăte că le permiți accesul din contul de administrator "
-"al organizației. Află mai multe în"
+"să poată folosi aplicația, asigurăte că le permiți accesul din contul de "
+"administrator al organizației. Află mai multe în"
 
-#: backend/templates/v2/account/snippets/third-party.html:143
+#: backend/templates/v2/account/snippets/third-party.html:157
 msgid "User Guide"
 msgstr "Ghidul utilizatorului"
-
-#: backend/templates/v2/account/snippets/third-party.html:154
-msgid "Log in problems?"
-msgstr "Ai probleme la conectare?"
-
-#: backend/templates/v2/account/snippets/third-party.html:156
-msgid "Check the support page"
-msgstr "Consultă pagina de suport"
 
 #: backend/templates/v2/components/copy-to-clipboard.html:10
 msgid "Copy the link"
