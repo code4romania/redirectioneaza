@@ -33,9 +33,15 @@
     {% endif %}
 
     <p>
-      {% blocktrans trimmed %}
-        Use your NGO Hub account to access redirectioneaza.ro and other applications dedicated to civil society, all in one place.
-      {% endblocktrans %}
+      {% if page_type == "login" %}
+        {% blocktrans trimmed %}
+          Use your NGO Hub account to access redirectioneaza.ro and other applications dedicated to civil society, all in one place.
+        {% endblocktrans %}
+      {% else %}
+        {% blocktrans trimmed %}
+          If you are an NGO you can access our entire civil society ecosystem for free through NGO Hub.
+        {% endblocktrans %}
+      {% endif %}
     </p>
   </div>
 
@@ -52,14 +58,34 @@
     </div>
   </div>
 
+  {% if page_type == "login" %}
+  <div class="font-medium prose text-center prose-p:text-gray-700">
+    <p>
+      {% trans "You don't have an NGO HUB account?" %}
+      <a class="text-base font-normal text-cyan-700" href="https://app.ngohub.ro">{% trans "Register here" %}</a>
+    </p>
+    <p>
+      {% trans "Log in problems?" %}
+      {# TODO: Fix the link #}
+      <a class="text-base font-normal text-cyan-700" href="#">{% trans "Check the support page" %}</a>
+    </p>
+  </div>
+  {% endif %}
+
   <div class="mx-auto mt-8 p-4 max-w-md bg-gray-50">
 
     <dl class="grid gap-8 text-gray-500 text-base/7">
       <div class="relative px-4 text-gray-900">
         <p>
-          {% blocktrans trimmed %}
-            To access redirectioneaza.ro through your NGO Hub account, make sure:
-          {% endblocktrans %}
+          {% if page_type == "login" %}
+            {% blocktrans trimmed %}
+              To access redirectioneaza.ro through your NGO Hub account, make sure:
+            {% endblocktrans %}
+          {% else %}
+            {% blocktrans trimmed %}
+              To access redirectioneaza.ro through your NGO Hub account, follow the steps:
+            {% endblocktrans %}
+          {% endif %}
         </p>
       </div>
 
@@ -71,15 +97,22 @@
           {% if page_type == "login" %}
             {% trans "You have an active account in NGO Hub" %}
           {% else %}
-            {% trans "Register your organization in NGO Hub" %}
+            {% trans "Create an account for your organization in NGO Hub" %}
           {% endif %}
         </dt>
         <dd class="mt-2">
-          {% blocktrans trimmed %}
-            If you don't have an account in NGO Hub, you can create one for free.
-            Learn more about the
-          {% endblocktrans %}
-          <a class="text-base font-normal text-cyan-700" href="{{ ngohub_site }}">{% trans "benefits of NGO Hub" %}</a>.
+          {% if page_type == "login" %}
+            {% blocktrans trimmed %}
+              If you don't have an account in NGO Hub, you can create one for free.
+              Learn more about the
+            {% endblocktrans %}
+            <a class="text-base font-normal text-cyan-700" href="{{ ngohub_site }}">{% trans "benefits of NGO Hub" %}</a>.
+          {% else %}
+            {% blocktrans trimmed %}
+              Register your organization and discover all NGO Hub apps dedicated to the civic society. Simple and free.
+            {% endblocktrans %}
+            <a class="text-base font-normal text-cyan-700" href="{{ ngohub_site }}">{% trans "Read more" %}</a>
+          {% endif %}
         </dd>
       </div>
 
@@ -91,14 +124,14 @@
           {% if page_type == "login" %}
             {% trans "You have activated the Redirecționează platform in your NGO Hub account" %}
           {% else %}
-            {% trans "Activate the Redirecționează application in your NGO Hub account" %}
+            {% trans "Activate the Redirecționează application for your organization in NGO Hub" %}
           {% endif %}
         </dt>
         <dd class="mt-2">
           {% if page_type == "login" %}
             {% trans "Check with your organization's administrator if access to this platform is correctly configured." %}
           {% else %}
-            {% trans "Look for the Redirecționează application in the All applications section. It is one of the many applications offered for free to non-profit organizations in Romania." %}
+            {% trans "Add the Redirecționează application for your organization in the All applications section of your administrator account. You and the team will be able to manage the online form collection." %}
           {% endif %}
         </dd>
       </div>
@@ -116,18 +149,28 @@
         </dt>
         <dd class="mt-2">
           {% if page_type == "login" %}
-            {% trans "Check with your organization's administrator if they have given you access to the Redirecționează application." %}
+            {% trans "Check with your organization's administrator if they have given you access to the Redirecționează application. Read more in the" %}
           {% else %}
-            {% trans "In NGO Hub, each of your colleagues can have their own account. Make sure you give your colleagues access to the applications they work with every day." %}
+            {% trans "Add colleagues in NGO Hub by giving them redirectioneaza.ro accounts. For them to use the application, be sure to grant them access from the organization's administration account. Read more in the" %}
           {% endif %}
-
-          {% comment %}
-            {% trans "Read more in the User Guide" %}
-          {% endcomment %}
+          {# TODO: Fix the link #}
+          <a class="text-base font-normal text-cyan-700" href="https://ngohub.ro/">{% trans "User Guide" %}</a>.
         </dd>
       </div>
+
     </dl>
 
   </div>
+
+  {% if page_type != "login" %}
+  <div class="font-medium prose text-center prose-p:text-gray-700 py-6">
+    <p>
+      {% trans "Log in problems?" %}
+      {# TODO: Fix the link #}
+      <a class="text-base font-normal text-cyan-700" href="#">{% trans "Check the support page" %}</a>
+    </p>
+  </div>
+  {% endif %}
+
 </section>
 
