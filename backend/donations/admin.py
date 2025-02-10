@@ -104,7 +104,7 @@ class HasNgoHubFilter(admin.SimpleListFilter):
             filter_value = False
 
         if filter_value is not None:
-            return queryset.filter(ngohub_org_id__isnull=filter_value)
+            return queryset.filter(ngohub_org_id__isnull=not filter_value)
 
 
 class HasOwnerFilter(admin.SimpleListFilter):
