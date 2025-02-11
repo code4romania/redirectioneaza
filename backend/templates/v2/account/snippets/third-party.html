@@ -59,17 +59,16 @@
   </div>
 
   {% if page_type == "login" %}
-  <div class="font-medium prose text-center prose-p:text-gray-700">
-    <p>
-      {% trans "You don't have an NGO HUB account?" %}
-      <a class="text-base font-normal text-cyan-700" href="https://app.ngohub.ro">{% trans "Register here" %}</a>
-    </p>
-    <p>
-      {% trans "Log in problems?" %}
-      {# TODO: Fix the link #}
-      <a class="text-base font-normal text-cyan-700" href="#">{% trans "Check the support page" %}</a>
-    </p>
-  </div>
+    <div class="font-medium prose text-center prose-p:text-gray-700">
+      <p>
+        {% trans "You don't have an NGO HUB account?" %}
+        <a class="text-base font-normal text-cyan-700" href="https://app.ngohub.ro">{% trans "Register here" %}</a>
+      </p>
+      <p>
+        {% trans "Log in problems?" %}
+        <a class="text-base font-normal text-cyan-700" href="https://www.ngohub.ro/ro/suport-tehnic-redirectioneaza">{% trans "Check the support page" %}</a>
+      </p>
+    </div>
   {% endif %}
 
   <div class="mx-auto mt-8 p-4 max-w-md bg-gray-50">
@@ -149,12 +148,17 @@
         </dt>
         <dd class="mt-2">
           {% if page_type == "login" %}
-            {% trans "Check with your organization's administrator if they have given you access to the Redirecționează application. Read more in the" %}
+            {% trans "Check with your organization's administrator if they have given you access to the Redirecționează application." %}
           {% else %}
-            {% trans "Add colleagues in NGO Hub by giving them redirectioneaza.ro accounts. For them to use the application, be sure to grant them access from the organization's administration account. Read more in the" %}
+            {% trans "Add colleagues in NGO Hub by giving them redirectioneaza.ro accounts. For them to use the application, be sure to grant them access from the organization's administration account." %}
           {% endif %}
-          {# TODO: Fix the link #}
-          <a class="text-base font-normal text-cyan-700" href="https://ngohub.ro/">{% trans "User Guide" %}</a>.
+
+          {% comment %}
+            {# TODO: Add the User guide, when available #}
+            {% trans "Read more in the " %}
+            <a class="text-base font-normal text-cyan-700" href="https://ngohub.ro/">{% trans "User Guide" %}</a>.
+          {% endcomment %}
+
         </dd>
       </div>
 
@@ -163,13 +167,12 @@
   </div>
 
   {% if page_type != "login" %}
-  <div class="font-medium prose text-center prose-p:text-gray-700 py-6">
-    <p>
-      {% trans "Log in problems?" %}
-      {# TODO: Fix the link #}
-      <a class="text-base font-normal text-cyan-700" href="#">{% trans "Check the support page" %}</a>
-    </p>
-  </div>
+    <div class="font-medium prose text-center prose-p:text-gray-700 py-6">
+      <p>
+        {% trans "Log in problems?" %}
+        <a class="text-base font-normal text-cyan-700" href="https://www.ngohub.ro/ro/suport-tehnic-redirectioneaza">{% trans "Check the support page" %}</a>
+      </p>
+    </div>
   {% endif %}
 
 </section>
