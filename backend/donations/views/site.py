@@ -11,7 +11,7 @@ from django.utils.translation import gettext_lazy as _
 from django.utils.translation import ngettext_lazy
 from django.views.generic import TemplateView
 
-from partners.models import DisplayOrderingChoices, Partner
+from partners.models import Partner
 from redirectioneaza.common.cache import cache_decorator
 
 from ..models.donors import Donor
@@ -62,13 +62,7 @@ class HomePage(BaseVisibleTemplateView):
         return ngo_queryset.filter(id__in=random.sample(all_ngo_ids, num_ngos))
 
     def _partner_response(self, context: Dict, partner: Partner):
-        partner_ngos = partner.ngos.all()
-        if partner.display_ordering == DisplayOrderingChoices.ALPHABETICAL:
-            partner_ngos = partner_ngos.order_by("name")
-        elif partner.display_ordering == DisplayOrderingChoices.NEWEST:
-            partner_ngos = partner_ngos.order_by("-date_created")
-        elif partner.display_ordering == DisplayOrderingChoices.RANDOM:
-            random.shuffle(list(partner_ngos))
+        partner_ngos = partner.ordered_ngos()
         context.update(
             {
                 "company_name": partner.name,

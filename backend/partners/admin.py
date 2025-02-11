@@ -1,11 +1,11 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
-from unfold.admin import ModelAdmin
+from unfold.admin import ModelAdmin, TabularInline
 
 from .models import Partner
 
 
-class NgoPartnerInline(admin.TabularInline):
+class NgoPartnerInline(TabularInline):
     model = Partner.ngos.through
     extra = 1
 
