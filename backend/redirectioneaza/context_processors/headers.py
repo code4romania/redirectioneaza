@@ -62,27 +62,27 @@ HEADER_ITEMS: Dict[str, Dict[str, str]] = {
     },
     "admin_ngos": {
         "title": _("NGOs"),
-        "link": reverse_lazy("admin:donations_ngo_changelist"),
+        "url": reverse_lazy("admin:donations_ngo_changelist"),
         "icon": "M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0 0 12 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75Z",
     },
     "admin_donations": {
         "title": _("Donations"),
-        "link": reverse_lazy("admin:donations_donor_changelist"),
+        "url": reverse_lazy("admin:donations_donor_changelist"),
         "icon": "M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m.75 12 3 3m0 0 3-3m-3 3v-6m-1.5-9H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z",
     },
     "admin_partners": {
         "title": _("Partners"),
-        "link": reverse_lazy("admin:partners_partner_changelist"),
+        "url": reverse_lazy("admin:partners_partner_changelist"),
         "icon": "M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Z",
     },
     "admin_faq_questions": {
         "title": _("FAQ Questions"),
-        "link": reverse_lazy("admin:frequent_questions_question_changelist"),
+        "url": reverse_lazy("admin:frequent_questions_question_changelist"),
         "icon": "M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z",
     },
     "admin_users": {
         "title": _("Users"),
-        "link": reverse_lazy("admin:users_user_changelist"),
+        "url": reverse_lazy("admin:users_user_changelist"),
         "icon": "M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z",
     },
     "ngo_dashboard": {
