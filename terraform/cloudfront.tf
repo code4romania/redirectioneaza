@@ -161,7 +161,7 @@ resource "aws_cloudfront_cache_policy" "default" {
     enable_accept_encoding_gzip   = true
 
     cookies_config {
-      cookie_behavior = "none"
+      cookie_behavior = "all"
     }
 
     headers_config {
@@ -175,7 +175,7 @@ resource "aws_cloudfront_cache_policy" "default" {
     }
 
     query_strings_config {
-      query_string_behavior = "none"
+      query_string_behavior = "all"
     }
   }
 }
