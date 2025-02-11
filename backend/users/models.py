@@ -10,6 +10,7 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from donations.models.ngos import Ngo
+from partners.models import Partner
 from users.groups_management import MAIN_ADMIN, NGO_ADMIN, NGO_MEMBER, RESTRICTED_ADMIN
 
 
@@ -68,6 +69,14 @@ class User(AbstractUser):
     ngo = models.ForeignKey(
         Ngo,
         verbose_name=_("NGO"),
+        related_name="users",
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+    )
+    partner = models.ForeignKey(
+        Partner,
+        verbose_name=_("Partner"),
         related_name="users",
         blank=True,
         null=True,

@@ -133,13 +133,13 @@ urlpatterns = (
         # Cron routes
         path("cron/ngos/remove-form/", NgoRemoveForms.as_view(), name="cron-ngo-remove-form"),
         # Django Admin
-        path("admin/", admin.site.urls),
         path("admin/login/", RedirectView.as_view(pattern_name="login", permanent=True)),
         path("admin/avansat/login/", RedirectView.as_view(pattern_name="login", permanent=True)),
         path("admin/avansat/", RedirectView.as_view(pattern_name="admin:index", permanent=True)),
         path("admin/django/", RedirectView.as_view(pattern_name="admin:index", permanent=True)),
         # ADMIN HANDLERS
         path("admin/organizatii/", RedirectView.as_view(pattern_name="admin:index", permanent=True)),
+        path("admin/", admin.site.urls),
         # must always be the last set of urls
         re_path(r"^(?P<ngo_url>[\w-]+)/doilasuta/", RedirectView.as_view(pattern_name="twopercent", permanent=True)),
         # re_path(r"^(?P<ngo_url>[\w-]+)/semnatura/", FormSignature.as_view(), name="ngo-twopercent-signature"),

@@ -18,6 +18,12 @@ SIDEBAR_NAVIGATION = [
                 "link": reverse_lazy("admin:index"),
                 "permission": lambda request: request.user.is_superuser,
             },
+            {
+                "title": _("Home page"),
+                "icon": "dashboard",
+                "link": reverse_lazy("admin:index"),
+                "permission": lambda request: not request.user.is_superuser,
+            },
         ],
     },
     {
@@ -27,7 +33,7 @@ SIDEBAR_NAVIGATION = [
                 "title": _("NGOs"),
                 "icon": "foundation",
                 "link": reverse_lazy("admin:donations_ngo_changelist"),
-                "permission": lambda request: request.user.is_superuser,
+                "permission": lambda request: request.user.is_staff,
             },
             {
                 "title": _("Donations"),

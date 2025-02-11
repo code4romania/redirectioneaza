@@ -1,0 +1,13 @@
+{% load i18n %}
+
+{% trans "Hello," %} {{ first_name }}
+
+{% blocktrans trimmed %}
+  You have been invited to join redirectioneaza.ro
+  and manage the partner account for {{ partner_name }}.
+  To accept the invitation and set up your account, please click the button below.
+{% endblocktrans %}
+
+{{ action_url }}
+
+{% include "emails/components/misdelivered.html" %}
