@@ -1,3 +1,5 @@
+{% load i18n %}
+
 {% blocktrans trimmed %}
   If you didn't request a password reset,
   you can ignore this email.
