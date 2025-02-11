@@ -257,7 +257,7 @@ class NgoFormsView(NgoBaseTemplateView):
     @method_decorator(login_required(login_url=reverse_lazy("login")))
     def post(self, request, *args, **kwargs):
         post = request.POST
-        user = request.user
+        user: UserModel = request.user
 
         if not user.is_authenticated:
             raise PermissionDenied()
@@ -284,7 +284,7 @@ class NgoFormsView(NgoBaseTemplateView):
             slug_has_errors = True
             form.add_error("slug", ValidationError(_("The URL is blocked")))
 
-        if NgoSlugValidator.is_reused(form_slug, user):
+        if NgoSlugValidator.is_reused(form_slug, ngo.pk):
             slug_has_errors = True
             form.add_error("slug", ValidationError(_("The URL is already used")))
 
