@@ -111,8 +111,7 @@
 
       <div class="sm:col-span-2">
         {% trans "Locality" as input_title %}
-
-        {% include "components/input/input.html" with input_id="locality" input_name="locality" field=redirection_form.locality input_type="text" max_length=10 is_required=True input_autocomplete="address-level2" %}
+        {% include "components/input/input.html" with input_id="locality" input_name="locality" field=redirection_form.locality input_type="text" max_length=50 is_required=True input_autocomplete="address-level2" %}
       </div>
 
     </fieldset>
