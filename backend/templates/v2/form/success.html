@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% load i18n static %}
+
+
+{% block content %}
+
+  <div class="container">
+    <article class="prose prose-lg max-w-none prose-headings:text-cyan-700 prose-cyan place-items-center">
+
+      <div>
+        <img
+          src="{% static 'images/thank_you.jpg' %}"
+          alt="{% trans 'An image saying "Thank you" for your redirection' %}"
+          width="180px"/>
+      </div>
+
+      <div class="text text-center">
+        <h1>
+          <a
+            href="{{ donor.form_url }}"
+            class="px-2 py-1 text-2xl text-gray-900 font-semibold no-underline rounded-full shadow-sm bg-amber-300 sm:px-6 sm:py-2 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
+            download="formular.pdf"
+            target="_blank">
+            {% trans "Download your redirection form" %}
+          </a>
+        </h1>
+      </div>
+
+      <div class="text text-center text-xl">
+
+        <div class="mt-10 max-w-2xl">
+          {% if donor.has_signed %}
+
+            <h2 class="text-xl font-semibold">
+              {% blocktranslate trimmed %}
+                Thank you for your redirection! Your form has been sent to the NGO, and you have also received a copy of it by email.
+              {% endblocktranslate %}
+            </h2>
+
+            <p>
+              {% blocktranslate trimmed %}
+                Together we are better, stronger and braver. Together we can make a positive change in our society, that is why we need as many people like you as possible.
+              {% endblocktranslate %}
+            </p>
+
+            <p class="font-semibold">
+              {% blocktranslate trimmed %}
+                If you want to support the organization further, tell your friends to visit <a href="https://redirectioneaza.ro/">redirectioneaza.ro</a>.
+              {% endblocktranslate %}
+            </p>
+
+          {% else %}
+
+            <h2 class="text-2xl font-semibold">
+              {% trans "The first step was filling in the form. Now, here are the next steps:" %}
+            </h2>
+
+            <ul class="mt-4 text-left list-none">
+
+              <li>
+                <strong>{% trans "Step 2." %}</strong>
+                {% trans "Print the form and sign it." %}
+              </li>
+
+              <li>
+                <strong>{% trans "Step 3." %}</strong>
+                {% trans "Then, you have the following options:" %}
+
+                <ol type="A">
+
+                  {% if ngo.is_accepting_forms %}
+                    <li class="py-2">
+                      {% trans "You either scan it and send it by e-mail to the NGO and they will take care of submitting it. The NGO's e-mail address is:" %}
+                      <a href="mailto:{{ ngo.email }}">{{ ngo.email }}</a>;
+                    </li>
+                  {% endif %}
+
+                  <li class="py-2">
+                    {% blocktranslate trimmed %}
+                      Or you send it by post with <strong>registered mail</strong> to the ANAF unit you belong to.
+                    {% endblocktranslate %}
+
+                    <a href="https://static.anaf.ro/static/10/Anaf/AsistentaContribuabili_r/telefoane_judete/Regiuni.htm" target="_blank">
+                      {% blocktranslate trimmed %}
+                        Search for the office you belong to in this list;
+                      {% endblocktranslate %}
+                    </a>
+                  </li>
+
+                  <li class="py-2">
+                    {% blocktranslate trimmed %}
+                      Or you send it by post or courier to the NGO's address, and they will take care of submitting it. Their address is:
+                    {% endblocktranslate %}
+
+                    <strong>{{ ngo.name }}, {{ ngo.address }}, {% trans "the county" %} {{ ngo.county }}</strong>.
+                  </li>
+                </ol>
+              </li>
+            </ul>
+
+          {% endif %}
+        </div>
+
+      </div>
+
+    </article>
+  </div>
+
+{% endblock %}

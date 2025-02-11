@@ -1,0 +1,25 @@
+{% extends "emails/base.html" %}
+
+{% load i18n %}
+
+{% block heading %}
+  {% trans "Hello," %}
+{% endblock %}
+
+{% block content %}
+
+  <p>
+    {% blocktrans trimmed %}
+      We have received your request and have created an archive with all the information you need.
+    {% endblocktrans %}
+  </p>
+
+
+  {% trans "Download archive" as action_title %}
+  {% include "emails/components/action.html" with title=action_title url=action_url %}
+
+  {% blocktrans trimmed %}
+    Thank you for being part of this community!
+  {% endblocktrans %}
+
+{% endblock %}

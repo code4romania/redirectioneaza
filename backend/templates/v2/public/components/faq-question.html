@@ -1,0 +1,31 @@
+<div
+  x-data="{ expanded: false }"
+  class="border-b border-gray-200 py-8">
+
+  <dt>
+    <!-- Expand/collapse question button -->
+    <button
+      @click="expanded = !expanded"
+      type="button"
+      class="flex items-start justify-between w-full text-left text-gray-900"
+      :aria-expanded="expanded">
+
+      <span class="font-semibold text-base/7">
+        {{ question }}
+      </span>
+
+      <span class="flex items-center ml-6 h-7">
+        <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+          <path x-show="!expanded" stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6"></path>
+          <path x-show="expanded" stroke-linecap="round" stroke-linejoin="round" d="M18 12H6"></path>
+        </svg>
+      </span>
+    </button>
+  </dt>
+
+  <dd class="pr-12 mt-2" x-show="expanded">
+    <div class="text-gray-600 text-base/7 list-disc">
+      {{ answer|safe }}
+    </div>
+  </dd>
+</div>

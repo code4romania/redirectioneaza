@@ -1,0 +1,29 @@
+{% load i18n %}
+
+<section class="container">
+  <header class="prose">
+    <h1 class="mb-0">
+      {% if custom_subdomain %}
+        {% trans "Explore the NGOs" %}
+      {% else %}
+        {% trans "Explore NGOs" %}
+      {% endif %}
+    </h1>
+    <p>
+      {% trans "Choose the organization you want to redirect to!" %}
+    </p>
+  </header>
+
+  <div class="grid gap-8 my-12 sm:grid-cols-2 lg:grid-cols-4 lg:gap-10">
+    {% for ngo in ngos %}
+      {% include "public/components/ngo-card.html" with ngo=ngo %}
+    {% endfor %}
+  </div>
+
+  {% if not custom_subdomain %}
+    {% url "organizations" as button_url %}
+    {% trans "See all organizations" as button_title %}
+    {% include "components/buttons/link.html" %}
+  {% endif %}
+
+</section>

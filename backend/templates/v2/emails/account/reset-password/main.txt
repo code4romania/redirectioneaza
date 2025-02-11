@@ -1,0 +1,12 @@
+{% load i18n %}
+
+{% trans "Hello," %} {{ first_name }},
+
+{% blocktrans trimmed %}
+  We received a request to reset your password on redirectioneaza.ro.
+  You can reset your password by clicking the button below.
+{% endblocktrans %}
+
+{{ action_url }}
+
+{% include "emails/account/ignore-email.html" %}

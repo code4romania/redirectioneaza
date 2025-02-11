@@ -1,0 +1,74 @@
+{% load i18n text_format %}
+
+<div class="flex flex-col gap-8 mb-10 sm:flex-row">
+
+  <div class="max-w-48 shrink-0 grow-0">
+    {% include "components/logo-or-default.html" with ngo_logo=ngo.logo %}
+  </div>
+
+  <div class="">
+    <h1 class="text-3xl font-bold tracking-tight text-gray-900 pb-2">
+      {{ ngo.name }}
+    </h1>
+
+    <ul class="flex flex-col lg:flex-row gap-2 lg:gap-4 mt-1 text-sm font-medium">
+      {% if ngo_website %}
+        <li>
+          <a href="{{ ngo_website }}" class="hover:text-amber-600">
+            {{ ngo_website_description }}
+          </a>
+        </li>
+      {% endif %}
+
+      {% if ngo.display_email and ngo.email%}
+        <li>
+          <a href="mailto:{{ ngo.email }}" class="hover:text-amber-600">
+            {{ ngo.email }}
+          </a>
+        </li>
+      {% endif %}
+
+      {% if ngo.display_phone and ngo.phone %}
+        <li>
+          <a href="tel:{{ ngo.phone }}" class="hover:text-amber-600">
+            {{ ngo.phone }}
+          </a>
+        </li>
+      {% endif %}
+    </ul>
+
+    {% comment %}
+      <div class="mt-6">
+        <h3 class="sr-only">
+          {% trans "Active region" %}
+        </h3>
+
+        <div class="space-y-6 text-base font-semibold text-gray-500">
+          <p>
+            {% trans "Active region:" %}
+
+            {% if ngo.locality %}
+              {{ ngo.locality }},
+            {% endif %}
+
+            {% blocktranslate trimmed %}
+              {{ ngo.county|to_county }} county
+            {% endblocktranslate %}
+          </p>
+        </div>
+      </div>
+    {% endcomment %}
+
+    <div class="mt-6">
+      <h3 class="sr-only">
+        {% trans "Description" %}
+      </h3>
+
+      <div class="text-base font-normal prose-sm prose text-gray-500 sm:prose-base max-w-none">
+        {{ ngo.description|linebreaks }}
+      </div>
+    </div>
+
+  </div>
+
+</div>

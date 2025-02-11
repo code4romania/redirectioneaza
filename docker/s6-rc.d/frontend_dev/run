@@ -1,0 +1,6 @@
+#!/command/with-contenv sh
+set -e
+
+cd /var/www/redirect/backend/ || exit 1
+
+[ "${ENVIRONMENT}" = "development" ] && npm run dev

@@ -1,0 +1,16 @@
+{% load i18n %}
+
+{% trans "Good news! You have just redirected a part of your income tax!" %}
+
+{% blocktrans trimmed %}
+  Thank you for choosing to support {{ ngo_name }}!
+  Your form has reached the organization,
+  so you don't have to worry about anything else.
+  You can see the form you have filled in by clicking the button below.
+{% endblocktrans %}
+
+{{ action_url }}
+
+{% include "emails/components/extra-hand.txt" %}
+
+{% trans "Thank you for your involvement!" %}

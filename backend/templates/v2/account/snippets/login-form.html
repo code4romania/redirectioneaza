@@ -1,0 +1,82 @@
+{% load i18n %}
+{% load allauth %}
+{% load socialaccount %}
+{% load static %}
+
+<script>
+  let loginForm = function () {
+    return {
+      form: undefined,
+      pristine: undefined,
+      init() {
+        this.form = document.getElementById("login-form");
+
+        this.pristine = new Pristine(this.form, {
+          errorTextClass: "mt-2 text-sm text-red-600",
+        });
+
+
+        this.form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          let valid = this.pristine.validate();
+          this.isFormSubmitting = true;
+
+          if (valid) {
+            this.form.submit();
+          }
+        });
+      }
+    };
+  };
+</script>
+<script src="https://www.google.com/recaptcha/api.js?hl=ro" async defer></script>
+
+
+<form id='login-form' action="/login/" role="form" method="post" x-data="loginForm()" x-init="init()">
+  <div class="text-center">
+    <header class="flex flex-col items-center justify-center">
+      <img src="{% static 'images/logo-smaller.png' %}" alt="Redirectioneaza logo" class="w-auto h-24 mb-6"/>
+
+      <h1 class="mb-2 text-3xl font-extrabold leading-9 text-gray-900">
+        {% trans "Login with email & password" %}
+      </h1>
+    </header>
+
+    <div class="mb-6 font-medium prose prose-p:text-gray-700">
+      <p>
+        {% blocktrans trimmed %}
+          Did you previously log in to redirectioneaza.ro?
+          You can use the same login details.
+          For access to more features and a simpler login,
+          you can switch to NGO Hub without losing your existing data and forms.
+        {% endblocktrans %}
+      </p>
+    </div>
+  </div>
+
+  {% csrf_token %}
+
+  <div class="overflow-hidden rounded-lg bg-white drop-shadow ring-1 ring-gray-200 max-w-[448px] mx-auto">
+    <div class="grid gap-6 px-10 py-8">
+      {% trans "Email address" as email_label %}
+      {% include "account/components/email-input.html" with input_title=email_label input_name="email" %}
+
+      <div>
+        {% trans "Password" as password_label %}
+        {% include "account/components/password-input.html" with input_title=password_label input_name="password" max_length=150 %}
+
+        <div class="flex items-center justify-end mt-4">
+          <a href="{% url 'forgot' %}" class="text-sm/6 text-cyan-700">Ți-ai uitat parola?</a>
+        </div>
+      </div>
+
+      <button type="submit"
+              class="w-full px-2 py-1 text-sm text-center text-gray-900 rounded-full shadow-sm bg-amber-300 sm:text-base sm:px-6 sm:py-2 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
+        Intră în cont
+      </button>
+    </div>
+  </div>
+
+  <div id=g-recaptcha" class="g-recaptcha" data-sitekey="{{ captcha_public_key }}" data-size="invisible" data-callback="onSubmit"></div>
+</form>
+

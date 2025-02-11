@@ -1,5 +1,7 @@
 import logging
 import mimetypes
+import random
+import string
 import tempfile
 from typing import Dict, List, Optional, Union
 
@@ -13,7 +15,7 @@ from ngohub.models.organization import Organization, OrganizationGeneral
 from pycognito import Cognito
 from requests import Response
 
-from donations.common.validation.slug_url import clean_slug
+from donations.common.validation.slug_url import NgoSlugValidator, clean_slug
 from donations.models.ngos import Ngo
 from redirectioneaza.common.cache import cache_decorator
 
@@ -107,7 +109,14 @@ def update_local_ngo_with_ngohub_data(ngo: Ngo, ngohub_ngo: Organization) -> Dic
     ngo.name = ngohub_general_data.alias or ngohub_general_data.name
 
     if not ngo.slug:
-        ngo.slug = clean_slug(ngo.name)
+        new_slug = clean_slug(ngo.name)
+        if NgoSlugValidator.is_blocked(new_slug):
+            random_string = "".join(random.choices(string.ascii_lowercase + string.digits, k=5))
+            new_slug = f"{new_slug}-{random_string}"
+        elif NgoSlugValidator.is_reused(new_slug, ngo.pk):
+            random_string = "".join(random.choices(string.ascii_lowercase + string.digits, k=5))
+            new_slug = f"{new_slug}-{random_string}"
+        ngo.slug = new_slug
 
     if ngo.description is None:
         ngo.description = ngohub_general_data.description or ""
@@ -122,6 +131,7 @@ def update_local_ngo_with_ngohub_data(ngo: Ngo, ngohub_ngo: Organization) -> Dic
 
     # TODO: the county and active region have different formats here
     ngo.address = ngohub_general_data.address
+    ngo.locality = ngohub_general_data.city.name
     ngo.county = ngohub_general_data.county.name
 
     active_region: str = ngohub_ngo.activity_data.area

@@ -1,0 +1,65 @@
+<script>
+  function hasChangedFields(fieldsArray) {
+    return fieldsArray.some(function (field) {
+      let inputValue = undefined;
+      let originalValue = field.getAttribute('input-original-value');
+
+      if (field.type === 'checkbox') {
+        inputValue = field.checked;
+        originalValue = originalValue?.toLowerCase() === 'true';
+      } else {
+        inputValue = field.value;
+      }
+
+      // it is an empty field received from backend or new form
+      if ((originalValue === undefined || originalValue === null) && inputValue === '') {
+        return false;
+      }
+
+      return inputValue !== originalValue;
+    });
+  }
+
+  let ngoForm = function () {
+    return {
+      form: undefined,
+      pristine: undefined,
+      isFormSubmitting: false,
+      init() {
+        this.form = document.getElementById("{{ form_id }}");
+
+        this.pristine = new Pristine(this.form, {
+          errorTextClass: "mt-2 text-sm text-red-600",
+          errorClass: "has-error",
+          successClass: "has-success"
+        });
+
+        this.form.addEventListener('submit', (e) => {
+          e.preventDefault();
+
+          this.isFormSubmitting = true;
+          let valid = this.pristine.validate();
+
+          if (valid) {
+            this.form.submit();
+          }
+        });
+
+        // Event listener for the 'beforeunload' event
+        window.addEventListener('beforeunload', (event) => {
+          // Check if the form is being submitted
+          if (this.isFormSubmitting) {
+            return; // Allow navigation without showing the confirmation dialog
+          }
+
+          if (hasChangedFields(this.pristine.fields.map(field => field.input))) {
+            if (!confirm('Are you sure you want to leave?')) {
+              event.preventDefault();
+            }
+          }
+        });
+      }
+    };
+  };
+
+</script>

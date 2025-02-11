@@ -1,77 +1,114 @@
-{% load i18n %}
+{% load i18n static %}
 
-<h2>
-  {% trans "Classic registration" %}
-</h2>
+<script>
+  let registerForm = function () {
+    return {
+      form: undefined,
+      pristine: undefined,
+      init() {
+        this.form = document.getElementById("register-form");
 
-<form class="form form-horizontal" action="/cont-nou/" role="form" method="post">
+        this.pristine = new Pristine(this.form, {
+          errorTextClass: "mt-2 text-sm text-red-600"
+        });
+
+        this.form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          let valid = this.pristine.validate();
+          this.isFormSubmitting = true;
+
+          if (valid) {
+            this.form.submit();
+          }
+        });
+      },
+
+    };
+  };
+</script>
+<script src="https://www.google.com/recaptcha/api.js?hl=ro" async defer></script>
+
+
+<form id='register-form' action="/cont-nou/" role="form" method="post" x-data="registerForm()" x-init="init()">
+  <div class="text-center">
+    <header class="flex flex-col items-center justify-center">
+      <img src="{% static 'images/logo-smaller.png' %}" alt="Redirectioneaza logo" class="w-auto h-24 mb-6"/>
+
+      <h1 class="mb-2 text-3xl font-bold leading-9 text-center text-gray-900">
+        {% trans "Register without NGO Hub" %}
+      </h1>
+    </header>
+
+    <div class="mb-6 font-medium prose text-gray-700">
+      <p>
+        {% blocktrans trimmed %}
+          You can use redirectioneaza.ro without having an account in NGO Hub.
+          Register by filling out the form below.
+        {% endblocktrans %}
+      </p>
+    </div>
+  </div>
+
   {% csrf_token %}
-  <fieldset>
-    <div class="form-group">
-      <div class="col-xs-12 col-sm-6">
-        <input
-          class="form-control"
-          type="text"
-          name="last_name"
-          placeholder="Nume"
-          aria-label="Nume"
-          required/>
+
+  <div class="overflow-hidden rounded-lg bg-white drop-shadow ring-1 ring-gray-200 max-w-[448px] mx-auto">
+    <div class="grid gap-6 px-10 py-8">
+
+      <div>
+        {% trans "First name" as input_title %}
+        {% include "components/input/input.html" with input_id="first_name" input_title=input_title input_type="text" input_name="first_name" is_required=True max_length=200 %}
       </div>
-      <div class="col-xs-12 col-sm-6 second-form-row">
-        <input
-          class="form-control"
-          type="text"
-          name="first_name"
-          placeholder="Prenume"
-          aria-label="Prenume"
-          required/>
+      <div>
+        {% trans "Last name" as input_title %}
+        {% include "components/input/input.html" with input_id="last_name" input_title=input_title input_type="text" input_name="last_name" is_required=True max_length=200 %}
       </div>
+
+      <div>
+        {% trans "Email" as input_title %}
+        {% include "components/input/input.html" with input_id="email" input_title=input_title input_type="email" input_name="email" is_required=True max_length=254 %}
+      </div>
+
+      {% trans "Password" as password_label %}
+      {% trans "Confirm password" as password_confirm_label %}
+
+      {% include "account/components/password-input.html" with input_id="password-input" input_title=password_label input_name="password" password_type="new" max_length=150 %}
+
+      {% include "account/components/password-input.html" with input_title=password_confirm_label input_name="password_confirm" password_type="new" max_length=150 data_pristine_equals="#password-input" %}
+
+      <div class="space-y-5 form-group">
+        <div class="flex gap-3">
+          <div class="flex items-center h-6 shrink-0">
+            <div class="grid grid-cols-1 group size-4">
+              <input
+                id="agree"
+                name="agree"
+                type="checkbox"
+                required
+                class="col-start-1 row-start-1 bg-white border border-gray-300 rounded appearance-none checked:border-amber-300 checked:bg-amber-300 indeterminate:border-amber-300 indeterminate:bg-amber-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300 disabled:border-gray-300 disabled:bg-gray-200 disabled:checked:bg-gray-100 forced-colors:appearance-auto">
+              <svg class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-[:disabled]:stroke-gray-950/25" viewBox="0 0 14 14" fill="none">
+                <path class="opacity-0 group-has-[:checked]:opacity-100" d="M3 8L6 11L11 3.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path class="opacity-0 group-has-[:indeterminate]:opacity-100" d="M3 7H11" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </div>
+          </div>
+          <div class="text-sm/6">
+            <label for="agree" class="font-medium text-gray-900">
+              <span class="block mb-2 font-medium text-gray-900 text-sm/6">
+              {% trans "I agree with" %}
+              <a href="{% url 'terms' %}" class="font-semibold text-cyan-700">{% trans "the terms of the platform" %}</a>.
+            </span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        class="w-full px-2 py-1 text-sm text-center text-gray-900 rounded-full shadow-sm bg-amber-300 sm:text-base sm:px-6 sm:py-2 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
+        {% trans "Create account" %}
+      </button>
     </div>
-    <div class="form-group">
-      <div class="col-xs-12">
-        <input
-          class="form-control"
-          type="email"
-          name="email"
-          placeholder="Email"
-          aria-label="Email"
-          required/>
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="col-xs-12">
-        <input
-          class="form-control"
-          type="password"
-          name="password"
-          placeholder="Parola"
-          aria-label="Parola"
-          required/>
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="col-xs-12">
-        <input
-          class="form-control"
-          type="password"
-          name="password_confirm"
-          placeholder="Confirmă parola"
-          aria-label="Confirmă parola"
-          required/>
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="col-xs-12 checkbox">
-        <label class="" for="agree">
-          <input type="checkbox" name="agree" id="agree" required/>
-          Sunt de acord cu <a href="{% url 'terms' %}">Termenii aplicației</a>.
-        </label>
-      </div>
-    </div>
-    <div class="form-group margin-top">
-      <div class="col-sm-12">
-        <button type="submit" class="btn btn-primary">Trimite</button>
-      </div>
-    </div>
-  </fieldset>
+  </div>
+
+  <div id=g-recaptcha" class="g-recaptcha" data-sitekey="{{ captcha_public_key }}" data-size="invisible" data-callback="onSubmit"></div>
 </form>

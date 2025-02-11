@@ -1,0 +1,10 @@
+{% blocktrans trimmed %}
+  If you didn't request a password reset,
+  you can ignore this email.
+  For any other questions or concerns, feel free to write to us at
+  {{ contact_email }}
+  or
+  check out the support page.
+{% endblocktrans %}
+
+https://www.ngohub.ro/ro/suport-tehnic-redirectioneaza

@@ -2,14 +2,22 @@ name: redirect_dev
 
 services:
 
-  webapp_sqlite:
+  webapp_psql:
     extends:
       file: docker-compose.base.yml
       service: redirect_dev_base
-    volumes:
-      - ./backend/.db_sqlite:/var/www/redirect/backend/.db_sqlite
     environment:
-      - "DATABASE_ENGINE=sqlite3"
-    ports:
-      - "5678:5678"
-      - "5677:5677"
+      - "DATABASE_HOST=redirect_db_dev"
+      - "DATABASE_PORT=5432"
+    depends_on:
+      - db_psql_dev
+
+  db_psql_dev:
+    extends:
+      file: docker-compose.base.yml
+      service: db_base_psql
+    volumes:
+      - ./docker/init-psql:/docker-entrypoint-initdb.d
+
+volumes:
+  redirect_psql:

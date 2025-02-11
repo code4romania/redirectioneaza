@@ -1,0 +1,27 @@
+{% extends "public/articles/base.html" %}
+
+{% load i18n %}
+
+{% block article_content %}
+
+  <h1>
+    {% trans "Check your email address" %}
+  </h1>
+
+  <p>
+    {% blocktrans trimmed %}
+      Your account has been succesfully created! 
+      You will receive an email message shortly.
+      Click on the link in the email to finish your account validation.<br>
+      Unable to find the email? Be sure to also check the spam folder.
+    {% endblocktrans %}
+  </p>
+
+  <p>
+    {% trans "Authentication problems?" %} <br>
+    <a class="text-base font-normal text-cyan-700" href="https://www.ngohub.ro/ro/suport-tehnic-redirectioneaza">{% trans "Check the support page" %}</a>
+    {% trans "or contact us at" %}
+    <a class="text-base font-normal text-cyan-700" href="mailto:redirectioneaza@code4.ro">redirectioneaza@code4.ro</a>
+  </p>
+
+{% endblock article_content %}

@@ -17,10 +17,17 @@ from .helpers import (
 )
 
 ADMIN_DASHBOARD_CACHE_KEY = "ADMIN_DASHBOARD"
+ADMIN_DASHBOARD_STATS_CACHE_KEY = "ADMIN_DASHBOARD_STATS"
 
 
-@cache_decorator(timeout=settings.TIMEOUT_CACHE_SHORT, cache_key_prefix=ADMIN_DASHBOARD_CACHE_KEY)
 def callback(request, context) -> Dict:
+    context.update(_get_admin_stats())
+
+    return context
+
+
+@cache_decorator(timeout=settings.TIMEOUT_CACHE_SHORT, cache_key=ADMIN_DASHBOARD_STATS_CACHE_KEY)
+def _get_admin_stats() -> Dict:
     today = now()
     years_range_ascending = get_current_year_range()
 
@@ -30,15 +37,11 @@ def callback(request, context) -> Dict:
 
     forms_per_month_chart: Dict[str, str] = _create_chart_statistics()
 
-    context.update(
-        {
-            "header_stats": header_stats,
-            "yearly_stats": yearly_stats,
-            "forms_per_month_chart": forms_per_month_chart,
-        }
-    )
-
-    return context
+    return {
+        "header_stats": header_stats,
+        "yearly_stats": yearly_stats,
+        "forms_per_month_chart": forms_per_month_chart,
+    }
 
 
 def _get_header_stats(today) -> List[List[Dict[str, Union[str, int]]]]:

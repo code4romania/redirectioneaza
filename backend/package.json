@@ -1,5 +1,24 @@
 {
-  "dependencies": {
-    "bower": "^1.8.14"
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "devDependencies": {
+    "@alpinejs/collapse": "^3.14.8",
+    "@alpinejs/focus": "^3.14.8",
+    "@fontsource/inter": "^5.1.0",
+    "@ryangjchandler/alpine-tooltip": "^2.0.1",
+    "@tailwindcss/aspect-ratio": "^0.4.2",
+    "@tailwindcss/container-queries": "^0.1.1",
+    "@tailwindcss/forms": "^0.5.9",
+    "@tailwindcss/typography": "^0.5.15",
+    "alpinejs": "^3.14.7",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "signature_pad": "^5.0.4",
+    "tailwindcss": "^3.4.16",
+    "vite": "^6.0.3"
   }
 }

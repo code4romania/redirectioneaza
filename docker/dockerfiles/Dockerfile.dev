@@ -1,4 +1,4 @@
-ARG NODE_VERSION=22.12.0
+ARG NODE_VERSION=22.13.0
 
 FROM node:${NODE_VERSION}-bookworm-slim
 
@@ -22,6 +22,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y --no-install-recommends \
+    cron procps \
     nginx gcc xz-utils gettext python3 python3-pip python3-venv python3-dev git postgresql-client libpq-dev && \
     apt-get clean
 
@@ -52,15 +53,14 @@ RUN python3 -m pip install --upgrade pip setuptools && \
     python3 -m pip install -r ./requirements-dev.txt
 
 # install the frontend libraries:
-COPY ./backend/package.json ./backend/bower.json /var/www/redirect/backend/
-RUN npm install -g npm bower && \
-    bower install --allow-root --config.interactive=false
+COPY ./backend/assets assets
+COPY ./backend/templates templates
+COPY ./backend/package.json ./backend/postcss.config.js ./backend/vite.config.js ./backend/tailwind.config.js ./
+
+RUN npm i
 
 # copy the backend source code:
 COPY ./backend/ /var/www/redirect/backend/
-RUN rm -rf ./_appengine_legacy
-
-USER root
 
 
 # Make sure scripts in .local are usable:
@@ -78,4 +78,4 @@ WORKDIR /var/www/redirect/
 
 ENTRYPOINT ["/init"]
 
-EXPOSE 8000
+EXPOSE 8000 3000

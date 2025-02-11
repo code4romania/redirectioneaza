@@ -99,14 +99,14 @@ class UserOrgAdapter(DefaultSocialAccountAdapter):
         return user
 
 
-def common_user_init(sociallogin: SocialLogin) -> UserModel:
+def common_user_init(sociallogin: SocialLogin) -> None:
     user: UserModel = sociallogin.user
 
-    user.is_staff = True
+    user.is_ngohub_user = True
     user.save()
 
     if user.is_superuser:
-        return user
+        return
 
     user_token: str = sociallogin.token.token
 
@@ -127,13 +127,20 @@ def common_user_init(sociallogin: SocialLogin) -> UserModel:
 
         return
 
+    user.is_staff = False
+    user.save()
+
     organization: OrganizationBase = user_profile.organization
     _set_ngo_user(ngohub, user, user_role, user_token, organization)
 
 
 def _set_ngo_user(
-    ngohub: NGOHub, user: UserModel, user_role: str, user_token: str, user_organization: OrganizationBase
-) -> UserModel:
+    ngohub: NGOHub,
+    user: UserModel,
+    user_role: str,
+    user_token: str,
+    user_organization: OrganizationBase,
+) -> None:
     ngohub_org_id = user_organization.id
 
     if user_role == settings.NGOHUB_ROLE_NGO_ADMIN:

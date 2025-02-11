@@ -1,9 +1,5 @@
-{% extends "account/base.html" %}
+{% extends "base.html" %}
 {% load i18n allauth account %}
-
-{% block head_title %}
-  {{ title }}
-{% endblock head_title %}
 
 {% block content %}
 
@@ -17,59 +13,29 @@
       </div>
     {% endif %}
 
-    <div id="homepage-first-paragraph" class="row text-center">
-      {% element h1 %}
-        {{ title }}
-      {% endelement %}
 
-      <h3>Reprezinți un ONG și dorești să-ți crești organizația?</h3>
-      <p>Prin redirectioneaza.ro te poți conecta direct cu donatorii tăi</p>
-    </div>
+    <div class="grid gap-16 lg:grid-cols-2 xl:gap-32 2xl:gap-64">
 
-    <div class="row">
-      <div class="col-md-10 col-md-offset-1">
-        <div class="row">
-          <div class="col-xs-12 text-center">
-
-            <h4>
-              Creează-ți un cont pentru a vedea despre ce e vorba
-            </h4>
-
-          </div>
+      {% if SOCIALACCONUNT_ONLY %}
+        <div class="md:col-span-2">
+          {% include "account/snippets/third-party.html" with page_type="register" %}
         </div>
-      </div>
-    </div>
+      {% elif SOCIALACCOUNT_ENABLED %}
+        <div>
+          {% include "account/snippets/third-party.html" with page_type="register" %}
+        </div>
 
-    <div id="register-container" class="row">
+        <div>
+          {% include "account/snippets/register-form.html" %}
+        </div>
+      {% else %}
+        <div class="md:col-span-2">
+          {% include "account/snippets/register-form.html" %}
+        </div>
+      {% endif %}
 
-      <div id="register" class="col-sm-12">
+      <div class="g-recaptcha" data-sitekey="{{ captcha_public_key }}" data-size="invisible" data-callback="onSubmit"></div>
 
-        {% if SOCIALACCONUNT_ONLY %}
-
-          <div class="col-sm-12">
-            {% include "account/snippets/third-party.html" with page_type="register" %}
-          </div>
-
-        {% elif SOCIALACCOUNT_ENABLED %}
-
-          <div class="col-sm-6">
-            {% include "account/snippets/third-party.html" with page_type="register" %}
-          </div>
-
-          <div class="col-sm-6">
-            {% include "account/snippets/register-form.html" %}
-          </div>
-
-        {% else %}
-
-          <div class="col-sm-12">
-            {% include "account/snippets/register-form.html" %}
-          </div>
-
-        {% endif %}
-
-        <div class="g-recaptcha" data-sitekey="{{ captcha_public_key }}" data-size="invisible" data-callback="onSubmit"></div>
-      </div>
     </div>
 
   </div>

@@ -1,0 +1,11 @@
+{% load i18n %}
+
+{% trans "Good news! You have a new redirection form" %}
+
+{% blocktrans trimmed %}
+  A new superhero has decided to support your organization by redirecting income tax.
+  You can access the completed form by clicking the button below.
+  Remember to submit it to ANAF to complete the process!
+{% endblocktrans %}
+
+{{ action_url }}

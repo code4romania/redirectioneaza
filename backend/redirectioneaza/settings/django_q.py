@@ -1,3 +1,4 @@
+from django.utils.translation import gettext_lazy as _
 from .environment import env
 
 # Django Q2 — https://django-q2.readthedocs.io/en/stable/configure.html#configuration
@@ -19,7 +20,7 @@ Q_CLUSTER = {
     "compress": True,
     "save_limit": 200,
     "cpu_affinity": 1,
-    "label": "Django Q2",
+    "label": _("Background Tasks"),
     "orm": "default",
     "poll": Q_CLUSTER_POLL,
     "guard_cycle": 3,

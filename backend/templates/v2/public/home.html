@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  {% include "public/components/home/hero.html" %}
+
+  {% include "public/components/home/explore.html" %}
+
+  {% if not custom_subdomain %}
+    {% include "account/snippets/cta-ngohub.html" %}
+  {% endif %}
+
+{% endblock %}

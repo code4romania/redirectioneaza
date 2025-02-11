@@ -1,5 +1,6 @@
 import os
 from copy import deepcopy
+from typing import Any, Dict
 
 from .constants import BASE_DIR
 from .environment import env
@@ -20,10 +21,7 @@ MEDIA_URL = f"{public_media_location}/"
 STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR, "static"))
 MEDIA_ROOT = os.path.abspath(os.path.join(BASE_DIR, "media"))
 
-DEV_DEPENDECIES_LOCATION = "bower_components"
-
 STATICFILES_DIRS = [
-    os.path.abspath(os.path.join(DEV_DEPENDECIES_LOCATION)),
     os.path.abspath(os.path.join("static_extras")),
 ]
 
@@ -98,4 +96,37 @@ STORAGES = {
         "LOCATION": static_static_location,
         "OPTIONS": static_storage_options,
     },
+}
+
+
+# Django Vite config
+
+# Where ViteJS assets are built
+django_vite_assets_path = os.path.abspath("dist")  # noqa
+django_vite_sources_dir = os.path.abspath("assets")  # noqa
+
+django_vite_dev_mode = env.bool("DJANGO_VITE_DEV_MODE")
+django_vite_settings: Dict[str, Any] = {
+    "dev_mode": django_vite_dev_mode,
+    "manifest_path": os.path.join(django_vite_assets_path, "manifest.json"),
+}
+
+IS_CONTAINERIZED = env.bool("IS_CONTAINERIZED")
+
+if IS_CONTAINERIZED:
+    # Where ViteJS assets are built
+    STATIC_ROOT = os.path.abspath(os.path.join(os.sep, "var", "www", "redirect", "backend", "static"))
+    MEDIA_ROOT = os.path.abspath(os.path.join(os.sep, "var", "www", "redirect", "backend", "media"))
+
+
+# If we should use HMR or not
+if django_vite_dev_mode:
+    django_vite_settings["dev_server_port"] = env.int("DJANGO_VITE_DEV_SERVER_PORT")
+    django_vite_settings["dev_server_host"] = env.str("DJANGO_VITE_DEV_SERVER_HOST")
+    STATICFILES_DIRS.append(django_vite_sources_dir)
+else:
+    STATICFILES_DIRS.append(django_vite_assets_path)
+
+DJANGO_VITE: Dict[str, Dict] = {
+    "default": django_vite_settings,
 }

@@ -1,0 +1,79 @@
+{% extends "emails/base.html" %}
+
+{% load i18n %}
+
+{% block heading %}
+  {% trans "You're one step closer to redirecting your income tax to the cause you believe in" %}
+{% endblock %}
+
+{% block content %}
+
+  <p>
+    {% blocktrans trimmed %}
+      Thank you for choosing to support {{ ngo_name }}!
+      You can download the completed form by clicking the button below.
+    {% endblocktrans %}
+  </p>
+
+  {% trans "Download form" as action_title %}
+  {% include "emails/components/action.html" with title=action_title url=action_url %}
+
+  <h2>
+    {% trans "The next steps" %}
+  </h2>
+
+  <p>
+    {% blocktranslate trimmed %}
+      To complete the redirection, all you need to do is print the form, sign it,
+      and then choose one of the following options:
+    {% endblocktranslate %}
+  </p>
+  <ul>
+    <li>
+      {% trans "Send it to the beneficiary NGO, which will then take care of submitting it to ANAF." %}
+    </li>
+    <li>
+      {% blocktrans trimmed %}
+        Send it or submit it directly to the tax office (ANAF) in the area where you are domiciled, until
+        <strong>{{ limit_day }} {{ limit_month }} {{ limit_year }}</strong>.
+      {% endblocktrans %}
+    </li>
+  </ul>
+
+  <p>
+    {% blocktrans trimmed %}
+      If you want a simpler option, you can always return to redirectioneaza.ro to complete the form again and sign it online,
+      in which case it will go directly to the organization in digital format.
+    {% endblocktrans %}
+  </p>
+
+  {% blocktrans trimmed asvar panel %}
+    <dl>
+      <div>
+        <dt>Name:</dt>
+        <dd>{{ ngo_name }}</dd>
+      </div>
+
+      <div>
+        <dt>Address:</dt>
+        <dd>{{ ngo_address }}</dd>
+      </div>
+
+      <div>
+        <dt>Email:</dt>
+        <dd><a href="mailto:{{ ngo_email }}">{{ ngo_email }}</a></dd>
+      </div>
+    </dl>
+  {% endblocktrans %}
+
+  {% include "emails/components/panel.html" with content=panel %}
+
+  {% include "emails/components/extra-hand.html" %}
+
+  <p>
+    {% trans "Thank you for your involvement!" %}
+  </p>
+
+  {% include "emails/components/misdelivered.html" %}
+
+{% endblock %}

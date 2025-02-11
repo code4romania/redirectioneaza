@@ -2,15 +2,16 @@ import logging
 import uuid
 
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth import authenticate, get_user_model, login, logout
 from django.db import IntegrityError
 from django.http import Http404, HttpRequest
 from django.shortcuts import redirect, render
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from redirectioneaza.common.messaging import send_email
+from redirectioneaza.common.messaging import extend_email_context, send_email
 
 from ..forms.account import ForgotPasswordForm, LoginForm, RegisterForm, ResetPasswordForm
 from .base import BaseVisibleTemplateView
@@ -25,81 +26,108 @@ def django_login(request, user) -> None:
 
 
 class ForgotPasswordView(BaseVisibleTemplateView):
-    template_name = "resetare-parola.html"
+    template_name = "account/reset-password.html"
     title = _("Reset password")
 
-    def get(self, request, *args, **kwargs):
-        context = self.get_context_data(**kwargs)
-        return render(request, self.template_name, context)
+    def _send_password_reset_email(self, request: HttpRequest, user: UserModel):
+        verification_url = request.build_absolute_uri(
+            reverse(
+                "verification",
+                kwargs={
+                    "verification_type": "p",
+                    "user_id": user.id,
+                    "signup_token": user.refresh_token(),
+                },
+            )
+        )
+
+        template_context = {
+            "first_name": user.first_name,
+            "action_url": verification_url,
+            "contact_email": settings.CONTACT_EMAIL_ADDRESS,
+        }
+        template_context.update(extend_email_context(request))
+
+        send_email(
+            subject=_("Reset redirectioneaza.ro password"),
+            to_emails=[user.email],
+            text_template="emails/account/reset-password/main.txt",
+            html_template="emails/account/reset-password/main.html",
+            context=template_context,
+        )
+
+    def _send_ngohub_notification(self, request: HttpRequest, user: UserModel):
+        template_context = {
+            "first_name": user.first_name,
+            "contact_email": settings.CONTACT_EMAIL_ADDRESS,
+            "ngohub_site": settings.NGOHUB_APP_BASE,
+            "action_url": reverse_lazy("allauth-login"),
+        }
+        template_context.update(extend_email_context(request))
+
+        send_email(
+            subject=_("Your redirectioneaza.ro account"),
+            to_emails=[user.email],
+            text_template="emails/account/ngohub-notification/main.txt",
+            html_template="emails/account/ngohub-notification/main.html",
+            context=template_context,
+        )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["captcha_public_key"] = settings.RECAPTCHA_PUBLIC_KEY
+        return context
 
     def post(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
 
         form = ForgotPasswordForm(request.POST)
         if not form.is_valid():
-            context["errors"] = form.errors
+            context["form"] = form
             return render(request, self.template_name, context)
 
         try:
             user = self.user_model.objects.get(email=form.cleaned_data["email"].lower().strip())
-        except self.user_model.DoesNotExist:
-            user = None
 
-        if user and not user.is_ngohub_user:
-            self._send_password_reset_email(user)
-        elif user.is_ngohub_user:
-            # TODO: send an e-mail to the user
-            #       notify them that they should log in through NGO Hub
+            if not (user.is_ngohub_user or user.ngo and user.ngo.ngohub_org_id):
+                self._send_password_reset_email(request, user)
+            else:
+                self._send_ngohub_notification(request, user)
+        except self.user_model.DoesNotExist:
             pass
 
-        context["found"] = _("If the email address is valid, you will receive an email with instructions.")
+        messages.success(
+            request,
+            _("If the email address is valid, you will receive an email with instructions."),
+        )
 
         return render(request, self.template_name, context)
-
-    def _send_password_reset_email(self, user: UserModel):
-        template_context = {
-            "name": user.first_name,
-            "url": "{}://{}{}".format(
-                self.request.scheme,
-                self.request.get_host(),
-                reverse(
-                    "verification",
-                    kwargs={
-                        "verification_type": "p",
-                        "user_id": user.id,
-                        "signup_token": user.refresh_token(),
-                    },
-                ),
-            ),
-            "contact_email": settings.CONTACT_EMAIL_ADDRESS,
-        }
-        send_email(
-            subject=_("Reset redirectioneaza.ro password"),
-            to_emails=[user.email],
-            text_template="email/reset/reset_password.txt",
-            html_template="email/reset/reset_password.html",
-            context=template_context,
-        )
 
 
 class LoginView(BaseVisibleTemplateView):
     template_name = "account/login.html"
     title = _("Sign In")
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["captcha_public_key"] = settings.RECAPTCHA_PUBLIC_KEY
+        return context
+
     def get(self, request, *args, **kwargs):
         # if the user is logged in, then redirect
         if request.user.is_authenticated:
             if request.user.has_perm("users.can_view_old_dashboard"):
-                return redirect(reverse("admin-index"))
-            return redirect(reverse("contul-meu"))
+                return redirect(reverse("admin:index"))
+            return redirect(reverse("my-organization:dashboard"))
 
         context = self.get_context_data(**kwargs)
 
         context.update(
             {
-                "account_button": _("Go to account"),
-                "section_title": _("Login through NGO Hub"),
-                "form_action": reverse("amazon_cognito_login"),
+                "ngohub_site": settings.NGOHUB_HOME_BASE,
+                "account_button": _("Continue with NGO Hub"),
+                "section_title": _("I have an NGO Hub account"),
+                "form_action": reverse("allauth-login"),
             }
         )
 
@@ -119,33 +147,20 @@ class LoginView(BaseVisibleTemplateView):
         password = form.cleaned_data["password"]
 
         user = authenticate(email=email, password=password)
-        if user is not None:
-            django_login(request, user)
-            if user.has_perm("users.can_view_old_dashboard"):
-                return redirect(reverse("admin-index"))
+        if user is None:
+            logger.warning("Invalid email or password: {0}".format(email))
 
-            return redirect(reverse("contul-meu"))
-        else:
-            # Check the old password authentication and migrate it to the new method
-            user_model = get_user_model()
-            try:
-                user = user_model.objects.get(email=email)
-            except user_model.DoesNotExist:
-                user = None
+            context["email"] = email
+            context["errors"] = _("It seems that this email and password combination is incorrect.")
 
-            if user and user.check_old_password(password):
-                user.set_password(password)
-                user.save()
-                django_login(request, user)
-                if user.has_perm("users.can_view_old_dashboard"):
-                    return redirect(reverse("admin-index"))
-                return redirect(reverse("contul-meu"))
+            return render(request, self.template_name, context)
 
-        logger.warning("Invalid email or password: {0}".format(email))
-        context["email"] = email
-        context["errors"] = _("It seems that this email and password combination is incorrect.")
+        # TODO: check if the account is verified before authenticating
+        django_login(request, user)
+        if user.has_perm("users.can_view_old_dashboard"):
+            return redirect(reverse("admin:index"))
 
-        return render(request, self.template_name, context)
+        return redirect(reverse("my-organization:dashboard"))
 
 
 class LogoutView(BaseVisibleTemplateView):
@@ -157,7 +172,7 @@ class LogoutView(BaseVisibleTemplateView):
 
 
 class SetPasswordView(BaseVisibleTemplateView):
-    template_name = "parola-noua.html"
+    template_name = "account/set-password.html"
     title = _("Set New Password")
 
     def post(self, request, *args, **kwargs):
@@ -170,9 +185,17 @@ class SetPasswordView(BaseVisibleTemplateView):
 
         user = request.user
 
-        if not user:
-            logger.warning("Invalid user")
-            return redirect(reverse("login"))
+        if not user or user.is_anonymous:
+
+            if not form.cleaned_data.get("token"):
+                logger.warning("Invalid user")
+                return redirect(reverse("login"))
+
+            try:
+                user = self.user_model.objects.get(validation_token=form.cleaned_data["token"])
+            except self.user_model.DoesNotExist:
+                logger.warning("Invalid user")
+                return redirect(reverse("login"))
 
         user.set_password(form.cleaned_data["password"])
         user.clear_token(commit=False)
@@ -180,21 +203,27 @@ class SetPasswordView(BaseVisibleTemplateView):
 
         django_login(request, user)
 
-        return redirect(reverse("contul-meu"))
+        return redirect(reverse("my-organization:dashboard"))
 
 
 class SignupView(BaseVisibleTemplateView):
     template_name = "account/register.html"
     title = _("New account")
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["captcha_public_key"] = settings.RECAPTCHA_PUBLIC_KEY
+        return context
+
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect(reverse("contul-meu"))
+            return redirect(reverse("my-organization:dashboard"))
 
         context = self.get_context_data(**kwargs)
 
         context.update(
             {
+                "ngohub_site": settings.NGOHUB_HOME_BASE,
                 "account_button": _("Register new account"),
                 "account_button_is_external": True,
                 "section_title": _("Register through NGO Hub"),
@@ -240,38 +269,43 @@ class SignupView(BaseVisibleTemplateView):
             context.update({"nume": first_name, "prenume": last_name, "email": email})
             return render(request, self.template_name, context)
 
-        token = user.refresh_token()
-        verification_url = "https://{}{}".format(
-            self.request.get_host(),
+        verification_url = request.build_absolute_uri(
             reverse(
                 "verification",
                 kwargs={
                     "verification_type": "v",
                     "user_id": user.id,
-                    "signup_token": token,
+                    "signup_token": user.refresh_token(),
                 },
-            ),
+            )
         )
 
         template_values = {
-            "name": user.last_name,
-            "url": verification_url,
-            "host": self.request.get_host(),
+            "first_name": user.first_name,
+            "action_url": verification_url,
         }
+        template_values.update(extend_email_context(request))
 
         send_email(
             subject=_("Welcome to redirectioneaza.ro"),
             to_emails=[user.email],
-            text_template="email/signup/signup_text.txt",
-            html_template="email/signup/signup_inline.html",
+            text_template="emails/account/activate-account/main.txt",
+            html_template="emails/account/activate-account/main.html",
             context=template_values,
         )
 
-        # login the user after signup
-        django_login(request, user)
+        # redirect to registration confirmation page
+        return redirect(reverse("signup-confirmation"))
 
-        # redirect to my account
-        return redirect(reverse("contul-meu"))
+
+class SignupConfirmationView(BaseVisibleTemplateView):
+    template_name = "account/signup-confirmation.html"
+    title = _("Account created")
+
+
+class SignupVerificationView(BaseVisibleTemplateView):
+    template_name = "account/signup-verification.html"
+    title = _("Account verified")
 
 
 class VerificationView(BaseVisibleTemplateView):
@@ -281,7 +315,7 @@ class VerificationView(BaseVisibleTemplateView):
         p - reset user password
     """
 
-    template_name = "parola-noua.html"
+    template_name = "account/set-password.html"
     title = _("Verification")
 
     def get(self, request, *args, **kwargs):
@@ -302,17 +336,12 @@ class VerificationView(BaseVisibleTemplateView):
         if not user or not user.verify_token(signup_token):
             logger.info('Could not find any user with id "%s" signup token "%s"', user_id, signup_token)
             raise Http404
-        else:
-            # user.clear_token()
-            pass
-
-        django_login(request, user)
 
         if verification_type == "v":
             user.is_verified = True
             user.clear_token(commit=False)
             user.save()
-            return redirect(reverse("contul-meu"))
+            return redirect(reverse("signup-verification"))
 
         if verification_type == "p":
             # supply user to the page

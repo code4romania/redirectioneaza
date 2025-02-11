@@ -1,0 +1,56 @@
+{% load i18n static %}
+
+<tr>
+  <td>
+    <table class="footer" width="570" cellpadding="0" cellspacing="0" role="presentation">
+      <tr>
+        <td class="content-cell">
+          <a
+            href="https://www.code4.ro/"
+            target="_blank"
+            style="margin:0;display:inline-block;">
+            <img
+              src="{{ logo_code4romania }}"
+              alt="Redirecționează logo"
+              style="margin:0;display:block;height:32px;width:auto;">
+          </a>
+
+          <p>
+            {% trans "If you have any questions, please contact us at" %}
+            <a
+              href="mailto:{{ contact_email }}">
+              {{ contact_email }}
+            </a>
+          </p>
+
+
+          <div class="icons">
+            <a
+              href="https://www.facebook.com/code4romania"
+              target="_blank">
+              <img src="{{ logo_facebook }}" alt="Logo Facebook">
+            </a>
+
+            <a
+              href="https://instagram.com/code4romania"
+              target="_blank">
+              <img src="{{ logo_instagram }}" alt="Logo Instagram">
+            </a>
+
+            <a
+              href="https://github.com/code4romania/redirectioneaza"
+              target="_blank">
+              <img src="{{ logo_github }}" alt="Logo GitHub">
+            </a>
+          </div>
+
+          <p>
+            &copy; {% now "Y" %}
+            Code for Romania.
+            {% trans "Independent Non-profit organization, politically unaffiliated, and apolitical." %}
+          </p>
+        </td>
+      </tr>
+    </table>
+  </td>
+</tr>

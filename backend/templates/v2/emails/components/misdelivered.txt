@@ -1,0 +1,7 @@
+{% load i18n %}
+
+{% blocktranslate trimmed %}
+  Did you receive this email by mistake?
+  Please let us know at
+  {{ contact_email }}.
+{% endblocktranslate %}

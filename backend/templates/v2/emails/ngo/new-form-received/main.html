@@ -1,0 +1,22 @@
+{% extends "emails/base.html" %}
+
+{% load i18n %}
+
+{% block heading %}
+  {% trans "Good news! You have a new redirection form" %}
+{% endblock %}
+
+{% block content %}
+
+  <p>
+    {% blocktrans trimmed %}
+      A new superhero has decided to support your organization by redirecting income tax.
+      You can access the completed form by clicking the button below.
+      Remember to submit it to ANAF to complete the process!
+    {% endblocktrans %}
+  </p>
+
+  {% trans "Download form" as action_title %}
+  {% include "emails/components/action.html" with title=action_title url=action_url %}
+
+{% endblock %}

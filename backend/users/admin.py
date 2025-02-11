@@ -6,7 +6,8 @@ from django.utils.translation import gettext_lazy as _
 from unfold.admin import ModelAdmin
 
 from redirectioneaza.common.admin import HasNgoFilter
-from .models import User, GroupProxy
+
+from .models import GroupProxy, User
 
 # Remove the default admins for User and Group
 try:
@@ -69,7 +70,7 @@ class UserAdmin(ModelAdmin):
         ),
     )
 
-    readonly_fields = ("password", "old_password", "date_joined", "last_login", "token_timestamp")
+    readonly_fields = ("password", "date_joined", "last_login", "token_timestamp")
 
 
 @admin.register(GroupProxy)

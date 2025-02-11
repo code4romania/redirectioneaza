@@ -1,0 +1,26 @@
+{% extends 'components/input/base.html' %}
+
+{% block input %}
+
+  <input
+    id="{{ input_id }}"
+    name="{{ input_name }}"
+    type="{{ input_type }}"
+    class="flex h-9 w-full rounded-md border border-gray-300 bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-gray-400 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm aria-[invalid]:border-red-500 aria-[invalid]:hover:border-red-500 disabled:bg-zinc-950/5 disabled:text-zinc-950/50"
+    {# The following attributes are added to the input element #}
+    {% if input_autofocus %}autofocus{% endif %}
+    {% if pattern %}pattern="{{ pattern }}"{% endif %}
+    {% if min_length %}minlength="{{ min_length }}"{% endif %}
+    {% if max_length %}maxlength="{{ max_length }}"{% endif %}
+    {% if input_autocomplete %}autocomplete="{{ input_autocomplete }}"{% endif %}
+    {% if is_required %}required{% endif %}
+    {% if field or value %}value="{% if field and field.value %}{{ field.value }}{% elif value %}{{ value }}{% endif %}"{% endif %}
+    {% if placeholder %}placeholder="{{ placeholder }}"{% endif %}
+    {% if is_disabled %}disabled{% endif %}
+    {% if value %}input-original-value="{{ value }}"{% endif %}
+    {% if data_pristine_equals %}data-pristine-equals="{{ data_pristine_equals }}"{% endif %}
+  />
+
+  {% if field and field.errors %}
+    <div class="pristine-error mt-2 text-sm text-red-600" style="" id="error-{{ input_id }}" role="alert">{{ field.errors }}</div>{% endif %}
+{% endblock %}

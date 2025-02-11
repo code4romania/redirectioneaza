@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block content %}
+
+  <div class="container">
+    <article>
+      <div class="prose prose-lg max-w-none prose-headings:text-cyan-700 prose-cyan">
+        <h1>
+          {% trans "Frequently Asked Questions" %}
+        </h1>
+      </div>
+
+      {% for section in questions %}
+        <div>
+          <h2
+            id="#{{ section.title | slugify }}"
+            class="pt-10 font-semibold tracking-tight text-gray-900 sm:text-3xl">
+
+            <a href="#{{ section.title | slugify }}" class="group">
+              {{ section.title }}
+            </a>
+          </h2>
+
+          <dl class="grid mt-8">
+            {% for question in section.questions %}
+              {% include "public/components/faq-question.html" with question=question.title answer=question.answer %}
+            {% endfor %}
+          </dl>
+
+        </div>
+      {% endfor %}
+
+      <div class="pt-20 pb-10 prose-sm prose prose-headings:text-cyan-700 prose-cyan">
+        <h2>
+          {% trans "Couldn't find what you were looking for?" %}
+        </h2>
+
+        <p class="prose-a:text-cyan-700">
+          {% blocktrans trimmed %}
+            Send us your question at
+            <a href="mailto:{{ contact_email }}">{{ contact_email }}</a>
+            and we will get back to you as soon as possible.
+          {% endblocktrans %}
+        </p>
+      </div>
+    </article>
+  </div>
+{% endblock %}

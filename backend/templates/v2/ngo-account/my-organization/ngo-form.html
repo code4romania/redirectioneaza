@@ -1,0 +1,43 @@
+{% extends "ngo-account/my-organization/base.html" %}
+
+{% load i18n %}
+
+{% block content %}
+  {% include "ngo-account/components/ngo-switch-tab-script.html" with form_id="ngo-form-data-form" %}
+
+  <div x-data="ngoForm()" x-init="init()">
+    <form
+      id="ngo-form-data-form"
+      method="post"
+      enctype="multipart/form-data"
+      action="{% url 'my-organization:forms' %}">
+
+      {% csrf_token %}
+
+      {% trans "Form Data" as title %}
+      {% include "ngo-account/components/form-title.html" with hide_ngohub_button=True %}
+
+      <fieldset>
+        <div class="flex flex-col gap-8 py-4">
+
+          {% trans "Organization URL" as input_title %}
+          {% include "components/input/input.html" with input_id="slug" input_type="text" input_name="slug" is_required=True value=ngo.slug field=ngo_form.slug max_length=150 placeholder="numele-organizatiei" %}
+
+          <hr class="w-full border-gray-200">
+
+          {% trans "Form title" as input_title %}
+          {% include "components/input/input.html" with input_id="form_title" input_type="text" input_name="form_title" placeholder="Organization name" is_required=True is_disabled=True value=ngo.name %}
+
+          {% trans "Form description" as input_title %}
+          {% include "components/input/textarea.html" with input_id="description" input_type="textarea" input_name="description" is_required=True value=ngo.description field=ngo_form.description %}
+
+          {% trans "IBAN on form" as input_title %}
+          {% include "components/input/input.html" with input_id="iban" input_type="text" input_name="iban" placeholder="RO00 1234 5678 1234 5678" is_required=True value=ngo.bank_account field=ngo_form.iban max_length=48 %}
+
+        </div>
+      </fieldset>
+
+    </form>
+  </div>
+
+{% endblock %}

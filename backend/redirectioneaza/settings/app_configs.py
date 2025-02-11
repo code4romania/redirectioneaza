@@ -7,6 +7,7 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from localflavor.ro.ro_counties import COUNTIES_CHOICES
 
+from .base import DEBUG
 from .environment import env
 
 # Global parameters
@@ -120,6 +121,9 @@ try:
 except IndexError:
     pass
 
+EXTENDED_FORM_COUNTIES = [1, 2, 3, 4, 5, 6] + FORM_COUNTIES
+FORM_COUNTIES_CHOICES = [(county, county) for county in EXTENDED_FORM_COUNTIES]
+
 FORM_COUNTIES_NATIONAL = deepcopy(FORM_COUNTIES)
 FORM_COUNTIES_NATIONAL.insert(0, "Național")
 
@@ -129,3 +133,9 @@ ENCRYPT_KEY = env.str("ENCRYPT_KEY", "%INVALID%")
 if len(ENCRYPT_KEY) != 32 or ENCRYPT_KEY == "%INVALID%":
     raise Exception("ENCRYPT_KEY must be exactly 32 characters long")
 FERNET_OBJECT = Fernet(urlsafe_b64encode(ENCRYPT_KEY.encode("utf-8")))
+
+FORCE_PARTNER = False
+if DEBUG:
+    FORCE_PARTNER = env.bool("FORCE_PARTNER", False)
+
+SEARCH_QUERY_MIN_LENGTH = env.int("SEARCH_QUERY_MIN_LENGTH", 3)

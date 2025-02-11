@@ -1,13 +1,8 @@
-{% extends "account/base.html" %}
+{% extends "base.html" %}
 {% load i18n allauth account %}
-
-{% block head_title %}
-  {{ title }}
-{% endblock head_title %}
 
 {% block content %}
   <div class="container">
-
     {% if errors %}
       <div class="row">
         <div class="col-xs-12 col-md-6 col-md-offset-3">
@@ -16,46 +11,34 @@
       </div>
     {% endif %}
 
+    <div class="grid gap-16 lg:grid-cols-2 xl:gap-32 2xl:gap-64">
+      {% if SOCIALACCONUNT_ONLY %}
+        <div class="md:col-span-2">
+          {% include "account/snippets/third-party.html" with page_type="login" %}
+        </div>
+      {% elif SOCIALACCOUNT_ENABLED %}
+        <div>
+          {% include "account/snippets/third-party.html" with page_type="login" %}
+        </div>
 
-    <div id="homepage-first-paragraph" class="row text-center">
-      {% element h1 %}
-        {{ title }}
-      {% endelement %}
+        <div>
+          {% include "account/snippets/login-form.html" %}
+        </div>
+      {% else %}
+        <div class="md:col-span-2">
+          {% include "account/snippets/login-form.html" %}
+        </div>
+      {% endif %}
     </div>
 
-    <div id="login-container" class="row">
-      <div class="col-sm-12" id="login">
-
-        {% if SOCIALACCONUNT_ONLY %}
-
-          <div class="col-sm-12">
-            {% include "account/snippets/third-party.html" with page_type="login" %}
-          </div>
-
-        {% elif SOCIALACCOUNT_ENABLED %}
-
-          <div class="col-sm-6">
-            {% include "account/snippets/third-party.html" with page_type="login" %}
-          </div>
-
-          <div class="col-sm-6">
-            {% include "account/snippets/classic-login.html" %}
-          </div>
-
-        {% else %}
-
-          <div class="col-sm-12">
-            {% include "account/snippets/classic-login.html" %}
-          </div>
-
-        {% endif %}
-
-        <div class="g-recaptcha" data-sitekey="{{ captcha_public_key }}" data-size="invisible" data-callback="onSubmit"></div>
-
-      </div>
-
-    </div>
-
+    <div
+      class="g-recaptcha"
+      data-sitekey="{{ captcha_public_key }}"
+      data-size="invisible"
+      data-callback="onSubmit"></div>
   </div>
+
+
+  {% include "account/snippets/cta-ngohub.html" %}
 
 {% endblock content %}

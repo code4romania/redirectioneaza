@@ -9,7 +9,7 @@ from localflavor.ro.ro_counties import COUNTIES_CHOICES
 
 from donations.models.donors import Donor
 from donations.models.ngos import Ngo
-from donations.pdf import create_pdf
+from donations.pdf import create_full_pdf
 
 fake = Faker("ro_RO")
 
@@ -78,38 +78,7 @@ class Command(BaseCommand):
             donor.set_cnp(cnp)
             donor.set_address_helper(**address)
 
-            address_dict = {
-                "street": str(address["street_name"]),
-                "number": str(address["street_number"]),
-                "bl": str(address["street_bl"]),
-                "sc": str(address["street_sc"]),
-                "et": str(address["street_et"]),
-                "ap": str(address["street_ap"]),
-            }
-            donor_dict = {
-                "last_name": donor.l_name,
-                "first_name": donor.f_name,
-                "father": donor.initial,
-                "email": donor.email,
-                "tel": donor.phone,
-                "city": donor.city,
-                "county": donor.county,
-                "cnp": cnp,
-                "income_type": donor.income_type,
-                "has_signed": donor.has_signed,
-                "two_years": donor.two_years,
-            }
-            donor_dict.update(address_dict)
-
-            ngo_dict = {
-                "name": ngo.name,
-                "cif": ngo.registration_number,
-                "account": ngo.bank_account.upper(),
-                "years_checkmark": False,
-                "is_social_service_viable": ngo.is_social_service_viable,
-            }
-
-            donor.pdf_file = File(create_pdf(donor_dict, ngo_dict))
+            donor.pdf_file = File(create_full_pdf(donor))
 
             generated_donations.append(donor)
 

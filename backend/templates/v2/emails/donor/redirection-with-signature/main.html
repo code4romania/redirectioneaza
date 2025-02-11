@@ -1,0 +1,31 @@
+{% extends "emails/base.html" %}
+
+{% load i18n %}
+
+{% block heading %}
+  {% trans "Good news! You have just redirected a part of your income tax!" %}
+{% endblock %}
+
+{% block content %}
+
+  <p>
+    {% blocktrans trimmed %}
+      Thank you for choosing to support {{ ngo_name }}!
+      Your form has reached the organization,
+      so you don't have to worry about anything else.
+      You can see the form you have filled in by clicking the button below.
+    {% endblocktrans %}
+  </p>
+
+  {% trans "Download form" as action_title %}
+  {% include "emails/components/action.html" with title=action_title url=action_url %}
+
+  {% include "emails/components/extra-hand.html" %}
+
+  <p>
+    {% trans "Thank you for your involvement!" %}
+  </p>
+
+  {% include "emails/components/misdelivered.html" %}
+
+{% endblock %}

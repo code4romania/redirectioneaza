@@ -1,0 +1,257 @@
+{% load i18n %}
+
+<div x-data="twoPercentForm" class="max-w-3xl">
+  <h2 class="mb-5 text-2xl font-bold tracking-tight text-gray-900">
+    {% trans "Redirect easily and quickly" %}
+  </h2>
+
+  {% blocktranslate trimmed asvar banner_message %}
+    Since 2022, form 230 can be submitted online.
+    Fill in the form with the data from your ID,
+    sign it online, and it will be automatically sent to the organization.
+
+    Alternatively, your form will be generated, and you will be able to download the PDF,
+    but it will not reach the NGO.
+
+    We rely on you to print, sign the form by hand,
+    and send it to the NGO by mail or email,
+    or submit it directly to ANAF.
+  {% endblocktranslate %}
+  {% include "components/info-banner.html" with style="info" banner_message=banner_message %}
+
+  <form
+    id="two-percent-form"
+    class="flex flex-col w-full gap-8 py-10"
+    action="{% url 'twopercent' ngo_url=ngo.slug %}"
+    role="form"
+    method="post">
+
+    {% csrf_token %}
+
+    <fieldset class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-5">
+
+      <legend class="sr-only">
+        {% trans "Personal data" %}
+      </legend>
+
+      <div class="sm:col-span-2 sm:col-start-1">
+        {% trans "Last name" as input_title %}
+        {% include "components/input/input.html" with input_id="l_name" input_name="l_name" field=redirection_form.l_name input_type="text" max_length=100 is_required=True input_autocomplete="family-name" %}
+      </div>
+
+      <div class="sm:col-span-2">
+        {% trans "First name" as input_title %}
+        {% include "components/input/input.html" with input_id="f_name" input_name="f_name" field=redirection_form.f_name input_type="text" max_length=100 is_required=True input_autocomplete="given-name" %}
+      </div>
+
+      <div class="sm:col-span-1">
+        {% trans "Father's initial" as input_title %}
+        {% include "components/input/input.html" with input_id="initial" input_name="initial" field=redirection_form.initial input_type="text" max_length=1 is_required=True %}
+      </div>
+
+      <div class="sm:col-span-4 sm:col-start-1">
+        {% trans "Personal identification number" as input_title %}
+        {% include "components/input/input.html" with input_id="cnp" input_name="cnp" field=redirection_form.cnp input_type="text" pattern="/\d{13}/i" min_length=13 max_length=13 is_required=True %}
+      </div>
+
+      <div class="sm:col-span-2 sm:col-start-1">
+        {% trans "Email" as input_title %}
+        {% include "components/input/input.html" with input_id="email_address" input_name="email_address" field=redirection_form.email_address input_type="email" max_length=254 is_required=True input_autocomplete="email" %}
+      </div>
+
+      <div class="sm:col-span-2">
+        {% trans "Phone number" as input_title %}
+        {% include "components/input/input.html" with input_id="phone_number" input_name="phone_number" field=redirection_form.phone_number input_type="tel" max_length=20 is_required=False input_autocomplete="tel-national" %}
+      </div>
+
+    </fieldset>
+
+    <hr class="border-t border-gray-200">
+
+    <fieldset class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-4">
+
+      <legend class="my-5 font-semibold text-gray-900 col-span-full text-base/7">
+        {% trans "Home address" %}
+      </legend>
+
+      <div class="sm:col-span-3 sm:col-start-1">
+        {% trans "Street name" as input_title %}
+        {% include "components/input/input.html" with input_id="street_name" input_name="street_name" field=redirection_form.street_name input_type="text" max_length=100 is_required=True input_autocomplete="address-line1" %}
+      </div>
+
+      <div class="sm:col-span-1">
+        {% trans "Number" as input_title %}
+        {% include "components/input/input.html" with input_id="street_number" input_name="street_number" field=redirection_form.street_number input_type="text" max_length=10 is_required=True input_autocomplete="address-line1" %}
+      </div>
+
+      <div class="sm:col-span-1 sm:col-start-1">
+        {% trans "Flat" as input_title %}
+        {% include "components/input/input.html" with input_id="flat" input_name="flat" field=redirection_form.flat input_type="text" max_length=10 is_required=False input_autocomplete="address-line2" %}
+      </div>
+
+      <div class="sm:col-span-1">
+        {% trans "Entrance" as input_title %}
+        {% include "components/input/input.html" with input_id="entrance" input_name="entrance" field=redirection_form.entrance input_type="text" max_length=10 is_required=False input_autocomplete="address-line3" %}
+      </div>
+
+      <div class="sm:col-span-1">
+        {% trans "Floor" as input_title %}
+        {% include "components/input/input.html" with input_id="floor" input_name="floor" field=redirection_form.floor input_type="text" max_length=10 is_required=False input_autocomplete="address-line4" %}
+      </div>
+
+      <div class="sm:col-span-1">
+        {% trans "Apartment" as input_title %}
+        {% include "components/input/input.html" with input_id="apartment" input_name="apartment" field=redirection_form.apartment input_type="text" max_length=10 is_required=False input_autocomplete="address-line5" %}
+      </div>
+
+      <div class="sm:col-span-2 sm:col-start-1">
+        {% trans "County" as input_title %}
+        {% include "components/input/county.html" with input_id="county" input_name="county" field=redirection_form.county is_required=True input_autocomplete="address-level1" %}
+      </div>
+
+      <div class="sm:col-span-2">
+        {% trans "Locality" as input_title %}
+
+        {% include "components/input/input.html" with input_id="locality" input_name="locality" field=redirection_form.locality input_type="text" max_length=10 is_required=True input_autocomplete="address-level2" %}
+      </div>
+
+    </fieldset>
+
+    {% if ngo.is_accepting_forms %}
+
+      <hr class="border-t border-gray-200">
+
+      <fieldset class="grid grid-cols-1 gap-x-6 gap-y-8">
+
+        <legend class="my-5 font-semibold text-gray-900 sr-only text-base/7">
+          {% trans "Handwritten signature" %}
+        </legend>
+
+        {% include "form/signature.html" %}
+      </fieldset>
+
+    {% endif %}
+
+    <fieldset class="grid grid-cols-1 gap-x-6">
+
+      <legend class="hidden my-5 font-semibold text-gray-900 text-base/7">
+        {% trans "Data sharing information" %}
+      </legend>
+
+      {% trans "I want my redirection to be valid for two years" as input_title %}
+      <div class="flex gap-3">
+        {% include "components/input/checkbox.html" with input_id="two_years" input_name="two_years" field=redirection_form.two_years %}
+      </div>
+
+      {% blocktrans trimmed asvar input_title %}
+        I agree that ANAF may communicate to the beneficiary entity
+        my identification data
+        (name, surname, and personal identification code/tax identification number),
+        as well as the amount directed.
+      {% endblocktrans %}
+
+      <div class="flex gap-3 mt-4">
+        {% include "components/input/checkbox.html" with input_id="anaf_gdpr" input_name="anaf_gdpr" field=redirection_form.anaf_gdpr %}
+      </div>
+
+      <hr class="flex gap-3 mt-4 border-t border-gray-200">
+
+      {% trans "I agree that this NGO may contact me in the future with details about the projects implemented" as input_title %}
+      <div class="flex gap-3 mt-4">
+        {% include "components/input/checkbox.html" with input_id="agree_contact" input_name="agree_contact" is_required=False field=redirection_form.agree_contact %}
+      </div>
+
+      {% with href_class='underline text-cyan-700' %}
+        {% url 'terms' as terms_url %}
+        {% url 'policy' as policy_url %}
+
+        {% blocktranslate asvar input_title trimmed %}
+          I agree with
+          <a class="{{ href_class }}" href="{{ terms_url }}">
+            the Terms of the application
+          </a>.
+          <a class="{{ href_class }}" href="{{ policy_url }}">
+            the Privacy Policy
+          </a>.
+        {% endblocktranslate %}
+
+        <div class="flex gap-3 mt-4">
+          {% include "components/input/checkbox.html" with input_id="agree_terms" input_name="agree_terms" is_required=True field=redirection_form.agree_terms %}
+        </div>
+      {% endwith %}
+
+    </fieldset>
+
+    <fieldset>
+      <legend class="sr-only">
+        {% trans "Captcha" %}
+      </legend>
+
+      <div id=g-recaptcha" class="g-recaptcha" data-sitekey="{{ captcha_public_key }}" data-callback="onSubmit"></div>
+    </fieldset>
+
+    <div
+      x-data="{confirmationModalIsOpen: false}"
+      class="flex flex-col gap-4 text-center sm:items-center sm:flex-row">
+      <div
+        x-cloak
+        x-show="confirmationModalIsOpen"
+        x-transition.opacity.duration.100ms
+        x-trap.noscroll="confirmationModalIsOpen"
+        @keydown.esc.window="confirmationModalIsOpen = false"
+        @click.self="confirmationModalIsOpen = false"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="{% trans "Confirm sending without signature modal" %}"
+        class="fixed inset-0 z-30 flex items-end justify-center p-4 pb-8 bg-black/20 backdrop-blur-md sm:items-center lg:p-8">
+        <div
+          x-show="confirmationModalIsOpen"
+          x-transition:enter="transition ease-out duration-200 delay-100 motion-reduce:transition-opacity"
+          x-transition:enter-start="opacity-0 scale-50"
+          x-transition:enter-end="opacity-100 scale-100"
+          class="flex flex-col max-w-lg gap-4 overflow-hidden bg-white border rounded-md border-neutral-300 text-neutral-600 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-300">
+          {% include "form/confirmation.html" %}
+        </div>
+      </div>
+
+      {% if ngo.is_accepting_forms %}
+
+        <button
+          id="submit-with-signature"
+          type="button"
+          @click="sendSignedForm()"
+          class="px-4 py-2 text-sm text-center text-gray-900 rounded-full shadow-sm outline outline-amber-300 bg-amber-300 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
+          {% trans "Send signed form" %}
+        </button>
+
+
+        <button
+          id="show-confirmation-modal"
+          @click="sendUnsignedForm()"
+          type="button"
+          class="px-4 py-2 text-sm text-center text-gray-900 bg-white rounded-full shadow-sm outline outline-amber-300 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
+          {% trans "Continue without signing" %}
+        </button>
+
+      {% else %}
+
+        <button
+          id="submit-ngo-without-signature"
+          @click="sendFormWithoutSignatureField()"
+          type="button"
+          class="px-4 py-2 text-sm text-center text-gray-900 rounded-full shadow-sm h-9 outline outline-amber-300 bg-amber-300 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
+          {% trans "Send the form" %}
+        </button>
+
+      {% endif %}
+
+    </div>
+
+    {% comment %}
+      TODO: add non-field errors to the form:
+      {{ redirection_form.non_field_errors }}
+    {% endcomment %}
+
+  </form>
+
+</div>

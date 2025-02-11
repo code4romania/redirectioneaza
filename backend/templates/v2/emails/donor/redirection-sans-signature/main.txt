@@ -1,0 +1,32 @@
+{% load i18n %}
+
+{% trans "You're one step closer to redirecting your income tax to the cause you believe in" %}
+
+{% blocktrans trimmed %}
+  Thank you for choosing to support {{ ngo_name }}!
+  You can download the completed form by clicking the button below.
+{% endblocktrans %}
+
+{{ action_url }}
+
+
+{% trans "The next steps" %}
+
+{% blocktranslate trimmed %}
+  To complete the redirection, all you need to do is print the form, sign it,
+  and then choose one of the following options:
+{% endblocktranslate %}
+
+- {% trans "Send it to the beneficiary NGO, which will then take care of submitting it to ANAF." %}
+- {% trans "Send it or submit it directly to the tax office (ANAF) in the area where you are domiciled, until {{ limit.day }} {{ month_limit }} {{ limit.year }}." %}
+
+
+{% trans "The organization's contact info" %}
+
+- {% trans "Name" %}: {{ ngo_name }}
+- {% trans "Address" %}: {{ ngo_address }}
+- {% trans "Email" %}: {{ ngo_email }}
+
+{% include "emails/components/extra-hand.txt" %}
+
+{% trans "Thank you for your involvement!" %}

@@ -1,0 +1,29 @@
+{% extends "admin/base_site.html" %}
+
+{% load i18n unfold %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block extrahead %}
+  {{ block.super }}
+  <script src="{% url 'admin:jsi18n' %}"></script>
+  {{ form.media }}
+{% endblock %}
+
+{% block content %}
+  <form action="" method="post" novalidate>
+    <div class="aligned border border-base-200 mb-8 rounded pt-3 px-3 shadow-sm dark:border-base-800">
+      {% csrf_token %}
+
+      {% for field in form %}
+        {% include "unfold/helpers/field.html" with field=field %}
+      {% endfor %}
+    </div>
+
+    <div class="flex justify-end">
+      {% component "unfold/components/button.html" with submit=1 %}
+        {% trans "Send the form" %}
+      {% endcomponent %}
+    </div>
+  </form>
+{% endblock %}

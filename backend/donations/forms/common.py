@@ -13,11 +13,13 @@ class ReCaptchaMixin:
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+        self.recaptcha_widget = ReCaptchaV2Invisible
         self.init_captcha()
 
     def init_captcha(self):
         if settings.RECAPTCHA_ENABLED:
-            self.fields["g-recaptcha-response"] = ReCaptchaField(widget=ReCaptchaV2Invisible)
+            self.fields["g-recaptcha-response"] = ReCaptchaField(widget=self.recaptcha_widget)
 
 
 class TwoPasswordMixin:

@@ -1,0 +1,13 @@
+{% load i18n %}
+
+{% trans "Hello," %}
+
+{% blocktrans trimmed %}
+  We have received your request and have created an archive with all the information you need.
+{% endblocktrans %}
+
+{{ action_url }}
+
+{% blocktrans trimmed %}
+  Thank you for being part of this community!
+{% endblocktrans %}

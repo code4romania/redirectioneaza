@@ -58,6 +58,16 @@ if is_enabled "${RUN_SEED_GROUPS:-False}"; then
     python3 manage.py seed_groups
 fi
 
+# Start the task queue heartbeat scheduler
+echo "Starting the task queue heartbeat scheduler"
+python3 manage.py schedule_qheartbeat
+
+echo "######    Cron job to check if the task queue is stuck"
+(
+    crontab -l
+    echo "*/30 * * * * /opt/venv/bin/python3 /var/www/redirectioneaza/backend/manage.py qheartbeat --check-minutes 25"
+) | crontab -
+
 # Start the session clean-up schedule
-echo "Starting the session clean-up schedule that runs around 5:30 AM every day"
+echo "Starting the session clean-up schedule that runs once a day"
 python3 manage.py schedule_session_cleanup

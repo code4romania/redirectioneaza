@@ -6,9 +6,14 @@ env = environ.Env(
     # set casting, default value
     # Django settings
     DEBUG=(bool, False),
+    DJANGO_VITE_DEV_MODE=(bool, False),
+    DJANGO_VITE_DEV_SERVER_PORT=(int, 3000),
+    DJANGO_VITE_DEV_SERVER_HOST=(str, "localhost"),
     ENVIRONMENT=(str, "production"),
     DATA_UPLOAD_MAX_NUMBER_FIELDS=(int, 1000),
     OLD_SESSION_KEY=(str, ""),
+    ALLOW_OLD_PASSWORDS=(bool, True),
+    SESSION_COOKIE_SECURE=(bool, True),
     LOG_LEVEL=(str, "WARNING"),
     ENABLE_CACHE=(bool, True),
     ENABLE_FORMS_DOWNLOAD=(bool, True),
@@ -16,11 +21,11 @@ env = environ.Env(
     TIMEDELTA_DONATIONS_LIMIT_DOWNLOAD_DAYS=(int, 31),
     IS_CONTAINERIZED=(bool, False),
     RECAPTCHA_ENABLED=(bool, True),
+    FORCE_PARTNER=(bool, False),
     # proxy headers
     USE_PROXY_FORWARDED_HOST=(bool, False),
     PROXY_SSL_HEADER=(str, "HTTP_CLOUDFRONT_FORWARDED_PROTO"),
     # db settings
-    DATABASE_ENGINE=(str, "sqlite3"),
     DATABASE_NAME=(str, "default"),
     DATABASE_USER=(str, "root"),
     DATABASE_PASSWORD=(str, ""),
@@ -113,7 +118,10 @@ env = environ.Env(
     # Google Analytics:
     GOOGLE_ANALYTICS_ID=(str, ""),
     # App settings
-    ENABLE_FULL_CUI_VALIDATION=(bool, True),
+    ENABLE_FULL_VALIDATION_CUI=(bool, True),
+    ENABLE_FULL_VALIDATION_IBAN=(bool, True),
+    ENABLE_FULL_VALIDATION_PHONE=(bool, True),
+    ENABLE_FULL_VALIDATION_CNP=(bool, True),
 )
 
 environ.Env.read_env(ENV_FILE_PATH)
