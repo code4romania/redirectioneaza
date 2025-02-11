@@ -157,8 +157,11 @@ class LoginView(BaseVisibleTemplateView):
 
         # TODO: check if the account is verified before authenticating
         django_login(request, user)
-        if user.has_perm("users.can_view_old_dashboard"):
+
+        if user.is_superuser:
             return redirect(reverse("admin:index"))
+        elif user.partner:
+            return redirect(reverse_lazy("admin:partners_partner_change", args=[user.partner.pk]))
 
         return redirect(reverse("my-organization:dashboard"))
 

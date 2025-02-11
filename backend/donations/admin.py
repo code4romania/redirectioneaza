@@ -13,7 +13,7 @@ from django.urls import reverse, reverse_lazy
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 from unfold.admin import ModelAdmin, StackedInline, TabularInline
-from unfold.decorators import action as unfold_action
+from unfold.decorators import action
 from unfold.widgets import UnfoldAdminSelectWidget
 
 from redirectioneaza.common.admin import HasNgoFilter
@@ -229,6 +229,64 @@ class NgoAdmin(ModelAdmin):
         ),
     )
 
+    def get_actions(self, request):
+        if request.user.is_superuser:
+            return super().get_actions(request)
+
+        return []
+
+    def get_actions_detail(self, request, object_id):
+        if request.user.is_superuser:
+            return super().get_actions_detail(request, object_id)
+
+        return []
+
+    def get_inlines(self, request, obj):
+        if request.user.is_superuser:
+            return super().get_inlines(request, obj)
+
+        return []
+
+    def get_queryset(self, request):
+        if request.user.is_superuser:
+            return super().get_queryset(request)
+
+        return Ngo.active.all()
+
+    def get_list_display(self, request: HttpRequest):
+        if request.user.is_superuser:
+            return super().get_list_display(request)
+
+        return [
+            "slug",
+            "registration_number",
+            "name",
+        ]
+
+    def get_fieldsets(self, request: HttpRequest, obj=None):
+        if request.user.is_superuser:
+            return super().get_fieldsets(request, obj)
+
+        fieldsets = (
+            (
+                _("NGO"),
+                {
+                    "fields": (
+                        "name",
+                        "slug",
+                        "registration_number",
+                        "description",
+                    )
+                },
+            ),
+            (
+                _("Logo"),
+                {"fields": ("logo",)},
+            ),
+        )
+
+        return fieldsets
+
     @admin.display(description=_("Donations"))
     def get_donations_link(self, obj: Ngo):
         link_name = _("Open the NGO donor list")
@@ -269,7 +327,7 @@ class NgoAdmin(ModelAdmin):
             "message": _("Owner changed successfully."),
         }
 
-    @unfold_action(description=_("Change owner"))
+    @action(description=_("Change owner"))
     def change_owner(self, request: HttpRequest, object_id):
         ngo = Ngo.objects.get(id=object_id)
 
@@ -301,7 +359,7 @@ class NgoAdmin(ModelAdmin):
             },
         )
 
-    @unfold_action(description=_("Generate donations archive"))
+    @action(description=_("Generate donations archive"))
     def generate_donations_archive(self, request, queryset: QuerySet[Ngo]):
         ngo_names: List[str] = []
 
@@ -326,7 +384,7 @@ class NgoAdmin(ModelAdmin):
 
         self.message_user(request, message)
 
-    @unfold_action(description=_("Clean up registration numbers"))
+    @action(description=_("Clean up registration numbers"))
     def clean_registration_numbers(self, request, queryset: QuerySet[Ngo]):
         result = call_command("registration_numbers_cleanup")
 
@@ -335,14 +393,14 @@ class NgoAdmin(ModelAdmin):
         else:
             self.message_user(request, _("Registration numbers are clean."), level="SUCCESS")
 
-    @unfold_action(description=_("Update from NGO Hub synchronously"))
+    @action(description=_("Update from NGO Hub synchronously"))
     def update_from_ngohub_sync(self, request, queryset: QuerySet[Ngo]):
         for ngo in queryset:
             update_organization(ngo.id, update_method="sync")
 
         self.message_user(request, _("NGOs updated from NGO Hub."))
 
-    @unfold_action(description=_("Update from NGO Hub asynchronously"))
+    @action(description=_("Update from NGO Hub asynchronously"))
     def update_from_ngohub_async(self, request, queryset: QuerySet[Ngo]):
         for ngo in queryset:
             update_organization(ngo.id, update_method="async")

@@ -142,6 +142,17 @@ class NgoPresentationView(NgoBaseTemplateView):
 
         return context
 
+    def get(self, request, *args, **kwargs):
+        user = request.user
+
+        if user.is_staff:
+            if user.partner:
+                return redirect(reverse_lazy("admin:partners_partner_change", args=[user.partner.pk]))
+            if user.is_superuser:
+                return redirect(reverse("admin:index"))
+
+        return super().get(request, *args, **kwargs)
+
     @method_decorator(login_required(login_url=reverse_lazy("login")))
     def post(self, request, *args, **kwargs):
         post = request.POST

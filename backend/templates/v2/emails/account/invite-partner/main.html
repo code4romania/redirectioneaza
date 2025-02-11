@@ -1,0 +1,25 @@
+{% extends "emails/base.html" %}
+
+{% load i18n %}
+
+{% block heading %}
+  {% trans "Hello," %}
+  {{ first_name }},
+{% endblock %}
+
+{% block content %}
+
+  <p>
+    {% blocktrans trimmed %}
+      You have been invited to join redirectioneaza.ro
+      and manage the partner account for {{ partner_name }}.
+      To accept the invitation and set up your account, please click the button below.
+    {% endblocktrans %}
+  </p>
+
+  {% trans "Confirm invite" as action_title %}
+  {% include "emails/components/action.html" with title=action_title url=action_url %}
+
+  {% include "emails/components/misdelivered.html" %}
+
+{% endblock %}
