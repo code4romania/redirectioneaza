@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-10 23:13+0200\n"
+"POT-Creation-Date: 2025-02-11 11:00+0200\n"
 "PO-Revision-Date: 2024-02-28 15:45+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -1537,26 +1537,52 @@ msgid "Change password"
 msgstr "old password"
 
 #: backend/templates/v2/account/signup-confirmation.html:8
-msgid "Your account has been successfully created"
-msgstr ""
+#, fuzzy
+#| msgid "email address"
+msgid "Check your email address"
+msgstr "email address"
 
 #: backend/templates/v2/account/signup-confirmation.html:12
-msgid "Please check your email for a confirmation link, then log in."
+msgid ""
+"Your account has been succesfully created! You will receive an email message "
+"shortly. Click on the link in the email to finish your account validation."
+"<br> Unable to find the email? Be sure to also check the spam folder."
 msgstr ""
 
+#: backend/templates/v2/account/signup-confirmation.html:21
+#, fuzzy
+#| msgid "Work in progress"
+msgid "Authentication problems?"
+msgstr "Work in progress"
+
+#: backend/templates/v2/account/signup-confirmation.html:22
+#: backend/templates/v2/account/snippets/third-party.html:70
+#: backend/templates/v2/account/snippets/third-party.html:170
+msgid "Check the support page"
+msgstr ""
+
+#: backend/templates/v2/account/signup-confirmation.html:23
+#, fuzzy
+#| msgid "Contact us"
+msgid "or contact us at"
+msgstr "Contact us"
+
 #: backend/templates/v2/account/signup-verification.html:8
-msgid "We have succesfully verified your account"
+msgid "Your account has been succesfully validated!"
 msgstr ""
 
 #: backend/templates/v2/account/signup-verification.html:12
-msgid "Go to the login page to access your account."
+msgid ""
+"Congradulations! You have completed your redirectioneaza.ro account "
+"validation. Now you can return to the authentication page and log into your "
+"account."
 msgstr ""
 
-#: backend/templates/v2/account/signup-verification.html:16
+#: backend/templates/v2/account/signup-verification.html:19
 #, fuzzy
-#| msgid "Return to login"
-msgid "Go to login"
-msgstr "Return to login"
+#| msgid "Work in progress"
+msgid "Authenticate"
+msgstr "Work in progress"
 
 #: backend/templates/v2/account/snippets/cta-ngohub.html:15
 msgid "Do you represent an NGO? Join NGO Hub"
@@ -1669,11 +1695,6 @@ msgstr "Create an account"
 #| msgid "Work in progress"
 msgid "Log in problems?"
 msgstr "Work in progress"
-
-#: backend/templates/v2/account/snippets/third-party.html:70
-#: backend/templates/v2/account/snippets/third-party.html:170
-msgid "Check the support page"
-msgstr ""
 
 #: backend/templates/v2/account/snippets/third-party.html:81
 msgid "To access redirectioneaza.ro through your NGO Hub account, make sure:"
@@ -2854,6 +2875,11 @@ msgstr "old password"
 #: backend/users/models.py:169
 msgid "Group"
 msgstr "Group"
+
+#, fuzzy
+#~| msgid "Return to login"
+#~ msgid "Go to login"
+#~ msgstr "Return to login"
 
 #, fuzzy
 #~| msgid "User Link"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-10 23:13+0200\n"
+"POT-Creation-Date: 2025-02-11 11:00+0200\n"
 "PO-Revision-Date: 2024-03-07 11:27+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -1436,26 +1436,49 @@ msgid "Change password"
 msgstr "Schimbă parola"
 
 #: backend/templates/v2/account/signup-confirmation.html:8
-msgid "Your account has been successfully created"
-msgstr "Contul tău a fost creat cu succes"
+msgid "Check your email address"
+msgstr "Verifică-ți adresa de email"
 
 #: backend/templates/v2/account/signup-confirmation.html:12
-msgid "Please check your email for a confirmation link, then log in."
+msgid ""
+"Your account has been succesfully created! You will receive an email message "
+"shortly. Click on the link in the email to finish your account validation."
+"<br> Unable to find the email? Be sure to also check the spam folder."
 msgstr ""
-"Te rugăm să verifici emailul pentru un link de confirmare, apoi te poți "
-"conecta."
+"Contul tău a fost creat cu succes! În scurt timp vei primi un email. Apasă "
+"pe link-ul din email-ul primit  pentru a finaliza verificarea contului. Nu "
+"găsești emailul? Asigură-te că ai verificat și folderul de spam."
+
+#: backend/templates/v2/account/signup-confirmation.html:21
+msgid "Authentication problems?"
+msgstr "Ai probleme la conectare?"
+
+#: backend/templates/v2/account/signup-confirmation.html:22
+#: backend/templates/v2/account/snippets/third-party.html:70
+#: backend/templates/v2/account/snippets/third-party.html:170
+msgid "Check the support page"
+msgstr "Consultă pagina de suport"
+
+#: backend/templates/v2/account/signup-confirmation.html:23
+msgid "or contact us at"
+msgstr "sau contactează-ne la"
 
 #: backend/templates/v2/account/signup-verification.html:8
-msgid "We have succesfully verified your account"
-msgstr "Contul tău a fost validat cu succes"
+msgid "Your account has been succesfully validated!"
+msgstr "Contul tău a fost verificat cu succes!"
 
 #: backend/templates/v2/account/signup-verification.html:12
-msgid "Go to the login page to access your account."
-msgstr "Mergi la pagina de autentificare pentru a accesa contul tău."
+msgid ""
+"Congradulations! You have completed your redirectioneaza.ro account "
+"validation. Now you can return to the authentication page and log into your "
+"account."
+msgstr ""
+"Felicitări! Ai finalizat verificarea contului tău pe redirectioneaza.ro. "
+"Acum poți să te întorci la pagina de autentificare și să accesezi contul tău."
 
-#: backend/templates/v2/account/signup-verification.html:16
-msgid "Go to login"
-msgstr "Mergi la autentificare"
+#: backend/templates/v2/account/signup-verification.html:19
+msgid "Authenticate"
+msgstr "Intră în cont"
 
 #: backend/templates/v2/account/snippets/cta-ngohub.html:15
 msgid "Do you represent an NGO? Join NGO Hub"
@@ -1569,11 +1592,6 @@ msgstr "Înregistrează-te aici"
 #: backend/templates/v2/account/snippets/third-party.html:168
 msgid "Log in problems?"
 msgstr "Ai probleme la conectare?"
-
-#: backend/templates/v2/account/snippets/third-party.html:70
-#: backend/templates/v2/account/snippets/third-party.html:170
-msgid "Check the support page"
-msgstr "Consultă pagina de suport"
 
 #: backend/templates/v2/account/snippets/third-party.html:81
 msgid "To access redirectioneaza.ro through your NGO Hub account, make sure:"
@@ -2779,6 +2797,20 @@ msgstr "parolă veche"
 #: backend/users/models.py:169
 msgid "Group"
 msgstr "Grup"
+
+#~ msgid "We have succesfully verified your account"
+#~ msgstr "Contul tău a fost validat cu succes"
+
+#~ msgid "Go to the login page to access your account."
+#~ msgstr "Mergi la pagina de autentificare pentru a accesa contul tău."
+
+#~ msgid "Go to login"
+#~ msgstr "Mergi la autentificare"
+
+#~ msgid "Please check your email for a confirmation link, then log in."
+#~ msgstr ""
+#~ "Te rugăm să verifici emailul pentru un link de confirmare, apoi te poți "
+#~ "conecta."
 
 #~ msgid ""
 #~ "In NGO Hub, each of your colleagues can have their own account. Make sure "
