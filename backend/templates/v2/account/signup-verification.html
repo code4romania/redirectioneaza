@@ -5,15 +5,18 @@
 {% block article_content %}
 
   <h1>
-    {% trans "We have succesfully verified your account" %}
+    {% trans "Your account has been succesfully validated!" %}
   </h1>
 
   <p>
-    {% trans "Go to the login page to access your account." %}
+    {% blocktrans trimmed %}
+      Congradulations! You have completed your redirectioneaza.ro account validation.
+      Now you can return to the authentication page and log into your account.
+    {% endblocktrans %}
   </p>
 
   {% url "login" as button_url %}
-  {% trans "Go to login" as button_title %}
+  {% trans "Authenticate" as button_title %}
   {% include "components/buttons/link.html" %}
 
 {% endblock article_content %}
