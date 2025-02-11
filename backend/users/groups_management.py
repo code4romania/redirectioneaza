@@ -2,6 +2,7 @@ MAIN_ADMIN = "main admin"
 RESTRICTED_ADMIN = "restricted admin"
 NGO_ADMIN = "ngo admin"
 NGO_MEMBER = "ngo member"
+PARTNER_MANAGER = "partner manager"
 
 USER_GROUPS = {
     MAIN_ADMIN: {
@@ -48,6 +49,19 @@ USER_GROUPS = {
             "donations.view_donor",
             "donations.view_job",
             "partners.view_partner",
+        ),
+    },
+    PARTNER_MANAGER: {
+        "is_superuser": False,
+        "is_staff": True,
+        "permissions": (
+            "partners.change_partner",
+            "partners.view_partner",
+            "partners.add_partnerngo",
+            "partners.change_partnerngo",
+            "partners.delete_partnerngo",
+            "partners.view_partnerngo",
+            "donations.view_ngo",
         ),
     },
 }
