@@ -71,7 +71,7 @@ resource "aws_cloudfront_distribution" "main" {
     allowed_methods            = ["GET", "HEAD", "OPTIONS"]
     cached_methods             = ["GET", "HEAD", "OPTIONS"]
     target_origin_id           = module.s3_public.id
-    cache_policy_id            = "658327ea-f89d-4fab-a63d-7e88639e58f6" #Managed-CachingOptimized
+    cache_policy_id            = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad" #Managed-CachingDisabled
     origin_request_policy_id   = "88a5eaf4-2fd4-4709-b370-b4c650ea3fcf" #Managed-CORS-S3Origin
     response_headers_policy_id = "eaab4381-ed33-4a86-88ca-d9558dc6cd63" #Managed-CORS-with-preflight-and-SecurityHeadersPolicy
     viewer_protocol_policy     = "redirect-to-https"
@@ -86,18 +86,18 @@ resource "aws_cloudfront_distribution" "main" {
   # Logged in container
   dynamic "ordered_cache_behavior" {
     for_each = [
+      "/admin/*",
       "/api/*",
       "/cron/*",
-      "/verify/*",
-      "/admin/*",
+      "/date-cont/*",
+      "/download/*",
+      "/health/",
       "/login/*",
       "/ong/*",
+      "/organizatia-mea/*",
       "/password/*",
-      "/forgot/*",
-      "/contul-meu/*",
-      "/date-cont/*",
-      "/asociatia/*",
-      "/organizatia/*",
+      "/recuperare-parola/*",
+      "/verify/*",
       "/*/semnatura/",
       "/*/succes/",
     ]
