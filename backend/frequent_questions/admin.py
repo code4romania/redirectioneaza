@@ -1,5 +1,4 @@
 from django.contrib import admin
-from django.contrib.admin import ModelAdmin as DjangoModelAdmin
 from django.db import models
 from import_export.admin import ImportExportModelAdmin
 from tinymce.widgets import AdminTinyMCE
@@ -9,7 +8,7 @@ from frequent_questions.models import Question, Section
 
 
 @admin.register(Section)
-class SectionAdmin(ImportExportModelAdmin, DjangoModelAdmin):
+class SectionAdmin(ImportExportModelAdmin, ModelAdmin):
     list_display = ("title", "order")
     list_editable = ("order",)
 

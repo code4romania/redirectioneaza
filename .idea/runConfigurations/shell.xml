@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="shell" type="Python.DjangoServer" factoryName="Django server">
+  <configuration default="false" name="shell" type="Python.DjangoServer" factoryName="Django server" folderName="others">
     <module name="redirectioneaza" />
     <option name="ENV_FILES" value="$PROJECT_DIR$/.env.local" />
     <option name="INTERPRETER_OPTIONS" value="" />

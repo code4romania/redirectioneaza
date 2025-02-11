@@ -12,7 +12,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
-from unfold.admin import ModelAdmin
+from unfold.admin import ModelAdmin, StackedInline, TabularInline
 from unfold.decorators import action as unfold_action
 from unfold.widgets import UnfoldAdminSelectWidget
 
@@ -50,7 +50,7 @@ class ChangeNgoOwnerForm(forms.Form):
     # )
 
 
-class NgoPartnerInline(admin.TabularInline):
+class NgoPartnerInline(TabularInline):
     # noinspection PyUnresolvedReferences
     model = Ngo.partners.through
     extra = 1
@@ -58,7 +58,7 @@ class NgoPartnerInline(admin.TabularInline):
     autocomplete_fields = ("partner",)
 
 
-class NgoUserInline(admin.StackedInline):
+class NgoUserInline(StackedInline):
     # noinspection PyUnresolvedReferences
     model = User
     extra = 0
