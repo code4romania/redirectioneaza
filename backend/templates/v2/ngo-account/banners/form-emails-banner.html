@@ -1,0 +1,11 @@
+{% load i18n %}
+
+{% blocktranslate trimmed asvar banner_message %}
+  <p>
+    Your organization is not accepting forms by e-mail.
+    This means that users will have to download and print the form, fill it in,
+    and send it to the organization's address or to their ANAF office.
+  </p>
+{% endblocktranslate %}
+
+{% include "components/info-banner.html" with style="warning" banner_message=banner_message %}

@@ -21,30 +21,11 @@
       class="grid gap-5">
 
       {% if not ngo.is_accepting_forms %}
-        {% blocktranslate trimmed asvar banner_message %}
-          <p>
-            Your organization is not accepting forms by e-mail.
-            This means that users will have to download and print the form, fill it in,
-            and send it to the organization's address or to their ANAF office.
-          </p>
-        {% endblocktranslate %}
-        {% include "components/info-banner.html" with style="warning" banner_message=banner_message %}
+        {% include "ngo-account/banners/form-emails-banner.html" %}
       {% endif %}
 
       {% if has_ngohub %}
-        {% blocktranslate trimmed asvar banner_message %}
-          <p>
-            The information below appears on your organization's page on redirectioneaza.ro.
-          </p>
-          <p>
-            The disabled fields contain information that is automatically taken into the organization's account from NGO Hub.
-            These can be edited at any time directly in NGO Hub
-            and then updated on redirectioneaza.ro by pressing the
-            "Resynchronize information from NGO Hub" button.
-          </p>
-        {% endblocktranslate %}
-        {% trans "Go to NGO Hub" as banner_cta_message %}
-        {% include "components/info-banner.html" with style="info" banner_message=banner_message banner_cta_message=banner_cta_message banner_cta_url=ngohub_url %}
+        {% include "ngo-account/banners/form-ngohub.html" %}
       {% endif %}
 
       {% csrf_token %}
@@ -54,100 +35,100 @@
         {% trans "Presentation Data" as title %}
         {% include "ngo-account/components/form-title.html" %}
 
-        <div class="flex flex-col gap-8 py-4">
-          <div class="px-6 py-4 border border-gray-200 rounded bg-gray-50">
-            <div class="flex gap-3">
-              {% trans "I want to receive the completed forms by email" as input_title %}
-              {% include "components/input/checkbox.html" with input_id="is_accepting_forms" input_name="is_accepting_forms" value=ngo.is_accepting_forms field=ngo_presentation.is_accepting_forms %}
-            </div>
+        <fieldset>
+          <div class="flex flex-col gap-8 py-4">
 
-            <p class="pt-2 text-xs text-gray-500">
-              {% trans "By selecting this option, I confirm that the NGO has an SPV account to submit the forms" %}
-            </p>
-          </div>
-
-          {% comment %}
-            TODO: Ideally, this should be two rows on the first column and one on the second, but the grid system is not allowing it.
-          {% endcomment %}
-
-          <div>
-            {% trans "Name" as input_title %}
-            {% include "components/input/input.html" with input_id="name" input_type="text" input_name="name" is_required=True is_disabled=disable_ngohub_fields value=ngo.name field=ngo_presentation.name max_length=200 %}
-          </div>
-
-          <div>
-            {% trans "CUI/CIF" as input_title %}
-            {% include "components/input/input.html" with input_id="cif" input_type="text" input_name="cif" is_required=True is_disabled=disable_ngohub_fields value=ngo.full_registration_number field=ngo_presentation.cif max_length=100 %}
-          </div>
-
-          <div>
-            {% trans "Logo" as input_title %}
-            {% include "components/input/image.html" with input_id="logo" input_name="logo" is_required=False is_disabled=disable_ngohub_fields image=ngo.logo %}
-          </div>
-
-          <div>
-            {% trans "Organization website" as input_title %}
-            {% include "components/input/input.html" with input_id="website" input_type="url" input_name="website" is_disabled=disable_ngohub_fields value=ngo.website field=ngo_presentation.website max_length=200 %}
-          </div>
-
-          <div class="grid gap-x-6 gap-y-2 md:gap-y-8 md:grid-cols-6">
-            <div class="md:col-span-4">
-              {% trans "Organization contact e-mail" as input_title %}
-              {% include "components/input/input.html" with input_id="contact_email" input_type="email" input_name="contact_email" is_required=True is_disabled=disable_ngohub_fields value=ngo.email field=ngo_presentation.contact_email max_length=254 %}
-            </div>
-
-            <div class="md:col-span-2 md:mt-8">
-              {% trans "Display e-mail in the profile" as input_title %}
+            <div class="px-6 py-4 border border-gray-200 rounded bg-gray-50">
               <div class="flex gap-3">
-                {% include "components/input/checkbox.html" with input_id="display_email" input_name="display_email" value=ngo.display_email field=ngo_presentation.display_email %}
+                {% trans "I want to receive the completed forms by email" as input_title %}
+                {% include "components/input/checkbox.html" with input_id="is_accepting_forms" input_name="is_accepting_forms" value=ngo.is_accepting_forms field=ngo_presentation.is_accepting_forms %}
+              </div>
+
+              <p class="pt-2 text-xs text-gray-500">
+                {% trans "By selecting this option, I confirm that the NGO has an SPV account to submit the forms" %}
+              </p>
+            </div>
+
+            <div>
+              {% trans "Name" as input_title %}
+              {% include "components/input/input.html" with input_id="name" input_type="text" input_name="name" is_required=True is_disabled=disable_ngohub_fields value=ngo.name field=ngo_presentation.name max_length=200 %}
+            </div>
+
+            <div>
+              {% trans "CUI/CIF" as input_title %}
+              {% include "components/input/input.html" with input_id="cif" input_type="text" input_name="cif" is_required=True is_disabled=disable_ngohub_fields value=ngo.full_registration_number field=ngo_presentation.cif max_length=100 %}
+            </div>
+
+            <div>
+              {% trans "Logo" as input_title %}
+              {% include "components/input/image.html" with input_id="logo" input_name="logo" is_required=False is_disabled=disable_ngohub_fields image=ngo.logo %}
+            </div>
+
+            <div>
+              {% trans "Organization website" as input_title %}
+              {% include "components/input/input.html" with input_id="website" input_type="url" input_name="website" is_disabled=disable_ngohub_fields value=ngo.website field=ngo_presentation.website max_length=200 %}
+            </div>
+
+            <div class="grid gap-x-6 gap-y-2 md:gap-y-8 md:grid-cols-6">
+              <div class="md:col-span-4">
+                {% trans "Organization contact e-mail" as input_title %}
+                {% include "components/input/input.html" with input_id="contact_email" input_type="email" input_name="contact_email" is_required=True is_disabled=disable_ngohub_fields value=ngo.email field=ngo_presentation.contact_email max_length=254 %}
+              </div>
+
+              <div class="md:col-span-2 md:mt-8">
+                {% trans "Display e-mail in the profile" as input_title %}
+                <div class="flex gap-3">
+                  {% include "components/input/checkbox.html" with input_id="display_email" input_name="display_email" value=ngo.display_email field=ngo_presentation.display_email %}
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="grid gap-x-6 gap-y-2 md:gap-y-8 md:grid-cols-6">
-            <div class="md:col-span-4">
-              {% trans "Organization contact phone" as input_title %}
-              {% include "components/input/input.html" with input_id="contact_phone" input_type="tel" input_name="contact_phone" is_disabled=disable_ngohub_fields value=ngo.phone field=ngo_presentation.contact_phone max_length=30 %}
-            </div>
+            <div class="grid gap-x-6 gap-y-2 md:gap-y-8 md:grid-cols-6">
+              <div class="md:col-span-4">
+                {% trans "Organization contact phone" as input_title %}
+                {% include "components/input/input.html" with input_id="contact_phone" input_type="tel" input_name="contact_phone" is_disabled=disable_ngohub_fields value=ngo.phone field=ngo_presentation.contact_phone max_length=30 %}
+              </div>
 
-            <div class="md:col-span-2 md:mt-8">
-              {% trans "Display phone in the profile" as input_title %}
-              <div class="flex gap-3">
-                {% include "components/input/checkbox.html" with input_id="display-phone" input_name="display_phone" value=ngo.display_phone field=ngo_presentation.display_phone %}
+              <div class="md:col-span-2 md:mt-8">
+                {% trans "Display phone in the profile" as input_title %}
+                <div class="flex gap-3">
+                  {% include "components/input/checkbox.html" with input_id="display-phone" input_name="display_phone" value=ngo.display_phone field=ngo_presentation.display_phone %}
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="grid gap-x-6 gap-y-2 md:gap-y-8 md:grid-cols-8">
-            <div class="sm:col-span-4">
-              {% trans "Organization address" as input_title %}
-              {% include "components/input/input.html" with input_id="address" input_type="text" input_name="address" is_required=True is_disabled=disable_ngohub_fields value=ngo.address field=ngo_presentation.address %}
+            <div class="grid gap-x-6 gap-y-2 md:gap-y-8 md:grid-cols-8">
+              <div class="sm:col-span-4">
+                {% trans "Organization address" as input_title %}
+                {% include "components/input/input.html" with input_id="address" input_type="text" input_name="address" is_required=True is_disabled=disable_ngohub_fields value=ngo.address field=ngo_presentation.address %}
+              </div>
+
+              <div class="sm:col-span-2">
+                {% trans "Locality" as input_title %}
+                {% include "components/input/input.html" with input_id="locality" input_type="text" input_name="locality" is_disabled=disable_ngohub_fields value=ngo.locality field=ngo_presentation.locality %}
+              </div>
+
+              <div class="sm:col-span-2">
+                {% trans "County" as input_title %}
+                {% if has_ngohub %}
+                  {% include "components/input/input.html" with input_id="county" input_type="text" input_name="county" is_required=True is_disabled=disable_ngohub_fields value=ngo.county field=ngo_presentation.county max_length=100 %}
+                {% else %}
+                  {% include "components/input/county.html" with input_id="county" input_name="county" is_required=True is_disabled=disable_ngohub_fields value=ngo.county field=ngo_presentation.county %}
+                {% endif %}
+              </div>
             </div>
 
-            <div class="sm:col-span-2">
-              {% trans "Locality" as input_title %}
-              {% include "components/input/input.html" with input_id="locality" input_type="text" input_name="locality" is_disabled=disable_ngohub_fields value=ngo.locality field=ngo_presentation.locality %}
-            </div>
-
-            <div class="sm:col-span-2">
-              {% trans "County" as input_title %}
+            <div>
+              {% trans "Active region" as input_title %}
               {% if has_ngohub %}
-                {% include "components/input/input.html" with input_id="county" input_type="text" input_name="county" is_required=True is_disabled=disable_ngohub_fields value=ngo.county field=ngo_presentation.county max_length=100 %}
+                {% include "components/input/input.html" with input_id="active_region" input_type="text" input_name="active_region" is_required=True is_disabled=disable_ngohub_fields value=ngo.active_region field=ngo_presentation.active_region max_length=100 %}
               {% else %}
-                {% include "components/input/county.html" with input_id="county" input_name="county" is_required=True is_disabled=disable_ngohub_fields value=ngo.county field=ngo_presentation.county %}
+                {% include "components/input/county.html" with input_id="active_region" input_name="active_region" is_required=True value=ngo.active_region field=ngo_presentation.active_region counties=active_regions %}
               {% endif %}
             </div>
-          </div>
 
-          <div>
-            {% trans "Active region" as input_title %}
-            {% if has_ngohub %}
-              {% include "components/input/input.html" with input_id="active_region" input_type="text" input_name="active_region" is_required=True is_disabled=disable_ngohub_fields value=ngo.active_region field=ngo_presentation.active_region max_length=100 %}
-            {% else %}
-              {% include "components/input/county.html" with input_id="active_region" input_name="active_region" is_required=True value=ngo.active_region field=ngo_presentation.active_region counties=active_regions %}
-            {% endif %}
           </div>
-        </div>
+        </fieldset>
 
       {% endwith %}
     </form>

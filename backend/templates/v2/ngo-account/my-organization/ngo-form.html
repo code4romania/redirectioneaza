@@ -10,7 +10,8 @@
       id="ngo-form-data-form"
       method="post"
       enctype="multipart/form-data"
-      action="{% url 'my-organization:forms' %}">
+      action="{% url 'my-organization:forms' %}"
+      class="grid gap-5">
 
       {% csrf_token %}
 
