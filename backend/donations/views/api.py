@@ -2,19 +2,18 @@ import logging
 from typing import Dict, List
 
 from django.contrib.auth.decorators import login_required
-from django.core.exceptions import BadRequest, PermissionDenied
+from django.core.exceptions import BadRequest
 from django.core.files import File
 from django.core.management import call_command
-from django.http import Http404, HttpResponse, HttpResponseBadRequest, JsonResponse
+from django.http import Http404, JsonResponse
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView
 
-from ..common.validation.slug_url import NgoSlugValidator
 from ..models.jobs import Job, JobStatusChoices
-from ..models.ngos import Ngo, ngo_slug_validator
+from ..models.ngos import Ngo
 from ..pdf import create_ngo_pdf
 from ..workers.update_organization import update_organization
 from .base import BaseTemplateView
@@ -36,26 +35,6 @@ class UpdateFromNgohub(BaseTemplateView):
         update_organization(user.ngo.pk)
 
         return redirect_success
-
-
-class CheckNgoSlug(BaseTemplateView):
-    @classmethod
-    def validate_ngo_slug(cls, user, slug):
-        if not slug or not user and not user.is_staff:
-            raise PermissionDenied()
-
-        if user.is_anonymous:
-            raise PermissionDenied()
-
-        slug = ngo_slug_validator(slug)
-
-        if NgoSlugValidator.is_blocked(slug):
-            return HttpResponseBadRequest()
-
-        if NgoSlugValidator.is_reused(slug, user.ngo.pk):
-            return HttpResponseBadRequest()
-
-        return HttpResponse()
 
 
 class SearchNgosApi(TemplateView, NgoSearchMixin):

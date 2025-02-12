@@ -32,7 +32,6 @@ from donations.views.account_management import (
     VerificationView,
 )
 from donations.views.api import (
-    CheckNgoSlug,
     DownloadNgoForms,
     GetNgoForm,
     GetUploadUrl,
@@ -123,8 +122,6 @@ urlpatterns = (
         ),
         # APIs
         path("api/ngohub-refresh/", UpdateFromNgohub.as_view(), name="api-ngohub-refresh"),
-        path("api/ngo/check-url/<ngo_url>/", CheckNgoSlug.as_view(), name="api-ngo-check-url"),
-        #
         path("api/ngo/upload-url/", GetUploadUrl.as_view(), name="api-ngo-upload-url"),
         path("api/ngo/form/<ngo_url>/", GetNgoForm.as_view(), name="api-ngo-form-url"),
         path("api/ngo/forms/download/", DownloadNgoForms.as_view(), name="api-ngo-forms"),
