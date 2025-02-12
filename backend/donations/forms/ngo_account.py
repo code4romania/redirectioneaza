@@ -5,7 +5,7 @@ from localflavor.generic.forms import IBANFormField
 from localflavor.ro.forms import ROCIFField
 
 from donations.common.validation.phone_number import validate_phone_number
-from donations.common.validation.slug_url import NgoSlugValidator
+from donations.common.validation.validate_slug import NgoSlugValidator
 from donations.models.ngos import Ngo, ngo_slug_validator
 
 
@@ -29,8 +29,16 @@ class NgoPresentationForm(forms.Form):
 
     address = forms.CharField(label=_("Address"), max_length=255, required=True)
     locality = forms.CharField(label=_("Locality"), max_length=100, required=False)
-    county = forms.ChoiceField(label=_("County"), choices=settings.FORM_COUNTIES_CHOICES, required=True)
-    active_region = forms.ChoiceField(label=_("Active region"), choices=settings.FORM_COUNTIES_CHOICES, required=True)
+    county = forms.ChoiceField(
+        label=_("County"),
+        choices=settings.FORM_COUNTIES_CHOICES,
+        required=True,
+    )
+    active_region = forms.ChoiceField(
+        label=_("Active region"),
+        choices=settings.FORM_COUNTIES_NATIONAL_CHOICES,
+        required=True,
+    )
 
     def __init__(self, *args, **kwargs):
         is_fully_editable = kwargs.pop("is_fully_editable", True)

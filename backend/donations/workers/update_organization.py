@@ -15,7 +15,8 @@ from ngohub.models.organization import Organization, OrganizationGeneral
 from pycognito import Cognito
 from requests import Response
 
-from donations.common.validation.slug_url import NgoSlugValidator, clean_slug
+from donations.common.validation.clean_slug import clean_slug
+from donations.common.validation.validate_slug import NgoSlugValidator
 from donations.models.ngos import Ngo
 from redirectioneaza.common.cache import cache_decorator
 

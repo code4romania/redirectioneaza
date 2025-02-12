@@ -133,7 +133,6 @@
               {% trans "County" as input_title %}
               {% if has_ngohub %}
                 {% include "components/input/input.html" with input_id="county" input_type="text" input_name="county" is_required=True is_disabled=disable_ngohub_fields value=ngo.county field=ngo_presentation.county max_length=100 %}
-
               {% else %}
                 {% include "components/input/county.html" with input_id="county" input_name="county" is_required=True is_disabled=disable_ngohub_fields value=ngo.county field=ngo_presentation.county %}
               {% endif %}
@@ -145,7 +144,7 @@
             {% if has_ngohub %}
               {% include "components/input/input.html" with input_id="active_region" input_type="text" input_name="active_region" is_required=True is_disabled=disable_ngohub_fields value=ngo.active_region field=ngo_presentation.active_region max_length=100 %}
             {% else %}
-              {% include "components/input/county.html" with input_id="active_region" input_name="active_region" is_required=True value=ngo.active_region field=ngo_presentation.active_region %}
+              {% include "components/input/county.html" with input_id="active_region" input_name="active_region" is_required=True value=ngo.active_region field=ngo_presentation.active_region counties=active_regions %}
             {% endif %}
           </div>
         </div>

@@ -15,6 +15,7 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from donations.common.models_hashing import hash_id_secret
+from donations.common.validation.clean_slug import clean_slug
 from donations.common.validation.registration_number import REGISTRATION_NUMBER_REGEX_WITH_VAT, ngo_id_number_validator
 
 ALL_NGOS_CACHE_KEY = "ALL_NGOS"
@@ -223,6 +224,8 @@ class Ngo(models.Model):
     def save(self, *args, **kwargs):
         is_new = self.id is None
         self.slug = self.slug.lower()
+        if not self.slug:
+            self.slug = clean_slug(self.name)
 
         if self.registration_number:
             uppercase_registration_number = self.registration_number

@@ -17,7 +17,7 @@ from django_q.tasks import async_task
 from users.models import User
 
 from ..common.validation.registration_number import extract_vat_id, ngo_id_number_validator
-from ..common.validation.slug_url import NgoSlugValidator
+from ..common.validation.validate_slug import NgoSlugValidator
 from ..forms.ngo_account import NgoFormForm, NgoPresentationForm
 from ..models.donors import Donor
 from ..models.jobs import Job
@@ -133,7 +133,8 @@ class NgoPresentationView(NgoBaseTemplateView):
 
         context.update(
             {
-                "counties": settings.FORM_COUNTIES_NATIONAL,
+                "active_regions": settings.FORM_COUNTIES_NATIONAL,
+                "counties": settings.LIST_OF_COUNTIES,
                 "has_ngohub": has_ngohub,
                 "ngohub_url": ngohub_url,
                 "active_tab": self.tab_title,
@@ -338,7 +339,6 @@ class NgoSettingsView(NgoBaseTemplateView):
 
         context.update(
             {
-                "counties": settings.FORM_COUNTIES_NATIONAL,
                 "has_ngohub": has_ngohub,
             }
         )

@@ -116,16 +116,12 @@ CHART_COLORS = [
 LIST_OF_COUNTIES = [county[1] for county in COUNTIES_CHOICES]
 
 FORM_COUNTIES = deepcopy(LIST_OF_COUNTIES)
-try:
-    FORM_COUNTIES.pop(LIST_OF_COUNTIES.index("București"))
-except IndexError:
-    pass
+FORM_COUNTIES_CHOICES = [(county, county) for county in FORM_COUNTIES]
 
-EXTENDED_FORM_COUNTIES = [1, 2, 3, 4, 5, 6] + FORM_COUNTIES
-FORM_COUNTIES_CHOICES = [(county, county) for county in EXTENDED_FORM_COUNTIES]
-
-FORM_COUNTIES_NATIONAL = deepcopy(FORM_COUNTIES)
+FORM_COUNTIES_NATIONAL = deepcopy(LIST_OF_COUNTIES)
 FORM_COUNTIES_NATIONAL.insert(0, "Național")
+
+FORM_COUNTIES_NATIONAL_CHOICES = [(county, county) for county in FORM_COUNTIES_NATIONAL]
 
 
 # Encryption settings
