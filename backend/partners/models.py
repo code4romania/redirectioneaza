@@ -1,4 +1,3 @@
-import random
 from typing import Dict
 
 from django.db import models
@@ -86,20 +85,15 @@ class Partner(models.Model):
         display_ordering_mapping: Dict[str, str] = {
             str(DisplayOrderingChoices.ALPHABETICAL): "name",
             str(DisplayOrderingChoices.ALPHABETICAL_REVERSE): "-name",
-            str(DisplayOrderingChoices.NEWEST): "-date_created",
             str(DisplayOrderingChoices.OLDEST): "date_created",
+            str(DisplayOrderingChoices.NEWEST): "-date_created",
             str(DisplayOrderingChoices.CUSTOM): "partner_ngos__display_order",
         }
 
-        ngos_queryset: QuerySet = self.ngos.all()
+        order: str = display_ordering_mapping.get(self.display_ordering, "?")
 
-        order = display_ordering_mapping.get(self.display_ordering)
-        if not order:
-            ngos_queryset = ngos_queryset.order_by(order)
-        else:
-            random.shuffle(list(ngos_queryset))
-
-        return ngos_queryset
+        # noinspection PyTypeChecker
+        return self.ngos.order_by(order).all()
 
     def initialize_custom_display_ordering(self):
         partner_ngos = PartnerNgo.objects.filter(partner=self).order_by("display_order", "pk")

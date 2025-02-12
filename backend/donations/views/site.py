@@ -62,13 +62,12 @@ class HomePage(BaseVisibleTemplateView):
         return ngo_queryset.filter(id__in=random.sample(all_ngo_ids, num_ngos))
 
     def _partner_response(self, context: Dict, partner: Partner):
-        partner_ngos = partner.ordered_ngos()
         context.update(
             {
                 "company_name": partner.name,
                 "has_custom_header": partner.has_custom_header,
                 "has_custom_note": partner.has_custom_note,
-                "ngos": partner_ngos,
+                "ngos": partner.ordered_ngos(),
             }
         )
         return context
