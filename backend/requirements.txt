@@ -10,12 +10,12 @@ asgiref==3.8.1
     #   django-allauth
 blessed==1.20.0
     # via -r requirements.in
-boto3==1.36.13
+boto3==1.36.18
     # via
     #   django-ses
     #   django-storages
     #   pycognito
-botocore==1.36.13
+botocore==1.36.18
     # via
     #   boto3
     #   s3transfer
@@ -29,7 +29,7 @@ chardet==5.2.0
     # via reportlab
 charset-normalizer==3.4.1
     # via requests
-cryptography==44.0.0
+cryptography==44.0.1
     # via
     #   -r requirements.in
     #   pyjwt
@@ -37,7 +37,7 @@ cssselect2==0.7.0
     # via svglib
 diff-match-patch==20241021
     # via django-import-export
-django==5.1.5
+django==5.1.6
     # via
     #   -r requirements.in
     #   django-allauth
@@ -92,7 +92,7 @@ jmespath==1.0.1
     # via
     #   boto3
     #   botocore
-lxml==5.3.0
+lxml==5.3.1
     # via svglib
 ngohub==0.0.10
     # via -r requirements.in
