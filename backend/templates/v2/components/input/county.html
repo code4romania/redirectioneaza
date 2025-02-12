@@ -17,16 +17,6 @@
       {{ input_title }}
     </option>
 
-    <optgroup label="București">
-      {% for sector in '123456'|make_list %}
-        <option
-          value="{{ forloop.counter }}"
-          {% if number == value %}selected{% endif %}>
-          Sector {{ forloop.counter }}
-        </option>
-      {% endfor %}
-    </optgroup>
-
     {% for county_name in counties %}
       <option
         value="{{ county_name }}"
