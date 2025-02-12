@@ -1,5 +1,5 @@
 import datetime
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 from django.conf import settings
 from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector, TrigramSimilarity
@@ -13,7 +13,10 @@ from ..models.jobs import Job, JobStatusChoices
 from ..models.ngos import Ngo
 
 
-def get_was_last_job_recent(ngo: Ngo) -> bool:
+def get_was_last_job_recent(ngo: Optional[Ngo]) -> bool:
+    if not ngo:
+        return True
+
     now = timezone.now()
     last_ngo_job: Job = ngo.jobs.order_by("-date_created").first()
 
@@ -51,7 +54,7 @@ def get_time_between_retries() -> str:
     return period_between_retries
 
 
-def get_ngo_archive_download_status(ngo: Ngo):
+def get_ngo_archive_download_status(ngo: Optional[Ngo]) -> Dict:
     last_job_was_recent = get_was_last_job_recent(ngo)
     context = {
         "last_job_was_recent": last_job_was_recent,
