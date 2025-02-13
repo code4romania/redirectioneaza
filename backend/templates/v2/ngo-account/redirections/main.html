@@ -45,10 +45,10 @@
             class="inline-flex"
             {% if last_job_was_recent %}
               {% blocktrans trimmed asvar tooltip %}
-                Because the download operation of the redirections can take longer, depending on the number of donors,
-                you can currently download one archive every {{ period_between_retries }}.
+            Because the download operation of the redirections can take longer, depending on the number of donors,
+            you can currently download one archive every {{ period_between_retries }}.
               {% endblocktrans %}
-              x-data x-tooltip.raw="{{ tooltip }}"
+            x-data x-tooltip.raw="{{ tooltip }}"
             {% endif %}>
             <button
               type="submit"
