@@ -287,6 +287,9 @@ class Ngo(models.Model):
 
         return [field.field for field in field_names]
 
+    def missing_mandatory_fields(self):
+        return [field for field in self.mandatory_fields if not getattr(self, field.name)]
+
     @property
     def mandatory_fields_names(self):
         return [field.verbose_name for field in self.mandatory_fields]
@@ -298,6 +301,18 @@ class Ngo(models.Model):
     @property
     def mandatory_fields_names_capitalize(self):
         return [field.capitalize() for field in self.mandatory_fields_names]
+
+    @property
+    def missing_mandatory_fields_names(self):
+        return [field.verbose_name for field in self.missing_mandatory_fields()]
+
+    @property
+    def missing_mandatory_fields_names_lower(self):
+        return [field.lower() for field in self.missing_mandatory_fields_names]
+
+    @property
+    def missing_mandatory_fields_names_capitalize(self):
+        return [field.capitalize() for field in self.missing_mandatory_fields_names]
 
     def mandatory_fields_values(self):
         return [getattr(self, field.name) for field in self.mandatory_fields]

@@ -13,7 +13,7 @@
         </p>
       {% endblocktranslate %}
 
-      {% include "components/info-banner.html" with style="error" banner_message=banner_message banner_list=ngo.mandatory_fields_names_capitalize %}
+      {% include "components/info-banner.html" with style="error" banner_message=banner_message banner_list=ngo.missing_mandatory_fields_names_capitalize %}
     </div>
   {% endif %}
 
