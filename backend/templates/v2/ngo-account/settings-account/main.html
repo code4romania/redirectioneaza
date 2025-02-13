@@ -38,7 +38,7 @@
       {% csrf_token %}
 
       {% trans "User Account" as title %}
-      {% include "ngo-account/components/form-title.html" with hide_ngohub_button=True hide_save_button=True %}
+      {% include "ngo-account/components/form-title.html" with hide_ngohub_button=True hide_save_button=True hide_public_page_button=True %}
 
       <fieldset>
         <div class="grid grid-cols-2 py-4 gap-x-6 gap-y-8">

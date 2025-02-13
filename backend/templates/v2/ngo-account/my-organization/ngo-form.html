@@ -16,7 +16,7 @@
       {% csrf_token %}
 
       {% trans "Form Data" as title %}
-      {% include "ngo-account/components/form-title.html" with hide_ngohub_button=True %}
+      {% include "ngo-account/components/form-title.html" %}
 
       <fieldset>
         <div class="flex flex-col gap-8 py-4">
