@@ -40,12 +40,12 @@
 
             <div class="px-6 py-4 border border-gray-200 rounded bg-gray-50">
               <div class="flex gap-3">
-                {% trans "I want to receive the completed forms by email" as input_title %}
+                {% trans "Allow users to sign the form online" as input_title %}
                 {% include "components/input/checkbox.html" with input_id="is_accepting_forms" input_name="is_accepting_forms" value=ngo.is_accepting_forms field=ngo_presentation.is_accepting_forms %}
               </div>
 
               <p class="pt-2 text-xs text-gray-500">
-                {% trans "By selecting this option, I confirm that the NGO has an SPV account to submit the forms" %}
+                {% trans "By selecting this option, I confirm that the NGO has the SPV account that's necessary to submit the forms" %}
               </p>
             </div>
 
