@@ -10,8 +10,6 @@ from donations.models.ngos import Ngo, ngo_slug_validator
 
 
 class NgoPresentationForm(forms.Form):
-    is_accepting_forms = forms.BooleanField(label=_("Is accepting forms"), required=False)
-
     name = forms.CharField(label=_("Name"), max_length=255, required=True)
     if settings.ENABLE_FULL_VALIDATION_CUI:
         cif = ROCIFField(label=_("CUI/CIF"), required=True)
@@ -100,6 +98,8 @@ class NgoPresentationForm(forms.Form):
 
 
 class NgoFormForm(forms.Form):
+    is_accepting_forms = forms.BooleanField(label=_("Is accepting forms"), required=False)
+
     slug = forms.CharField(label=_("Slug"), max_length=150, required=True)
     description = forms.CharField(label=_("Description"), widget=forms.Textarea, required=True)
 

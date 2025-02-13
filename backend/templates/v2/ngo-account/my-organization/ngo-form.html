@@ -21,6 +21,18 @@
       <fieldset>
         <div class="flex flex-col gap-8 py-4">
 
+          <div class="px-6 py-4 border border-gray-200 rounded bg-gray-50">
+            <div class="flex gap-3">
+              {% trans "Allow users to sign the form online" as input_title %}
+              {% include "components/input/checkbox.html" with input_id="is_accepting_forms" input_name="is_accepting_forms" value=ngo.is_accepting_forms field=ngo_presentation.is_accepting_forms %}
+            </div>
+
+            <p class="pt-2 text-xs text-gray-500">
+              {% trans "By selecting this option, I confirm that the NGO has the SPV account that's necessary to submit the forms" %}
+            </p>
+          </div>
+
+
           {% trans "Organization URL" as input_title %}
           {% include "components/input/input.html" with input_id="slug" input_type="text" input_name="slug" is_required=True value=ngo.slug field=ngo_form.slug max_length=150 placeholder="numele-organizatiei" %}
 

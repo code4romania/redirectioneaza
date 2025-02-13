@@ -52,9 +52,17 @@
 
         {% if banner_cta_message and banner_cta_url %}
           <div class="mt-4">
-            <a href="{{ banner_cta_url }}" class="font-semibold hover:underline">
+
+            <a href="{{ banner_cta_url }}" class="flex items-center gap-x-1.5 font-semibold hover:underline">
+
               {{ banner_cta_message }}
+
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-4" stroke-width="2">
+                <path fill-rule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z" clip-rule="evenodd" />
+              </svg>
+
             </a>
+
           </div>
         {% endif %}
 

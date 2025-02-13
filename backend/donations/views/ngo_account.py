@@ -213,7 +213,6 @@ class NgoPresentationView(NgoBaseTemplateView):
             ngo.locality = form.cleaned_data["locality"]
             ngo.active_region = form.cleaned_data["active_region"]
 
-        ngo.is_accepting_forms = form.cleaned_data["is_accepting_forms"]
         ngo.display_email = form.cleaned_data["display_email"]
         ngo.display_phone = form.cleaned_data["display_phone"]
 
@@ -309,6 +308,8 @@ class NgoFormsView(NgoBaseTemplateView):
         ngo.bank_account = form.cleaned_data["iban"]
         ngo.description = form.cleaned_data["description"]
 
+        ngo.is_accepting_forms = form.cleaned_data["is_accepting_forms"]
+
         if errors:
             return render(request, self.template_name, context)
 
@@ -322,10 +323,10 @@ class NgoFormsView(NgoBaseTemplateView):
         return render(request, self.template_name, context)
 
 
-class NgoSettingsView(NgoBaseTemplateView):
-    template_name = "ngo-account/settings/main.html"
+class UserSettingsView(NgoBaseTemplateView):
+    template_name = "ngo-account/settings-account/main.html"
     title = _("Organization settings")
-    sidebar_item_target = "org-settings"
+    sidebar_item_target = "user-settings"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

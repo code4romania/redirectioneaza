@@ -9,7 +9,7 @@ from donations.views.ngo_account import (
     NgoFormsView,
     NgoPresentationView,
     NgoRedirectionsView,
-    NgoSettingsView,
+    UserSettingsView,
 )
 
 admin.site.site_header = f"Admin | {settings.VERSION_LABEL}"
@@ -23,6 +23,6 @@ urlpatterns = [
     path("formulare/", NgoFormsView.as_view(), name="forms"),
     path("redirectionari/", NgoRedirectionsView.as_view(), name="redirections"),
     path("arhive/", NgoArchivesView.as_view(), name="archives"),
-    path("settings/", NgoSettingsView.as_view(), name="settings"),
+    path("setari-cont/", UserSettingsView.as_view(), name="settings-account"),
     path("arhiva/<job_id>/", ArchiveDownloadLinkView.as_view(), name="archive-download-link"),
 ]

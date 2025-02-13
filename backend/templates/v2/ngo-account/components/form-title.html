@@ -39,13 +39,16 @@
       </div>
     {% endif %}
 
-    <div>
-      {% trans "Save changes" as button_title %}
-      <button
-        type="submit"
-        class="w-full px-3 py-2 text-sm font-semibold text-gray-800 no-underline border-2 rounded-md border-amber-300 bg-amber-300 hover:bg-amber-200">
-        {{ button_title }}
-      </button>
-    </div>
+    {% if not hide_save_button %}
+      <div>
+        {% trans "Save changes" as button_title %}
+        <button
+          type="submit"
+          class="w-full px-3 py-2 text-sm font-semibold text-gray-800 no-underline border-2 rounded-md border-amber-300 bg-amber-300 hover:bg-amber-200">
+          {{ button_title }}
+        </button>
+      </div>
+    {% endif %}
+
   </div>
 </div>

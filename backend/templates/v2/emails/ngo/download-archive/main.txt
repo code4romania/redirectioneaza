@@ -3,8 +3,12 @@
 {% trans "Hello," %}
 
 {% blocktrans trimmed %}
-  We have received your request and have created an archive with all the information you need.
+  We have received your request and prepared the archive with your organization's forms.
+  You can access the documents by clicking the button below.
+  Remember that the deadline for submitting the forms to ANAF is
 {% endblocktrans %}
+
+{{ donation_limit_day }} {{ donation_limit_month_name }} {{ donation_limit_year }}
 
 {{ action_url }}
 

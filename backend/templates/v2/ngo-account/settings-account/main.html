@@ -11,14 +11,15 @@
     </h1>
 
     <p class="pt-2 mt-2 text-lg text-gray-500">
-      {% if has_ngo_hub %}
-        {% blocktrans trimmed %}
-          Some of the settings here are managed by the NGO Hub platform.
-          If you need to change them, make the updates on NGO Hub.
-        {% endblocktrans %}
+      {% if has_ngohub %}
+        <a href="https://app.ngohub.ro/account" class="underline hover:cursor-pointer hover:text-slate-900">
+          {% blocktrans trimmed %}
+            Manage your account settings in NGO Hub
+          {% endblocktrans %}
+        </a>
       {% else %}
         {% blocktrans trimmed %}
-          Here you can manage your organization's settings.
+          Here you can manage your account settings.
         {% endblocktrans %}
       {% endif %}
     </p>
@@ -32,18 +33,18 @@
     <form
       method="post"
       enctype="multipart/form-data"
-      action="{% url 'my-organization:settings' %}">
+      action="{% url 'my-organization:settings-account' %}">
 
       {% csrf_token %}
 
-      {% trans "User Account Details" as title %}
-      {% include "ngo-account/components/form-title.html" with hide_ngohub_button=True %}
+      {% trans "User Account" as title %}
+      {% include "ngo-account/components/form-title.html" with hide_ngohub_button=True hide_save_button=True %}
 
       <fieldset>
         <div class="grid grid-cols-2 py-4 gap-x-6 gap-y-8">
 
           <div class="col-span-2">
-            {% trans "E-mail address" as input_title %}
+            {% trans "E-mail" as input_title %}
             {% include "components/input/input.html" with input_id="email" input_type="email" input_name="email" placeholder="Email address" is_required=True value=user.email is_disabled=True %}
           </div>
 

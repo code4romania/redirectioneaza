@@ -104,7 +104,7 @@ urlpatterns = (
         path("contul-meu/", RedirectView.as_view(pattern_name="my-organization:dashboard", permanent=True)),
         path("organizatia/", RedirectView.as_view(pattern_name="my-organization:dashboard", permanent=True)),
         path("asociatia/", RedirectView.as_view(pattern_name="my-organization:dashboard", permanent=True)),
-        path("date-cont/", RedirectView.as_view(pattern_name="my-organization:settings", permanent=True)),
+        path("date-cont/", RedirectView.as_view(pattern_name="my-organization:settings-account", permanent=True)),
         path(
             "contul-meu/eroare/aplicatie-lipsa/",
             StaticPageView.as_view(template_name="account/errors/login/app_missing.html"),
