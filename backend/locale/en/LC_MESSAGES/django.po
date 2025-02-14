@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-13 17:14+0200\n"
+"POT-Creation-Date: 2025-02-14 10:42+0200\n"
 "PO-Revision-Date: 2024-02-28 15:45+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -71,7 +71,7 @@ msgid "Donations"
 msgstr "Donations"
 
 #: donations/admin.py:169 donations/admin.py:272 donations/admin.py:434
-#: donations/admin.py:484 donations/models/donors.py:54
+#: donations/admin.py:484 donations/models/donors.py:52
 #: donations/models/jobs.py:28 donations/models/ngos.py:242
 #: partners/admin.py:49 partners/models.py:120 users/models.py:71
 msgid "NGO"
@@ -435,7 +435,7 @@ msgstr "Apartment"
 msgid "Two years"
 msgstr "two years"
 
-#: donations/forms/redirection.py:36 donations/models/donors.py:94
+#: donations/forms/redirection.py:36 donations/models/donors.py:90
 msgid "ANAF GDPR"
 msgstr ""
 
@@ -455,98 +455,102 @@ msgstr ""
 msgid "Signature"
 msgstr "Sign In"
 
-#: donations/models/donors.py:50
+#: donations/models/donors.py:48
 msgid "wage"
 msgstr "wage"
 
-#: donations/models/donors.py:51
+#: donations/models/donors.py:49
 msgid "pension"
 msgstr "pension"
 
-#: donations/models/donors.py:58 donations/views/donations_download.py:173
+#: donations/models/donors.py:54 donations/views/donations_download.py:171
 msgid "last name"
 msgstr "last name"
 
-#: donations/models/donors.py:59 donations/views/donations_download.py:174
+#: donations/models/donors.py:55 donations/views/donations_download.py:172
 msgid "first name"
 msgstr "first name"
 
-#: donations/models/donors.py:60
+#: donations/models/donors.py:56
 msgid "initials"
 msgstr "initials"
 
-#: donations/models/donors.py:62 donations/views/donations_download.py:176
+#: donations/models/donors.py:58 donations/views/donations_download.py:174
 msgid "CNP"
 msgstr "CNP"
 
-#: donations/models/donors.py:65 donations/views/donations_download.py:181
+#: donations/models/donors.py:61 donations/views/donations_download.py:179
 msgid "city"
 msgstr "city"
 
-#: donations/models/donors.py:73 donations/models/ngos.py:167
-#: donations/views/donations_download.py:180
+#: donations/models/donors.py:69 donations/models/ngos.py:167
+#: donations/views/donations_download.py:178
 msgid "county"
 msgstr "county"
 
-#: donations/models/donors.py:80 donations/models/ngos.py:157
+#: donations/models/donors.py:76 donations/models/ngos.py:157
 msgid "address"
 msgstr "address"
 
-#: donations/models/donors.py:83 donations/models/ngos.py:184
+#: donations/models/donors.py:79 donations/models/ngos.py:184
 msgid "telephone"
 msgstr "telephone"
 
-#: donations/models/donors.py:84 donations/models/ngos.py:183
-#: donations/views/donations_download.py:179
+#: donations/models/donors.py:80 donations/models/ngos.py:183
+#: donations/views/donations_download.py:177
 msgid "email"
 msgstr "email"
 
-#: donations/models/donors.py:88
+#: donations/models/donors.py:84
 msgid "anonymous"
 msgstr "anonymous"
 
-#: donations/models/donors.py:91
+#: donations/models/donors.py:87
 msgid "If the user would like the ngo to see the donation"
 msgstr "If the user would like the ngo to see the donation"
 
-#: donations/models/donors.py:96
+#: donations/models/donors.py:92
 msgid "If the user agrees for ANAF to share their data with the NGO"
 msgstr ""
 
-#: donations/models/donors.py:101
+#: donations/models/donors.py:97
 msgid "income type"
 msgstr "income type"
 
-#: donations/models/donors.py:110
+#: donations/models/donors.py:106
 msgid "two years"
 msgstr "two years"
 
-#: donations/models/donors.py:112
+#: donations/models/donors.py:108
 msgid "If the user wants to donate for 2 years"
 msgstr "If the user wants to donate for 2 years"
 
-#: donations/models/donors.py:115
+#: donations/models/donors.py:111
 msgid "Geo IP"
 msgstr "Geo IP"
 
-#: donations/models/donors.py:117
+#: donations/models/donors.py:113 donations/views/donations_download.py:187
+msgid "filename"
+msgstr "filename"
+
+#: donations/models/donors.py:114
 msgid "has signed"
 msgstr "has signed"
 
-#: donations/models/donors.py:120
+#: donations/models/donors.py:117
 msgid "PDF file"
 msgstr "PDF file"
 
-#: donations/models/donors.py:127 donations/models/jobs.py:52
+#: donations/models/donors.py:124 donations/models/jobs.py:52
 #: donations/models/ngos.py:216 partners/models.py:68 users/models.py:95
 msgid "date created"
 msgstr "date created"
 
-#: donations/models/donors.py:138
+#: donations/models/donors.py:135
 msgid "donor"
 msgstr "donor"
 
-#: donations/models/donors.py:139
+#: donations/models/donors.py:136
 msgid "donors"
 msgstr "donors"
 
@@ -854,59 +858,55 @@ msgstr "Donations in %d"
 msgid "Documents ready for download"
 msgstr "Documents ready for download"
 
-#: donations/views/donations_download.py:172
+#: donations/views/donations_download.py:170
 msgid "no."
 msgstr "no."
 
-#: donations/views/donations_download.py:175
+#: donations/views/donations_download.py:173
 msgid "initial"
 msgstr "initial"
 
-#: donations/views/donations_download.py:177
+#: donations/views/donations_download.py:175
 msgid "duplicate"
 msgstr "duplicate"
 
-#: donations/views/donations_download.py:178
+#: donations/views/donations_download.py:176
 msgid "phone"
 msgstr "phone"
 
-#: donations/views/donations_download.py:182
+#: donations/views/donations_download.py:180
 msgid "full address"
 msgstr "full address"
 
-#: donations/views/donations_download.py:183
+#: donations/views/donations_download.py:181
 msgid "street name"
 msgstr "street name"
 
-#: donations/views/donations_download.py:184
+#: donations/views/donations_download.py:182
 msgid "street number"
 msgstr "street number"
 
-#: donations/views/donations_download.py:185
+#: donations/views/donations_download.py:183
 msgid "building"
 msgstr "building"
 
-#: donations/views/donations_download.py:186
+#: donations/views/donations_download.py:184
 msgid "entrance"
 msgstr "entrance"
 
-#: donations/views/donations_download.py:187
+#: donations/views/donations_download.py:185
 msgid "floor"
 msgstr "floor"
 
-#: donations/views/donations_download.py:188
+#: donations/views/donations_download.py:186
 msgid "apartment"
 msgstr "apartment"
 
-#: donations/views/donations_download.py:189
-msgid "filename"
-msgstr "filename"
-
-#: donations/views/donations_download.py:190
+#: donations/views/donations_download.py:188
 msgid "date"
 msgstr "date"
 
-#: donations/views/donations_download.py:191
+#: donations/views/donations_download.py:189
 msgid "duration"
 msgstr "duration"
 
@@ -922,44 +922,44 @@ msgstr "The IBAN number must contain only letters and digits"
 msgid "The IBAN number must start with 'RO'"
 msgstr "The IBAN number must start with 'RO'"
 
-#: donations/views/ngo_account.py:68 donations/views/ngo_account.py:116
+#: donations/views/ngo_account.py:68 donations/views/ngo_account.py:117
 #, fuzzy
 #| msgid "NGO Hub organization ID"
 msgid "Organization details"
 msgstr "NGO Hub organization ID"
 
-#: donations/views/ngo_account.py:186
+#: donations/views/ngo_account.py:187
 msgid "There are some errors on the presentation form."
 msgstr ""
 
-#: donations/views/ngo_account.py:237
+#: donations/views/ngo_account.py:238
 #, fuzzy
 #| msgid "NGO Hub organization ID"
 msgid "Organization forms"
 msgstr "NGO Hub organization ID"
 
-#: donations/views/ngo_account.py:287 donations/views/redirections.py:176
+#: donations/views/ngo_account.py:288 donations/views/redirections.py:176
 msgid "There are some errors on the redirection form."
 msgstr ""
 
-#: donations/views/ngo_account.py:296
+#: donations/views/ngo_account.py:297
 #, fuzzy
 #| msgid "The URL is already used"
 msgid "The URL is blocked"
 msgstr "The URL is already used"
 
-#: donations/views/ngo_account.py:300
+#: donations/views/ngo_account.py:301
 msgid "The URL is already used"
 msgstr "The URL is already used"
 
-#: donations/views/ngo_account.py:328
+#: donations/views/ngo_account.py:329
 #: templates/v2/ngo-account/settings-account/main.html:10
 #, fuzzy
 #| msgid "NGO Hub organization ID"
 msgid "Organization settings"
 msgstr "NGO Hub organization ID"
 
-#: donations/views/ngo_account.py:371
+#: donations/views/ngo_account.py:372
 #: redirectioneaza/context_processors/headers.py:106
 #: templates/v2/ngo-account/redirections/main.html:10
 #, fuzzy
@@ -967,11 +967,11 @@ msgstr "NGO Hub organization ID"
 msgid "Redirections"
 msgstr "Options"
 
-#: donations/views/ngo_account.py:423
+#: donations/views/ngo_account.py:424
 msgid "Archives history "
 msgstr ""
 
-#: donations/views/ngo_account.py:465
+#: donations/views/ngo_account.py:466
 #: templates/v2/emails/ngo/download-archive/main.html:21
 msgid "Download archive"
 msgstr ""
@@ -982,11 +982,11 @@ msgstr ""
 msgid "Successful redirection"
 msgstr "Successful tasks"
 
-#: donations/views/redirections.py:247
+#: donations/views/redirections.py:249
 msgid "Un nou formular de redirecționare"
 msgstr "Un nou formular de redirecționare"
 
-#: donations/views/redirections.py:254 donations/views/redirections.py:277
+#: donations/views/redirections.py:256 donations/views/redirections.py:276
 msgid "Formularul tău de redirecționare"
 msgstr "Formularul tău de redirecționare"
 
@@ -1073,10 +1073,6 @@ msgstr "Options"
 #: templates/v2/redirect/footer.html:153 templates/v2/redirect/footer.html:166
 msgid "Frequently Asked Questions"
 msgstr "Frequently Asked Questions"
-
-#: importer/apps.py:8
-msgid "Importer"
-msgstr "Importer"
 
 #: partners/admin.py:25
 #, fuzzy
@@ -1323,7 +1319,7 @@ msgid "Dashboard"
 msgstr "Dashboard"
 
 #: redirectioneaza/context_processors/headers.py:94
-#: templates/v2/ngo-account/my-organization/base.html:31
+#: templates/v2/ngo-account/my-organization/base.html:43
 #, fuzzy
 #| msgid "NGO Hub organization ID"
 msgid "Organization Data"
@@ -2148,8 +2144,8 @@ msgstr ""
 #, python-format
 msgid ""
 "Send it or submit it directly to the tax office (ANAF) in the area where you "
-"are domiciled, until <strong>%(limit_day)s %(limit_month)s %(limit_year)s</"
-"strong>."
+"are domiciled, until <strong>%(donation_limit_day)s "
+"%(donation_limit_month_name)s %(donation_limit_year)s</strong>."
 msgstr ""
 
 #: templates/v2/emails/donor/redirection-sans-signature/main.html:44
@@ -2177,7 +2173,8 @@ msgstr ""
 #: templates/v2/emails/donor/redirection-sans-signature/main.txt:21
 msgid ""
 "Send it or submit it directly to the tax office (ANAF) in the area where you "
-"are domiciled, until {{ limit.day }} {{ month_limit }} {{ limit.year }}."
+"are domiciled, until {{ donation_limit_day }} "
+"{{ donation_limit_month_name }} {{ donation_limit_year }}."
 msgstr ""
 
 #: templates/v2/emails/donor/redirection-sans-signature/main.txt:24
@@ -2556,23 +2553,32 @@ msgstr "NGOs from NGO Hub"
 msgid "Save changes"
 msgstr ""
 
-#: templates/v2/ngo-account/my-organization/base.html:9
+#: templates/v2/ngo-account/my-organization/base.html:10
 msgid ""
 "<p> Your organization can't currently receive forms because not all the "
 "required information has been filled in. Please make sure the following "
 "fields are filled in: </p>"
 msgstr ""
 
-#: templates/v2/ngo-account/my-organization/base.html:35
+#: templates/v2/ngo-account/my-organization/base.html:19
+#, python-format
+msgid ""
+"<p> Your organization can't currently receive forms because it is not "
+"active. If you think this is a mistake, please contact us at <a "
+"href=\"mailto:%(contact_email)s\" class=\"text-blue-600 "
+"underline\">%(contact_email)s</a>. </p>"
+msgstr ""
+
+#: templates/v2/ngo-account/my-organization/base.html:47
 msgid "Fill out the organization's profile on redirectioneaza.ro"
 msgstr ""
 
-#: templates/v2/ngo-account/my-organization/base.html:40
+#: templates/v2/ngo-account/my-organization/base.html:52
 #: templates/v2/ngo-account/my-organization/ngo-presentation.html:27
 msgid "Presentation Data"
 msgstr ""
 
-#: templates/v2/ngo-account/my-organization/base.html:41
+#: templates/v2/ngo-account/my-organization/base.html:53
 #: templates/v2/ngo-account/my-organization/ngo-form.html:18
 #, fuzzy
 #| msgid "Form"
@@ -2962,6 +2968,9 @@ msgstr "old password"
 #: users/models.py:178
 msgid "Group"
 msgstr "Group"
+
+#~ msgid "Importer"
+#~ msgstr "Importer"
 
 #, fuzzy
 #~| msgid "User Link"

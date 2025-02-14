@@ -77,6 +77,7 @@ class NgoBaseView(BaseContextPropertiesMixin):
             "ngo": ngo,
             "title": self._get_checked_property("title", ""),
             "active_item": self._get_checked_property("sidebar_item_target", ""),
+            "contact_email": settings.CONTACT_EMAIL_ADDRESS,
         }
 
 
