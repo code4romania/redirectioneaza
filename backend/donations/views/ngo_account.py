@@ -326,7 +326,7 @@ class NgoFormsView(NgoBaseTemplateView):
 
 class UserSettingsView(NgoBaseTemplateView):
     template_name = "ngo-account/settings-account/main.html"
-    title = _("Organization settings")
+    title = _("Account settings")
     sidebar_item_target = "user-settings"
 
     def get_context_data(self, **kwargs):
@@ -421,7 +421,7 @@ class NgoRedirectionsView(NgoBaseListView):
 
 class NgoArchivesView(NgoBaseListView):
     template_name = "ngo-account/archives/main.html"
-    title = _("Archives history ")
+    title = _("Archives history")
     context_object_name = "archive_jobs"
     paginate_by = 8
     sidebar_item_target = "org-archives"
