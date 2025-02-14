@@ -4,35 +4,40 @@
 
 {% block page_heading %}
 
-  {% if not ngo.can_receive_forms %}
-    <div class="py-6">
-      {% if ngo.is_active %}
-        {% blocktranslate trimmed asvar banner_message %}
-          <p>
-            Your organization can't currently receive forms because not all the required information has been filled in.
-            Please make sure the following fields are filled in:
-          </p>
-        {% endblocktranslate %}
+  {% if ngo %}
 
-        {% include "components/info-banner.html" with style="error" banner_message=banner_message banner_list=ngo.missing_mandatory_fields_names_capitalize %}
-      {% else %}
-        {% blocktranslate trimmed asvar banner_message %}
-          <p>
-            Your organization can't currently receive forms because it is not active.
-            If you think this is a mistake, please contact us at
-            <a href="mailto:{{ contact_email }}" class="text-blue-600 underline">{{ contact_email }}</a>.
-          </p>
-        {% endblocktranslate %}
+    {% if not ngo.can_receive_forms %}
+      <div class="py-6">
+        {% if ngo.is_active %}
+          {% blocktranslate trimmed asvar banner_message %}
+            <p>
+              Your organization can't currently receive forms because not all the required information has been filled
+              in.
+              Please make sure the following fields are filled in:
+            </p>
+          {% endblocktranslate %}
 
-        {% include "components/info-banner.html" with style="error" banner_message=banner_message %}
-      {% endif %}
-    </div>
-  {% endif %}
+          {% include "components/info-banner.html" with style="error" banner_message=banner_message banner_list=ngo.missing_mandatory_fields_names_capitalize %}
+        {% else %}
+          {% blocktranslate trimmed asvar banner_message %}
+            <p>
+              Your organization can't currently receive forms because it is not active.
+              If you think this is a mistake, please contact us at
+              <a href="mailto:{{ contact_email }}" class="text-blue-600 underline">{{ contact_email }}</a>.
+            </p>
+          {% endblocktranslate %}
 
-  {% if not ngo.is_accepting_forms %}
-    <div class="py-6">
-      {% include "ngo-account/banners/form-emails-banner.html" %}
-    </div>
+          {% include "components/info-banner.html" with style="error" banner_message=banner_message %}
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {% if not ngo.is_accepting_forms %}
+      <div class="py-6">
+        {% include "ngo-account/banners/form-emails-banner.html" %}
+      </div>
+    {% endif %}
+
   {% endif %}
 
   <div
