@@ -34,7 +34,21 @@ def ngo_directory_path(subdir: str, instance: "Ngo", filename: str) -> str:
     """
     The file will be uploaded to MEDIA_ROOT/<subdir>/ngo-<id>-<hash>/<filename>
     """
-    return "{0}/ngo-{1}-{2}/{3}".format(subdir, instance.pk, hash_id_secret("ngo", instance.pk), filename)
+    ngo_pk = instance.pk
+    ngo_hash = hash_id_secret("ngo", ngo_pk)
+
+    return f"{subdir}/ngo-{ngo_pk}-{ngo_hash}/{filename}"
+
+
+def ngo_form_directory_path(subdir: str, instance: "NgoForm", filename: str) -> str:
+    """
+    The file will be uploaded to MEDIA_ROOT/<subdir>/ngo-<id>-<hash>/<filename>
+    """
+    ngo_pk = instance.ngo.pk
+    form_pk = instance.pk
+    form_hash = hash_id_secret("ngo-form", form_pk)
+
+    return f"{subdir}/ngo-{ngo_pk}/form-{form_pk}-{form_hash}/{filename}"
 
 
 def year_ngo_directory_path(subdir: str, instance: "Ngo", filename: str) -> str:
@@ -42,9 +56,12 @@ def year_ngo_directory_path(subdir: str, instance: "Ngo", filename: str) -> str:
     The file will be uploaded to MEDIA_ROOT/<subdir>/<year>/ngo-<id>-<hash>/<filename>
     """
     timestamp = timezone.now()
-    return "{0}/{1}/ngo-{2}-{3}/{4}".format(
-        subdir, timestamp.date().year, instance.pk, hash_id_secret("ngo", instance.pk), filename
-    )
+
+    year = timestamp.date().year
+    ngo_pk = instance.pk
+    ngo_hash = hash_id_secret("ngo", ngo_pk)
+
+    return f"{subdir}/{year}/ngo-{ngo_pk}-{ngo_hash}/{filename}"
 
 
 def ngo_slug_validator(value):
@@ -104,6 +121,7 @@ class Ngo(models.Model):
     )
 
     name = models.CharField(verbose_name=_("Name"), blank=False, null=False, max_length=200, db_index=True)
+    # XXX: [MULTI-FORM] Move to NgoForm
     description = models.TextField(verbose_name=_("description"))
 
     # NGO Hub details
@@ -118,6 +136,7 @@ class Ngo(models.Model):
     ngohub_last_update_ended = models.DateTimeField(_("Last NGO Hub update"), null=True, blank=True, editable=False)
 
     # originally: logo
+    # XXX: [MULTI-FORM] Should we move this to NgoForm ???
     logo = models.ImageField(
         verbose_name=_("logo"),
         blank=True,
@@ -126,7 +145,7 @@ class Ngo(models.Model):
         upload_to=partial(ngo_directory_path, "logos"),
     )
 
-    # originally: account
+    # XXX: [MULTI-FORM] Move to NgoForm
     bank_account = models.CharField(verbose_name=_("bank account"), max_length=100)
 
     # originally: cif
@@ -347,3 +366,42 @@ class Ngo(models.Model):
         if changed:
             ngo.save()
             logging.info("Prefilled form deleted for NGO id %d", ngo_id)
+
+
+class NgoForm(models.Model):
+    ngo = models.ForeignKey(Ngo, on_delete=models.CASCADE, related_name="forms")
+
+    allow_online_collection = models.BooleanField(verbose_name=_("allow online collection"), default=False)
+
+    display_image = models.ImageField(
+        verbose_name=_("logo"),
+        blank=True,
+        null=False,
+        storage=select_public_storage,
+        upload_to=partial(ngo_directory_path, "logos"),
+    )
+
+    slug = models.SlugField(
+        verbose_name=_("slug"),
+        blank=False,
+        null=False,
+        max_length=150,
+        db_index=True,
+        unique=True,
+        validators=[ngo_slug_validator],
+    )
+
+    title = models.CharField(verbose_name=_("title"), blank=False, null=False, max_length=200, db_index=True)
+    description = models.TextField(verbose_name=_("description"))
+
+    bank_account = models.CharField(verbose_name=_("bank account"), max_length=100)
+
+    date_created = models.DateTimeField(verbose_name=_("date created"), db_index=True, auto_now_add=True)
+    date_updated = models.DateTimeField(verbose_name=_("date updated"), db_index=True, auto_now=True)
+
+    class Meta:
+        verbose_name = _("NGO form")
+        verbose_name_plural = _("NGO forms")
+
+    def __str__(self):
+        return f"{self.ngo.name} - {self.title}"
