@@ -18,7 +18,7 @@
 {% endblocktranslate %}
 
 - {% trans "Send it to the beneficiary NGO, which will then take care of submitting it to ANAF." %}
-- {% trans "Send it or submit it directly to the tax office (ANAF) in the area where you are domiciled, until {{ limit.day }} {{ month_limit }} {{ limit.year }}." %}
+- {% trans "Send it or submit it directly to the tax office (ANAF) in the area where you are domiciled, until {{ donation_limit_day }} {{ donation_limit_month_name }} {{ donation_limit_year }}." %}
 
 
 {% trans "The organization's contact info" %}

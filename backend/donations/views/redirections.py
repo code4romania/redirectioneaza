@@ -238,9 +238,11 @@ class RedirectionHandler(TemplateView):
             {
                 "ngo_url": request.build_absolute_uri(reverse("twopercent", kwargs={"ngo_url": ngo_url})),
                 "ngo_name": ngo.name,
+                "donation_is_two_years": new_donor.two_years,
             }
         )
 
+        # TODO: add a text for two-year donations
         # send and email to the donor with a link to the PDF file
         if signature:
             send_email(
@@ -268,9 +270,6 @@ class RedirectionHandler(TemplateView):
                 {
                     "ngo_address": ngo_address,
                     "ngo_email": ngo.email,
-                    "limit_day": settings.DONATIONS_LIMIT.day,
-                    "limit_month": settings.DONATIONS_LIMIT_MONTH_NAME,
-                    "limit_year": settings.DONATIONS_LIMIT.year,
                 }
             )
             send_email(
