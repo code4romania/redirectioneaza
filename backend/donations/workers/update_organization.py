@@ -114,7 +114,7 @@ def update_local_ngo_with_ngohub_data(ngo: Ngo, ngohub_ngo: Organization) -> Dic
         if NgoSlugValidator.is_blocked(new_slug):
             random_string = "".join(random.choices(string.ascii_lowercase + string.digits, k=5))
             new_slug = f"{new_slug}-{random_string}"
-        elif NgoSlugValidator.is_reused(new_slug, ngo.pk):
+        elif NgoSlugValidator.is_reused_by_ngo(new_slug, ngo.pk):
             random_string = "".join(random.choices(string.ascii_lowercase + string.digits, k=5))
             new_slug = f"{new_slug}-{random_string}"
         ngo.slug = new_slug

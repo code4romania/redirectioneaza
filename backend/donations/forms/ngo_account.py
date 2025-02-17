@@ -6,7 +6,7 @@ from localflavor.ro.forms import ROCIFField
 
 from donations.common.validation.phone_number import validate_phone_number
 from donations.common.validation.validate_slug import NgoSlugValidator
-from donations.models.ngos import Ngo, ngo_slug_validator
+from donations.models.ngos import Ngo, NgoForm, ngo_slug_validator
 
 
 class NgoPresentationForm(forms.Form):
@@ -97,29 +97,33 @@ class NgoPresentationForm(forms.Form):
         return phone_number_validation["result"]
 
 
-class NgoFormForm(forms.Form):
-    is_accepting_forms = forms.BooleanField(label=_("Is accepting forms"), required=False)
-
-    slug = forms.CharField(label=_("Slug"), max_length=150, required=True)
-    description = forms.CharField(label=_("Description"), widget=forms.Textarea, required=True)
-
+class NgoFormForm(forms.ModelForm):
     if settings.ENABLE_FULL_VALIDATION_IBAN:
-        iban = IBANFormField(label=_("IBAN"), include_countries=("RO",), required=True)
+        bank_account = IBANFormField(label=_("IBAN"), include_countries=("RO",), required=True)
     else:
-        iban = forms.CharField(label=_("IBAN"), max_length=24, min_length=24, required=True)
+        bank_account = forms.CharField(label=_("IBAN"), max_length=24, min_length=24, required=True)
 
-    def __init__(self, *args, **kwargs):
-        self.ngo = kwargs.pop("ngo")
+    class Meta:
+        model = NgoForm
 
-        super().__init__(*args, **kwargs)
+        exclude = [
+            "ngo",
+            "date_created",
+            "date_updated",
+            # TODO: remove these once we have multiple forms
+            "title",
+        ]
 
     def clean_slug(self):
         slug = self.cleaned_data.get("slug").lower()
 
         ngo_slug_validator(slug)
 
-        if Ngo.objects.filter(slug=slug).exclude(pk=self.ngo.pk).exists():
+        if NgoForm.objects.filter(slug=slug).exclude(pk=self.instance.pk).exists():
             raise forms.ValidationError(_("An NGO with this slug already exists."))
+
+        if NgoSlugValidator.is_reused(slug, self.instance.pk):
+            raise forms.ValidationError(_("This slug is already used by another form."))
 
         if NgoSlugValidator.is_blocked(slug):
             raise forms.ValidationError(_("This slug is not allowed."))

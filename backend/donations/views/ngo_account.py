@@ -21,7 +21,7 @@ from ..common.validation.validate_slug import NgoSlugValidator
 from ..forms.ngo_account import NgoFormForm, NgoPresentationForm
 from ..models.donors import Donor
 from ..models.jobs import Job
-from ..models.ngos import Ngo
+from ..models.ngos import Ngo, NgoForm
 from .base import BaseContextPropertiesMixin, BaseVisibleTemplateView
 from .common import get_ngo_archive_download_status
 
@@ -248,9 +248,14 @@ class NgoFormsView(NgoBaseTemplateView):
         if ngo and ngo.slug:
             ngo_url = self.request.build_absolute_uri(reverse("twopercent", kwargs={"ngo_url": ngo.slug}))
 
+        ngo_form = None
+        if ngo:
+            ngo_form = NgoForm.objects.filter(ngo=ngo).first()
+
         context.update(
             {
                 "ngo_url": ngo_url,
+                "ngo_form": ngo_form,
                 "active_tab": self.tab_title,
             }
         )
@@ -276,43 +281,32 @@ class NgoFormsView(NgoBaseTemplateView):
 
         context = self.get_context_data()
 
-        errors: List[str] = []
-
         ngo: Ngo = user.ngo
 
         must_refresh_prefilled_form = False
 
-        form = NgoFormForm(post, ngo=ngo)
+        ngo_form: NgoForm = NgoForm.objects.filter(ngo=ngo).first()
+        form = NgoFormForm(post, instance=ngo_form)
+
+        context.update({"django_form": form})
 
         if not form.is_valid():
             messages.error(request, _("There are some errors on the redirection form."))
-            context.update({"ngo_form": form})
             return render(request, self.template_name, context)
 
-        slug_has_errors = False
+        ngo_form = form.save(commit=False)
 
-        form_slug = form.cleaned_data["slug"]
-        if NgoSlugValidator.is_blocked(form_slug):
-            slug_has_errors = True
-            form.add_error("slug", ValidationError(_("The URL is blocked")))
+        ngo_form.title = ngo.name
+        ngo_form.ngo = ngo
 
-        if NgoSlugValidator.is_reused(form_slug, ngo.pk):
-            slug_has_errors = True
-            form.add_error("slug", ValidationError(_("The URL is already used")))
+        ngo_form.save()
 
-        if slug_has_errors:
-            context["ngo_form"] = form
-            return render(request, self.template_name, context)
+        # TODO: Remove once testing is finished, this information should only be kept in the forms
+        ngo.slug = ngo_form.slug
+        ngo.bank_account = ngo_form.bank_account
+        ngo.description = ngo_form.description
 
-        ngo.slug = form_slug
-
-        ngo.bank_account = form.cleaned_data["iban"]
-        ngo.description = form.cleaned_data["description"]
-
-        ngo.is_accepting_forms = form.cleaned_data["is_accepting_forms"]
-
-        if errors:
-            return render(request, self.template_name, context)
+        ngo.is_accepting_forms = ngo_form.allow_online_collection
 
         ngo.save()
 
@@ -320,6 +314,7 @@ class NgoFormsView(NgoBaseTemplateView):
             async_task("donations.views.my_account.delete_prefilled_form", ngo.id)
 
         context["ngo"] = ngo
+        context["ngo_form"] = ngo_form
 
         return render(request, self.template_name, context)
 

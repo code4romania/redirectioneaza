@@ -24,7 +24,7 @@
           <div class="px-6 py-4 border border-gray-200 rounded bg-gray-50">
             <div class="flex gap-3">
               {% trans "Allow users to sign the form online" as input_title %}
-              {% include "components/input/checkbox.html" with input_id="is_accepting_forms" input_name="is_accepting_forms" value=ngo.is_accepting_forms field=ngo_form.is_accepting_forms %}
+              {% include "components/input/checkbox.html" with input_id="allow_online_collection" input_name="allow_online_collection" value=ngo_form.allow_online_collection field=django_form.allow_online_collection %}
             </div>
 
             <p class="pt-2 text-xs text-gray-500">
@@ -32,20 +32,19 @@
             </p>
           </div>
 
-
           {% trans "Organization URL" as input_title %}
-          {% include "components/input/input.html" with input_id="slug" input_type="text" input_name="slug" is_required=True value=ngo.slug field=ngo_form.slug max_length=150 placeholder="numele-organizatiei" %}
+          {% include "components/input/input.html" with input_id="slug" input_type="text" input_name="slug" is_required=True value=ngo_form.slug field=django_form.slug max_length=150 placeholder="numele-organizatiei" %}
 
           <hr class="w-full border-gray-200">
 
           {% trans "Form title" as input_title %}
-          {% include "components/input/input.html" with input_id="form_title" input_type="text" input_name="form_title" placeholder="Organization name" is_required=True is_disabled=True value=ngo.name %}
+          {% include "components/input/input.html" with input_id="title" input_type="text" input_name="title" placeholder=input_title is_required=True is_disabled=True value=ngo.name %}
 
           {% trans "Form description" as input_title %}
-          {% include "components/input/textarea.html" with input_id="description" input_type="textarea" input_name="description" is_required=True value=ngo.description field=ngo_form.description %}
+          {% include "components/input/textarea.html" with input_id="description" input_type="textarea" input_name="description" is_required=True value=ngo_form.description field=django_form.description %}
 
           {% trans "IBAN on form" as input_title %}
-          {% include "components/input/input.html" with input_id="iban" input_type="text" input_name="iban" placeholder="RO00 1234 5678 1234 5678" is_required=True value=ngo.bank_account field=ngo_form.iban max_length=48 %}
+          {% include "components/input/input.html" with input_id="bank_account" input_type="text" input_name="bank_account" placeholder="RO00 1234 5678 1234 5678" is_required=True value=ngo_form.bank_account field=django_form.bank_account max_length=48 %}
 
         </div>
       </fieldset>
