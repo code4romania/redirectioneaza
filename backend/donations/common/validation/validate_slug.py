@@ -1,3 +1,5 @@
+from typing import Optional
+
 from django.db.models import QuerySet
 
 from donations.models.ngos import Ngo, NgoForm
@@ -58,21 +60,13 @@ class NgoSlugValidator:
         return False
 
     @classmethod
-    def is_reused(cls, slug: str, form_pk: int):
-        ngo_form_queryset: QuerySet = NgoForm.objects.exclude(pk=form_pk).filter(slug=slug.lower())
+    def is_reused(cls, slug: str, form_pk: Optional[int] = None):
+        ngo_form_queryset: QuerySet = NgoForm.objects.filter(slug=slug.lower())
+
+        if form_pk:
+            ngo_form_queryset = ngo_form_queryset.exclude(pk=form_pk)
 
         if ngo_form_queryset.exists():
-            return True
-
-        return False
-
-    @classmethod
-    def is_reused_by_ngo(cls, slug: str, ngo_pk: int):
-        ngo_queryset: QuerySet[Ngo] = Ngo.objects
-
-        ngo_queryset = ngo_queryset.exclude(pk=ngo_pk)
-
-        if ngo_queryset.filter(slug=slug.lower()).exists():
             return True
 
         return False
