@@ -10,12 +10,12 @@ asgiref==3.8.1
     #   django-allauth
 blessed==1.20.0
     # via -r requirements.in
-boto3==1.36.18
+boto3==1.36.21
     # via
     #   django-ses
     #   django-storages
     #   pycognito
-botocore==1.36.18
+botocore==1.36.21
     # via
     #   boto3
     #   s3transfer
@@ -60,7 +60,7 @@ django-import-export==4.3.5
     # via -r requirements.in
 django-ipware==7.0.1
     # via -r requirements.in
-django-localflavor==4.0
+django-localflavor @ git+https://github.com/tudoramariei/django-localflavor.git@fix-rocnpfield-xx00
     # via -r requirements.in
 django-picklefield==3.2
     # via django-q2
@@ -70,7 +70,7 @@ django-recaptcha==4.0.0
     # via -r requirements.in
 django-ses==4.3.2
     # via -r requirements.in
-django-storages==1.14.4
+django-storages==1.14.5
     # via -r requirements.in
 django-tinymce==4.1.0
     # via -r requirements.in
@@ -98,7 +98,7 @@ ngohub==0.0.10
     # via -r requirements.in
 packaging==24.2
     # via gunicorn
-phonenumbers==8.13.54
+phonenumbers==8.13.55
     # via -r requirements.in
 pillow==11.1.0
     # via reportlab
