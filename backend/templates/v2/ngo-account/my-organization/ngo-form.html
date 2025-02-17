@@ -24,7 +24,7 @@
           <div class="px-6 py-4 border border-gray-200 rounded bg-gray-50">
             <div class="flex gap-3">
               {% trans "Allow users to sign the form online" as input_title %}
-              {% include "components/input/checkbox.html" with input_id="is_accepting_forms" input_name="is_accepting_forms" value=ngo.is_accepting_forms field=ngo_presentation.is_accepting_forms %}
+              {% include "components/input/checkbox.html" with input_id="is_accepting_forms" input_name="is_accepting_forms" value=ngo.is_accepting_forms field=ngo_form.is_accepting_forms %}
             </div>
 
             <p class="pt-2 text-xs text-gray-500">
