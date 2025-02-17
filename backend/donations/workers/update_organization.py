@@ -17,7 +17,7 @@ from pycognito import Cognito
 from requests import Response
 
 from donations.common.validation.validate_slug import NgoSlugValidator
-from donations.models.ngos import Ngo, NgoForm
+from donations.models.ngos import Cause, Ngo
 from redirectioneaza.common.cache import cache_decorator
 
 logger = logging.getLogger(__name__)
@@ -99,10 +99,10 @@ def get_ngo_hub_data(ngohub_org_id: int, token: str = "") -> Organization:
     return hub.get_organization(organization_id=ngohub_org_id, admin_token=token)
 
 
-def create_default_ngo_form(ngo: Ngo) -> NgoForm:
-    ngo_form: NgoForm = NgoForm(ngo=ngo)
+def create_default_ngo_form(ngo: Ngo) -> Cause:
+    ngo_form: Cause = Cause(ngo=ngo)
 
-    ngo_form.title = ngo.name
+    ngo_form.name = ngo.name
     ngo_form.description = ngo.description
 
     new_slug = slugify(ngo.name).replace("_", "-")
@@ -166,7 +166,7 @@ def update_local_ngo_with_ngohub_data(ngo: Ngo, ngohub_ngo: Organization) -> Dic
     ngo.is_verified = True
     ngo.save()
 
-    if not ngo.forms.exists():
+    if not ngo.causes.exists():
         create_default_ngo_form(ngo)
 
     ngo.ngohub_last_update_ended = timezone.now()

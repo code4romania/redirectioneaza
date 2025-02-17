@@ -15,8 +15,8 @@
   </header>
 
   <div class="grid gap-8 my-12 sm:grid-cols-2 lg:grid-cols-4 lg:gap-10">
-    {% for ngo in ngos %}
-      {% include "public/components/ngo-card.html" with ngo=ngo %}
+    {% for cause in causes %}
+      {% include "public/components/grid-card.html" with card_logo=cause.logo card_slug=cause.slug card_title=cause.name card_description=cause.description %}
     {% endfor %}
   </div>
 

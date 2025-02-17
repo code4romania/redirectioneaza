@@ -15,15 +15,13 @@ from django.views.generic import ListView
 from django_q.tasks import async_task
 
 from users.models import User
-
-from ..common.validation.registration_number import extract_vat_id, ngo_id_number_validator
-from ..common.validation.validate_slug import NgoSlugValidator
-from ..forms.ngo_account import NgoFormForm, NgoPresentationForm
-from ..models.donors import Donor
-from ..models.jobs import Job
-from ..models.ngos import Ngo, NgoForm
 from .base import BaseContextPropertiesMixin, BaseVisibleTemplateView
 from .common import get_ngo_archive_download_status
+from ..common.validation.registration_number import extract_vat_id, ngo_id_number_validator
+from ..forms.ngo_account import CauseForm, NgoPresentationForm
+from ..models.donors import Donor
+from ..models.jobs import Job
+from ..models.ngos import Cause, Ngo
 
 UserModel = get_user_model()
 
@@ -250,7 +248,7 @@ class NgoFormsView(NgoBaseTemplateView):
 
         ngo_form = None
         if ngo:
-            ngo_form = NgoForm.objects.filter(ngo=ngo).first()
+            ngo_form = Cause.objects.filter(ngo=ngo).first()
 
         context.update(
             {
@@ -285,8 +283,8 @@ class NgoFormsView(NgoBaseTemplateView):
 
         must_refresh_prefilled_form = False
 
-        ngo_form: NgoForm = NgoForm.objects.filter(ngo=ngo).first()
-        form = NgoFormForm(post, instance=ngo_form)
+        ngo_form: Cause = Cause.objects.filter(ngo=ngo).first()
+        form = CauseForm(post, instance=ngo_form)
 
         context.update({"django_form": form})
 
@@ -296,7 +294,7 @@ class NgoFormsView(NgoBaseTemplateView):
 
         ngo_form = form.save(commit=False)
 
-        ngo_form.title = ngo.name
+        ngo_form.name = ngo.name
         ngo_form.ngo = ngo
 
         ngo_form.save()

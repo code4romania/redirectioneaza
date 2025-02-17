@@ -12,12 +12,17 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView
 
+from .base import BaseTemplateView
+from .common import (
+    NgoCauseMixedSearchMixin,
+    get_cause_response_item,
+    get_is_over_donation_archival_limit,
+    get_was_last_job_recent,
+)
 from ..models.jobs import Job, JobStatusChoices
-from ..models.ngos import Ngo
+from ..models.ngos import Cause, Ngo
 from ..pdf import create_ngo_pdf
 from ..workers.update_organization import update_organization
-from .base import BaseTemplateView
-from .common import NgoSearchMixin, get_is_over_donation_archival_limit, get_ngo_response_item, get_was_last_job_recent
 
 logger = logging.getLogger(__name__)
 
@@ -37,18 +42,18 @@ class UpdateFromNgohub(BaseTemplateView):
         return redirect_success
 
 
-class SearchNgosApi(TemplateView, NgoSearchMixin):
-    queryset = Ngo.active
+class SearchCausesApi(TemplateView, NgoCauseMixedSearchMixin):
+    queryset = Cause.active
 
     def get(self, request, *args, **kwargs):
-        ngos_queryset = self.search()
+        causes = self.search()
 
         response: List[Dict] = []
-        for ngo in ngos_queryset:
-            if not ngo.slug:
+        for cause in causes:
+            if not cause.slug:
                 continue
 
-            response.append(get_ngo_response_item(ngo))
+            response.append(get_cause_response_item(cause))
 
         return JsonResponse(response, safe=False)
 

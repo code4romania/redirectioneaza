@@ -10,7 +10,7 @@ from django.utils.translation import ngettext_lazy
 from django.views.generic import ListView
 
 from ..models.jobs import Job, JobStatusChoices
-from ..models.ngos import Ngo
+from ..models.ngos import Cause, Ngo
 
 
 def get_was_last_job_recent(ngo: Optional[Ngo]) -> bool:
@@ -77,13 +77,12 @@ def get_is_over_donation_archival_limit() -> bool:
     return False
 
 
-def get_ngo_response_item(ngo) -> Dict:
+def get_cause_response_item(cause: Cause) -> Dict:
     return {
-        "name": ngo.name,
-        "url": reverse("twopercent", kwargs={"ngo_url": ngo.slug}),
-        "logo": ngo.logo.url if ngo.logo else None,
-        "active_region": ngo.active_region,
-        "description": ngo.description,
+        "name": cause.name,
+        "url": reverse("twopercent", kwargs={"ngo_url": cause.slug}),
+        "logo": cause.display_image.url if cause.display_image else None,
+        "description": cause.description,
     }
 
 
@@ -122,7 +121,8 @@ class SearchMixin(ListView):
 
 
 class NgoSearchMixin(SearchMixin):
-    def get_search_results(self, queryset: QuerySet, query: str, language_code: str) -> QuerySet:
+    @classmethod
+    def get_search_results(cls, queryset: QuerySet, query: str, language_code: str) -> QuerySet:
         search_fields = ["name", "registration_number"]
         search_vector: SearchVector = ConfigureSearch.vector(search_fields, language_code)
         search_query: SearchQuery = ConfigureSearch.query(query, language_code)
@@ -138,3 +138,34 @@ class NgoSearchMixin(SearchMixin):
         )
 
         return ngos
+
+
+class CauseSearchMixin(SearchMixin):
+    @classmethod
+    def get_search_results(cls, queryset: QuerySet, query: str, language_code: str) -> QuerySet[Cause]:
+        search_fields = ["name"]
+        search_vector: SearchVector = ConfigureSearch.vector(search_fields, language_code)
+        search_query: SearchQuery = ConfigureSearch.query(query, language_code)
+
+        ngo_forms: QuerySet[Cause] = (
+            queryset.annotate(
+                rank=SearchRank(search_vector, search_query),
+                similarity=TrigramSimilarity("name", query),
+            )
+            .filter(Q(rank__gte=0.3) | Q(similarity__gt=0.3))
+            .order_by("name")
+            .distinct("name")
+        )
+
+        return ngo_forms
+
+
+class NgoCauseMixedSearchMixin(SearchMixin):
+    @classmethod
+    def get_search_results(cls, queryset: QuerySet, query: str, language_code: str) -> QuerySet[Cause]:
+        ngos = NgoSearchMixin.get_search_results(Ngo.active, query, language_code)
+        ngos_forms = Cause.active.filter(ngo__in=ngos).distinct("name")
+
+        searched_ngo_forms = CauseSearchMixin.get_search_results(queryset, query, language_code)
+
+        return searched_ngo_forms | ngos_forms

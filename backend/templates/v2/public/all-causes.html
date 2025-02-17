@@ -6,14 +6,14 @@
   <header class="-mt-16 bg-yellow-400">
     <div class="container flex flex-col max-w-4xl gap-6 text-center pt-9 pb-14">
       <h1 class="text-3xl font-bold text-center text-gray-900">
-        {% trans "Explore organizations" %}
+        {% trans "Explore causes" %}
       </h1>
 
       <p class="font-medium text-gray-900">
         {% blocktranslate trimmed %}
           Without costing you anything extra,
           by redirecting,
-          you give a little extra power to an NGO to do good in your name.
+          you give a little extra power to a cause to do good in your name.
           You can opt for the redistribution of the amount until
         {% endblocktranslate %}
         <strong class="text-cyan-900">{{ limit.day }} {{ month_limit }}</strong>.
@@ -24,11 +24,11 @@
   <section class="container grid gap-12">
     <!-- Search and filters -->
     <form action="" method="GET">
-      {% include "public/components/ngo-search.html" %}
+      {% include "public/components/cause-search.html" %}
     </form>
 
     <div class="grid gap-x-8 gap-y-16 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-10 xl:gap-y-20">
-      {% if not ngos %}
+      {% if not causes %}
         <div class="col-span-full text-center">
           <p class="text-gray-900 text-4xl font-bold">
             {% trans "No organizations found." %}
@@ -38,8 +38,8 @@
         {% trans "organizations" as paginated_type %}
         {% include "public/components/pagination.html" with page_obj=page_obj paginated_type=paginated_type show_pagination_count=True %}
 
-        {% for ngo in ngos %}
-          {% include "public/components/grid-card.html" with card_logo=ngo.logo card_slug=ngo.slug card_title=ngo.name card_description=ngo.description %}
+        {% for cause in causes %}
+          {% include "public/components/grid-card.html" with card_logo=cause.logo card_slug=cause.slug card_title=cause.name card_description=cause.description %}
         {% endfor %}
       {% endif %}
     </div>

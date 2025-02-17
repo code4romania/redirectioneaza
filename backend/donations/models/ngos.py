@@ -40,7 +40,7 @@ def ngo_directory_path(subdir: str, instance: "Ngo", filename: str) -> str:
     return f"{subdir}/ngo-{ngo_pk}-{ngo_hash}/{filename}"
 
 
-def ngo_form_directory_path(subdir: str, instance: "NgoForm", filename: str) -> str:
+def ngo_form_directory_path(subdir: str, instance: "Cause", filename: str) -> str:
     """
     The file will be uploaded to MEDIA_ROOT/<subdir>/ngo-<id>-<hash>/<filename>
     """
@@ -99,6 +99,25 @@ class NgoActiveManager(models.Manager):
         )
 
 
+class CauseActiveManager(models.Manager):
+    def get_queryset(self):
+        return (
+            super()
+            .get_queryset()
+            .filter(ngo__is_active=True)
+            .exclude(
+                Q(name__isnull=True)
+                | Q(name__exact="")
+                | Q(slug__isnull=True)
+                | Q(slug__exact="")
+                | Q(bank_account__isnull=True)
+                | Q(bank_account__exact="")
+                | Q(ngo__registration_number__isnull=True)
+                | Q(ngo__registration_number__exact=""),
+            )
+        )
+
+
 class NgoHubManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().filter(is_active=True, ngohub_org_id__isnull=False)
@@ -121,7 +140,7 @@ class Ngo(models.Model):
     )
 
     name = models.CharField(verbose_name=_("Name"), blank=False, null=False, max_length=200, db_index=True)
-    # XXX: [MULTI-FORM] Move to NgoForm
+    # XXX: [MULTI-FORM] Move to Cause
     description = models.TextField(verbose_name=_("description"))
 
     # NGO Hub details
@@ -136,7 +155,7 @@ class Ngo(models.Model):
     ngohub_last_update_ended = models.DateTimeField(_("Last NGO Hub update"), null=True, blank=True, editable=False)
 
     # originally: logo
-    # XXX: [MULTI-FORM] Should we move this to NgoForm ???
+    # XXX: [MULTI-FORM] Should we move this to Cause ???
     logo = models.ImageField(
         verbose_name=_("logo"),
         blank=True,
@@ -145,7 +164,7 @@ class Ngo(models.Model):
         upload_to=partial(ngo_directory_path, "logos"),
     )
 
-    # XXX: [MULTI-FORM] Move to NgoForm
+    # XXX: [MULTI-FORM] Move to Cause
     bank_account = models.CharField(verbose_name=_("bank account"), max_length=100)
 
     # originally: cif
@@ -368,8 +387,8 @@ class Ngo(models.Model):
             logging.info("Prefilled form deleted for NGO id %d", ngo_id)
 
 
-class NgoForm(models.Model):
-    ngo = models.ForeignKey(Ngo, on_delete=models.CASCADE, related_name="forms")
+class Cause(models.Model):
+    ngo = models.ForeignKey(Ngo, on_delete=models.CASCADE, related_name="causes")
 
     allow_online_collection = models.BooleanField(verbose_name=_("allow online collection"), default=False)
 
@@ -391,7 +410,7 @@ class NgoForm(models.Model):
         validators=[ngo_slug_validator],
     )
 
-    title = models.CharField(verbose_name=_("title"), blank=False, null=False, max_length=200, db_index=True)
+    name = models.CharField(verbose_name=_("name"), blank=False, null=False, max_length=200, db_index=True)
     description = models.TextField(verbose_name=_("description"))
 
     bank_account = models.CharField(verbose_name=_("bank account"), max_length=100)
@@ -399,9 +418,12 @@ class NgoForm(models.Model):
     date_created = models.DateTimeField(verbose_name=_("date created"), db_index=True, auto_now_add=True)
     date_updated = models.DateTimeField(verbose_name=_("date updated"), db_index=True, auto_now=True)
 
+    objects = models.Manager()
+    active = CauseActiveManager()
+
     class Meta:
         verbose_name = _("NGO form")
         verbose_name_plural = _("NGO forms")
 
     def __str__(self):
-        return f"{self.ngo.name} - {self.title}"
+        return f"{self.ngo.name} - {self.name}"
