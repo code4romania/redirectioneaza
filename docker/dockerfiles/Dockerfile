@@ -2,7 +2,7 @@ ARG NODE_VERSION=22
 ARG PYTHON_VERSION=3.12.8
 
 
-FROM node:${NODE_VERSION}-alpine as frontend
+FROM node:${NODE_VERSION}-alpine AS frontend
 
 WORKDIR /build
 
