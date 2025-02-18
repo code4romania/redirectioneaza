@@ -6,7 +6,6 @@ from django.utils.translation import gettext_lazy as _
 from unfold.admin import ModelAdmin
 
 from redirectioneaza.common.admin import HasNgoFilter
-
 from .models import GroupProxy, User
 
 # Remove the default admins for User and Group
@@ -44,6 +43,7 @@ class UserAdmin(ModelAdmin):
                     "ngo",
                     "is_active",
                     "is_verified",
+                    "is_ngohub_user",
                     "is_staff",
                     "is_superuser",
                 )
