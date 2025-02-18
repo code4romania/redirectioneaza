@@ -14,12 +14,11 @@ from django.views.generic import TemplateView
 from ipware import get_client_ip
 
 from redirectioneaza.common.messaging import extend_email_context, send_email
-
+from .base import BaseVisibleTemplateView
 from ..forms.redirection import DonationForm
 from ..models.donors import Donor
-from ..models.ngos import Ngo
+from ..models.ngos import Cause, Ngo
 from ..pdf import create_full_pdf
-from .base import BaseVisibleTemplateView
 
 logger = logging.getLogger(__name__)
 
@@ -164,7 +163,8 @@ class RedirectionHandler(TemplateView):
         post = self.request.POST
 
         try:
-            ngo: Ngo = Ngo.active.get(slug=ngo_url)
+            cause: Cause = Cause.active.get(slug=ngo_url)
+            ngo: Ngo = cause.ngo
         except Ngo.DoesNotExist:
             raise Http404
 
@@ -191,6 +191,7 @@ class RedirectionHandler(TemplateView):
             county=form.cleaned_data["county"],
             has_signed=signature is not None and signature != "",
             income_type="wage",
+            cause=cause,
             ngo=ngo,
         )
         new_donor.set_cnp(form.cleaned_data["cnp"])

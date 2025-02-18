@@ -2,8 +2,8 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from .ngos import Ngo
 from users.models import User
+from .ngos import Cause, Ngo
 
 
 class JobError(Exception):
@@ -30,6 +30,14 @@ class Job(models.Model):
         db_index=True,
         related_name="jobs",
     )
+    cause = models.ForeignKey(
+        Cause,
+        verbose_name=_("cause"),
+        on_delete=models.CASCADE,
+        db_index=True,
+        related_name="jobs",
+        null=True,
+    )
     owner = models.ForeignKey(
         User,
         verbose_name=_("owner"),
@@ -49,11 +57,11 @@ class Job(models.Model):
 
     zip = models.FileField(verbose_name=_("ZIP"), upload_to="donation-zips/%Y/%m/%d/", blank=True, null=True)
 
-    date_created = models.DateTimeField(verbose_name=_("date created"), db_index=True, auto_now_add=timezone.now)
+    date_created = models.DateTimeField(verbose_name=_("date created"), db_index=True, auto_now_add=True)
     date_finished = models.DateTimeField(verbose_name=_("date finished"), db_index=True, blank=True, null=True)
 
     def __str__(self):
-        return f"{self.owner} {self.ngo} {self.status}"
+        return f"{self.cause} {self.status}"
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         if self.status == JobStatusChoices.DONE and not self.date_finished:

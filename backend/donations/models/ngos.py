@@ -58,10 +58,28 @@ def year_ngo_directory_path(subdir: str, instance: "Ngo", filename: str) -> str:
     timestamp = timezone.now()
 
     year = timestamp.date().year
+
     ngo_pk = instance.pk
     ngo_hash = hash_id_secret("ngo", ngo_pk)
 
     return f"{subdir}/{year}/ngo-{ngo_pk}-{ngo_hash}/{filename}"
+
+
+def year_cause_directory_path(subdir: str, instance: "Cause", filename: str) -> str:
+    """
+    The file will be uploaded to MEDIA_ROOT/<subdir>/<year>/ngo-<id>-<hash>/<filename>
+    """
+    timestamp = timezone.now()
+
+    year = timestamp.date().year
+
+    ngo_pk = instance.ngo.pk
+    ngo_hash = hash_id_secret("ngo", ngo_pk)
+
+    cause_pk = instance.pk
+    cause_hash = hash_id_secret("cause", cause_pk)
+
+    return f"{subdir}/{year}/ngo-{ngo_pk}-{ngo_hash}/c-{cause_pk}-{cause_hash}/{filename}"
 
 
 def ngo_slug_validator(value):
@@ -415,6 +433,14 @@ class Cause(models.Model):
 
     bank_account = models.CharField(verbose_name=_("bank account"), max_length=100)
 
+    prefilled_form = models.FileField(
+        verbose_name=_("form with prefilled cause"),
+        blank=True,
+        null=False,
+        storage=select_public_storage,
+        upload_to=partial(year_cause_directory_path, "causes"),
+    )
+
     date_created = models.DateTimeField(verbose_name=_("date created"), db_index=True, auto_now_add=True)
     date_updated = models.DateTimeField(verbose_name=_("date updated"), db_index=True, auto_now=True)
 
@@ -422,8 +448,8 @@ class Cause(models.Model):
     active = CauseActiveManager()
 
     class Meta:
-        verbose_name = _("NGO form")
-        verbose_name_plural = _("NGO forms")
+        verbose_name = _("Cause")
+        verbose_name_plural = _("Causes")
 
     def __str__(self):
         return f"{self.ngo.name} - {self.name}"

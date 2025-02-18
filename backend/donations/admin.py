@@ -1,5 +1,5 @@
 import logging
-from typing import List
+from typing import Dict, List, Tuple
 
 from django import forms
 from django.conf import settings
@@ -21,7 +21,7 @@ from redirectioneaza.common.admin import HasNgoFilter
 from users.models import User
 from .models.donors import Donor
 from .models.jobs import Job, JobStatusChoices
-from .models.ngos import Ngo
+from .models.ngos import Cause, Ngo
 from .workers.update_organization import update_organization
 
 logger = logging.getLogger(__name__)
@@ -50,10 +50,64 @@ class ChangeNgoOwnerForm(forms.Form):
     # )
 
 
+class CommonCauseFields:
+    ngo_fieldset: Tuple[str, Dict[str, Tuple[str]]] = (
+        _("NGO"),
+        {"fields": ("ngo",)},
+    )
+
+    editable_fieldset: Tuple[str, Dict[str, Tuple[str]]] = (
+        _("Cause"),
+        {
+            "fields": (
+                "allow_online_collection",
+                "name",
+                "slug",
+                "description",
+                "bank_account",
+                "display_image",
+            )
+        },
+    )
+
+    date_fieldset: Tuple[str, Dict[str, Tuple[str]]] = (
+        _("Date"),
+        {
+            "fields": (
+                "date_created",
+                "date_updated",
+            )
+        },
+    )
+
+    readonly_fields = ("ngo", "date_created", "date_updated")
+
+    def get_readonly_fields(self, request: HttpRequest, obj=None):
+        if obj and not obj.is_accepting_forms:
+            return self.readonly_fields + ("allow_online_collection",)
+
+        return self.readonly_fields
+
+
+class NgoCauseInline(StackedInline, CommonCauseFields):
+    model = Cause
+    extra = 0
+    tab = True
+
+    fieldsets = (CommonCauseFields.editable_fieldset,)
+
+    def has_add_permission(self, request, obj):
+        return False
+
+    def has_delete_permission(self, request, obj=...):
+        return False
+
+
 class NgoPartnerInline(TabularInline):
     # noinspection PyUnresolvedReferences
     model = Ngo.partners.through
     extra = 1
+    tab = True
 
     autocomplete_fields = ("partner",)
 
@@ -62,6 +116,7 @@ class NgoUserInline(StackedInline):
     # noinspection PyUnresolvedReferences
     model = User
     extra = 0
+    tab = True
 
     readonly_fields = ("link_to_user", "email", "first_name", "last_name", "is_active", "is_staff", "is_superuser")
 
@@ -129,7 +184,7 @@ class HasOwnerFilter(admin.SimpleListFilter):
 class NgoAdmin(ModelAdmin):
     list_filter_submit = True
 
-    list_display = ("id", "get_ngohub_link", "get_cif", "name", "slug", "is_active")
+    list_display = ("id", "get_ngohub_link", "get_cif", "name", "slug", "is_accepting_forms", "is_active")
     list_display_links = ("id", "get_cif", "name", "slug")
     list_editable = ("is_active",)
 
@@ -149,14 +204,13 @@ class NgoAdmin(ModelAdmin):
 
     search_fields = ("name", "registration_number", "slug", "description")
 
-    inlines = (NgoPartnerInline, NgoUserInline)
+    inlines = (NgoCauseInline, NgoPartnerInline, NgoUserInline)
 
     readonly_fields = ("date_created", "date_updated", "get_donations_link")
 
     actions_detail = ("change_owner",)
 
     actions = (
-        "generate_donations_archive",
         "clean_registration_numbers",
         "update_from_ngohub_sync",
         "update_from_ngohub_async",
@@ -375,31 +429,6 @@ class NgoAdmin(ModelAdmin):
             },
         )
 
-    @action(description=_("Generate donations archive"))
-    def generate_donations_archive(self, request, queryset: QuerySet[Ngo]):
-        ngo_names: List[str] = []
-
-        for ngo in queryset:
-            new_job: Job = Job(ngo=ngo, owner=request.user)
-            new_job.save()
-
-            try:
-                call_command("download_donations", new_job.id)
-
-                ngo_names.append(f"{ngo.id} - {ngo.name}")
-            except Exception as e:
-                logger.error(e)
-
-                new_job.status = JobStatusChoices.ERROR
-                new_job.save()
-
-        if ngo_names:
-            message = _("The donations archive has been generated for the following NGOs: ") + ", ".join(ngo_names)
-        else:
-            message = _("The donations archive could not be generated for any of the selected NGOs.")
-
-        self.message_user(request, message)
-
     @action(description=_("Clean up registration numbers"))
     def clean_registration_numbers(self, request, queryset: QuerySet[Ngo]):
         result = call_command("registration_numbers_cleanup")
@@ -424,9 +453,56 @@ class NgoAdmin(ModelAdmin):
         self.message_user(request, _("NGOs are being updated from NGO Hub."))
 
 
+@admin.register(Cause)
+class CauseAdmin(ModelAdmin, CommonCauseFields):
+    list_display = ("slug", "name", "link_to_ngo")
+    list_display_links = ("name",)
+    search_fields = ("name", "slug", "ngo__name")
+
+    actions = ("generate_donations_archive",)
+
+    fieldsets = (
+        CommonCauseFields.ngo_fieldset,
+        CommonCauseFields.editable_fieldset,
+        CommonCauseFields.date_fieldset,
+    )
+
+    @action(description=_("Generate donations archive"))
+    def generate_donations_archive(self, request, queryset: QuerySet[Ngo]):
+        ngo_names: List[str] = []
+
+        for ngo in queryset:
+            new_job: Job = Job(ngo=ngo, cause=ngo.causes.first(), owner=request.user)
+            new_job.save()
+
+            try:
+                call_command("download_donations", new_job.id)
+
+                ngo_names.append(f"{ngo.id} - {ngo.name}")
+            except Exception as e:
+                logger.error(e)
+
+                new_job.status = JobStatusChoices.ERROR
+                new_job.save()
+
+        if ngo_names:
+            message = _("The donations archive has been generated for the following NGOs: ") + ", ".join(ngo_names)
+        else:
+            message = _("The donations archive could not be generated for any of the selected NGOs.")
+
+        self.message_user(request, message)
+
+    @admin.display(description=_("NGO"))
+    def link_to_ngo(self, obj: Cause):
+        ngo: Ngo = obj.ngo
+
+        link_url = reverse("admin:donations_ngo_change", args=(ngo.pk,))
+        return format_html(f'<a href="{link_url}">{ngo.name}</a>')
+
+
 @admin.register(Donor)
 class DonorAdmin(ModelAdmin):
-    list_display = ("id", "email", "l_name", "f_name", "ngo", "date_created")
+    list_display = ("id", "email", "l_name", "f_name", "ngo", "cause", "has_signed", "date_created")
     list_display_links = ("id", "email", "l_name", "f_name")
     list_filter = (
         "date_created",
