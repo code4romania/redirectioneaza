@@ -64,7 +64,7 @@ class User(AbstractUser):
     )
 
     email = models.EmailField(verbose_name=_("email address"), blank=False, null=False, unique=True)
-    is_ngohub_user = models.BooleanField(default=False)
+    is_ngohub_user = models.BooleanField(verbose_name=_("is ngohub user"), db_index=True, default=False)
 
     ngo = models.ForeignKey(
         Ngo,

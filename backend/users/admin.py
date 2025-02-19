@@ -23,9 +23,10 @@ except NotRegistered:
 @admin.register(User)
 class UserAdmin(ModelAdmin):
     list_display = (
-        "pk",
         "email",
+        "is_active",
         "is_verified",
+        "is_ngohub_user",
         "date_updated",
     )
     list_display_links = ("email",)

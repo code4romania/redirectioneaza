@@ -2,6 +2,7 @@ import logging
 from typing import List
 
 from django import forms
+from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.core.management import call_command
@@ -18,7 +19,6 @@ from unfold.widgets import UnfoldAdminSelectWidget
 
 from redirectioneaza.common.admin import HasNgoFilter
 from users.models import User
-
 from .models.donors import Donor
 from .models.jobs import Job, JobStatusChoices
 from .models.ngos import Ngo
@@ -129,8 +129,10 @@ class HasOwnerFilter(admin.SimpleListFilter):
 class NgoAdmin(ModelAdmin):
     list_filter_submit = True
 
-    list_display = ("id", "ngohub_org_id", "slug", "registration_number", "name")
-    list_display_links = ("id", "ngohub_org_id", "slug", "registration_number", "name")
+    list_display = ("id", "get_ngohub_link", "get_cif", "name", "slug", "is_active")
+    list_display_links = ("id", "get_cif", "name", "slug")
+    list_editable = ("is_active",)
+
     list_filter = (
         "date_created",
         HasNgoHubFilter,
@@ -286,6 +288,20 @@ class NgoAdmin(ModelAdmin):
         )
 
         return fieldsets
+
+    @admin.display(description=_("NGO Hub link"))
+    def get_ngohub_link(self, obj: Ngo):
+        if not obj.ngohub_org_id:
+            return "-"
+
+        link_text = obj.ngohub_org_id
+        link_url = f"{settings.NGOHUB_APP_BASE}organizations/{obj.ngohub_org_id}/overview"
+
+        return format_html(f'<a href="{link_url}" target="_blank">{link_text}</a>')
+
+    @admin.display(description=_("CIF"))
+    def get_cif(self, obj: Ngo):
+        return obj.vat_id + obj.registration_number
 
     @admin.display(description=_("Donations"))
     def get_donations_link(self, obj: Ngo):
