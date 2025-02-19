@@ -16,6 +16,7 @@ import Tooltip from '@ryangjchandler/alpine-tooltip';
 import ngoSearch from './ngoSearch';
 import signature from './signature';
 import twoPercentForm from './twoPercentForm';
+import imageUpload from './imageUpload';
 
 Alpine.plugin(collapse);
 Alpine.plugin(focus);
@@ -24,6 +25,7 @@ Alpine.plugin(Tooltip);
 Alpine.data('ngoSearch', ngoSearch);
 Alpine.data('signature', signature);
 Alpine.data('twoPercentForm', twoPercentForm);
+Alpine.data('imageUpload', imageUpload);
 
 window.Alpine = Alpine;
 
