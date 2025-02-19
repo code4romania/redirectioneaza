@@ -28,13 +28,12 @@ class CommonCreateUserCommand(BaseCommand):
         )
 
     @classmethod
-    def _create_user(
+    def _get_or_create_user(
         cls,
-        admin_email: str,
+        new_email: str,
         password: str,
         is_superuser: bool,
         is_staff: bool,
-        username: str = None,
         first_name: str = "Admin",
         last_name: str = "Admin",
     ):
@@ -43,13 +42,16 @@ class CommonCreateUserCommand(BaseCommand):
 
         user_model = get_user_model()
 
-        if user_model.objects.filter(email=admin_email).exists():
-            logger.warning("Super admin already exists")
-            return None
+        if user_model.objects.filter(email=new_email).exists():
+            if user_model.objects.filter(email=new_email).count() > 1:
+                logger.error("There are multiple users with the same email. Please fix it.")
+                return None
+
+            return user_model.objects.get(email=new_email)
 
         user = user_model(
-            email=admin_email,
-            username=username or admin_email,
+            email=new_email,
+            username=new_email,
             first_name=first_name,
             last_name=last_name,
             is_active=True,

@@ -43,19 +43,20 @@ if is_enabled "${RUN_COLLECT_STATIC}"; then
     python3 manage.py collectstatic --noinput
 fi
 
-# Create the Django Admin super user
+# Create the Django user groups
+if is_enabled "${RUN_SEED_GROUPS:-False}"; then
+    echo "Running the test user seed script"
+
+    python3 manage.py seed_groups
+fi
+
+# Create the Django Admin superuser
 if is_enabled "${RUN_CREATE_SUPER_USER:-False}"; then
     echo "Running the superuser seed script"
 
     python3 manage.py seed_superuser \
         --first_name "${DJANGO_ADMIN_FIRST_NAME}" \
         --last_name "${DJANGO_ADMIN_LAST_NAME}"
-fi
-
-if is_enabled "${RUN_SEED_GROUPS:-False}"; then
-    echo "Running the test user seed script"
-
-    python3 manage.py seed_groups
 fi
 
 # Start the task queue heartbeat scheduler
