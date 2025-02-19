@@ -224,7 +224,7 @@ class NgoPresentationView(NgoBaseTemplateView):
             user.ngo = ngo
             user.save()
         elif must_refresh_prefilled_form:
-            async_task("donations.views.ngo_account.delete_prefilled_form", ngo.id)
+            async_task(delete_prefilled_form, ngo.id)
 
         context["ngo"] = ngo
 
@@ -242,18 +242,19 @@ class NgoFormsView(NgoBaseTemplateView):
 
         ngo: Ngo = context["ngo"]
 
-        ngo_url = ""
-        if ngo and ngo.slug:
-            ngo_url = self.request.build_absolute_uri(reverse("twopercent", kwargs={"ngo_url": ngo.slug}))
+        cause_url = ""
+        if ngo and ngo.causes.exists():
+            cause = ngo.causes.first()
+            cause_url = self.request.build_absolute_uri(reverse("twopercent", kwargs={"ngo_url": cause.slug}))
 
-        ngo_form = None
+        cause = None
         if ngo:
-            ngo_form = Cause.objects.filter(ngo=ngo).first()
+            cause = Cause.objects.filter(ngo=ngo).first()
 
         context.update(
             {
-                "ngo_url": ngo_url,
-                "ngo_form": ngo_form,
+                "ngo_url": cause_url,
+                "cause": cause,
                 "active_tab": self.tab_title,
             }
         )
@@ -262,7 +263,7 @@ class NgoFormsView(NgoBaseTemplateView):
 
     @method_decorator(login_required(login_url=reverse_lazy("login")))
     def get(self, request, *args, **kwargs):
-        user = request.user
+        user: User = request.user
 
         if not user.ngo:
             return redirect(reverse("my-organization:presentation"))
@@ -272,7 +273,7 @@ class NgoFormsView(NgoBaseTemplateView):
     @method_decorator(login_required(login_url=reverse_lazy("login")))
     def post(self, request, *args, **kwargs):
         post = request.POST
-        user: UserModel = request.user
+        user: User = request.user
 
         if not user.is_authenticated:
             raise PermissionDenied()
@@ -283,8 +284,8 @@ class NgoFormsView(NgoBaseTemplateView):
 
         must_refresh_prefilled_form = False
 
-        ngo_form: Cause = Cause.objects.filter(ngo=ngo).first()
-        form = CauseForm(post, instance=ngo_form)
+        cause: Cause = Cause.objects.filter(ngo=ngo).first()
+        form = CauseForm(post, instance=cause)
 
         context.update({"django_form": form})
 
@@ -292,27 +293,28 @@ class NgoFormsView(NgoBaseTemplateView):
             messages.error(request, _("There are some errors on the redirection form."))
             return render(request, self.template_name, context)
 
-        ngo_form = form.save(commit=False)
+        cause = form.save(commit=False)
 
-        ngo_form.name = ngo.name
-        ngo_form.ngo = ngo
+        cause.name = ngo.name
+        cause.ngo = ngo
 
-        ngo_form.save()
+        cause.save()
 
-        # TODO: Remove once testing is finished, this information should only be kept in the forms
-        ngo.slug = ngo_form.slug
-        ngo.bank_account = ngo_form.bank_account
-        ngo.description = ngo_form.description
+        # XXX: [MULTI-FORM] Remove once testing is finished, this information should only be kept in the forms
+        ngo.bank_account = cause.bank_account
 
-        ngo.is_accepting_forms = ngo_form.allow_online_collection
+        ngo.slug = cause.slug
+        ngo.description = cause.description
+
+        ngo.is_accepting_forms = cause.allow_online_collection
 
         ngo.save()
 
         if must_refresh_prefilled_form:
-            async_task("donations.views.my_account.delete_prefilled_form", ngo.id)
+            async_task(delete_prefilled_form, ngo.id)
 
         context["ngo"] = ngo
-        context["ngo_form"] = ngo_form
+        context["cause"] = cause
 
         return render(request, self.template_name, context)
 

@@ -74,7 +74,7 @@ class RedirectionHandler(TemplateView):
         ngo_url = kwargs.get("ngo_url", "")
 
         try:
-            ngo: Ngo = Ngo.objects.get(slug=ngo_url)
+            cause: Cause = Cause.active.get(slug=ngo_url)
         except Ngo.DoesNotExist:
             raise Http404
 
@@ -82,14 +82,14 @@ class RedirectionHandler(TemplateView):
 
         context.update(
             {
-                "title": ngo.name,
-                "ngo": ngo,
+                "title": cause.name,
+                "cause": cause,
                 "absolute_path": absolute_path,
             }
         )
 
         # if we didn't find it or the ngo doesn't have an active page
-        if ngo is None or not ngo.can_receive_forms():
+        if cause is None or not cause.ngo.can_receive_forms():
             raise Http404
 
         # if we still have a cookie from an old session, remove it
@@ -116,7 +116,7 @@ class RedirectionHandler(TemplateView):
             return context
 
         ngo_website_description = ""
-        ngo_website = ngo.website if ngo.website else ""
+        ngo_website = cause.ngo.website if cause.ngo.website else ""
 
         if ngo_website:
             # try and parse the url to see if it's valid

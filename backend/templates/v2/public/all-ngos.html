@@ -28,7 +28,7 @@
     </form>
 
     <div class="grid gap-x-8 gap-y-16 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-10 xl:gap-y-20">
-      {% if not ngos %}
+      {% if not causes %}
         <div class="col-span-full text-center">
           <p class="text-gray-900 text-4xl font-bold">
             {% trans "No organizations found." %}
@@ -38,8 +38,8 @@
         {% trans "organizations" as paginated_type %}
         {% include "public/components/pagination.html" with page_obj=page_obj paginated_type=paginated_type show_pagination_count=True %}
 
-        {% for ngo in ngos %}
-          {% include "public/components/grid-card.html" with card_logo=ngo.logo card_slug=ngo.slug card_title=ngo.name card_description=ngo.description %}
+        {% for cause in causes %}
+          {% include "public/components/grid-card.html" with card_logo=cause.display_image card_slug=cause.slug card_title=cause.name card_description=cause.description %}
         {% endfor %}
       {% endif %}
     </div>

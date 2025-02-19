@@ -5,7 +5,7 @@ from django.db.models import QuerySet
 from django.db.models.functions import Lower
 from django.utils.translation import gettext_lazy as _
 
-from donations.models.ngos import Ngo
+from donations.models.ngos import Cause, Ngo
 from redirectioneaza.common.validators import url_validator
 
 
@@ -64,6 +64,13 @@ class Partner(models.Model):
         blank=True,
         related_name="partners",
     )
+    causes = models.ManyToManyField(
+        verbose_name=_("Causes"),
+        to=Cause,
+        through="PartnerCause",
+        blank=True,
+        related_name="partners",
+    )
 
     date_created = models.DateTimeField(verbose_name=_("date created"), auto_now_add=True, editable=False)
     date_updated = models.DateTimeField(verbose_name=_("date updated"), auto_now=True, editable=False)
@@ -81,26 +88,26 @@ class Partner(models.Model):
     def __str__(self):
         return f"{self.name}"
 
-    def ordered_ngos(self) -> QuerySet[Ngo]:
+    def ordered_causes(self) -> QuerySet[Cause]:
         display_ordering_mapping: Dict[str, str] = {
             str(DisplayOrderingChoices.ALPHABETICAL): "name",
             str(DisplayOrderingChoices.ALPHABETICAL_REVERSE): "-name",
             str(DisplayOrderingChoices.OLDEST): "date_created",
             str(DisplayOrderingChoices.NEWEST): "-date_created",
-            str(DisplayOrderingChoices.CUSTOM): "partner_ngos__display_order",
+            str(DisplayOrderingChoices.CUSTOM): "partner_causes__display_order",
         }
 
         order: str = display_ordering_mapping.get(self.display_ordering, "?")
 
         # noinspection PyTypeChecker
-        return self.ngos.order_by(order).all()
+        return self.causes.order_by(order).all()
 
     def initialize_custom_display_ordering(self):
-        partner_ngos = PartnerNgo.objects.filter(partner=self).order_by("display_order", "pk")
+        partner_causes = PartnerCause.objects.filter(partner=self).order_by("display_order", "pk")
 
-        for index, partner_ngo in enumerate(partner_ngos):
-            partner_ngo.display_order = index + 1
-            partner_ngo.save()
+        for index, partner_cause in enumerate(partner_causes):
+            partner_cause.display_order = index + 1
+            partner_cause.save()
 
     def save(self, *args, **kwargs):
         if self.display_ordering == DisplayOrderingChoices.CUSTOM:
@@ -139,5 +146,39 @@ class PartnerNgo(models.Model):
         if self.display_order == 0:
             number_of_partner_ngos = PartnerNgo.objects.filter(partner=self.partner).count()
             self.display_order = number_of_partner_ngos + 1
+
+        super().save(*args, **kwargs)
+
+
+class PartnerCause(models.Model):
+    partner = models.ForeignKey(
+        verbose_name=_("partner"),
+        to=Partner,
+        on_delete=models.CASCADE,
+        related_name="partner_causes",
+    )
+    cause = models.ForeignKey(
+        verbose_name=_("Cause"),
+        to=Cause,
+        on_delete=models.CASCADE,
+        related_name="partner_causes",
+    )
+
+    display_order = models.PositiveIntegerField(verbose_name=_("display order"), default=0)
+
+    class Meta:
+        verbose_name = _("Partner Cause")
+        verbose_name_plural = _("Partner Causes")
+        constraints = [
+            models.UniqueConstraint(fields=["partner", "cause"], name="partner_cause_unique"),
+        ]
+
+    def __str__(self):
+        return f"{self.partner} - {self.cause}"
+
+    def save(self, *args, **kwargs):
+        if self.display_order == 0:
+            number_of_partner_causes = PartnerCause.objects.filter(partner=self.partner).count()
+            self.display_order = number_of_partner_causes + 1
 
         super().save(*args, **kwargs)

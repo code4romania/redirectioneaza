@@ -63,8 +63,6 @@ class Donor(models.Model):
     ngo = models.ForeignKey("Ngo", verbose_name=_("NGO"), on_delete=models.SET_NULL, db_index=True, null=True)
     cause = models.ForeignKey("Cause", verbose_name=_("cause"), on_delete=models.SET_NULL, db_index=True, null=True)
 
-    # TODO: first name and last name have been swapped
-    # https://github.com/code4romania/redirectioneaza/issues/269
     l_name = models.CharField(verbose_name=_("last name"), blank=True, null=False, default="", max_length=100)
     f_name = models.CharField(verbose_name=_("first name"), blank=True, null=False, default="", max_length=100)
     initial = models.CharField(verbose_name=_("initials"), blank=True, null=False, default="", max_length=5)

@@ -15,7 +15,7 @@ from reportlab.pdfgen.canvas import Canvas
 from svglib.svglib import svg2rlg
 
 from donations.models.donors import Donor
-from donations.models.ngos import Ngo
+from donations.models.ngos import Cause
 
 abs_path = os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir))
 # TODO: we might need to rethink this; we should not hardcode the path to static_extras
@@ -26,12 +26,12 @@ default_font_size = 15
 form_image_path = abs_path + "/static_extras/images/formular-2025.jpg"
 
 
-def _format_ngo_account(ngo_account: str):
+def _format_bank_account(bank_account: str):
     # remove spaces from the bank account number
-    ngo_account = ngo_account.replace(" ", "")
+    bank_account = bank_account.replace(" ", "")
 
     account = ""
-    for i, letter in enumerate(ngo_account):
+    for i, letter in enumerate(bank_account):
         account += letter
         if (i + 1) % 4 == 0:
             account += " "
@@ -39,7 +39,7 @@ def _format_ngo_account(ngo_account: str):
     return account
 
 
-def _add_ngo_data(start_y, c: Canvas, ngo: Ngo):
+def _add_ngo_data(start_y, c: Canvas, cause: Cause):
     start_ngo_y = start_y - 289
 
     # the x mark to support an NGO
@@ -47,10 +47,10 @@ def _add_ngo_data(start_y, c: Canvas, ngo: Ngo):
 
     # the cif code
     c.setFontSize(9)
-    c.drawString(250, start_ngo_y - 39, ngo.full_registration_number)
+    c.drawString(250, start_ngo_y - 39, cause.ngo.full_registration_number)
 
     # the name
-    org_name = ngo.name
+    org_name = cause.ngo.name
     if len(org_name) > 79:
         c.setFontSize(9)
     elif len(org_name) > 65:
@@ -61,7 +61,7 @@ def _add_ngo_data(start_y, c: Canvas, ngo: Ngo):
     c.setFontSize(11)
 
     # the bank account
-    account = _format_ngo_account(ngo.bank_account)
+    account = _format_bank_account(cause.bank_account)
     c.drawString(110, start_ngo_y - 84, account)
 
     c.drawString(146, start_ngo_y - 106, "3,5%")
@@ -238,7 +238,7 @@ def _add_year_to_pdf(c, start_x, start_y):
         start_x += 18
 
 
-def create_ngo_pdf(ngo: Ngo):
+def create_cause_pdf(cause: Cause):
     start_x = 305
     start_y = 726
 
@@ -250,7 +250,7 @@ def create_ngo_pdf(ngo: Ngo):
 
     _add_year_to_pdf(c, start_x, start_y)
 
-    _add_ngo_data(start_y, c, ngo)
+    _add_ngo_data(start_y, c, cause)
 
     c.save()
 
@@ -281,7 +281,7 @@ def create_full_pdf(donor: Donor, signature: str = None):
     # DRAW DONOR DATA
     _add_donor_data(start_y, c, donor)
 
-    _add_ngo_data(start_y, c, donor.ngo)
+    _add_ngo_data(start_y, c, donor.cause)
 
     if signature:
         _add_signature_to_pdf(c, signature)

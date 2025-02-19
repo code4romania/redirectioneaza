@@ -12,9 +12,9 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from redirectioneaza.common.messaging import extend_email_context, send_email
-
-from ..forms.account import ForgotPasswordForm, LoginForm, RegisterForm, ResetPasswordForm
+from users.models import User
 from .base import BaseVisibleTemplateView
+from ..forms.account import ForgotPasswordForm, LoginForm, RegisterForm, ResetPasswordForm
 
 logger = logging.getLogger(__name__)
 
@@ -146,7 +146,7 @@ class LoginView(BaseVisibleTemplateView):
         email = form.cleaned_data["email"].lower().strip()
         password = form.cleaned_data["password"]
 
-        user = authenticate(email=email, password=password)
+        user: User = authenticate(email=email, password=password)
         if user is None:
             logger.warning("Invalid email or password: {0}".format(email))
 

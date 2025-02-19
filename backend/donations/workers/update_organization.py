@@ -99,11 +99,11 @@ def get_ngo_hub_data(ngohub_org_id: int, token: str = "") -> Organization:
     return hub.get_organization(organization_id=ngohub_org_id, admin_token=token)
 
 
-def create_default_ngo_form(ngo: Ngo) -> Cause:
-    ngo_form: Cause = Cause(ngo=ngo)
+def create_default_cause(ngo: Ngo) -> Cause:
+    cause: Cause = Cause(ngo=ngo)
 
-    ngo_form.name = ngo.name
-    ngo_form.description = ngo.description
+    cause.name = ngo.name
+    cause.description = ngo.description
 
     new_slug = slugify(ngo.name).replace("_", "-")
     if NgoSlugValidator.is_blocked(new_slug):
@@ -113,14 +113,14 @@ def create_default_ngo_form(ngo: Ngo) -> Cause:
         random_string = "".join(random.choices(string.ascii_lowercase + string.digits, k=5))
         new_slug = f"{new_slug}-{random_string}"
 
-    ngo_form.slug = new_slug
+    cause.slug = new_slug
 
     if ngo.logo:
-        ngo_form.display_image = ngo.logo
+        cause.display_image = ngo.logo
 
-    ngo_form.save()
+    cause.save()
 
-    return ngo_form
+    return cause
 
 
 def update_local_ngo_with_ngohub_data(ngo: Ngo, ngohub_ngo: Organization) -> Dict[str, Union[int, List[str]]]:
@@ -167,7 +167,7 @@ def update_local_ngo_with_ngohub_data(ngo: Ngo, ngohub_ngo: Organization) -> Dic
     ngo.save()
 
     if not ngo.causes.exists():
-        create_default_ngo_form(ngo)
+        create_default_cause(ngo)
 
     ngo.ngohub_last_update_ended = timezone.now()
     ngo.save()

@@ -15,7 +15,7 @@ from redirectioneaza.common.cache import cache_decorator
 from .base import BaseVisibleTemplateView
 from .common import CauseSearchMixin, NgoSearchMixin
 from ..models.donors import Donor
-from ..models.ngos import Cause, FRONTPAGE_NGOS_KEY, FRONTPAGE_STATS_KEY, Ngo
+from ..models.ngos import Cause, FRONTPAGE_NGOS_KEY, FRONTPAGE_STATS_KEY
 
 
 class HomePage(BaseVisibleTemplateView):
@@ -128,8 +128,8 @@ class CausesListHandler(CauseSearchMixin):
 
 class NgoListHandler(NgoSearchMixin):
     template_name = "public/all-ngos.html"
-    context_object_name = "ngos"
-    queryset = Ngo.active
+    context_object_name = "causes"
+    queryset = Cause.active
     ordering = "name"
     paginate_by = 8
 

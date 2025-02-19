@@ -4,11 +4,11 @@
 
 
 {% block additional_headers %}
-  <meta property="og:title" content="{{ ngo.name }}"/>
-  <meta property="og:description" content="{{ ngo.description }}"/>
-  {% if ngo.logo %}
-    <meta property="og:image" content="{{ ngo.logo.url }}"/>
-    <meta property="og:image:secure_url" content="{{ ngo.logo.url }}"/>
+  <meta property="og:title" content="{{ cause.name }}"/>
+  <meta property="og:description" content="{{ cause.description }}"/>
+  {% if cause.display_image %}
+    <meta property="og:image" content="{{ cause.display_image.url }}"/>
+    <meta property="og:image:secure_url" content="{{ cause.display_image.url }}"/>
   {% endif %}
 
   <meta property="og:type" content="website"/>

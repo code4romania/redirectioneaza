@@ -110,7 +110,7 @@ class CauseForm(forms.ModelForm):
             "ngo",
             "date_created",
             "date_updated",
-            # TODO: remove these once we have multiple forms
+            # XXX: [MULTI-FORM] remove these once we have multiple forms
             "name",
         ]
 

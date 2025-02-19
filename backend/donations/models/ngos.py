@@ -73,13 +73,10 @@ def year_cause_directory_path(subdir: str, instance: "Cause", filename: str) -> 
 
     year = timestamp.date().year
 
-    ngo_pk = instance.ngo.pk
-    ngo_hash = hash_id_secret("ngo", ngo_pk)
-
     cause_pk = instance.pk
     cause_hash = hash_id_secret("cause", cause_pk)
 
-    return f"{subdir}/{year}/ngo-{ngo_pk}-{ngo_hash}/c-{cause_pk}-{cause_hash}/{filename}"
+    return f"{subdir}/{year}/c-{cause_pk}-{cause_hash}/{filename}"
 
 
 def ngo_slug_validator(value):
@@ -394,15 +391,8 @@ class Ngo(models.Model):
             logging.info("NGO id %d does not exist for prefilled form deletion", ngo_id)
             return
 
-        changed = False
-
-        if ngo.prefilled_form:
-            ngo.prefilled_form.delete(save=False)
-            changed = True
-
-        if changed:
-            ngo.save()
-            logging.info("Prefilled form deleted for NGO id %d", ngo_id)
+        for cause in ngo.causes.all():
+            cause.delete_prefilled_form()
 
 
 class Cause(models.Model):
@@ -453,3 +443,42 @@ class Cause(models.Model):
 
     def __str__(self):
         return f"{self.ngo.name} - {self.name}"
+
+    @property
+    def mandatory_fields(self):
+
+        # noinspection PyTypeChecker
+        field_names: List[DeferredAttribute] = [
+            Cause.name,
+            Cause.slug,
+            Cause.description,
+            Cause.bank_account,
+        ]
+
+        return [field.field for field in field_names]
+
+    @property
+    def missing_mandatory_fields(self):
+        return [field for field in self.mandatory_fields if not getattr(self, field.name)]
+
+    @property
+    def missing_mandatory_fields_names(self):
+        return [field.verbose_name for field in self.missing_mandatory_fields]
+
+    @property
+    def mandatory_fields_values(self):
+        return [getattr(self, field.name) for field in self.mandatory_fields]
+
+    def can_receive_forms(self):
+        if not self.ngo.can_receive_forms():
+            return False
+
+        if not all(self.mandatory_fields_values):
+            return False
+
+        return True
+
+    def delete_prefilled_form(self):
+        if self.prefilled_form:
+            self.prefilled_form.delete(save=False)
+            self.save()
