@@ -8,7 +8,7 @@ def copy_ngos_to_causes(apps, _):
     Ngo = apps.get_model("donations", "Ngo")
 
     for ngo in Ngo.objects.all():
-        ngo_form = Cause(
+        cause = Cause(
             ngo=ngo,
             allow_online_collection=ngo.is_accepting_forms,
             display_image=ngo.logo,
@@ -18,7 +18,7 @@ def copy_ngos_to_causes(apps, _):
             bank_account=ngo.bank_account,
         )
 
-        ngo_form.save()
+        cause.save()
 
 
 def copy_causes_to_ngos(apps, _):
@@ -27,12 +27,12 @@ def copy_causes_to_ngos(apps, _):
 
     for ngo in Ngo.objects.filter(causes__isnull=False):
         # get the oldest form of the NGO
-        ngo_form: Cause = ngo.causes.order_by("date_created").first()
+        cause: Cause = ngo.causes.order_by("date_created").first()
 
-        ngo.logo = ngo_form.display_image
-        ngo.slug = ngo_form.slug
-        ngo.description = ngo_form.description
-        ngo.bank_account = ngo_form.bank_account
+        ngo.logo = cause.display_image
+        ngo.slug = cause.slug
+        ngo.description = cause.description
+        ngo.bank_account = cause.bank_account
         ngo.save()
 
         ngo.causes.all().delete()

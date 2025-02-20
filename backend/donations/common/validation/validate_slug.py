@@ -60,13 +60,13 @@ class NgoSlugValidator:
         return False
 
     @classmethod
-    def is_reused(cls, slug: str, form_pk: Optional[int] = None):
-        ngo_form_queryset: QuerySet = Cause.objects.filter(slug=slug.lower())
+    def is_reused(cls, slug: str, cause_pk: Optional[int] = None):
+        cause_queryset: QuerySet = Cause.objects.filter(slug=slug.lower())
 
-        if form_pk:
-            ngo_form_queryset = ngo_form_queryset.exclude(pk=form_pk)
+        if cause_pk:
+            cause_queryset = cause_queryset.exclude(pk=cause_pk)
 
-        if ngo_form_queryset.exists():
+        if cause_queryset.exists():
             return True
 
         return False

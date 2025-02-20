@@ -30,13 +30,13 @@ class RedirectionSuccessHandler(BaseVisibleTemplateView):
     def get_context_data(self, ngo_url, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        ngo_url = ngo_url.lower().strip()
+        cause_url = ngo_url.lower().strip()
         try:
-            ngo = Ngo.objects.get(slug=ngo_url)
+            cause = Cause.objects.get(slug=cause_url)
         except Ngo.DoesNotExist:
-            ngo = None
+            cause = None
 
-        if not ngo:
+        if not cause:
             raise Http404("NGO not found")
 
         try:
@@ -48,7 +48,6 @@ class RedirectionSuccessHandler(BaseVisibleTemplateView):
         context.update(
             {
                 "donor": donor,
-                "ngo": ngo,
                 "limit": settings.DONATIONS_LIMIT,
             }
         )

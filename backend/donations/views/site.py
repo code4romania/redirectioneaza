@@ -56,8 +56,8 @@ class HomePage(BaseVisibleTemplateView):
 
     @cache_decorator(timeout=settings.TIMEOUT_CACHE_SHORT, cache_key_prefix=FRONTPAGE_NGOS_KEY)
     def _get_random_causes(self, queryset: QuerySet, num_items: int):
-        all_ngo_form_ids = list(Cause.active.values_list("pk", flat=True))
-        return queryset.filter(id__in=random.sample(all_ngo_form_ids, num_items))
+        all_cause_ids = list(Cause.active.values_list("pk", flat=True))
+        return queryset.filter(id__in=random.sample(all_cause_ids, num_items))
 
     def _partner_response(self, context: Dict, partner: Partner):
         context.update(

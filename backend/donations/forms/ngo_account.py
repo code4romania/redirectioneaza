@@ -129,3 +129,6 @@ class CauseForm(forms.ModelForm):
             raise forms.ValidationError(_("This slug is not allowed."))
 
         return slug
+
+    def clean_description(self):
+        return self.cleaned_data.get("description").strip()

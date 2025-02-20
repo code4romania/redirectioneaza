@@ -14,13 +14,10 @@ from donations.common.models_hashing import hash_id_secret
 
 def year_ngo_donor_directory_path(subdir: str, instance: "Donor", filename: str) -> str:
     """
-    The file will be uploaded to MEDIA_ROOT/<subdir>/<year>/ngo-<ngo.id>-<ngo.hash>/c-<cause.id>-<cause.hash>/<id>_<hash>_<filename>
+    The file will be uploaded to MEDIA_ROOT/<subdir>/<year>/c-<cause.id>-<cause.hash>/<id>_<hash>_<filename>
     """
     timestamp = timezone.now()
     year = timestamp.date().year
-
-    ngo_pk = instance.ngo.pk if instance.ngo else 0
-    ngo_hash = hash_id_secret("ngo", ngo_pk)
 
     cause_pk = instance.cause.pk if instance.cause else 0
     cause_hash = hash_id_secret("cause", cause_pk)
@@ -32,7 +29,6 @@ def year_ngo_donor_directory_path(subdir: str, instance: "Donor", filename: str)
         [
             f"{subdir}",
             f"{year}",
-            f"ngo-{ngo_pk}-{ngo_hash}",
             f"c-{cause_pk}-{cause_hash}",
             f"{redirection_pk}_{redirection_hash}_{filename}",
         ]

@@ -65,6 +65,7 @@ def delete_prefilled_form(ngo_id):
 class NgoBaseView(BaseContextPropertiesMixin):
     title = _("Organization details")
     sidebar_item_target = None
+    request: HttpRequest
 
     def get_extra_context(self):
         user: User = self.request.user
@@ -143,7 +144,7 @@ class NgoPresentationView(NgoBaseTemplateView):
         return context
 
     def get(self, request, *args, **kwargs):
-        user = request.user
+        user: User = request.user
 
         if user.is_staff:
             if user.partner:
@@ -226,12 +227,18 @@ class NgoPresentationView(NgoBaseTemplateView):
         elif must_refresh_prefilled_form:
             async_task(delete_prefilled_form, ngo.id)
 
+        if ngo.causes.exists():
+            cause = ngo.causes.first()
+            if not cause.display_image and ngo.logo:
+                cause.display_image = ngo.logo
+                cause.save()
+
         context["ngo"] = ngo
 
         return render(request, self.template_name, context)
 
 
-class NgoFormsView(NgoBaseTemplateView):
+class NgoCausesView(NgoBaseTemplateView):
     template_name = "ngo-account/my-organization/ngo-form.html"
     title = _("Organization forms")
     tab_title = "form"
@@ -297,6 +304,9 @@ class NgoFormsView(NgoBaseTemplateView):
 
         cause.name = ngo.name
         cause.ngo = ngo
+
+        if not cause.display_image and ngo.logo:
+            cause.display_image = ngo.logo
 
         cause.save()
 

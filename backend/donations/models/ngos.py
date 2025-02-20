@@ -40,20 +40,21 @@ def ngo_directory_path(subdir: str, instance: "Ngo", filename: str) -> str:
     return f"{subdir}/ngo-{ngo_pk}-{ngo_hash}/{filename}"
 
 
-def ngo_form_directory_path(subdir: str, instance: "Cause", filename: str) -> str:
+def cause_directory_path(subdir: str, instance: "Cause", filename: str) -> str:
     """
-    The file will be uploaded to MEDIA_ROOT/<subdir>/ngo-<id>-<hash>/<filename>
+    The file will be uploaded to MEDIA_ROOT/<subdir>/ngo-<ngo.id>/c-<cause.id>-<cause.hash>/<filename>
     """
     ngo_pk = instance.ngo.pk
-    form_pk = instance.pk
-    form_hash = hash_id_secret("ngo-form", form_pk)
 
-    return f"{subdir}/ngo-{ngo_pk}/form-{form_pk}-{form_hash}/{filename}"
+    cause_pk = instance.pk
+    cause_hash = hash_id_secret("cause", cause_pk)
+
+    return f"{subdir}/ngo-{ngo_pk}/c-{cause_pk}-{cause_hash}/{filename}"
 
 
 def year_ngo_directory_path(subdir: str, instance: "Ngo", filename: str) -> str:
     """
-    The file will be uploaded to MEDIA_ROOT/<subdir>/<year>/ngo-<id>-<hash>/<filename>
+    The file will be uploaded to MEDIA_ROOT/<subdir>/<year>/ngo-<ngo.id>-<ngo.hash>/<filename>
     """
     timestamp = timezone.now()
 
@@ -67,7 +68,7 @@ def year_ngo_directory_path(subdir: str, instance: "Ngo", filename: str) -> str:
 
 def year_cause_directory_path(subdir: str, instance: "Cause", filename: str) -> str:
     """
-    The file will be uploaded to MEDIA_ROOT/<subdir>/<year>/ngo-<id>-<hash>/<filename>
+    The file will be uploaded to MEDIA_ROOT/<subdir>/<year>/c-<cause.id>-<cause.hash>/<filename>
     """
     timestamp = timezone.now()
 
@@ -405,7 +406,7 @@ class Cause(models.Model):
         blank=True,
         null=False,
         storage=select_public_storage,
-        upload_to=partial(ngo_directory_path, "logos"),
+        upload_to=partial(cause_directory_path, "logos"),
     )
 
     slug = models.SlugField(

@@ -4,13 +4,13 @@
 
   <div class="w-full max-w-48 shrink-0 grow-0">
     <div class="aspect-w-3 aspect-h-2">
-      {% include "components/logo-or-default.html" with logo=ngo.logo %}
+      {% include "components/logo-or-default.html" with logo=cause.display_image %}
     </div>
   </div>
 
   <div class="">
     <h1 class="pb-2 text-3xl font-bold tracking-tight text-gray-900">
-      {{ ngo.name }}
+      {{ cause.name }}
     </h1>
 
     <ul class="flex flex-col gap-2 mt-1 text-sm font-medium lg:flex-row lg:gap-4">
@@ -22,18 +22,18 @@
         </li>
       {% endif %}
 
-      {% if ngo.display_email and ngo.email %}
+      {% if cause.ngo.display_email and cause.ngo.email %}
         <li>
-          <a href="mailto:{{ ngo.email }}" class="hover:text-amber-600">
-            {{ ngo.email }}
+          <a href="mailto:{{ cause.ngo.email }}" class="hover:text-amber-600">
+            {{ cause.ngo.email }}
           </a>
         </li>
       {% endif %}
 
-      {% if ngo.display_phone and ngo.phone %}
+      {% if cause.ngo.display_phone and cause.ngo.phone %}
         <li>
-          <a href="tel:{{ ngo.phone }}" class="hover:text-amber-600">
-            {{ ngo.phone }}
+          <a href="tel:{{ cause.ngo.phone }}" class="hover:text-amber-600">
+            {{ cause.ngo.phone }}
           </a>
         </li>
       {% endif %}
@@ -49,12 +49,12 @@
           <p>
             {% trans "Active region:" %}
 
-            {% if ngo.locality %}
-              {{ ngo.locality }},
+            {% if cause.ngo.locality %}
+              {{ cause.ngo.locality }},
             {% endif %}
 
             {% blocktranslate trimmed %}
-              {{ ngo.county|to_county }} county
+              {{ cause.ngo.county|to_county }} county
             {% endblocktranslate %}
           </p>
         </div>

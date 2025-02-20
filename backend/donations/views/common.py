@@ -147,7 +147,7 @@ class CauseSearchMixin(SearchMixin):
         search_vector: SearchVector = ConfigureSearch.vector(search_fields, language_code)
         search_query: SearchQuery = ConfigureSearch.query(query, language_code)
 
-        ngo_forms: QuerySet[Cause] = (
+        causes: QuerySet[Cause] = (
             queryset.annotate(
                 rank=SearchRank(search_vector, search_query),
                 similarity=TrigramSimilarity("name", query),
@@ -157,15 +157,15 @@ class CauseSearchMixin(SearchMixin):
             .distinct("name")
         )
 
-        return ngo_forms
+        return causes
 
 
 class NgoCauseMixedSearchMixin(SearchMixin):
     @classmethod
     def get_search_results(cls, queryset: QuerySet, query: str, language_code: str) -> QuerySet[Cause]:
         ngos = NgoSearchMixin.get_search_results(Ngo.active, query, language_code)
-        ngos_forms = Cause.active.filter(ngo__in=ngos).distinct("name")
+        ngos_causes = Cause.active.filter(ngo__in=ngos).distinct("name")
 
-        searched_ngo_forms = CauseSearchMixin.get_search_results(queryset, query, language_code)
+        searched_causes = CauseSearchMixin.get_search_results(queryset, query, language_code)
 
-        return searched_ngo_forms | ngos_forms
+        return searched_causes | ngos_causes
