@@ -41,6 +41,9 @@ def download_donations_job(job_id: int = 0):
         return
 
     ngo: Ngo = job.ngo
+    if not ngo.causes.exists():
+        raise ValueError(f"NGO {ngo.id} has no causes")
+
     timestamp: datetime = timezone.now()
     donations: QuerySet[Donor] = Donor.current_year_signed.filter(ngo=ngo).order_by("-date_created").all()
 
@@ -424,6 +427,10 @@ def _clean_registration_number(reg_num: str) -> str:
 def _build_xml_header(ngo, xml_idx, zip_timestamp) -> str:
     valid_registration_number: str = _clean_registration_number(ngo.registration_number)
 
+    # XXX: [MULTI-FORM] This will change when we have multiple causes
+    cause = ngo.causes.first()
+    bank_account = cause.bank_account
+
     # noinspection HttpUrlsUsage
     xml_str = f"""
                 <btnDoc>
@@ -452,20 +459,24 @@ def _build_xml_header(ngo, xml_idx, zip_timestamp) -> str:
                 <z_tipPersoana>Rad2</z_tipPersoana>
                 <z_denEntitate>{ngo.name}</z_denEntitate>
                 <z_cifEntitate>{valid_registration_number}</z_cifEntitate>
-                <z_ibanEntitate>{ngo.bank_account}</z_ibanEntitate>
+                <z_ibanEntitate>{bank_account}</z_ibanEntitate>
                 <nrDataB>
                     <nrD>{xml_idx}</nrD>
                     <dataD>{zip_timestamp.day:02}.{zip_timestamp.month:02}.{zip_timestamp.year}</dataD>
                     <denD>{ngo.name}</denD>
                     <cifD>{valid_registration_number}</cifD>
                     <adresaD>{ngo.address}</adresaD>
-                    <ibanD>{ngo.bank_account}</ibanD>
+                    <ibanD>{bank_account}</ibanD>
                 </nrDataB>
             """
     return xml_str
 
 
 def _build_xml_donation_content(donation: Donor, donation_idx: int, ngo: Ngo):
+    # XXX: [MULTI-FORM] This will change when we have multiple causes
+    cause = ngo.causes.first()
+    bank_account = cause.bank_account
+
     # noinspection HttpUrlsUsage
     detailed_address: Dict = _get_address_details(donation)
     return f"""
@@ -514,7 +525,7 @@ def _build_xml_donation_content(donation: Donor, donation_idx: int, ngo: Ngo):
                                     <anDoi>{_parse_duration(donation.two_years)}</anDoi>
                                     <cifOJ>{_clean_registration_number(ngo.registration_number)}</cifOJ>
                                     <denOJ>{ngo.name}</denOJ>
-                                    <ibanNp>{ngo.bank_account}</ibanNp>
+                                    <ibanNp>{bank_account}</ibanNp>
                                     <prc>3.50</prc>
                                     <venitB/>
                                 </idEnt>

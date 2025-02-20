@@ -441,6 +441,9 @@ class Cause(models.Model):
     class Meta:
         verbose_name = _("Cause")
         verbose_name_plural = _("Causes")
+        constraints = [
+            models.UniqueConstraint(fields=["ngo", "bank_account"], name="ngo_bank_account_unique"),
+        ]
 
     def __str__(self):
         return f"{self.ngo.name} - {self.name}"

@@ -66,6 +66,10 @@ class Migration(migrations.Migration):
                 "verbose_name_plural": "Causes",
             },
         ),
+        migrations.AddConstraint(
+            model_name="cause",
+            constraint=models.UniqueConstraint(fields=("ngo", "bank_account"), name="ngo_bank_account_unique"),
+        ),
         migrations.AddField(
             model_name="donor",
             name="cause",
