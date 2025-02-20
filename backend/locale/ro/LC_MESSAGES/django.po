@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-19 11:03+0200\n"
+"POT-Creation-Date: 2025-02-20 14:01+0200\n"
 "PO-Revision-Date: 2024-03-07 11:27+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -104,7 +104,7 @@ msgstr "Data"
 
 #: donations/admin.py:292
 msgid "NGO Hub link"
-msgstr ""
+msgstr "Link NGO Hub"
 
 #: donations/admin.py:302
 msgid "CIF"
@@ -333,7 +333,7 @@ msgid "Slug"
 msgstr "URL organizație"
 
 #: donations/forms/ngo_account.py:104
-#: templates/v2/form/redirection-header.html:65
+#: templates/v2/form/redirection-header.html:67
 msgid "Description"
 msgstr "Descriere"
 
@@ -1773,17 +1773,13 @@ msgstr "Susține redirectioneaza.ro"
 msgid "Support the Infrastructure for Good"
 msgstr "Sprijină Infrastructura Binelui"
 
-#: templates/v2/components/input/image.html:30
+#: templates/v2/components/input/image.html:37
 msgid "Upload a logo in NGO Hub"
 msgstr "Încarcă un logo în NGO Hub"
 
-#: templates/v2/components/input/image.html:32
+#: templates/v2/components/input/image.html:39
 msgid "Upload an image"
 msgstr "Încarcă o imagine"
-
-#: templates/v2/components/input/image.html:46
-msgid "PNG, JPG, GIF up to 2MB"
-msgstr "PNG, JPG, GIF până la 2MB"
 
 #: templates/v2/components/notifications/message.html:31
 msgid "Close"
@@ -2893,6 +2889,9 @@ msgstr "parolă veche"
 #: users/models.py:178
 msgid "Group"
 msgstr "Grup"
+
+#~ msgid "PNG, JPG, GIF up to 2MB"
+#~ msgstr "PNG, JPG, GIF până la 2MB"
 
 #~ msgid "Archives history "
 #~ msgstr "Istoric arhive"
