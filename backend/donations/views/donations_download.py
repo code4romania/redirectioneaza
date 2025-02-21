@@ -23,7 +23,7 @@ from localflavor.ro.ro_counties import COUNTIES_CHOICES
 from donations.common.validation.registration_number import REGISTRATION_NUMBER_REGEX_SANS_VAT
 from donations.models.donors import Donor
 from donations.models.jobs import Job, JobDownloadError, JobStatusChoices
-from donations.models.ngos import Ngo
+from donations.models.ngos import Cause, Ngo
 from redirectioneaza.common.app_url import build_uri
 from redirectioneaza.common.messaging import extend_email_context, send_email
 
@@ -35,24 +35,22 @@ COUNTIES_CHOICES_REVERSED = {name: code for code, name in COUNTIES_CHOICES}
 
 def download_donations_job(job_id: int = 0):
     try:
-        job: Job = Job.objects.select_related("ngo").get(id=job_id)
+        job: Job = Job.objects.select_related("cause").get(id=job_id)
     except Job.DoesNotExist:
         logger.error("Job with ID %d does not exist", job_id)
         return
 
-    ngo: Ngo = job.ngo
-    if not ngo.causes.exists():
-        raise ValueError(f"NGO {ngo.id} has no causes")
+    cause: Cause = job.cause
 
     timestamp: datetime = timezone.now()
-    donations: QuerySet[Donor] = Donor.current_year_signed.filter(ngo=ngo).order_by("-date_created").all()
+    donations: QuerySet[Donor] = Donor.current_year_signed.filter(cause=cause).order_by("-date_created").all()
 
-    file_name = f"n{ngo.id:06d}__{datetime.strftime(timestamp, '%Y%m%d_%H%M')}.zip"
+    file_name = f"n{cause.id:06d}__{datetime.strftime(timestamp, '%Y%m%d_%H%M')}.zip"
 
     with tempfile.TemporaryDirectory(prefix=f"rdr_zip_{job_id:06d}_") as tmp_dir_name:
         logger.info("Created temporary directory '%s'", tmp_dir_name)
         try:
-            zip_path = _package_donations(tmp_dir_name, donations, ngo, file_name)
+            zip_path = _package_donations(tmp_dir_name, donations, cause, file_name)
             with open(zip_path, "rb") as f:
                 job.zip.save(file_name, File(f), save=False)
             job.status = JobStatusChoices.DONE
@@ -70,15 +68,15 @@ def download_donations_job(job_id: int = 0):
 
     send_email(
         subject=_("Documents ready for download"),
-        to_emails=[job.ngo.email],
+        to_emails=[job.cause.ngo.email],
         html_template="emails/ngo/download-archive/main.html",
         text_template="emails/ngo/download-archive/main.txt",
         context=mail_context,
     )
 
 
-def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], ngo: Ngo, zip_name: str) -> str:
-    logger.info("Processing %d donations for '%s'", len(donations), ngo.name)
+def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], cause: Cause, zip_name: str) -> str:
+    logger.info("Processing %d donations for '%s'", len(donations), cause.name)
 
     zip_timestamp: datetime = timezone.now()
     zip_path: str = os.path.join(tmp_dir_name, zip_name)
@@ -229,7 +227,7 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], ngo: Ngo, 
                 fp.seek(0)
                 handler.write(fp.read())
 
-        _generate_xml_files(ngo, zip_archive, zip_64_flag, zip_timestamp, cnp_idx)
+        _generate_xml_files(cause, zip_archive, zip_64_flag, zip_timestamp, cnp_idx)
 
     logger.info("Creating ZIP file for %d donations", zipped_files)
 
@@ -298,23 +296,23 @@ def _download_file(source_url: str) -> bytes:
 
 
 def _generate_xml_files(
-    ngo: Ngo,
+    cause: Cause,
     zip_archive: ZipFile,
     zip_64_flag: bool,
     zip_timestamp: datetime,
     cnp_idx: Dict[str, Dict[str, Any]],
 ):
-    if not cnp_idx or not ngo or not zip_archive:
+    if not cnp_idx or not cause or not zip_archive:
         return
 
-    ngo_donations: QuerySet[Donor] = Donor.current_year_signed.filter(ngo=ngo).order_by("-date_created")
+    ngo_donations: QuerySet[Donor] = Donor.current_year_signed.filter(cause=cause).order_by("-date_created")
 
     # if there are less than 2 * settings.DONATIONS_XML_LIMIT_PER_FILE donations
     # create a single XML file
     if ngo_donations.count() < 2 * settings.DONATIONS_XML_LIMIT_PER_FILE:
         xml_name: str = "d230.xml"
         _build_xml(
-            ngo,
+            cause,
             ngo_donations,
             1,
             xml_name,
@@ -326,10 +324,10 @@ def _generate_xml_files(
 
         return
 
-    _generate_donations_by_county(cnp_idx, ngo, ngo_donations, zip_64_flag, zip_archive, zip_timestamp)
+    _generate_donations_by_county(cnp_idx, cause, ngo_donations, zip_64_flag, zip_archive, zip_timestamp)
 
 
-def _generate_donations_by_county(cnp_idx, ngo, ngo_donations, zip_64_flag, zip_archive, zip_timestamp):
+def _generate_donations_by_county(cnp_idx, cause: Cause, ngo_donations, zip_64_flag, zip_archive, zip_timestamp):
     donations_limit: int = settings.DONATIONS_XML_LIMIT_PER_FILE
 
     number_of_donations_by_county: QuerySet[Tuple[str, int]] = (
@@ -345,7 +343,7 @@ def _generate_donations_by_county(cnp_idx, ngo, ngo_donations, zip_64_flag, zip_
 
             county_donations: QuerySet[Donor] = ngo_donations.filter(county=current_county)
             _build_xml(
-                ngo,
+                cause,
                 county_donations,
                 xml_count,
                 xml_name,
@@ -363,7 +361,7 @@ def _generate_donations_by_county(cnp_idx, ngo, ngo_donations, zip_64_flag, zip_
                     i * donations_limit : (i + 1) * donations_limit
                 ]
                 _build_xml(
-                    ngo,
+                    cause,
                     county_donations,
                     xml_count,
                     xml_name,
@@ -377,7 +375,7 @@ def _generate_donations_by_county(cnp_idx, ngo, ngo_donations, zip_64_flag, zip_
 
 
 def _build_xml(
-    ngo: Ngo,
+    cause: Cause,
     donations_batch: QuerySet[Donor],
     batch_count: int,
     xml_name: str,
@@ -390,7 +388,7 @@ def _build_xml(
     xml_str: str = """<?xml version="1.0" encoding="UTF-8"?>\n<form1>"""
 
     # 02. XML header
-    xml_str += _build_xml_header(ngo, batch_count, zip_timestamp)
+    xml_str += _build_xml_header(cause, batch_count, zip_timestamp)
 
     # 03. XML body
     for donation_idx, donation in enumerate(donations_batch):
@@ -402,7 +400,7 @@ def _build_xml(
             else:
                 continue
 
-        xml_str += _build_xml_donation_content(donation, donation_idx, ngo)
+        xml_str += _build_xml_donation_content(donation, donation_idx, cause)
 
     # 04. XML closing tag
     xml_str += """</form1>"""
@@ -424,13 +422,11 @@ def _clean_registration_number(reg_num: str) -> str:
     return reg_num[2:]
 
 
-def _build_xml_header(ngo, xml_idx, zip_timestamp) -> str:
+def _build_xml_header(cause: Cause, xml_idx, zip_timestamp) -> str:
+    ngo: Ngo = cause.ngo
     valid_registration_number: str = _clean_registration_number(ngo.registration_number)
 
     # XXX: [MULTI-FORM] This will change when we have multiple causes
-    cause = ngo.causes.first()
-    bank_account = cause.bank_account
-
     # noinspection HttpUrlsUsage
     xml_str = f"""
                 <btnDoc>
@@ -459,23 +455,22 @@ def _build_xml_header(ngo, xml_idx, zip_timestamp) -> str:
                 <z_tipPersoana>Rad2</z_tipPersoana>
                 <z_denEntitate>{ngo.name}</z_denEntitate>
                 <z_cifEntitate>{valid_registration_number}</z_cifEntitate>
-                <z_ibanEntitate>{bank_account}</z_ibanEntitate>
+                <z_ibanEntitate>{cause.bank_account}</z_ibanEntitate>
                 <nrDataB>
                     <nrD>{xml_idx}</nrD>
                     <dataD>{zip_timestamp.day:02}.{zip_timestamp.month:02}.{zip_timestamp.year}</dataD>
                     <denD>{ngo.name}</denD>
                     <cifD>{valid_registration_number}</cifD>
                     <adresaD>{ngo.address}</adresaD>
-                    <ibanD>{bank_account}</ibanD>
+                    <ibanD>{cause.bank_account}</ibanD>
                 </nrDataB>
             """
     return xml_str
 
 
-def _build_xml_donation_content(donation: Donor, donation_idx: int, ngo: Ngo):
+def _build_xml_donation_content(donation: Donor, donation_idx: int, cause: Cause):
     # XXX: [MULTI-FORM] This will change when we have multiple causes
-    cause = ngo.causes.first()
-    bank_account = cause.bank_account
+    ngo: Ngo = cause.ngo
 
     # noinspection HttpUrlsUsage
     detailed_address: Dict = _get_address_details(donation)
@@ -525,7 +520,7 @@ def _build_xml_donation_content(donation: Donor, donation_idx: int, ngo: Ngo):
                                     <anDoi>{_parse_duration(donation.two_years)}</anDoi>
                                     <cifOJ>{_clean_registration_number(ngo.registration_number)}</cifOJ>
                                     <denOJ>{ngo.name}</denOJ>
-                                    <ibanNp>{bank_account}</ibanNp>
+                                    <ibanNp>{cause.bank_account}</ibanNp>
                                     <prc>3.50</prc>
                                     <venitB/>
                                 </idEnt>
