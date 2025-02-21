@@ -1,5 +1,6 @@
 import logging
 from datetime import datetime, timedelta
+from typing import Optional, Tuple
 from urllib.parse import urlparse
 
 from django.conf import settings
@@ -23,6 +24,21 @@ from ..pdf import create_full_pdf
 logger = logging.getLogger(__name__)
 
 
+def get_ngo_cause(slug: str) -> Tuple[Optional[Cause], Ngo]:
+    #  XXX: [MULTI-FORM] This is a temporary solution to handle both causes and NGOs
+    try:
+        cause: Optional[Cause] = Cause.active.get(slug=slug)
+        ngo: Ngo = cause.ngo
+    except Cause.DoesNotExist:
+        try:
+            ngo: Ngo = Ngo.active.get(slug=slug)
+            cause = ngo.causes.first()
+        except Ngo.DoesNotExist:
+            raise Http404
+
+    return cause, ngo
+
+
 class RedirectionSuccessHandler(BaseVisibleTemplateView):
     template_name = "form/success.html"
     title = _("Successful redirection")
@@ -31,12 +47,9 @@ class RedirectionSuccessHandler(BaseVisibleTemplateView):
         context = super().get_context_data(**kwargs)
 
         cause_url = ngo_url.lower().strip()
-        try:
-            cause = Cause.objects.get(slug=cause_url)
-        except Ngo.DoesNotExist:
-            cause = None
+        cause, ngo = get_ngo_cause(cause_url)
 
-        if not cause:
+        if not cause and not ngo:
             raise Http404("NGO not found")
 
         try:
@@ -72,24 +85,22 @@ class RedirectionHandler(TemplateView):
         request = self.request
         ngo_url = kwargs.get("ngo_url", "")
 
-        try:
-            cause: Cause = Cause.active.get(slug=ngo_url)
-        except Ngo.DoesNotExist:
+        cause, ngo = get_ngo_cause(ngo_url)
+
+        # if we didn't find it or the ngo doesn't have an active page
+        if (cause is None or not cause.ngo.can_receive_forms()) and (ngo is None or not ngo.can_receive_forms()):
             raise Http404
 
         absolute_path = request.build_absolute_uri(reverse("twopercent", kwargs={"ngo_url": ngo_url}))
 
         context.update(
             {
-                "title": cause.name,
+                "title": cause.name if cause else ngo.name,
                 "cause": cause,
+                "ngo": ngo,
                 "absolute_path": absolute_path,
             }
         )
-
-        # if we didn't find it or the ngo doesn't have an active page
-        if cause is None or not cause.ngo.can_receive_forms():
-            raise Http404
 
         # if we still have a cookie from an old session, remove it
         if "donor_id" in request.session:
@@ -161,10 +172,12 @@ class RedirectionHandler(TemplateView):
     def post(self, request, ngo_url):
         post = self.request.POST
 
-        try:
-            cause: Cause = Cause.active.get(slug=ngo_url)
-            ngo: Ngo = cause.ngo
-        except Ngo.DoesNotExist:
+        (
+            cause,
+            ngo,
+        ) = get_ngo_cause(ngo_url)
+
+        if not cause and not ngo:
             raise Http404
 
         # if we have an ajax request, return an answer
