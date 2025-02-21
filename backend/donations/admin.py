@@ -472,7 +472,8 @@ class CauseAdmin(ModelAdmin, CommonCauseFields):
         ngo_names: List[str] = []
 
         for ngo in queryset:
-            new_job: Job = Job(ngo=ngo, cause=ngo.causes.first(), owner=request.user)
+            cause = ngo.causes.first()
+            new_job: Job = Job(ngo=ngo, cause=cause, owner=request.user)
             new_job.save()
 
             try:

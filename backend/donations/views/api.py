@@ -107,7 +107,8 @@ class DownloadNgoForms(BaseTemplateView):
         if get_is_over_donation_archival_limit():
             return redirect(failure_redirect_url)
 
-        new_job: Job = Job(ngo=ngo, owner=request.user)
+        cause: Cause = ngo.causes.first()
+        new_job: Job = Job(ngo=ngo, cause=cause, owner=request.user)
         new_job.save()
 
         try:
