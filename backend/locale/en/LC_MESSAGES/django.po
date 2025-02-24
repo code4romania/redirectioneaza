@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-24 12:01+0200\n"
+"POT-Creation-Date: 2025-02-24 12:53+0200\n"
 "PO-Revision-Date: 2024-02-28 15:45+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -299,8 +299,6 @@ msgid "Address"
 msgstr "Address"
 
 #: donations/forms/ngo_account.py:29 donations/forms/redirection.py:33
-#: templates/v2/form/redirection-open.html:115
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:92
 msgid "Locality"
 msgstr "Locality"
 
@@ -1703,7 +1701,8 @@ msgstr "Read more"
 
 #: templates/v2/account/snippets/third-party.html:124
 msgid "You have activated the Redirecționează platform in your NGO Hub account"
-msgstr "You have activated the Redirecționează platform in your NGO Hub account"
+msgstr ""
+"You have activated the Redirecționează platform in your NGO Hub account"
 
 #: templates/v2/account/snippets/third-party.html:126
 msgid ""
@@ -2258,6 +2257,13 @@ msgstr "Street name"
 #: templates/v2/form/redirection-open.html:90
 msgid "Flat"
 msgstr "Flat"
+
+#: templates/v2/form/redirection-open.html:115
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:92
+#, fuzzy
+#| msgid "Locality"
+msgid "Locality/Sector"
+msgstr "Locality"
 
 #: templates/v2/form/redirection-open.html:128
 msgid "Handwritten signature"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-24 12:01+0200\n"
+"POT-Creation-Date: 2025-02-24 12:53+0200\n"
 "PO-Revision-Date: 2024-03-07 11:27+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -301,8 +301,6 @@ msgid "Address"
 msgstr "Adresă"
 
 #: donations/forms/ngo_account.py:29 donations/forms/redirection.py:33
-#: templates/v2/form/redirection-open.html:115
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:92
 msgid "Locality"
 msgstr "Localitate"
 
@@ -2269,6 +2267,11 @@ msgstr "Stradă"
 #: templates/v2/form/redirection-open.html:90
 msgid "Flat"
 msgstr "Bloc"
+
+#: templates/v2/form/redirection-open.html:115
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:92
+msgid "Locality/Sector"
+msgstr "Localitate/Sector"
 
 #: templates/v2/form/redirection-open.html:128
 msgid "Handwritten signature"
