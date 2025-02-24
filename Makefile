@@ -25,6 +25,12 @@ up-psql:                                         ## run the project with psql
 upd-psql:                                        ## run the project with psql in detached mode
 	docker compose -f docker-compose.yml up -d --build
 
+up-psql-db:                                      ## run only the database with psql
+	docker compose -f docker-compose.yml up db
+
+upd-psql-db:                                     ## run only the database with psql in detached mode
+	docker compose -f docker-compose.yml up -d db
+
 up-prod:                                         ## run the project with psql in production
 	docker compose -f docker-compose.prod.yml up --build
 
@@ -37,6 +43,9 @@ rund-psql: upd-psql                              ## run the project with psql in
 redo-psql: drop-psql up-psql                     ## delete the db and rerun the project with psql
 redod-psql: drop-psql upd-psql                   ## delete the db and rerun the project with psql in detached mode
 
+run-psql-db: up-psql-db                          ## run the project with psql and stop the prod config beforehand
+rund-psql-db: upd-psql-db                        ## run the project with psql in detached mode and stop the project project beforehand
+
 ### Using the Production configuration
 run-prod: up-prod                                ## run the project with prod
 rund-prod: upd-prod                              ## run the project with prod in detached mode
@@ -48,6 +57,8 @@ run: run-psql                                    ## set the default run command 
 redo: redo-psql                                  ## set the default redo command to psql
 rund: rund-psql                                  ## set the default run command to psql
 redod: redod-psql                                ## set the default redo command to psql
+run-db: run-psql-db                              ## set the default run command to psql
+rund-db: rund-psql-db                            ## set the default run command to psql
 
 stop: stop-psql stop-prod                        ## stop all running projects
 

@@ -50,8 +50,6 @@ would like the UI to look like if you’re suggesting new UI elements.
 
 ### Database technology & provider
 
-The project has been configured to work with the following databases:
-
 - [PostgreSQL](https://www.postgresql.org/)
 
 ## Development
@@ -65,12 +63,14 @@ The project has been configured to work with the following databases:
 - a PostgreSQL 16.2 database (can be run with Docker)
 
 1. Go to the root of the project
-2. Run `cp .env.example .env` to create the environment file
-3. Set up the Node.js environment
+2. Run `cp .env.example .env.local` to create the environment file
+3. Configure your database to run with the configuration in the `.env.local` file
+    or run the database using docker with `docker compose up -d db_psql_dev` or `make rund-db`
+4. Set up the Node.js environment
    1. Go to the `backend` directory
    2. Run `nvm use || nvm install` to install the Node.js version specified in the `.nvmrc` file
    3. Run `npm install` to install the Node.js dependencies
-4. Set up the Python environment
+5. Set up the Python environment
    1. Create a virtual environment and activate it with `python3 -m venv venv && source venv/bin/activate`
    2. Go to the `backend` directory
    3. Run `pip install -r requirements-dev.txt` to install the Python dependencies
@@ -85,38 +85,16 @@ The project has been configured to work with the following databases:
    1. Go to the `backend` directory
    2. Run `nvm use` to use the Node.js version specified in the `.nvmrc` file
    3. Run `npm run dev` to start the frontend development server
+3. Open http://localhost:8000 in your browser
 
-#### Compiling the old CSS with less
+:information_source:
+**Configure whatever port works best for you.**
+For Django, change the `:8000` to whatever works best for you.
+For the frontend, set the `DJANGO_VITE_DEV_SERVER_PORT` variable in the `.env.local` file
 
-Go to the root of the project and run the following commands:
-
-```bash
-pushd backend/
-
-nvm use --lts || nvm install --lts
-
-npm i -g less@2.7.3 less-plugin-clean-css@1.5.1 bower@1.8.14
-
-bower install
-
-cp -r bower_components/  static_extras/
-
-pushd static_extras/
-
-lessc css/main.less > css/main.css --clean-css="--s1 --advanced --compatibility=ie8"
-
-rm -rf bower_components/
-
-popd
-
-popd
-```
-
-or, in a one-liner:
-
-```bash
-pushd backend/ && nvm use --lts || nvm install --lts && npm i -g less@2.7.3 less-plugin-clean-css@1.5.1 && cp -r bower_components/  static_extras/ && pushd static_extras/ && lessc css/main.less > css/main.css --clean-css="--s1 --advanced --compatibility=ie8" && rm -rf bower_components/ && popd && popd
-```
+:bangbang:
+**In case of problems with the instructions**, please open an issue.
+If you managed to find a solution, please open a PR with the changes.
 
 
 ### Deployment With Docker
