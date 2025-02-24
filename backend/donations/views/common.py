@@ -1,9 +1,10 @@
 import datetime
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Tuple
 
 from django.conf import settings
 from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector, TrigramSimilarity
 from django.db.models import Q, QuerySet
+from django.http import Http404
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import ngettext_lazy
@@ -169,3 +170,18 @@ class NgoCauseMixedSearchMixin(SearchMixin):
         searched_causes = CauseSearchMixin.get_search_results(queryset, query, language_code)
 
         return searched_causes | ngos_causes
+
+
+def get_ngo_cause(slug: str) -> Tuple[Optional[Cause], Ngo]:
+    #  XXX: [MULTI-FORM] This is a temporary solution to handle both causes and NGOs
+    try:
+        cause: Optional[Cause] = Cause.active.get(slug=slug)
+        ngo: Ngo = cause.ngo
+    except Cause.DoesNotExist:
+        try:
+            ngo: Ngo = Ngo.active.get(slug=slug)
+            cause = ngo.causes.first()
+        except Ngo.DoesNotExist:
+            raise Http404
+
+    return cause, ngo

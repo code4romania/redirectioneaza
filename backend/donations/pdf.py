@@ -3,7 +3,7 @@ import os
 import tempfile
 from datetime import datetime
 from io import BytesIO
-from typing import Dict
+from typing import Dict, Optional
 
 from reportlab.graphics import renderPDF
 from reportlab.lib.pagesizes import A4
@@ -15,7 +15,7 @@ from reportlab.pdfgen.canvas import Canvas
 from svglib.svglib import svg2rlg
 
 from donations.models.donors import Donor
-from donations.models.ngos import Cause
+from donations.models.ngos import Cause, Ngo
 
 abs_path = os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir))
 # TODO: we might need to rethink this; we should not hardcode the path to static_extras
@@ -39,7 +39,7 @@ def _format_bank_account(bank_account: str):
     return account
 
 
-def _add_ngo_data(start_y, c: Canvas, cause: Cause):
+def _add_ngo_data(start_y, c: Canvas, cause: Optional[Cause], ngo: Ngo):
     start_ngo_y = start_y - 289
 
     # the x mark to support an NGO
@@ -47,21 +47,22 @@ def _add_ngo_data(start_y, c: Canvas, cause: Cause):
 
     # the cif code
     c.setFontSize(9)
-    c.drawString(250, start_ngo_y - 39, cause.ngo.full_registration_number)
+    c.drawString(250, start_ngo_y - 39, ngo.full_registration_number)
 
     # the name
-    org_name = cause.ngo.name
+    org_name = ngo.name
     if len(org_name) > 79:
         c.setFontSize(9)
     elif len(org_name) > 65:
         c.setFontSize(12)
 
-    c.drawString(186, start_ngo_y - 62, org_name.encode("utf-8"))
+    c.drawString(186, start_ngo_y - 62, org_name)
 
     c.setFontSize(11)
 
     # the bank account
-    account = _format_bank_account(cause.bank_account)
+    bank_account = cause.bank_account if cause else ngo.bank_account
+    account = _format_bank_account(bank_account)
     c.drawString(110, start_ngo_y - 84, account)
 
     c.drawString(146, start_ngo_y - 106, "3,5%")
@@ -238,7 +239,7 @@ def _add_year_to_pdf(c, start_x, start_y):
         start_x += 18
 
 
-def create_cause_pdf(cause: Cause):
+def create_cause_pdf(cause: Optional[Cause], ngo: Ngo):
     start_x = 305
     start_y = 726
 
@@ -250,7 +251,7 @@ def create_cause_pdf(cause: Cause):
 
     _add_year_to_pdf(c, start_x, start_y)
 
-    _add_ngo_data(start_y, c, cause)
+    _add_ngo_data(start_y, c, cause, ngo)
 
     c.save()
 
@@ -261,7 +262,7 @@ def create_cause_pdf(cause: Cause):
 
 
 def create_full_pdf(donor: Donor, signature: str = None):
-    """method used to create the pdf
+    """method used to create the PDF
 
     donor: Donor object with the person's data
     signature: base64 encoded string of the signature svg
@@ -281,7 +282,7 @@ def create_full_pdf(donor: Donor, signature: str = None):
     # DRAW DONOR DATA
     _add_donor_data(start_y, c, donor)
 
-    _add_ngo_data(start_y, c, donor.cause)
+    _add_ngo_data(start_y, c, donor.cause, donor.ngo)
 
     if signature:
         _add_signature_to_pdf(c, signature)

@@ -13,6 +13,7 @@ from .common import (
     NgoCauseMixedSearchMixin,
     get_cause_response_item,
     get_is_over_donation_archival_limit,
+    get_ngo_cause,
     get_was_last_job_recent,
 )
 from ..models.jobs import Job, JobStatusChoices
@@ -56,16 +57,13 @@ class SearchCausesApi(TemplateView, NgoCauseMixedSearchMixin):
 
 class GetNgoForm(TemplateView):
     def get(self, request, ngo_url, *args, **kwargs):
-        try:
-            cause = Cause.objects.get(slug=ngo_url)
-        except Ngo.DoesNotExist:
-            raise Http404()
+        cause, ngo = get_ngo_cause(ngo_url)
 
         # if we have a form created for this ngo, return the url
         if cause.prefilled_form:
             return redirect(cause.prefilled_form.url)
 
-        pdf = create_cause_pdf(cause)
+        pdf = create_cause_pdf(cause, ngo)
 
         # filename = "Formular 2% - {0}.pdf".format(ngo.name)
         filename = "formular_donatie.pdf"

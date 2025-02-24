@@ -1,6 +1,5 @@
 import logging
 from datetime import datetime, timedelta
-from typing import Optional, Tuple
 from urllib.parse import urlparse
 
 from django.conf import settings
@@ -16,27 +15,12 @@ from ipware import get_client_ip
 
 from redirectioneaza.common.messaging import extend_email_context, send_email
 from .base import BaseVisibleTemplateView
+from .common import get_ngo_cause
 from ..forms.redirection import DonationForm
 from ..models.donors import Donor
-from ..models.ngos import Cause, Ngo
 from ..pdf import create_full_pdf
 
 logger = logging.getLogger(__name__)
-
-
-def get_ngo_cause(slug: str) -> Tuple[Optional[Cause], Ngo]:
-    #  XXX: [MULTI-FORM] This is a temporary solution to handle both causes and NGOs
-    try:
-        cause: Optional[Cause] = Cause.active.get(slug=slug)
-        ngo: Ngo = cause.ngo
-    except Cause.DoesNotExist:
-        try:
-            ngo: Ngo = Ngo.active.get(slug=slug)
-            cause = ngo.causes.first()
-        except Ngo.DoesNotExist:
-            raise Http404
-
-    return cause, ngo
 
 
 class RedirectionSuccessHandler(BaseVisibleTemplateView):

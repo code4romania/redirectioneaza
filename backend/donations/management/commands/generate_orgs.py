@@ -7,7 +7,7 @@ from django.db import IntegrityError
 from faker import Faker
 from localflavor.ro.ro_counties import COUNTIES_CHOICES
 
-from donations.models.ngos import Ngo
+from donations.models.ngos import Cause, Ngo
 
 fake = Faker("ro_RO")
 
@@ -218,5 +218,15 @@ class Command(BaseCommand):
 
             owner.ngo = org
             owner.save()
+
+            ngo_cause = Cause.objects.create(
+                ngo=org,
+                name=org.name,
+                slug=org.slug,
+                description=org.description,
+                bank_account=org.bank_account,
+                allow_online_collection=True,
+            )
+            ngo_cause.save()
 
         self.stdout.write(self.style.SUCCESS(f"Successfully created {len(organizations)} organization(s)."))
