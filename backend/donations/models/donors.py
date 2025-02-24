@@ -14,17 +14,24 @@ from donations.common.models_hashing import hash_id_secret
 
 def year_ngo_donor_directory_path(subdir: str, instance: "Donor", filename: str) -> str:
     """
-    The file will be uploaded to MEDIA_ROOT/<subdir>/<year>/ngo-<ngo.id>-<ngo.hash>/<id>_<hash>_<filename>
+    The file will be uploaded to MEDIA_ROOT/<subdir>/<year>/c-<cause.id>-<cause.hash>/<id>_<hash>_<filename>
     """
     timestamp = timezone.now()
-    return "{0}/{1}/ngo-{2}-{3}/{4}_{5}_{6}".format(
-        subdir,
-        timestamp.date().year,
-        instance.ngo.pk if instance.ngo else 0,
-        hash_id_secret("ngo", instance.ngo.pk if instance.ngo else 0),
-        instance.pk,
-        hash_id_secret("donor", instance.pk),
-        filename,
+    year = timestamp.date().year
+
+    cause_pk = instance.cause.pk if instance.cause else 0
+    cause_hash = hash_id_secret("cause", cause_pk)
+
+    redirection_pk = instance.pk
+    redirection_hash = hash_id_secret("donor", redirection_pk)
+
+    return "/".join(
+        [
+            f"{subdir}",
+            f"{year}",
+            f"c-{cause_pk}-{cause_hash}",
+            f"{redirection_pk}_{redirection_hash}_{filename}",
+        ]
     )
 
 
@@ -50,9 +57,8 @@ class Donor(models.Model):
     )
 
     ngo = models.ForeignKey("Ngo", verbose_name=_("NGO"), on_delete=models.SET_NULL, db_index=True, null=True)
+    cause = models.ForeignKey("Cause", verbose_name=_("cause"), on_delete=models.SET_NULL, db_index=True, null=True)
 
-    # TODO: first name and last name have been swapped
-    # https://github.com/code4romania/redirectioneaza/issues/269
     l_name = models.CharField(verbose_name=_("last name"), blank=True, null=False, default="", max_length=100)
     f_name = models.CharField(verbose_name=_("first name"), blank=True, null=False, default="", max_length=100)
     initial = models.CharField(verbose_name=_("initials"), blank=True, null=False, default="", max_length=5)
@@ -138,7 +144,7 @@ class Donor(models.Model):
         verbose_name_plural = _("donors")
 
     def __str__(self):
-        return f"{self.ngo} {self.date_created} {self.email}"
+        return f"{self.cause} {self.date_created} {self.email}"
 
     def set_cnp(self, cnp: str):
         self.encrypted_cnp = self.encrypt_cnp(cnp)

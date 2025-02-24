@@ -1,5 +1,6 @@
 import logging
 from datetime import datetime, timedelta
+from typing import Optional, Tuple
 from urllib.parse import urlparse
 
 from django.conf import settings
@@ -14,14 +15,28 @@ from django.views.generic import TemplateView
 from ipware import get_client_ip
 
 from redirectioneaza.common.messaging import extend_email_context, send_email
-
+from .base import BaseVisibleTemplateView
 from ..forms.redirection import DonationForm
 from ..models.donors import Donor
-from ..models.ngos import Ngo
+from ..models.ngos import Cause, Ngo
 from ..pdf import create_full_pdf
-from .base import BaseVisibleTemplateView
 
 logger = logging.getLogger(__name__)
+
+
+def get_ngo_cause(slug: str) -> Tuple[Optional[Cause], Ngo]:
+    #  XXX: [MULTI-FORM] This is a temporary solution to handle both causes and NGOs
+    try:
+        cause: Optional[Cause] = Cause.active.get(slug=slug)
+        ngo: Ngo = cause.ngo
+    except Cause.DoesNotExist:
+        try:
+            ngo: Ngo = Ngo.active.get(slug=slug)
+            cause = ngo.causes.first()
+        except Ngo.DoesNotExist:
+            raise Http404
+
+    return cause, ngo
 
 
 class RedirectionSuccessHandler(BaseVisibleTemplateView):
@@ -31,13 +46,10 @@ class RedirectionSuccessHandler(BaseVisibleTemplateView):
     def get_context_data(self, ngo_url, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        ngo_url = ngo_url.lower().strip()
-        try:
-            ngo = Ngo.objects.get(slug=ngo_url)
-        except Ngo.DoesNotExist:
-            ngo = None
+        cause_url = ngo_url.lower().strip()
+        cause, ngo = get_ngo_cause(cause_url)
 
-        if not ngo:
+        if not cause and not ngo:
             raise Http404("NGO not found")
 
         try:
@@ -49,7 +61,6 @@ class RedirectionSuccessHandler(BaseVisibleTemplateView):
         context.update(
             {
                 "donor": donor,
-                "ngo": ngo,
                 "limit": settings.DONATIONS_LIMIT,
             }
         )
@@ -74,24 +85,22 @@ class RedirectionHandler(TemplateView):
         request = self.request
         ngo_url = kwargs.get("ngo_url", "")
 
-        try:
-            ngo: Ngo = Ngo.objects.get(slug=ngo_url)
-        except Ngo.DoesNotExist:
+        cause, ngo = get_ngo_cause(ngo_url)
+
+        # if we didn't find it or the ngo doesn't have an active page
+        if (cause is None or not cause.ngo.can_receive_forms()) and (ngo is None or not ngo.can_receive_forms()):
             raise Http404
 
         absolute_path = request.build_absolute_uri(reverse("twopercent", kwargs={"ngo_url": ngo_url}))
 
         context.update(
             {
-                "title": ngo.name,
+                "title": cause.name if cause else ngo.name,
+                "cause": cause,
                 "ngo": ngo,
                 "absolute_path": absolute_path,
             }
         )
-
-        # if we didn't find it or the ngo doesn't have an active page
-        if ngo is None or not ngo.can_receive_forms():
-            raise Http404
 
         # if we still have a cookie from an old session, remove it
         if "donor_id" in request.session:
@@ -117,7 +126,7 @@ class RedirectionHandler(TemplateView):
             return context
 
         ngo_website_description = ""
-        ngo_website = ngo.website if ngo.website else ""
+        ngo_website = cause.ngo.website if cause.ngo.website else ""
 
         if ngo_website:
             # try and parse the url to see if it's valid
@@ -163,9 +172,12 @@ class RedirectionHandler(TemplateView):
     def post(self, request, ngo_url):
         post = self.request.POST
 
-        try:
-            ngo: Ngo = Ngo.active.get(slug=ngo_url)
-        except Ngo.DoesNotExist:
+        (
+            cause,
+            ngo,
+        ) = get_ngo_cause(ngo_url)
+
+        if not cause and not ngo:
             raise Http404
 
         # if we have an ajax request, return an answer
@@ -191,6 +203,7 @@ class RedirectionHandler(TemplateView):
             county=form.cleaned_data["county"],
             has_signed=signature is not None and signature != "",
             income_type="wage",
+            cause=cause,
             ngo=ngo,
         )
         new_donor.set_cnp(form.cleaned_data["cnp"])

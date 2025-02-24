@@ -14,13 +14,12 @@ from unfold.widgets import UnfoldAdminEmailInputWidget, UnfoldAdminTextInputWidg
 
 from redirectioneaza.common.messaging import extend_email_context, send_email
 from users.groups_management import PARTNER_MANAGER
-
 from .models import Partner
 
 UserModel = get_user_model()
 
 
-class AddNewNgoPartnerManagerForm(Form):
+class AddNewCausePartnerManagerForm(Form):
     first_name = forms.CharField(
         label=_("First Name"),
         help_text=_("The first name of the user who will be the administering the Partner."),
@@ -42,14 +41,14 @@ class AddNewNgoPartnerManagerForm(Form):
     )
 
 
-class NgoPartnerInline(TabularInline):
-    model = Partner.ngos.through
+class CausePartnerInline(TabularInline):
+    model = Partner.causes.through
     extra = 1
 
-    verbose_name = _("NGO")
-    verbose_name_plural = _("NGOs")
+    verbose_name = _("Cause")
+    verbose_name_plural = _("Causes")
 
-    autocomplete_fields = ("ngo",)
+    autocomplete_fields = ("cause",)
 
 
 @admin.register(Partner)
@@ -70,7 +69,7 @@ class PartnerAdmin(ModelAdmin):
         "name",
     )
 
-    inlines = (NgoPartnerInline,)
+    inlines = (CausePartnerInline,)
     readonly_fields = (
         "date_created",
         "date_updated",
@@ -110,7 +109,7 @@ class PartnerAdmin(ModelAdmin):
 
     actions_detail = ("invite_new_owner",)
 
-    def _invite_new_owner(self, request: HttpRequest, form: AddNewNgoPartnerManagerForm, partner: Partner):
+    def _invite_new_owner(self, request: HttpRequest, form: AddNewCausePartnerManagerForm, partner: Partner):
         first_name = form.cleaned_data["first_name"]
         last_name = form.cleaned_data["last_name"]
         user_email = form.cleaned_data["user_email"]
@@ -170,7 +169,7 @@ class PartnerAdmin(ModelAdmin):
         partner = self.get_object(request, object_id)
 
         if request.method == "POST":
-            form = AddNewNgoPartnerManagerForm(request.POST)
+            form = AddNewCausePartnerManagerForm(request.POST)
             if form.is_valid():
                 result = self._invite_new_owner(request, form, partner)
 
@@ -181,7 +180,7 @@ class PartnerAdmin(ModelAdmin):
             else:
                 self.message_user(request, _("The form is not valid."), level="ERROR")
         else:
-            form = AddNewNgoPartnerManagerForm()
+            form = AddNewCausePartnerManagerForm()
 
         return render(
             request,

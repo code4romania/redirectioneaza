@@ -5,24 +5,26 @@
     {% trans "Redirect easily and quickly" %}
   </h2>
 
-  {% blocktranslate trimmed asvar banner_message %}
-    Since 2022, form 230 can be submitted online.
-    Fill in the form with the data from your ID,
-    sign it online, and it will be automatically sent to the organization.
+  {% if cause.ngo.is_accepting_forms and cause.allow_online_collection %}
+    {% blocktranslate trimmed asvar banner_message %}
+      Since 2022, form 230 can be submitted online.
+      Fill in the form with the data from your ID,
+      sign it online, and it will be automatically sent to the organization.
 
-    Alternatively, your form will be generated, and you will be able to download the PDF,
-    but it will not reach the NGO.
+      Alternatively, your form will be generated, and you will be able to download the PDF,
+      but it will not reach the NGO.
 
-    We rely on you to print, sign the form by hand,
-    and send it to the NGO by mail or email,
-    or submit it directly to ANAF.
-  {% endblocktranslate %}
-  {% include "components/info-banner.html" with style="info" banner_message=banner_message %}
+      We rely on you to print, sign the form by hand,
+      and send it to the NGO by mail or email,
+      or submit it directly to ANAF.
+    {% endblocktranslate %}
+    {% include "components/info-banner.html" with style="info" banner_message=banner_message %}
+  {% endif %}
 
   <form
     id="two-percent-form"
     class="flex flex-col w-full gap-8 py-10"
-    action="{% url 'twopercent' ngo_url=ngo.slug %}"
+    action="{% url 'twopercent' ngo_url=cause.slug %}"
     role="form"
     method="post">
 
@@ -116,7 +118,7 @@
 
     </fieldset>
 
-    {% if ngo.is_accepting_forms %}
+    {% if cause.ngo.is_accepting_forms and cause.allow_online_collection %}
 
       <hr class="border-t border-gray-200">
 
@@ -213,7 +215,7 @@
         </div>
       </div>
 
-      {% if ngo.is_accepting_forms %}
+      {% if cause.ngo.is_accepting_forms and cause.allow_online_collection %}
 
         <button
           id="submit-with-signature"

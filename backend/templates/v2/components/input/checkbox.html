@@ -7,6 +7,7 @@
         type="checkbox"
         {% if is_required %}required{% endif %}
         {% if value or field and field.value %}checked{% endif %}
+        {% if field or value %}{% if field and field.value == True %}checked{% elif value == True %}checked{% endif %}{% endif %}
         {% if is_disabled %}disabled{% endif %}
         {% if value == True %}input-original-value="true"{% else %} input-original-value="false" {% endif %}
         class="col-start-1 row-start-1 bg-white border border-gray-300 rounded appearance-none checked:hover:bg-amber-500 hover:border-amber-500 checked:border-amber-300 checked:bg-amber-300 indeterminate:border-amber-300 indeterminate:bg-amber-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300 disabled:border-gray-300 disabled:bg-gray-200 disabled:checked:bg-gray-100 forced-colors:appearance-auto">

@@ -34,17 +34,50 @@ def ngo_directory_path(subdir: str, instance: "Ngo", filename: str) -> str:
     """
     The file will be uploaded to MEDIA_ROOT/<subdir>/ngo-<id>-<hash>/<filename>
     """
-    return "{0}/ngo-{1}-{2}/{3}".format(subdir, instance.pk, hash_id_secret("ngo", instance.pk), filename)
+    ngo_pk = instance.pk
+    ngo_hash = hash_id_secret("ngo", ngo_pk)
+
+    return f"{subdir}/ngo-{ngo_pk}-{ngo_hash}/{filename}"
+
+
+def cause_directory_path(subdir: str, instance: "Cause", filename: str) -> str:
+    """
+    The file will be uploaded to MEDIA_ROOT/<subdir>/ngo-<ngo.id>/c-<cause.id>-<cause.hash>/<filename>
+    """
+    ngo_pk = instance.ngo.pk
+
+    cause_pk = instance.pk
+    cause_hash = hash_id_secret("cause", cause_pk)
+
+    return f"{subdir}/ngo-{ngo_pk}/c-{cause_pk}-{cause_hash}/{filename}"
 
 
 def year_ngo_directory_path(subdir: str, instance: "Ngo", filename: str) -> str:
     """
-    The file will be uploaded to MEDIA_ROOT/<subdir>/<year>/ngo-<id>-<hash>/<filename>
+    The file will be uploaded to MEDIA_ROOT/<subdir>/<year>/ngo-<ngo.id>-<ngo.hash>/<filename>
     """
     timestamp = timezone.now()
-    return "{0}/{1}/ngo-{2}-{3}/{4}".format(
-        subdir, timestamp.date().year, instance.pk, hash_id_secret("ngo", instance.pk), filename
-    )
+
+    year = timestamp.date().year
+
+    ngo_pk = instance.pk
+    ngo_hash = hash_id_secret("ngo", ngo_pk)
+
+    return f"{subdir}/{year}/ngo-{ngo_pk}-{ngo_hash}/{filename}"
+
+
+def year_cause_directory_path(subdir: str, instance: "Cause", filename: str) -> str:
+    """
+    The file will be uploaded to MEDIA_ROOT/<subdir>/<year>/c-<cause.id>-<cause.hash>/<filename>
+    """
+    timestamp = timezone.now()
+
+    year = timestamp.date().year
+
+    cause_pk = instance.pk
+    cause_hash = hash_id_secret("cause", cause_pk)
+
+    return f"{subdir}/{year}/c-{cause_pk}-{cause_hash}/{filename}"
 
 
 def ngo_slug_validator(value):
@@ -82,6 +115,25 @@ class NgoActiveManager(models.Manager):
         )
 
 
+class CauseActiveManager(models.Manager):
+    def get_queryset(self):
+        return (
+            super()
+            .get_queryset()
+            .filter(ngo__is_active=True)
+            .exclude(
+                Q(name__isnull=True)
+                | Q(name__exact="")
+                | Q(slug__isnull=True)
+                | Q(slug__exact="")
+                | Q(bank_account__isnull=True)
+                | Q(bank_account__exact="")
+                | Q(ngo__registration_number__isnull=True)
+                | Q(ngo__registration_number__exact=""),
+            )
+        )
+
+
 class NgoHubManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().filter(is_active=True, ngohub_org_id__isnull=False)
@@ -104,6 +156,7 @@ class Ngo(models.Model):
     )
 
     name = models.CharField(verbose_name=_("Name"), blank=False, null=False, max_length=200, db_index=True)
+    # XXX: [MULTI-FORM] Move to Cause
     description = models.TextField(verbose_name=_("description"))
 
     # NGO Hub details
@@ -118,6 +171,7 @@ class Ngo(models.Model):
     ngohub_last_update_ended = models.DateTimeField(_("Last NGO Hub update"), null=True, blank=True, editable=False)
 
     # originally: logo
+    # XXX: [MULTI-FORM] Should we move this to Cause ???
     logo = models.ImageField(
         verbose_name=_("logo"),
         blank=True,
@@ -126,7 +180,7 @@ class Ngo(models.Model):
         upload_to=partial(ngo_directory_path, "logos"),
     )
 
-    # originally: account
+    # XXX: [MULTI-FORM] Move to Cause
     bank_account = models.CharField(verbose_name=_("bank account"), max_length=100)
 
     # originally: cif
@@ -338,12 +392,97 @@ class Ngo(models.Model):
             logging.info("NGO id %d does not exist for prefilled form deletion", ngo_id)
             return
 
-        changed = False
+        for cause in ngo.causes.all():
+            cause.delete_prefilled_form()
 
-        if ngo.prefilled_form:
-            ngo.prefilled_form.delete(save=False)
-            changed = True
 
-        if changed:
-            ngo.save()
-            logging.info("Prefilled form deleted for NGO id %d", ngo_id)
+class Cause(models.Model):
+    ngo = models.ForeignKey(Ngo, on_delete=models.CASCADE, related_name="causes")
+
+    allow_online_collection = models.BooleanField(verbose_name=_("allow online collection"), default=False)
+
+    display_image = models.ImageField(
+        verbose_name=_("logo"),
+        blank=True,
+        null=False,
+        storage=select_public_storage,
+        upload_to=partial(cause_directory_path, "logos"),
+    )
+
+    slug = models.SlugField(
+        verbose_name=_("slug"),
+        blank=False,
+        null=False,
+        max_length=150,
+        db_index=True,
+        unique=True,
+        validators=[ngo_slug_validator],
+    )
+
+    name = models.CharField(verbose_name=_("name"), blank=False, null=False, max_length=200, db_index=True)
+    description = models.TextField(verbose_name=_("description"))
+
+    bank_account = models.CharField(verbose_name=_("bank account"), max_length=100)
+
+    prefilled_form = models.FileField(
+        verbose_name=_("form with prefilled cause"),
+        blank=True,
+        null=False,
+        storage=select_public_storage,
+        upload_to=partial(year_cause_directory_path, "causes"),
+    )
+
+    date_created = models.DateTimeField(verbose_name=_("date created"), db_index=True, auto_now_add=True)
+    date_updated = models.DateTimeField(verbose_name=_("date updated"), db_index=True, auto_now=True)
+
+    objects = models.Manager()
+    active = CauseActiveManager()
+
+    class Meta:
+        verbose_name = _("Cause")
+        verbose_name_plural = _("Causes")
+        constraints = [
+            models.UniqueConstraint(fields=["ngo", "bank_account"], name="ngo_bank_account_unique"),
+        ]
+
+    def __str__(self):
+        return f"{self.ngo.name} - {self.name}"
+
+    @property
+    def mandatory_fields(self):
+
+        # noinspection PyTypeChecker
+        field_names: List[DeferredAttribute] = [
+            Cause.name,
+            Cause.slug,
+            Cause.description,
+            Cause.bank_account,
+        ]
+
+        return [field.field for field in field_names]
+
+    @property
+    def missing_mandatory_fields(self):
+        return [field for field in self.mandatory_fields if not getattr(self, field.name)]
+
+    @property
+    def missing_mandatory_fields_names(self):
+        return [field.verbose_name for field in self.missing_mandatory_fields]
+
+    @property
+    def mandatory_fields_values(self):
+        return [getattr(self, field.name) for field in self.mandatory_fields]
+
+    def can_receive_forms(self):
+        if not self.ngo.can_receive_forms():
+            return False
+
+        if not all(self.mandatory_fields_values):
+            return False
+
+        return True
+
+    def delete_prefilled_form(self):
+        if self.prefilled_form:
+            self.prefilled_form.delete(save=False)
+            self.save()

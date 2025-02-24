@@ -1,12 +1,12 @@
 import random
-import string
 from typing import List
 
 from django.core.management import BaseCommand
 from django.db import IntegrityError
+from django.utils.text import slugify
 from faker import Faker
 
-from donations.models.ngos import Ngo
+from donations.models.ngos import Cause
 from partners.models import DisplayOrderingChoices, Partner
 
 fake = Faker("ro_RO")
@@ -31,35 +31,29 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         total_partners = options["total_partners"]
-        num_orgs = options.get("orgs", None)
+        num_causes = options.get("orgs", None)
 
         errors_threshold = 10
 
         self.stdout.write(
             f"Generating {total_partners} partners with "
-            f"{num_orgs if num_orgs else 'a random number of'} "
+            f"{num_causes if num_causes else 'a random number of'} "
             f"organizations each"
         )
 
-        ngos = list(Ngo.active.all())
-        if not ngos:
-            self.stdout.write("No active NGOs found. Exiting...")
+        causes = list(Cause.active.all())
+        if not causes:
+            self.stdout.write("No active Causes found. Exiting...")
             return
 
         generated_partners_count = 0
         errors_count = 0
 
         while generated_partners_count < total_partners and errors_count < errors_threshold:
-            num_orgs = num_orgs if num_orgs else random.randint(1, min(15, len(ngos)))
+            num_causes = num_causes if num_causes else random.randint(1, min(15, len(causes)))
 
             partner_name = fake.company()
-            partner_subdomain = ""
-            for letter in partner_name:
-                letter = letter.lower()
-                if letter in (string.ascii_lowercase + string.digits):
-                    partner_subdomain += letter
-                else:
-                    partner_subdomain += "-"
+            partner_subdomain = slugify(partner_name)
 
             try:
                 partner = Partner(
@@ -75,8 +69,8 @@ class Command(BaseCommand):
                 errors_count += 1
                 continue
 
-            partner_ngos: List[Ngo] = random.sample(ngos, num_orgs)
-            partner.ngos.add(*partner_ngos)
+            partner_causes: List[Cause] = random.sample(causes, num_causes)
+            partner.causes.add(*partner_causes, through_defaults={"display_order": 1})
 
             generated_partners_count += 1
 

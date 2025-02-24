@@ -1,6 +1,8 @@
+from typing import Optional
+
 from django.db.models import QuerySet
 
-from donations.models.ngos import Ngo
+from donations.models.ngos import Cause
 
 
 class NgoSlugValidator:
@@ -58,12 +60,13 @@ class NgoSlugValidator:
         return False
 
     @classmethod
-    def is_reused(cls, slug: str, ngo_pk: int):
-        ngo_queryset: QuerySet[Ngo] = Ngo.objects
+    def is_reused(cls, slug: str, cause_pk: Optional[int] = None):
+        cause_queryset: QuerySet = Cause.objects.filter(slug=slug.lower())
 
-        ngo_queryset = ngo_queryset.exclude(pk=ngo_pk)
+        if cause_pk:
+            cause_queryset = cause_queryset.exclude(pk=cause_pk)
 
-        if ngo_queryset.filter(slug=slug.lower()).exists():
+        if cause_queryset.exists():
             return True
 
         return False

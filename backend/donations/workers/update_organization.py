@@ -9,15 +9,15 @@ import requests
 from django.conf import settings
 from django.core.files import File
 from django.utils import timezone
+from django.utils.text import slugify
 from django_q.tasks import async_task
 from ngohub import NGOHub
 from ngohub.models.organization import Organization, OrganizationGeneral
 from pycognito import Cognito
 from requests import Response
 
-from donations.common.validation.clean_slug import clean_slug
 from donations.common.validation.validate_slug import NgoSlugValidator
-from donations.models.ngos import Ngo
+from donations.models.ngos import Cause, Ngo
 from redirectioneaza.common.cache import cache_decorator
 
 logger = logging.getLogger(__name__)
@@ -99,6 +99,30 @@ def get_ngo_hub_data(ngohub_org_id: int, token: str = "") -> Organization:
     return hub.get_organization(organization_id=ngohub_org_id, admin_token=token)
 
 
+def create_default_cause(ngo: Ngo) -> Cause:
+    cause: Cause = Cause(ngo=ngo)
+
+    cause.name = ngo.name
+    cause.description = ngo.description
+
+    new_slug = slugify(ngo.name).replace("_", "-")
+    if NgoSlugValidator.is_blocked(new_slug):
+        random_string = "".join(random.choices(string.ascii_lowercase + string.digits, k=5))
+        new_slug = f"{new_slug}-{random_string}"
+    elif NgoSlugValidator.is_reused(new_slug):
+        random_string = "".join(random.choices(string.ascii_lowercase + string.digits, k=5))
+        new_slug = f"{new_slug}-{random_string}"
+
+    cause.slug = new_slug
+
+    if ngo.logo:
+        cause.display_image = ngo.logo
+
+    cause.save()
+
+    return cause
+
+
 def update_local_ngo_with_ngohub_data(ngo: Ngo, ngohub_ngo: Organization) -> Dict[str, Union[int, List[str]]]:
     errors: List[str] = []
 
@@ -108,16 +132,6 @@ def update_local_ngo_with_ngohub_data(ngo: Ngo, ngohub_ngo: Organization) -> Dic
     ngohub_general_data: OrganizationGeneral = ngohub_ngo.general_data
 
     ngo.name = ngohub_general_data.alias or ngohub_general_data.name
-
-    if not ngo.slug:
-        new_slug = clean_slug(ngo.name)
-        if NgoSlugValidator.is_blocked(new_slug):
-            random_string = "".join(random.choices(string.ascii_lowercase + string.digits, k=5))
-            new_slug = f"{new_slug}-{random_string}"
-        elif NgoSlugValidator.is_reused(new_slug, ngo.pk):
-            random_string = "".join(random.choices(string.ascii_lowercase + string.digits, k=5))
-            new_slug = f"{new_slug}-{random_string}"
-        ngo.slug = new_slug
 
     if ngo.description is None:
         ngo.description = ngohub_general_data.description or ""
@@ -150,6 +164,10 @@ def update_local_ngo_with_ngohub_data(ngo: Ngo, ngohub_ngo: Organization) -> Dic
 
     ngo.is_social_service_viable = ngohub_ngo.activity_data.is_social_service_viable
     ngo.is_verified = True
+    ngo.save()
+
+    if not ngo.causes.exists():
+        create_default_cause(ngo)
 
     ngo.ngohub_last_update_ended = timezone.now()
     ngo.save()

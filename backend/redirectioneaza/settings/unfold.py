@@ -36,21 +36,27 @@ SIDEBAR_NAVIGATION = [
                 "permission": lambda request: request.user.is_staff,
             },
             {
+                "title": _("Causes"),
+                "icon": "help_clinic",
+                "link": reverse_lazy("admin:donations_cause_changelist"),
+                "permission": lambda request: request.user.is_superuser,
+            },
+            {
                 "title": _("Donations"),
                 "icon": "edit_document",
                 "link": reverse_lazy("admin:donations_donor_changelist"),
                 "permission": lambda request: request.user.is_superuser,
             },
             {
-                "title": _("Partners"),
-                "icon": "handshake",
-                "link": reverse_lazy("admin:partners_partner_changelist"),
-                "permission": lambda request: request.user.is_superuser,
-            },
-            {
                 "title": _("Donation exports"),
                 "icon": "file_copy",
                 "link": reverse_lazy("admin:donations_job_changelist"),
+                "permission": lambda request: request.user.is_superuser,
+            },
+            {
+                "title": _("Partners"),
+                "icon": "handshake",
+                "link": reverse_lazy("admin:partners_partner_changelist"),
                 "permission": lambda request: request.user.is_superuser,
             },
         ],

@@ -69,12 +69,10 @@
 
                 <ol type="A">
 
-                  {% if ngo.is_accepting_forms %}
-                    <li class="py-2">
-                      {% trans "You either scan it and send it by e-mail to the NGO and they will take care of submitting it. The NGO's e-mail address is:" %}
-                      <a href="mailto:{{ ngo.email }}">{{ ngo.email }}</a>;
-                    </li>
-                  {% endif %}
+                  <li class="py-2">
+                    {% trans "You either scan it and send it by e-mail to the NGO and they will take care of submitting it. The NGO's e-mail address is:" %}
+                    <a href="mailto:{{ donor.cause.ngo.email }}">{{ donor.cause.ngo.email }}</a>;
+                  </li>
 
                   <li class="py-2">
                     {% blocktranslate trimmed %}
@@ -93,7 +91,7 @@
                       Or you send it by post or courier to the NGO's address, and they will take care of submitting it. Their address is:
                     {% endblocktranslate %}
 
-                    <strong>{{ ngo.name }}, {{ ngo.address }}, {% trans "the county" %} {{ ngo.county }}</strong>.
+                    <strong>{{ donor.cause.ngo.name }}, {{ donor.cause.ngo.address }}, {% trans "the county" %} {{ donor.cause.ngo.county }}</strong>.
                   </li>
                 </ol>
               </li>

@@ -34,8 +34,7 @@ from donations.views.account_management import (
 from donations.views.api import (
     DownloadNgoForms,
     GetNgoForm,
-    GetUploadUrl,
-    SearchNgosApi,
+    SearchCausesApi,
     UpdateFromNgohub,
 )
 from donations.views.cron import NgoRemoveForms
@@ -47,6 +46,7 @@ from donations.views.redirections import (
 )
 from donations.views.site import (
     AboutHandler,
+    CausesListHandler,
     EmailDemoHandler,
     HealthCheckHandler,
     HomePage,
@@ -71,7 +71,7 @@ urlpatterns = (
             OwnFormDownloadLinkHandler.as_view(),
             name="donor-download-link",
         ),
-        # backup in case of old urls. to be removed
+        path("cauze/", CausesListHandler.as_view(), name="causes"),
         path("organizatii/", NgoListHandler.as_view(), name="organizations"),
         path("asociatii/", RedirectView.as_view(pattern_name="organizations", permanent=True)),
         path("termene-si-conditii/", TermsHandler.as_view(), name="terms"),
@@ -122,11 +122,10 @@ urlpatterns = (
         ),
         # APIs
         path("api/ngohub-refresh/", UpdateFromNgohub.as_view(), name="api-ngohub-refresh"),
-        path("api/ngo/upload-url/", GetUploadUrl.as_view(), name="api-ngo-upload-url"),
         path("api/ngo/form/<ngo_url>/", GetNgoForm.as_view(), name="api-ngo-form-url"),
         path("api/ngo/forms/download/", DownloadNgoForms.as_view(), name="api-ngo-forms"),
         #
-        path("api/search/", SearchNgosApi.as_view(), name="api-search-ngos"),
+        path("api/search/", SearchCausesApi.as_view(), name="api-search-ngos"),
         # Cron routes
         path("cron/ngos/remove-form/", NgoRemoveForms.as_view(), name="cron-ngo-remove-form"),
         # Django Admin

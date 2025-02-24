@@ -7,17 +7,15 @@ from django.conf import settings
 from django.db.models import QuerySet
 from django.http import HttpResponse
 from django.utils import timezone
-from django.utils.translation import gettext_lazy as _
-from django.utils.translation import ngettext_lazy
+from django.utils.translation import gettext_lazy as _, ngettext_lazy
 from django.views.generic import TemplateView
 
 from partners.models import Partner
 from redirectioneaza.common.cache import cache_decorator
-
-from ..models.donors import Donor
-from ..models.ngos import FRONTPAGE_NGOS_KEY, FRONTPAGE_STATS_KEY, Ngo
 from .base import BaseVisibleTemplateView
-from .common import NgoSearchMixin
+from .common import CauseSearchMixin, NgoSearchMixin
+from ..models.donors import Donor
+from ..models.ngos import Cause, FRONTPAGE_NGOS_KEY, FRONTPAGE_STATS_KEY
 
 
 class HomePage(BaseVisibleTemplateView):
@@ -25,12 +23,12 @@ class HomePage(BaseVisibleTemplateView):
     title = "redirectioneaza.ro"
 
     @cache_decorator(timeout=settings.TIMEOUT_CACHE_SHORT, cache_key_prefix=FRONTPAGE_STATS_KEY)
-    def _get_stats(self, now: datetime = None, ngo_queryset: QuerySet = None) -> List[Dict[str, Union[str, int]]]:
+    def _get_stats(self, now: datetime = None, queryset: QuerySet = None) -> List[Dict[str, Union[str, int]]]:
         if now is None:
             now = timezone.now()
 
-        if ngo_queryset is None:
-            ngo_queryset = Ngo.active
+        if queryset is None:
+            queryset = Cause.active
 
         start_of_year = datetime(now.year, 1, 1, 0, 0, 0, tzinfo=now.tzinfo)
 
@@ -44,7 +42,7 @@ class HomePage(BaseVisibleTemplateView):
         return [
             {
                 "title": _("organizations registered in the platform"),
-                "value": ngo_queryset.count(),
+                "value": queryset.count(),
             },
             {
                 "title": pluralized_title + " " + str(start_of_year.year),
@@ -57,9 +55,9 @@ class HomePage(BaseVisibleTemplateView):
         ]
 
     @cache_decorator(timeout=settings.TIMEOUT_CACHE_SHORT, cache_key_prefix=FRONTPAGE_NGOS_KEY)
-    def _get_random_ngos(self, ngo_queryset: QuerySet, num_ngos: int):
-        all_ngo_ids = list(Ngo.active.values_list("id", flat=True))
-        return ngo_queryset.filter(id__in=random.sample(all_ngo_ids, num_ngos))
+    def _get_random_causes(self, queryset: QuerySet, num_items: int):
+        all_cause_ids = list(Cause.active.values_list("pk", flat=True))
+        return queryset.filter(id__in=random.sample(all_cause_ids, num_items))
 
     def _partner_response(self, context: Dict, partner: Partner):
         context.update(
@@ -91,10 +89,10 @@ class HomePage(BaseVisibleTemplateView):
         if partner:
             return self._partner_response(context, partner)
 
-        ngo_queryset = Ngo.active
+        queryset = Cause.active
 
-        context["stats"] = self._get_stats(now, ngo_queryset)
-        context["ngos"] = self._get_random_ngos(ngo_queryset, num_ngos=min(4, ngo_queryset.count()))
+        context["stats"] = self._get_stats(now, queryset)
+        context["causes"] = self._get_random_causes(queryset, num_items=min(4, queryset.count()))
 
         return context
 
@@ -104,10 +102,34 @@ class AboutHandler(BaseVisibleTemplateView):
     title = _("About redirectioneaza.ro")
 
 
+class CausesListHandler(CauseSearchMixin):
+    template_name = "public/all-causes.html"
+    context_object_name = "causes"
+    queryset = Cause.active
+    ordering = "title"
+    paginate_by = 8
+
+    def get_queryset(self):
+        queryset = self.search()
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update(
+            {
+                "title": _("All causes"),
+                "limit": settings.DONATIONS_LIMIT,
+                "month_limit": settings.DONATIONS_LIMIT_MONTH_NAME,
+            }
+        )
+        return context
+
+
 class NgoListHandler(NgoSearchMixin):
     template_name = "public/all-ngos.html"
-    context_object_name = "ngos"
-    queryset = Ngo.active
+    context_object_name = "causes"
+    queryset = Cause.active
     ordering = "name"
     paginate_by = 8
 

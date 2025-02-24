@@ -8,7 +8,6 @@
     rows="{% if input_rows %}{{ input_rows }}{% else %}5{% endif %}"
     {% if is_required %}required{% endif %}
     {% if is_disabled %}disabled{% endif %}
-    {% if value %}input-original-value="{{ value }}"{% endif %}
-    class="flex min-h-[60px] w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-base shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm">{{ value }}</textarea>
+    class="flex min-h-[60px] w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-base shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm">{% if field or value %}{% if field and field.value %}{{ field.value }}{% elif value %}{{ value }}{% endif %}{% endif %}</textarea>
 
 {% endblock %}
