@@ -1,8 +1,16 @@
+from django.conf import settings
+
 MAIN_ADMIN = "main admin"
 RESTRICTED_ADMIN = "restricted admin"
 NGO_ADMIN = "ngo admin"
 NGO_MEMBER = "ngo member"
 PARTNER_MANAGER = "partner manager"
+
+NGOHUB_ROLE_TO_REDIRECT_ROLE = {
+    settings.NGOHUB_ROLE_SUPER_ADMIN: MAIN_ADMIN,
+    settings.NGOHUB_ROLE_NGO_ADMIN: NGO_ADMIN,
+    settings.NGOHUB_ROLE_NGO_EMPLOYEE: NGO_MEMBER,
+}
 
 USER_GROUPS = {
     MAIN_ADMIN: {
