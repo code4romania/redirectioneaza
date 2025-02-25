@@ -21,7 +21,7 @@ from sentry_sdk import capture_message
 
 from donations.models.ngos import Ngo
 from donations.workers.update_organization import create_organization_for_user, update_organization
-from users.groups_management import MAIN_ADMIN, NGO_ADMIN, NGO_MEMBER
+from users.groups_management import MAIN_ADMIN, NGOHUB_ROLE_TO_REDIRECT_ROLE
 
 logger = logging.getLogger(__name__)
 
@@ -143,26 +143,13 @@ def _set_ngo_user(
 ) -> None:
     ngohub_org_id = user_organization.id
 
-    if user_role == settings.NGOHUB_ROLE_NGO_ADMIN:
-        if not ngohub.check_user_organization_has_application(ngo_token=user_token, login_link=settings.BASE_WEBSITE):
-            if user.ngo:
-                _deactivate_ngo_and_users(user_ngo=user.ngo)
-            else:
-                _deactivate_ngo_and_users(ngohub_org_id=ngohub_org_id)
-
-            raise ImmediateHttpResponse(redirect(reverse("error-app-missing")))
-
-        # Add the user to the NGO admin group
-        user.groups.add(Group.objects.get(name=NGO_ADMIN))
-
-    elif user_role == settings.NGOHUB_ROLE_NGO_EMPLOYEE:
+    if user_role in (settings.NGOHUB_ROLE_NGO_ADMIN, settings.NGOHUB_ROLE_NGO_EMPLOYEE):
         if not ngohub.check_user_organization_has_application(ngo_token=user_token, login_link=settings.BASE_WEBSITE):
             user.deactivate()
 
             raise ImmediateHttpResponse(redirect(reverse("error-app-missing")))
 
-        # Add the user to the NGO member group
-        user.groups.add(Group.objects.get(name=NGO_MEMBER))
+        user.groups.add(Group.objects.get(name=NGOHUB_ROLE_TO_REDIRECT_ROLE[user_role]))
 
     else:
         raise ImmediateHttpResponse(redirect(reverse("error-unknown-user-role")))
@@ -217,22 +204,6 @@ def _connect_user_and_ngo(user: UserModel, ngohub_org_id, token) -> None:
 
     user.ngo = user_ngo
     user.save()
-
-
-def _deactivate_ngo_and_users(ngohub_org_id: int = None, user_ngo: Ngo = None) -> None:
-    if not user_ngo:
-        if not ngohub_org_id:
-            raise ValueError("Either ngohub_org_id or ngo must be provided")
-
-        try:
-            user_ngo: Ngo = Ngo.objects.get(ngohub_org_id=ngohub_org_id)
-        except Ngo.DoesNotExist:
-            return
-
-    user_ngo.deactivate()
-
-    for user in UserModel.objects.filter(ngo=user_ngo):
-        user.deactivate()
 
 
 def _get_or_create_user_ngo(user: UserModel, ngohub_org_id: int, token: str) -> Ngo:
