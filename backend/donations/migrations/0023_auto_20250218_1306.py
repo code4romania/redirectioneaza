@@ -101,6 +101,7 @@ def add_cause_to_jobs(apps, _):
 
 
 class Migration(migrations.Migration):
+    atomic = False
 
     dependencies = [
         ("donations", "0022_cause_donor_cause_job_cause"),

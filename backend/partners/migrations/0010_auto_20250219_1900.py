@@ -19,6 +19,10 @@ def copy_partner_ngo_to_partner_cause(apps, _):
             ngo: Ngo = partner_ngo.ngo
             ngo_cause: Cause = Cause.objects.filter(ngo=ngo).first()
 
+            if not ngo_cause:
+                logger.warning("Could not find cause for NGO %s", ngo)
+                continue
+
             partner_cause = PartnerCause(
                 partner=partner,
                 cause=ngo_cause,
@@ -55,6 +59,7 @@ def copy_partner_cause_to_partner_ngo(apps, _):
 
 
 class Migration(migrations.Migration):
+    atomic = False
 
     dependencies = [
         ("partners", "0009_partnercause_partner_causes_and_more"),
