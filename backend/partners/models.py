@@ -102,6 +102,20 @@ class Partner(models.Model):
         # noinspection PyTypeChecker
         return self.causes.order_by(order).all()
 
+    def ordered_ngos(self) -> QuerySet[Ngo]:
+        display_ordering_mapping: Dict[str, str] = {
+            str(DisplayOrderingChoices.ALPHABETICAL): "name",
+            str(DisplayOrderingChoices.ALPHABETICAL_REVERSE): "-name",
+            str(DisplayOrderingChoices.OLDEST): "date_created",
+            str(DisplayOrderingChoices.NEWEST): "-date_created",
+            str(DisplayOrderingChoices.CUSTOM): "partner_ngos__display_order",
+        }
+
+        order: str = display_ordering_mapping.get(self.display_ordering, "?")
+
+        # noinspection PyTypeChecker
+        return self.ngos.order_by(order).all()
+
     def initialize_custom_display_ordering(self):
         partner_causes = PartnerCause.objects.filter(partner=self).order_by("display_order", "pk")
 
