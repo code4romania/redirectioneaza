@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-24 12:53+0200\n"
+"POT-Creation-Date: 2025-02-25 11:53+0200\n"
 "PO-Revision-Date: 2024-02-28 15:45+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -299,12 +299,12 @@ msgid "Address"
 msgstr "Address"
 
 #: donations/forms/ngo_account.py:29 donations/forms/redirection.py:33
+#: templates/v2/form/redirection-open.html:115
 msgid "Locality"
 msgstr "Locality"
 
 #: donations/forms/ngo_account.py:31 donations/forms/redirection.py:32
 #: donations/views/dashboard/ngo_dashboard.py:56
-#: templates/v2/form/redirection-open.html:110
 #: templates/v2/ngo-account/my-organization/ngo-presentation.html:97
 msgid "County"
 msgstr "County"
@@ -752,14 +752,14 @@ msgstr "Account verified"
 msgid "Verification"
 msgstr "Verification"
 
-#: donations/views/common.py:43
+#: donations/views/common.py:44
 #, python-format
 msgid "%(time)d hour"
 msgid_plural "%(time)d hours"
 msgstr[0] "%(time)d hour"
 msgstr[1] "%(time)d hours"
 
-#: donations/views/common.py:49
+#: donations/views/common.py:50
 #, python-format
 msgid "%(time)d minute"
 msgid_plural "%(time)d minutes"
@@ -899,7 +899,7 @@ msgstr "There are some errors on the presentation form."
 msgid "Organization forms"
 msgstr "Organization forms"
 
-#: donations/views/ngo_account.py:300 donations/views/redirections.py:188
+#: donations/views/ngo_account.py:300 donations/views/redirections.py:172
 msgid "There are some errors on the redirection form."
 msgstr "There are some errors on the redirection form."
 
@@ -924,15 +924,15 @@ msgstr "Archives history"
 msgid "Download archive"
 msgstr "Download archive"
 
-#: donations/views/redirections.py:44
+#: donations/views/redirections.py:28
 msgid "Successful redirection"
 msgstr "Successful redirection"
 
-#: donations/views/redirections.py:262
+#: donations/views/redirections.py:246
 msgid "Un nou formular de redirecționare"
 msgstr "A new redirection form"
 
-#: donations/views/redirections.py:269 donations/views/redirections.py:289
+#: donations/views/redirections.py:253 donations/views/redirections.py:273
 msgid "Formularul tău de redirecționare"
 msgstr "Your redirection form"
 
@@ -2258,12 +2258,9 @@ msgstr "Street name"
 msgid "Flat"
 msgstr "Flat"
 
-#: templates/v2/form/redirection-open.html:115
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:92
-#, fuzzy
-#| msgid "Locality"
-msgid "Locality/Sector"
-msgstr "Locality"
+#: templates/v2/form/redirection-open.html:110
+msgid "County/Sector"
+msgstr "County/Sector"
 
 #: templates/v2/form/redirection-open.html:128
 msgid "Handwritten signature"
@@ -2604,6 +2601,12 @@ msgstr "Display phone in the profile"
 #: templates/v2/ngo-account/my-organization/ngo-presentation.html:87
 msgid "Organization address"
 msgstr "Organization address"
+
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:92
+#, fuzzy
+#| msgid "Locality"
+msgid "Locality/Sector"
+msgstr "Locality"
 
 #: templates/v2/ngo-account/redirections/list-header.html:11
 msgid "Locality, County"

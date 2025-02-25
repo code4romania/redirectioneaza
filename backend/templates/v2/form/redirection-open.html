@@ -107,12 +107,12 @@
       </div>
 
       <div class="sm:col-span-2 sm:col-start-1">
-        {% trans "County" as input_title %}
+        {% trans "County/Sector" as input_title %}
         {% include "components/input/county.html" with input_id="county" input_name="county" field=redirection_form.county is_required=True input_autocomplete="address-level1" %}
       </div>
 
       <div class="sm:col-span-2">
-        {% trans "Locality/Sector" as input_title %}
+        {% trans "Locality" as input_title %}
         {% include "components/input/input.html" with input_id="locality" input_name="locality" field=redirection_form.locality input_type="text" max_length=50 is_required=True input_autocomplete="address-level2" %}
       </div>
 
