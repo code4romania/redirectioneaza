@@ -5,11 +5,11 @@ from typing import List
 from django.core.files import File
 from django.core.management import BaseCommand
 from faker import Faker
-from localflavor.ro.ro_counties import COUNTIES_CHOICES
 
 from donations.models.donors import Donor
 from donations.models.ngos import Ngo
 from donations.pdf import create_full_pdf
+from redirectioneaza.settings import FORM_COUNTIES_WITH_SECTORS_CHOICES
 
 fake = Faker("ro_RO")
 
@@ -70,7 +70,9 @@ class Command(BaseCommand):
                 email=fake.email(),
                 phone=fake.phone_number(),
                 city=fake.city(),
-                county=COUNTIES_CHOICES[random.randint(0, len(COUNTIES_CHOICES) - 1)][1],
+                county=FORM_COUNTIES_WITH_SECTORS_CHOICES[
+                    random.randint(0, len(FORM_COUNTIES_WITH_SECTORS_CHOICES) - 1)
+                ][1],
                 income_type="wage",
                 has_signed=random.choice([True, False]),
                 two_years=random.choice([True, False]),

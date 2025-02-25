@@ -123,6 +123,20 @@ FORM_COUNTIES_NATIONAL.insert(0, "Național")
 
 FORM_COUNTIES_NATIONAL_CHOICES = [(county, county) for county in FORM_COUNTIES_NATIONAL]
 
+FORM_COUNTIES_WITH_SECTORS = deepcopy(LIST_OF_COUNTIES)
+if "București" in FORM_COUNTIES_WITH_SECTORS:
+    FORM_COUNTIES_WITH_SECTORS.remove("București")
+
+BUCHAREST_SECTORS = ["Sector 1", "Sector 2", "Sector 3", "Sector 4", "Sector 5", "Sector 6"]
+SECTORS_ITEM = {
+    "title": "București",
+    "values": BUCHAREST_SECTORS,
+}
+
+FORM_COUNTIES_WITH_SECTORS_CHOICES = [(county, county) for county in (BUCHAREST_SECTORS + FORM_COUNTIES_WITH_SECTORS)]
+
+if SECTORS_ITEM not in FORM_COUNTIES_WITH_SECTORS:
+    FORM_COUNTIES_WITH_SECTORS.insert(0, SECTORS_ITEM)
 
 # Encryption settings
 ENCRYPT_KEY = env.str("ENCRYPT_KEY", "%INVALID%")

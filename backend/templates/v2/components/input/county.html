@@ -17,15 +17,26 @@
       {{ input_title }}
     </option>
 
-    {% for county_name in counties %}
-      <option
-        value="{{ county_name }}"
-        {% if county_name == value %}selected{% endif %}>
-        {{ county_name }}
-      </option>
+    {% for county in counties %}
+      {% if county.values %}
+        <optgroup label="{{ county.title }}">
+          {% for sub_county in county.values %}
+            <option
+              value="{{ sub_county }}"
+              {% if sub_county == value %}selected{% endif %}>
+              {{ sub_county }}
+            </option>
+          {% endfor %}
+        </optgroup>
+      {% else %}
+        <option
+          value="{{ county }}"
+          {% if county == value %}selected{% endif %}>
+          {{ county }}
+        </option>
+      {% endif %}
     {% endfor %}
 
   </select>
-
 
 {% endblock %}

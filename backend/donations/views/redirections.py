@@ -144,7 +144,7 @@ class RedirectionHandler(TemplateView):
 
         context.update(
             {
-                "counties": settings.FORM_COUNTIES,
+                "counties": settings.FORM_COUNTIES_WITH_SECTORS,
                 "captcha_public_key": settings.RECAPTCHA_PUBLIC_KEY,
                 "ngo_website_description": ngo_website_description,
                 "ngo_website": ngo_website,
