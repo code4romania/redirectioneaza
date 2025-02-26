@@ -85,7 +85,7 @@ def _get_header_stats(today) -> List[List[Dict[str, Union[str, int]]]]:
                 "icon": "foundation",
                 "metric": Ngo.ngo_hub.count(),
                 "footer": _create_stat_link(
-                    url=f'{reverse("admin:donations_ngo_changelist")}?is_active=1&is_ngohub=1', text=_("View all")
+                    url=f'{reverse("admin:donations_ngo_changelist")}?is_active=1&has_ngohub=1', text=_("View all")
                 ),
             },
         ]
