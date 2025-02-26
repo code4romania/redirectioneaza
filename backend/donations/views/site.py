@@ -13,7 +13,7 @@ from django.views.generic import TemplateView
 from partners.models import Partner
 from redirectioneaza.common.cache import cache_decorator
 from .base import BaseVisibleTemplateView
-from .common import CauseSearchMixin, NgoSearchMixin
+from .common import CauseSearchMixin, NgoCauseMixedSearchMixin
 from ..models.donors import Donor
 from ..models.ngos import Cause, FRONTPAGE_NGOS_KEY, FRONTPAGE_STATS_KEY
 
@@ -126,7 +126,7 @@ class CausesListHandler(CauseSearchMixin):
         return context
 
 
-class NgoListHandler(NgoSearchMixin):
+class NgoListHandler(NgoCauseMixedSearchMixin):
     template_name = "public/all-ngos.html"
     context_object_name = "causes"
     queryset = Cause.active
