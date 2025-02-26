@@ -1,5 +1,4 @@
 import logging
-from typing import Dict, List, Tuple
 
 from django import forms
 from django.conf import settings
@@ -17,12 +16,10 @@ from unfold.admin import ModelAdmin, StackedInline, TabularInline
 from unfold.decorators import action
 from unfold.widgets import UnfoldAdminSelectWidget
 
-from redirectioneaza.common.admin import HasNgoFilter
+from donations.admin.common import CommonCauseFields
+from donations.models.ngos import Cause, Ngo
+from donations.workers.update_organization import update_organization
 from users.models import User
-from .models.donors import Donor
-from .models.jobs import Job, JobStatusChoices
-from .models.ngos import Cause, Ngo
-from .workers.update_organization import update_organization
 
 logger = logging.getLogger(__name__)
 
@@ -48,45 +45,6 @@ class ChangeNgoOwnerForm(forms.Form):
     #     help_text=_("Enter the email of the new owner of the NGO. The user will be created."),
     #     widget=UnfoldAdminEmailInputWidget,
     # )
-
-
-class CommonCauseFields:
-    ngo_fieldset: Tuple[str, Dict[str, Tuple[str]]] = (
-        _("NGO"),
-        {"fields": ("ngo",)},
-    )
-
-    editable_fieldset: Tuple[str, Dict[str, Tuple[str]]] = (
-        _("Cause"),
-        {
-            "fields": (
-                "allow_online_collection",
-                "name",
-                "slug",
-                "description",
-                "bank_account",
-                "display_image",
-            )
-        },
-    )
-
-    date_fieldset: Tuple[str, Dict[str, Tuple[str]]] = (
-        _("Date"),
-        {
-            "fields": (
-                "date_created",
-                "date_updated",
-            )
-        },
-    )
-
-    readonly_fields = ("ngo", "date_created", "date_updated")
-
-    def get_readonly_fields(self, request: HttpRequest, obj=None):
-        if obj and not obj.is_accepting_forms:
-            return self.readonly_fields + ("allow_online_collection",)
-
-        return self.readonly_fields
 
 
 class NgoCauseInline(StackedInline, CommonCauseFields):
@@ -366,7 +324,7 @@ class NgoAdmin(ModelAdmin):
         )
 
     @transaction.atomic
-    def _change_owner(self, ngo: Ngo, new_owner: UserModel):
+    def _change_owner(self, ngo: Ngo, new_owner: User):
         if new_owner.ngo:
             return {
                 "status": "ERROR",
@@ -451,142 +409,3 @@ class NgoAdmin(ModelAdmin):
             update_organization(ngo.id, update_method="async")
 
         self.message_user(request, _("NGOs are being updated from NGO Hub."))
-
-
-@admin.register(Cause)
-class CauseAdmin(ModelAdmin, CommonCauseFields):
-    list_display = ("slug", "name", "link_to_ngo")
-    list_display_links = ("name",)
-    search_fields = ("name", "slug", "ngo__name")
-
-    actions = ("generate_donations_archive",)
-
-    fieldsets = (
-        CommonCauseFields.ngo_fieldset,
-        CommonCauseFields.editable_fieldset,
-        CommonCauseFields.date_fieldset,
-    )
-
-    @action(description=_("Generate donations archive"))
-    def generate_donations_archive(self, request, queryset: QuerySet[Ngo]):
-        ngo_names: List[str] = []
-
-        for ngo in queryset:
-            cause = ngo.causes.first()
-            new_job: Job = Job(ngo=ngo, cause=cause, owner=request.user)
-            new_job.save()
-
-            try:
-                call_command("download_donations", new_job.id)
-
-                ngo_names.append(f"{ngo.id} - {ngo.name}")
-            except Exception as e:
-                logger.error(e)
-
-                new_job.status = JobStatusChoices.ERROR
-                new_job.save()
-
-        if ngo_names:
-            message = _("The donations archive has been generated for the following NGOs: ") + ", ".join(ngo_names)
-        else:
-            message = _("The donations archive could not be generated for any of the selected NGOs.")
-
-        self.message_user(request, message)
-
-    @admin.display(description=_("NGO"))
-    def link_to_ngo(self, obj: Cause):
-        ngo: Ngo = obj.ngo
-
-        link_url = reverse("admin:donations_ngo_change", args=(ngo.pk,))
-        return format_html(f'<a href="{link_url}">{ngo.name}</a>')
-
-
-@admin.register(Donor)
-class DonorAdmin(ModelAdmin):
-    list_display = ("id", "email", "l_name", "f_name", "ngo", "cause", "has_signed", "date_created")
-    list_display_links = ("id", "email", "l_name", "f_name")
-    list_filter = (
-        "date_created",
-        HasNgoFilter,
-        "is_anonymous",
-        "has_signed",
-        "two_years",
-        "income_type",
-    )
-    date_hierarchy = "date_created"
-
-    search_fields = ("email", "ngo__name", "ngo__slug")
-
-    exclude = ("encrypted_cnp", "encrypted_address")
-
-    readonly_fields = ("date_created", "get_form_url")
-    autocomplete_fields = ("ngo",)
-
-    fieldsets = (
-        (
-            _("NGO"),
-            {"fields": ("ngo",)},
-        ),
-        (
-            _("Identity"),
-            {
-                "fields": (
-                    "l_name",
-                    "f_name",
-                    "initial",
-                    "county",
-                    "city",
-                    "email",
-                    "phone",
-                )
-            },
-        ),
-        (
-            _("Info"),
-            {"fields": ("is_anonymous", "income_type", "two_years")},
-        ),
-        (
-            _("File"),
-            {"fields": ("has_signed", "pdf_file", "get_form_url")},
-        ),
-        (
-            _("Date"),
-            {"fields": ("date_created", "geoip")},
-        ),
-    )
-
-    def has_change_permission(self, request, obj=None):
-        return False
-
-    @admin.display(description=_("Form"))
-    def get_form_url(self, obj: Donor):
-        return obj.form_url
-
-
-@admin.register(Job)
-class JobAdmin(ModelAdmin):
-    list_display = ("id", "ngo", "status", "date_created")
-    list_display_links = ("id", "ngo")
-    list_filter = ("date_created", "status")
-
-    readonly_fields = ("date_created",)
-    autocomplete_fields = ("ngo",)
-
-    fieldsets = (
-        (
-            _("NGO"),
-            {"fields": ("ngo",)},
-        ),
-        (
-            _("Status"),
-            {"fields": ("status",)},
-        ),
-        (
-            _("File"),
-            {"fields": ("zip",)},
-        ),
-        (
-            _("Date"),
-            {"fields": ("date_created",)},
-        ),
-    )
