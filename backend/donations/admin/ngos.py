@@ -13,6 +13,7 @@ from django.urls import reverse, reverse_lazy
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 from unfold.admin import ModelAdmin, StackedInline, TabularInline
+from unfold.contrib.filters.admin import SingleNumericFilter
 from unfold.decorators import action
 from unfold.widgets import UnfoldAdminSelectWidget
 
@@ -149,6 +150,7 @@ class NgoAdmin(ModelAdmin):
     list_filter = (
         "date_created",
         HasNgoHubFilter,
+        ("ngohub_org_id", SingleNumericFilter),
         "is_verified",
         "is_active",
         "is_accepting_forms",
