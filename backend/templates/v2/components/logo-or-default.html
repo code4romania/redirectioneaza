@@ -3,7 +3,7 @@
 <img
   class="{% if logo_class %}{{ logo_class }}{% else %}object-contain w-full{% endif %}"
 
-  {% if logo_image %}
+  {% if logo %}
   src="{{ logo.url }}"
   {% else %}
   src="{% static 'images/placeholder.png' %}"
