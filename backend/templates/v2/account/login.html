@@ -3,14 +3,6 @@
 
 {% block content %}
   <div class="container">
-    {% if errors %}
-      <div class="row">
-        <div class="col-xs-12 col-md-6 col-md-offset-3">
-          {% include "account/snippets/errors.html" %}
-        </div>
-      </div>
-    {% endif %}
-
     <div class="grid gap-16 lg:grid-cols-2 xl:gap-32 2xl:gap-64">
       {% if SOCIALACCONUNT_ONLY %}
         <div class="md:col-span-2">

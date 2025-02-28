@@ -122,6 +122,9 @@ class LoginView(BaseVisibleTemplateView):
 
         context = self.get_context_data(**kwargs)
 
+        form = LoginForm()
+        context["form"] = form
+
         context.update(
             {
                 "ngohub_site": settings.NGOHUB_HOME_BASE,
@@ -139,8 +142,9 @@ class LoginView(BaseVisibleTemplateView):
         # TODO: if the account appears in NGO Hub, redirect them to the NGO Hub login page
 
         form = LoginForm(request.POST)
+        context["form"] = form
+
         if not form.is_valid():
-            context["errors"] = form.errors
             return render(request, self.template_name, context)
 
         email = form.cleaned_data["email"].lower().strip()
@@ -149,9 +153,7 @@ class LoginView(BaseVisibleTemplateView):
         user: User = authenticate(email=email, password=password)
         if user is None:
             logger.warning("Invalid email or password: {0}".format(email))
-
-            context["email"] = email
-            context["errors"] = _("It seems that this email and password combination is incorrect.")
+            form.add_error(None, _("It seems that this email and password combination is incorrect."))
 
             return render(request, self.template_name, context)
 
