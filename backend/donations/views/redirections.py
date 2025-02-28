@@ -15,7 +15,7 @@ from ipware import get_client_ip
 
 from redirectioneaza.common.messaging import extend_email_context, send_email
 from .base import BaseVisibleTemplateView
-from .common import get_ngo_cause
+from .common.misc import get_ngo_cause
 from ..forms.redirection import DonationForm
 from ..models.donors import Donor
 from ..pdf import create_full_pdf

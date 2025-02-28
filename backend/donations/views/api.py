@@ -9,13 +9,13 @@ from django.urls import reverse
 from django.views.generic import TemplateView
 
 from .base import BaseTemplateView
-from .common import (
-    NgoCauseMixedSearchMixin,
+from .common.misc import (
     get_cause_response_item,
     get_is_over_donation_archival_limit,
     get_ngo_cause,
     get_was_last_job_recent,
 )
+from .common.search import NgoCauseMixedSearchMixin
 from ..models.jobs import Job, JobStatusChoices
 from ..models.ngos import Cause, Ngo
 from ..pdf import create_cause_pdf
