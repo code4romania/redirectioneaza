@@ -68,11 +68,11 @@ class HomePage(BaseVisibleTemplateView):
                 "company_name": partner.name,
                 "has_custom_header": partner.has_custom_header,
                 "has_custom_note": partner.has_custom_note,
-                "ngos": partner.ordered_causes(),
+                "causes": partner.ordered_causes(),
             }
         )
 
-        if context["ngos"].count() == 0:
+        if context["causes"].count() == 0:
             logger.error(f"Partner {partner} has no causes")
 
         return context
