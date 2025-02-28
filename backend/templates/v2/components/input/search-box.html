@@ -1,0 +1,31 @@
+{% load i18n %}
+
+<div>
+
+  {% if not input_title %}
+    {% trans "Search" as input_title %}
+  {% endif %}
+
+  <label for="searchBox_{{ input_id }}" class="block sr-only">
+    {{ input_title }}
+  </label>
+
+  <div class="mt-2">
+    <div class="flex rounded-md bg-white outline outline-1 -outline-offset-1 outline-gray-300 focus-within:outline focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-amber-600">
+      <div class="px-1.5 py-1.5 text-gray-400">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
+          <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z" clip-rule="evenodd"/>
+        </svg>
+      </div>
+
+      <input
+        id="searchBox_{{ input_id }}"
+        type="text"
+        name="q"
+        autocomplete="off"
+        placeholder="{{ input_title }}"
+        class="block min-w-0 grow px-3 py-1.5 text-base text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-0 sm:text-sm/6 border-0">
+    </div>
+  </div>
+
+</div>

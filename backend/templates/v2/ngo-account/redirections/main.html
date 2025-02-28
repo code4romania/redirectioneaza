@@ -23,7 +23,7 @@
 
 {% block content %}
 
-  <div class="grid mb-8 gap-x-6 gap-y-3 sm:grid-cols-2">
+  <div class="grid mb-4 gap-x-6 gap-y-3 sm:grid-cols-2">
 
     <h1 class="text-base font-semibold text-gray-900">
       {% blocktranslate count counter=page_obj.paginator.count trimmed %}
@@ -100,6 +100,17 @@
       </div>
     {% endcomment %}
 
+  </div>
+
+  <hr class="w-full border-gray-200">
+
+  <div class="flex flex-row-reverse">
+    <div class="basis-80">
+      <form action="" method="GET">
+        {% trans "Search for donors" as input_title %}
+        {% include "components/input/search-box.html" %}
+      </form>
+    </div>
   </div>
 
   {% include "ngo-account/redirections/listing.html" %}
