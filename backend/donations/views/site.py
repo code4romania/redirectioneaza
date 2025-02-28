@@ -1,4 +1,5 @@
 import json
+import logging
 import random
 from datetime import datetime
 from typing import Dict, List, Union
@@ -16,6 +17,8 @@ from .base import BaseVisibleTemplateView
 from .common import CauseSearchMixin, NgoCauseMixedSearchMixin
 from ..models.donors import Donor
 from ..models.ngos import Cause, FRONTPAGE_NGOS_KEY, FRONTPAGE_STATS_KEY
+
+logger = logging.getLogger(__name__)
 
 
 class HomePage(BaseVisibleTemplateView):
@@ -65,9 +68,13 @@ class HomePage(BaseVisibleTemplateView):
                 "company_name": partner.name,
                 "has_custom_header": partner.has_custom_header,
                 "has_custom_note": partner.has_custom_note,
-                "ngos": partner.ordered_ngos(),
+                "ngos": partner.ordered_causes(),
             }
         )
+
+        if context["ngos"].count() == 0:
+            logger.error(f"Partner {partner} has no causes")
+
         return context
 
     def get_context_data(self, **kwargs):

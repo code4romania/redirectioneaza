@@ -44,6 +44,7 @@ class AddNewCausePartnerManagerForm(Form):
 class CausePartnerInline(TabularInline):
     model = Partner.causes.through
     extra = 1
+    tab = True
 
     verbose_name = _("Cause")
     verbose_name_plural = _("Causes")
