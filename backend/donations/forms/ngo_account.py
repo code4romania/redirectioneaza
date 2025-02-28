@@ -98,6 +98,8 @@ class NgoPresentationForm(forms.Form):
 
 
 class CauseForm(forms.ModelForm):
+    slug = forms.CharField(label=_("Slug"), max_length=150, required=True)
+
     if settings.ENABLE_FULL_VALIDATION_IBAN:
         bank_account = IBANFormField(label=_("IBAN"), include_countries=("RO",), required=True)
     else:

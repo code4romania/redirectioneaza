@@ -565,9 +565,9 @@ msgstr "joburi"
 #: donations/models/ngos.py:85
 #, python-format
 msgid ""
-"%(value)s is not a valid identifier. The identifier must look like %(sample)s"
+"'%(value)s' is not a valid identifier. The identifier must look like %(sample)s"
 msgstr ""
-"%(value)s nu este un identificator valid. Identificatorul trebuie să arate "
+"'%(value)s' nu este un identificator valid. Identificatorul trebuie să arate "
 "ca modelul următor: %(sample)s"
 
 #: donations/models/ngos.py:149 donations/models/ngos.py:413
