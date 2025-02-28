@@ -31,6 +31,8 @@ class CauseAdmin(ModelAdmin, CommonCauseFields):
         CommonCauseFields.date_fieldset,
     )
 
+    readonly_fields = CommonCauseFields.readonly_fields
+
     @action(description=_("Generate donations archive"))
     def generate_donations_archive(self, request, queryset: QuerySet[Ngo]):
         ngo_names: List[str] = []
