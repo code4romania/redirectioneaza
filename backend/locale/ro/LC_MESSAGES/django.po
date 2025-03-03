@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-05 17:36+0200\n"
+"POT-Creation-Date: 2025-03-05 17:52+0200\n"
 "PO-Revision-Date: 2024-03-07 11:27+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -425,7 +425,7 @@ msgstr "Acord contact"
 msgid "Agree terms"
 msgstr "Acord termeni"
 
-#: donations/forms/redirection.py:40 templates/v2/form/signature.html:7
+#: donations/forms/redirection.py:40 templates/v2/form/modals/signature.html:7
 msgid "Signature"
 msgstr "Semnătura"
 
@@ -1831,6 +1831,8 @@ msgstr ""
 "organizației."
 
 #: templates/v2/components/cta-redirection.html:74
+#: templates/v2/form/success/signed.html:22
+#: templates/v2/form/success/unsigned.html:26
 msgid "Download the form"
 msgstr "Descarcă formularul"
 
@@ -2221,11 +2223,11 @@ msgstr ""
 "pe venit. Poți accesa formularul completat apăsând butonul de mai jos. Nu "
 "uita să-l depui la ANAF pentru a finaliza procesul!"
 
-#: templates/v2/form/confirmation.html:35
+#: templates/v2/form/modals/confirmation.html:35
 msgid "Continue without signing?"
 msgstr "Continui fără să semnezi?"
 
-#: templates/v2/form/confirmation.html:39
+#: templates/v2/form/modals/confirmation.html:39
 msgid ""
 "If you continue without signing online, your form will be generated, and you "
 "will be able to download the PDF, but it will not reach the NGO. We rely on "
@@ -2237,13 +2239,33 @@ msgstr ""
 "pe tine că vei imprima, semna formularul de mână și îl vei trimite către ONG "
 "prin poștă sau email, sau îl vei depune singur la ANAF."
 
-#: templates/v2/form/confirmation.html:55
+#: templates/v2/form/modals/confirmation.html:55
 msgid "Back"
 msgstr "Înapoi"
 
-#: templates/v2/form/confirmation.html:64
+#: templates/v2/form/modals/confirmation.html:64
 msgid "Continue"
 msgstr "Continuă"
+
+#: templates/v2/form/modals/signature.html:57
+msgid "Signature modal"
+msgstr "Modal de semnătură"
+
+#: templates/v2/form/modals/signature.html:111
+msgid "Add signature"
+msgstr "Adaugă semnătura"
+
+#: templates/v2/form/modals/signature.html:115
+msgid "Draw your signature in the canvas below."
+msgstr "Desenează semnătura în câmpul de mai jos."
+
+#: templates/v2/form/modals/signature.html:132
+msgid "Reset"
+msgstr "Resetează"
+
+#: templates/v2/form/modals/signature.html:142
+msgid "Ok"
+msgstr "Ok"
 
 #: templates/v2/form/redirection-closed.html:6
 msgid "Notice!"
@@ -2379,111 +2401,90 @@ msgstr "Continuă fără a semna"
 msgid "Send the form"
 msgstr "Trimite formularul"
 
-#: templates/v2/form/signature.html:57
-msgid "Signature modal"
-msgstr "Modal de semnătură"
-
-#: templates/v2/form/signature.html:111
-msgid "Add signature"
-msgstr "Adaugă semnătura"
-
-#: templates/v2/form/signature.html:115
-msgid "Draw your signature in the canvas below."
-msgstr "Desenează semnătura în câmpul de mai jos."
-
-#: templates/v2/form/signature.html:132
-msgid "Reset"
-msgstr "Resetează"
-
-#: templates/v2/form/signature.html:142
-msgid "Ok"
-msgstr "Ok"
-
-#: templates/v2/form/success.html:14
-msgid "An image saying \"Thank you\" for your redirection"
-msgstr "O imagine care spune \"Mulțumim\" pentru redirecționare"
-
-#: templates/v2/form/success.html:25
-msgid "Download your redirection form"
-msgstr "Descarcă formularul tău"
-
-#: templates/v2/form/success.html:36
-msgid ""
-"Thank you for your redirection! Your form has been sent to the NGO, and you "
-"have also received a copy of it by email."
+#: templates/v2/form/success/signed.html:4
+msgid "Thank you! Part of your income tax will go to the cause you believe in"
 msgstr ""
-"Îți mulțumim! Formularul tău a fost trimis organizației și ai primit si tu o "
-"copie a acestuia pe email."
+"Îți mulțumim! O parte din impozitul tău pe venit va merge către cauza în "
+"care crezi"
 
-#: templates/v2/form/success.html:42
+#: templates/v2/form/success/signed.html:10
 msgid ""
-"Together we are better, stronger and braver. Together we can make a positive "
-"change in our society, that is why we need as many people like you as "
-"possible."
+"Your form has been sent to the organization, and they will take care of "
+"submitting it to the tax office. You will receive a copy of it by email "
+"shortly."
 msgstr ""
-"Împreună suntem mai buni, mai puternici și mai curajoși. Împreună putem "
-"aduce o schimbare în bine în societatea noastră, de aceea avem nevoie de cât "
-"mai mulți oameni ca tine."
+"Formularul tău a fost trimis către organizație, iar aceștia se vor ocupa de "
+"depunerea lui la ANAF. Vei primi în scurt timp o copie a acestuia pe email."
 
-#: templates/v2/form/success.html:48
+#: templates/v2/form/success/signed.html:26
+#: templates/v2/form/success/unsigned.html:107
 msgid ""
-"If you want to support the organization further, tell your friends to visit "
-"<a href=\"https://redirectioneaza.ro/\">redirectioneaza.ro</a>."
+"Together we can make a positive change in society, that's why we need as "
+"many people like you as possible. See below how you can contribute more."
 msgstr ""
-"Dacă vrei să susții organizația mai departe, spune și prietenilor tăi să "
-"intre pe <a href=\"https://redirectioneaza.ro\">redirectioneaza.ro</a>."
+"Împreună putem aduce o schimbare în bine în societate, de aceea avem nevoie "
+"de cât mai mulți oameni ca tine. Vezi mai jos cum poți să contribui mai mult."
 
-#: templates/v2/form/success.html:56
-msgid "The first step was filling in the form. Now, here are the next steps:"
-msgstr "Primul pas a fost completarea formularului. Acum, iată pașii următori:"
+#: templates/v2/form/success/unsigned.html:5
+msgid "You are one step closer to redirecting your income tax..."
+msgstr ""
+"Ești cu un pas mai aproape de a redirecționa impozitul tău pe venit..."
 
-#: templates/v2/form/success.html:62
-msgid "Step 2."
-msgstr "Pasul 2."
-
-#: templates/v2/form/success.html:63
-msgid "Print the form and sign it."
-msgstr "Imprimă formularul și semnează-l."
-
-#: templates/v2/form/success.html:67
-msgid "Step 3."
-msgstr "Pasul 3."
-
-#: templates/v2/form/success.html:68
-msgid "Then, you have the following options:"
-msgstr "Apoi, ai următoarele opțiuni:"
-
-#: templates/v2/form/success.html:73
+#: templates/v2/form/success/unsigned.html:14
 msgid ""
-"You either scan it and send it by e-mail to the NGO and they will take care "
-"of submitting it. The NGO's e-mail address is:"
+"We have generated the form with your data. Next, it needs to be signed and "
+"sent. See below, or in the email, the steps you need to follow."
 msgstr ""
-"Fie îl scanezi și îl trimiți pe email la ONG și ei se vor ocupa de depunerea "
+"Am generat formularul cu datele tale. "
+"Mai departe, el trebuie semnat și trimis. "
+"Vezi mai jos, sau pe email, pașii pe care trebuie să îi urmezi."
+
+#: templates/v2/form/success/unsigned.html:36
+msgid "After you print and sign the form, you have the following options:"
+msgstr "După ce printezi și semnezi formularul, ai următoarele opțiuni:"
+
+#: templates/v2/form/success/unsigned.html:47
+msgid ""
+"You scan and send it by email to the NGO, and they will take care of "
+"submitting it. The NGO's email address is:"
+msgstr ""
+"Îl scanezi și îl trimiți pe email către ONG și ei se vor ocupa de depunerea "
 "lui. Adresa de email a ONG-ului este:"
 
-#: templates/v2/form/success.html:78
+#: templates/v2/form/success/unsigned.html:60
 msgid ""
-"Or you send it by post with <strong>registered mail</strong> to the ANAF "
-"unit you belong to."
+"You send it by post with a registered letter to the tax office (ANAF) you "
+"belong to."
 msgstr ""
-"Sau îl trimiți prin poștă cu <strong>scrisoare recomandată</strong> la "
-"unitatea ANAF din care faci parte."
+"Îl trimiți prin poștă cu scrisoare recomandată la unitatea fiscală (ANAF) de "
+"care aparții."
 
-#: templates/v2/form/success.html:83
+#: templates/v2/form/success/unsigned.html:65
 msgid "Search for the office you belong to in this list;"
 msgstr "Caută oficiul din care faci parte în această listă;"
 
-#: templates/v2/form/success.html:90
+#: templates/v2/form/success/unsigned.html:78
 msgid ""
-"Or you send it by post or courier to the NGO's address, and they will take "
-"care of submitting it. Their address is:"
+"You send it by post or courier to the NGO's address, and they will take care "
+"of submitting it. Their address is:"
 msgstr ""
-"Sau îl trimiți prin poștă sau curier la adresa ONG-ului, iar ei se vor ocupa "
-"de depunerea lui. Adresa lor este:"
+"Îl trimiți prin poștă sau curier la adresa ONG-ului, iar ei se vor ocupa de "
+"depunerea lui. Adresa lor este:"
 
-#: templates/v2/form/success.html:94
+#: templates/v2/form/success/unsigned.html:83
 msgid "the county"
 msgstr "județul"
+
+#: templates/v2/form/success/unsigned.html:96
+msgid ""
+"Alternatively, you can choose to refill the form and sign it online at any "
+"time, in which case it will go directly to the organization in digital "
+"format, and they will complete the redirection process."
+msgstr ""
+"Alternativ, poți alege oricând să recompletezi formularul și să-l semnezi online, "
+"caz în care va ajunge direct la organizație în format digital "
+"iar aceștia vor finaliza procesul de redirecționare."
+
 
 #: templates/v2/ngo-account/archives/list-header.html:5
 #: templates/v2/ngo-account/redirections/list-header.html:5
@@ -2989,14 +2990,39 @@ msgstr "parolă veche"
 msgid "Group"
 msgstr "Grup"
 
+#~ msgid "An image saying \"Thank you\" for your redirection"
+#~ msgstr "O imagine care spune \"Mulțumim\" pentru redirecționare"
+
+#~ msgid "Download your redirection form"
+#~ msgstr "Descarcă formularul tău"
+
 #~ msgid ""
-#~ "If you want a simpler option, you can always return to redirectioneaza.ro "
-#~ "to complete the form again and sign it online, in which case it will go "
-#~ "directly to the organization in digital format."
+#~ "Thank you for your redirection! Your form has been sent to the NGO, and "
+#~ "you have also received a copy of it by email."
 #~ msgstr ""
-#~ "Dacă vrei o variantă mai simplă, te poți întoarce oricând pe "
-#~ "redirectioneaza.ro. să recompletezi formularul și să-l semnezi online, "
-#~ "caz în care va ajunge direct la organizație în format digital."
+#~ "Îți mulțumim! Formularul tău a fost trimis organizației și ai primit si "
+#~ "tu o copie a acestuia pe email."
+
+#~ msgid ""
+#~ "If you want to support the organization further, tell your friends to "
+#~ "visit <a href=\"https://redirectioneaza.ro/\">redirectioneaza.ro</a>."
+#~ msgstr ""
+#~ "Dacă vrei să susții organizația mai departe, spune și prietenilor tăi să "
+#~ "intre pe <a href=\"https://redirectioneaza.ro\">redirectioneaza.ro</a>."
+
+#~ msgid ""
+#~ "The first step was filling in the form. Now, here are the next steps:"
+#~ msgstr ""
+#~ "Primul pas a fost completarea formularului. Acum, iată pașii următori:"
+
+#~ msgid "Step 2."
+#~ msgstr "Pasul 2."
+
+#~ msgid "Print the form and sign it."
+#~ msgstr "Imprimă formularul și semnează-l."
+
+#~ msgid "Step 3."
+#~ msgstr "Pasul 3."
 
 #~ msgid "Is accepting forms"
 #~ msgstr "Acceptă formulare"

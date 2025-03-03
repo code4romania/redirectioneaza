@@ -1,0 +1,31 @@
+{% load i18n %}
+
+<h1 class="block mt-1 text-3xl font-extrabold tracking-tight">
+  {% blocktranslate trimmed %}
+    Thank you! Part of your income tax will go to the cause you believe in
+  {% endblocktranslate %}
+</h1>
+
+<p class="my-12 text-base text-gray-900">
+  {% blocktranslate trimmed %}
+    Your form has been sent to the organization,
+    and they will take care of submitting it to the tax office.
+    You will receive a copy of it by email shortly.
+  {% endblocktranslate %}
+</p>
+
+<a
+  href="{{ donor.form_url }}"
+  class="my-12 px-2 py-1 sm:px-6 sm:py-4 hover:cursor-pointer text-lg text-gray-900 font-medium no-underline rounded-full shadow-sm bg-amber-300 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
+  download="formular.pdf"
+  target="_blank">
+  {% trans "Download the form" %}
+</a>
+
+<p class="my-12 text-base text-gray-900">
+  {% blocktranslate trimmed %}
+    Together we can make a positive change in society,
+    that's why we need as many people like you as possible.
+    See below how you can contribute more.
+  {% endblocktranslate %}
+</p>

@@ -1,0 +1,102 @@
+{% load i18n %}
+
+<h1 class="block mt-1 text-3xl font-extrabold tracking-tight">
+  {% blocktranslate trimmed %}
+    You are one step closer to redirecting your income tax...
+  {% endblocktranslate %}
+</h1>
+
+<p class="my-12 text-base text-gray-900">
+  {% blocktranslate trimmed %}
+    We have generated the form with your data.
+    Next, it needs to be signed and sent.
+    See below, or in the email, the steps you need to follow.
+  {% endblocktranslate %}
+</p>
+
+<a
+  href="{{ donor.form_url }}"
+  class="my-12 px-2 py-1 sm:px-6 sm:py-4 hover:cursor-pointer text-lg text-gray-900 font-medium no-underline rounded-full shadow-sm bg-amber-300 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
+  download="formular.pdf"
+  target="_blank">
+  {% trans "Download the form" %}
+</a>
+
+
+<div class="py-8 mt-8 w-full bg-gray-50">
+
+  <dl class="grid gap-8 text-gray-500 text-base/7">
+    <div class="relative px-4 text-gray-900">
+      <p>
+        {% blocktrans trimmed %}
+          After you print and sign the form, you have the following options:
+        {% endblocktrans %}
+      </p>
+    </div>
+
+    <div class="relative pl-12">
+      <dt class="font-medium text-gray-900">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="absolute left-4 text-cyan-700 top-1 size-5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/>
+        </svg>
+        {% blocktrans trimmed %}
+          You scan and send it by email to the NGO, and they will take care of submitting it.
+          The NGO's email address is:
+        {% endblocktrans %}
+        <a class="text-cyan-700" href="mailto:{{ donor.cause.ngo.email }}">{{ donor.cause.ngo.email }}</a>;
+      </dt>
+    </div>
+
+    <div class="relative pl-12">
+      <dt class="font-medium text-gray-900">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="absolute left-4 text-cyan-700 top-1 size-5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/>
+        </svg>
+        {% blocktrans trimmed %}
+          You send it by post with a registered letter to the tax office (ANAF) you belong to.
+        {% endblocktrans %}
+
+        <a class="text-cyan-700" href="https://static.anaf.ro/static/10/Anaf/AsistentaContribuabili_r/telefoane_judete/Regiuni.htm" target="_blank">
+          {% blocktranslate trimmed %}
+            Search for the office you belong to in this list;
+          {% endblocktranslate %}
+        </a>
+
+      </dt>
+    </div>
+
+    <div class="relative pl-12">
+      <dt class="font-medium text-gray-900">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="absolute left-4 text-cyan-700 top-1 size-5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/>
+        </svg>
+        {% blocktrans trimmed %}
+          You send it by post or courier to the NGO's address,
+          and they will take care of submitting it.
+          Their address is:
+        {% endblocktrans %}
+        <strong>{{ donor.cause.ngo.name }}, {{ donor.cause.ngo.address }}, {% trans "the county" %} {{ donor.cause.ngo.county }}</strong>.
+      </dt>
+    </div>
+
+  </dl>
+
+</div>
+
+{% if donor and donor.cause and donor.cause.ngo and donor.cause.ngo.is_accepting_forms and donor.cause.allow_online_collection %}
+  <p class="my-12 text-base text-gray-900">
+    {% blocktranslate trimmed %}
+      Alternatively, you can choose to refill the form and sign it online at any time,
+      in which case it will go directly to the organization in digital format,
+      and they will complete the redirection process.
+    {% endblocktranslate %}
+  </p>
+{% endif %}
+
+<p class="my-12 text-base text-gray-900">
+  {% blocktranslate trimmed %}
+    Together we can make a positive change in society,
+    that's why we need as many people like you as possible.
+    See below how you can contribute more.
+  {% endblocktranslate %}
+</p>

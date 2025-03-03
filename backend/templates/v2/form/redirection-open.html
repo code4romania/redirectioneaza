@@ -128,7 +128,7 @@
           {% trans "Handwritten signature" %}
         </legend>
 
-        {% include "form/signature.html" %}
+        {% include "form/modals/signature.html" %}
       </fieldset>
 
     {% endif %}
@@ -211,7 +211,7 @@
           x-transition:enter-start="opacity-0 scale-50"
           x-transition:enter-end="opacity-100 scale-100"
           class="flex flex-col max-w-lg gap-4 overflow-hidden bg-white border rounded-md border-neutral-300 text-neutral-600 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-300">
-          {% include "form/confirmation.html" %}
+          {% include "form/modals/confirmation.html" %}
         </div>
       </div>
 
