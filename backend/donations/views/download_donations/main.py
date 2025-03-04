@@ -4,7 +4,6 @@ import io
 import logging
 import math
 import os
-import re
 import tempfile
 from datetime import datetime
 from typing import Any, Dict, List, Tuple
@@ -20,16 +19,16 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from localflavor.ro.ro_counties import COUNTIES_CHOICES
 
-from donations.common.validation.registration_number import REGISTRATION_NUMBER_REGEX_SANS_VAT
+from donations.common.validation.phone_number import clean_phone_number
 from donations.models.donors import Donor
 from donations.models.jobs import Job, JobDownloadError, JobStatusChoices
-from donations.models.ngos import Cause, Ngo
+from donations.models.ngos import Cause
+from donations.views.download_donations.build_xml import add_xml_to_zip
+from donations.views.download_donations.common import get_address_details, parse_duration
 from redirectioneaza.common.app_url import build_uri
 from redirectioneaza.common.messaging import extend_email_context, send_email
 
 logger = logging.getLogger(__name__)
-
-
 COUNTIES_CHOICES_REVERSED = {name: code for code, name in COUNTIES_CHOICES}
 
 
@@ -127,7 +126,7 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], cause: Cau
                     zipped_files += 1
                     retries_left = 0
 
-                    phone = _parse_phone(donation_object.phone)
+                    phone = clean_phone_number(donation_object.phone)
 
                     donation_cnp: str = donation_object.get_cnp()
                     duplicate_cnp_idx: int = cnp_idx.get(donation_cnp, {}).get("index", 0)
@@ -139,7 +138,7 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], cause: Cau
                     else:
                         cnp_idx[donation_cnp]["has_duplicate"] = True
 
-                    detailed_address: Dict = _get_address_details(donation_object)
+                    detailed_address: Dict = get_address_details(donation_object)
                     donations_data.append(
                         {
                             "last_name": donation_object.l_name,
@@ -160,7 +159,7 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], cause: Cau
                             "ap": detailed_address["ap"],
                             "filename": filename,
                             "date": donation_object.date_created,
-                            "duration": _parse_duration(donation_object.two_years),
+                            "duration": parse_duration(donation_object.two_years),
                         }
                     )
 
@@ -234,36 +233,6 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], cause: Cau
     return zip_path
 
 
-def _parse_duration(donation_duration: bool) -> int:
-    return 2 if donation_duration else 1
-
-
-def _parse_phone(phone: str) -> str:
-    if not phone:
-        return ""
-
-    return "".join([c for c in phone if c.isdigit()])
-
-
-def _get_address_details(donation_object: Donor) -> Dict[str, str]:
-    full_address: Dict = donation_object.get_address()
-
-    full_address_prefix: str = f"jud. {donation_object.county}, loc. {donation_object.city}"
-    full_address_string: str = f"{full_address_prefix}, {donation_object.address_to_string(full_address)}"
-
-    address_details = {
-        "full_address": full_address_string,
-        "str": full_address.get("str", ""),
-        "nr": full_address.get("nr", ""),
-        "bl": full_address.get("bl", ""),
-        "sc": full_address.get("sc", ""),
-        "et": full_address.get("et", ""),
-        "ap": full_address.get("ap", ""),
-    }
-
-    return address_details
-
-
 def _get_pdf_url(donation: Donor) -> str:
     if donation.pdf_file:
         source_url = donation.pdf_file.url
@@ -311,7 +280,7 @@ def _generate_xml_files(
     # create a single XML file
     if ngo_donations.count() < 2 * settings.DONATIONS_XML_LIMIT_PER_FILE:
         xml_name: str = "d230.xml"
-        _build_xml(
+        add_xml_to_zip(
             cause,
             ngo_donations,
             1,
@@ -342,7 +311,7 @@ def _generate_donations_by_county(cnp_idx, cause: Cause, ngo_donations, zip_64_f
             xml_name: str = f"d230_{county_code}.xml"
 
             county_donations: QuerySet[Donor] = ngo_donations.filter(county=current_county)
-            _build_xml(
+            add_xml_to_zip(
                 cause,
                 county_donations,
                 xml_count,
@@ -360,7 +329,7 @@ def _generate_donations_by_county(cnp_idx, cause: Cause, ngo_donations, zip_64_f
                 county_donations: QuerySet[Donor] = ngo_donations.filter(county=current_county)[
                     i * donations_limit : (i + 1) * donations_limit
                 ]
-                _build_xml(
+                add_xml_to_zip(
                     cause,
                     county_donations,
                     xml_count,
@@ -372,160 +341,3 @@ def _generate_donations_by_county(cnp_idx, cause: Cause, ngo_donations, zip_64_f
                 )
 
                 xml_count += 1
-
-
-def _build_xml(
-    cause: Cause,
-    donations_batch: QuerySet[Donor],
-    batch_count: int,
-    xml_name: str,
-    cnp_idx: Dict[str, Dict[str, Any]],
-    zip_timestamp: datetime,
-    zip_archive: ZipFile,
-    zip_64_flag: bool,
-):
-    # 01. XML opening tag
-    xml_str: str = """<?xml version="1.0" encoding="UTF-8"?>\n<form1>"""
-
-    # 02. XML header
-    xml_str += _build_xml_header(cause, batch_count, zip_timestamp)
-
-    # 03. XML body
-    for donation_idx, donation in enumerate(donations_batch):
-        # skip donations which have a duplicate CNP from the XML
-        cnp = donation.get_cnp()
-        if cnp in cnp_idx and cnp_idx[cnp]["has_duplicate"]:
-            if not cnp_idx[cnp].get("skip", False):
-                cnp_idx[cnp]["skip"] = True
-            else:
-                continue
-
-        xml_str += _build_xml_donation_content(donation, donation_idx, cause)
-
-    # 04. XML closing tag
-    xml_str += """</form1>"""
-
-    # 05. XML cleanup
-    xml_str = xml_str.replace("\n            ", "\n")
-    xml_str = xml_str.replace("\n\n", "\n")
-
-    with zip_archive.open(os.path.join("xml", xml_name), mode="w", force_zip64=zip_64_flag) as handler:
-        handler.write(xml_str.encode())
-
-
-def _clean_registration_number(reg_num: str) -> str:
-    # The registration number should be added without the country prefix
-    reg_num: str = reg_num.upper()
-    if re.match(REGISTRATION_NUMBER_REGEX_SANS_VAT, reg_num):
-        return reg_num
-
-    return reg_num[2:]
-
-
-def _build_xml_header(cause: Cause, xml_idx, zip_timestamp) -> str:
-    ngo: Ngo = cause.ngo
-    valid_registration_number: str = _clean_registration_number(ngo.registration_number)
-
-    # XXX: [MULTI-FORM] This will change when we have multiple causes
-    # noinspection HttpUrlsUsage
-    xml_str = f"""
-                <btnDoc>
-                    <btnSalt/>
-                    <btnWebService/>
-                    <info>
-                        <help xmlns:xfa="http://www.xfa.org/schema/xfa-data/1.0/" xfa:dataNode="dataGroup"/>
-                    </info>
-                </btnDoc>
-                <semnatura xmlns:xfa="http://www.xfa.org/schema/xfa-data/1.0/" xfa:dataNode="dataGroup"/>
-                <Title xmlns:xfa="http://www.xfa.org/schema/xfa-data/1.0/" xfa:dataNode="dataGroup"/>
-                <IdDoc>
-                    <universalCode>B230_A1.0.8</universalCode>
-                    <totalPlata_A/>
-                    <cif>{valid_registration_number}</cif>
-                    <formValid>FORMULAR NEVALIDAT</formValid>
-                    <luna_r>12</luna_r>
-                    <d_rec>0</d_rec>
-                    <an_r>{zip_timestamp.year - 1}</an_r>
-                </IdDoc>
-                <imp>
-                    <bifaI>
-                        <rprI>0</rprI>
-                    </bifaI>
-                </imp>
-                <z_tipPersoana>Rad2</z_tipPersoana>
-                <z_denEntitate>{ngo.name}</z_denEntitate>
-                <z_cifEntitate>{valid_registration_number}</z_cifEntitate>
-                <z_ibanEntitate>{cause.bank_account}</z_ibanEntitate>
-                <nrDataB>
-                    <nrD>{xml_idx}</nrD>
-                    <dataD>{zip_timestamp.day:02}.{zip_timestamp.month:02}.{zip_timestamp.year}</dataD>
-                    <denD>{ngo.name}</denD>
-                    <cifD>{valid_registration_number}</cifD>
-                    <adresaD>{ngo.address}</adresaD>
-                    <ibanD>{cause.bank_account}</ibanD>
-                </nrDataB>
-            """
-    return xml_str
-
-
-def _build_xml_donation_content(donation: Donor, donation_idx: int, cause: Cause):
-    # XXX: [MULTI-FORM] This will change when we have multiple causes
-    ngo: Ngo = cause.ngo
-
-    # noinspection HttpUrlsUsage
-    detailed_address: Dict = _get_address_details(donation)
-    return f"""
-                <contrib>
-                    <nrCrt>
-                        <nV>{donation_idx + 1}</nV>
-                    </nrCrt>
-                    <idCnt>
-                        <nume>{donation.l_name.upper()}</nume>
-                        <init>{donation.initial.upper()}</init>
-                        <pren>{donation.f_name.upper()}</pren>
-                        <cif_c>{donation.get_cnp()}</cif_c>
-                        <adresa>{detailed_address["full_address"].upper()}</adresa>
-                        <telefon>{_parse_phone(donation.phone)}</telefon>
-                        <fax/>
-                        <email>{donation.email}</email>
-                    </idCnt>
-                    <s15>
-                        <date>
-                            <nrCrt>
-                                <nV>1</nV>
-                            </nrCrt>
-                            <optiuneSuma>
-                                <slct>
-                                    <ent>1</ent>
-                                    <brs>0</brs>
-                                </slct>
-                            </optiuneSuma>
-                            <brs>
-                                <Gap xmlns:xfa="http://www.xfa.org/schema/xfa-data/1.0/" xfa:dataNode="dataGroup"/>
-                                <idEnt>
-                                    <nrDataC>
-                                        <nrD/>
-                                        <dataD/>
-                                    </nrDataC>
-                                    <nrDataP>
-                                        <nrD/>
-                                        <dataD/>
-                                        <venitB/>
-                                    </nrDataP>
-                                </idEnt>
-                            </brs>
-                            <ent>
-                                <Gap xmlns:xfa="http://www.xfa.org/schema/xfa-data/1.0/" xfa:dataNode="dataGroup"/>
-                                <idEnt>
-                                    <anDoi>{_parse_duration(donation.two_years)}</anDoi>
-                                    <cifOJ>{_clean_registration_number(ngo.registration_number)}</cifOJ>
-                                    <denOJ>{ngo.name}</denOJ>
-                                    <ibanNp>{cause.bank_account}</ibanNp>
-                                    <prc>3.50</prc>
-                                    <venitB/>
-                                </idEnt>
-                            </ent>
-                        </date>
-                    </s15>
-                </contrib>
-            """
