@@ -429,7 +429,7 @@ class Cause(models.Model):
         blank=True,
         null=False,
         storage=select_public_storage,
-        upload_to=partial(year_cause_directory_path, "causes"),
+        upload_to=partial(year_cause_directory_path, "ngo-forms"),
     )
 
     date_created = models.DateTimeField(verbose_name=_("date created"), db_index=True, auto_now_add=True)

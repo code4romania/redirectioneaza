@@ -37,7 +37,6 @@ from donations.views.api import (
     SearchCausesApi,
     UpdateFromNgohub,
 )
-from donations.views.cron import NgoRemoveForms
 from donations.views.errors import create_error_view
 from donations.views.redirections import (
     OwnFormDownloadLinkHandler,
@@ -126,8 +125,6 @@ urlpatterns = (
         path("api/ngo/forms/download/", DownloadNgoForms.as_view(), name="api-ngo-forms"),
         #
         path("api/search/", SearchCausesApi.as_view(), name="api-search-ngos"),
-        # Cron routes
-        path("cron/ngos/remove-form/", NgoRemoveForms.as_view(), name="cron-ngo-remove-form"),
         # Django Admin
         path("admin/login/", RedirectView.as_view(pattern_name="login", permanent=True)),
         path("admin/avansat/login/", RedirectView.as_view(pattern_name="login", permanent=True)),

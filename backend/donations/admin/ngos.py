@@ -176,6 +176,8 @@ class NgoAdmin(ModelAdmin):
         "update_from_ngohub_async",
     )
 
+    actions_list = ["remove_prefilled_forms"]
+
     fieldsets = (
         (
             _("Donations"),
@@ -411,3 +413,30 @@ class NgoAdmin(ModelAdmin):
             update_organization(ngo.id, update_method="async")
 
         self.message_user(request, _("NGOs are being updated from NGO Hub."))
+
+    @action(description=_("Remove prefilled forms"), url_path="remove-forms", permissions=["remove_forms"])
+    def remove_prefilled_forms(self, request: HttpRequest):
+        causes = Cause.objects.exclude(prefilled_form="")
+
+        removed_count = 0
+        expected_count = causes.count()
+
+        errors = []
+
+        for cause in causes:
+            try:
+                cause.prefilled_form.delete()
+                removed_count += 1
+            except Exception as e:
+                errors.append("Error removing `form_url` from cause {0}: {1}".format(cause.pk, e))
+
+        result_message = f"Total of {removed_count}/{expected_count} prefilled forms removed."
+        if errors:
+            self.message_user(request, "\n".join([result_message] + errors), level="ERROR")
+        else:
+            self.message_user(request, result_message, level="SUCCESS")
+
+        return redirect(reverse_lazy("admin:donations_ngo_changelist"))
+
+    def has_remove_forms_permission(self, request: HttpRequest, object_id=None):
+        return request.user.is_superuser
