@@ -1,7 +1,7 @@
 locals {
   namespace  = "redirectioneaza-${var.env}"
   image_repo = "code4romania/redirectioneaza"
-  image_tag  = "3.1.7"
+  image_tag  = "3.1.8"
 
   availability_zone = data.aws_availability_zones.current.names[0]
 
