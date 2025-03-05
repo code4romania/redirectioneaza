@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-05 16:04+0200\n"
+"POT-Creation-Date: 2025-03-05 17:36+0200\n"
 "PO-Revision-Date: 2024-03-07 11:27+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -212,10 +212,8 @@ msgid "NGOs are being updated from NGO Hub."
 msgstr "ONG-urile sunt actualizate din NGO Hub."
 
 #: donations/admin/ngos.py:417
-#, fuzzy
-#| msgid "Collect printed forms"
 msgid "Remove prefilled forms"
-msgstr "Colectează formulare tipărite"
+msgstr "Elimină formularele completate"
 
 #: donations/common/validation/phone_number.py:17
 msgid "Invalid country code"
@@ -1790,59 +1788,67 @@ msgstr "Linkul a fost copiat"
 msgid "Be a civic superhero"
 msgstr "Fii un super-erou civic"
 
-#: templates/v2/components/cta-redirection.html:22
-msgid "Give an extra hand"
+#: templates/v2/components/cta-redirection.html:10
+msgid ""
+"If you can't redirect your income tax, or you want to give an extra hand, "
+"you can support the organization to collect more forms, or you can support "
+"the redirectioneaza.ro project through a donation."
 msgstr ""
+"Dacă tu nu poți redirecționa impozitul,sau vrei să dai o mână de ajutor în "
+"plus,poți susține organizația să strângă mai multe formulare,sau poți "
+"susține proiectul redirectioneaza.ro printr-o donație."
 
-#: templates/v2/components/cta-redirection.html:36
+#: templates/v2/components/cta-redirection.html:24
+msgid "Give an extra hand"
+msgstr "Give an extra hand"
+
+#: templates/v2/components/cta-redirection.html:38
 msgid "Share the page"
 msgstr "Distribuie pagina"
 
-#: templates/v2/components/cta-redirection.html:42
+#: templates/v2/components/cta-redirection.html:41
 msgid ""
 "Share this page on social networks, and encourage your friends to complete "
 "the online form for the organization you believe in, simply and safely, on "
-"redirectioneaza.ro."
+"redirectioneaza.ro"
 msgstr ""
-"Distribuie această pagină pe rețelele sociale, "
-"și încurajează-ți prietenii să completeze formularul online pentru organizația în care crezi, "
-"simplu și în siguranță, pe redirectioneaza.ro."
+"Distribuie această pagină pe rețelele sociale, și încurajează-ți prietenii "
+"să completeze formularul online pentru organizația în care crezi, simplu și "
+"în siguranță, pe redirectioneaza.ro."
 
-#: templates/v2/components/cta-redirection.html:63
+#: templates/v2/components/cta-redirection.html:62
 msgid "Collect printed forms"
 msgstr "Colectează formulare tipărite"
 
-#: templates/v2/components/cta-redirection.html:69
+#: templates/v2/components/cta-redirection.html:65
 msgid ""
 "Download the uncompleted form, print multiple copies. Convince as many "
 "friends as possible to complete it, and send the documents to the "
 "organization."
 msgstr ""
-"Descarcă declarația 230 necompletată, "
-"printează mai multe exemplare. "
-"Convinge cât mai mulți prieteni să îl completeze, și trimite documentele organizației."
+"Descarcă declarația 230 necompletată, printează mai multe exemplare. "
+"Convinge cât mai mulți prieteni să îl completeze, și trimite documentele "
+"organizației."
 
-#: templates/v2/components/cta-redirection.html:78
+#: templates/v2/components/cta-redirection.html:74
 msgid "Download the form"
 msgstr "Descarcă formularul"
 
-#: templates/v2/components/cta-redirection.html:93
+#: templates/v2/components/cta-redirection.html:89
 msgid "Support redirectioneaza.ro"
 msgstr "Susține redirectioneaza.ro"
 
-#: templates/v2/components/cta-redirection.html:100
+#: templates/v2/components/cta-redirection.html:92
 msgid ""
 "Together we digitize Romania! Redirecționează is a project dedicated to "
 "NGOs, developed by the Code4Romania. Find out how you can support our "
 "activity."
 msgstr ""
-"Împreună digitalizăm România!"
-"Platforma Redirecționează este un proiect dedicat ONG-urilor, "
-"dezvoltat de organizația Code4Romania."
-"Află cum poți susține activitatea noastră."
+"Împreună digitalizăm România!Platforma Redirecționează este un proiect "
+"dedicat ONG-urilor, dezvoltat de organizația Code4Romania.Află cum poți "
+"susține activitatea noastră."
 
-
-#: templates/v2/components/cta-redirection.html:110
+#: templates/v2/components/cta-redirection.html:102
 msgid "Support the Infrastructure for Good"
 msgstr "Sprijină Infrastructura Binelui"
 

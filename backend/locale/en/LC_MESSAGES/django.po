@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-05 16:04+0200\n"
+"POT-Creation-Date: 2025-03-05 17:36+0200\n"
 "PO-Revision-Date: 2024-02-28 15:45+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -210,10 +210,8 @@ msgid "NGOs are being updated from NGO Hub."
 msgstr "NGOs are being updated from NGO Hub."
 
 #: donations/admin/ngos.py:417
-#, fuzzy
-#| msgid "Collect printed forms"
 msgid "Remove prefilled forms"
-msgstr "Collect printed forms"
+msgstr "Remove prefilled forms"
 
 #: donations/common/validation/phone_number.py:17
 msgid "Invalid country code"
@@ -1782,29 +1780,39 @@ msgstr "Copied the link"
 msgid "Be a civic superhero"
 msgstr "Be a civic superhero"
 
-#: templates/v2/components/cta-redirection.html:22
+#: templates/v2/components/cta-redirection.html:10
+msgid ""
+"If you can't redirect your income tax, or you want to give an extra hand, "
+"you can support the organization to collect more forms, or you can support "
+"the redirectioneaza.ro project through a donation."
+msgstr ""
+"If you can't redirect your income tax, or you want to give an extra hand, "
+"you can support the organization to collect more forms, or you can support "
+"the redirectioneaza.ro project through a donation."
+
+#: templates/v2/components/cta-redirection.html:24
 msgid "Give an extra hand"
 msgstr "Give an extra hand"
 
-#: templates/v2/components/cta-redirection.html:36
+#: templates/v2/components/cta-redirection.html:38
 msgid "Share the page"
 msgstr "Share the page"
 
-#: templates/v2/components/cta-redirection.html:42
+#: templates/v2/components/cta-redirection.html:41
 msgid ""
 "Share this page on social networks, and encourage your friends to complete "
 "the online form for the organization you believe in, simply and safely, on "
-"redirectioneaza.ro."
+"redirectioneaza.ro"
 msgstr ""
 "Share this page on social networks, and encourage your friends to complete "
 "the online form for the organization you believe in, simply and safely, on "
 "redirectioneaza.ro."
 
-#: templates/v2/components/cta-redirection.html:63
+#: templates/v2/components/cta-redirection.html:62
 msgid "Collect printed forms"
 msgstr "Collect printed forms"
 
-#: templates/v2/components/cta-redirection.html:69
+#: templates/v2/components/cta-redirection.html:65
 msgid ""
 "Download the uncompleted form, print multiple copies. Convince as many "
 "friends as possible to complete it, and send the documents to the "
@@ -1814,15 +1822,15 @@ msgstr ""
 "friends as possible to complete it, and send the documents to the "
 "organization."
 
-#: templates/v2/components/cta-redirection.html:78
+#: templates/v2/components/cta-redirection.html:74
 msgid "Download the form"
 msgstr "Download the form"
 
-#: templates/v2/components/cta-redirection.html:93
+#: templates/v2/components/cta-redirection.html:89
 msgid "Support redirectioneaza.ro"
 msgstr "Support redirectioneaza.ro"
 
-#: templates/v2/components/cta-redirection.html:100
+#: templates/v2/components/cta-redirection.html:92
 msgid ""
 "Together we digitize Romania! Redirecționează is a project dedicated to "
 "NGOs, developed by the Code4Romania. Find out how you can support our "
@@ -1832,7 +1840,7 @@ msgstr ""
 "NGOs, developed by the Code4Romania. Find out how you can support our "
 "activity."
 
-#: templates/v2/components/cta-redirection.html:110
+#: templates/v2/components/cta-redirection.html:102
 msgid "Support the Infrastructure for Good"
 msgstr "Support the Infrastructure for Good"
 
@@ -2641,10 +2649,8 @@ msgid "Organization address"
 msgstr "Organization address"
 
 #: templates/v2/ngo-account/my-organization/ngo-presentation.html:92
-#, fuzzy
-#| msgid "Locality"
 msgid "Locality/Sector"
-msgstr "Locality"
+msgstr "Locality/Sector"
 
 #: templates/v2/ngo-account/redirections/list-header.html:11
 msgid "Locality, County"
