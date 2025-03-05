@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% load i18n static %}
+
+{% block content %}
+
+  <div class="container">
+    <div class="container pb-8 lg:grid lg:grid-cols-2 lg:gap-x-8 lg:pt-8">
+      <div class="px-6 lg:px-0 lg:pt-4">
+        <div class="max-w-lg mx-auto lg:max-w-none">
+
+          {% if donor.has_signed %}
+
+            {% include "form/success/signed.html" %}
+
+        {% else %}
+
+        {% include "form/success/unsigned.html" %}
+
+          {% endif %}
+
+        </div>
+      </div>
+
+
+      <div class="mt-20 px-20 sm:mt-24 md:mx-auto md:max-w-xl lg:mx-0 lg:mt-0 lg:w-screen">
+        <img class="w-full max-w-lg mx-auto lg:max-w-none" src="{% static 'images/envelope-received.svg' %}" alt="">
+      </div>
+
+    </div>
+  </div>
+
+{% endblock %}

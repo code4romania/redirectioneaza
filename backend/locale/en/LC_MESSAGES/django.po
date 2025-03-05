@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-05 17:36+0200\n"
+"POT-Creation-Date: 2025-03-05 17:52+0200\n"
 "PO-Revision-Date: 2024-02-28 15:45+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -423,7 +423,7 @@ msgstr "Agree contact"
 msgid "Agree terms"
 msgstr "Agree terms"
 
-#: donations/forms/redirection.py:40 templates/v2/form/signature.html:7
+#: donations/forms/redirection.py:40 templates/v2/form/modals/signature.html:7
 msgid "Signature"
 msgstr "Signature"
 
@@ -1823,6 +1823,8 @@ msgstr ""
 "organization."
 
 #: templates/v2/components/cta-redirection.html:74
+#: templates/v2/form/success/signed.html:22
+#: templates/v2/form/success/unsigned.html:26
 msgid "Download the form"
 msgstr "Download the form"
 
@@ -2212,11 +2214,11 @@ msgstr ""
 "income tax. You can access the completed form by clicking the button below. "
 "Remember to submit it to ANAF to complete the process!"
 
-#: templates/v2/form/confirmation.html:35
+#: templates/v2/form/modals/confirmation.html:35
 msgid "Continue without signing?"
 msgstr "Continue without signing?"
 
-#: templates/v2/form/confirmation.html:39
+#: templates/v2/form/modals/confirmation.html:39
 msgid ""
 "If you continue without signing online, your form will be generated, and you "
 "will be able to download the PDF, but it will not reach the NGO. We rely on "
@@ -2228,13 +2230,33 @@ msgstr ""
 "you to print, sign the form by hand, and send it to the NGO by post or "
 "email, or you will submit it independently to ANAF."
 
-#: templates/v2/form/confirmation.html:55
+#: templates/v2/form/modals/confirmation.html:55
 msgid "Back"
 msgstr "Back"
 
-#: templates/v2/form/confirmation.html:64
+#: templates/v2/form/modals/confirmation.html:64
 msgid "Continue"
 msgstr "Continue"
+
+#: templates/v2/form/modals/signature.html:57
+msgid "Signature modal"
+msgstr "Signature modal"
+
+#: templates/v2/form/modals/signature.html:111
+msgid "Add signature"
+msgstr "Add signature"
+
+#: templates/v2/form/modals/signature.html:115
+msgid "Draw your signature in the canvas below."
+msgstr "Draw your signature in the canvas below."
+
+#: templates/v2/form/modals/signature.html:132
+msgid "Reset"
+msgstr "Reset"
+
+#: templates/v2/form/modals/signature.html:142
+msgid "Ok"
+msgstr "Ok"
 
 #: templates/v2/form/redirection-closed.html:6
 msgid "Notice!"
@@ -2370,111 +2392,118 @@ msgstr "Continue without signing"
 msgid "Send the form"
 msgstr "Send the form"
 
-#: templates/v2/form/signature.html:57
-msgid "Signature modal"
-msgstr "Signature modal"
-
-#: templates/v2/form/signature.html:111
-msgid "Add signature"
-msgstr "Add signature"
-
-#: templates/v2/form/signature.html:115
-msgid "Draw your signature in the canvas below."
-msgstr "Draw your signature in the canvas below."
-
-#: templates/v2/form/signature.html:132
-msgid "Reset"
-msgstr "Reset"
-
-#: templates/v2/form/signature.html:142
-msgid "Ok"
-msgstr "Ok"
-
-#: templates/v2/form/success.html:14
-msgid "An image saying \"Thank you\" for your redirection"
-msgstr "An image saying \"Thank you\" for your redirection"
-
-#: templates/v2/form/success.html:25
-msgid "Download your redirection form"
-msgstr "Download your redirection form"
-
-#: templates/v2/form/success.html:36
-msgid ""
-"Thank you for your redirection! Your form has been sent to the NGO, and you "
-"have also received a copy of it by email."
+#: templates/v2/form/success/signed.html:4
+#, fuzzy
+#| msgid ""
+#| "You're one step closer to redirecting your income tax to the cause you "
+#| "believe in"
+msgid "Thank you! Part of your income tax will go to the cause you believe in"
 msgstr ""
-"Thank you for your redirection! Your form has been sent to the NGO, and you "
-"have also received a copy of it by email."
+"You're one step closer to redirecting your income tax to the cause you "
+"believe in"
 
-#: templates/v2/form/success.html:42
+#: templates/v2/form/success/signed.html:10
 msgid ""
-"Together we are better, stronger and braver. Together we can make a positive "
-"change in our society, that is why we need as many people like you as "
-"possible."
+"Your form has been sent to the organization, and they will take care of "
+"submitting it to the tax office. You will receive a copy of it by email "
+"shortly."
+msgstr ""
+
+#: templates/v2/form/success/signed.html:26
+#: templates/v2/form/success/unsigned.html:107
+#, fuzzy
+#| msgid ""
+#| "Together we are better, stronger and braver. Together we can make a "
+#| "positive change in our society, that is why we need as many people like "
+#| "you as possible."
+msgid ""
+"Together we can make a positive change in society, that's why we need as "
+"many people like you as possible. See below how you can contribute more."
 msgstr ""
 "Together we are better, stronger and braver. Together we can make a positive "
 "change in our society, that is why we need as many people like you as "
 "possible."
 
-#: templates/v2/form/success.html:48
-msgid ""
-"If you want to support the organization further, tell your friends to visit "
-"<a href=\"https://redirectioneaza.ro/\">redirectioneaza.ro</a>."
+#: templates/v2/form/success/unsigned.html:5
+#, fuzzy
+#| msgid ""
+#| "You're one step closer to redirecting your income tax to the cause you "
+#| "believe in"
+msgid "You are one step closer to redirecting your income tax..."
 msgstr ""
-"If you want to support the organization further, tell your friends to visit "
-"<a href=\"https://redirectioneaza.ro/\">redirectioneaza.ro</a>."
+"You're one step closer to redirecting your income tax to the cause you "
+"believe in"
 
-#: templates/v2/form/success.html:56
-msgid "The first step was filling in the form. Now, here are the next steps:"
-msgstr "The first step was filling in the form. Now, here are the next steps:"
+#: templates/v2/form/success/unsigned.html:14
+msgid ""
+"We have generated the form with your data. Next, it needs to be signed and "
+"sent. See below, or in the email, the steps you need to follow."
+msgstr ""
 
-#: templates/v2/form/success.html:62
-msgid "Step 2."
-msgstr "Step 2."
-
-#: templates/v2/form/success.html:63
-msgid "Print the form and sign it."
-msgstr "Print the form and sign it."
-
-#: templates/v2/form/success.html:67
-msgid "Step 3."
-msgstr "Step 3."
-
-#: templates/v2/form/success.html:68
-msgid "Then, you have the following options:"
+#: templates/v2/form/success/unsigned.html:36
+#, fuzzy
+#| msgid "Then, you have the following options:"
+msgid "After you print and sign the form, you have the following options:"
 msgstr "Then, you have the following options:"
 
-#: templates/v2/form/success.html:73
+#: templates/v2/form/success/unsigned.html:47
+#, fuzzy
+#| msgid ""
+#| "You either scan it and send it by e-mail to the NGO and they will take "
+#| "care of submitting it. The NGO's e-mail address is:"
 msgid ""
-"You either scan it and send it by e-mail to the NGO and they will take care "
-"of submitting it. The NGO's e-mail address is:"
+"You scan and send it by email to the NGO, and they will take care of "
+"submitting it. The NGO's email address is:"
 msgstr ""
 "You either scan it and send it by e-mail to the NGO and they will take care "
 "of submitting it. The NGO's e-mail address is:"
 
-#: templates/v2/form/success.html:78
+#: templates/v2/form/success/unsigned.html:60
+#, fuzzy
+#| msgid ""
+#| "Or you send it by post with <strong>registered mail</strong> to the ANAF "
+#| "unit you belong to."
 msgid ""
-"Or you send it by post with <strong>registered mail</strong> to the ANAF "
-"unit you belong to."
+"You send it by post with a registered letter to the tax office (ANAF) you "
+"belong to."
 msgstr ""
 "Or you send it by post with <strong>registered mail</strong> to the ANAF "
 "unit you belong to."
 
-#: templates/v2/form/success.html:83
+#: templates/v2/form/success/unsigned.html:65
 msgid "Search for the office you belong to in this list;"
 msgstr "Search for the office you belong to in this list;"
 
-#: templates/v2/form/success.html:90
+#: templates/v2/form/success/unsigned.html:78
+#, fuzzy
+#| msgid ""
+#| "Or you send it by post or courier to the NGO's address, and they will "
+#| "take care of submitting it. Their address is:"
 msgid ""
-"Or you send it by post or courier to the NGO's address, and they will take "
-"care of submitting it. Their address is:"
+"You send it by post or courier to the NGO's address, and they will take care "
+"of submitting it. Their address is:"
 msgstr ""
 "Or you send it by post or courier to the NGO's address, and they will take "
 "care of submitting it. Their address is:"
 
-#: templates/v2/form/success.html:94
+#: templates/v2/form/success/unsigned.html:83
 msgid "the county"
 msgstr "the county"
+
+#: templates/v2/form/success/unsigned.html:96
+#, fuzzy
+#| msgid ""
+#| "If you want a simpler option, you can always return to redirectioneaza.ro "
+#| "to complete the form again and sign it online, in which case it will go "
+#| "directly to the organization in digital format."
+msgid ""
+"Alternatively, you can choose to refill the form and sign it online at any "
+"time, in which case it will go directly to the organization in digital "
+"format, and they will complete the redirection process."
+msgstr ""
+"If you want a simpler option, you can always return to redirectioneaza.ro to "
+"complete the form again and sign it online, in which case it will go "
+"directly to the organization in digital format."
 
 #: templates/v2/ngo-account/archives/list-header.html:5
 #: templates/v2/ngo-account/redirections/list-header.html:5
@@ -2974,14 +3003,39 @@ msgstr "old password"
 msgid "Group"
 msgstr "Group"
 
+#~ msgid "An image saying \"Thank you\" for your redirection"
+#~ msgstr "An image saying \"Thank you\" for your redirection"
+
+#~ msgid "Download your redirection form"
+#~ msgstr "Download your redirection form"
+
 #~ msgid ""
-#~ "If you want a simpler option, you can always return to redirectioneaza.ro "
-#~ "to complete the form again and sign it online, in which case it will go "
-#~ "directly to the organization in digital format."
+#~ "Thank you for your redirection! Your form has been sent to the NGO, and "
+#~ "you have also received a copy of it by email."
 #~ msgstr ""
-#~ "If you want a simpler option, you can always return to redirectioneaza.ro "
-#~ "to complete the form again and sign it online, in which case it will go "
-#~ "directly to the organization in digital format."
+#~ "Thank you for your redirection! Your form has been sent to the NGO, and "
+#~ "you have also received a copy of it by email."
+
+#~ msgid ""
+#~ "If you want to support the organization further, tell your friends to "
+#~ "visit <a href=\"https://redirectioneaza.ro/\">redirectioneaza.ro</a>."
+#~ msgstr ""
+#~ "If you want to support the organization further, tell your friends to "
+#~ "visit <a href=\"https://redirectioneaza.ro/\">redirectioneaza.ro</a>."
+
+#~ msgid ""
+#~ "The first step was filling in the form. Now, here are the next steps:"
+#~ msgstr ""
+#~ "The first step was filling in the form. Now, here are the next steps:"
+
+#~ msgid "Step 2."
+#~ msgstr "Step 2."
+
+#~ msgid "Print the form and sign it."
+#~ msgstr "Print the form and sign it."
+
+#~ msgid "Step 3."
+#~ msgstr "Step 3."
 
 #~ msgid "Is accepting forms"
 #~ msgstr "Is accepting forms"

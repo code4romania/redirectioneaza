@@ -24,7 +24,7 @@ logger = logging.getLogger(__name__)
 
 
 class RedirectionSuccessHandler(BaseVisibleTemplateView):
-    template_name = "form/success.html"
+    template_name = "form/success/main.html"
     title = _("Successful redirection")
 
     def get_context_data(self, ngo_url, **kwargs):
