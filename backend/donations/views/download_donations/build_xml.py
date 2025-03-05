@@ -31,6 +31,7 @@ CLEAN_TEXT_CHOICES = {
 def _redirection_has_duplicate_cnp(redirection: Donor, cnp_idx: Dict[str, Dict[str, Any]]) -> bool:
     cnp = redirection.get_cnp()
 
+    # TODO: check if the CNP is valid
     if cnp in cnp_idx and cnp_idx[cnp]["has_duplicate"]:
         if not cnp_idx[cnp].get("skip", False):
             cnp_idx[cnp]["skip"] = True
