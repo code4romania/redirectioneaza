@@ -1,3 +1,4 @@
+import re
 from typing import Dict
 
 from donations.models.donors import Donor
@@ -24,3 +25,12 @@ def get_address_details(donation_object: Donor) -> Dict[str, str]:
     }
 
     return address_details
+
+
+def parse_email_for_anaf(email: str) -> str:
+    email_regex = r"^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9]+\.[a-zA-Z0-9.]+$"
+
+    if not email or not re.match(email_regex, email):
+        return ""
+
+    return email

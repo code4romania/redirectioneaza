@@ -1,4 +1,5 @@
 import os
+import string
 import unicodedata
 from datetime import datetime
 from typing import Any, Dict
@@ -10,10 +11,21 @@ from django.db.models import QuerySet
 from donations.common.validation.phone_number import clean_phone_number
 from donations.models.donors import Donor
 from donations.models.ngos import Cause, Ngo
-from donations.views.download_donations.common import get_address_details, parse_duration
+from donations.views.download_donations.common import get_address_details, parse_duration, parse_email_for_anaf
 
 XMLNS_DETAILS = {"xmlns:xfa": "http://www.xfa.org/schema/xfa-data/1.0/", "xfa:dataNode": "dataGroup"}
 ANAF_FORM_VERSION = "B230_A1.0.9"
+
+# ANAF has a custom list of characters allowed in the XML: [A-Z, a-z, 0-9, ",", ".", "-", " "]
+# It includes the "&" but it's not consistent, so we're not including it here
+CUSTOM_LIST = string.ascii_letters + string.digits + "," + "." + "-" + " "
+CLEAN_TEXT_CHOICES = {
+    "alphabet": lambda text: "".join([c for c in text if c.isalpha()]),
+    "numbers": lambda text: "".join([c for c in text if c.isdecimal()]),
+    "alnum": lambda text: "".join([c for c in text if c.isalnum()]),
+    "email": lambda text: parse_email_for_anaf(text),
+    "custom": lambda text: "".join([c for c in text if c in CUSTOM_LIST]),
+}
 
 
 def _redirection_has_duplicate_cnp(redirection: Donor, cnp_idx: Dict[str, Dict[str, Any]]) -> bool:
@@ -50,12 +62,18 @@ def add_xml_to_zip(
         xml_element_tree.write(handler, encoding="utf-8", xml_declaration=True, method="xml")
 
 
-def _new_element(tag: str, text: str = None, clean_text: bool = False) -> Element:
+def _new_element(tag: str, text: str = None, clean: str = "") -> Element:
     element = Element(tag)
 
     if text:
-        if clean_text:
-            text = unicodedata.normalize("NFKD", text)
+        if clean:
+            text = unicodedata.normalize("NFKD", text).strip()
+
+            if clean in CLEAN_TEXT_CHOICES:
+                text = CLEAN_TEXT_CHOICES[clean](text)
+
+            text = text.upper()
+
         element.text = text
 
     return element
@@ -77,9 +95,9 @@ def build_xml(
     xml.append(_build_imp())
 
     xml.append(_new_element(tag="z_tipPersoana", text="Rad2"))
-    xml.append(_new_element(tag="z_denEntitate", text=cause.ngo.name))
-    xml.append(_new_element(tag="z_cifEntitate", text=cause.ngo.registration_number))
-    xml.append(_new_element(tag="z_ibanEntitate", text=cause.bank_account))
+    xml.append(_new_element(tag="z_denEntitate", text=cause.ngo.name, clean="alnum"))
+    xml.append(_new_element(tag="z_cifEntitate", text=cause.ngo.registration_number, clean="numbers"))
+    xml.append(_new_element(tag="z_ibanEntitate", text=cause.bank_account, clean="alnum"))
 
     xml.append(_build_borderou_data(xml_index, timestamp, cause))
 
@@ -114,7 +132,7 @@ def _build_id_doc(ngo: Ngo, timestamp: datetime) -> Element:
     totalPlata_A = Element("totalPlata_A")
     element.append(totalPlata_A)
 
-    element.append(_new_element(tag="cif", text=ngo.registration_number))
+    element.append(_new_element(tag="cif", text=ngo.registration_number, clean="numbers"))
     element.append(_new_element(tag="formValid", text="FORMULAR NEVALIDAT"))
     element.append(_new_element(tag="luna_r", text="12"))
     element.append(_new_element(tag="d_rec", text="0"))
@@ -139,17 +157,17 @@ def _build_borderou_data(xml_index: int, timestamp: datetime, cause: Cause) -> E
 
     element.append(_new_element(tag="nrD", text=str(xml_index)))
     element.append(_new_element(tag="dataD", text=timestamp.strftime("%d.%m.%Y")))
-    element.append(_new_element(tag="denD", text=cause.ngo.name))
-    element.append(_new_element(tag="cifD", text=cause.ngo.registration_number))
+    element.append(_new_element(tag="denD", text=cause.ngo.name, clean="alnum"))
+    element.append(_new_element(tag="cifD", text=cause.ngo.registration_number, clean="numbers"))
 
     ngo_address: str = cause.ngo.address
     if cause.ngo.locality:
         ngo_address += ", " + cause.ngo.locality
     if cause.ngo.county:
         ngo_address += ", " + cause.ngo.county
-    element.append(_new_element(tag="adresaD", text=ngo_address))
+    element.append(_new_element(tag="adresaD", text=ngo_address, clean="custom"))
 
-    element.append(_new_element(tag="ibanD", text=cause.bank_account))
+    element.append(_new_element(tag="ibanD", text=cause.bank_account, clean="alnum"))
 
     return element
 
@@ -162,14 +180,16 @@ def _build_donor(index: int, donor: Donor) -> Element:
     element.append(nrCrt)
 
     contributor_identity = Element("idCnt")
-    contributor_identity.append(_new_element(tag="nume", text=donor.l_name.upper()))
-    contributor_identity.append(_new_element(tag="init", text=donor.initial.upper()))
-    contributor_identity.append(_new_element(tag="pren", text=donor.f_name.upper()))
-    contributor_identity.append(_new_element(tag="cif_c", text=donor.get_cnp()))
-    contributor_identity.append(_new_element(tag="adresa", text=get_address_details(donor)["full_address"]))
-    contributor_identity.append(_new_element(tag="telefon", text=clean_phone_number(donor.phone)))
+    contributor_identity.append(_new_element(tag="nume", text=donor.l_name.upper(), clean="alphabet"))
+    contributor_identity.append(_new_element(tag="init", text=donor.initial.upper(), clean="alphabet"))
+    contributor_identity.append(_new_element(tag="pren", text=donor.f_name.upper(), clean="alphabet"))
+    contributor_identity.append(_new_element(tag="cif_c", text=donor.get_cnp(), clean="numbers"))
+    contributor_identity.append(
+        _new_element(tag="adresa", text=get_address_details(donor)["full_address"], clean="custom")
+    )
+    contributor_identity.append(_new_element(tag="telefon", text=clean_phone_number(donor.phone), clean="numbers"))
     contributor_identity.append(_new_element(tag="fax"))
-    contributor_identity.append(_new_element(tag="email", text=donor.email))
+    contributor_identity.append(_new_element(tag="email", text=donor.email, clean="email"))
     element.append(contributor_identity)
 
     s15 = Element("s15")
@@ -226,9 +246,9 @@ def _build_donor_field_entitate(donor: Donor):
     idEnt = Element("idEnt")
 
     idEnt.append(_new_element("anDoi", text=str(parse_duration(donor.two_years))))
-    idEnt.append(_new_element("cifOJ", text=donor.ngo.registration_number))
-    idEnt.append(_new_element("denOJ", text=donor.ngo.name))
-    idEnt.append(_new_element("ibanNp", text=donor.cause.bank_account))
+    idEnt.append(_new_element("cifOJ", text=donor.ngo.registration_number, clean="numbers"))
+    idEnt.append(_new_element("denOJ", text=donor.ngo.name, clean="alnum"))
+    idEnt.append(_new_element("ibanNp", text=donor.cause.bank_account, clean="alnum"))
     idEnt.append(_new_element("prc", text="3.50"))
     idEnt.append(_new_element("venitB"))
     idEnt.append(_new_element("acord", text="1" if donor.anaf_gdpr else "0"))
