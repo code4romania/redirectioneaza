@@ -11,7 +11,7 @@ from django.http import HttpRequest
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 from django.utils.html import format_html
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_lazy as _, ngettext_lazy
 from unfold.admin import ModelAdmin, StackedInline, TabularInline
 from unfold.contrib.filters.admin import SingleNumericFilter
 from unfold.decorators import action
@@ -176,7 +176,7 @@ class NgoAdmin(ModelAdmin):
         "update_from_ngohub_async",
     )
 
-    actions_list = ["remove_prefilled_forms"]
+    actions_list = ("clean_registration_numbers", "remove_prefilled_forms")
 
     fieldsets = (
         (
@@ -392,13 +392,28 @@ class NgoAdmin(ModelAdmin):
         )
 
     @action(description=_("Clean up registration numbers"))
-    def clean_registration_numbers(self, request, queryset: QuerySet[Ngo]):
-        result = call_command("registration_numbers_cleanup")
+    def clean_registration_numbers(self, request, queryset: QuerySet[Ngo] = None, object_id=None):
+        target_ngos = None
+        if queryset:
+            target_ngos = queryset.values_list("pk", flat=True)
+            result = call_command("registration_numbers_cleanup", "--ngos", *target_ngos)
+        else:
+            result = call_command("registration_numbers_cleanup")
 
         if result:
             self.message_user(request, result, level="ERROR")
         else:
-            self.message_user(request, _("Registration numbers are clean."), level="SUCCESS")
+            success_message = _("Successfully cleaned registration numbers")
+            if target_ngos:
+                success_message += ngettext_lazy(
+                    " for 1 NGO.",
+                    " for %(ngos)d NGOs.",
+                    target_ngos.count(),
+                ) % {"ngos": target_ngos.count()}
+
+            self.message_user(request, success_message, level="SUCCESS")
+
+        return redirect(reverse_lazy("admin:donations_ngo_changelist"))
 
     @action(description=_("Update from NGO Hub synchronously"))
     def update_from_ngohub_sync(self, request, queryset: QuerySet[Ngo]):

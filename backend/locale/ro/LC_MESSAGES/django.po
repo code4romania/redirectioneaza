@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-05 17:52+0200\n"
+"POT-Creation-Date: 2025-03-06 10:09+0200\n"
 "PO-Revision-Date: 2024-03-07 11:27+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -191,27 +191,35 @@ msgstr "Schimbă administratorul ONG-ului '%(name)s'"
 msgid "Clean up registration numbers"
 msgstr "Curăță numerele de înregistrare"
 
-#: donations/admin/ngos.py:401
-msgid "Registration numbers are clean."
-msgstr "Numerele de înregistrare sunt curate."
+#: donations/admin/ngos.py:406
+msgid "Successfully cleaned registration numbers"
+msgstr "Au fost curățate cu succes numerele de înregistrare"
 
-#: donations/admin/ngos.py:403
+#: donations/admin/ngos.py:409
+#, python-format
+msgid " for 1 NGO."
+msgid_plural " for %(ngos)d NGOs."
+msgstr[0] "pentru 1 ONG."
+msgstr[1] "pentru %(ngos)d ONG-uri."
+msgstr[2] "pentru %(ngos)d de ONG-uri."
+
+#: donations/admin/ngos.py:418
 msgid "Update from NGO Hub synchronously"
 msgstr "Actualizează din NGO Hub sincron"
 
-#: donations/admin/ngos.py:408
+#: donations/admin/ngos.py:423
 msgid "NGOs updated from NGO Hub."
 msgstr "ONG-urile au fost actualizate din NGO Hub."
 
-#: donations/admin/ngos.py:410
+#: donations/admin/ngos.py:425
 msgid "Update from NGO Hub asynchronously"
 msgstr "Actualizează din NGO Hub asincron"
 
-#: donations/admin/ngos.py:415
+#: donations/admin/ngos.py:430
 msgid "NGOs are being updated from NGO Hub."
 msgstr "ONG-urile sunt actualizate din NGO Hub."
 
-#: donations/admin/ngos.py:417
+#: donations/admin/ngos.py:432
 msgid "Remove prefilled forms"
 msgstr "Elimină formularele completate"
 
@@ -1832,7 +1840,7 @@ msgstr ""
 
 #: templates/v2/components/cta-redirection.html:74
 #: templates/v2/form/success/signed.html:22
-#: templates/v2/form/success/unsigned.html:26
+#: templates/v2/form/success/unsigned.html:22
 msgid "Download the form"
 msgstr "Descarcă formularul"
 
@@ -2417,7 +2425,7 @@ msgstr ""
 "depunerea lui la ANAF. Vei primi în scurt timp o copie a acestuia pe email."
 
 #: templates/v2/form/success/signed.html:26
-#: templates/v2/form/success/unsigned.html:107
+#: templates/v2/form/success/unsigned.html:97
 msgid ""
 "Together we can make a positive change in society, that's why we need as "
 "many people like you as possible. See below how you can contribute more."
@@ -2425,25 +2433,23 @@ msgstr ""
 "Împreună putem aduce o schimbare în bine în societate, de aceea avem nevoie "
 "de cât mai mulți oameni ca tine. Vezi mai jos cum poți să contribui mai mult."
 
-#: templates/v2/form/success/unsigned.html:5
+#: templates/v2/form/success/unsigned.html:4
 msgid "You are one step closer to redirecting your income tax..."
-msgstr ""
-"Ești cu un pas mai aproape de a redirecționa impozitul tău pe venit..."
+msgstr "Ești cu un pas mai aproape de a redirecționa impozitul tău pe venit..."
 
-#: templates/v2/form/success/unsigned.html:14
+#: templates/v2/form/success/unsigned.html:10
 msgid ""
 "We have generated the form with your data. Next, it needs to be signed and "
 "sent. See below, or in the email, the steps you need to follow."
 msgstr ""
-"Am generat formularul cu datele tale. "
-"Mai departe, el trebuie semnat și trimis. "
-"Vezi mai jos, sau pe email, pașii pe care trebuie să îi urmezi."
+"Am generat formularul cu datele tale. Mai departe, el trebuie semnat și "
+"trimis. Vezi mai jos, sau pe email, pașii pe care trebuie să îi urmezi."
 
-#: templates/v2/form/success/unsigned.html:36
+#: templates/v2/form/success/unsigned.html:31
 msgid "After you print and sign the form, you have the following options:"
 msgstr "După ce printezi și semnezi formularul, ai următoarele opțiuni:"
 
-#: templates/v2/form/success/unsigned.html:47
+#: templates/v2/form/success/unsigned.html:42
 msgid ""
 "You scan and send it by email to the NGO, and they will take care of "
 "submitting it. The NGO's email address is:"
@@ -2451,7 +2457,7 @@ msgstr ""
 "Îl scanezi și îl trimiți pe email către ONG și ei se vor ocupa de depunerea "
 "lui. Adresa de email a ONG-ului este:"
 
-#: templates/v2/form/success/unsigned.html:60
+#: templates/v2/form/success/unsigned.html:55
 msgid ""
 "You send it by post with a registered letter to the tax office (ANAF) you "
 "belong to."
@@ -2459,11 +2465,11 @@ msgstr ""
 "Îl trimiți prin poștă cu scrisoare recomandată la unitatea fiscală (ANAF) de "
 "care aparții."
 
-#: templates/v2/form/success/unsigned.html:65
+#: templates/v2/form/success/unsigned.html:60
 msgid "Search for the office you belong to in this list;"
 msgstr "Caută oficiul din care faci parte în această listă;"
 
-#: templates/v2/form/success/unsigned.html:78
+#: templates/v2/form/success/unsigned.html:73
 msgid ""
 "You send it by post or courier to the NGO's address, and they will take care "
 "of submitting it. Their address is:"
@@ -2471,20 +2477,19 @@ msgstr ""
 "Îl trimiți prin poștă sau curier la adresa ONG-ului, iar ei se vor ocupa de "
 "depunerea lui. Adresa lor este:"
 
-#: templates/v2/form/success/unsigned.html:83
+#: templates/v2/form/success/unsigned.html:78
 msgid "the county"
 msgstr "județul"
 
-#: templates/v2/form/success/unsigned.html:96
+#: templates/v2/form/success/unsigned.html:88
 msgid ""
 "Alternatively, you can choose to refill the form and sign it online at any "
 "time, in which case it will go directly to the organization in digital "
 "format, and they will complete the redirection process."
 msgstr ""
-"Alternativ, poți alege oricând să recompletezi formularul și să-l semnezi online, "
-"caz în care va ajunge direct la organizație în format digital "
-"iar aceștia vor finaliza procesul de redirecționare."
-
+"Alternativ, poți alege oricând să recompletezi formularul și să-l semnezi "
+"online, caz în care va ajunge direct la organizație în format digital iar "
+"aceștia vor finaliza procesul de redirecționare."
 
 #: templates/v2/ngo-account/archives/list-header.html:5
 #: templates/v2/ngo-account/redirections/list-header.html:5
@@ -2989,6 +2994,9 @@ msgstr "parolă veche"
 #: users/models.py:178
 msgid "Group"
 msgstr "Grup"
+
+#~ msgid "Registration numbers are clean."
+#~ msgstr "Numerele de înregistrare sunt curate."
 
 #~ msgid "An image saying \"Thank you\" for your redirection"
 #~ msgstr "O imagine care spune \"Mulțumim\" pentru redirecționare"
