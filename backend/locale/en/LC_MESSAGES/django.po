@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-06 10:09+0200\n"
+"POT-Creation-Date: 2025-03-06 10:59+0200\n"
 "PO-Revision-Date: 2024-02-28 15:45+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -1539,13 +1539,13 @@ msgstr ""
 msgid "Authentication problems?"
 msgstr "Authentication problems?"
 
-#: templates/v2/account/signup-confirmation.html:22
+#: templates/v2/account/signup-confirmation.html:25
 #: templates/v2/account/snippets/third-party.html:69
 #: templates/v2/account/snippets/third-party.html:174
 msgid "Check the support page"
 msgstr "Check the support page"
 
-#: templates/v2/account/signup-confirmation.html:23
+#: templates/v2/account/signup-confirmation.html:26
 msgid "or contact us at"
 msgstr "or contact us at"
 

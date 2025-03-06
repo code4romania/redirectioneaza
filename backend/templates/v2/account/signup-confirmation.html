@@ -1,14 +1,14 @@
-{% extends "public/articles/base.html" %}
+{% extends "layouts/content-and-image-page.html" %}
 
 {% load i18n %}
 
-{% block article_content %}
+{% block page_content %}
 
-  <h1>
+  <h1 class="block mt-1 text-3xl font-extrabold tracking-tight">
     {% trans "Check your email address" %}
   </h1>
 
-  <p>
+  <p class="my-12 text-base text-gray-900">
     {% blocktrans trimmed %}
       Your account has been succesfully created!
       You will receive an email message shortly.
@@ -17,11 +17,14 @@
     {% endblocktrans %}
   </p>
 
-  <p>
-    {% trans "Authentication problems?" %} <br>
+  <p class="mt-12 text-base text-gray-900">
+    {% trans "Authentication problems?" %}
+  </p>
+
+  <p class="text-base text-gray-900">
     <a class="text-base font-normal text-cyan-700" href="https://www.ngohub.ro/ro/suport-tehnic-redirectioneaza">{% trans "Check the support page" %}</a>
     {% trans "or contact us at" %}
     <a class="text-base font-normal text-cyan-700" href="mailto:redirectioneaza@code4.ro">redirectioneaza@code4.ro</a>
   </p>
 
-{% endblock article_content %}
+{% endblock %}
