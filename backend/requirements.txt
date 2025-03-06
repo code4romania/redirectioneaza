@@ -37,7 +37,7 @@ cssselect2==0.7.0
     # via svglib
 diff-match-patch==20241021
     # via django-import-export
-django==5.1.6
+django==5.1.7
     # via
     #   -r requirements.in
     #   django-allauth
