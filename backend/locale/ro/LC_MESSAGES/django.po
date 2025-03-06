@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-06 10:59+0200\n"
+"POT-Creation-Date: 2025-03-06 12:21+0200\n"
 "PO-Revision-Date: 2024-03-07 11:27+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -108,12 +108,12 @@ msgid "Has NGO Hub account"
 msgstr "Are cont NGO Hub"
 
 #: donations/admin/ngos.py:111 donations/admin/ngos.py:129
-#: templates/v2/ngo-account/redirections/list-items.html:42
+#: templates/v2/ngo-account/redirections/list-items.html:47
 msgid "Yes"
 msgstr "Da"
 
 #: donations/admin/ngos.py:111 donations/admin/ngos.py:129
-#: templates/v2/ngo-account/redirections/list-items.html:44
+#: templates/v2/ngo-account/redirections/list-items.html:49
 msgid "No"
 msgstr "Nu"
 
@@ -280,7 +280,7 @@ msgstr "Parolele nu se potrivesc"
 #: donations/forms/ngo_account.py:13 donations/models/ngos.py:158
 #: templates/v2/emails/donor/redirection-sans-signature/main.txt:26
 #: templates/v2/ngo-account/my-organization/ngo-presentation.html:38
-#: templates/v2/ngo-account/redirections/list-header.html:8
+#: templates/v2/ngo-account/redirections/list-header.html:11
 msgid "Name"
 msgstr "Nume"
 
@@ -2327,7 +2327,7 @@ msgid "Personal identification number"
 msgstr "CNP"
 
 #: templates/v2/form/redirection-open.html:65
-#: templates/v2/ngo-account/redirections/list-header.html:17
+#: templates/v2/ngo-account/redirections/list-header.html:20
 msgid "Phone number"
 msgstr "Număr de telefon"
 
@@ -2672,36 +2672,36 @@ msgstr "Adresa organizației"
 msgid "Locality/Sector"
 msgstr "Localitate/Sector"
 
-#: templates/v2/ngo-account/redirections/list-header.html:11
+#: templates/v2/ngo-account/redirections/list-header.html:8
+msgid "Date filled"
+msgstr "Completat la"
+
+#: templates/v2/ngo-account/redirections/list-header.html:14
 msgid "Locality, County"
 msgstr "Oraș, Județ"
 
-#: templates/v2/ngo-account/redirections/list-header.html:14
+#: templates/v2/ngo-account/redirections/list-header.html:17
 #: templates/v2/ngo-account/settings-account/main.html:47
 msgid "E-mail"
 msgstr "E-mail"
 
-#: templates/v2/ngo-account/redirections/list-header.html:20
+#: templates/v2/ngo-account/redirections/list-header.html:23
 msgid "2 years"
 msgstr "2 ani"
-
-#: templates/v2/ngo-account/redirections/list-header.html:23
-msgid "Date filled"
-msgstr "Data completării"
 
 #: templates/v2/ngo-account/redirections/list-items.html:7
 msgid "No redirections found"
 msgstr "Nu s-au găsit redirecționări"
 
-#: templates/v2/ngo-account/redirections/list-items.html:30
+#: templates/v2/ngo-account/redirections/list-items.html:35
 msgid "This person does not wish to share their contact details."
 msgstr "Această persoană nu dorește să-și împărtășească datele de contact."
 
-#: templates/v2/ngo-account/redirections/list-items.html:52
+#: templates/v2/ngo-account/redirections/list-items.html:54
 msgid "Signed"
 msgstr "Semnat"
 
-#: templates/v2/ngo-account/redirections/list-items.html:54
+#: templates/v2/ngo-account/redirections/list-items.html:56
 msgid "Unsigned"
 msgstr "Nesemnat"
 
