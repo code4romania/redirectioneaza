@@ -10,20 +10,31 @@ from donations.common.validation.registration_number import (
     extract_vat_id,
     ngo_id_number_validator,
 )
-from donations.models.ngos import (
-    Ngo,
-)
+from donations.models.ngos import Ngo
 
 
 class Command(BaseCommand):
     help = "Clean up registration numbers for all NGOs."
 
+    def add_arguments(self, parser):
+        parser.add_argument(
+            "--ngos",
+            type=int,
+            nargs="+",
+            help="List of NGO IDs to clean registration numbers for.",
+        )
+
     def handle(self, *args, **options):
         errors: List[str] = []
-        target_ngos = Ngo.objects.filter(registration_number_valid=None)
 
-        if target_ngos.count() == 0:
-            target_ngos = Ngo.objects.filter(registration_number_valid=False)
+        if options["ngos"]:
+            target_ngo_ids = options["ngos"]
+            target_ngos = Ngo.objects.filter(pk__in=target_ngo_ids)
+        else:
+            target_ngos = Ngo.objects.filter(registration_number_valid=None)
+
+            if target_ngos.count() == 0:
+                target_ngos = Ngo.objects.filter(registration_number_valid=False)
 
         if target_ngos.count() == 0:
             self.stdout.write(self.style.SUCCESS("No NGOs to clean registration numbers for."))
@@ -39,8 +50,6 @@ class Command(BaseCommand):
             self.stdout.write(
                 self.style.ERROR(f"Errors occurred while cleaning registration numbers for NGOs: ({','.join(errors)})")
             )
-
-        return f"Errors occurred while cleaning registration numbers for NGOs: ({','.join(errors)})"
 
     def clean_ngo(self, ngo_id: int) -> Dict[str, str]:
         ngo = Ngo.objects.get(pk=ngo_id)
