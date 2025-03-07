@@ -379,6 +379,10 @@ class NgoRedirectionsView(NgoBaseListView, DonorSearchMixin):
         user: User = self.request.user
         ngo: Ngo = user.ngo if user.ngo else None
 
+        counties_options: List[str] = [
+            county for county in settings.FORM_COUNTIES_WITH_SECTORS_LIST if county in ngo.donors_counties()
+        ]
+
         context.update(
             {
                 "user": user,
@@ -386,6 +390,18 @@ class NgoRedirectionsView(NgoBaseListView, DonorSearchMixin):
                 "title": self.title,
                 "search_query": search_query,
                 "url_search_query": query_dict.urlencode(),
+                "filters": {
+                    "counties_options": counties_options,
+                    "localities_options": sorted(ngo.donors_localities()),
+                    "period_options": [
+                        {"title": _("One year"), "value": "1"},
+                        {"title": _("Two years"), "value": "2"},
+                    ],
+                    "status_options": [
+                        {"title": _("Signed"), "value": "signed"},
+                        {"title": _("Not signed"), "value": "unsigned"},
+                    ],
+                },
             }
         )
 

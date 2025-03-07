@@ -402,6 +402,12 @@ class Ngo(models.Model):
         for cause in ngo.causes.all():
             cause.delete_prefilled_form()
 
+    def donors_counties(self):
+        return self.donor_set.values_list("county", flat=True).distinct()
+
+    def donors_localities(self):
+        return self.donor_set.values_list("city", flat=True).distinct()
+
 
 class Cause(models.Model):
     ngo = models.ForeignKey(Ngo, on_delete=models.CASCADE, related_name="causes")

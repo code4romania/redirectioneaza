@@ -6,7 +6,7 @@ export default function () {
     focusedOptionIndex: null,
     options: null,
     initOptions(options) {
-      this.normalizeOptions(options);
+      this.options = this.normalizeOptions(options);
     },
     fetchOptions(endpoint) {
       const url = new URL(window.location.origin + endpoint);
@@ -14,27 +14,35 @@ export default function () {
       fetch(url)
         .then(response => response.json())
         .then(data => options = data);
-      this.normalizeOptions(options);
+      this.options = this.normalizeOptions(options);
     },
     normalizeString(string) {
       return string.normalize('NFKD').replace(/[^\w\s.-_\/]/g, '').toLowerCase();
     },
     normalizeOptions(options) {
-      this.options = options.map(option => {
-        return [option, this.normalizeString(option)];
+      return options.map(option => {
+        const title = option.title ? option.title : option;
+        return {
+          title: title,
+          value: option.value ? option.value : title,
+          normalizedTitle: this.normalizeString(title)
+        };
       });
     },
     filteredOptions() {
+      if (!this.isOpen()) {
+        return;
+      }
+      const searchString = this.filter ? this.normalizeString(this.filter) : '';
       return this.options
         ? this.options.filter(option => {
-          const searchString = this.filter ? this.normalizeString(this.filter) : '';
-          return option[1].indexOf(searchString) > -1
-        }).map(option => option[0])
+          return option.normalizedTitle.indexOf(searchString) > -1 || option.title.indexOf(searchString) > -1
+        }).map(option => option)
         : {}
     },
     closeOptionsList() {
       this.show = false;
-      this.filter = this.selected;
+      this.filter = this.selectedOption();
       this.focusedOptionIndex = this.selected ? this.focusedOptionIndex : null;
     },
     openOptionsList() {
@@ -55,6 +63,9 @@ export default function () {
       this.focusedOptionIndex = index;
       this.selectOption();
     },
+    selectedOption() {
+      return this.selected ? this.selected.title : this.filter;
+    },
     selectOption() {
       if (!this.isOpen()) {
         return;
@@ -66,7 +77,7 @@ export default function () {
         this.filter = '';
       } else {
         this.selected = selected;
-        this.filter = this.selected;
+        this.filter = this.selectedOption();
       }
       this.closeOptionsList();
     },
