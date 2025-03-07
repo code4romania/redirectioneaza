@@ -2,18 +2,18 @@ pip-tools~= 7.4.1
 
 # formatting & linting
 black~=25.1.0
-ruff~=0.8.3
+ruff~=0.9
 
-faker~=36.1.0
+faker~=36.2
 
 # testing
 pytest~=8.3.4
 
-pytest-django~=4.9.0
+pytest-django~=4.10
 pytest-xdist~=3.6.1
 pytest-cov~=6.0.0
 
 # debugging
 debugpy~=1.8.11
 
--r requirements.txt
+-r ./requirements.txt

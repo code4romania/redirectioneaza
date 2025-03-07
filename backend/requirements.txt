@@ -10,12 +10,12 @@ asgiref==3.8.1
     #   django-allauth
 blessed==1.20.0
     # via -r requirements.in
-boto3==1.36.24
+boto3==1.37.8
     # via
     #   django-ses
     #   django-storages
     #   pycognito
-botocore==1.36.24
+botocore==1.37.8
     # via
     #   boto3
     #   s3transfer
@@ -29,15 +29,15 @@ chardet==5.2.0
     # via reportlab
 charset-normalizer==3.4.1
     # via requests
-cryptography==44.0.1
+cryptography==44.0.2
     # via
     #   -r requirements.in
     #   pyjwt
-cssselect2==0.7.0
+cssselect2==0.8.0
     # via svglib
 diff-match-patch==20241021
     # via django-import-export
-django==5.1.6
+django==5.1.7
     # via
     #   -r requirements.in
     #   django-allauth
@@ -52,11 +52,11 @@ django==5.1.6
     #   django-unfold
     #   django-vite
     #   sentry-sdk
-django-allauth==65.3.1
+django-allauth==65.4.1
     # via -r requirements.in
-django-environ==0.11.2
+django-environ==0.12.0
     # via -r requirements.in
-django-import-export==4.3.5
+django-import-export==4.3.7
     # via -r requirements.in
 django-ipware==7.0.1
     # via -r requirements.in
@@ -68,15 +68,15 @@ django-q2==1.7.6
     # via -r requirements.in
 django-recaptcha==4.0.0
     # via -r requirements.in
-django-ses==4.3.2
+django-ses==4.4.0
     # via -r requirements.in
 django-storages==1.14.5
     # via -r requirements.in
 django-tinymce==4.1.0
     # via -r requirements.in
-django-unfold==0.46.0
+django-unfold==0.50.0
     # via -r requirements.in
-django-vite==3.0.6
+django-vite==3.1.0
     # via -r requirements.in
 envs==1.4
     # via pycognito
@@ -98,7 +98,7 @@ ngohub==0.1.0
     # via -r requirements.in
 packaging==24.2
     # via gunicorn
-phonenumbers==8.13.55
+phonenumbers==9.0.0
     # via -r requirements.in
 pillow==11.1.0
     # via reportlab
@@ -114,7 +114,7 @@ pyjwt==2.10.1
     # via pycognito
 pymysql==1.1.1
     # via -r requirements.in
-pypdf==5.1.0
+pypdf==5.3.1
     # via -r requirements.in
 python-dateutil==2.9.0.post0
     # via botocore
@@ -122,7 +122,7 @@ python-ipware==3.0.0
     # via django-ipware
 python-stdnum==1.20
     # via django-localflavor
-reportlab==4.2.5
+reportlab==4.3.1
     # via
     #   -r requirements.in
     #   svglib
@@ -130,9 +130,9 @@ requests==2.32.3
     # via
     #   -r requirements.in
     #   pycognito
-s3transfer==0.11.2
+s3transfer==0.11.4
     # via boto3
-sentry-sdk==2.19.2
+sentry-sdk==2.22.0
     # via -r requirements.in
 six==1.17.0
     # via
@@ -159,7 +159,7 @@ webencodings==0.5.1
     # via
     #   cssselect2
     #   tinycss2
-whitenoise==6.8.2
+whitenoise==6.9.0
     # via -r requirements.in
 zope-event==5.0
     # via gevent
