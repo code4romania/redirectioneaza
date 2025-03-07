@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-06 12:21+0200\n"
+"POT-Creation-Date: 2025-03-07 14:52+0200\n"
 "PO-Revision-Date: 2024-03-07 11:27+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -421,7 +421,7 @@ msgstr "Apartament"
 msgid "Two years"
 msgstr "Doi ani"
 
-#: donations/forms/redirection.py:36 donations/models/donors.py:98
+#: donations/forms/redirection.py:36 donations/models/donors.py:114
 msgid "ANAF GDPR"
 msgstr "ANAF GDPR"
 
@@ -449,96 +449,96 @@ msgstr "pensie"
 msgid "cause"
 msgstr "cauză"
 
-#: donations/models/donors.py:62 donations/views/donations_download.py:172
+#: donations/models/donors.py:63 donations/views/donations_download.py:172
 msgid "last name"
 msgstr "nume"
 
-#: donations/models/donors.py:63 donations/views/donations_download.py:173
+#: donations/models/donors.py:66 donations/views/donations_download.py:173
 msgid "first name"
 msgstr "prenume"
 
-#: donations/models/donors.py:64
+#: donations/models/donors.py:68
 msgid "initials"
 msgstr "inițiale"
 
-#: donations/models/donors.py:66 donations/views/donations_download.py:175
+#: donations/models/donors.py:70 donations/views/donations_download.py:175
 msgid "CNP"
 msgstr "CNP"
 
-#: donations/models/donors.py:69 donations/views/donations_download.py:180
+#: donations/models/donors.py:73 donations/views/donations_download.py:180
 msgid "city"
 msgstr "oraș"
 
-#: donations/models/donors.py:77 donations/models/ngos.py:221
+#: donations/models/donors.py:81 donations/models/ngos.py:221
 #: donations/views/donations_download.py:179
 msgid "county"
 msgstr "județ"
 
-#: donations/models/donors.py:84 donations/models/ngos.py:211
+#: donations/models/donors.py:88 donations/models/ngos.py:211
 msgid "address"
 msgstr "adresă"
 
-#: donations/models/donors.py:87 donations/models/ngos.py:238
+#: donations/models/donors.py:92 donations/models/ngos.py:238
 msgid "telephone"
 msgstr "telefon"
 
-#: donations/models/donors.py:88 donations/models/ngos.py:237
+#: donations/models/donors.py:100 donations/models/ngos.py:237
 #: donations/views/donations_download.py:178
 msgid "email"
 msgstr "email"
 
-#: donations/models/donors.py:92
+#: donations/models/donors.py:108
 msgid "anonymous"
 msgstr "anonim"
 
-#: donations/models/donors.py:95
+#: donations/models/donors.py:111
 msgid "If the user would like the ngo to see the donation"
 msgstr "Dacă utilizatorul dorește ca ONG-ul să vadă donația"
 
-#: donations/models/donors.py:100
+#: donations/models/donors.py:116
 msgid "If the user agrees for ANAF to share their data with the NGO"
 msgstr ""
 "Dacă utilizatorul este de acord ca ANAF să împărtășească datele cu ONG-ul"
 
-#: donations/models/donors.py:105
+#: donations/models/donors.py:121
 msgid "income type"
 msgstr "tip venit"
 
-#: donations/models/donors.py:114
+#: donations/models/donors.py:130
 msgid "two years"
 msgstr "doi ani"
 
-#: donations/models/donors.py:116
+#: donations/models/donors.py:132
 msgid "If the user wants to donate for 2 years"
 msgstr "Dacă utilizatorul dorește să doneze pentru 2 ani"
 
-#: donations/models/donors.py:119
+#: donations/models/donors.py:135
 msgid "Geo IP"
 msgstr "Geo IP"
 
-#: donations/models/donors.py:121 donations/views/donations_download.py:188
+#: donations/models/donors.py:137 donations/views/donations_download.py:188
 msgid "filename"
 msgstr "nume fișier"
 
-#: donations/models/donors.py:122
+#: donations/models/donors.py:138
 msgid "has signed"
 msgstr "a semnat"
 
-#: donations/models/donors.py:125
+#: donations/models/donors.py:141
 msgid "PDF file"
 msgstr "fișier PDF"
 
-#: donations/models/donors.py:132 donations/models/jobs.py:60
+#: donations/models/donors.py:148 donations/models/jobs.py:60
 #: donations/models/ngos.py:270 donations/models/ngos.py:435
 #: partners/models.py:75 users/models.py:95
 msgid "date created"
 msgstr "data creării"
 
-#: donations/models/donors.py:143
+#: donations/models/donors.py:159
 msgid "donor"
 msgstr "donator"
 
-#: donations/models/donors.py:144
+#: donations/models/donors.py:160
 msgid "donors"
 msgstr "donatori"
 
@@ -774,7 +774,7 @@ msgstr "Cont validat"
 msgid "Verification"
 msgstr "Verificare"
 
-#: donations/views/common.py:44
+#: donations/views/common/misc.py:41
 #, python-format
 msgid "%(time)d hour"
 msgid_plural "%(time)d hours"
@@ -782,7 +782,7 @@ msgstr[0] "%(time)d oră"
 msgstr[1] "%(time)d ore"
 msgstr[2] "%(time)d de ore"
 
-#: donations/views/common.py:50
+#: donations/views/common/misc.py:47
 #, python-format
 msgid "%(time)d minute"
 msgid_plural "%(time)d minutes"
@@ -899,51 +899,51 @@ msgstr "data completării"
 msgid "duration"
 msgstr "perioadă"
 
-#: donations/views/ngo_account.py:34
+#: donations/views/ngo_account.py:35
 msgid "The IBAN number must have 24 characters"
 msgstr "IBAN-ul trebuie să aibă 24 de cifre"
 
-#: donations/views/ngo_account.py:37
+#: donations/views/ngo_account.py:38
 msgid "The IBAN number must contain only letters and digits"
 msgstr "IBAN-ul trebuie să conțină doar litere și cifre"
 
-#: donations/views/ngo_account.py:40
+#: donations/views/ngo_account.py:41
 msgid "The IBAN number must start with 'RO'"
 msgstr "IBAN-ul trebuie să înceapă cu 'RO'"
 
-#: donations/views/ngo_account.py:66 donations/views/ngo_account.py:116
+#: donations/views/ngo_account.py:67 donations/views/ngo_account.py:117
 msgid "Organization details"
 msgstr "Detalii organizație"
 
-#: donations/views/ngo_account.py:186
+#: donations/views/ngo_account.py:187
 msgid "There are some errors on the presentation form."
 msgstr "Există erori în formularul de prezentare."
 
-#: donations/views/ngo_account.py:243
+#: donations/views/ngo_account.py:244
 msgid "Organization forms"
 msgstr "Formulare organizație"
 
-#: donations/views/ngo_account.py:300 donations/views/redirections.py:172
+#: donations/views/ngo_account.py:301 donations/views/redirections.py:172
 msgid "There are some errors on the redirection form."
 msgstr "Există erori în formularul de redirecționare."
 
-#: donations/views/ngo_account.py:334
+#: donations/views/ngo_account.py:335
 #: templates/v2/ngo-account/settings-account/main.html:10
 msgid "Account settings"
 msgstr "Setări cont"
 
-#: donations/views/ngo_account.py:377
+#: donations/views/ngo_account.py:378
 #: redirectioneaza/context_processors/headers.py:106
 #: templates/v2/ngo-account/redirections/main.html:10
 msgid "Redirections"
 msgstr "Redirecționări"
 
-#: donations/views/ngo_account.py:429
+#: donations/views/ngo_account.py:431
 #: templates/v2/ngo-account/archives/main.html:10
 msgid "Archives history"
 msgstr "Istoric arhive exportate"
 
-#: donations/views/ngo_account.py:471
+#: donations/views/ngo_account.py:473
 #: templates/v2/emails/ngo/download-archive/main.html:21
 msgid "Download archive"
 msgstr "Descarcă arhiva"
@@ -1870,6 +1870,10 @@ msgstr "Încarcă un logo în NGO Hub"
 msgid "Upload an image"
 msgstr "Încarcă o imagine"
 
+#: templates/v2/components/input/search-box.html:6
+msgid "Search"
+msgstr "Caută"
+
 #: templates/v2/components/notifications/message.html:31
 msgid "Close"
 msgstr "Închide"
@@ -2738,6 +2742,10 @@ msgstr ""
 #: templates/v2/ngo-account/redirections/main.html:72
 msgid "Generate ANAF Archive"
 msgstr "Generează arhiva ANAF"
+
+#: templates/v2/ngo-account/redirections/main.html:111
+msgid "Search for donors"
+msgstr "Caută contribuabili"
 
 #: templates/v2/ngo-account/settings-account/main.html:16
 msgid "Manage your account settings in NGO Hub"

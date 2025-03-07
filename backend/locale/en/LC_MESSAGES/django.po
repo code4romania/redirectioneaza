@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-06 12:21+0200\n"
+"POT-Creation-Date: 2025-03-07 14:52+0200\n"
 "PO-Revision-Date: 2024-02-28 15:45+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -190,17 +190,15 @@ msgid "Clean up registration numbers"
 msgstr "Clean up registration numbers"
 
 #: donations/admin/ngos.py:406
-#, fuzzy
-#| msgid "Clean up registration numbers"
 msgid "Successfully cleaned registration numbers"
-msgstr "Clean up registration numbers"
+msgstr "Successfully cleaned registration numbers"
 
 #: donations/admin/ngos.py:409
 #, python-format
 msgid " for 1 NGO."
 msgid_plural " for %(ngos)d NGOs."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] " for 1 NGO."
+msgstr[1] " for %(ngos)d NGOs."
 
 #: donations/admin/ngos.py:418
 msgid "Update from NGO Hub synchronously"
@@ -420,7 +418,7 @@ msgstr "Apartment"
 msgid "Two years"
 msgstr "Two years"
 
-#: donations/forms/redirection.py:36 donations/models/donors.py:98
+#: donations/forms/redirection.py:36 donations/models/donors.py:114
 msgid "ANAF GDPR"
 msgstr "ANAF GDPR"
 
@@ -448,95 +446,95 @@ msgstr "pension"
 msgid "cause"
 msgstr "cause"
 
-#: donations/models/donors.py:62 donations/views/donations_download.py:172
+#: donations/models/donors.py:63 donations/views/donations_download.py:172
 msgid "last name"
 msgstr "last name"
 
-#: donations/models/donors.py:63 donations/views/donations_download.py:173
+#: donations/models/donors.py:66 donations/views/donations_download.py:173
 msgid "first name"
 msgstr "first name"
 
-#: donations/models/donors.py:64
+#: donations/models/donors.py:68
 msgid "initials"
 msgstr "initials"
 
-#: donations/models/donors.py:66 donations/views/donations_download.py:175
+#: donations/models/donors.py:70 donations/views/donations_download.py:175
 msgid "CNP"
 msgstr "CNP"
 
-#: donations/models/donors.py:69 donations/views/donations_download.py:180
+#: donations/models/donors.py:73 donations/views/donations_download.py:180
 msgid "city"
 msgstr "city"
 
-#: donations/models/donors.py:77 donations/models/ngos.py:221
+#: donations/models/donors.py:81 donations/models/ngos.py:221
 #: donations/views/donations_download.py:179
 msgid "county"
 msgstr "county"
 
-#: donations/models/donors.py:84 donations/models/ngos.py:211
+#: donations/models/donors.py:88 donations/models/ngos.py:211
 msgid "address"
 msgstr "address"
 
-#: donations/models/donors.py:87 donations/models/ngos.py:238
+#: donations/models/donors.py:92 donations/models/ngos.py:238
 msgid "telephone"
 msgstr "telephone"
 
-#: donations/models/donors.py:88 donations/models/ngos.py:237
+#: donations/models/donors.py:100 donations/models/ngos.py:237
 #: donations/views/donations_download.py:178
 msgid "email"
 msgstr "email"
 
-#: donations/models/donors.py:92
+#: donations/models/donors.py:108
 msgid "anonymous"
 msgstr "anonymous"
 
-#: donations/models/donors.py:95
+#: donations/models/donors.py:111
 msgid "If the user would like the ngo to see the donation"
 msgstr "If the user would like the ngo to see the donation"
 
-#: donations/models/donors.py:100
+#: donations/models/donors.py:116
 msgid "If the user agrees for ANAF to share their data with the NGO"
 msgstr "If the user agrees for ANAF to share their data with the NGO"
 
-#: donations/models/donors.py:105
+#: donations/models/donors.py:121
 msgid "income type"
 msgstr "income type"
 
-#: donations/models/donors.py:114
+#: donations/models/donors.py:130
 msgid "two years"
 msgstr "two years"
 
-#: donations/models/donors.py:116
+#: donations/models/donors.py:132
 msgid "If the user wants to donate for 2 years"
 msgstr "If the user wants to donate for 2 years"
 
-#: donations/models/donors.py:119
+#: donations/models/donors.py:135
 msgid "Geo IP"
 msgstr "Geo IP"
 
-#: donations/models/donors.py:121 donations/views/donations_download.py:188
+#: donations/models/donors.py:137 donations/views/donations_download.py:188
 msgid "filename"
 msgstr "filename"
 
-#: donations/models/donors.py:122
+#: donations/models/donors.py:138
 msgid "has signed"
 msgstr "has signed"
 
-#: donations/models/donors.py:125
+#: donations/models/donors.py:141
 msgid "PDF file"
 msgstr "PDF file"
 
-#: donations/models/donors.py:132 donations/models/jobs.py:60
+#: donations/models/donors.py:148 donations/models/jobs.py:60
 #: donations/models/ngos.py:270 donations/models/ngos.py:435
 #: partners/models.py:75 users/models.py:95
 msgid "date created"
 msgstr "date created"
 
-#: donations/models/donors.py:143
+#: donations/models/donors.py:159
 msgid "donor"
 msgstr "donor"
 
-#: donations/models/donors.py:144
+#: donations/models/donors.py:160
 msgid "donors"
 msgstr "donors"
 
@@ -773,14 +771,14 @@ msgstr "Account verified"
 msgid "Verification"
 msgstr "Verification"
 
-#: donations/views/common.py:44
+#: donations/views/common/misc.py:41
 #, python-format
 msgid "%(time)d hour"
 msgid_plural "%(time)d hours"
 msgstr[0] "%(time)d hour"
 msgstr[1] "%(time)d hours"
 
-#: donations/views/common.py:50
+#: donations/views/common/misc.py:47
 #, python-format
 msgid "%(time)d minute"
 msgid_plural "%(time)d minutes"
@@ -896,51 +894,51 @@ msgstr "date"
 msgid "duration"
 msgstr "duration"
 
-#: donations/views/ngo_account.py:34
+#: donations/views/ngo_account.py:35
 msgid "The IBAN number must have 24 characters"
 msgstr "The IBAN number must have 24 characters"
 
-#: donations/views/ngo_account.py:37
+#: donations/views/ngo_account.py:38
 msgid "The IBAN number must contain only letters and digits"
 msgstr "The IBAN number must contain only letters and digits"
 
-#: donations/views/ngo_account.py:40
+#: donations/views/ngo_account.py:41
 msgid "The IBAN number must start with 'RO'"
 msgstr "The IBAN number must start with 'RO'"
 
-#: donations/views/ngo_account.py:66 donations/views/ngo_account.py:116
+#: donations/views/ngo_account.py:67 donations/views/ngo_account.py:117
 msgid "Organization details"
 msgstr "Organization details"
 
-#: donations/views/ngo_account.py:186
+#: donations/views/ngo_account.py:187
 msgid "There are some errors on the presentation form."
 msgstr "There are some errors on the presentation form."
 
-#: donations/views/ngo_account.py:243
+#: donations/views/ngo_account.py:244
 msgid "Organization forms"
 msgstr "Organization forms"
 
-#: donations/views/ngo_account.py:300 donations/views/redirections.py:172
+#: donations/views/ngo_account.py:301 donations/views/redirections.py:172
 msgid "There are some errors on the redirection form."
 msgstr "There are some errors on the redirection form."
 
-#: donations/views/ngo_account.py:334
+#: donations/views/ngo_account.py:335
 #: templates/v2/ngo-account/settings-account/main.html:10
 msgid "Account settings"
 msgstr "Account settings"
 
-#: donations/views/ngo_account.py:377
+#: donations/views/ngo_account.py:378
 #: redirectioneaza/context_processors/headers.py:106
 #: templates/v2/ngo-account/redirections/main.html:10
 msgid "Redirections"
 msgstr "Redirections"
 
-#: donations/views/ngo_account.py:429
+#: donations/views/ngo_account.py:431
 #: templates/v2/ngo-account/archives/main.html:10
 msgid "Archives history"
 msgstr "Archives history"
 
-#: donations/views/ngo_account.py:471
+#: donations/views/ngo_account.py:473
 #: templates/v2/emails/ngo/download-archive/main.html:21
 msgid "Download archive"
 msgstr "Download archive"
@@ -1863,6 +1861,10 @@ msgstr "Upload a logo in NGO Hub"
 msgid "Upload an image"
 msgstr "Upload an image"
 
+#: templates/v2/components/input/search-box.html:6
+msgid "Search"
+msgstr "Search"
+
 #: templates/v2/components/notifications/message.html:31
 msgid "Close"
 msgstr "Close"
@@ -2402,14 +2404,8 @@ msgid "Send the form"
 msgstr "Send the form"
 
 #: templates/v2/form/success/signed.html:4
-#, fuzzy
-#| msgid ""
-#| "You're one step closer to redirecting your income tax to the cause you "
-#| "believe in"
 msgid "Thank you! Part of your income tax will go to the cause you believe in"
-msgstr ""
-"You're one step closer to redirecting your income tax to the cause you "
-"believe in"
+msgstr "Thank you! Part of your income tax will go to the cause you believe in"
 
 #: templates/v2/form/success/signed.html:10
 msgid ""
@@ -2417,102 +2413,76 @@ msgid ""
 "submitting it to the tax office. You will receive a copy of it by email "
 "shortly."
 msgstr ""
+"Your form has been sent to the organization, and they will take care of "
+"submitting it to the tax office. You will receive a copy of it by email "
+"shortly."
 
 #: templates/v2/form/success/signed.html:26
 #: templates/v2/form/success/unsigned.html:97
-#, fuzzy
-#| msgid ""
-#| "Together we are better, stronger and braver. Together we can make a "
-#| "positive change in our society, that is why we need as many people like "
-#| "you as possible."
 msgid ""
 "Together we can make a positive change in society, that's why we need as "
 "many people like you as possible. See below how you can contribute more."
 msgstr ""
-"Together we are better, stronger and braver. Together we can make a positive "
-"change in our society, that is why we need as many people like you as "
-"possible."
+"Together we can make a positive change in society, that's why we need as "
+"many people like you as possible. See below how you can contribute more."
 
 #: templates/v2/form/success/unsigned.html:4
-#, fuzzy
-#| msgid ""
-#| "You're one step closer to redirecting your income tax to the cause you "
-#| "believe in"
 msgid "You are one step closer to redirecting your income tax..."
-msgstr ""
-"You're one step closer to redirecting your income tax to the cause you "
-"believe in"
+msgstr "You are one step closer to redirecting your income tax..."
 
 #: templates/v2/form/success/unsigned.html:10
 msgid ""
 "We have generated the form with your data. Next, it needs to be signed and "
 "sent. See below, or in the email, the steps you need to follow."
 msgstr ""
+"We have generated the form with your data. Next, it needs to be signed and "
+"sent. See below, or in the email, the steps you need to follow."
 
 #: templates/v2/form/success/unsigned.html:31
-#, fuzzy
-#| msgid "Then, you have the following options:"
 msgid "After you print and sign the form, you have the following options:"
-msgstr "Then, you have the following options:"
+msgstr "After you print and sign the form, you have the following options:"
 
 #: templates/v2/form/success/unsigned.html:42
-#, fuzzy
-#| msgid ""
-#| "You either scan it and send it by e-mail to the NGO and they will take "
-#| "care of submitting it. The NGO's e-mail address is:"
 msgid ""
 "You scan and send it by email to the NGO, and they will take care of "
 "submitting it. The NGO's email address is:"
 msgstr ""
-"You either scan it and send it by e-mail to the NGO and they will take care "
-"of submitting it. The NGO's e-mail address is:"
+"You scan and send it by email to the NGO, and they will take care of "
+"submitting it. The NGO's email address is:"
 
 #: templates/v2/form/success/unsigned.html:55
-#, fuzzy
-#| msgid ""
-#| "Or you send it by post with <strong>registered mail</strong> to the ANAF "
-#| "unit you belong to."
 msgid ""
 "You send it by post with a registered letter to the tax office (ANAF) you "
 "belong to."
 msgstr ""
-"Or you send it by post with <strong>registered mail</strong> to the ANAF "
-"unit you belong to."
+"You send it by post with a registered letter to the tax office (ANAF) you "
+"belong to."
 
 #: templates/v2/form/success/unsigned.html:60
 msgid "Search for the office you belong to in this list;"
 msgstr "Search for the office you belong to in this list;"
 
 #: templates/v2/form/success/unsigned.html:73
-#, fuzzy
-#| msgid ""
-#| "Or you send it by post or courier to the NGO's address, and they will "
-#| "take care of submitting it. Their address is:"
 msgid ""
 "You send it by post or courier to the NGO's address, and they will take care "
 "of submitting it. Their address is:"
 msgstr ""
-"Or you send it by post or courier to the NGO's address, and they will take "
-"care of submitting it. Their address is:"
+"You send it by post or courier to the NGO's address, and they will take care "
+"of submitting it. Their address is:"
 
 #: templates/v2/form/success/unsigned.html:78
 msgid "the county"
 msgstr "the county"
 
 #: templates/v2/form/success/unsigned.html:88
-#, fuzzy
-#| msgid ""
-#| "If you want a simpler option, you can always return to redirectioneaza.ro "
-#| "to complete the form again and sign it online, in which case it will go "
-#| "directly to the organization in digital format."
 msgid ""
 "Alternatively, you can choose to refill the form and sign it online at any "
 "time, in which case it will go directly to the organization in digital "
 "format, and they will complete the redirection process."
 msgstr ""
-"If you want a simpler option, you can always return to redirectioneaza.ro to "
-"complete the form again and sign it online, in which case it will go "
-"directly to the organization in digital format."
+"Alternatively, you can choose to refill the form and sign it online at any "
+"time, in which case it will go directly to the organization in digital "
+"format, and they will complete the redirection process."
 
 #: templates/v2/ngo-account/archives/list-header.html:5
 #: templates/v2/ngo-account/redirections/list-header.html:5
@@ -2754,6 +2724,10 @@ msgstr ""
 #: templates/v2/ngo-account/redirections/main.html:72
 msgid "Generate ANAF Archive"
 msgstr "Generate ANAF Archive"
+
+#: templates/v2/ngo-account/redirections/main.html:111
+msgid "Search for donors"
+msgstr "Search for donors"
 
 #: templates/v2/ngo-account/settings-account/main.html:16
 msgid "Manage your account settings in NGO Hub"
