@@ -42,3 +42,12 @@ def validate_phone_number(raw_phone_number) -> Dict[str, str]:
         "status": "success",
         "result": normalized_phone,
     }
+
+
+def clean_phone_number(raw_phone_number: str) -> str:
+    try:
+        phone_number: PhoneNumber = phonenumbers.parse(raw_phone_number, region="RO")
+    except phonenumbers.NumberParseException:
+        return ""
+
+    return phonenumbers.format_number(phone_number, phonenumbers.PhoneNumberFormat.NATIONAL)
