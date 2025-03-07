@@ -17,6 +17,11 @@
         {{ forloop.counter0|add:page_obj.start_index }}
       </td>
 
+      <td class="px-1 py-4 whitespace-nowrap">
+        {{ redirection.date_created|date:"SHORT_DATE_FORMAT" }}
+        <br>
+        {{ redirection.date_created|time:"TIME_FORMAT" }}
+      </td>
       <td class="py-4 pl-4 pr-3 font-medium text-gray-900 whitespace-normal sm:pl-0">
         {{ redirection.f_name }} {{ redirection.l_name }}
       </td>
@@ -43,9 +48,6 @@
         {% else %}
           {% trans "No" %}
         {% endif %}
-      </td>
-      <td class="px-1 py-4 whitespace-nowrap">
-        {{ redirection.date_created|date:"SHORT_DATE_FORMAT" }}
       </td>
       <td class="px-1 py-4 whitespace-nowrap">
         {% if redirection.has_signed %}
