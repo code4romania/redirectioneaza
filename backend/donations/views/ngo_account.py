@@ -16,7 +16,8 @@ from django_q.tasks import async_task
 
 from users.models import User
 from .base import BaseContextPropertiesMixin, BaseVisibleTemplateView
-from .common import get_ngo_archive_download_status
+from .common.misc import get_ngo_archive_download_status
+from .common.search import DonorSearchMixin
 from ..common.validation.registration_number import extract_vat_id, ngo_id_number_validator
 from ..forms.ngo_account import CauseForm, NgoPresentationForm
 from ..models.donors import Donor
@@ -372,7 +373,7 @@ class UserSettingsView(NgoBaseTemplateView):
         return render(request, self.template_name, context)
 
 
-class NgoRedirectionsView(NgoBaseListView):
+class NgoRedirectionsView(NgoBaseListView, DonorSearchMixin):
     template_name = "ngo-account/redirections/main.html"
     title = _("Redirections")
     context_object_name = "redirections"
@@ -401,27 +402,28 @@ class NgoRedirectionsView(NgoBaseListView):
         user: User = self.request.user
         ngo: Ngo = user.ngo if user.ngo else None
 
-        redirections = Donor.objects.none()
-        if ngo:
-            redirections = (
-                ngo.donor_set.all()
-                .order_by("-date_created")
-                .values(
-                    "id",
-                    "f_name",
-                    "l_name",
-                    "city",
-                    "county",
-                    "email",
-                    "phone",
-                    "date_created",
-                    "two_years",
-                    "is_anonymous",
-                    "has_signed",
-                )
-            )
+        if not ngo:
+            return Donor.objects.none()
 
-        return redirections
+        redirections = (
+            ngo.donor_set.all()
+            .order_by("-date_created")
+            .values(
+                "id",
+                "f_name",
+                "l_name",
+                "city",
+                "county",
+                "email",
+                "phone",
+                "date_created",
+                "two_years",
+                "is_anonymous",
+                "has_signed",
+            )
+        )
+
+        return self.search(queryset=redirections)
 
 
 class NgoArchivesView(NgoBaseListView):

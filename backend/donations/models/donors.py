@@ -59,8 +59,12 @@ class Donor(models.Model):
     ngo = models.ForeignKey("Ngo", verbose_name=_("NGO"), on_delete=models.SET_NULL, db_index=True, null=True)
     cause = models.ForeignKey("Cause", verbose_name=_("cause"), on_delete=models.SET_NULL, db_index=True, null=True)
 
-    l_name = models.CharField(verbose_name=_("last name"), blank=True, null=False, default="", max_length=100)
-    f_name = models.CharField(verbose_name=_("first name"), blank=True, null=False, default="", max_length=100)
+    l_name = models.CharField(
+        verbose_name=_("last name"), blank=True, null=False, default="", max_length=100, db_index=True
+    )
+    f_name = models.CharField(
+        verbose_name=_("first name"), blank=True, null=False, default="", max_length=100, db_index=True
+    )
     initial = models.CharField(verbose_name=_("initials"), blank=True, null=False, default="", max_length=5)
 
     encrypted_cnp = models.TextField(verbose_name=_("CNP"), blank=True, null=False, default="")
@@ -84,8 +88,20 @@ class Donor(models.Model):
     encrypted_address = models.TextField(verbose_name=_("address"), blank=True, null=False, default="")
 
     # originally: tel
-    phone = models.CharField(verbose_name=_("telephone"), blank=True, null=False, default="", max_length=30)
-    email = models.EmailField(verbose_name=_("email"), blank=False, null=False, db_index=True)
+    phone = models.CharField(
+        verbose_name=_("telephone"),
+        blank=True,
+        null=False,
+        default="",
+        max_length=30,
+        db_index=True,
+    )
+    email = models.EmailField(
+        verbose_name=_("email"),
+        blank=False,
+        null=False,
+        db_index=True,
+    )
 
     # originally: "anonymous"
     is_anonymous = models.BooleanField(
