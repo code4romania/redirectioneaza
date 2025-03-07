@@ -15,14 +15,15 @@ from django.views.generic import ListView
 from django_q.tasks import async_task
 
 from users.models import User
-from .base import BaseContextPropertiesMixin, BaseVisibleTemplateView
-from .common.misc import get_ngo_archive_download_status
-from .common.search import DonorSearchMixin
+
 from ..common.validation.registration_number import extract_vat_id, ngo_id_number_validator
 from ..forms.ngo_account import CauseForm, NgoPresentationForm
 from ..models.donors import Donor
 from ..models.jobs import Job
 from ..models.ngos import Cause, Ngo
+from .base import BaseContextPropertiesMixin, BaseVisibleTemplateView
+from .common.misc import get_ngo_archive_download_status
+from .common.search import DonorSearchMixin
 
 UserModel = get_user_model()
 
@@ -386,11 +387,27 @@ class NgoRedirectionsView(NgoBaseListView, DonorSearchMixin):
         user: User = self.request.user
         ngo: Ngo = user.ngo if user.ngo else None
 
+        counties_options: List[str] = [
+            county for county in settings.FORM_COUNTIES_WITH_SECTORS_LIST if county in ngo.donors_counties()
+        ]
+
         context.update(
             {
                 "user": user,
                 "ngo": ngo,
                 "title": self.title,
+                "filters": {
+                    "counties_options": counties_options,
+                    "localities_options": sorted(ngo.donors_localities()),
+                    "period_options": [
+                        {"title": _("One year"), "value": "1"},
+                        {"title": _("Two years"), "value": "2"},
+                    ],
+                    "status_options": [
+                        {"title": _("Signed"), "value": "signed"},
+                        {"title": _("Not signed"), "value": "unsigned"},
+                    ],
+                },
             }
         )
 
