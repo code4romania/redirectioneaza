@@ -60,7 +60,7 @@ would like the UI to look like if you’re suggesting new UI elements.
 
 - Python 3.12
 - [NVM](https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating)
-- a PostgreSQL 16.2 database (can be run with Docker)
+- a PostgreSQL 16.4 database (can be run with Docker)
 
 1. Go to the root of the project
 2. Run `cp .env.example .env.local` to create the environment file

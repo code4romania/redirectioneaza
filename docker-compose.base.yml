@@ -48,7 +48,7 @@ services:
   db_base_psql:
     extends:
       service: db_base
-    image: postgres:16.2
+    image: postgres:16.4
     volumes:
       - redirect_psql:/var/lib/postgresql/data
     environment:
