@@ -420,6 +420,7 @@ class NgoRedirectionsView(NgoBaseListView, DonorSearchMixin):
                 "two_years",
                 "is_anonymous",
                 "has_signed",
+                "pdf_file",
             )
         )
 
