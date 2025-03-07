@@ -15,14 +15,15 @@ from django.views.generic import ListView
 from django_q.tasks import async_task
 
 from users.models import User
-from .base import BaseContextPropertiesMixin, BaseVisibleTemplateView
-from .common.misc import get_ngo_archive_download_status
-from .common.search import DonorSearchMixin
+
 from ..common.validation.registration_number import extract_vat_id, ngo_id_number_validator
 from ..forms.ngo_account import CauseForm, NgoPresentationForm
 from ..models.donors import Donor
 from ..models.jobs import Job
 from ..models.ngos import Cause, Ngo
+from .base import BaseContextPropertiesMixin, BaseVisibleTemplateView
+from .common.misc import get_ngo_archive_download_status
+from .common.search import DonorSearchMixin
 
 UserModel = get_user_model()
 
@@ -433,7 +434,6 @@ class NgoRedirectionsView(NgoBaseListView, DonorSearchMixin):
                 "two_years",
                 "is_anonymous",
                 "has_signed",
-                "pdf_file",
             )
         )
 
@@ -481,6 +481,31 @@ class NgoArchivesView(NgoBaseListView):
             )
 
         return archives
+
+
+class RedirectionDownloadLinkView(BaseVisibleTemplateView):
+    title = _("Download donor form")
+
+    @method_decorator(login_required(login_url=reverse_lazy("login")))
+    def get(self, request, form_id, *args, **kwargs):
+        user: User = request.user
+        ngo: Ngo = user.ngo if user.ngo else None
+
+        if not ngo:
+            raise Http404
+
+        if not ngo.is_active:
+            raise PermissionDenied(_("Your organization is not active"))
+
+        try:
+            donor = Donor.objects.get(pk=form_id, ngo=ngo)
+        except Donor.DoesNotExist:
+            raise Http404
+
+        if not donor.pdf_file:
+            raise Http404
+
+        return redirect(donor.pdf_file.url)
 
 
 class ArchiveDownloadLinkView(BaseVisibleTemplateView):
