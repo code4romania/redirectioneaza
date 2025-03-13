@@ -460,19 +460,20 @@ class NgoArchivesView(NgoBaseListView):
         user: User = self.request.user
         ngo: Ngo = user.ngo if user.ngo else None
 
-        redirections = Job.objects.none()
+        archives = Job.objects.none()
         if ngo:
-            redirections = (
+            archives = (
                 ngo.jobs.all()
                 .order_by("-date_created")
                 .values(
                     "pk",
                     "date_created",
+                    "number_of_donations",
                     "status",
                 )
             )
 
-        return redirections
+        return archives
 
 
 class ArchiveDownloadLinkView(BaseVisibleTemplateView):

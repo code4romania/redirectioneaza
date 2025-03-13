@@ -19,6 +19,8 @@
 
       <td class="py-4 pl-4 pr-3 font-medium text-gray-900 whitespace-normal sm:pl-0">
         {{ archive.date_created|date:"SHORT_DATE_FORMAT" }}
+        <br>
+        {{ archive.date_created|time:"TIME_FORMAT" }}
       </td>
       <td class="px-1 py-4 whitespace-nowrap">
         {% if archive.status == "done" %}
@@ -32,10 +34,10 @@
         {% endif %}
       </td>
       <td class="px-1 py-4 whitespace-nowrap">
-        {% if archive.number_of_donations > 0 %}
-          {{ archive.number_of_donations }}
-        {% else %}
+        {% if archive.number_of_donations == -1 %}
           —
+        {% else %}
+          {{ archive.number_of_donations }}
         {% endif %}
       </td>
       <td class="px-1 py-4 whitespace-nowrap">
