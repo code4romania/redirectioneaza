@@ -23,10 +23,19 @@
       <td class="px-1 py-4 whitespace-nowrap">
         {% if archive.status == "done" %}
           {% trans "Done" %}
-          {% elif archive.status == "new" %}
+        {% elif archive.status == "new" %}
           {% trans "In progress" %}
-          {% elif archive.status == "error" %}
+        {% elif archive.status == "error" %}
           {% trans "Error" %}
+        {% else %}
+          {% trans "Unknown" %}
+        {% endif %}
+      </td>
+      <td class="px-1 py-4 whitespace-nowrap">
+        {% if archive.number_of_donations > 0 %}
+          {{ archive.number_of_donations }}
+        {% else %}
+          —
         {% endif %}
       </td>
       <td class="px-1 py-4 whitespace-nowrap">

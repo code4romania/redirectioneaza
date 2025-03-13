@@ -44,6 +44,15 @@ def download_donations_job(job_id: int = 0):
     timestamp: datetime = timezone.now()
     donations: QuerySet[Donor] = Donor.current_year_signed.filter(cause=cause).order_by("-date_created").all()
 
+    number_of_donations = donations.count()
+    job.number_of_donations = number_of_donations
+
+    if number_of_donations == 0:
+        job.status = JobStatusChoices.ERROR
+        job.save()
+
+        return
+
     file_name = f"n{cause.id:06d}__{datetime.strftime(timestamp, '%Y%m%d_%H%M')}.zip"
 
     with tempfile.TemporaryDirectory(prefix=f"rdr_zip_{job_id:06d}_") as tmp_dir_name:
