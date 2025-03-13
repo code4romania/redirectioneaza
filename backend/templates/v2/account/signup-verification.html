@@ -1,6 +1,6 @@
 {% extends "layouts/content-and-image-page.html" %}
 
-{% load i18n %}
+{% load i18n static %}
 
 {% block page_content %}
 
@@ -17,6 +17,12 @@
 
   {% url "login" as button_url %}
   {% trans "Authenticate" as button_title %}
-  {% include "components/buttons/link.html" %}
+  {% include "components/buttons/link.html" with style="white" %}
 
 {% endblock %}
+
+{% block page_image %}
+  <img
+    src="{% static 'images/checkmark-verified.svg' %}"
+    alt="">
+{% endblock page_image %}
