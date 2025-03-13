@@ -1,5 +1,4 @@
 import os
-import string
 import unicodedata
 from datetime import datetime
 from typing import Any, Dict
@@ -11,20 +10,28 @@ from django.db.models import QuerySet
 from donations.common.validation.phone_number import clean_phone_number
 from donations.models.donors import Donor
 from donations.models.ngos import Cause, Ngo
-from donations.views.download_donations.common import get_address_details, parse_duration, parse_email_for_anaf
+from redirectioneaza.common.clean import (
+    clean_text_alnum,
+    clean_text_alphabet,
+    clean_text_custom,
+    clean_text_email,
+    clean_text_numbers,
+    duration_flag_to_int,
+)
 
 XMLNS_DETAILS = {"xmlns:xfa": "http://www.xfa.org/schema/xfa-data/1.0/", "xfa:dataNode": "dataGroup"}
 ANAF_FORM_VERSION = "B230_A1.0.9"
 
 # ANAF has a custom list of characters allowed in the XML: [A-Z, a-z, 0-9, ",", ".", "-", " "]
 # It includes the "&" but it's not consistent, so we're not including it here
-CUSTOM_LIST = string.ascii_letters + string.digits + "," + "." + "-" + " "
 CLEAN_TEXT_CHOICES = {
-    "alphabet": lambda text: "".join([c for c in text if c.isalpha()]),
-    "numbers": lambda text: "".join([c for c in text if c.isdecimal()]),
-    "alnum": lambda text: "".join([c for c in text if c.isalnum()]),
-    "email": lambda text: parse_email_for_anaf(text),
-    "custom": lambda text: "".join([c for c in text if c in CUSTOM_LIST]),
+    "alphabet": lambda text: clean_text_alphabet(text),
+    "alphabets": lambda text: clean_text_alphabet(text, allow_spaces=True),
+    "alnum": lambda text: clean_text_alnum(text),
+    "alnums": lambda text: clean_text_alnum(text, allow_spaces=True),
+    "numbers": lambda text: clean_text_numbers(text),
+    "email": lambda text: clean_text_email(text),
+    "custom": lambda text: clean_text_custom(text),
 }
 
 
@@ -67,12 +74,13 @@ def _new_element(tag: str, text: str = None, clean: str = "") -> Element:
     element = Element(tag)
 
     if text:
+        # ANAF has a limit of 75 to 250 characters for each field
+        text = text[:250]
+
         if clean:
             text = unicodedata.normalize("NFKD", text).strip()
-
-            if clean in CLEAN_TEXT_CHOICES:
-                text = CLEAN_TEXT_CHOICES[clean](text)
-
+            text = CLEAN_TEXT_CHOICES.get(clean)(text)
+            text = " ".join(text.split())
             text = text.upper()
 
         element.text = text
@@ -96,7 +104,7 @@ def build_xml(
     xml.append(_build_imp())
 
     xml.append(_new_element(tag="z_tipPersoana", text="Rad2"))
-    xml.append(_new_element(tag="z_denEntitate", text=cause.ngo.name, clean="alnum"))
+    xml.append(_new_element(tag="z_denEntitate", text=cause.ngo.name, clean="alnums"))
     xml.append(_new_element(tag="z_cifEntitate", text=cause.ngo.registration_number, clean="numbers"))
     xml.append(_new_element(tag="z_ibanEntitate", text=cause.bank_account, clean="alnum"))
 
@@ -158,7 +166,7 @@ def _build_borderou_data(xml_index: int, timestamp: datetime, cause: Cause) -> E
 
     element.append(_new_element(tag="nrD", text=str(xml_index)))
     element.append(_new_element(tag="dataD", text=timestamp.strftime("%d.%m.%Y")))
-    element.append(_new_element(tag="denD", text=cause.ngo.name, clean="alnum"))
+    element.append(_new_element(tag="denD", text=cause.ngo.name, clean="alnums"))
     element.append(_new_element(tag="cifD", text=cause.ngo.registration_number, clean="numbers"))
 
     ngo_address: str = cause.ngo.address
@@ -181,12 +189,12 @@ def _build_donor(index: int, donor: Donor) -> Element:
     element.append(nrCrt)
 
     contributor_identity = Element("idCnt")
-    contributor_identity.append(_new_element(tag="nume", text=donor.l_name.upper(), clean="alphabet"))
+    contributor_identity.append(_new_element(tag="nume", text=donor.l_name.upper(), clean="alphabets"))
     contributor_identity.append(_new_element(tag="init", text=donor.initial.upper(), clean="alphabet"))
-    contributor_identity.append(_new_element(tag="pren", text=donor.f_name.upper(), clean="alphabet"))
+    contributor_identity.append(_new_element(tag="pren", text=donor.f_name.upper(), clean="alphabets"))
     contributor_identity.append(_new_element(tag="cif_c", text=donor.get_cnp(), clean="numbers"))
     contributor_identity.append(
-        _new_element(tag="adresa", text=get_address_details(donor)["full_address"], clean="custom")
+        _new_element(tag="adresa", text=donor.get_address(include_full=True)["full_address"], clean="custom")
     )
     contributor_identity.append(_new_element(tag="telefon", text=clean_phone_number(donor.phone), clean="numbers"))
     contributor_identity.append(_new_element(tag="fax"))
@@ -246,7 +254,7 @@ def _build_donor_field_entitate(donor: Donor):
 
     idEnt = Element("idEnt")
 
-    idEnt.append(_new_element("anDoi", text=str(parse_duration(donor.two_years))))
+    idEnt.append(_new_element("anDoi", text=str(duration_flag_to_int(donor.two_years))))
     idEnt.append(_new_element("cifOJ", text=donor.ngo.registration_number, clean="numbers"))
     idEnt.append(_new_element("denOJ", text=donor.ngo.name, clean="alnum"))
     idEnt.append(_new_element("ibanNp", text=donor.cause.bank_account, clean="alnum"))

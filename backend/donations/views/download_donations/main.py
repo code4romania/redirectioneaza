@@ -24,8 +24,8 @@ from donations.models.donors import Donor
 from donations.models.jobs import Job, JobDownloadError, JobStatusChoices
 from donations.models.ngos import Cause
 from donations.views.download_donations.build_xml import add_xml_to_zip
-from donations.views.download_donations.common import get_address_details, parse_duration
 from redirectioneaza.common.app_url import build_uri
+from redirectioneaza.common.clean import duration_flag_to_int
 from redirectioneaza.common.messaging import extend_email_context, send_email
 
 logger = logging.getLogger(__name__)
@@ -138,7 +138,7 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], cause: Cau
                     else:
                         cnp_idx[donation_cnp]["has_duplicate"] = True
 
-                    detailed_address: Dict = get_address_details(donation_object)
+                    detailed_address: Dict = donation_object.get_address(include_full=True)
                     donations_data.append(
                         {
                             "last_name": donation_object.l_name,
@@ -159,7 +159,7 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], cause: Cau
                             "ap": detailed_address["ap"],
                             "filename": filename,
                             "date": donation_object.date_created,
-                            "duration": parse_duration(donation_object.two_years),
+                            "duration": duration_flag_to_int(donation_object.two_years),
                         }
                     )
 
