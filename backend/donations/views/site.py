@@ -6,7 +6,7 @@ from typing import Dict, List, Union
 
 from django.conf import settings
 from django.db.models import QuerySet
-from django.http import HttpResponse
+from django.http import HttpResponse, QueryDict
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _, ngettext_lazy
 from django.views.generic import TemplateView
@@ -146,12 +146,19 @@ class NgoListHandler(NgoCauseMixedSearchMixin):
         return queryset
 
     def get_context_data(self, **kwargs):
+        search_query = self._search_query()
+
+        query_dict = QueryDict(mutable=True)
+        query_dict["q"] = search_query
+
         context = super().get_context_data(**kwargs)
         context.update(
             {
                 "title": "Toate ONG-urile",
                 "limit": settings.DONATIONS_LIMIT,
                 "month_limit": settings.DONATIONS_LIMIT_MONTH_NAME,
+                "search_query": search_query,
+                "url_search_query": query_dict.urlencode(),
             }
         )
         return context

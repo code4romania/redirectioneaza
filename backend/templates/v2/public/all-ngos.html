@@ -24,7 +24,7 @@
   <section class="container grid gap-12">
     <!-- Search and filters -->
     <form action="" method="GET">
-      {% include "public/components/ngo-search.html" %}
+      {% include "public/components/ngo-search.html" with current_search=search_query %}
     </form>
 
     <div class="grid gap-x-8 gap-y-16 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-10 xl:gap-y-20">
@@ -36,7 +36,7 @@
         </div>
       {% else %}
         {% trans "organizations" as paginated_type %}
-        {% include "public/components/pagination.html" with page_obj=page_obj paginated_type=paginated_type show_pagination_count=True %}
+        {% include "public/components/pagination.html" with page_obj=page_obj url_params=url_search_query paginated_type=paginated_type show_pagination_count=True %}
 
         {% for cause in causes %}
           {% include "public/components/grid-card.html" with card_logo=cause.display_image card_slug=cause.slug card_title=cause.name card_description=cause.description %}
@@ -44,7 +44,7 @@
       {% endif %}
     </div>
 
-    {% include "public/components/pagination.html" with page_obj=page_obj %}
+    {% include "public/components/pagination.html" with page_obj=page_obj url_params=url_search_query %}
   </section>
 
   {% include "account/snippets/cta-ngohub.html" %}
