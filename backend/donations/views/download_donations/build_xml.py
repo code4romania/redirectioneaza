@@ -5,7 +5,9 @@ from typing import Any, Dict
 from xml.etree.ElementTree import Element, ElementTree
 from zipfile import ZipFile
 
+from django.core.exceptions import ValidationError
 from django.db.models import QuerySet
+from localflavor.ro.forms import ROCNPField
 
 from donations.common.validation.phone_number import clean_phone_number
 from donations.models.donors import Donor
@@ -34,11 +36,18 @@ CLEAN_TEXT_CHOICES = {
     "custom": lambda text: clean_text_custom(text),
 }
 
+# Repurposed from localflavor.ro.forms.ROCNPField
+CNP_FIELD = ROCNPField()
+
 
 def _redirection_has_duplicate_cnp(redirection: Donor, cnp_idx: Dict[str, Dict[str, Any]]) -> bool:
     cnp = redirection.get_cnp()
 
-    # TODO: check if the CNP is valid
+    try:
+        CNP_FIELD.clean(cnp)
+    except ValidationError:
+        return False
+
     if cnp in cnp_idx and cnp_idx[cnp]["has_duplicate"]:
         if not cnp_idx[cnp].get("skip", False):
             cnp_idx[cnp]["skip"] = True
