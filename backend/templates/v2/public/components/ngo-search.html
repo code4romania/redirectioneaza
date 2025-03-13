@@ -5,18 +5,28 @@
     {% trans "Search for an NGO by its name or CUI/CIF" as search_title %}
     <span class="sr-only">{{ search_title }}</span>
 
-    <input
-      type="text"
-      name="q"
-      class="border-none col-start-1 row-start-1 block w-full rounded-full bg-white py-1.5 pl-10 pr-3 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-300 sm:pl-9 sm:text-sm/6 focus:outline-none"
-      placeholder="{{ search_title }}"
-      maxlength="100"
-      autocomplete="off"
-      value="{{ current_search }}"
-    >
+    <div class="mt-2 flex">
+      <div class="-mr-px grid grow grid-cols-1 focus-within:relative">
+        <input
+          type="text"
+          name="q"
+          class="border-none col-start-1 row-start-1 block w-full rounded-l-xl bg-white py-1.5 pl-10 pr-3 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-300 sm:pl-9 sm:text-sm/6 focus:outline-none"
+          placeholder="{{ search_title }}"
+          maxlength="100"
+          autocomplete="off"
+          value="{{ current_search }}"
+        >
+        <svg class="self-center col-start-1 row-start-1 ml-3 text-gray-400 pointer-events-none size-5 sm:size-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+          <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z" clip-rule="evenodd"/>
+        </svg>
+      </div>
 
-    <svg class="self-center col-start-1 row-start-1 ml-3 text-gray-400 pointer-events-none size-5 sm:size-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
-      <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z" clip-rule="evenodd"/>
-    </svg>
+      <a href="?" type="button" class="flex shrink-0 items-center gap-x-1.5 rounded-r-xl bg-white px-3 py-2 text-sm font-semibold text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 hover:bg-gray-50 focus:relative focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-300">
+        <svg class="-ml-0.5 size-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+          <path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
+        </svg>
+      </a>
+    </div>
+    
   </label>
 </div>
