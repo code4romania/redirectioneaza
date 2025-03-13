@@ -30,6 +30,8 @@ class RedirectionSuccessHandler(BaseVisibleTemplateView):
     def get_context_data(self, ngo_url, **kwargs):
         context = super().get_context_data(**kwargs)
 
+        request = self.request
+
         cause_url = ngo_url.lower().strip()
         cause, ngo = get_ngo_cause(cause_url)
 
@@ -42,8 +44,11 @@ class RedirectionSuccessHandler(BaseVisibleTemplateView):
         except Donor.DoesNotExist:
             donor = None
 
+        absolute_path = request.build_absolute_uri(reverse("twopercent", kwargs={"ngo_url": ngo_url}))
+
         context.update(
             {
+                "absolute_path": absolute_path,
                 "donor": donor,
                 "limit": settings.DONATIONS_LIMIT,
             }

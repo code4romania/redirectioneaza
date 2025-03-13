@@ -15,3 +15,7 @@
   {% endif %}
 
 {% endblock %}
+
+{% block extra_content %}
+  {% include "components/cta-redirection.html" with cause=donor.cause %}
+{% endblock %}
