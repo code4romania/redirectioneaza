@@ -55,6 +55,7 @@ class Command(BaseCommand):
         while len(generated_donations) < total_donations:
             # pick a random NGO
             ngo = ngos[random.randint(0, len(ngos) - 1)]
+            cause = ngo.causes.all()[random.randint(0, ngo.causes.count() - 1)]
             cnp = fake.ssn()
 
             address = {
@@ -69,6 +70,7 @@ class Command(BaseCommand):
             # generate a random donor
             donor = Donor(
                 ngo=ngo,
+                cause=cause,
                 f_name=fake.first_name(),
                 l_name=fake.last_name(),
                 initial=random.choice(string.ascii_uppercase),
