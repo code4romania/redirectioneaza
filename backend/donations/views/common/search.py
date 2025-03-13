@@ -30,8 +30,11 @@ class CommonSearchMixin(ListView):
     def get_search_results(self, queryset: QuerySet, query: str, language_code: str) -> QuerySet:
         raise NotImplementedError("You must add your own logic for searching")
 
+    def _search_query(self) -> str:
+        return self.request.GET.get("q", "").strip()[:100]
+
     def search(self, queryset: Optional[QuerySet[Any]] = None) -> QuerySet:
-        query: str = self.request.GET.get("q")
+        query = self._search_query()
 
         if not queryset:
             queryset = self.queryset

@@ -108,7 +108,7 @@
     <div class="basis-80">
       <form action="" method="GET">
         {% trans "Search for donors" as input_title %}
-        {% include "components/input/search-box.html" %}
+        {% include "components/input/search-box.html" with input_value=search_query %}
       </form>
     </div>
   </div>

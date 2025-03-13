@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied, ValidationError
 from django.db.models import QuerySet
-from django.http import Http404, HttpRequest
+from django.http import Http404, HttpRequest, QueryDict
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
@@ -381,6 +381,11 @@ class NgoRedirectionsView(NgoBaseListView, DonorSearchMixin):
     sidebar_item_target = "org-redirections"
 
     def get_context_data(self, **kwargs):
+        search_query = self._search_query()
+
+        query_dict = QueryDict(mutable=True)
+        query_dict["q"] = search_query
+
         context = super().get_context_data(**kwargs)
 
         user: User = self.request.user
@@ -391,6 +396,8 @@ class NgoRedirectionsView(NgoBaseListView, DonorSearchMixin):
                 "user": user,
                 "ngo": ngo,
                 "title": self.title,
+                "search_query": search_query,
+                "url_search_query": query_dict.urlencode(),
             }
         )
 

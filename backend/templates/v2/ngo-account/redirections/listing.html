@@ -12,5 +12,5 @@
 
 {% block pagination %}
   {% trans "donations" as paginated_type %}
-  {% include "public/components/pagination.html" with page_obj=page_obj paginated_type=paginated_type %}
+  {% include "public/components/pagination.html" with page_obj=page_obj url_params=url_search_query paginated_type=paginated_type %}
 {% endblock %}

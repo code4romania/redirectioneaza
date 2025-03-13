@@ -4,7 +4,7 @@
   <div class="flex items-center justify-between col-span-full">
     <div class="flex justify-between flex-1 sm:hidden">
       {% if page_obj.has_previous %}
-        <a href="?page={{ page_obj.previous_page_number }}" class="inline-flex items-center text-sm font-medium text-gray-500 hover:text-yellow-400">
+        <a href="?page={{ page_obj.previous_page_number }}&{{ url_params|safe }}" class="inline-flex items-center text-sm font-medium text-gray-500 hover:text-yellow-400">
           <svg class="mr-3 size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
             <path fill-rule="evenodd" d="M18 10a.75.75 0 0 1-.75.75H4.66l2.1 1.95a.75.75 0 1 1-1.02 1.1l-3.5-3.25a.75.75 0 0 1 0-1.1l3.5-3.25a.75.75 0 1 1 1.02 1.1l-2.1 1.95h12.59A.75.75 0 0 1 18 10Z" clip-rule="evenodd"/>
           </svg>
@@ -14,7 +14,7 @@
 
       <div class="flex justify-end flex-1 w-0 -mt-px">
         {% if page_obj.has_next %}
-          <a href="?page={{ page_obj.next_page_number }}" class="inline-flex items-center text-sm font-medium text-gray-500 hover:text-yellow-400">
+          <a href="?page={{ page_obj.next_page_number }}&{{ url_params|safe }}" class="inline-flex items-center text-sm font-medium text-gray-500 hover:text-yellow-400">
             {% trans "Next" %}
             <svg class="ml-3 size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
               <path fill-rule="evenodd" d="M2 10a.75.75 0 0 1 .75-.75h12.59l-2.1-1.95a.75.75 0 1 1 1.02-1.1l3.5 3.25a.75.75 0 0 1 0 1.1l-3.5 3.25a.75.75 0 1 1-1.02-1.1l2.1-1.95H2.75A.75.75 0 0 1 2 10Z" clip-rule="evenodd"/>
@@ -36,7 +36,7 @@
 
       <nav class="inline-flex gap-1{% if not show_pagination_count %} inset-y-0 right-0{% endif %} isolate" aria-label="Pagination">
         {% if page_obj.has_previous %}
-          <a href="?page={{ page_obj.previous_page_number }}" class="relative inline-flex items-center justify-center text-gray-500 rounded-full w-9 h-9 hover:bg-yellow-100 focus:z-20 focus:outline-offset-0">
+          <a href="?page={{ page_obj.previous_page_number }}&{{ url_params|safe }}" class="relative inline-flex items-center justify-center text-gray-500 rounded-full w-9 h-9 hover:bg-yellow-100 focus:z-20 focus:outline-offset-0">
             <span class="sr-only">
               {% trans "Previous" %}
             </span>
@@ -53,20 +53,20 @@
             <span class="relative inline-flex items-center justify-center text-sm font-semibold text-gray-500 rounded-full w-9 h-9 focus:outline-offset-0">&hellip;</span>
           {% elif page_obj.number == num %}
             <a
-              href="?page={{ num }}"
+              href="?page={{ num }}&{{ url_params|safe }}"
               aria-current="page"
               class="relative z-10 inline-flex items-center justify-center text-sm font-semibold text-gray-900 bg-yellow-400 rounded-full w-9 h-9 focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-400">
               {{ num }}
             </a>
           {% else %}
-            <a href="?page={{ num }}" class="relative inline-flex items-center justify-center text-sm font-semibold text-gray-500 rounded-full w-9 h-9 hover:bg-yellow-100 focus:z-20 focus:outline-offset-0">
+            <a href="?page={{ num }}&{{ url_params|safe }}" class="relative inline-flex items-center justify-center text-sm font-semibold text-gray-500 rounded-full w-9 h-9 hover:bg-yellow-100 focus:z-20 focus:outline-offset-0">
               {{ num }}
             </a>
           {% endif %}
         {% endfor %}
 
         {% if page_obj.has_next %}
-          <a href="?page={{ page_obj.next_page_number }}" class="relative inline-flex items-center justify-center text-gray-500 rounded-full w-9 h-9 hover:bg-yellow-100 focus:z-20 focus:outline-offset-0">
+          <a href="?page={{ page_obj.next_page_number }}&{{ url_params|safe }}" class="relative inline-flex items-center justify-center text-gray-500 rounded-full w-9 h-9 hover:bg-yellow-100 focus:z-20 focus:outline-offset-0">
             <span class="sr-only">
               {% trans "Next" %}
             </span>
