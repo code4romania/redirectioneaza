@@ -45,16 +45,20 @@
       {% endif %}
       <td class="px-1 py-4 whitespace-nowrap">
         {% if redirection.two_years %}
-          {% trans "Yes" %}
+          {% trans "Yes" as two_years_status_text %}
+          {% include "components/badge.html" with badge_title=two_years_status_text style="success" %}
         {% else %}
-          {% trans "No" %}
+          {% trans "No" as two_years_status_text %}
+          {% include "components/badge.html" with badge_title=two_years_status_text %}
         {% endif %}
       </td>
       <td class="px-1 py-4 whitespace-nowrap">
         {% if redirection.has_signed %}
-          {% trans "Signed" %}
+          {% trans "Signed" as signing_status_text %}
+          {% include "components/badge.html" with badge_title=signing_status_text style="success" %}
         {% else %}
-          {% trans "Unsigned" %}
+          {% trans "Unsigned" as signing_status_text %}
+          {% include "components/badge.html" with badge_title=signing_status_text style="error" %}
         {% endif %}
       </td>
 
