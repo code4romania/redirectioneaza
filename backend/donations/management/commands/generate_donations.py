@@ -35,12 +35,17 @@ class Command(BaseCommand):
         total_donations = options["total_donations"]
         target_org = options.get("org", None)
 
-        self.stdout.write(f"Generating {total_donations} donations")
-
-        if not target_org:
-            ngos = list(Ngo.active.all())
-        else:
+        if target_org:
             ngos = [Ngo.objects.get(id=target_org)]
+        else:
+            ngos = list(Ngo.active.all())
+
+        log_message = f"Generating {total_donations} donations"
+        if target_org:
+            log_message += f" for organization {ngos[0].pk}: '{ngos[0]}'"
+        else:
+            log_message += f" for {len(ngos)} organizations"
+        self.stdout.write(log_message)
 
         if not ngos:
             self.stdout.write(self.style.ERROR("No active organizations found"))
