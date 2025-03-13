@@ -31,8 +31,7 @@ class CommonSearchMixin(ListView):
         raise NotImplementedError("You must add your own logic for searching")
 
     def _search_query(self) -> str:
-        # TODO: We should clean up the search query (maybe remove trailing spaces and limit its max length)
-        return self.request.GET.get("q", "")
+        return self.request.GET.get("q", "").strip()[:100]
 
     def search(self, queryset: Optional[QuerySet[Any]] = None) -> QuerySet:
         query = self._search_query()
