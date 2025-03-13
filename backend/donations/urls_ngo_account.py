@@ -7,6 +7,7 @@ from donations.views.ngo_account import (
     ArchiveDownloadLinkView,
     NgoArchivesView,
     NgoCausesView,
+    RedirectionDownloadLinkView,
     NgoPresentationView,
     NgoRedirectionsView,
     UserSettingsView,
@@ -25,4 +26,5 @@ urlpatterns = [
     path("arhive/", NgoArchivesView.as_view(), name="archives"),
     path("setari-cont/", UserSettingsView.as_view(), name="settings-account"),
     path("arhiva/<job_id>/", ArchiveDownloadLinkView.as_view(), name="archive-download-link"),
+    path("formular/<form_id>/", RedirectionDownloadLinkView.as_view(), name="redirection-download-link"),
 ]
