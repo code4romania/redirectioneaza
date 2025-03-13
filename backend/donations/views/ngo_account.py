@@ -460,22 +460,22 @@ class NgoArchivesView(NgoBaseListView):
         user: User = self.request.user
         ngo: Ngo = user.ngo if user.ngo else None
 
-        redirections = Job.objects.none()
+        archives = Job.objects.none()
         if ngo:
-            redirections = (
+            archives = (
                 ngo.jobs.all()
                 .order_by("-date_created")
                 .values(
                     "pk",
                     "date_created",
+                    "number_of_donations",
                     "status",
                 )
             )
 
-        return redirections
+        return archives
 
 
-# TODO: Figure out how to optimize it and if it does anything else than redirecting to the zip file
 class ArchiveDownloadLinkView(BaseVisibleTemplateView):
     title = _("Download archive")
 
@@ -501,7 +501,7 @@ class ArchiveDownloadLinkView(BaseVisibleTemplateView):
 
             # Check that the requested job belongs to the current user
             try:
-                job = Job.objects.get(pk=job_id, ngo=user.ngo, owner=user)
+                job = Job.objects.get(pk=job_id, ngo=user.ngo)
             except Job.DoesNotExist:
                 raise Http404
 

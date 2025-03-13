@@ -199,8 +199,17 @@ class Donor(models.Model):
     def _set_address(self, address: dict):
         self.encrypted_address = self.encrypt_address(address)
 
-    def get_address(self) -> Dict:
-        return self.decrypt_address(self.encrypted_address)
+    def get_address(self, *, include_full: bool = False) -> Dict:
+        address: Dict = self.decrypt_address(self.encrypted_address)
+        if not include_full:
+            return address
+
+        full_address_prefix: str = f"jud. {self.county}, loc. {self.city}"
+        full_address_string: str = f"{full_address_prefix}, {self.address_to_string(address)}"
+
+        address["full_address"] = full_address_string
+
+        return address
 
     def get_address_string(self) -> str:
         address = self.get_address()

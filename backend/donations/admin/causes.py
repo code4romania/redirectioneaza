@@ -34,11 +34,11 @@ class CauseAdmin(ModelAdmin, CommonCauseFields):
     readonly_fields = CommonCauseFields.readonly_fields
 
     @action(description=_("Generate donations archive"))
-    def generate_donations_archive(self, request, queryset: QuerySet[Ngo]):
+    def generate_donations_archive(self, request, queryset: QuerySet[Cause]):
         ngo_names: List[str] = []
 
-        for ngo in queryset:
-            cause = ngo.causes.first()
+        for cause in queryset:
+            ngo = cause.ngo
             new_job: Job = Job(ngo=ngo, cause=cause, owner=request.user)
             new_job.save()
 

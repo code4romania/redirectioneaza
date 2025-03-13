@@ -5,7 +5,7 @@ from django.core.management import BaseCommand
 from django_q.models import Schedule
 from django_q.tasks import async_task
 
-from donations.views.donations_download import download_donations_job
+from donations.views.download_donations.main import download_donations_job
 
 logger = logging.getLogger(__name__)
 
@@ -62,4 +62,4 @@ class Command(BaseCommand):
         except Schedule.DoesNotExist:
             pass
 
-        async_task("donations.views.donations_download.download_donations_job", job_id)
+        async_task("donations.views.download_donations.main.download_donations_job", job_id)

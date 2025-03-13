@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from users.models import User
+
 from .ngos import Cause, Ngo
 
 
@@ -55,6 +56,7 @@ class Job(models.Model):
         db_index=True,
     )
 
+    number_of_donations = models.IntegerField(verbose_name=_("donations count"), default=-1)
     zip = models.FileField(verbose_name=_("ZIP"), upload_to="donation-zips/%Y/%m/%d/", blank=True, null=True)
 
     date_created = models.DateTimeField(verbose_name=_("date created"), db_index=True, auto_now_add=True)
