@@ -79,6 +79,7 @@ class Command(BaseCommand):
                     random.randint(0, len(FORM_COUNTIES_WITH_SECTORS_CHOICES) - 1)
                 ][1],
                 income_type="wage",
+                is_anonymous=random.choice([True, False]),
                 has_signed=random.choice([True, False]),
                 two_years=random.choice([True, False]),
             )
