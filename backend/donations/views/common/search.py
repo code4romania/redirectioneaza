@@ -4,6 +4,7 @@ from django.conf import settings
 from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector, TrigramSimilarity
 from django.db.models import Q, QuerySet
 from django.db.models.functions import Greatest
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import ListView
 
 from donations.models.donors import Donor
@@ -31,7 +32,20 @@ class CommonSearchMixin(ListView):
         raise NotImplementedError("You must add your own logic for searching")
 
     def _search_query(self) -> str:
-        return self.request.GET.get("q", "").strip()[:100]
+        search_string = self.request.GET.get("q", "").strip()[:100]
+
+        if len(search_string) < 3:
+            return ""
+
+        return search_string
+
+    def _search_placeholder(self) -> str:
+        search_string = self.request.GET.get("q", "").strip()
+
+        if len(search_string) < 3:
+            return _("The search query must be at least 3 characters long")
+
+        return ""
 
     def search(self, queryset: Optional[QuerySet[Any]] = None) -> QuerySet:
         query = self._search_query()
