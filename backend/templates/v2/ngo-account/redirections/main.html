@@ -106,9 +106,11 @@
 
   <div class="flex flex-row-reverse">
     <div class="basis-80">
-      <form action="" method="GET">
-        {% trans "Search for donors" as input_title %}
-        {% include "components/input/search-box.html" with input_value=search_query %}
+O      <form action="" method="GET">
+        {% trans "Search for donors" as search_title %}
+        <div class="py-4">
+          {% include "components/input/search-box.html" with input_id="redirections_search" %}
+        </div>
       </form>
     </div>
   </div>

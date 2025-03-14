@@ -24,7 +24,10 @@
   <section class="container grid gap-12">
     <!-- Search and filters -->
     <form action="" method="GET">
-      {% include "public/components/ngo-search.html" with current_search=search_query %}
+      {% trans "Search for an NGO by its name or CUI/CIF" as search_title %}
+      <div class="py-8">
+        {% include "components/input/search-box.html" with input_id="ngo_search" %}
+      </div>
     </form>
 
     <div class="grid gap-x-8 gap-y-16 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-10 xl:gap-y-20">
