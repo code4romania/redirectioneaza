@@ -1,33 +1,49 @@
 {% load i18n %}
 
-<div>
+<label
+  for="searchBox_{{ input_id }}"
+  class="block sr-only">
+  {{ search_title }}
+</label>
 
-  {% if not input_title %}
-    {% trans "Search" as input_title %}
-  {% endif %}
+<div
+  x-data="{ currentSearch: '{{ search_query }}' }">
 
-  <label for="searchBox_{{ input_id }}" class="block sr-only">
-    {{ input_title }}
-  </label>
+  <label class="relative grid grid-cols-1">
 
-  <div class="mt-2">
-    <div class="flex rounded-md bg-white outline outline-1 -outline-offset-1 outline-gray-300 focus-within:outline focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-amber-600">
-      <div class="px-1.5 py-1.5 text-gray-400">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
-          <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z" clip-rule="evenodd"/>
+    <span class="sr-only">{{ search_title }}</span>
+
+    <input
+      x-model="currentSearch"
+      id="searchBox_{{ input_id }}"
+      type="text"
+      name="q"
+      class="border-none col-start-1 row-start-1 block w-full rounded-full bg-white py-1.5 pl-10 pr-3 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-300 sm:pl-9 sm:text-sm/6 focus:outline-none focus:ring-0"
+      placeholder="{% if search_placeholder %}{{ search_placeholder }}{% else %}{{ search_title }}{% endif %}"
+      title="{{ search_title }}"
+      maxlength="100"
+      autocomplete="off"
+      value="{{ search_query }}">
+
+    <svg class="self-center col-start-1 row-start-1 ml-3 text-gray-400 pointer-events-none size-5 sm:size-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+      <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z" clip-rule="evenodd"/>
+    </svg>
+
+
+    <span class="self-center justify-self-end absolute inset-y-0 right-0 pr-3 flex items-center">
+      <a
+        x-cloak
+        x-show="currentSearch.length > 0"
+        href="?"
+        aria-label="{% trans 'Clear search' %}"
+        type="button"
+        class="w-full items-center rounded-xl bg-white text-gray-400 hover:bg-gray-100 hover:text-gray-600 focus:bg-gray-100 focus:text-gray-800 focus:outline-none">
+        <svg class="size-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+          <path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z"/>
         </svg>
-      </div>
+      </a>
+    </span>
 
-      <input
-        id="searchBox_{{ input_id }}"
-        type="text"
-        name="q"
-        autocomplete="off"
-        maxlength="100"
-        placeholder="{{ input_title }}"
-        value="{{ input_value }}"
-        class="block min-w-0 grow px-3 py-1.5 text-base text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-0 sm:text-sm/6 border-0">
-    </div>
-  </div>
+  </label>
 
 </div>

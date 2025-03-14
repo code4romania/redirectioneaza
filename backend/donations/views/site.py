@@ -8,15 +8,17 @@ from django.conf import settings
 from django.db.models import QuerySet
 from django.http import HttpResponse, QueryDict
 from django.utils import timezone
-from django.utils.translation import gettext_lazy as _, ngettext_lazy
+from django.utils.translation import gettext_lazy as _
+from django.utils.translation import ngettext_lazy
 from django.views.generic import TemplateView
 
 from partners.models import Partner
 from redirectioneaza.common.cache import cache_decorator
+
+from ..models.donors import Donor
+from ..models.ngos import FRONTPAGE_NGOS_KEY, FRONTPAGE_STATS_KEY, Cause
 from .base import BaseVisibleTemplateView
 from .common.search import CauseSearchMixin, NgoCauseMixedSearchMixin
-from ..models.donors import Donor
-from ..models.ngos import Cause, FRONTPAGE_NGOS_KEY, FRONTPAGE_STATS_KEY
 
 logger = logging.getLogger(__name__)
 
@@ -161,6 +163,10 @@ class NgoListHandler(NgoCauseMixedSearchMixin):
                 "url_search_query": query_dict.urlencode(),
             }
         )
+
+        if search_placeholder := self._search_placeholder():
+            context["search_placeholder"] = search_placeholder
+
         return context
 
 

@@ -401,6 +401,9 @@ class NgoRedirectionsView(NgoBaseListView, DonorSearchMixin):
             }
         )
 
+        if search_placeholder := self._search_placeholder():
+            context["search_placeholder"] = search_placeholder
+
         context.update(get_ngo_archive_download_status(ngo))
 
         return context
