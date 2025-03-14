@@ -42,7 +42,7 @@ class CommonSearchMixin(ListView):
     def _search_placeholder(self) -> str:
         search_string = self.request.GET.get("q", "").strip()
 
-        if len(search_string) < 3:
+        if 0 < len(search_string) < 3:
             return _("The search query must be at least 3 characters long")
 
         return ""
