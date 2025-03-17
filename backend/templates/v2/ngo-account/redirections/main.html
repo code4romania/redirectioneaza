@@ -104,7 +104,7 @@
 
     <hr class="w-full border-gray-200">
 
-    <div class="flex flex-row justify-end gap-2 mt-4">
+    <div class="flex flex-row justify-end gap-4">
 
       <div class="basis-80">
         <form action="" method="GET">
@@ -118,7 +118,8 @@
       <button
         type="button"
         x-on:click="filtersDisplay = !filtersDisplay"
-        class="flex items-center rounded-md px-1.5 bg-white text-base font-medium outline outline-1 -outline-offset-1 outline-gray-300 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
+        class="flex gap-2 items-center rounded-md px-2 my-4  text-base font-medium outline outline-1 -outline-offset-1 outline-gray-300 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
+        :class="filtersDisplay ? 'bg-amber-200': 'bg-white'"
       >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
           <path
