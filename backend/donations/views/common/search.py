@@ -51,6 +51,8 @@ class CommonSearchMixin(ListView):
         query = self._search_query()
 
         if not queryset:
+            if not self.queryset:
+                return queryset.none()
             queryset = self.queryset
 
         if not query or len(query) < settings.SEARCH_QUERY_MIN_LENGTH:
