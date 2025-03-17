@@ -1,6 +1,7 @@
 import logging
 from typing import Dict, List
 
+from django.conf import settings
 from django.core.files import File
 from django.core.management import call_command
 from django.http import Http404, JsonResponse
@@ -8,6 +9,10 @@ from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic import TemplateView
 
+from ..models.jobs import Job, JobStatusChoices
+from ..models.ngos import Cause, Ngo
+from ..pdf import create_cause_pdf
+from ..workers.update_organization import update_organization
 from .base import BaseTemplateView
 from .common.misc import (
     get_cause_response_item,
@@ -16,10 +21,6 @@ from .common.misc import (
     get_was_last_job_recent,
 )
 from .common.search import NgoCauseMixedSearchMixin
-from ..models.jobs import Job, JobStatusChoices
-from ..models.ngos import Cause, Ngo
-from ..pdf import create_cause_pdf
-from ..workers.update_organization import update_organization
 
 logger = logging.getLogger(__name__)
 
@@ -110,7 +111,10 @@ class DownloadNgoForms(BaseTemplateView):
         new_job.save()
 
         try:
-            call_command("download_donations", new_job.id)
+            if settings.FORMS_DOWNLOAD_METHOD == "async":
+                call_command("download_donations", new_job.id)
+            else:
+                call_command("download_donations", new_job.id, "--run")
         except Exception as e:
             logging.error(e)
 

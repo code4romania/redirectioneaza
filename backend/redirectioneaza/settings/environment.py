@@ -16,12 +16,15 @@ env = environ.Env(
     SESSION_COOKIE_SECURE=(bool, True),
     LOG_LEVEL=(str, "WARNING"),
     ENABLE_CACHE=(bool, True),
-    ENABLE_FORMS_DOWNLOAD=(bool, True),
-    TIMEDELTA_FORMS_DOWNLOAD_MINUTES=(int, 6 * HOUR),
-    TIMEDELTA_DONATIONS_LIMIT_DOWNLOAD_DAYS=(int, 31),
     IS_CONTAINERIZED=(bool, False),
     RECAPTCHA_ENABLED=(bool, True),
     FORCE_PARTNER=(bool, False),
+    # Forms Download
+    FORMS_DOWNLOAD_METHOD=(str, "async"),
+    ENABLE_FORMS_DOWNLOAD=(bool, True),
+    TIMEDELTA_FORMS_DOWNLOAD_MINUTES=(int, 6 * HOUR),
+    TIMEDELTA_DONATIONS_LIMIT_DOWNLOAD_DAYS=(int, 31),
+    DONATIONS_XML_LIMIT_PER_FILE=(int, 100),
     # proxy headers
     USE_PROXY_FORWARDED_HOST=(bool, False),
     PROXY_SSL_HEADER=(str, "HTTP_CLOUDFRONT_FORWARDED_PROTO"),
@@ -39,7 +42,6 @@ env = environ.Env(
     DONATIONS_LIMIT_MONTH=(int, 5),
     DONATIONS_LIMIT_YEAR=(int, 2016),
     DONATIONS_LIMIT_TO_CURRENT_YEAR=(bool, True),
-    DONATIONS_XML_LIMIT_PER_FILE=(int, 100),
     # security settings
     ALLOWED_HOSTS=(list, ["*"]),
     CORS_ALLOWED_ORIGINS=(list, []),

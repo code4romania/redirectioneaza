@@ -17,7 +17,6 @@ from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-from localflavor.ro.ro_counties import COUNTIES_CHOICES
 
 from donations.common.validation.phone_number import clean_phone_number
 from donations.models.donors import Donor
@@ -25,11 +24,10 @@ from donations.models.jobs import Job, JobDownloadError, JobStatusChoices
 from donations.models.ngos import Cause
 from donations.views.download_donations.build_xml import add_xml_to_zip
 from redirectioneaza.common.app_url import build_uri
-from redirectioneaza.common.clean import duration_flag_to_int
+from redirectioneaza.common.clean import duration_flag_to_int, normalize_text_alnum
 from redirectioneaza.common.messaging import extend_email_context, send_email
 
 logger = logging.getLogger(__name__)
-COUNTIES_CHOICES_REVERSED = {name: code for code, name in COUNTIES_CHOICES}
 
 
 def download_donations_job(job_id: int = 0):
@@ -148,6 +146,11 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], cause: Cau
                         cnp_idx[donation_cnp]["has_duplicate"] = True
 
                     detailed_address: Dict = donation_object.get_address(include_full=True)
+                    county = (
+                        donation_object.county
+                        if len(str(donation_object.county)) > 1
+                        else f"Sector {donation_object.county}"
+                    )
                     donations_data.append(
                         {
                             "last_name": donation_object.l_name,
@@ -157,7 +160,7 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], cause: Cau
                             "email": donation_object.email,
                             "cnp": donation_cnp,
                             "duplicate": duplicate_cnp_idx,
-                            "county": donation_object.county,
+                            "county": county,
                             "city": donation_object.city,
                             "full_address": detailed_address.get("full_address", ""),
                             "str": detailed_address.get("str", ""),
@@ -315,7 +318,12 @@ def _generate_donations_by_county(cnp_idx, cause: Cause, ngo_donations, zip_64_f
     xml_count: int = 1
     for current_county, current_county_count in number_of_donations_by_county:
         # if there are more than donations_limit donations for a county, split them into multiple files
-        county_code: str = COUNTIES_CHOICES_REVERSED.get(current_county, f"S{current_county}").lower().replace(" ", "_")
+        clean_county_name = normalize_text_alnum(current_county)
+        county_code = settings.COUNTIES_CHOICES_WITH_SECTORS_REVERSED_CLEAN.get(
+            clean_county_name, f"sector{clean_county_name}"
+        )
+        county_code = county_code.lower().replace(" ", "_")
+
         if current_county_count <= donations_limit:
             xml_name: str = f"d230_{county_code}.xml"
 

@@ -1,6 +1,7 @@
 import logging
 from typing import List
 
+from django.conf import settings
 from django.contrib import admin
 from django.core.management import call_command
 from django.db.models import QuerySet
@@ -43,7 +44,10 @@ class CauseAdmin(ModelAdmin, CommonCauseFields):
             new_job.save()
 
             try:
-                call_command("download_donations", new_job.id)
+                if settings.FORMS_DOWNLOAD_METHOD == "async":
+                    call_command("download_donations", new_job.id)
+                else:
+                    call_command("download_donations", new_job.id, "--run")
 
                 ngo_names.append(f"{ngo.id} - {ngo.name}")
             except Exception as e:

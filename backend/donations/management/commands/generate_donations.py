@@ -2,6 +2,7 @@ import random
 import string
 from typing import List
 
+from django.conf import settings
 from django.core.files import File
 from django.core.management import BaseCommand
 from faker import Faker
@@ -9,7 +10,6 @@ from faker import Faker
 from donations.models.donors import Donor
 from donations.models.ngos import Ngo
 from donations.pdf import create_full_pdf
-from redirectioneaza.settings import FORM_COUNTIES_WITH_SECTORS_CHOICES
 
 fake = Faker("ro_RO")
 
@@ -77,9 +77,7 @@ class Command(BaseCommand):
                 email=fake.email(),
                 phone=fake.phone_number(),
                 city=fake.city(),
-                county=FORM_COUNTIES_WITH_SECTORS_CHOICES[
-                    random.randint(0, len(FORM_COUNTIES_WITH_SECTORS_CHOICES) - 1)
-                ][1],
+                county=random.choice(settings.COUNTIES_WITH_SECTORS_LIST + list(range(1, 7))),
                 income_type="wage",
                 is_anonymous=random.choice([True, False]),
                 has_signed=random.choice([True, False]),

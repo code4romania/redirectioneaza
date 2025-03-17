@@ -141,10 +141,13 @@ def _add_donor_data(start_y, c: Canvas, donor: Donor):
 
     # județ
     county = donor.county
-    if len(county) <= 12:
+    if len(str(county)) <= 12:
         c.setFontSize(12)
     else:
         c.setFontSize(8)
+
+    if len(str(county)) == 1:
+        county = f"Sector {county}"
 
     c.drawString(donor_block_x + 185, fourth_row_y, county)
     c.setFontSize(default_font_size)

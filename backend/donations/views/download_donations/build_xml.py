@@ -1,5 +1,4 @@
 import os
-import unicodedata
 from datetime import datetime
 from typing import Any, Dict
 from xml.etree.ElementTree import Element, ElementTree
@@ -19,13 +18,12 @@ from redirectioneaza.common.clean import (
     clean_text_email,
     clean_text_numbers,
     duration_flag_to_int,
+    unicode_to_ascii,
 )
 
 XMLNS_DETAILS = {"xmlns:xfa": "http://www.xfa.org/schema/xfa-data/1.0/", "xfa:dataNode": "dataGroup"}
 ANAF_FORM_VERSION = "B230_A1.0.9"
 
-# ANAF has a custom list of characters allowed in the XML: [A-Z, a-z, 0-9, ",", ".", "-", " "]
-# It includes the "&" but it's not consistent, so we're not including it here
 CLEAN_TEXT_CHOICES = {
     "alphabet": lambda text: clean_text_alphabet(text),
     "alphabets": lambda text: clean_text_alphabet(text, allow_spaces=True),
@@ -87,7 +85,7 @@ def _new_element(tag: str, text: str = None, clean: str = "") -> Element:
         text = text[:250]
 
         if clean:
-            text = unicodedata.normalize("NFKD", text).strip()
+            text = unicode_to_ascii(text.strip())
             text = CLEAN_TEXT_CHOICES.get(clean)(text)
             text = " ".join(text.split())
             text = text.upper()

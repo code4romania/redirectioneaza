@@ -7,6 +7,7 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from localflavor.ro.ro_counties import COUNTIES_CHOICES
 
+from ..common.clean import normalize_text_alnum
 from .base import DEBUG
 from .environment import env
 
@@ -29,6 +30,7 @@ DONATIONS_LIMIT = datetime(
 TIMEDELTA_DONATIONS_LIMIT_DOWNLOAD_DAYS = env.int("TIMEDELTA_DONATIONS_LIMIT_DOWNLOAD_DAYS")
 
 DONATIONS_XML_LIMIT_PER_FILE = env.int("DONATIONS_XML_LIMIT_PER_FILE")
+FORMS_DOWNLOAD_METHOD = env.str("FORMS_DOWNLOAD_METHOD")
 
 MONTHS = [
     {
@@ -123,20 +125,26 @@ FORM_COUNTIES_NATIONAL.insert(0, "Național")
 
 FORM_COUNTIES_NATIONAL_CHOICES = [(county, county) for county in FORM_COUNTIES_NATIONAL]
 
-FORM_COUNTIES_WITH_SECTORS = deepcopy(LIST_OF_COUNTIES)
-if "București" in FORM_COUNTIES_WITH_SECTORS:
-    FORM_COUNTIES_WITH_SECTORS.remove("București")
-
 BUCHAREST_SECTORS = ["Sector 1", "Sector 2", "Sector 3", "Sector 4", "Sector 5", "Sector 6"]
 SECTORS_ITEM = {
     "title": "București",
     "values": BUCHAREST_SECTORS,
 }
 
-FORM_COUNTIES_WITH_SECTORS_CHOICES = [(county, county) for county in (BUCHAREST_SECTORS + FORM_COUNTIES_WITH_SECTORS)]
+FORM_COUNTIES_WITHOUT_BUCHAREST = deepcopy(LIST_OF_COUNTIES)
+if "București" in FORM_COUNTIES_WITHOUT_BUCHAREST:
+    FORM_COUNTIES_WITHOUT_BUCHAREST.remove("București")
 
-if SECTORS_ITEM not in FORM_COUNTIES_WITH_SECTORS:
-    FORM_COUNTIES_WITH_SECTORS.insert(0, SECTORS_ITEM)
+COUNTIES_WITH_SECTORS_LIST = BUCHAREST_SECTORS + FORM_COUNTIES_WITHOUT_BUCHAREST
+FORM_COUNTIES_WITH_SECTORS_CHOICES = [(county, county) for county in COUNTIES_WITH_SECTORS_LIST]
+
+FORM_COUNTIES_WITH_SECTORS = [SECTORS_ITEM] + FORM_COUNTIES_WITHOUT_BUCHAREST
+
+COUNTIES_CHOICES_REVERSED = {name: code for code, name in COUNTIES_CHOICES}
+
+COUNTIES_CHOICES_WITH_SECTORS = tuple([(sector[0]+sector[-1], sector) for sector in BUCHAREST_SECTORS]) + COUNTIES_CHOICES
+COUNTIES_CHOICES_WITH_SECTORS_REVERSED = {name: code for code, name in COUNTIES_CHOICES_WITH_SECTORS}
+COUNTIES_CHOICES_WITH_SECTORS_REVERSED_CLEAN = {normalize_text_alnum(name): code for code, name in COUNTIES_CHOICES_WITH_SECTORS}
 
 # Encryption settings
 ENCRYPT_KEY = env.str("ENCRYPT_KEY", "%INVALID%")
