@@ -6,7 +6,8 @@
 
   <div
     x-data="combobox({{ options }})"
-    @click.away="close"
+    @click.outside="close"
+    @focusout="close"
     class="relative">
 
 
@@ -18,6 +19,8 @@
       x-transition:leave="transition ease-in duration-100"
       x-transition:leave-start="opacity-100"
       x-transition:leave-end="opacity-0"
+      @mousedown="isOpen = true"
+      @focus="isOpen = true"
       @keydown.esc="close"
       class="block w-full rounded-md bg-white py-1.5 pl-3 pr-12 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-600 sm:text-sm/6"
     >
