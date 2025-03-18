@@ -206,7 +206,8 @@ class NgoPresentationView(NgoBaseTemplateView):
             ngo.phone = form.cleaned_data["contact_phone"]
             ngo.email = form.cleaned_data["contact_email"]
 
-            ngo.logo = form.cleaned_data["logo"]
+            if form.cleaned_data["logo"]:
+                ngo.logo = form.cleaned_data["logo"]
 
             ngo.website = form.cleaned_data["website"]
             ngo.address = form.cleaned_data["address"]
@@ -228,9 +229,10 @@ class NgoPresentationView(NgoBaseTemplateView):
         elif must_refresh_prefilled_form:
             async_task(delete_prefilled_form, ngo.id)
 
+        # XXX: [MULTI-FORM] remove these once we have multiple forms
         if ngo.causes.exists():
             cause = ngo.causes.first()
-            if not cause.display_image and ngo.logo:
+            if cause.display_image != ngo.logo:
                 cause.display_image = ngo.logo
                 cause.save()
 
