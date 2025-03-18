@@ -19,7 +19,9 @@
           {% with submit_on_select=form_name %}
 
             {% for filter in filters %}
-              {% include "components/input/combobox.html" with input_id=filter.id input_title=filter.title input_name=filter.key options=filter.options input_value=filters_active|get_item:filter.key %}
+              {% if filter.options %}
+                {% include "components/input/combobox.html" with input_id=filter.id input_title=filter.title input_name=filter.key options=filter.options input_value=filters_active|get_item:filter.key %}
+              {% endif %}
             {% endfor %}
 
           {% endwith %}
