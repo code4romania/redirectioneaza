@@ -6,12 +6,13 @@
 
   <div
     x-data="combobox"
-    x-init="{% if options %}initOptions({{ options }}){% elif endpoint %}fetchOptions('{{ endpoint }}'){% endif %}"
+    x-init="{% if options %}initOptions({{ options }}{% elif endpoint %}fetchOptions('{{ endpoint }}'{% endif %},'{{ input_id }}')"
     @click.away="closeOptionsList()"
     class="relative">
 
     <input
       id="{{ input_id }}"
+      name="{{ input_name }}"
       title="{{ input_title }}"
       placeholder="{{ input_title }}"
       x-model="filter"

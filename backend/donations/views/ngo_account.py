@@ -390,17 +390,43 @@ class NgoRedirectionsView(NgoBaseListView, DonorSearchMixin):
                 "title": self.title,
                 "search_query": search_query,
                 "url_search_query": query_dict.urlencode(),
-                "filters": {
-                    "counties_options": counties_options,
-                    "localities_options": sorted(ngo.donors_localities()),
-                    "period_options": [
-                        {"title": _("One year"), "value": "1"},
-                        {"title": _("Two years"), "value": "2"},
-                    ],
-                    "status_options": [
-                        {"title": _("Signed"), "value": "signed"},
-                        {"title": _("Not signed"), "value": "unsigned"},
-                    ],
+                "filters": [
+                    {
+                        "id": "filter_dropdown_county",
+                        "key": "c",
+                        "title": _("County"),
+                        "options": counties_options,
+                    },
+                    {
+                        "id": "filter_dropdown_locality",
+                        "key": "l",
+                        "title": _("Locality"),
+                        "options": sorted(ngo.donors_localities()),
+                    },
+                    {
+                        "id": "filter_dropdown_period",
+                        "key": "p",
+                        "title": _("Period"),
+                        "options": [
+                            {"title": _("One year"), "value": "1"},
+                            {"title": _("Two years"), "value": "2"},
+                        ],
+                    },
+                    {
+                        "id": "filter_dropdown_status",
+                        "key": "s",
+                        "title": _("Status"),
+                        "options": [
+                            {"title": _("Signed"), "value": "signed"},
+                            {"title": _("Not signed"), "value": "unsigned"},
+                        ],
+                    },
+                ],
+                "filters_active": {
+                    "c": "0",
+                    "l": "1",
+                    "p": "2",
+                    "s": "3",
                 },
             }
         )

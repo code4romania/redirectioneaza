@@ -5,17 +5,28 @@ export default function () {
     selected: null,
     focusedOptionIndex: null,
     options: null,
-    initOptions(options) {
+    inputId: null,
+    // submitOnClose: null,
+    initOptions(options, inputId) {
       this.options = this.normalizeOptions(options);
+      this.inputId = inputId;
+      // this.initSubmission(submitOnSelect);
     },
-    fetchOptions(endpoint) {
+    fetchOptions(endpoint, inputId) {
       const url = new URL(window.location.origin + endpoint);
       let options = null;
       fetch(url)
         .then(response => response.json())
         .then(data => options = data);
       this.options = this.normalizeOptions(options);
+      this.inputId = inputId;
+      // this.initSubmission(submitOnSelect);
     },
+    // initSubmission(submitOnClose) {
+    //   if (submitOnClose.length > 0) {
+    //     this.submitOnClose = submitOnClose;
+    //   }
+    // },
     normalizeString(string) {
       return string.normalize('NFKD').replace(/[^\w\s.-_\/]/g, '').toLowerCase();
     },
@@ -44,6 +55,14 @@ export default function () {
       this.show = false;
       this.filter = this.selectedOption();
       this.focusedOptionIndex = this.selected ? this.focusedOptionIndex : null;
+      console.log("AAAAAAAAA");
+      console.log(this.filter);
+      if (this.inputId && this.filter) {
+        document.getElementById(this.inputId).value = this.filter;
+      }
+      // if (this.submitOnClose && this.filter) {
+      //   document.getElementById(this.submitOnClose).submit();
+      // }
     },
     openOptionsList() {
       this.show = true;

@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n dictionary_management %}
 
 <section aria-labelledby="filter-heading" class="grid items-center border-y border-gray-200">
   <h2 id="filter-heading" class="sr-only">
@@ -8,28 +8,24 @@
   <div class="border-gray-200 py-4" id="disclosure-1">
     <div class="mx-auto gap-4 text-sm sm:px-6 md:gap-x-6 lg:px-8">
 
-        <fieldset class="grid auto-rows-min grid-cols-2 gap-10 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
-          <legend class="block font-medium sr-only">
-            {% trans "Filters" %}
-          </legend>
+      <fieldset
+          class="grid auto-rows-min grid-cols-2 gap-10 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
 
-          {% with sr_only_label=True %}
+        <legend class="block font-medium sr-only">
+          {% trans "Filters" %}
+        </legend>
 
-            {% trans "County" as input_title %}
-            {% include "components/input/combobox.html" with input_id="filter_dropdown_county" options=filters.counties_options %}
+        {% with sr_only_label=True %}
+          {% with submit_on_select=form_name %}
 
-            {% trans "Locality" as input_title %}
-            {% include "components/input/combobox.html" with input_id="filter_dropdown_locality" options=filters.localities_options %}
-
-            {% trans "Period" as input_title %}
-            {% include "components/input/combobox.html" with input_id="filter_dropdown_period" options=filters.period_options %}
-
-            {% trans "Status" as input_title %}
-            {% include "components/input/combobox.html" with input_id="filter_dropdown_status" options=filters.status_options %}
+            {% for filter in filters %}
+              {% include "components/input/combobox.html" with input_id=filter.id input_title=filter.title input_name=filter.key options=filter.options input_value=filters_active|get_item:filter.key %}
+            {% endfor %}
 
           {% endwith %}
+        {% endwith %}
 
-        </fieldset>
+      </fieldset>
 
     </div>
   </div>
