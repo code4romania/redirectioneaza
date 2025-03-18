@@ -6,14 +6,15 @@ from django.utils.safestring import mark_safe
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 
-from donations.models.ngos import Cause, Ngo
+from donations.models.ngos import Ngo
 from redirectioneaza.common.cache import cache_decorator
+
+from ...models.donors import Donor
 from .helpers import (
     generate_donations_per_month_chart,
     get_current_year_range,
     get_encoded_current_year_range,
 )
-from ...models.donors import Donor
 
 ADMIN_DASHBOARD_CACHE_KEY = "ADMIN_DASHBOARD"
 ADMIN_DASHBOARD_STATS_CACHE_KEY = "ADMIN_DASHBOARD_STATS"
@@ -65,20 +66,18 @@ def _get_header_stats(today) -> List[List[Dict[str, Union[str, int]]]]:
                 "footer": _create_stat_link(url=reverse("admin:donations_donor_changelist"), text=_("View all")),
             },
             {
-                "title": _("Causes registered"),
-                "icon": "foundation",
-                "metric": Cause.active.count(),
-                "footer": _create_stat_link(
-                    url=f'{reverse("admin:donations_ngo_changelist")}?is_active=1', text=_("View all")
-                ),
-            },
-            {
                 "title": _("NGOs registered"),
                 "icon": "foundation",
                 "metric": Ngo.active.count(),
                 "footer": _create_stat_link(
                     url=f'{reverse("admin:donations_ngo_changelist")}?is_active=1', text=_("View all")
                 ),
+            },
+            {
+                "title": _("Functioning NGOs"),
+                "icon": "foundation",
+                "metric": Ngo.with_forms_this_year.count(),
+                "footer": _create_stat_link(url=f'{reverse("admin:donations_ngo_changelist")}', text=_("View all")),
             },
             {
                 "title": _("NGOs from NGO Hub"),

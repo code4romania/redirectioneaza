@@ -17,6 +17,7 @@ from django.utils.translation import gettext_lazy as _
 from donations.common.models_hashing import hash_id_secret
 from donations.common.validation.clean_slug import clean_slug
 from donations.common.validation.registration_number import REGISTRATION_NUMBER_REGEX_WITH_VAT, ngo_id_number_validator
+from donations.models.donors import Donor
 
 ALL_NGOS_CACHE_KEY = "ALL_NGOS"
 ALL_NGO_IDS_CACHE_KEY = "ALL_NGO_IDS"
@@ -142,6 +143,12 @@ class NgoHubManager(models.Manager):
 class NgoWithFormsManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().filter(is_active=True, is_accepting_forms=True)
+
+
+class NgoWithFormsThisYearManager(models.Manager):
+    def get_queryset(self):
+        donations_ngos = Donor.objects.filter(date_created__year=timezone.now().year).values("ngo_id").distinct()
+        return super().get_queryset().filter(pk__in=donations_ngos)
 
 
 class Ngo(models.Model):
@@ -273,7 +280,7 @@ class Ngo(models.Model):
     objects = models.Manager()
     active = NgoActiveManager()
     ngo_hub = NgoHubManager()
-    with_forms = NgoWithFormsManager()
+    with_forms_this_year = NgoWithFormsThisYearManager()
 
     def save(self, *args, **kwargs):
         is_new = self.id is None
