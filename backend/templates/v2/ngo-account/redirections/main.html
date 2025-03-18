@@ -110,6 +110,7 @@
         <div class="flex flex-row justify-end gap-4">
 
           <div class="basis-80">
+            <button type="submit" hidden id="filter-submit">Submit</button>
             {% trans "Search for donors" as search_title %}
             <div class="py-4">
               {% include "components/input/search-box.html" with input_id="redirections_search" box_style="rounded-md" %}
@@ -119,7 +120,7 @@
           <button
             type="button"
             x-on:click="filtersDisplay = !filtersDisplay"
-            class="flex gap-2 items-center rounded-md px-2 my-4  text-base font-medium outline outline-1 -outline-offset-1 outline-gray-300 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
+            class="flex items-center gap-2 px-2 my-4 text-base font-medium rounded-md outline outline-1 -outline-offset-1 outline-gray-300 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
             :class="filtersDisplay ? 'bg-amber-200': 'bg-white'"
           >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
