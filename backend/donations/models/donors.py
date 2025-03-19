@@ -162,6 +162,10 @@ class Donor(models.Model):
     def __str__(self):
         return f"{self.cause} {self.date_created} {self.email}"
 
+    def delete(self, using=None, keep_parents=False):
+        self.pdf_file.delete()
+        super().delete(using=using, keep_parents=keep_parents)
+
     def set_cnp(self, cnp: str):
         self.encrypted_cnp = self.encrypt_cnp(cnp)
 
