@@ -24,7 +24,7 @@ def repair_addresses_task(batch_size: int = 1000) -> None:
 
 
 def repair_address_batch(ids: list) -> None:
-    target_donors: QuerySet[Donor] = Donor.objects.filter(pk__in=ids).order_by("pk")
+    target_donors: QuerySet[Donor] = Donor.available.filter(pk__in=ids).order_by("pk")
 
     logger.info("Found %s donors with addresses to repair", target_donors.count())
 

@@ -8,7 +8,6 @@ from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import ngettext_lazy
-from django_q.tasks import async_task, result
 from unfold.admin import ModelAdmin
 from unfold.contrib.filters.admin import TextFilter
 from unfold.decorators import action
@@ -16,39 +15,37 @@ from unfold.decorators import action
 from donations.models.donors import Donor
 from redirectioneaza.common.admin import HasNgoFilter
 from redirectioneaza.common.app_url import build_uri
-from redirectioneaza.common.messaging import send_email
+from redirectioneaza.common.messaging import extend_email_context, send_email
 
 logger = logging.getLogger(__name__)
 
-REMOVE_DONATIONS_GROUP_NAME = "REMOVE_DONATIONS"
-REMOVE_DONATIONS_SUCCESS_MESSAGE = "success"
-REMOVE_DONATIONS_FAILURE_MESSAGE = "failure"
+REMOVE_DONATIONS_SUCCESS_FLAG = "success"
+REMOVE_DONATIONS_FAILURE_FLAG = "failure"
 
 
-def delete_donor(donor_pk: int):
+def soft_delete_donor(donor_pk: int):
     logger.info(f"Deleting donor {donor_pk}")
     try:
-        donor = Donor.objects.get(pk=donor_pk)
+        donor = Donor.available.get(pk=donor_pk)
+        donor.remove()
 
-        donor_email = donor.email
-        cause = donor.cause
-
-        donor.delete()
+        mail_context = {
+            "cause_name": donor.cause.name,
+            "action_url": build_uri(reverse("twopercent", kwargs={"ngo_url": donor.cause.slug})),
+        }
+        mail_context.update(extend_email_context())
 
         send_email(
             subject=_("Donation removal"),
-            to_emails=[donor_email],
+            to_emails=[donor.email],
             text_template="emails/donor/removed-redirection/main.txt",
             html_template="emails/donor/removed-redirection/main.html",
-            context={
-                "cause_name": cause.name,
-                "action_url": build_uri(reverse("twopercent", kwargs={"ngo_url": cause.slug})),
-            },
+            context=mail_context,
         )
-        return REMOVE_DONATIONS_SUCCESS_MESSAGE
+        return REMOVE_DONATIONS_SUCCESS_FLAG
     except Exception as e:
         logger.error(f"Failed to delete donor {donor_pk}: {e}")
-        return REMOVE_DONATIONS_FAILURE_MESSAGE
+        return REMOVE_DONATIONS_FAILURE_FLAG
 
 
 class CommonNumericFilter(TextFilter):
@@ -81,7 +78,7 @@ class CauseIdNumericListFilter(CommonNumericFilter):
 
 @admin.register(Donor)
 class DonorAdmin(ModelAdmin):
-    list_display = ("id", "email", "l_name", "f_name", "ngo", "cause", "has_signed", "date_created")
+    list_display = ("id", "email", "l_name", "f_name", "ngo", "is_available", "has_signed", "date_created")
     list_display_links = ("id", "email", "l_name", "f_name")
 
     list_filter_submit = True
@@ -89,6 +86,7 @@ class DonorAdmin(ModelAdmin):
         "date_created",
         HasNgoFilter,
         "is_anonymous",
+        "is_available",
         "has_signed",
         "two_years",
         "income_type",
@@ -106,8 +104,12 @@ class DonorAdmin(ModelAdmin):
 
     fieldsets = (
         (
+            _("Availability"),
+            {"fields": ("is_available",)},
+        ),
+        (
             _("NGO"),
-            {"fields": ("ngo",)},
+            {"fields": ("ngo", "cause")},
         ),
         (
             _("Identity"),
@@ -151,27 +153,12 @@ class DonorAdmin(ModelAdmin):
 
     @action(description=_("Remove donations and notify donors"), url_path="remove-donations")
     def remove_donations(self, request, queryset: QuerySet[Donor]):
-        task_ids = []
-        task_results = {
-            "success": 0,
-            "failure": 0,
-        }
+        task_results = {REMOVE_DONATIONS_SUCCESS_FLAG: 0, REMOVE_DONATIONS_FAILURE_FLAG: 0}
 
         queryset_size = queryset.count()
         for donor in queryset:
-            task_id = async_task(delete_donor, donor.pk, group=REMOVE_DONATIONS_GROUP_NAME)
-            task_ids.append(task_id)
-
-        for task_id in task_ids:
-            if task_id is None:
-                task_results["failure"] += 1
-                continue
-
-            task_result = result(task_id)
-            if task_result == REMOVE_DONATIONS_SUCCESS_MESSAGE:
-                task_results["success"] += 1
-            else:
-                task_results["failure"] += 1
+            task_result = soft_delete_donor(donor.pk)
+            task_results[task_result] += 1
 
         part_1 = ngettext_lazy(
             singular="Out of %(queryset_size)d donor",
@@ -182,13 +169,13 @@ class DonorAdmin(ModelAdmin):
         part_2 = ngettext_lazy(
             singular="%(success)d was deleted",
             plural="%(success)d were deleted",
-            number=task_results["success"],
-        ) % {"success": task_results["success"]}
+            number=task_results[REMOVE_DONATIONS_SUCCESS_FLAG],
+        ) % {"success": task_results[REMOVE_DONATIONS_SUCCESS_FLAG]}
 
         part_3 = ngettext_lazy(
             singular="%(failure)d was not deleted",
             plural="%(failure)d were not deleted",
-            number=task_results["failure"],
-        ) % {"failure": task_results["failure"]}
+            number=task_results[REMOVE_DONATIONS_FAILURE_FLAG],
+        ) % {"failure": task_results[REMOVE_DONATIONS_FAILURE_FLAG]}
 
         self.message_user(request, ", ".join([part_1, part_2, part_3 + "."]))

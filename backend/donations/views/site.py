@@ -37,7 +37,7 @@ class HomePage(BaseVisibleTemplateView):
 
         start_of_year = datetime(now.year, 1, 1, 0, 0, 0, tzinfo=now.tzinfo)
 
-        forms_filled_count = Donor.objects.filter(date_created__gte=start_of_year).count()
+        forms_filled_count = Donor.available.filter(date_created__gte=start_of_year).count()
         pluralized_title = ngettext_lazy(
             "form filled in",
             "forms filled in",

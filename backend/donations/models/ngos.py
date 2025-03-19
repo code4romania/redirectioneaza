@@ -147,7 +147,7 @@ class NgoWithFormsManager(models.Manager):
 
 class NgoWithFormsThisYearManager(models.Manager):
     def get_queryset(self):
-        donations_ngos = Donor.objects.filter(date_created__year=timezone.now().year).values("ngo_id").distinct()
+        donations_ngos = Donor.available.filter(date_created__year=timezone.now().year).values("ngo_id").distinct()
         return super().get_queryset().filter(pk__in=donations_ngos)
 
 
