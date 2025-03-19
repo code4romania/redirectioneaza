@@ -65,7 +65,7 @@ def handle_pre_social_login(sociallogin: SocialLogin, **kwargs) -> None:
         return
 
     if user.is_ngohub_user:
-        return
+        return check_ngohub_user(sociallogin)
 
     common_user_init(sociallogin=sociallogin)
 
@@ -97,6 +97,14 @@ class UserOrgAdapter(DefaultSocialAccountAdapter):
         common_user_init(sociallogin=sociallogin)
 
         return user
+
+
+def check_ngohub_user(sociallogin: SocialLogin) -> None:
+    ngohub: NGOHub = NGOHub(settings.NGOHUB_API_HOST)
+    user_token: str = sociallogin.token.token
+
+    if not ngohub.check_user_organization_has_application(ngo_token=user_token, login_link=settings.BASE_WEBSITE):
+        raise ImmediateHttpResponse(redirect(reverse("error-app-missing")))
 
 
 def common_user_init(sociallogin: SocialLogin) -> None:
@@ -145,8 +153,6 @@ def _set_ngo_user(
 
     if user_role in (settings.NGOHUB_ROLE_NGO_ADMIN, settings.NGOHUB_ROLE_NGO_EMPLOYEE):
         if not ngohub.check_user_organization_has_application(ngo_token=user_token, login_link=settings.BASE_WEBSITE):
-            user.deactivate()
-
             raise ImmediateHttpResponse(redirect(reverse("error-app-missing")))
 
         user.groups.add(Group.objects.get(name=NGOHUB_ROLE_TO_REDIRECT_ROLE[user_role]))
@@ -176,8 +182,6 @@ def _get_user_profile(ngohub, user: UserModel, user_token) -> UserProfile:
     try:
         user_profile: Optional[UserProfile] = ngohub.get_profile(user_token)
     except HubHTTPException:
-        user.deactivate()
-
         logger.error(f"User {user.email} could not be found in NGO Hub. Please check the configuration.")
 
         raise ImmediateHttpResponse(redirect(reverse("error-app-missing")))
@@ -186,9 +190,6 @@ def _get_user_profile(ngohub, user: UserModel, user_token) -> UserProfile:
 
 
 def _connect_user_and_ngo(user: UserModel, ngohub_org_id, token) -> None:
-    # Make sure the user is active
-    user.activate()
-
     if user.ngo:
         # If the user already has an organization, update it
         user_ngo: Ngo = user.ngo
