@@ -420,6 +420,7 @@ class NgoRedirectionsView(NgoBaseListView, DonorSearchMixin):
         redirections = (
             ngo.donor_set.all()
             .order_by("-date_created")
+            .filter(is_available=True)
             .values(
                 "id",
                 "f_name",
