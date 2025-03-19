@@ -5,25 +5,29 @@
 {% block input %}
 
   <div
-    x-data="combobox({{ options }})"
+    x-data="combobox({{ options }},{% if current_value %}'{{ current_value }}'{% else %}null{% endif %})"
     @click.outside="close"
-    @focusout="close"
+    @keydown.tab="close"
     class="relative">
 
 
-    <input id="{{ input_id }}" name="{{ input_name }}" x-ref="input" hidden />
+    <input id="{{ input_id }}" name="{{ input_name }}" x-ref="input" hidden/>
 
-    <input
-      placeholder="{{ input_title }}"
-      x-model="query"
-      x-transition:leave="transition ease-in duration-100"
-      x-transition:leave-start="opacity-100"
-      x-transition:leave-end="opacity-0"
-      @mousedown="isOpen = true"
-      @focus="isOpen = true"
-      @keydown.esc="close"
-      class="block w-full rounded-md bg-white py-1.5 pl-3 pr-12 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-600 sm:text-sm/6"
-    >
+    <label>
+      <span class="sr-only">{{ input_title }}</span>
+      <input
+        placeholder="{{ input_title }}"
+        x-model="query"
+        x-ref="display"
+        x-transition:leave="transition ease-in duration-100"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
+        @mousedown="isOpen = true"
+        @focus="isOpen = true"
+        @keydown.esc="close"
+        class="block w-full rounded-md bg-white py-1.5 pl-3 pr-12 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-600 sm:text-sm/6"
+      >
+    </label>
 
     <button
       @click="isOpen = ! isOpen"
@@ -51,7 +55,7 @@
           class="relative py-2 pl-3 text-gray-900 cursor-default select-none pr-9 hover:bg-amber-200"
           id="option-0"
           role="option"
-          aria-selected="focusedOptionIndex === index">
+        >
           <span x-text="option.title"></span>
         </li>
       </template>

@@ -368,6 +368,61 @@ class NgoRedirectionsView(NgoBaseListView, DonorSearchMixin):
     paginate_by = 8
     sidebar_item_target = "org-redirections"
 
+    def get_filters(self):
+        user: User = self.request.user
+        ngo: Ngo = user.ngo if user.ngo else None
+
+        counties_options: List[str] = [
+            county for county in settings.FORM_COUNTIES_WITH_SECTORS_LIST if county in ngo.donors_counties()
+        ]
+
+        filters = [
+            {
+                "id": "filter_dropdown_county",
+                "key": "c",
+                "title": _("County"),
+                "options": counties_options,
+            },
+            {
+                "id": "filter_dropdown_locality",
+                "key": "l",
+                "title": _("Locality"),
+                "options": sorted(ngo.donors_localities()),
+            },
+            {
+                "id": "filter_dropdown_period",
+                "key": "p",
+                "title": _("Period"),
+                "options": [
+                    {"title": _("One year"), "value": "1"},
+                    {"title": _("Two years"), "value": "2"},
+                ],
+            },
+            {
+                "id": "filter_dropdown_status",
+                "key": "s",
+                "title": _("Status"),
+                "options": [
+                    {"title": _("Signed"), "value": "signed"},
+                    {"title": _("Not signed"), "value": "unsigned"},
+                ],
+            },
+        ]
+
+        return filters
+
+    def get_active_filters(self, filters):
+        filters_active = {}
+        request_params = self.request.GET
+
+        for search_filter in filters:
+            filter_key = search_filter["key"]
+            filter_value = request_params.get(filter_key, "")
+            if filter_value:
+                filters_active[filter_key] = filter_value
+
+        return filters_active
+
     def get_context_data(self, **kwargs):
         search_query = self._search_query()
 
@@ -379,9 +434,8 @@ class NgoRedirectionsView(NgoBaseListView, DonorSearchMixin):
         user: User = self.request.user
         ngo: Ngo = user.ngo if user.ngo else None
 
-        counties_options: List[str] = [
-            county for county in settings.FORM_COUNTIES_WITH_SECTORS_LIST if county in ngo.donors_counties()
-        ]
+        filters = self.get_filters()
+        filters_active = self.get_active_filters(filters)
 
         context.update(
             {
@@ -390,44 +444,8 @@ class NgoRedirectionsView(NgoBaseListView, DonorSearchMixin):
                 "title": self.title,
                 "search_query": search_query,
                 "url_search_query": query_dict.urlencode(),
-                "filters": [
-                    {
-                        "id": "filter_dropdown_county",
-                        "key": "c",
-                        "title": _("County"),
-                        "options": counties_options,
-                    },
-                    {
-                        "id": "filter_dropdown_locality",
-                        "key": "l",
-                        "title": _("Locality"),
-                        "options": sorted(ngo.donors_localities()),
-                    },
-                    {
-                        "id": "filter_dropdown_period",
-                        "key": "p",
-                        "title": _("Period"),
-                        "options": [
-                            {"title": _("One year"), "value": "1"},
-                            {"title": _("Two years"), "value": "2"},
-                        ],
-                    },
-                    {
-                        "id": "filter_dropdown_status",
-                        "key": "s",
-                        "title": _("Status"),
-                        "options": [
-                            {"title": _("Signed"), "value": "signed"},
-                            {"title": _("Not signed"), "value": "unsigned"},
-                        ],
-                    },
-                ],
-                "filters_active": {
-                    "c": "0",
-                    "l": "1",
-                    "p": "2",
-                    "s": "3",
-                },
+                "filters": filters,
+                "filters_active": filters_active,
             }
         )
 
