@@ -37,7 +37,7 @@ def year_ngo_donor_directory_path(subdir: str, instance: "Donor", filename: str)
 
 class DonorAvailableManager(models.Manager):
     def get_queryset(self):
-        return super().get_queryset().filter(is_available=False)
+        return super().get_queryset().filter(is_available=True)
 
 
 class DonorSignedManager(DonorAvailableManager):
