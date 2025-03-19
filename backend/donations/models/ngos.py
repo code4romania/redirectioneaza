@@ -403,10 +403,10 @@ class Ngo(models.Model):
             cause.delete_prefilled_form()
 
     def donors_counties(self):
-        return self.donor_set.values_list("county", flat=True).distinct()
+        return self.donor_set.filter(is_available=True).values_list("county", flat=True).distinct()
 
     def donors_localities(self):
-        return self.donor_set.values_list("city", flat=True).distinct()
+        return self.donor_set.filter(is_available=True).values_list("city", flat=True).distinct()
 
 
 class Cause(models.Model):

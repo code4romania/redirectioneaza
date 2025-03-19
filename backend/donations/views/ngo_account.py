@@ -380,18 +380,22 @@ class NgoRedirectionsView(NgoBaseListView, DonorSearchMixin):
             {
                 "id": "filter_dropdown_county",
                 "key": "c",
+                "queryset_key": "county",
                 "title": _("County"),
                 "options": counties_options,
             },
             {
                 "id": "filter_dropdown_locality",
                 "key": "l",
+                "queryset_key": "city",
                 "title": _("Locality"),
                 "options": sorted(ngo.donors_localities()),
             },
             {
                 "id": "filter_dropdown_period",
                 "key": "p",
+                "queryset_key": "two_years",
+                "queryset_transformation": lambda fe_value: fe_value == "2",
                 "title": _("Period"),
                 "options": [
                     {"title": _("One year"), "value": "1"},
@@ -401,6 +405,8 @@ class NgoRedirectionsView(NgoBaseListView, DonorSearchMixin):
             {
                 "id": "filter_dropdown_status",
                 "key": "s",
+                "queryset_key": "has_signed",
+                "queryset_transformation": lambda fe_value: fe_value == "signed",
                 "title": _("Status"),
                 "options": [
                     {"title": _("Signed"), "value": "signed"},
@@ -411,17 +417,30 @@ class NgoRedirectionsView(NgoBaseListView, DonorSearchMixin):
 
         return filters
 
-    def get_active_filters(self, filters):
+    def get_frontend_filters(self, filters):
         filters_active = {}
         request_params = self.request.GET
 
         for search_filter in filters:
             filter_key = search_filter["key"]
-            filter_value = request_params.get(filter_key, "")
-            if filter_value:
+            if filter_value := request_params.get(filter_key, ""):
                 filters_active[filter_key] = filter_value
 
         return filters_active
+
+    def get_queryset_filters(self, filters):
+        queryset_filters = {}
+        request_params = self.request.GET
+
+        for search_filter in filters:
+            filter_key = search_filter["key"]
+            if filter_value := request_params.get(filter_key, ""):
+                if queryset_transformation := search_filter.get("queryset_transformation"):
+                    filter_value = queryset_transformation(filter_value)
+
+                queryset_filters[search_filter["queryset_key"]] = filter_value
+
+        return queryset_filters
 
     def get_context_data(self, **kwargs):
         search_query = self._search_query()
@@ -435,7 +454,7 @@ class NgoRedirectionsView(NgoBaseListView, DonorSearchMixin):
         ngo: Ngo = user.ngo if user.ngo else None
 
         filters = self.get_filters()
-        filters_active = self.get_active_filters(filters)
+        filters_active = self.get_frontend_filters(filters)
 
         context.update(
             {
@@ -463,10 +482,14 @@ class NgoRedirectionsView(NgoBaseListView, DonorSearchMixin):
         if not ngo:
             return Donor.objects.none()
 
+        filters = self.get_filters()
+        queryset_filters = self.get_queryset_filters(filters)
+
         redirections = (
             ngo.donor_set.all()
             .order_by("-date_created")
             .filter(is_available=True)
+            .filter(**queryset_filters)
             .values(
                 "id",
                 "f_name",
