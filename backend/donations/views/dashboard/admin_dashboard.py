@@ -54,7 +54,7 @@ def _get_header_stats(today) -> List[List[Dict[str, Union[str, int]]]]:
             {
                 "title": _("Donations this year"),
                 "icon": "edit_document",
-                "metric": Donor.objects.filter(date_created__year=current_year).count(),
+                "metric": Donor.available.filter(date_created__year=current_year).count(),
                 "footer": _create_stat_link(
                     url=f'{reverse("admin:donations_donor_changelist")}?{current_year_range}', text=_("View all")
                 ),
@@ -62,7 +62,7 @@ def _get_header_stats(today) -> List[List[Dict[str, Union[str, int]]]]:
             {
                 "title": _("Donations all-time"),
                 "icon": "edit_document",
-                "metric": Donor.objects.count(),
+                "metric": Donor.available.count(),
                 "footer": _create_stat_link(url=reverse("admin:donations_donor_changelist"), text=_("View all")),
             },
             {
@@ -95,7 +95,7 @@ def _create_chart_statistics() -> Dict[str, str]:
     default_border_width: int = 3
 
     donations_per_month_queryset = [
-        Donor.objects.filter(date_created__month=month) for month in range(1, settings.DONATIONS_LIMIT.month + 1)
+        Donor.available.filter(date_created__month=month) for month in range(1, settings.DONATIONS_LIMIT.month + 1)
     ]
 
     forms_per_month_chart = generate_donations_per_month_chart(default_border_width, donations_per_month_queryset)
@@ -125,9 +125,9 @@ def _get_yearly_stats(years_range_ascending) -> List[Dict[str, Union[int, List[D
 
 @cache_decorator(timeout=settings.TIMEOUT_CACHE_NORMAL, cache_key_prefix=ADMIN_DASHBOARD_CACHE_KEY)
 def _get_stats_for_year(year: int) -> Dict[str, int]:
-    donations: int = Donor.objects.filter(date_created__year=year).count()
+    donations: int = Donor.available.filter(date_created__year=year).count()
     ngos_registered: int = Ngo.objects.filter(date_created__year=year).count()
-    ngos_with_forms: int = Donor.objects.filter(date_created__year=year).values("ngo_id").distinct().count()
+    ngos_with_forms: int = Donor.available.filter(date_created__year=year).values("ngo_id").distinct().count()
 
     statistic = {
         "year": year,

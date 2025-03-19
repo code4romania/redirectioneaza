@@ -14,11 +14,12 @@ from django.views.generic import TemplateView
 from ipware import get_client_ip
 
 from redirectioneaza.common.messaging import extend_email_context, send_email
-from .base import BaseVisibleTemplateView
-from .common.misc import get_ngo_cause
+
 from ..forms.redirection import DonationForm
 from ..models.donors import Donor
 from ..pdf import create_full_pdf
+from .base import BaseVisibleTemplateView
+from .common.misc import get_ngo_cause
 
 logger = logging.getLogger(__name__)
 
@@ -40,7 +41,7 @@ class RedirectionSuccessHandler(BaseVisibleTemplateView):
 
         try:
             request = self.request
-            donor = Donor.objects.get(pk=request.session.get("donor_id", 0))
+            donor = Donor.available.get(pk=request.session.get("donor_id", 0))
         except Donor.DoesNotExist:
             donor = None
 
@@ -310,7 +311,7 @@ class OwnFormDownloadLinkHandler(TemplateView):
         # Don't allow downloading donation forms older than this
         cutoff_date = timezone.now() - timedelta(days=365)
         try:
-            donor = Donor.objects.get(pk=donor_id, date_created__gte=cutoff_date)
+            donor = Donor.available.get(pk=donor_id, date_created__gte=cutoff_date)
         except Donor.DoesNotExist:
             raise Http404
         else:

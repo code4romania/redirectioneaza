@@ -35,7 +35,12 @@ def year_ngo_donor_directory_path(subdir: str, instance: "Donor", filename: str)
     )
 
 
-class DonorSignedManager(models.Manager):
+class DonorAvailableManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(is_available=False)
+
+
+class DonorSignedManager(DonorAvailableManager):
     def get_queryset(self):
         return super().get_queryset().filter(has_signed=True)
 
@@ -45,7 +50,7 @@ class DonorCurrentYearSignedManager(DonorSignedManager):
         return super().get_queryset().filter(date_created__year=timezone.now().year)
 
 
-class DonorCurrentYearManager(models.Manager):
+class DonorCurrentYearManager(DonorAvailableManager):
     def get_queryset(self):
         return super().get_queryset().filter(date_created__year=timezone.now().year)
 
@@ -54,6 +59,13 @@ class Donor(models.Model):
     INCOME_CHOICES = (
         ("wage", _("wage")),
         ("pension", _("pension")),
+    )
+
+    is_available = models.BooleanField(
+        verbose_name=_("is available"),
+        help_text=_("If the donation is available on the platform (not removed)"),
+        db_index=True,
+        default=True,
     )
 
     ngo = models.ForeignKey("Ngo", verbose_name=_("NGO"), on_delete=models.SET_NULL, db_index=True, null=True)
@@ -151,6 +163,7 @@ class Donor(models.Model):
     )
 
     objects = models.Manager()
+    available = DonorAvailableManager()
     signed = DonorSignedManager()
     current_year = DonorCurrentYearManager()
     current_year_signed = DonorCurrentYearSignedManager()
@@ -162,9 +175,10 @@ class Donor(models.Model):
     def __str__(self):
         return f"{self.cause} {self.date_created} {self.email}"
 
-    def delete(self, using=None, keep_parents=False):
-        self.pdf_file.delete()
-        super().delete(using=using, keep_parents=keep_parents)
+    def remove(self):
+        self.is_available = False
+
+        self.save()
 
     def set_cnp(self, cnp: str):
         self.encrypted_cnp = self.encrypt_cnp(cnp)

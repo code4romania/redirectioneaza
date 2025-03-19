@@ -41,7 +41,7 @@ def _create_chart_statistics(organization: Ngo) -> Dict[str, str]:
     default_border_width: int = 3
 
     donations_per_month_queryset = [
-        Donor.objects.filter(date_created__month=month, ngo=organization)
+        Donor.available.filter(date_created__month=month, ngo=organization)
         for month in range(1, settings.DONATIONS_LIMIT.month + 1)
     ]
 
@@ -57,12 +57,12 @@ def _get_donations_per_county(user_ngo):
         _("Number of donations"),
     ]
 
-    counties = Donor.objects.filter(ngo=user_ngo).values_list("county", flat=True).distinct()
+    counties = Donor.available.filter(ngo=user_ngo).values_list("county", flat=True).distinct()
 
     rows = [
         [
             county,
-            Donor.objects.filter(ngo=user_ngo, county=county).count(),
+            Donor.available.filter(ngo=user_ngo, county=county).count(),
         ]
         for county in counties
     ]
@@ -95,7 +95,7 @@ def _get_header_stats(ngo: Ngo) -> List[List[Dict[str, Union[str, int]]]]:
             {
                 "title": _("Donations in %d") % year,
                 "icon": "edit_document",
-                "metric": Donor.objects.filter(date_created__year=year).count(),
+                "metric": Donor.available.filter(date_created__year=year).count(),
             }
             for year in year_row
         ]

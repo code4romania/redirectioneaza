@@ -29,7 +29,7 @@ def import_donor_forms_task(batch_size: int = 50, run_async: bool = False, dry_r
     index: int = 0
     processed_form_ids: List[int] = []
     for index, ngo in enumerate(ngos_by_number_of_donors):
-        donor_forms_for_ngo: List[int] = Donor.objects.filter(
+        donor_forms_for_ngo: List[int] = Donor.available.filter(
             ngo=ngo, pdf_file="", date_created__gte="2023-12-31"
         ).values_list("pk", flat=True)[: batch_size + 1]
 
