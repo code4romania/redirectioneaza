@@ -1,0 +1,29 @@
+{% extends "emails/base.html" %}
+
+{% load i18n %}
+
+{% block heading %}
+  {% trans "Your redirection form was removed from redirectioneaza.ro" %}
+{% endblock %}
+
+{% block content %}
+
+  <p>
+    {% blocktrans trimmed %}
+      Thank you for choosing to support {{ cause_name }}!
+      The administrators of the platform have unfortunately removed the redirection
+      because of an error or a request from the NGO.
+      If you wish to redirect again to the same cause, please go to the following link:
+    {% endblocktrans %}
+  </p>
+
+  {% trans "Redirect" as action_title %}
+  {% include "emails/components/action.html" with title=action_title url=action_url %}
+
+  <p>
+    {% trans "Thank you for your involvement!" %}
+  </p>
+
+  {% include "emails/components/misdelivered.html" %}
+
+{% endblock %}
