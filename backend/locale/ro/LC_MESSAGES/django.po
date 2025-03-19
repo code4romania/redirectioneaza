@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-14 13:26+0200\n"
+"POT-Creation-Date: 2025-03-19 14:52+0200\n"
 "PO-Revision-Date: 2024-03-07 11:27+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -20,30 +20,30 @@ msgstr ""
 "20)) ? 1 : 2;\n"
 "X-Generator: Weblate 5.3.1\n"
 
-#: donations/admin/causes.py:36
+#: donations/admin/causes.py:37
 msgid "Generate donations archive"
 msgstr "Generează arhiva de donații"
 
-#: donations/admin/causes.py:56
+#: donations/admin/causes.py:60
 msgid "The donations archive has been generated for the following NGOs: "
 msgstr "Arhiva de donații a fost generată pentru următoarele ONG-uri: "
 
-#: donations/admin/causes.py:58
+#: donations/admin/causes.py:62
 msgid ""
 "The donations archive could not be generated for any of the selected NGOs."
 msgstr ""
 "Arhiva de donații nu a putut fi generată pentru niciunul dintre ONG-urile "
 "selectate."
 
-#: donations/admin/causes.py:62 donations/admin/common.py:9
+#: donations/admin/causes.py:66 donations/admin/common.py:9
 #: donations/admin/donors.py:32 donations/admin/jobs.py:19
 #: donations/admin/ngos.py:187 donations/admin/ngos.py:290
 #: donations/models/donors.py:59 donations/models/jobs.py:29
-#: donations/models/ngos.py:296 partners/models.py:141 users/models.py:71
+#: donations/models/ngos.py:303 partners/models.py:141 users/models.py:71
 msgid "NGO"
 msgstr "ONG"
 
-#: donations/admin/common.py:14 donations/models/ngos.py:442
+#: donations/admin/common.py:14 donations/models/ngos.py:449
 #: partners/admin.py:49 partners/models.py:175
 msgid "Cause"
 msgstr "Cauză"
@@ -122,7 +122,7 @@ msgid "Has owner"
 msgstr "Are utilizator"
 
 #: donations/admin/ngos.py:183 donations/admin/ngos.py:322 donations/apps.py:8
-#: donations/views/dashboard/admin_dashboard.py:149
+#: donations/views/dashboard/admin_dashboard.py:148
 #: redirectioneaza/context_processors/headers.py:69
 #: redirectioneaza/settings/unfold.py:30 redirectioneaza/settings/unfold.py:45
 msgid "Donations"
@@ -277,7 +277,7 @@ msgstr "Numele este obligatoriu"
 msgid "Passwords do not match"
 msgstr "Parolele nu se potrivesc"
 
-#: donations/forms/ngo_account.py:13 donations/models/ngos.py:158
+#: donations/forms/ngo_account.py:13 donations/models/ngos.py:165
 #: templates/v2/emails/donor/redirection-sans-signature/main.txt:26
 #: templates/v2/ngo-account/my-organization/ngo-presentation.html:38
 #: templates/v2/ngo-account/redirections/list-header.html:11
@@ -449,11 +449,11 @@ msgstr "pensie"
 msgid "cause"
 msgstr "cauză"
 
-#: donations/models/donors.py:63 donations/views/download_donations/main.py:180
+#: donations/models/donors.py:63 donations/views/download_donations/main.py:183
 msgid "last name"
 msgstr "nume"
 
-#: donations/models/donors.py:66 donations/views/download_donations/main.py:181
+#: donations/models/donors.py:66 donations/views/download_donations/main.py:184
 msgid "first name"
 msgstr "prenume"
 
@@ -461,29 +461,29 @@ msgstr "prenume"
 msgid "initials"
 msgstr "inițiale"
 
-#: donations/models/donors.py:70 donations/views/download_donations/main.py:183
+#: donations/models/donors.py:70 donations/views/download_donations/main.py:186
 msgid "CNP"
 msgstr "CNP"
 
-#: donations/models/donors.py:73 donations/views/download_donations/main.py:188
+#: donations/models/donors.py:73 donations/views/download_donations/main.py:191
 msgid "city"
 msgstr "oraș"
 
-#: donations/models/donors.py:81 donations/models/ngos.py:221
-#: donations/views/download_donations/main.py:187
+#: donations/models/donors.py:81 donations/models/ngos.py:228
+#: donations/views/download_donations/main.py:190
 msgid "county"
 msgstr "județ"
 
-#: donations/models/donors.py:88 donations/models/ngos.py:211
+#: donations/models/donors.py:88 donations/models/ngos.py:218
 msgid "address"
 msgstr "adresă"
 
-#: donations/models/donors.py:92 donations/models/ngos.py:238
+#: donations/models/donors.py:92 donations/models/ngos.py:245
 msgid "telephone"
 msgstr "telefon"
 
-#: donations/models/donors.py:100 donations/models/ngos.py:237
-#: donations/views/download_donations/main.py:186
+#: donations/models/donors.py:100 donations/models/ngos.py:244
+#: donations/views/download_donations/main.py:189
 msgid "email"
 msgstr "email"
 
@@ -517,7 +517,7 @@ msgid "Geo IP"
 msgstr "Geo IP"
 
 #: donations/models/donors.py:137
-#: donations/views/download_donations/main.py:196
+#: donations/views/download_donations/main.py:199
 msgid "filename"
 msgstr "nume fișier"
 
@@ -530,7 +530,7 @@ msgid "PDF file"
 msgstr "fișier PDF"
 
 #: donations/models/donors.py:148 donations/models/jobs.py:62
-#: donations/models/ngos.py:270 donations/models/ngos.py:435
+#: donations/models/ngos.py:277 donations/models/ngos.py:442
 #: partners/models.py:75 users/models.py:95
 msgid "date created"
 msgstr "data creării"
@@ -585,7 +585,7 @@ msgstr "sarcină"
 msgid "jobs"
 msgstr "joburi"
 
-#: donations/models/ngos.py:85
+#: donations/models/ngos.py:86
 #, python-format
 msgid ""
 "'%(value)s' is not a valid identifier. The identifier must look like "
@@ -594,110 +594,110 @@ msgstr ""
 "'%(value)s' nu este un identificator valid. Identificatorul trebuie să arate "
 "ca modelul următor: %(sample)s"
 
-#: donations/models/ngos.py:149 donations/models/ngos.py:413
+#: donations/models/ngos.py:156 donations/models/ngos.py:420
 msgid "slug"
 msgstr "URL organizație"
 
-#: donations/models/ngos.py:160 donations/models/ngos.py:423
+#: donations/models/ngos.py:167 donations/models/ngos.py:430
 msgid "description"
 msgstr "descriere"
 
-#: donations/models/ngos.py:164
+#: donations/models/ngos.py:171
 msgid "NGO Hub organization ID"
 msgstr "ID organizație în NGO Hub"
 
-#: donations/models/ngos.py:170 donations/models/ngos.py:171
+#: donations/models/ngos.py:177 donations/models/ngos.py:178
 msgid "Last NGO Hub update"
 msgstr "Ultima actualizare din NGO Hub"
 
-#: donations/models/ngos.py:176 donations/models/ngos.py:405
+#: donations/models/ngos.py:183 donations/models/ngos.py:412
 msgid "logo"
 msgstr "logo"
 
-#: donations/models/ngos.py:184 donations/models/ngos.py:425
+#: donations/models/ngos.py:191 donations/models/ngos.py:432
 msgid "bank account"
 msgstr "cont bancar"
 
-#: donations/models/ngos.py:189
+#: donations/models/ngos.py:196
 msgid "registration number"
 msgstr "număr de înregistrare"
 
-#: donations/models/ngos.py:198
+#: donations/models/ngos.py:205
 msgid "VAT ID"
 msgstr "COD TVA"
 
-#: donations/models/ngos.py:206
+#: donations/models/ngos.py:213
 msgid "registration validation failed"
 msgstr "validarea înregistrării a eșuat"
 
-#: donations/models/ngos.py:213
+#: donations/models/ngos.py:220
 msgid "locality"
 msgstr "localitate"
 
-#: donations/models/ngos.py:229
+#: donations/models/ngos.py:236
 msgid "active region"
 msgstr "regiune activă"
 
-#: donations/models/ngos.py:240
+#: donations/models/ngos.py:247
 msgid "display email"
 msgstr "afișează email"
 
-#: donations/models/ngos.py:241
+#: donations/models/ngos.py:248
 msgid "display phone"
 msgstr "afișează telefon"
 
-#: donations/models/ngos.py:243
+#: donations/models/ngos.py:250
 msgid "website"
 msgstr "website"
 
-#: donations/models/ngos.py:246 users/models.py:87
+#: donations/models/ngos.py:253 users/models.py:87
 msgid "is verified"
 msgstr "este verificat"
 
-#: donations/models/ngos.py:250
+#: donations/models/ngos.py:257
 msgid "has special status"
 msgstr "are statut special"
 
-#: donations/models/ngos.py:254
+#: donations/models/ngos.py:261
 msgid "is accepting forms"
 msgstr "acceptă formulare"
 
-#: donations/models/ngos.py:257 partners/models.py:46
+#: donations/models/ngos.py:264 partners/models.py:46
 msgid "is active"
 msgstr "este activ"
 
-#: donations/models/ngos.py:261
+#: donations/models/ngos.py:268
 msgid "form with prefilled ngo data"
 msgstr "formular cu datele ONG-ului completate"
 
-#: donations/models/ngos.py:268
+#: donations/models/ngos.py:275
 msgid "Filename cache"
 msgstr "Cache nume fișier"
 
-#: donations/models/ngos.py:271 donations/models/ngos.py:436
+#: donations/models/ngos.py:278 donations/models/ngos.py:443
 #: partners/models.py:76 users/models.py:96
 msgid "date updated"
 msgstr "data actualizării"
 
-#: donations/models/ngos.py:297 partners/models.py:61
+#: donations/models/ngos.py:304 partners/models.py:61
 #: redirectioneaza/context_processors/headers.py:64
 #: redirectioneaza/settings/unfold.py:33
 msgid "NGOs"
 msgstr "ONG-uri"
 
-#: donations/models/ngos.py:402
+#: donations/models/ngos.py:409
 msgid "allow online collection"
 msgstr "permite colectarea online"
 
-#: donations/models/ngos.py:422 partners/models.py:31
+#: donations/models/ngos.py:429 partners/models.py:31
 msgid "name"
 msgstr "nume"
 
-#: donations/models/ngos.py:428
+#: donations/models/ngos.py:435
 msgid "form with prefilled cause"
 msgstr "formular cu datele ONG-ului completate"
 
-#: donations/models/ngos.py:443 partners/admin.py:50 partners/models.py:68
+#: donations/models/ngos.py:450 partners/admin.py:50 partners/models.py:68
 #: redirectioneaza/settings/unfold.py:39
 msgid "Causes"
 msgstr "Cauze"
@@ -799,39 +799,39 @@ msgstr[2] "%(time)d de minute"
 msgid "The search query must be at least 3 characters long"
 msgstr "Termenul de căutare trebuie să aibă cel puțin 3 caractere"
 
-#: donations/views/dashboard/admin_dashboard.py:54
+#: donations/views/dashboard/admin_dashboard.py:55
 msgid "Donations this year"
 msgstr "Donații anul acesta"
 
-#: donations/views/dashboard/admin_dashboard.py:58
-#: donations/views/dashboard/admin_dashboard.py:65
-#: donations/views/dashboard/admin_dashboard.py:72
+#: donations/views/dashboard/admin_dashboard.py:59
+#: donations/views/dashboard/admin_dashboard.py:66
+#: donations/views/dashboard/admin_dashboard.py:73
 #: donations/views/dashboard/admin_dashboard.py:80
-#: donations/views/dashboard/admin_dashboard.py:88
-#: donations/views/dashboard/admin_dashboard.py:155
-#: donations/views/dashboard/admin_dashboard.py:165
-#: donations/views/dashboard/admin_dashboard.py:175
+#: donations/views/dashboard/admin_dashboard.py:87
+#: donations/views/dashboard/admin_dashboard.py:154
+#: donations/views/dashboard/admin_dashboard.py:164
+#: donations/views/dashboard/admin_dashboard.py:174
 msgid "View all"
 msgstr "Vezi toate"
 
-#: donations/views/dashboard/admin_dashboard.py:62
+#: donations/views/dashboard/admin_dashboard.py:63
 msgid "Donations all-time"
 msgstr "Donații totale"
 
-#: donations/views/dashboard/admin_dashboard.py:68
-msgid "Causes registered"
-msgstr "ONG-uri înregistrate"
-
-#: donations/views/dashboard/admin_dashboard.py:76
-#: donations/views/dashboard/admin_dashboard.py:159
+#: donations/views/dashboard/admin_dashboard.py:69
+#: donations/views/dashboard/admin_dashboard.py:158
 msgid "NGOs registered"
 msgstr "ONG-uri înregistrate"
 
-#: donations/views/dashboard/admin_dashboard.py:84
+#: donations/views/dashboard/admin_dashboard.py:77
+msgid "Functioning NGOs"
+msgstr "ONG-uri utilizatoare"
+
+#: donations/views/dashboard/admin_dashboard.py:83
 msgid "NGOs from NGO Hub"
 msgstr "ONG-uri din NGO Hub"
 
-#: donations/views/dashboard/admin_dashboard.py:169
+#: donations/views/dashboard/admin_dashboard.py:168
 msgid "NGOs with forms"
 msgstr "ONG-uri cu formulare"
 
@@ -852,59 +852,59 @@ msgstr "Donații pe județe pentru anul curent"
 msgid "Donations in %d"
 msgstr "Donații în %d"
 
-#: donations/views/download_donations/main.py:78
+#: donations/views/download_donations/main.py:76
 msgid "Documents ready for download"
 msgstr "Documentele sunt gata pentru descărcare"
 
-#: donations/views/download_donations/main.py:179
+#: donations/views/download_donations/main.py:182
 msgid "no."
 msgstr "nr. crt."
 
-#: donations/views/download_donations/main.py:182
+#: donations/views/download_donations/main.py:185
 msgid "initial"
 msgstr "inițială"
 
-#: donations/views/download_donations/main.py:184
+#: donations/views/download_donations/main.py:187
 msgid "duplicate"
 msgstr "duplicat"
 
-#: donations/views/download_donations/main.py:185
+#: donations/views/download_donations/main.py:188
 msgid "phone"
 msgstr "telefon"
 
-#: donations/views/download_donations/main.py:189
+#: donations/views/download_donations/main.py:192
 msgid "full address"
 msgstr "adresă completă"
 
-#: donations/views/download_donations/main.py:190
+#: donations/views/download_donations/main.py:193
 msgid "street name"
 msgstr "strada"
 
-#: donations/views/download_donations/main.py:191
+#: donations/views/download_donations/main.py:194
 msgid "street number"
 msgstr "număr"
 
-#: donations/views/download_donations/main.py:192
+#: donations/views/download_donations/main.py:195
 msgid "building"
 msgstr "bloc"
 
-#: donations/views/download_donations/main.py:193
+#: donations/views/download_donations/main.py:196
 msgid "entrance"
 msgstr "scara"
 
-#: donations/views/download_donations/main.py:194
+#: donations/views/download_donations/main.py:197
 msgid "floor"
 msgstr "etaj"
 
-#: donations/views/download_donations/main.py:195
+#: donations/views/download_donations/main.py:198
 msgid "apartment"
 msgstr "apartament"
 
-#: donations/views/download_donations/main.py:197
+#: donations/views/download_donations/main.py:200
 msgid "date"
 msgstr "data completării"
 
-#: donations/views/download_donations/main.py:198
+#: donations/views/download_donations/main.py:201
 msgid "duration"
 msgstr "perioadă"
 
@@ -928,31 +928,31 @@ msgstr "Detalii organizație"
 msgid "There are some errors on the presentation form."
 msgstr "Există erori în formularul de prezentare."
 
-#: donations/views/ngo_account.py:244
+#: donations/views/ngo_account.py:246
 msgid "Organization forms"
 msgstr "Formulare organizație"
 
-#: donations/views/ngo_account.py:301 donations/views/redirections.py:177
+#: donations/views/ngo_account.py:303 donations/views/redirections.py:177
 msgid "There are some errors on the redirection form."
 msgstr "Există erori în formularul de redirecționare."
 
-#: donations/views/ngo_account.py:335
+#: donations/views/ngo_account.py:337
 #: templates/v2/ngo-account/settings-account/main.html:10
 msgid "Account settings"
 msgstr "Setări cont"
 
-#: donations/views/ngo_account.py:378
+#: donations/views/ngo_account.py:380
 #: redirectioneaza/context_processors/headers.py:106
 #: templates/v2/ngo-account/redirections/main.html:10
 msgid "Redirections"
 msgstr "Redirecționări"
 
-#: donations/views/ngo_account.py:441
+#: donations/views/ngo_account.py:443
 #: templates/v2/ngo-account/archives/main.html:10
 msgid "Archives history"
 msgstr "Istoric arhive exportate"
 
-#: donations/views/ngo_account.py:483
+#: donations/views/ngo_account.py:485
 #: templates/v2/emails/ngo/download-archive/main.html:21
 msgid "Download archive"
 msgstr "Descarcă arhiva"
@@ -1174,6 +1174,10 @@ msgstr "Partener Cauză"
 msgid "Partner Causes"
 msgstr "Parteneri Cauze"
 
+#: redirectioneaza/common/admin.py:6
+msgid "Has NGO"
+msgstr "Are ONG"
+
 #: redirectioneaza/common/messaging.py:49
 msgid "Invalid email send method. Must be 'async' or 'sync'."
 msgstr "Metoda de trimitere email invalidă. Trebuie să fie 'async' sau 'sync'."
@@ -1329,96 +1333,96 @@ msgstr "Admin"
 msgid "My Organization"
 msgstr "Organizația mea"
 
-#: redirectioneaza/settings/app_configs.py:35
+#: redirectioneaza/settings/app_configs.py:37
 msgid "January"
 msgstr "Ianuarie"
 
-#: redirectioneaza/settings/app_configs.py:36
+#: redirectioneaza/settings/app_configs.py:38
 msgid "Jan"
 msgstr "Ian"
 
-#: redirectioneaza/settings/app_configs.py:39
+#: redirectioneaza/settings/app_configs.py:41
 msgid "February"
 msgstr "Februarie"
 
-#: redirectioneaza/settings/app_configs.py:40
+#: redirectioneaza/settings/app_configs.py:42
 msgid "Feb"
 msgstr "Feb"
 
-#: redirectioneaza/settings/app_configs.py:43
+#: redirectioneaza/settings/app_configs.py:45
 msgid "March"
 msgstr "Martie"
 
-#: redirectioneaza/settings/app_configs.py:44
+#: redirectioneaza/settings/app_configs.py:46
 msgid "Mar"
 msgstr "Mar"
 
-#: redirectioneaza/settings/app_configs.py:47
+#: redirectioneaza/settings/app_configs.py:49
 msgid "April"
 msgstr "Aprilie"
 
-#: redirectioneaza/settings/app_configs.py:48
+#: redirectioneaza/settings/app_configs.py:50
 msgid "Apr"
 msgstr "Apr"
 
-#: redirectioneaza/settings/app_configs.py:51
-#: redirectioneaza/settings/app_configs.py:52
+#: redirectioneaza/settings/app_configs.py:53
+#: redirectioneaza/settings/app_configs.py:54
 msgid "May"
 msgstr "Mai"
 
-#: redirectioneaza/settings/app_configs.py:55
+#: redirectioneaza/settings/app_configs.py:57
 msgid "June"
 msgstr "Iun"
 
-#: redirectioneaza/settings/app_configs.py:56
+#: redirectioneaza/settings/app_configs.py:58
 msgid "Jun"
 msgstr "Iun"
 
-#: redirectioneaza/settings/app_configs.py:59
+#: redirectioneaza/settings/app_configs.py:61
 msgid "July"
 msgstr "Iulie"
 
-#: redirectioneaza/settings/app_configs.py:60
+#: redirectioneaza/settings/app_configs.py:62
 msgid "Jul"
 msgstr "Iul"
 
-#: redirectioneaza/settings/app_configs.py:63
+#: redirectioneaza/settings/app_configs.py:65
 msgid "August"
 msgstr "August"
 
-#: redirectioneaza/settings/app_configs.py:64
+#: redirectioneaza/settings/app_configs.py:66
 msgid "Aug"
 msgstr "Aug"
 
-#: redirectioneaza/settings/app_configs.py:67
+#: redirectioneaza/settings/app_configs.py:69
 msgid "September"
 msgstr "Septembrie"
 
-#: redirectioneaza/settings/app_configs.py:68
+#: redirectioneaza/settings/app_configs.py:70
 msgid "Sep"
 msgstr "Sep"
 
-#: redirectioneaza/settings/app_configs.py:71
+#: redirectioneaza/settings/app_configs.py:73
 msgid "October"
 msgstr "Octombrie"
 
-#: redirectioneaza/settings/app_configs.py:72
+#: redirectioneaza/settings/app_configs.py:74
 msgid "Oct"
 msgstr "Oct"
 
-#: redirectioneaza/settings/app_configs.py:75
+#: redirectioneaza/settings/app_configs.py:77
 msgid "November"
 msgstr "Noiembrie"
 
-#: redirectioneaza/settings/app_configs.py:76
+#: redirectioneaza/settings/app_configs.py:78
 msgid "Nov"
 msgstr "Noi"
 
-#: redirectioneaza/settings/app_configs.py:79
+#: redirectioneaza/settings/app_configs.py:81
 msgid "December"
 msgstr "Decembrie"
 
-#: redirectioneaza/settings/app_configs.py:80
+#: redirectioneaza/settings/app_configs.py:82
 msgid "Dec"
 msgstr "Dec"
 
@@ -2976,11 +2980,11 @@ msgstr "Administrație site Django"
 msgid "Django administration"
 msgstr "Administrație Django"
 
-#: users/admin.py:56
+#: users/admin.py:57
 msgid "Permissions"
 msgstr "Permisiuni"
 
-#: users/admin.py:65
+#: users/admin.py:66
 msgid "Important dates"
 msgstr "Date importante"
 
@@ -3023,6 +3027,9 @@ msgstr "parolă veche"
 #: users/models.py:178
 msgid "Group"
 msgstr "Grup"
+
+#~ msgid "Causes registered"
+#~ msgstr "ONG-uri înregistrate"
 
 #~ msgid "Search"
 #~ msgstr "Caută"

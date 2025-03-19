@@ -6,6 +6,7 @@ from django.utils.translation import gettext_lazy as _
 from unfold.admin import ModelAdmin
 
 from redirectioneaza.common.admin import HasNgoFilter
+
 from .models import GroupProxy, User
 
 # Remove the default admins for User and Group
@@ -30,7 +31,7 @@ class UserAdmin(ModelAdmin):
         "date_updated",
     )
     list_display_links = ("email",)
-    list_filter = ("is_active", "is_staff", "is_superuser", HasNgoFilter)
+    list_filter = ("is_active", "is_staff", "is_superuser", "is_ngohub_user", HasNgoFilter)
 
     search_fields = ("email", "first_name", "last_name")
     autocomplete_fields = ("ngo",)

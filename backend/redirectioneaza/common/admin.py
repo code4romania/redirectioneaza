@@ -1,8 +1,9 @@
 from django.contrib import admin
+from django.utils.translation import gettext_lazy as _
 
 
 class HasNgoFilter(admin.SimpleListFilter):
-    title = "Has NGO"
+    title = _("Has NGO")
     parameter_name = "has_ngo"
 
     def lookups(self, request, model_admin):
