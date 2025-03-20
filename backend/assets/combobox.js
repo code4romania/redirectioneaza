@@ -49,7 +49,7 @@ export default function (options, currentValue) {
 
     close() {
       this.isOpen = false;
-      this.query = null;
+      this.query = this.selectedOption ? this.selectedOption : null;
     },
 
     normalizeOptions(options) {
