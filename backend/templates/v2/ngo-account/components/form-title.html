@@ -36,6 +36,39 @@
       </a>
     {% endif %}
 
+    {% if ngo and ngo.can_receive_forms and not hide_public_download_button %}
+      {% blocktrans trimmed asvar tooltip_text %}
+        Download the form filled with the organization's data, print it, and collect contributions offline.
+      {% endblocktrans %}
+      <a
+        x-data
+        x-tooltip.raw="{{ tooltip_text }}"
+        href="{% url 'api-ngo-form-url' ngo.slug %}"
+        target="_blank"
+        class="px-3 py-2 text-sm font-semibold text-gray-700 no-underline border-2 rounded-md border-gray-300 bg-white hover:bg-gray-200 hover:cursor-pointer">
+
+        <span class="flex items-center justify-center gap-x-1.5">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="size-5">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+          </svg>
+
+          <span>
+            {% trans "Download form" %}
+          </span>
+        </span>
+
+      </a>
+    {% endif %}
+
     {% if has_ngohub and not hide_ngohub_button %}
       <div>
         {% trans "Get from NGO Hub" as button_title %}

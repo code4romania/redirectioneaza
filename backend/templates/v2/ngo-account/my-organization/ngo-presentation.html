@@ -25,7 +25,7 @@
       {% with disable_ngohub_fields=has_ngohub %}
 
         {% trans "Presentation Data" as title %}
-        {% include "ngo-account/components/form-title.html" %}
+        {% include "ngo-account/components/form-title.html" with hide_public_download_button=True %}
 
         {% if has_ngohub %}
           {% include "ngo-account/banners/form-ngohub.html" %}

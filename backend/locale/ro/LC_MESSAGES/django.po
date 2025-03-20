@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-19 18:02+0200\n"
+"POT-Creation-Date: 2025-03-20 10:53+0200\n"
 "PO-Revision-Date: 2024-03-07 11:27+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -1005,12 +1005,12 @@ msgstr "Setări cont"
 msgid "Redirections"
 msgstr "Redirecționări"
 
-#: donations/views/ngo_account.py:443
+#: donations/views/ngo_account.py:444
 #: templates/v2/ngo-account/archives/main.html:10
 msgid "Archives history"
 msgstr "Istoric arhive exportate"
 
-#: donations/views/ngo_account.py:485
+#: donations/views/ngo_account.py:486
 #: templates/v2/emails/ngo/download-archive/main.html:21
 msgid "Download archive"
 msgstr "Descarcă arhiva"
@@ -2188,6 +2188,7 @@ msgstr ""
 #: templates/v2/emails/donor/redirection-sans-signature/main.html:18
 #: templates/v2/emails/donor/redirection-with-signature/main.html:20
 #: templates/v2/emails/ngo/new-form-received/main.html:19
+#: templates/v2/ngo-account/components/form-title.html:65
 msgid "Download form"
 msgstr "Descarcă formular"
 
@@ -2672,11 +2673,19 @@ msgstr "Mergi la NGO Hub"
 msgid "View public page"
 msgstr "Vezi pagina publică"
 
-#: templates/v2/ngo-account/components/form-title.html:41
+#: templates/v2/ngo-account/components/form-title.html:40
+msgid ""
+"Download the form filled with the organization's data, print it, and collect "
+"contributions offline."
+msgstr ""
+"Descarcă formularul completat cu datele organizației, tipărește-l și colectează "
+"contribuții offline."
+
+#: templates/v2/ngo-account/components/form-title.html:74
 msgid "Get from NGO Hub"
 msgstr "Preia din NGO Hub"
 
-#: templates/v2/ngo-account/components/form-title.html:73
+#: templates/v2/ngo-account/components/form-title.html:106
 msgid "Save changes"
 msgstr "Salvează modificările"
 

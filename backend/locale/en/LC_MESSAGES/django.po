@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-19 18:02+0200\n"
+"POT-Creation-Date: 2025-03-20 10:53+0200\n"
 "PO-Revision-Date: 2024-02-28 15:45+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -1007,12 +1007,12 @@ msgstr "Account settings"
 msgid "Redirections"
 msgstr "Redirections"
 
-#: donations/views/ngo_account.py:443
+#: donations/views/ngo_account.py:444
 #: templates/v2/ngo-account/archives/main.html:10
 msgid "Archives history"
 msgstr "Archives history"
 
-#: donations/views/ngo_account.py:485
+#: donations/views/ngo_account.py:486
 #: templates/v2/emails/ngo/download-archive/main.html:21
 msgid "Download archive"
 msgstr "Download archive"
@@ -2185,6 +2185,7 @@ msgstr ""
 #: templates/v2/emails/donor/redirection-sans-signature/main.html:18
 #: templates/v2/emails/donor/redirection-with-signature/main.html:20
 #: templates/v2/emails/ngo/new-form-received/main.html:19
+#: templates/v2/ngo-account/components/form-title.html:65
 msgid "Download form"
 msgstr "Download form"
 
@@ -2667,11 +2668,17 @@ msgstr "Go to NGO Hub"
 msgid "View public page"
 msgstr "View public page"
 
-#: templates/v2/ngo-account/components/form-title.html:41
+#: templates/v2/ngo-account/components/form-title.html:40
+msgid ""
+"Download the form filled with the organization's data, print it, and collect "
+"contributions offline."
+msgstr ""
+
+#: templates/v2/ngo-account/components/form-title.html:74
 msgid "Get from NGO Hub"
 msgstr "Get from NGO Hub"
 
-#: templates/v2/ngo-account/components/form-title.html:73
+#: templates/v2/ngo-account/components/form-title.html:106
 msgid "Save changes"
 msgstr "Save changes"
 
