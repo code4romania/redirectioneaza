@@ -294,6 +294,8 @@ class NgoCausesView(NgoBaseTemplateView):
         must_refresh_prefilled_form = False
 
         cause: Cause = Cause.objects.filter(ngo=ngo).first()
+        if cause is None:
+            cause = Cause(ngo=ngo)
         form = CauseForm(post, instance=cause)
 
         context.update({"django_form": form})
