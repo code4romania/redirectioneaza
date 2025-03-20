@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-20 10:53+0200\n"
+"POT-Creation-Date: 2025-03-20 15:17+0200\n"
 "PO-Revision-Date: 2024-03-07 11:27+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -158,12 +158,12 @@ msgid "Has NGO Hub account"
 msgstr "Are cont NGO Hub"
 
 #: donations/admin/ngos.py:111 donations/admin/ngos.py:129
-#: templates/v2/ngo-account/redirections/list-items.html:47
+#: templates/v2/ngo-account/redirections/list-items.html:48
 msgid "Yes"
 msgstr "Da"
 
 #: donations/admin/ngos.py:111 donations/admin/ngos.py:129
-#: templates/v2/ngo-account/redirections/list-items.html:49
+#: templates/v2/ngo-account/redirections/list-items.html:51
 msgid "No"
 msgstr "Nu"
 
@@ -760,6 +760,22 @@ msgstr "formular cu datele ONG-ului completate"
 msgid "Causes"
 msgstr "Cauze"
 
+#: donations/templatetags/action_menu.py:18
+#: templates/v2/emails/donor/redirection-sans-signature/main.html:18
+#: templates/v2/emails/donor/redirection-with-signature/main.html:20
+#: templates/v2/emails/ngo/new-form-received/main.html:19
+#: templates/v2/ngo-account/components/form-title.html:65
+msgid "Download form"
+msgstr "Descarcă formular"
+
+#: donations/templatetags/action_menu.py:33
+msgid "Form options"
+msgstr "Opțiuni formular"
+
+#: donations/templatetags/action_menu.py:34
+msgid "Downloads are disabled for unsigned redirections"
+msgstr "Descărcările sunt dezactivate pentru redirecționările fără semnătură"
+
 #: donations/templatetags/text_format.py:11
 #, python-format
 msgid "Sector %s"
@@ -966,51 +982,59 @@ msgstr "data completării"
 msgid "duration"
 msgstr "perioadă"
 
-#: donations/views/ngo_account.py:35
+#: donations/views/ngo_account.py:36
 msgid "The IBAN number must have 24 characters"
 msgstr "IBAN-ul trebuie să aibă 24 de cifre"
 
-#: donations/views/ngo_account.py:38
+#: donations/views/ngo_account.py:39
 msgid "The IBAN number must contain only letters and digits"
 msgstr "IBAN-ul trebuie să conțină doar litere și cifre"
 
-#: donations/views/ngo_account.py:41
+#: donations/views/ngo_account.py:42
 msgid "The IBAN number must start with 'RO'"
 msgstr "IBAN-ul trebuie să înceapă cu 'RO'"
 
-#: donations/views/ngo_account.py:67 donations/views/ngo_account.py:117
+#: donations/views/ngo_account.py:68 donations/views/ngo_account.py:118
 msgid "Organization details"
 msgstr "Detalii organizație"
 
-#: donations/views/ngo_account.py:187
+#: donations/views/ngo_account.py:188
 msgid "There are some errors on the presentation form."
 msgstr "Există erori în formularul de prezentare."
 
-#: donations/views/ngo_account.py:246
+#: donations/views/ngo_account.py:245
 msgid "Organization forms"
 msgstr "Formulare organizație"
 
-#: donations/views/ngo_account.py:303 donations/views/redirections.py:178
+#: donations/views/ngo_account.py:302 donations/views/redirections.py:178
 msgid "There are some errors on the redirection form."
 msgstr "Există erori în formularul de redirecționare."
 
-#: donations/views/ngo_account.py:337
+#: donations/views/ngo_account.py:321
 #: templates/v2/ngo-account/settings-account/main.html:10
 msgid "Account settings"
 msgstr "Setări cont"
 
-#: donations/views/ngo_account.py:380
+#: donations/views/ngo_account.py:364
 #: redirectioneaza/context_processors/headers.py:106
 #: templates/v2/ngo-account/redirections/main.html:10
 msgid "Redirections"
 msgstr "Redirecționări"
 
-#: donations/views/ngo_account.py:444
+#: donations/views/ngo_account.py:428
 #: templates/v2/ngo-account/archives/main.html:10
 msgid "Archives history"
 msgstr "Istoric arhive exportate"
 
-#: donations/views/ngo_account.py:486
+#: donations/views/ngo_account.py:470
+msgid "Download donor form"
+msgstr "Descarcă formular donator"
+
+#: donations/views/ngo_account.py:481
+msgid "Your organization is not active"
+msgstr "Organizația ta nu este activă"
+
+#: donations/views/ngo_account.py:495
 #: templates/v2/emails/ngo/download-archive/main.html:21
 msgid "Download archive"
 msgstr "Descarcă arhiva"
@@ -1855,6 +1879,14 @@ msgstr ""
 "să poată folosi aplicația, asigurăte că le permiți accesul din contul de "
 "administrator al organizației."
 
+#: templates/v2/components/action-menu/main.html:22
+msgid "Open options"
+msgstr "Deschide opțiunile"
+
+#: templates/v2/components/action-menu/main.html:35
+msgid "Dropdown menu, show/hide based on menu state."
+msgstr "Meniu derulant, arată/ascunde în funcție de starea meniului."
+
 #: templates/v2/components/copy-to-clipboard.html:10
 msgid "Copy the link"
 msgstr "Copiază linkul"
@@ -2184,13 +2216,6 @@ msgid ""
 msgstr ""
 "Mulțumim că ai ales să susții %(ngo_name)s! Poți descărca formularul "
 "completat apăsând butonul de mai jos."
-
-#: templates/v2/emails/donor/redirection-sans-signature/main.html:18
-#: templates/v2/emails/donor/redirection-with-signature/main.html:20
-#: templates/v2/emails/ngo/new-form-received/main.html:19
-#: templates/v2/ngo-account/components/form-title.html:65
-msgid "Download form"
-msgstr "Descarcă formular"
 
 #: templates/v2/emails/donor/redirection-sans-signature/main.html:22
 #: templates/v2/emails/donor/redirection-sans-signature/main.txt:13
@@ -2678,8 +2703,8 @@ msgid ""
 "Download the form filled with the organization's data, print it, and collect "
 "contributions offline."
 msgstr ""
-"Descarcă formularul completat cu datele organizației, tipărește-l și colectează "
-"contribuții offline."
+"Descarcă formularul completat cu datele organizației, tipărește-l și "
+"colectează contribuții offline."
 
 #: templates/v2/ngo-account/components/form-title.html:74
 msgid "Get from NGO Hub"
@@ -2806,15 +2831,15 @@ msgstr "2 ani"
 msgid "No redirections found"
 msgstr "Nu s-au găsit redirecționări"
 
-#: templates/v2/ngo-account/redirections/list-items.html:35
+#: templates/v2/ngo-account/redirections/list-items.html:36
 msgid "This person does not wish to share their contact details."
 msgstr "Această persoană nu dorește să-și împărtășească datele de contact."
 
-#: templates/v2/ngo-account/redirections/list-items.html:54
+#: templates/v2/ngo-account/redirections/list-items.html:57
 msgid "Signed"
 msgstr "Semnat"
 
-#: templates/v2/ngo-account/redirections/list-items.html:56
+#: templates/v2/ngo-account/redirections/list-items.html:60
 msgid "Unsigned"
 msgstr "Nesemnat"
 
