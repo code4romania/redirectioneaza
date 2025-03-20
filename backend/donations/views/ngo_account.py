@@ -466,6 +466,31 @@ class NgoArchivesView(NgoBaseListView):
         return archives
 
 
+class RedirectionDownloadLinkView(BaseVisibleTemplateView):
+    title = _("Download donor form")
+
+    @method_decorator(login_required(login_url=reverse_lazy("login")))
+    def get(self, request, form_id, *args, **kwargs):
+        user: User = request.user
+        ngo: Ngo = user.ngo if user.ngo else None
+
+        if not ngo:
+            raise Http404
+
+        if not ngo.is_active:
+            raise PermissionDenied(_("Your organization is not active"))
+
+        try:
+            donor = Donor.objects.get(pk=form_id, ngo=ngo)
+        except Donor.DoesNotExist:
+            raise Http404
+
+        if not donor.pdf_file:
+            raise Http404
+
+        return redirect(donor.pdf_file.url)
+
+
 class ArchiveDownloadLinkView(BaseVisibleTemplateView):
     title = _("Download archive")
 

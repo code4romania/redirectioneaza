@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n action_menu %}
 
 {% if redirections|length == 0 %}
 
@@ -11,7 +11,8 @@
 {% else %}
 
   {% for redirection in redirections %}
-    <tr class="text-sm text-gray-600">
+    <tr
+      class="text-sm text-gray-600">
 
       <td class="py-4 pl-4 pr-3 font-medium text-gray-900 whitespace-nowrap sm:pl-0">
         {{ forloop.counter0|add:page_obj.start_index }}
@@ -57,6 +58,11 @@
         {% endif %}
       </td>
 
+      <td>
+
+        {% include "components/action-menu/main.html" with items=redirection|redirection_dropdown button_disabled=redirection|button_disabled button_title=redirection|button_title %}
+
+      </td>
     </tr>
   {% endfor %}
 

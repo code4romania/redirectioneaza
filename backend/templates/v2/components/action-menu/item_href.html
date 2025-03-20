@@ -1,0 +1,12 @@
+<a
+  {% if active %}
+  href="{{ link }}"
+  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+  {% else %}
+  class="block px-4 py-2 text-sm text-gray-400"
+  {% endif %}
+  role="menuitem"
+  tabindex="-1"
+  id="menu-item-{{ index }}">
+  {{ title }}
+</a>
