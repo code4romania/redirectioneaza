@@ -373,7 +373,7 @@ class NgoRedirectionsView(NgoBaseListView, DonorSearchMixin):
         ngo: Ngo = user.ngo if user.ngo else None
 
         counties_options: List[str] = [
-            county for county in settings.FORM_COUNTIES_WITH_SECTORS_LIST if county in ngo.donors_counties()
+            county for county in settings.COUNTIES_WITH_SECTORS_LIST if county in ngo.donors_counties()
         ]
 
         filters = [
