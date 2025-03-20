@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="q" type="Python.DjangoServer" factoryName="Django server">
+  <configuration default="false" name="seed_groups" type="Python.DjangoServer" factoryName="Django server" folderName="others">
     <module name="redirectioneaza" />
     <option name="ENV_FILES" value="$PROJECT_DIR$/.env.local" />
     <option name="INTERPRETER_OPTIONS" value="" />
@@ -7,11 +7,11 @@
     <envs>
       <env name="PYTHONUNBUFFERED" value="1" />
       <env name="DJANGO_SETTINGS_MODULE" value="redirectioneaza.settings" />
-      <env name="DJANGO_VITE_DEV_SERVER_PORT" value="3001" />
     </envs>
     <option name="SDK_HOME" value="" />
+    <option name="SDK_NAME" value="Python 3.12 (redirectioneaza)" />
     <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/backend" />
-    <option name="IS_MODULE_SDK" value="true" />
+    <option name="IS_MODULE_SDK" value="false" />
     <option name="ADD_CONTENT_ROOTS" value="true" />
     <option name="ADD_SOURCE_ROOTS" value="true" />
     <option name="launchJavascriptDebuger" value="false" />
@@ -21,7 +21,7 @@
     <option name="runTestServer" value="false" />
     <option name="runNoReload" value="false" />
     <option name="useCustomRunCommand" value="true" />
-    <option name="customRunCommand" value="qcluster" />
+    <option name="customRunCommand" value="seed_groups" />
     <method v="2" />
   </configuration>
 </component>
