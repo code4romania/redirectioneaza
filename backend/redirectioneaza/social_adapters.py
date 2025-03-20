@@ -106,7 +106,18 @@ def check_ngohub_user(sociallogin: SocialLogin) -> None:
     ngohub: NGOHub = NGOHub(settings.NGOHUB_API_HOST)
     user_token: str = sociallogin.token.token
 
-    if not ngohub.check_user_organization_has_application(ngo_token=user_token, login_link=settings.BASE_WEBSITE):
+    try:
+        has_application = ngohub.check_user_organization_has_application(
+            ngo_token=user_token, login_link=settings.BASE_WEBSITE
+        )
+    except HubHTTPException as e:
+        logger.error(
+            f"User {sociallogin.user.email} could not be found in NGO Hub. "
+            f"Please check the configuration. Exception raised from error {e}."
+        )
+        raise ImmediateHttpResponse(redirect(reverse("error-app-missing")))
+
+    if not has_application:
         raise ImmediateHttpResponse(redirect(reverse("error-app-missing")))
 
 
