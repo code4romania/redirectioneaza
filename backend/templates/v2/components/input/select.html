@@ -1,0 +1,23 @@
+{% extends 'components/input/base.html' %}
+
+{% load i18n %}
+
+{% block input %}
+
+<div x-data="select({{ options}}, {% if current_value %}'{{ current_value }}'{% else %}null{% endif %})">
+
+    <!-- Dropdown Select -->
+    <select id="{{ input_id }}" name="{{ input_name }}"
+        x-ref="select"    
+        x-model="selectedOption" 
+        @change="handleChange"
+        class="block w-full rounded-md bg-white py-1.5 pl-3 pr-12 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-600 sm:text-sm/6">
+        <option value="" disabled selected>Select an option</option>
+        <template x-for="option in options" :key="option.value">
+            <option :value="option.value" x-text="option.title" :selected="option.value===selectedOption"></option>
+        </template>
+    </select>
+
+</div>
+
+{% endblock %}
