@@ -15,14 +15,15 @@ from django.views.generic import ListView
 from django_q.tasks import async_task
 
 from users.models import User
-from .base import BaseContextPropertiesMixin, BaseVisibleTemplateView
-from .common.misc import get_ngo_archive_download_status
-from .common.search import DonorSearchMixin
+
 from ..common.validation.registration_number import extract_vat_id, ngo_id_number_validator
 from ..forms.ngo_account import CauseForm, NgoPresentationForm
 from ..models.donors import Donor
 from ..models.jobs import Job
 from ..models.ngos import Cause, Ngo
+from .base import BaseContextPropertiesMixin, BaseVisibleTemplateView
+from .common.misc import get_ngo_archive_download_status
+from .common.search import DonorSearchMixin
 
 UserModel = get_user_model()
 
@@ -231,10 +232,8 @@ class NgoPresentationView(NgoBaseTemplateView):
 
         # XXX: [MULTI-FORM] remove these once we have multiple forms
         if ngo.causes.exists():
-            cause = ngo.causes.first()
-            if cause.display_image != ngo.logo:
-                cause.display_image = ngo.logo
-                cause.save()
+            cause: Cause = ngo.causes.first()
+            cause.sync_with_ngo()
 
         context["ngo"] = ngo
 
@@ -305,23 +304,8 @@ class NgoCausesView(NgoBaseTemplateView):
 
         cause = form.save(commit=False)
 
-        cause.name = ngo.name
-        cause.ngo = ngo
-
-        if not cause.display_image and ngo.logo:
-            cause.display_image = ngo.logo
-
-        cause.save()
-
         # XXX: [MULTI-FORM] Remove once testing is finished, this information should only be kept in the forms
-        ngo.bank_account = cause.bank_account
-
-        ngo.slug = cause.slug
-        ngo.description = cause.description
-
-        ngo.is_accepting_forms = cause.allow_online_collection
-
-        ngo.save()
+        cause.sync_with_ngo(force_cause_save=True)
 
         if must_refresh_prefilled_form:
             async_task(delete_prefilled_form, ngo.id)
