@@ -65,6 +65,9 @@ def handle_pre_social_login(sociallogin: SocialLogin, **kwargs) -> None:
         return
 
     if user.is_ngohub_user:
+        if user.groups.filter(name=MAIN_ADMIN).exists():
+            return
+
         if not user.ngo:
             common_user_init(sociallogin=sociallogin)
 
