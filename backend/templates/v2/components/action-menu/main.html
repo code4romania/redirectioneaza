@@ -1,0 +1,63 @@
+{% load i18n %}
+
+<div
+  x-data="{ open: false }"
+  @keydown.escape.stop="open = false"
+  @click.away="open = false"
+  class="relative inline-block text-left">
+
+  <div>
+    <button
+      x-ref="button"
+      @click="open = !open"
+      {% if button_disabled %}disabled{% endif %}
+      {% if button_title %}title="{{ button_title }}"{% endif %}
+      type="button"
+      class="flex items-center rounded-full bg-white text-gray-700 hover:text-gray-900  disabled:text-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 focus:ring-offset-gray-100"
+      id="menu-button"
+      aria-expanded="true"
+      aria-haspopup="true">
+
+      <span class="sr-only">
+        {% trans "Open options" %}
+      </span>
+
+      <svg class="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+        <path d="M10 3a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM10 8.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM11.5 15.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0Z"/>
+      </svg>
+
+    </button>
+  </div>
+
+  <div
+    x-show="open"
+    x-ref="menu-items"
+    x-description="{% trans "Dropdown menu, show/hide based on menu state." %}"
+    x-transition:enter="transition ease-out duration-100"
+    x-transition:enter-start="transform opacity-0 scale-95"
+    x-transition:enter-end="transform opacity-100 scale-100"
+    x-transition:leave="transition ease-in duration-75"
+    x-transition:leave-start="transform opacity-100 scale-100"
+    x-transition:leave-end="transform opacity-0 scale-95"
+    x-bind:aria-activedescendant="activeDescendant"
+    @keydown.arrow-up.prevent="onArrowUp()"
+    @keydown.arrow-down.prevent="onArrowDown()"
+    @keydown.tab="open = false"
+    @keydown.enter.prevent="open = false"
+    @keyup.space.prevent="open = false"
+    class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none"
+    role="menu"
+    aria-orientation="vertical"
+    aria-labelledby="menu-button"
+    tabindex="-1">
+
+    <div class="py-1" role="none">
+
+      {% for item in items %}
+        {% include "components/action-menu/item_href.html" with index=forloop.counter title=item.title link=item.link active=item.active %}
+      {% endfor %}
+
+    </div>
+
+  </div>
+</div>

@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n action_menu %}
 
 {% if redirections|length == 0 %}
 
@@ -59,82 +59,9 @@
       </td>
 
       <td>
-        <div
-          x-data="{ open: false }"
-          @keydown.escape.stop="open = false; focusButton()"
-          @click.away="open = false"
-          class="relative flex-none">
-          <button
-            id="options-menu-0-button"
-            type="button"
-            {% if not redirection.has_signed %}disabled{% endif %}
-            {% if not redirection.has_signed %}title="{% trans "Downloads are disabled for unsigned redirections" %}"{% endif %}
-            class="-m-2.5 block p-2.5 text-gray-500 hover:text-gray-900 disabled:text-gray-400 disabled:cursor-not-allowed"
-            x-ref="button"
-            @click="open = !open"
-            @keyup.space.prevent="onButtonEnter()"
-            @keydown.enter.prevent="onButtonEnter()"
-            aria-expanded="true" aria-haspopup="true"
-            x-bind:aria-expanded="open.toString()"
-            @keydown.arrow-up.prevent="onArrowUp()"
-            @keydown.arrow-down.prevent="onArrowDown()">
 
-              <span class="sr-only">
-                {% trans "Open options" %}
-              </span>
-            <svg class="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
-              <path d="M10 3a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM10 8.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM11.5 15.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0Z"></path>
-            </svg>
+        {% include "components/action-menu/main.html" with items=redirection|redirection_dropdown button_disabled=redirection|button_disabled button_title=redirection|button_title %}
 
-          </button>
-          <div
-            class="absolute right-0 z-10 mt-2 w-64 origin-top-right rounded-md bg-white py-2 ring-1 shadow-lg ring-gray-900/5 focus:outline-hidden"
-            x-show="open"
-            x-ref="menu-items"
-            x-description="{% trans "Dropdown menu, show/hide based on menu state." %}"
-            x-transition:enter="transition ease-out duration-100"
-            x-transition:enter-start="transform opacity-0 scale-95"
-            x-transition:enter-end="transform opacity-100 scale-100"
-            x-transition:leave="transition ease-in duration-75"
-            x-transition:leave-start="transform opacity-100 scale-100"
-            x-transition:leave-end="transform opacity-0 scale-95"
-            x-bind:aria-activedescendant="activeDescendant" role="menu" aria-orientation="vertical" aria-labelledby="options-menu-0-button" tabindex="-1"
-            @keydown.arrow-up.prevent="onArrowUp()"
-            @keydown.arrow-down.prevent="onArrowDown()"
-            @keydown.tab="open = false"
-            @keydown.enter.prevent="open = false; focusButton()"
-            @keyup.space.prevent="open = false; focusButton()"
-          >
-
-            {% if redirection.has_signed %}
-              <a
-                href="{% url "my-organization:redirection-download-link" form_id=redirection.id %}"
-                target="_blank"
-                class="flex gap-2 px-3 py-1 text-sm/6 text-gray-900 hover:bg-gray-50 hover:cursor-pointer"
-                x-state:on="Active"
-                x-state:off="Not Active"
-                :class="{ 'bg-gray-50 outline-hidden': activeIndex === 0 }"
-                role="menuitem"
-                tabindex="-1"
-                id="options-menu-0-item-0"
-                {#              @mouseenter="onMouseEnter($event)"#}
-                {#              @mousemove="onMouseMove($event, 0)"#}
-                {#              @mouseleave="onMouseLeave($event)"#}
-                {#              @click="open = false">#}
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                  <path
-                    stroke-linecap="round" stroke-linejoin="round"
-                    d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m.75 12 3 3m0 0 3-3m-3 3v-6m-1.5-9H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"/>
-                </svg>
-
-                {% trans "Download form" %}
-                <span class="sr-only">, {{ redirection.f_name }} {{ redirection.l_name }}</span>
-              </a>
-            {% endif %}
-
-          </div>
-        </div>
       </td>
     </tr>
   {% endfor %}
