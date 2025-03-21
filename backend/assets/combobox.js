@@ -1,4 +1,4 @@
-export default function (options, currentValue) {
+export default function (options, resetText, currentValue) {
   return {
     options: [],
     query: null,
@@ -13,6 +13,8 @@ export default function (options, currentValue) {
       const filter = (query) => {
         query = this.normalizeString(query);
 
+        const resetOption = { title: resetText, value: null };
+
         if (!query) {
           this.filteredOptions = this.options;
         } else {
@@ -20,6 +22,7 @@ export default function (options, currentValue) {
             return option.normalizedTitle.indexOf(query) > -1 || option.title.indexOf(query) > -1;
           });
         }
+        this.filteredOptions = [resetOption, ...this.filteredOptions];
       };
 
       filter();

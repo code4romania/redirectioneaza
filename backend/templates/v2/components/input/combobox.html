@@ -4,8 +4,12 @@
 
 {% block input %}
 
+  {% if not reset_text %}
+    {% trans "Reset filter" as reset_text %}
+  {% endif %}
+
   <div
-    x-data="combobox({{ options }},{% if current_value %}'{{ current_value }}'{% else %}null{% endif %})"
+    x-data="combobox({{ options }},'{{ reset_text }}',{% if current_value %}'{{ current_value }}'{% else %}null{% endif %})"
     @click.outside="close"
     @keydown.tab="close"
     class="relative">
@@ -26,7 +30,8 @@
         @mousedown="isOpen = true"
         @focus="isOpen = true"
         @keydown.esc="close"
-        class="block w-full rounded-md bg-white py-1.5 pl-3 pr-12 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-600 sm:text-sm/6"
+        class="block w-full rounded-md bg-white py-1.5 pl-3 pr-12 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-600 sm:text-sm/6"
+        :class="selectedOption !== null ? 'ring-1 ring-amber-700' : ''"
       >
     </label>
 
@@ -35,7 +40,7 @@
       title="{% trans 'Toggle dropdown' %}"
       type="button"
       class="absolute inset-y-0 right-0 flex items-center px-2 rounded-r-md focus:outline-none">
-      <svg class="text-gray-400 size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+      <svg class="text-gray-500 size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
         <path
           fill-rule="evenodd"
           d="M10.53 3.47a.75.75 0 0 0-1.06 0L6.22 6.72a.75.75 0 0 0 1.06 1.06L10 5.06l2.72 2.72a.75.75 0 1 0 1.06-1.06l-3.25-3.25Zm-4.31 9.81 3.25 3.25a.75.75 0 0 0 1.06 0l3.25-3.25a.75.75 0 1 0-1.06-1.06L10 14.94l-2.72-2.72a.75.75 0 0 0-1.06 1.06Z"
@@ -53,7 +58,8 @@
         :key="index">
         <li
           @click="select(option)"
-          class="relative py-2 pl-3 text-gray-900 cursor-default select-none pr-9 hover:bg-amber-200"
+          class="relative py-2 pl-3 cursor-default select-none pr-9 hover:bg-amber-200"
+          :class="option.value === null ? 'text-gray-500 hover:text-gray-700' : 'text-gray-900'"
           id="option-0"
           role="option"
         >

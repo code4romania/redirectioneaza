@@ -1,22 +1,24 @@
-export default function (options, selectedValue) {
+export default function (options,selectedValue) {
 
   return {
-      selectedOption: "",
-      options: [],
+    selectedOption: "",
+    options: [],
 
-      handleChange() {
-          this.$refs.select.closest('form').submit();
-      },
+    handleChange() {
+      this.$refs.select.closest('form').submit();
+    },
 
-      init() {
-          // Convert all option values to strings to ensure consistency
-          this.options = options.map(option => ({
-              ...option,
-              value: String(option.value) // Ensure option values are strings
-          }));
+    init() {
+      // Convert all option values to strings to ensure consistency
+      this.options = options.map(option => ({
+        ...option,
+        value: String(option.value) // Ensure option values are strings
+      }));
+      this.options = [...this.options];
 
-          // Convert selected value to string if not null
-          this.selectedOption  = selectedValue !== null ? String(selectedValue) : "";
-      }
+      // Convert selected value to string if not null
+      this.selectedOption = selectedValue !== null ? String(selectedValue) : "";
+      console.log('selectedOption: "' + this.selectedOption + '"');
+    }
   }
 }

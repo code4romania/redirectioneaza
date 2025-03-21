@@ -382,6 +382,7 @@ class NgoRedirectionsView(NgoBaseListView, DonorSearchMixin):
                 "key": "c",
                 "queryset_key": "county",
                 "title": _("County"),
+                "type": "combobox",
                 "options": counties_options,
             },
             {
@@ -389,6 +390,7 @@ class NgoRedirectionsView(NgoBaseListView, DonorSearchMixin):
                 "key": "l",
                 "queryset_key": "city",
                 "title": _("Locality"),
+                "type": "combobox",
                 "options": sorted(ngo.donors_localities()),
             },
             {
@@ -397,6 +399,7 @@ class NgoRedirectionsView(NgoBaseListView, DonorSearchMixin):
                 "queryset_key": "two_years",
                 "queryset_transformation": lambda fe_value: fe_value == "2",
                 "title": _("Period"),
+                "type": "select",
                 "options": [
                     {"title": _("One year"), "value": "1"},
                     {"title": _("Two years"), "value": "2"},
@@ -408,6 +411,7 @@ class NgoRedirectionsView(NgoBaseListView, DonorSearchMixin):
                 "queryset_key": "has_signed",
                 "queryset_transformation": lambda fe_value: fe_value == "signed",
                 "title": _("Status"),
+                "type": "select",
                 "options": [
                     {"title": _("Signed"), "value": "signed"},
                     {"title": _("Not signed"), "value": "unsigned"},

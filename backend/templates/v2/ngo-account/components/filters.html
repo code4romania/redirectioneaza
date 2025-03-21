@@ -19,9 +19,7 @@
           {% with submit_on_select=form_name %}
 
             {% for filter in filters %}
-              {% if filter.options %}
-                {% include "components/input/combobox.html" with input_id=filter.id input_title=filter.title input_name=filter.key options=filter.options current_value=filters_active|get_item:filter.key %}
-              {% endif %}
+              {% include "components/input/filter.html" %}
             {% endfor %}
 
           {% endwith %}
@@ -30,7 +28,7 @@
         {% if filters_active %}
           <a
             href="?"
-            class="col-span-1 place-self-center justify-self-start text-sm font-semibold text-cyan-900 hover:text-cyan-700 hover:cursor-pointer">
+            class="col-span-1 place-self-center justify-self-start text-sm font-semibold text-amber-900 hover:text-amber-700 hover:cursor-pointer">
             {% trans "Clear filters and search" %}
           </a>
         {% endif %}

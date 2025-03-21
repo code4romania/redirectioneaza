@@ -121,13 +121,15 @@
             type="button"
             x-on:click="filtersDisplay = !filtersDisplay"
             class="flex items-center gap-2 px-2 my-4 text-base font-medium rounded-md outline outline-1 -outline-offset-1 outline-gray-300 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
-            :class="filtersDisplay ? 'bg-amber-200': 'bg-white'"
+            :class="filtersDisplay ? 'bg-amber-50 ring-1 ring-amber-700 text-amber-700': 'bg-white'"
           >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
               <path
                 d="M17 2.75a.75.75 0 0 0-1.5 0v5.5a.75.75 0 0 0 1.5 0v-5.5ZM17 15.75a.75.75 0 0 0-1.5 0v1.5a.75.75 0 0 0 1.5 0v-1.5ZM3.75 15a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0v-1.5a.75.75 0 0 1 .75-.75ZM4.5 2.75a.75.75 0 0 0-1.5 0v5.5a.75.75 0 0 0 1.5 0v-5.5ZM10 11a.75.75 0 0 1 .75.75v5.5a.75.75 0 0 1-1.5 0v-5.5A.75.75 0 0 1 10 11ZM10.75 2.75a.75.75 0 0 0-1.5 0v1.5a.75.75 0 0 0 1.5 0v-1.5ZM10 6a2 2 0 1 0 0 4 2 2 0 0 0 0-4ZM3.75 10a2 2 0 1 0 0 4 2 2 0 0 0 0-4ZM16.25 10a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z"/>
             </svg>
-            {% trans "Filter list" %}
+            <span>
+              {% trans "Filter list" %}
+            </span>
           </button>
         </div>
 

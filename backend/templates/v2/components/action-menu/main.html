@@ -13,7 +13,7 @@
       {% if button_disabled %}disabled{% endif %}
       {% if button_title %}title="{{ button_title }}"{% endif %}
       type="button"
-      class="flex items-center rounded-full bg-white text-gray-700 hover:text-gray-900  disabled:text-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 focus:ring-offset-gray-100"
+      class="flex items-center rounded-full bg-white text-gray-700 hover:text-gray-900  disabled:text-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-700 focus:ring-offset-2 focus:ring-offset-gray-100"
       id="menu-button"
       aria-expanded="true"
       aria-haspopup="true">
@@ -39,7 +39,6 @@
     x-transition:leave="transition ease-in duration-75"
     x-transition:leave-start="transform opacity-100 scale-100"
     x-transition:leave-end="transform opacity-0 scale-95"
-    x-bind:aria-activedescendant="activeDescendant"
     @keydown.arrow-up.prevent="onArrowUp()"
     @keydown.arrow-down.prevent="onArrowDown()"
     @keydown.tab="open = false"
