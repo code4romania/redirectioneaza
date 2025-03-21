@@ -33,7 +33,7 @@ class LocalityQueryFilter(QueryFilter):
 
         self.title = _("Locality")
 
-        self.queryset_key = "locality"
+        self.queryset_key = "city"
 
     def options_with_objects(self, objects: Optional[QuerySet] = None) -> List[Dict[str, Union[int, str]]]:
         return sorted(set(objects.values_list("city", flat=True).distinct()))
