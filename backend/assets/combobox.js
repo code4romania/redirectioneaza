@@ -1,19 +1,16 @@
-export default function (options, resetText, currentValue) {
+export default function (options, currentValue) {
   return {
     options: [],
     query: null,
     filteredOptions: [],
-
     isOpen: false,
     selectedOption: null,
-
     init() {
       this.options = this.normalizeOptions(options);
 
       const filter = (query) => {
         query = this.normalizeString(query);
 
-        const resetOption = { title: resetText, value: null };
 
         if (!query) {
           this.filteredOptions = this.options;
@@ -22,7 +19,6 @@ export default function (options, resetText, currentValue) {
             return option.normalizedTitle.indexOf(query) > -1 || option.title.indexOf(query) > -1;
           });
         }
-        this.filteredOptions = [resetOption, ...this.filteredOptions];
       };
 
       filter();
@@ -34,27 +30,26 @@ export default function (options, resetText, currentValue) {
       }
     },
     setSelectedOption(option) {
-      this.selectedOption = option.value;
+      this.selectedOption = option?.value ? option.value : null;
 
-      this.$refs.input.value = option.value;
-      this.$refs.display.value = option.title;
+      this.$refs.input.value = option?.value ? option.value : null;
+      this.$refs.display.value = option?.title ? option.title : '';
 
       this.close();
     },
     select(option) {
-      if (!option || !this.isOpen) {
+      if (!this.isOpen) {
         return;
       }
+      console.log(option);
       this.setSelectedOption(option);
 
       this.$refs.input.closest('form').submit();
     },
-
     close() {
       this.isOpen = false;
       this.query = this.selectedOption ? this.selectedOption : null;
     },
-
     normalizeOptions(options) {
       return options.map(option => {
         const title = option?.title || option;
@@ -67,7 +62,6 @@ export default function (options, resetText, currentValue) {
         };
       });
     },
-
     normalizeString(string) {
       if (!string) {
         return '';

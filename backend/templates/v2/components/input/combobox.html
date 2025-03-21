@@ -9,7 +9,7 @@
   {% endif %}
 
   <div
-    x-data="combobox({{ options }},'{{ reset_text }}',{% if current_value %}'{{ current_value }}'{% else %}null{% endif %})"
+    x-data="combobox({{ options }},{% if current_value %}'{{ current_value }}'{% else %}null{% endif %})"
     @click.outside="close"
     @keydown.tab="close"
     class="relative">
@@ -52,6 +52,16 @@
       x-show="isOpen"
       class="absolute z-10 w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black/5 focus:outline-none sm:text-sm"
       id="options" role="listbox">
+
+      <li
+        @click="select(null)"
+        class="relative py-2 pl-3 cursor-default select-none pr-9 text-gray-500 hover:text-gray-700 hover:bg-amber-200"
+        id="option-0"
+        role="option">
+        {{ reset_text }}
+      </li>
+
+      <hr>
 
       <template
         x-for="(option, index) in filteredOptions"

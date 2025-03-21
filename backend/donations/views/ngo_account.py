@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Callable, Dict, List, Optional, Union
 
 from django.conf import settings
 from django.contrib import messages
@@ -14,6 +14,7 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic import ListView
 from django_q.tasks import async_task
 
+from redirectioneaza.common.filters import QueryFilter
 from users.models import User
 
 from ..common.validation.registration_number import extract_vat_id, ngo_id_number_validator
@@ -24,6 +25,12 @@ from ..models.ngos import Cause, Ngo
 from .base import BaseContextPropertiesMixin, BaseVisibleTemplateView
 from .common.misc import get_ngo_archive_download_status
 from .common.search import DonorSearchMixin
+from .ngo_account_filters import (
+    CountyQueryFilter,
+    FormPeriodQueryFilter,
+    FormStatusQueryFilter,
+    LocalityQueryFilter,
+)
 
 UserModel = get_user_model()
 
@@ -368,81 +375,43 @@ class NgoRedirectionsView(NgoBaseListView, DonorSearchMixin):
     paginate_by = 8
     sidebar_item_target = "org-redirections"
 
-    def get_filters(self):
-        user: User = self.request.user
-        ngo: Ngo = user.ngo if user.ngo else None
-
-        counties_options: List[str] = [
-            county for county in settings.COUNTIES_WITH_SECTORS_LIST if county in ngo.donors_counties()
+    def get_filters(self) -> List[QueryFilter]:
+        return [
+            CountyQueryFilter(),
+            LocalityQueryFilter(),
+            FormPeriodQueryFilter(),
+            FormStatusQueryFilter(),
         ]
 
-        filters = [
-            {
-                "id": "filter_dropdown_county",
-                "key": "c",
-                "queryset_key": "county",
-                "title": _("County"),
-                "type": "combobox",
-                "options": counties_options,
-            },
-            {
-                "id": "filter_dropdown_locality",
-                "key": "l",
-                "queryset_key": "city",
-                "title": _("Locality"),
-                "type": "combobox",
-                "options": sorted(ngo.donors_localities()),
-            },
-            {
-                "id": "filter_dropdown_period",
-                "key": "p",
-                "queryset_key": "two_years",
-                "queryset_transformation": lambda fe_value: fe_value == "2",
-                "title": _("Period"),
-                "type": "select",
-                "options": [
-                    {"title": _("One year"), "value": "1"},
-                    {"title": _("Two years"), "value": "2"},
-                ],
-            },
-            {
-                "id": "filter_dropdown_status",
-                "key": "s",
-                "queryset_key": "has_signed",
-                "queryset_transformation": lambda fe_value: fe_value == "signed",
-                "title": _("Status"),
-                "type": "select",
-                "options": [
-                    {"title": _("Signed"), "value": "signed"},
-                    {"title": _("Not signed"), "value": "unsigned"},
-                ],
-            },
-        ]
+    def get_filters_dict(self) -> List[Dict[str, Union[str, Callable, Optional[List[Dict]]]]]:
+        objects = self.object_list
+        return [query_filter.to_dict(include_options=True, objects=objects) for query_filter in (self.get_filters())]
 
-        return filters
+    def get_frontend_filters(self, filters: List[QueryFilter] = None):
+        if not filters:
+            filters = self.get_filters()
 
-    def get_frontend_filters(self, filters):
         filters_active = {}
         request_params = self.request.GET
 
         for search_filter in filters:
-            filter_key = search_filter["key"]
+            filter_key = search_filter.key
             if filter_value := request_params.get(filter_key, ""):
                 filters_active[filter_key] = filter_value
 
         return filters_active
 
-    def get_queryset_filters(self, filters):
+    def get_queryset_filters(self, filters: List[QueryFilter] = None):
+        if not filters:
+            filters = self.get_filters()
+
         queryset_filters = {}
         request_params = self.request.GET
 
         for search_filter in filters:
-            filter_key = search_filter["key"]
+            filter_key = search_filter.key
             if filter_value := request_params.get(filter_key, ""):
-                if queryset_transformation := search_filter.get("queryset_transformation"):
-                    filter_value = queryset_transformation(filter_value)
-
-                queryset_filters[search_filter["queryset_key"]] = filter_value
+                queryset_filters[search_filter.queryset_key] = search_filter.transform(filter_value)
 
         return queryset_filters
 
@@ -457,9 +426,6 @@ class NgoRedirectionsView(NgoBaseListView, DonorSearchMixin):
         user: User = self.request.user
         ngo: Ngo = user.ngo if user.ngo else None
 
-        filters = self.get_filters()
-        filters_active = self.get_frontend_filters(filters)
-
         context.update(
             {
                 "user": user,
@@ -467,8 +433,8 @@ class NgoRedirectionsView(NgoBaseListView, DonorSearchMixin):
                 "title": self.title,
                 "search_query": search_query,
                 "url_search_query": query_dict.urlencode(),
-                "filters": filters,
-                "filters_active": filters_active,
+                "filters": self.get_filters_dict(),
+                "filters_active": self.get_frontend_filters(),
             }
         )
 
@@ -486,8 +452,7 @@ class NgoRedirectionsView(NgoBaseListView, DonorSearchMixin):
         if not ngo:
             return Donor.objects.none()
 
-        filters = self.get_filters()
-        queryset_filters = self.get_queryset_filters(filters)
+        queryset_filters = self.get_queryset_filters()
 
         redirections = (
             ngo.donor_set.all()

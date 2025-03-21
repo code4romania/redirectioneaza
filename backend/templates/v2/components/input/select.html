@@ -18,7 +18,9 @@
       <option value="" :selected="selectedOption === ''">
         {{ input_title }}
       </option>
+
       <hr>
+
       <template x-for="option in options" :key="option.value">
           <option :value="option.value" x-text="option.title" :selected="option.value===selectedOption"></option>
       </template>
