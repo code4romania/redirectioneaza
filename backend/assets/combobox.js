@@ -1,96 +1,73 @@
-export default function () {
+export default function (options, currentValue) {
   return {
-    filter: '',
-    show: false,
-    selected: null,
-    focusedOptionIndex: null,
-    options: null,
-    initOptions(options) {
-      this.normalizeOptions(options);
+    options: [],
+    query: null,
+    filteredOptions: [],
+    isOpen: false,
+    selectedOption: null,
+    init() {
+      this.options = this.normalizeOptions(options);
+
+      const filter = (query) => {
+        query = this.normalizeString(query);
+
+
+        if (!query) {
+          this.filteredOptions = this.options;
+        } else {
+          this.filteredOptions = this.options.filter((option) => {
+            return option.normalizedTitle.indexOf(query) > -1 || option.title.indexOf(query) > -1;
+          });
+        }
+      };
+
+      filter();
+      this.$watch('query', filter);
+
+      if (currentValue) {
+        const selectedOption = this.options.find(option => option.value === currentValue);
+        this.setSelectedOption(selectedOption);
+      }
     },
-    fetchOptions(endpoint) {
-      const url = new URL(window.location.origin + endpoint);
-      let options = null;
-      fetch(url)
-        .then(response => response.json())
-        .then(data => options = data);
-      this.normalizeOptions(options);
+    setSelectedOption(option) {
+      this.selectedOption = option?.value ? option.value : null;
+
+      this.$refs.input.value = option?.value ? option.value : null;
+      this.$refs.display.value = option?.title ? option.title : '';
+
+      this.close();
     },
-    normalizeString(string) {
-      return string.normalize('NFKD').replace(/[^\w\s.-_\/]/g, '').toLowerCase();
+    select(option) {
+      if (!this.isOpen) {
+        return;
+      }
+      console.log(option);
+      this.setSelectedOption(option);
+
+      this.$refs.input.closest('form').submit();
+    },
+    close() {
+      this.isOpen = false;
+      this.query = this.selectedOption ? this.selectedOption : null;
     },
     normalizeOptions(options) {
-      this.options = options.map(option => {
-        return [option, this.normalizeString(option)];
+      return options.map(option => {
+        const title = option?.title || option;
+        const value = option?.value || title;
+
+        return {
+          title,
+          value,
+          normalizedTitle: this.normalizeString(title)
+        };
       });
     },
-    filteredOptions() {
-      return this.options
-        ? this.options.filter(option => {
-          const searchString = this.filter ? this.normalizeString(this.filter) : '';
-          return option[1].indexOf(searchString) > -1
-        }).map(option => option[0])
-        : {}
-    },
-    closeOptionsList() {
-      this.show = false;
-      this.filter = this.selected;
-      this.focusedOptionIndex = this.selected ? this.focusedOptionIndex : null;
-    },
-    openOptionsList() {
-      this.show = true;
-      this.filter = '';
-    },
-    toggleOptionsList() {
-      if (this.show) {
-        this.closeOptionsList();
-      } else {
-        this.openOptionsList()
+    normalizeString(string) {
+      if (!string) {
+        return '';
       }
+
+      return string.normalize('NFKD').replace(/[^\w\s.-_\/]/g, '').toLowerCase();
     },
-    isOpen() {
-      return this.show === true
-    },
-    onOptionClick(index) {
-      this.focusedOptionIndex = index;
-      this.selectOption();
-    },
-    selectOption() {
-      if (!this.isOpen()) {
-        return;
-      }
-      this.focusedOptionIndex = this.focusedOptionIndex ?? 0;
-      const selected = this.filteredOptions()[this.focusedOptionIndex]
-      if (this.selected && this.selected === selected) {
-        this.selected = null;
-        this.filter = '';
-      } else {
-        this.selected = selected;
-        this.filter = this.selected;
-      }
-      this.closeOptionsList();
-    },
-    focusPrevOption() {
-      if (!this.isOpen()) {
-        return;
-      }
-      const optionsNum = Object.keys(this.filteredOptions()).length - 1;
-      if (this.focusedOptionIndex > 0 && this.focusedOptionIndex <= optionsNum) {
-        this.focusedOptionIndex--;
-      } else if (this.focusedOptionIndex === 0) {
-        this.focusedOptionIndex = '';
-      }
-    },
-    focusNextOption() {
-      const optionsNum = Object.keys(this.filteredOptions()).length - 1;
-      if (!this.isOpen()) {
-        this.openOptionsList();
-      }
-      if (this.focusedOptionIndex == null || this.focusedOptionIndex === optionsNum) {
-        this.focusedOptionIndex = 0;
-      } else if (this.focusedOptionIndex >= 0 && this.focusedOptionIndex < optionsNum) {
-        this.focusedOptionIndex++;
-      }
-    }
   }
 }

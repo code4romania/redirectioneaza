@@ -1,53 +1,79 @@
 {% extends 'components/input/base.html' %}
 
+{% load i18n %}
+
 {% block input %}
 
-  <div
-      x-data="combobox"
-      x-init="{% if options %}initOptions({{ options }}){% elif endpoint %}fetchOptions('{{ endpoint }}'){% endif %}"
-      @click.away="closeOptionsList()"
-      class="relative">
+  {% if not reset_text %}
+    {% trans "Reset filter" as reset_text %}
+  {% endif %}
 
-    <input
-        x-model="filter"
+  <div
+    x-data="combobox({{ options }},{% if current_value %}'{{ current_value }}'{% else %}null{% endif %})"
+    @click.outside="close"
+    @keydown.tab="close"
+    class="relative">
+
+
+    <input id="{{ input_id }}" name="{{ input_name }}" x-ref="input" hidden/>
+
+    <label>
+      <span class="sr-only">{{ input_title }}</span>
+      <input
+        placeholder="{{ input_title }}"
+        autocomplete="off"
+        x-model="query"
+        x-ref="display"
         x-transition:leave="transition ease-in duration-100"
         x-transition:leave-start="opacity-100"
         x-transition:leave-end="opacity-0"
-        @mousedown="openOptionsList()"
-        @keydown.esc="closeOptionsList()"
-        @keydown.enter.stop="selectOption()"
-        @keydown.up.prevent="focusPrevOption()"
-        @keydown.down.prevent="focusNextOption()"
-        class="block w-full rounded-md bg-white py-1.5 pl-3 pr-12 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-600 sm:text-sm/6"
-    >
+        @mousedown="isOpen = true"
+        @focus="isOpen = true"
+        @keydown.esc="close"
+        class="block w-full rounded-md bg-white py-1.5 pl-3 pr-12 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-600 sm:text-sm/6"
+        :class="selectedOption !== null ? 'ring-1 ring-amber-700' : ''"
+      >
+    </label>
 
     <button
-        @click="toggleOptionsList()"
-        type="button"
-        class="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
-      <svg class="size-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+      @click="isOpen = ! isOpen"
+      title="{% trans 'Toggle dropdown' %}"
+      type="button"
+      class="absolute inset-y-0 right-0 flex items-center px-2 rounded-r-md focus:outline-none">
+      <svg class="text-gray-500 size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
         <path
-            fill-rule="evenodd"
-            d="M10.53 3.47a.75.75 0 0 0-1.06 0L6.22 6.72a.75.75 0 0 0 1.06 1.06L10 5.06l2.72 2.72a.75.75 0 1 0 1.06-1.06l-3.25-3.25Zm-4.31 9.81 3.25 3.25a.75.75 0 0 0 1.06 0l3.25-3.25a.75.75 0 1 0-1.06-1.06L10 14.94l-2.72-2.72a.75.75 0 0 0-1.06 1.06Z"
-            clip-rule="evenodd"/>
+          fill-rule="evenodd"
+          d="M10.53 3.47a.75.75 0 0 0-1.06 0L6.22 6.72a.75.75 0 0 0 1.06 1.06L10 5.06l2.72 2.72a.75.75 0 1 0 1.06-1.06l-3.25-3.25Zm-4.31 9.81 3.25 3.25a.75.75 0 0 0 1.06 0l3.25-3.25a.75.75 0 1 0-1.06-1.06L10 14.94l-2.72-2.72a.75.75 0 0 0-1.06 1.06Z"
+          clip-rule="evenodd"/>
       </svg>
     </button>
 
     <ul
-        x-show="isOpen()"
-        class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm"
-        id="options" role="listbox">
+      x-show="isOpen"
+      class="absolute z-10 w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black/5 focus:outline-none sm:text-sm"
+      id="options" role="listbox">
+
+      <li
+        @click="select(null)"
+        class="relative py-2 pl-3 cursor-default select-none pr-9 text-gray-500 hover:text-gray-700 hover:bg-amber-200"
+        id="option-0"
+        role="option">
+        {{ reset_text }}
+      </li>
+
+      <hr>
 
       <template
-          x-for="(option, index) in filteredOptions()"
-          :key="index">
+        x-for="(option, index) in filteredOptions"
+        :key="index">
         <li
-            @click="onOptionClick(index)"
-            class="relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 hover:bg-amber-200"
-            id="option-0"
-            role="option"
-            :aria-selected="focusedOptionIndex === index">
-          <span x-text="option"></span>
+          @click="select(option)"
+          class="relative py-2 pl-3 cursor-default select-none pr-9 hover:bg-amber-200"
+          :class="option.value === null ? 'text-gray-500 hover:text-gray-700' : 'text-gray-900'"
+          id="option-0"
+          role="option"
+        >
+          <span x-text="option.title"></span>
         </li>
       </template>
 

@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Callable, Dict, List, Optional, Union
 
 from django.conf import settings
 from django.contrib import messages
@@ -14,6 +14,7 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic import ListView
 from django_q.tasks import async_task
 
+from redirectioneaza.common.filters import QueryFilter
 from users.models import User
 
 from ..common.validation.registration_number import extract_vat_id, ngo_id_number_validator
@@ -24,6 +25,12 @@ from ..models.ngos import Cause, Ngo
 from .base import BaseContextPropertiesMixin, BaseVisibleTemplateView
 from .common.misc import get_ngo_archive_download_status
 from .common.search import DonorSearchMixin
+from .ngo_account_filters import (
+    CountyQueryFilter,
+    FormPeriodQueryFilter,
+    FormStatusQueryFilter,
+    LocalityQueryFilter,
+)
 
 UserModel = get_user_model()
 
@@ -368,6 +375,46 @@ class NgoRedirectionsView(NgoBaseListView, DonorSearchMixin):
     paginate_by = 8
     sidebar_item_target = "org-redirections"
 
+    def get_filters(self) -> List[QueryFilter]:
+        return [
+            CountyQueryFilter(),
+            LocalityQueryFilter(),
+            FormPeriodQueryFilter(),
+            FormStatusQueryFilter(),
+        ]
+
+    def get_filters_dict(self) -> List[Dict[str, Union[str, Callable, Optional[List[Dict]]]]]:
+        objects = self.object_list
+        return [query_filter.to_dict(include_options=True, objects=objects) for query_filter in (self.get_filters())]
+
+    def get_frontend_filters(self, filters: List[QueryFilter] = None):
+        if not filters:
+            filters = self.get_filters()
+
+        filters_active = {}
+        request_params = self.request.GET
+
+        for search_filter in filters:
+            filter_key = search_filter.key
+            if filter_value := request_params.get(filter_key, ""):
+                filters_active[filter_key] = filter_value
+
+        return filters_active
+
+    def get_queryset_filters(self, filters: List[QueryFilter] = None):
+        if not filters:
+            filters = self.get_filters()
+
+        queryset_filters = {}
+        request_params = self.request.GET
+
+        for search_filter in filters:
+            filter_key = search_filter.key
+            if filter_value := request_params.get(filter_key, ""):
+                queryset_filters[search_filter.queryset_key] = search_filter.transform(filter_value)
+
+        return queryset_filters
+
     def get_context_data(self, **kwargs):
         search_query = self._search_query()
 
@@ -386,6 +433,8 @@ class NgoRedirectionsView(NgoBaseListView, DonorSearchMixin):
                 "title": self.title,
                 "search_query": search_query,
                 "url_search_query": query_dict.urlencode(),
+                "filters": self.get_filters_dict(),
+                "filters_active": self.get_frontend_filters(),
             }
         )
 
@@ -403,10 +452,13 @@ class NgoRedirectionsView(NgoBaseListView, DonorSearchMixin):
         if not ngo:
             return Donor.objects.none()
 
+        queryset_filters = self.get_queryset_filters()
+
         redirections = (
             ngo.donor_set.all()
             .order_by("-date_created")
             .filter(is_available=True)
+            .filter(**queryset_filters)
             .values(
                 "id",
                 "f_name",

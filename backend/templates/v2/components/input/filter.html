@@ -1,0 +1,7 @@
+{% if filter.options %}
+  {% if filter.type == "combobox" %}
+    {% include "components/input/combobox.html" with input_id=filter.id input_title=filter.title input_name=filter.key options=filter.options current_value=filters_active|get_item:filter.key %}
+  {% elif filter.type == "select" %}
+    {% include "components/input/select.html" with input_id=filter.id input_title=filter.title input_name=filter.key options=filter.options current_value=filters_active|get_item:filter.key %}
+  {% endif %}
+{% endif %}
