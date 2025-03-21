@@ -302,7 +302,7 @@ class NgoCausesView(NgoBaseTemplateView):
 
         cause: Cause = Cause.objects.filter(ngo=ngo).first()
         if cause is None:
-            cause = Cause(ngo=ngo)
+            cause = Cause(ngo=ngo, is_main=True)
         form = CauseForm(post, instance=cause)
 
         context.update({"django_form": form})
@@ -311,7 +311,7 @@ class NgoCausesView(NgoBaseTemplateView):
             messages.error(request, _("There are some errors on the redirection form."))
             return render(request, self.template_name, context)
 
-        cause = form.save(commit=False)
+        cause = form.save(commit=True)
 
         # XXX: [MULTI-FORM] Remove once testing is finished, this information should only be kept in the forms
         cause.sync_with_ngo(force_cause_save=True)

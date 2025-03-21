@@ -125,6 +125,8 @@ env = environ.Env(
     ENABLE_FULL_VALIDATION_IBAN=(bool, True),
     ENABLE_FULL_VALIDATION_PHONE=(bool, True),
     ENABLE_FULL_VALIDATION_CNP=(bool, True),
+    # Feature flags
+    ENABLE_MULTIPLE_FORMS=(bool, False),
 )
 
 environ.Env.read_env(ENV_FILE_PATH)

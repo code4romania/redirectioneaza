@@ -135,6 +135,11 @@ class CauseActiveManager(models.Manager):
         )
 
 
+class CauseMainManager(CauseActiveManager):
+    def get_queryset(self):
+        return super().get_queryset().filter(is_main=True)
+
+
 class NgoHubManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().filter(is_active=True, ngohub_org_id__isnull=False)
@@ -412,6 +417,8 @@ class Ngo(models.Model):
 class Cause(models.Model):
     ngo = models.ForeignKey(Ngo, on_delete=models.CASCADE, related_name="causes")
 
+    # XXX: [MULTI-FORM] set the default to False when we have multiple forms
+    is_main = models.BooleanField(verbose_name=_("is main cause"), db_index=True, default=True)
     allow_online_collection = models.BooleanField(verbose_name=_("allow online collection"), default=False)
 
     display_image = models.ImageField(
@@ -450,12 +457,14 @@ class Cause(models.Model):
 
     objects = models.Manager()
     active = CauseActiveManager()
+    main = CauseMainManager()
 
     class Meta:
         verbose_name = _("Cause")
         verbose_name_plural = _("Causes")
         constraints = [
             models.UniqueConstraint(fields=["ngo", "bank_account"], name="ngo_bank_account_unique"),
+            models.UniqueConstraint(fields=["ngo"], condition=Q(is_main=True), name="ngo_main_cause_unique"),
         ]
 
     def __str__(self):
