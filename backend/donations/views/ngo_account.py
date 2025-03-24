@@ -247,9 +247,9 @@ class NgoPresentationView(NgoBaseTemplateView):
         return render(request, self.template_name, context)
 
 
-class NgoCausesView(NgoBaseTemplateView):
+class NgoCauseView(NgoBaseTemplateView):
     template_name = "ngo-account/my-organization/ngo-form.html"
-    title = _("Organization forms")
+    title = _("Organization form")
     tab_title = "form"
     sidebar_item_target = "org-data"
 
@@ -323,6 +323,30 @@ class NgoCausesView(NgoBaseTemplateView):
         context["cause"] = cause
 
         return render(request, self.template_name, context)
+
+
+class NgoCausesView(NgoBaseListView):
+    template_name = "ngo-account/causes/main.html"
+    title = _("Organization Causes")
+    context_object_name = "causes"
+    paginate_by = 8
+    sidebar_item_target = "org-causes"
+
+    @method_decorator(login_required(login_url=reverse_lazy("login")))
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
+
+    def get_queryset(self):
+        user: User = self.request.user
+
+        if not user.ngo:
+            return Cause.objects.none()
+
+        return Cause.other.filter(ngo=user.ngo).order_by("date_created")
+
+
+class NgoCausesCreateView(NgoBaseTemplateView):
+    pass
 
 
 class UserSettingsView(NgoBaseTemplateView):
