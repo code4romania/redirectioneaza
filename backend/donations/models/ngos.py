@@ -140,6 +140,11 @@ class CauseMainManager(CauseActiveManager):
         return super().get_queryset().filter(is_main=True)
 
 
+class CauseOtherManager(CauseActiveManager):
+    def get_queryset(self):
+        return super().get_queryset().filter(is_main=False)
+
+
 class NgoHubManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().filter(is_active=True, ngohub_org_id__isnull=False)
@@ -452,6 +457,7 @@ class Cause(models.Model):
     objects = models.Manager()
     active = CauseActiveManager()
     main = CauseMainManager()
+    other = CauseOtherManager()
 
     class Meta:
         verbose_name = _("Cause")
