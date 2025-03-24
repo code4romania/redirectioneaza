@@ -1,7 +1,21 @@
 {% if filter.options %}
-  {% if filter.type == "combobox" %}
-    {% include "components/input/combobox.html" with input_id=filter.id input_title=filter.title input_name=filter.key options=filter.options current_value=filters_active|get_item:filter.key %}
-  {% elif filter.type == "select" %}
-    {% include "components/input/select.html" with input_id=filter.id input_title=filter.title input_name=filter.key options=filter.options current_value=filters_active|get_item:filter.key %}
-  {% endif %}
+
+  {% with input_id=filter.id %}
+    {% with input_title=filter.title %}
+      {% with input_name=filter.key %}
+        {% with options=filter.options %}
+          {% with current_value=filters_active|get_item:filter.key %}
+
+            {% if filter.type == "combobox" %}
+              {% include "components/input/combobox.html" %}
+            {% elif filter.type == "select" %}
+              {% include "components/input/select.html" %}
+            {% endif %}
+
+          {% endwith %}
+        {% endwith %}
+      {% endwith %}
+    {% endwith %}
+  {% endwith %}
+
 {% endif %}
