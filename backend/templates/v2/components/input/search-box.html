@@ -1,49 +1,51 @@
 {% load i18n %}
 
-<label
-  for="searchBox_{{ input_id }}"
-  class="block sr-only">
-  {{ search_title }}
-</label>
+{% with search_box_id="searchBox_"|add:input_id %}
+  <label
+    for="{{ search_box_id }}"
+    class="block sr-only">
+    {{ search_title }}
+  </label>
 
-<div
-  x-data="{ currentSearch: '{{ search_query }}' }">
+  <div x-data="{currentSearch: '{{ search_query }}',clearSearch: function() {this.currentSearch = '';document.getElementById('{{ search_box_id }}').focus();}}">
 
-  <label class="relative grid grid-cols-1">
+    <label class="relative grid grid-cols-1">
 
-    <span class="sr-only">{{ search_title }}</span>
+      <span class="sr-only">{{ search_title }}</span>
 
-    <input
-      x-model="currentSearch"
-      id="searchBox_{{ input_id }}"
-      type="text"
-      name="q"
-      class="border-none col-start-1 row-start-1 block w-full {% if box_style %}{{ box_style }}{% else %}rounded-full{% endif %} bg-white py-1.5 pl-10 pr-3 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-300 sm:pl-9 sm:text-sm/6 focus:outline-none focus:ring-0"
-      placeholder="{% if search_placeholder %}{{ search_placeholder }}{% else %}{{ search_title }}{% endif %}"
-      title="{{ search_title }}"
-      maxlength="100"
-      autocomplete="off"
-      value="{{ search_query }}">
+      <input
+        x-model="currentSearch"
+        id="{{ search_box_id }}"
+        type="text"
+        name="q"
+        class="border-none col-start-1 row-start-1 block w-full bg-white py-1.5 pl-10 pr-3 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-300 sm:pl-9 sm:text-sm/6 focus:outline-none focus:ring-0
+          {% if box_style %}{{ box_style }}{% else %}rounded-full{% endif %}"
+        placeholder="{% if search_placeholder %}{{ search_placeholder }}{% else %}{{ search_title }}{% endif %}"
+        title="{{ search_title }}"
+        maxlength="100"
+        autocomplete="off"
+        value="{{ search_query }}">
 
-    <svg class="self-center col-start-1 row-start-1 ml-3 text-gray-400 pointer-events-none size-5 sm:size-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
-      <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z" clip-rule="evenodd"/>
-    </svg>
+      <svg class="self-center col-start-1 row-start-1 ml-3 text-gray-400 pointer-events-none size-5 sm:size-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+        <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z" clip-rule="evenodd"/>
+      </svg>
 
 
-    <span class="self-center justify-self-end absolute inset-y-0 right-0 pr-3 flex items-center">
-      <a
+      <span class="self-center justify-self-end absolute inset-y-0 right-0 pr-3 flex items-center">
+      <button
         x-cloak
         x-show="currentSearch.length > 0"
-        href="?"
+        x-on:click="clearSearch()"
         aria-label="{% trans 'Clear search' %}"
         type="button"
         class="w-full items-center rounded-xl bg-white text-gray-400 hover:bg-gray-100 hover:text-gray-600 focus:bg-gray-100 focus:text-gray-800 focus:outline-none">
         <svg class="size-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
           <path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z"/>
         </svg>
-      </a>
+      </button>
     </span>
 
-  </label>
+    </label>
 
-</div>
+  </div>
+{% endwith %}
