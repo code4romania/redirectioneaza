@@ -342,7 +342,8 @@ class NgoCausesView(NgoBaseListView):
         if not user.ngo:
             return Cause.objects.none()
 
-        return Cause.other.filter(ngo=user.ngo).order_by("date_created")
+        # XXX: [MULTI-FORM] This should get `.other` causes
+        return Cause.objects.filter(ngo=user.ngo).order_by("date_created")
 
 
 class NgoCausesCreateView(NgoBaseTemplateView):

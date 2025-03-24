@@ -1,4 +1,4 @@
-{% load i18n action_menu %}
+{% load i18n cause_action_menu text_format %}
 
 {% if causes|length == 0 %}
 
@@ -11,36 +11,63 @@
 {% else %}
 
   {% for cause in causes %}
-    <tr class="text-sm text-gray-600">
+    <tr class="text-sm text-left text-gray-900 odd:bg-white even:bg-gray-50">
 
-      <td class="py-3.5 pl-4 pr-3 text-gray-900 sm:pl-0">
-        {#Cause#}
-
+      <td class="sm:pl-0 py-4">
+        {{ cause.name }}
       </td>
-      <td class="px-3 py-3.5 text-gray-900">
-        {#IBAN#}
-
+      <td class="px-3 py-4">
+        {{ cause.bank_account|iban }}
       </td>
-      <td class="px-3 py-3.5 text-gray-900">
-        {#Form URL#}
-
+      <td class="px-3 py-4">
+        {% if cause.visibility != "private" %}
+          <a
+              href="{% url 'twopercent' cause.slug %}"
+              class="text-cyan-800 inline-flex justify-center hover:cursor-pointer hover:underline">
+            <span>
+              /{{ cause.slug }}
+            </span>
+            <span class="mx-1">
+              <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  class="size-5">
+              <path
+                  d="M12.232 4.232a2.5 2.5 0 0 1 3.536 3.536l-1.225 1.224a.75.75 0 0 0 1.061 1.06l1.224-1.224a4 4 0 0 0-5.656-5.656l-3 3a4 4 0 0 0 .225 5.865.75.75 0 0 0 .977-1.138 2.5 2.5 0 0 1-.142-3.667l3-3Z"/>
+              <path
+                  d="M11.603 7.963a.75.75 0 0 0-.977 1.138 2.5 2.5 0 0 1 .142 3.667l-3 3a2.5 2.5 0 0 1-3.536-3.536l1.225-1.224a.75.75 0 0 0-1.061-1.06l-1.224 1.224a4 4 0 1 0 5.656 5.656l3-3a4 4 0 0 0-.225-5.865Z"/>
+            </svg>
+            </span>
+          </a>
+        {% else %}
+          <p class="text-zinc-500">
+            {{ cause.slug }}
+          </p>
+        {% endif %}
       </td>
-      <td class="px-3 py-3.5 text-gray-900">
-        {#Online Signing#}
-
+      <td class="px-3 py-4">
+        {% if cause.allow_online_collection %}
+          {% trans "Yes" %}
+        {% else %}
+          {% trans "No" %}
+        {% endif %}
       </td>
-      <td class="px-3 py-3.5 text-gray-900">
-        {#Visibility#}
-
+      <td class="px-3 py-4">
+        {% include "ngo-account/causes/visibility-badge.html" with visibility=cause.visibility %}
       </td>
-      <td class="px-3 py-3.5 text-gray-900">
-        {#Edited at#}
-
+      <td class="px-3 py-4">
+        {{ cause.date_updated|date:"SHORT_DATE_FORMAT" }}
+        <br>
+        {{ cause.date_updated|time:"TIME_FORMAT" }}
       </td>
-      <td class="px-3 py-3.5 text-gray-900">
-        {#Contributions#}
-
+      <td class="px-3 py-4">
+        {{ cause.contributions }}
       </td>
+      <td>
+        {% include "components/action-menu/main.html" with items=cause|dropdown button_disabled=cause|button_disabled button_title=cause|button_title %}
+      </td>
+
     </tr>
   {% endfor %}
 
