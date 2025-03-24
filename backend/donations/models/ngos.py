@@ -495,6 +495,9 @@ class Cause(models.Model):
     def mandatory_fields_values(self):
         return [getattr(self, field.name) for field in self.mandatory_fields]
 
+    def contributions(self):
+        return self.donor_set.count()
+
     def sync_with_ngo(self, force_cause_save: bool = False, force_ngo_save: bool = False):
         """
         XXX: [MULTI-FORM] remove these once we have multiple forms
