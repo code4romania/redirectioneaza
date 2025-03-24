@@ -41,7 +41,6 @@ export default function (options, currentValue) {
       if (!this.isOpen) {
         return;
       }
-      console.log(option);
       this.setSelectedOption(option);
 
       this.$refs.input.closest('form').submit();

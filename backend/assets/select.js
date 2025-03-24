@@ -18,7 +18,6 @@ export default function (options,selectedValue) {
 
       // Convert selected value to string if not null
       this.selectedOption = selectedValue !== null ? String(selectedValue) : "";
-      console.log('selectedOption: "' + this.selectedOption + '"');
     }
   }
 }
