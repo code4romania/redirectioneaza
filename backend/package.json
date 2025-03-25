@@ -19,6 +19,6 @@
     "postcss": "^8.4.49",
     "signature_pad": "^5.0.4",
     "tailwindcss": "^3.4.16",
-    "vite": "^6.0.3"
+    "vite": "^6.0.12"
   }
 }
