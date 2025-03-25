@@ -71,6 +71,14 @@ def delete_prefilled_form(ngo_id):
     return Ngo.delete_prefilled_form(ngo_id)
 
 
+def get_ngo_cause_banner_list_items(ngo: Ngo) -> List[str]:
+    banner_list_items = [
+        _("Organization name: ") + ngo.name,
+        _("Organization CIF: ") + ngo.registration_number,
+    ]
+    return banner_list_items
+
+
 class NgoBaseView(BaseContextPropertiesMixin):
     title = _("Organization details")
     sidebar_item_target = None
@@ -247,7 +255,7 @@ class NgoPresentationView(NgoBaseTemplateView):
         return render(request, self.template_name, context)
 
 
-class NgoCauseView(NgoBaseTemplateView):
+class NgoMainCauseView(NgoBaseTemplateView):
     template_name = "ngo-account/my-organization/ngo-form.html"
     title = _("Organization form")
     tab_title = "form"
@@ -272,6 +280,7 @@ class NgoCauseView(NgoBaseTemplateView):
                 "ngo_url": cause_url,
                 "cause": cause,
                 "active_tab": self.tab_title,
+                "info_banner_items": get_ngo_cause_banner_list_items(ngo),
             }
         )
 
@@ -325,7 +334,7 @@ class NgoCauseView(NgoBaseTemplateView):
         return render(request, self.template_name, context)
 
 
-class NgoCausesView(NgoBaseListView):
+class NgoCausesListView(NgoBaseListView):
     template_name = "ngo-account/causes/main.html"
     title = _("Organization Causes")
     context_object_name = "causes"
@@ -342,32 +351,77 @@ class NgoCausesView(NgoBaseListView):
         if not user.ngo:
             return Cause.objects.none()
 
-        # XXX: [MULTI-FORM] This should get `.other` causes
-        return Cause.objects.filter(ngo=user.ngo).order_by("date_created")
+        return Cause.other.filter(ngo=user.ngo).order_by("date_created")
 
 
-class NgoCausesCreateView(NgoBaseTemplateView):
-    template_name = "ngo-account/causes/new/main.html"
+class NgoCausesView(NgoBaseTemplateView):
+    template_name = "ngo-account/cause/main.html"
     title = _("Organization form")
     sidebar_item_target = "org-causes"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        banner_list_items = [
-            _("Organization name: ") + context["ngo"].name,
-            _("Organization CIF: ") + context["ngo"].registration_number,
-        ]
+        request = self.request
+        cause_create_path = reverse("my-organization:cause-create")
+
+        ngo = context["ngo"]
+
+        cause = None
+        cause_id = kwargs.get("cause_id")
+        if request.path != cause_create_path:
+            if not cause_id:
+                raise Http404
+
+            cause = Cause.objects.filter(pk=cause_id, ngo=ngo).first()
+            if not cause:
+                raise Http404
 
         context.update(
             {
+                "cause": cause,
                 "active_regions": settings.FORM_COUNTIES_NATIONAL,
                 "counties": settings.LIST_OF_COUNTIES,
-                "info_banner_items": banner_list_items,
+                "info_banner_items": get_ngo_cause_banner_list_items(ngo),
             }
         )
 
         return context
+
+    @method_decorator(login_required(login_url=reverse_lazy("login")))
+    def post(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+
+        post = request.POST
+        user: User = request.user
+
+        ngo: Ngo = user.ngo
+
+        if not ngo:
+            return redirect(reverse("my-organization:presentation"))
+
+        existing_cause = context.get("cause")
+        form = CauseForm(post, instance=existing_cause)
+
+        context.update({"django_form": form})
+
+        if not form.is_valid():
+            messages.error(request, _("There are some errors on the redirection form."))
+            return render(request, self.template_name, context)
+
+        cause = form.save(commit=False)
+        cause.ngo = ngo
+        cause.save()
+
+        context["cause"] = cause
+        context["ngo"] = ngo
+
+        success_message = _("The cause has been saved.")
+        if existing_cause:
+            success_message = _("The changes have been saved.")
+        messages.success(request, success_message)
+
+        return redirect(reverse_lazy("my-organization:cause", kwargs={"cause_id": cause.pk}))
 
 
 class UserSettingsView(NgoBaseTemplateView):

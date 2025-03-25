@@ -112,8 +112,6 @@ class CauseForm(forms.ModelForm):
             "ngo",
             "date_created",
             "date_updated",
-            # XXX: [MULTI-FORM] remove these once we have multiple forms
-            "name",
         ]
 
     def clean_slug(self):
