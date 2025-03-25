@@ -1,6 +1,12 @@
-<div class="w-full form-group">
+<div
+  {% if style == "isolated" %}
+    class="form-group bg-gray-50 p-4 rounded-md"
+  {% else %}
+    class="form-group"
+  {% endif %}
+>
   <label for="{{ input_id }}" class="flex cursor-pointer gap-3 font-medium text-gray-700 [&:has(input:checked)]:text-neutral-900 [&:has(input:disabled)]:opacity-75 [&:has(input:disabled)]:cursor-not-allowed">
-    <div class="flex items-center h-6 shrink-0">
+    <span class="flex items-center h-6 shrink-0">
       <input
         id="{{ input_id }}"
         name="{{ input_name }}"
@@ -11,7 +17,15 @@
         {% if is_disabled %}disabled{% endif %}
         {% if value == True %}input-original-value="true"{% else %} input-original-value="false" {% endif %}
         class="col-start-1 row-start-1 bg-white border border-gray-300 rounded appearance-none checked:hover:bg-amber-500 hover:border-amber-500 checked:border-amber-300 checked:bg-amber-300 indeterminate:border-amber-300 indeterminate:bg-amber-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300 disabled:border-gray-300 disabled:bg-gray-200 disabled:checked:bg-gray-100 forced-colors:appearance-auto">
-    </div>
-    <span class="text-sm/6">{{ input_title }}{% if is_required %}<span class='text-red-600'>*</span>{% endif %}</span>
+    </span>
+    <span class="flex flex-col">
+
+      <span class="text-sm/6">{{ input_title }}{% if is_required %}<span class='text-red-600'>*</span>{% endif %}</span>
+
+      {% include "components/input/help-text.html" %}
+
+    </span>
   </label>
+
+
 </div>
