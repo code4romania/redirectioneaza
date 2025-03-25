@@ -5,6 +5,7 @@
 {% block content_container %}
   <div class="flex-1 bg-gray-50">
     <main class="container py-10">
+
       {% if breadcrumbs %}
         <div class="flex items-center mb-6 text-sm text-gray-500 gap-2">
           {% block breadcrumbs %}
@@ -38,6 +39,7 @@
       <div class="px-4 py-5 bg-white rounded-lg shadow sm:p-6">
         {% block content %}{% endblock %}
       </div>
+
     </main>
   </div>
 {% endblock %}
