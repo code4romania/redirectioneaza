@@ -7,29 +7,45 @@
     <main class="container py-10">
 
       {% if breadcrumbs %}
-        <div class="flex items-center mb-6 text-sm text-gray-500 gap-2">
-          {% block breadcrumbs %}
+        {% block breadcrumbs %}
 
-            {% for crumb in breadcrumbs %}
+          <nav class="flex items-center mb-6 text-sm text-gray-500 gap-2" aria-label="Breadcrumb">
+            <ol role="list" class="flex items-center space-x-2">
 
-              {% if crumb.url %}
-                <a href="{{ crumb.url }}" class="font-semibold text-gray-600 hover:underline hover:cursor-pointer">
-                  {{ crumb.title }}
-                </a>
-              {% else %}
-                <p>
-                  {{ crumb.title }}
-                </p>
-              {% endif %}
+              {% for crumb in breadcrumbs %}
 
-              {% if not forloop.last %}
-                /
-              {% endif %}
+                <li>
+                  <div
+                    {% if not forloop.first %}
+                      class="flex items-center"
+                    {% endif %}
+                  >
 
-            {% endfor %}
+                    {% if not forloop.first %}
+                      <svg
+                        class="size-5 shrink-0 text-gray-300"
+                        fill="currentColor"
+                        viewBox="0 0 20 20" aria-hidden="true">
+                        <path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z"/>
+                      </svg>
+                    {% endif %}
 
-          {% endblock %}
-        </div>
+                    <a
+                      href="{{ crumb.url|default_if_none:"#" }}"
+                      class="ml-2 text-sm text-gray-500 hover:text-gray-700 {% if forloop.last %}font-medium{% else %}font-semibold{% endif %}"
+                    >
+                      {{ crumb.title }}
+                    </a>
+
+                  </div>
+                </li>
+
+              {% endfor %}
+
+            </ol>
+          </nav>
+
+        {% endblock %}
       {% endif %}
 
       <div class="mb-6">
