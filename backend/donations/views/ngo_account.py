@@ -330,7 +330,8 @@ class NgoCauseCommonView(NgoBaseTemplateView):
 
         success_message = _("The cause has been created.")
         if existing_cause:
-            success_message = _("The changes have been saved.")
+            # Formularul a fost salvat cu succes!
+            success_message = _("The form has been saved.")
         messages.success(request, success_message)
 
         response["status"] = "success"
