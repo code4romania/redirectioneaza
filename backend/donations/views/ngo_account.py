@@ -394,7 +394,22 @@ class NgoCauseCreateView(NgoCauseCommonView):
     sidebar_item_target = "org-causes"
 
     def get_context_data(self, **kwargs):
-        return super().get_context_data(is_create=True, **kwargs)
+        context = super().get_context_data(is_create=True, **kwargs)
+
+        page_title = _("Add new cause form")
+
+        context["page_title"] = page_title
+        context["breadcrumbs"] = [
+            {
+                "url": reverse_lazy("my-organization:causes"),
+                "title": _("Causes"),
+            },
+            {
+                "title": page_title,
+            },
+        ]
+
+        return context
 
     @method_decorator(login_required(login_url=reverse_lazy("login")))
     def post(self, request, *args, **kwargs):
@@ -412,6 +427,24 @@ class NgoCauseEditView(NgoCauseCommonView):
     template_name = "ngo-account/cause/main.html"
     title = _("Organization form")
     sidebar_item_target = "org-causes"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        page_title = _("Edit cause")
+
+        context["page_title"] = f"{page_title}: \"{context['cause'].name}\""
+        context["breadcrumbs"] = [
+            {
+                "url": reverse_lazy("my-organization:causes"),
+                "title": _("Causes"),
+            },
+            {
+                "title": page_title,
+            },
+        ]
+
+        return context
 
     @method_decorator(login_required(login_url=reverse_lazy("login")))
     def post(self, request, *args, **kwargs):

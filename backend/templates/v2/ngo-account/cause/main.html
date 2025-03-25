@@ -4,18 +4,6 @@
 
 {% block page_heading %}
 
-  {% trans "Add new cause form" as page_title %}
-
-  <div class="flex items-center mb-6 text-sm text-gray-500 gap-2">
-    <a href="{% url 'my-organization:causes' %}" class="font-semibold text-gray-600 hover:underline hover:cursor-pointer">
-      {% trans "Causes" %}
-    </a>
-    /
-    <p>
-      {{ page_title }}
-    </p>
-  </div>
-
   <h1 class="text-2xl font-semibold text-gray-900">
     <span class="flex items-center">
       <a href="{% url 'my-organization:causes' %}" class="text-cyan-700 hover:text-cyan-900 hover:cursor-pointer">
