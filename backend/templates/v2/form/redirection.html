@@ -17,10 +17,11 @@
 
 {% endblock %}
 
-{% block content %}
-  <div class="container">
+{% block content_container %}
 
-    {% include "form/redirection-header.html" %}
+  {% include "form/header/main.html" %}
+
+  <div class="container py-16">
 
     {% if donation_status == "open" %}
 

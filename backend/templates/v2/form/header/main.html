@@ -1,0 +1,106 @@
+{% load i18n text_format %}
+
+<div class="bg-gray-50">
+  <div class="container">
+    <div class="mx-auto px-4 sm:py-8 lg:grid lg:grid-cols-3 lg:gap-x-6">
+
+      <div class="col-span-2">
+
+        <nav aria-label="Breadcrumb">
+          <ol role="list" class="flex items-center space-x-2">
+            <li>
+              <div class="flex items-center text-sm">
+                <a href="{% url 'organizations' %}" class="font-semibold text-gray-500 hover:text-gray-900">
+                  {% trans "Explore organizations" %}
+                </a>
+                <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" class="ml-2 size-5 shrink-0 text-gray-300">
+                  <path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z"/>
+                </svg>
+              </div>
+            </li>
+            {% if main_cause.slug and main_cause.slug != cause.slug %}
+              <li>
+                <div class="flex items-center text-sm">
+                  <a href="{% url 'twopercent' ngo_url=main_cause.slug %}" class="font-medium text-gray-500 hover:text-gray-900">
+                    {{ main_cause.name }}
+                  </a>
+
+                  <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" class="ml-2 size-5 shrink-0 text-gray-300">
+                    <path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z"/>
+                  </svg>
+
+                </div>
+              </li>
+            {% endif %}
+            <li>
+              <div class="flex items-center text-sm">
+                <a href="#" class="font-medium text-gray-500 hover:text-gray-900">
+                  {{ cause.name }}
+                </a>
+              </div>
+            </li>
+          </ol>
+        </nav>
+
+        <div class="mt-4">
+          <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+            {{ main_cause.name }}
+          </h1>
+        </div>
+
+        <section aria-labelledby="organization-information" class="mt-4">
+          <h2 id="organization-information" class="sr-only">
+            {% trans "Organization information" %}
+          </h2>
+
+          <ul class="flex flex-col gap-2 mt-1 text-sm font-medium sm:flex-row sm:gap-4">
+
+            {% if ngo_website %}
+              <li>
+                <a href="{{ ngo_website }}" class="hover:text-amber-600">
+                  {{ ngo_website_description }}
+                </a>
+              </li>
+            {% endif %}
+
+
+            {% if cause.ngo.display_email and cause.ngo.email %}
+              <li>
+                <a href="mailto:{{ cause.ngo.email }}" class="hover:text-amber-600">
+                  {{ ngo.email }}
+                </a>
+              </li>
+            {% endif %}
+
+            {% if cause.ngo.display_phone and cause.ngo.phone %}
+              <li>
+                <a href="tel:{{ cause.ngo.phone }}" class="hover:text-amber-600">
+                  {{ ngo.phone }}
+                </a>
+              </li>
+            {% endif %}
+
+          </ul>
+
+          <div class="mt-4 space-y-6">
+            <p class="text-base text-gray-500">
+              {{ main_cause.description|linebreaks }}
+            </p>
+          </div>
+
+        </section>
+      </div>
+
+      <div class="mt-10 lg:col-start-3 lg:row-span-1 lg:mt-0 lg:self-center">
+        {% with ngo_logo_class="aspect-square max-h-64 object-cover" %}
+          {% include "components/logo-or-default.html" with logo=main_cause.display_image logo_class=ngo_logo_class %}
+        {% endwith %}
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% if main_cause.slug != cause.slug %}
+  {% include "form/header/other-form.html" %}
+{% endif %}
