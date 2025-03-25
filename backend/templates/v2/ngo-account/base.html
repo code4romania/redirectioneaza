@@ -5,6 +5,32 @@
 {% block content_container %}
   <div class="flex-1 bg-gray-50">
     <main class="container py-10">
+      {% if breadcrumbs %}
+        <div class="flex items-center mb-6 text-sm text-gray-500 gap-2">
+          {% block breadcrumbs %}
+
+            {% for crumb in breadcrumbs %}
+
+              {% if crumb.url %}
+                <a href="{{ crumb.url }}" class="font-semibold text-gray-600 hover:underline hover:cursor-pointer">
+                  {{ crumb.title }}
+                </a>
+              {% else %}
+                <p>
+                  {{ crumb.title }}
+                </p>
+              {% endif %}
+
+              {% if not forloop.last %}
+                /
+              {% endif %}
+
+            {% endfor %}
+
+          {% endblock %}
+        </div>
+      {% endif %}
+
       <div class="mb-6">
         {% block page_heading %}{% endblock %}
       </div>
