@@ -347,7 +347,27 @@ class NgoCausesView(NgoBaseListView):
 
 
 class NgoCausesCreateView(NgoBaseTemplateView):
-    pass
+    template_name = "ngo-account/causes/new/main.html"
+    title = _("Organization form")
+    sidebar_item_target = "org-causes"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        banner_list_items = [
+            _("Organization name: ") + context["ngo"].name,
+            _("Organization CIF: ") + context["ngo"].registration_number,
+        ]
+
+        context.update(
+            {
+                "active_regions": settings.FORM_COUNTIES_NATIONAL,
+                "counties": settings.LIST_OF_COUNTIES,
+                "info_banner_items": banner_list_items,
+            }
+        )
+
+        return context
 
 
 class UserSettingsView(NgoBaseTemplateView):
