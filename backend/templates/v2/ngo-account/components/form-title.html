@@ -10,7 +10,7 @@
     {% if not hide_public_page_button and ngo.can_receive_forms %}
       <a
         {# XXX: [MULTI-FORM] If we have an NGO page this should take us to that page #}
-        href="{% url 'twopercent' ngo.slug %}"
+        href="{% url 'twopercent' cause.slug %}"
         target="_blank"
         class="px-3 py-2 text-sm font-semibold text-gray-700 no-underline border-2 rounded-md border-gray-300 bg-white hover:bg-gray-200 hover:cursor-pointer">
 

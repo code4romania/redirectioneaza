@@ -416,7 +416,7 @@ class NgoCausesView(NgoBaseTemplateView):
         context["cause"] = cause
         context["ngo"] = ngo
 
-        success_message = _("The cause has been saved.")
+        success_message = _("The cause has been created.")
         if existing_cause:
             success_message = _("The changes have been saved.")
         messages.success(request, success_message)
