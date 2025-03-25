@@ -12,12 +12,12 @@ register = template.Library()
 @register.filter
 def dropdown(cause: Cause) -> List[Dict[str, Any]]:
     link = ""
-    if is_active := cause.slug:
-        link = reverse("twopercent", kwargs={"ngo_url": cause.slug})
+    if is_active := (cause is not None):
+        link = reverse("my-organization:cause", kwargs={"cause_id": cause.pk})
 
     return [
         {
-            "title": _("Do a thing"),
+            "title": _("Edit cause"),
             "active": is_active,
             "link": link,
         },
@@ -26,11 +26,13 @@ def dropdown(cause: Cause) -> List[Dict[str, Any]]:
 
 @register.filter
 def button_disabled(cause: Cause) -> bool:
-    return not cause.is_main
+    if not cause:
+        return True
+    return False
 
 
 @register.filter
 def button_title(cause: Cause) -> str:
-    if cause.is_main:
-        return _("Form options")
-    return _("Downloads are disabled for unsigned redirections")
+    if not cause:
+        return _("Cause doesn't exist")
+    return _("Form options")
