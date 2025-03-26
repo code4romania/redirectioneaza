@@ -18,6 +18,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "redirectioneaza.context_processors.headers.main",
+                "redirectioneaza.context_processors.variables.main",
                 "partners.context_processors.custom_subdomain",
                 "users.context_processors.get_admin_properties",
                 "donations.context_processors.default_ngo_logo",
