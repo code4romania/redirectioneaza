@@ -379,6 +379,13 @@ class NgoCausesListView(NgoBaseListView):
     paginate_by = 8
     sidebar_item_target = "org-causes"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context["absolute_path"] = self.request.build_absolute_uri("/")
+
+        return context
+
     @method_decorator(login_required(login_url=reverse_lazy("login")))
     def get(self, request, *args, **kwargs):
         return super().get(request, *args, **kwargs)
