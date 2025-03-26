@@ -100,6 +100,22 @@ class NgoBaseTemplateView(NgoBaseView, BaseVisibleTemplateView):
 
         return context
 
+    def get_cause_missing_fields(self, cause: Optional[Cause]) -> Optional[List[str]]:
+        if not cause:
+            missing_fields = Cause.mandatory_fields_names_capitalized()
+        else:
+            missing_fields = cause.missing_mandatory_fields_names_capitalized()
+
+        return missing_fields
+
+    def get_missing_ngo_fields(self, ngo: Optional[Ngo]) -> Optional[List[str]]:
+        if not ngo:
+            missing_fields = Ngo.mandatory_fields_names_capitalize
+        else:
+            missing_fields = ngo.missing_mandatory_fields_names_capitalize
+
+        return missing_fields
+
     @method_decorator(login_required(login_url=reverse_lazy("login")))
     def get(self, request, *args, **kwargs):
         user = request.user
@@ -123,6 +139,104 @@ class NgoBaseListView(NgoBaseView, ListView):
         return super().get(request, *args, **kwargs)
 
 
+class NgoCauseCommonView(NgoBaseTemplateView):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        ngo: Ngo = context["ngo"]
+
+        context["info_banner_items"] = self.get_ngo_cause_banner_list_items(ngo)
+
+        is_create = context.get("is_create", None)
+        if is_create:
+            return context
+
+        is_main = context.get("is_main", None)
+        if is_main:
+            cause = self.get_main_cause(ngo)
+        else:
+            cause_id = int(kwargs.get("cause_id"))
+            cause = self.get_other_cause(ngo, cause_id)
+
+        context["cause"] = cause
+
+        return context
+
+    def get_main_cause(self, ngo: Ngo) -> Cause:
+        return Cause.objects.filter(ngo=ngo, is_main=True).first()
+
+    def get_other_cause(self, ngo: Ngo, cause_id: int) -> Cause:
+        if not cause_id:
+            raise Http404
+
+        cause = Cause.objects.filter(pk=cause_id, ngo=ngo).first()
+        if not cause:
+            raise Http404
+
+        return cause
+
+    def get_ngo_cause_banner_list_items(self, ngo: Ngo) -> List[str]:
+        banner_list_items = [
+            _("Organization name: ") + ngo.name,
+            _("Organization CIF: ") + ngo.registration_number,
+        ]
+        return banner_list_items
+
+    @method_decorator(login_required(login_url=reverse_lazy("login")))
+    def do_post(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+
+        response = {
+            "status": "error",
+        }
+
+        post = request.POST
+        user: User = request.user
+
+        ngo: Ngo = user.ngo
+
+        if not ngo:
+            messages.error(request, _("Please fill in the organization details first."))
+            response["error"] = redirect(reverse("my-organization:presentation"))
+            return response
+
+        is_main_cause = context.get("is_main", False)
+        if not is_main_cause and not ngo.can_receive_forms():
+            messages.error(request, _("You need to first create the form with the organization's details."))
+            response["error"] = redirect(reverse("my-organization:presentation"))
+            return response
+
+        existing_cause = context.get("cause")
+        form = CauseForm(post, instance=existing_cause)
+
+        context.update({"django_form": form})
+
+        if not form.is_valid():
+            messages.error(request, _("There are some errors on the redirection form."))
+            response["error"] = render(request, self.template_name, context)
+            return response
+
+        cause = form.save(commit=False)
+        if is_main_cause:
+            cause.is_main = True
+        cause.ngo = ngo
+        cause.save()
+
+        context["cause"] = cause
+        context["ngo"] = ngo
+
+        success_message = _("The cause has been created.")
+        if existing_cause:
+            # Formularul a fost salvat cu succes!
+            success_message = _("The form has been saved.")
+        messages.success(request, success_message)
+
+        response["status"] = "success"
+        response["context"] = context
+
+        return response
+
+
 class NgoPresentationView(NgoBaseTemplateView):
     template_name = "ngo-account/my-organization/ngo-presentation.html"
     title = _("Organization details")
@@ -142,6 +256,11 @@ class NgoPresentationView(NgoBaseTemplateView):
         ngohub_url = ""
         if has_ngohub:
             ngohub_url = f"{settings.NGOHUB_APP_BASE}organizations/{ngo.ngohub_org_id}/general"
+
+        context["missing_cause_fields"] = self.get_cause_missing_fields(context.get("cause"))
+        context["missing_ngo_fields"] = self.get_missing_ngo_fields(context.get("ngo"))
+        context["missing_fields_banner_cta_message"] = _("Go to the form.")
+        context["missing_fields_banner_cta_url"] = reverse_lazy("my-organization:forms")
 
         context.update(
             {
@@ -250,96 +369,6 @@ class NgoPresentationView(NgoBaseTemplateView):
         return render(request, self.template_name, context)
 
 
-class NgoCauseCommonView(NgoBaseTemplateView):
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        ngo: Ngo = context["ngo"]
-
-        context["info_banner_items"] = self.get_ngo_cause_banner_list_items(ngo)
-
-        is_create = context.get("is_create", None)
-        if is_create:
-            return context
-
-        is_main = context.get("is_main", None)
-        if is_main:
-            cause = self.get_main_cause(ngo)
-        else:
-            cause_id = int(kwargs.get("cause_id"))
-            cause = self.get_other_cause(ngo, cause_id)
-
-        context["cause"] = cause
-
-        return context
-
-    def get_main_cause(self, ngo: Ngo) -> Cause:
-        return Cause.objects.filter(ngo=ngo, is_main=True).first()
-
-    def get_other_cause(self, ngo: Ngo, cause_id: int) -> Cause:
-        if not cause_id:
-            raise Http404
-
-        cause = Cause.objects.filter(pk=cause_id, ngo=ngo).first()
-        if not cause:
-            raise Http404
-
-        return cause
-
-    def get_ngo_cause_banner_list_items(self, ngo: Ngo) -> List[str]:
-        banner_list_items = [
-            _("Organization name: ") + ngo.name,
-            _("Organization CIF: ") + ngo.registration_number,
-        ]
-        return banner_list_items
-
-    @method_decorator(login_required(login_url=reverse_lazy("login")))
-    def do_post(self, request, *args, **kwargs):
-        context = self.get_context_data(**kwargs)
-
-        response = {
-            "status": "error",
-        }
-
-        post = request.POST
-        user: User = request.user
-
-        ngo: Ngo = user.ngo
-
-        if not ngo:
-            messages.error(request, _("Please fill in the organization details first."))
-            response["error"] = redirect(reverse("my-organization:presentation"))
-            return response
-
-        existing_cause = context.get("cause")
-        form = CauseForm(post, instance=existing_cause)
-
-        context.update({"django_form": form})
-
-        if not form.is_valid():
-            messages.error(request, _("There are some errors on the redirection form."))
-            response["error"] = render(request, self.template_name, context)
-            return response
-
-        cause = form.save(commit=False)
-        cause.ngo = ngo
-        cause.save()
-
-        context["cause"] = cause
-        context["ngo"] = ngo
-
-        success_message = _("The cause has been created.")
-        if existing_cause:
-            # Formularul a fost salvat cu succes!
-            success_message = _("The form has been saved.")
-        messages.success(request, success_message)
-
-        response["status"] = "success"
-        response["context"] = context
-
-        return response
-
-
 class NgoMainCauseView(NgoCauseCommonView):
     template_name = "ngo-account/my-organization/ngo-form.html"
     title = _("Organization form")
@@ -348,6 +377,11 @@ class NgoMainCauseView(NgoCauseCommonView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(is_main=True, **kwargs)
+
+        context["missing_cause_fields"] = self.get_cause_missing_fields(context.get("cause"))
+        context["missing_ngo_fields"] = self.get_missing_ngo_fields(context.get("ngo"))
+        context["missing_fields_banner_cta_message"] = ""
+        context["missing_fields_banner_cta_url"] = ""
 
         context["active_tab"] = self.tab_title
 
@@ -421,6 +455,16 @@ class NgoCauseCreateView(NgoCauseCommonView):
         ]
 
         return context
+
+    @method_decorator(login_required(login_url=reverse_lazy("login")))
+    def get(self, request, *args, **kwargs):
+        user: User = request.user
+
+        if user.ngo and not user.ngo.can_receive_forms():
+            messages.error(request, _("You need to first create the form with the organization's details."))
+            return redirect(reverse("my-organization:forms"))
+
+        return super().get(request, *args, **kwargs)
 
     @method_decorator(login_required(login_url=reverse_lazy("login")))
     def post(self, request, *args, **kwargs):
