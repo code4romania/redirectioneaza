@@ -10,12 +10,12 @@ asgiref==3.8.1
     #   django-allauth
 blessed==1.20.0
     # via -r requirements.in
-boto3==1.37.8
+boto3==1.37.20
     # via
     #   django-ses
     #   django-storages
     #   pycognito
-botocore==1.37.8
+botocore==1.37.20
     # via
     #   boto3
     #   s3transfer
@@ -52,7 +52,7 @@ django==5.1.7
     #   django-unfold
     #   django-vite
     #   sentry-sdk
-django-allauth==65.4.1
+django-allauth==65.5.0
     # via -r requirements.in
 django-environ==0.12.0
     # via -r requirements.in
@@ -62,7 +62,7 @@ django-ipware==7.0.1
     # via -r requirements.in
 django-localflavor @ git+https://github.com/tudoramariei/django-localflavor.git@fix-rocnpfield-xx00
     # via -r requirements.in
-django-picklefield==3.2
+django-picklefield==3.3
     # via django-q2
 django-q2==1.7.6
     # via -r requirements.in
@@ -74,7 +74,7 @@ django-storages==1.14.5
     # via -r requirements.in
 django-tinymce==4.1.0
     # via -r requirements.in
-django-unfold==0.50.0
+django-unfold==0.53.0
     # via -r requirements.in
 django-vite==3.1.0
     # via -r requirements.in
@@ -98,7 +98,7 @@ ngohub==0.1.0
     # via -r requirements.in
 packaging==24.2
     # via gunicorn
-phonenumbers==9.0.0
+phonenumbers==9.0.1
     # via -r requirements.in
 pillow==11.1.0
     # via reportlab
@@ -114,7 +114,7 @@ pyjwt==2.10.1
     # via pycognito
 pymysql==1.1.1
     # via -r requirements.in
-pypdf==5.3.1
+pypdf==5.4.0
     # via -r requirements.in
 python-dateutil==2.9.0.post0
     # via botocore
@@ -132,7 +132,7 @@ requests==2.32.3
     #   pycognito
 s3transfer==0.11.4
     # via boto3
-sentry-sdk==2.22.0
+sentry-sdk==2.24.1
     # via -r requirements.in
 six==1.17.0
     # via
