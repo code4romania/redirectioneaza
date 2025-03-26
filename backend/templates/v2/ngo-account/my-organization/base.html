@@ -11,13 +11,14 @@
         {% if ngo.is_active %}
           {% blocktranslate trimmed asvar banner_message %}
             <p>
-              Your organization can't currently receive forms because not all the required information has been filled
-              in.
-              Please make sure the following fields are filled in:
+              Your organization can't currently receive forms
+              because not all the required information has been filled
+              in the form.
+              Please make sure the main organization form has the following fields filled in:
             </p>
           {% endblocktranslate %}
 
-          {% include "components/info-banner.html" with style="error" banner_message=banner_message banner_list=ngo.missing_mandatory_fields_names_capitalize %}
+          {% include "components/info-banner.html" with style="error" banner_message=banner_message banner_list=missing_cause_fields banner_cta_message=missing_fields_banner_cta_message banner_cta_url=missing_fields_banner_cta_url %}
         {% else %}
           {% blocktranslate trimmed asvar banner_message %}
             <p>
