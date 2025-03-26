@@ -137,6 +137,16 @@ class CauseActiveManager(models.Manager):
         )
 
 
+class CausePublicFormManager(CauseActiveManager):
+    def get_queryset(self):
+        return super().get_queryset().filter(form_visibility="pub")
+
+
+class CauseNonPrivateFormManager(CauseActiveManager):
+    def get_queryset(self):
+        return super().get_queryset().exclude(form_visibility="pri")
+
+
 class CauseMainManager(CauseActiveManager):
     def get_queryset(self):
         return super().get_queryset().filter(is_main=True)
@@ -423,11 +433,27 @@ class Ngo(models.Model):
 
 
 class Cause(models.Model):
+    VISIBILITY_CHOICES = (
+        ("pub", _("public")),
+        ("unl", _("unlisted")),
+        ("pri", _("private")),
+    )
+
     ngo = models.ForeignKey(Ngo, on_delete=models.CASCADE, related_name="causes")
 
     # XXX: [MULTI-FORM] set the default to False when we have multiple forms
     is_main = models.BooleanField(verbose_name=_("is main cause"), db_index=True, default=True)
     allow_online_collection = models.BooleanField(verbose_name=_("allow online collection"), default=False)
+
+    form_visibility = models.CharField(
+        verbose_name=_("form visibility"),
+        max_length=3,
+        default="pub",
+        blank=False,
+        null=False,
+        db_index=True,
+        choices=VISIBILITY_CHOICES,
+    )
 
     display_image = models.ImageField(
         verbose_name=_("logo"),
@@ -467,6 +493,8 @@ class Cause(models.Model):
     active = CauseActiveManager()
     main = CauseMainManager()
     other = CauseOtherManager()
+    public_active = CausePublicFormManager()
+    nonprivate_active = CauseNonPrivateFormManager()
 
     class Meta:
         verbose_name = _("Cause")
@@ -499,6 +527,14 @@ class Cause(models.Model):
     @classmethod
     def mandatory_fields_names_capitalized(cls):
         return [field.capitalize() for field in cls.mandatory_fields_names()]
+
+    @property
+    def is_public(self):
+        return self.form_visibility == "pub"
+
+    @property
+    def is_private(self):
+        return self.form_visibility == "pri"
 
     @property
     def missing_mandatory_fields(self):
