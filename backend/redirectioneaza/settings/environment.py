@@ -42,6 +42,8 @@ env = environ.Env(
     DONATIONS_LIMIT_MONTH=(int, 5),
     DONATIONS_LIMIT_YEAR=(int, 2016),
     DONATIONS_LIMIT_TO_CURRENT_YEAR=(bool, True),
+    # i18n
+    LANGUAGE_CODE=(str, "ro"),
     # security settings
     ALLOWED_HOSTS=(list, ["*"]),
     CORS_ALLOWED_ORIGINS=(list, []),

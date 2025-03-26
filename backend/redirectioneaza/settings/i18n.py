@@ -3,8 +3,10 @@
 import os
 
 from .constants import BASE_DIR
+from .environment import env
 
-LANGUAGE_CODE = "ro"
+
+LANGUAGE_CODE = env.str("LANGUAGE_CODE")
 
 TIME_ZONE = "Europe/Bucharest"
 
