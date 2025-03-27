@@ -98,7 +98,7 @@
 
         <div
           class="flex flex-col gap-8 py-4"
-          x-data="clearElementOnVariableChange('notifications_email', 'allow_online_notifications')">
+          x-data="clearElementOnCheckboxChange(elementId='notifications_email',alpineVariable='allow_online_notifications',triggerValue=false,isRequired=true)">
 
           {% trans "Form visibility" as input_title %}
           {% include "components/input/select.html" with input_id="form_visibility" input_name="form_visibility" current_value=cause.form_visibility field=django_form.form_visibility options="{title:'a',value:'b'}" is_required=True %}
