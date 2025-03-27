@@ -99,7 +99,7 @@
         <div class="flex flex-col gap-8 py-4">
 
           {% trans "Form visibility" as input_title %}
-          {% include "components/input/select.html" with input_id="form_visibility" input_name="form_visibility" current_value=cause.form_visibility field=django_form.form_visibility options="[{title:'public',value:'pub'},{title:'nelistat',value:'unl'},{title:'privat',value:'pri'}]" is_required=True %}
+          {% include "components/input/select.html" with input_id="visibility" input_name="visibility" current_value=cause.visibility field=django_form.visibility options="[{title:'public',value:'pub'},{title:'nelistat',value:'unl'},{title:'privat',value:'pri'}]" is_required=True %}
 
 
           {% trans "Allow users to sign the form online" as input_title %}

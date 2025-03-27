@@ -139,12 +139,12 @@ class CauseActiveManager(models.Manager):
 
 class CausePublicFormManager(CauseActiveManager):
     def get_queryset(self):
-        return super().get_queryset().filter(form_visibility="pub")
+        return super().get_queryset().filter(visibility="pub")
 
 
 class CauseNonPrivateFormManager(CauseActiveManager):
     def get_queryset(self):
-        return super().get_queryset().exclude(form_visibility="pri")
+        return super().get_queryset().exclude(visibility="pri")
 
 
 class CauseMainManager(CauseActiveManager):
@@ -445,7 +445,7 @@ class Cause(models.Model):
     is_main = models.BooleanField(verbose_name=_("is main cause"), db_index=True, default=True)
     allow_online_collection = models.BooleanField(verbose_name=_("allow online collection"), default=False)
 
-    form_visibility = models.CharField(
+    visibility = models.CharField(
         verbose_name=_("form visibility"),
         max_length=3,
         default="pub",
@@ -530,11 +530,11 @@ class Cause(models.Model):
 
     @property
     def is_public(self):
-        return self.form_visibility == "pub"
+        return self.visibility == "pub"
 
     @property
     def is_private(self):
-        return self.form_visibility == "pri"
+        return self.visibility == "pri"
 
     @property
     def missing_mandatory_fields(self):
