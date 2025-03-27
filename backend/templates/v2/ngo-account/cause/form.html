@@ -12,7 +12,7 @@
   {% trans "Form data" as title %}
   {% include "ngo-account/components/form-title.html" with hide_public_page_button=hide_public_page_button|default_if_none:True hide_public_download_button=hide_public_download_button|default_if_none:True hide_ngohub_button=hide_ngohub_button|default_if_none:True %}
 
-  <div class="flex flex-col gap-8 xl:flex-row-reverse xl:gap-16">
+  <div class="flex flex-col gap-8 lg:flex-row-reverse lg:gap-16">
     <div>
       {% blocktrans trimmed asvar banner_message %}
         For filling in the form, we will use the following organization data:
@@ -96,7 +96,9 @@
         {% endblocktrans %}
         {% include "components/form/legend.html" with legend_title=form_settings_legend_title info_tooltip=form_settings_info_tooltip %}
 
-        <div class="flex flex-col gap-8 py-4">
+        <div
+          class="flex flex-col gap-8 py-4"
+          x-data="clearElementOnVariableChange('notifications_email', 'allow_online_notifications')">
 
           {% trans "Form visibility" as input_title %}
           {% include "components/input/select.html" with input_id="form_visibility" input_name="form_visibility" current_value=cause.form_visibility field=django_form.form_visibility options="{title:'a',value:'b'}" is_required=True %}
@@ -118,8 +120,12 @@
           {% include "components/input/checkbox.html" with input_id="allow_online_notifications" input_name="allow_online_notifications" value=cause.allow_online_notifications field=django_form.allow_online_notifications help_text=notifications_helptext style="isolated" %}
 
 
-          {% trans "Notifications e-mail address" as input_title %}
-          {% include "components/input/input.html" with input_id="notifications_email" input_type="email" input_name="notifications_email" is_disabled=disable_ngohub_fields value=cause.notifications_email field=django_form.notifications_email max_length=254 %}
+          <div
+            x-cloak
+            x-show="allow_online_notifications">
+            {% trans "Notifications e-mail address" as input_title %}
+            {% include "components/input/input.html" with input_id="notifications_email" input_type="email" input_name="notifications_email" is_disabled=disable_ngohub_fields value=cause.notifications_email field=django_form.notifications_email max_length=254 %}
+          </div>
 
         </div>
 
