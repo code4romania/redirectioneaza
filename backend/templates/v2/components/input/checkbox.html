@@ -11,6 +11,7 @@
         id="{{ input_id }}"
         name="{{ input_name }}"
         type="checkbox"
+        x-model="{{ input_id }}"
         {% if is_required %}required{% endif %}
         {% if value or field and field.value %}checked{% endif %}
         {% if field or value %}{% if field and field.value == True %}checked{% elif value == True %}checked{% endif %}{% endif %}
