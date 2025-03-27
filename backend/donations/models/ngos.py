@@ -518,45 +518,6 @@ class Cause(models.Model):
     def contributions(self):
         return self.donor_set.count()
 
-    def sync_with_ngo(self, force_cause_save: bool = False, force_ngo_save: bool = False):
-        """
-        XXX: [MULTI-FORM] remove these once we have multiple forms
-        The name and logo can be edited from the NGO's presentation,
-        while the other fields from the Cause page
-        """
-        cause_changed: bool = force_cause_save
-        ngo_changed: bool = force_ngo_save
-
-        if self.name != self.ngo.name:
-            self.name = self.ngo.name
-            cause_changed = True
-
-        if self.display_image != self.ngo.logo:
-            self.display_image = self.ngo.logo
-            cause_changed = True
-
-        if cause_changed:
-            self.save()
-
-        if self.ngo.slug != self.slug:
-            self.ngo.slug = self.slug
-            ngo_changed = True
-
-        if self.ngo.description != self.description:
-            self.ngo.description = self.description
-            ngo_changed = True
-
-        if self.ngo.bank_account != self.bank_account:
-            self.ngo.bank_account = self.bank_account
-            ngo_changed = True
-
-        if self.ngo.is_accepting_forms != self.allow_online_collection:
-            self.ngo.is_accepting_forms = self.allow_online_collection
-            ngo_changed = True
-
-        if ngo_changed:
-            self.ngo.save()
-
     def can_receive_forms(self):
         if not self.ngo.can_receive_forms():
             return False

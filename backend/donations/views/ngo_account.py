@@ -333,11 +333,6 @@ class NgoPresentationView(NgoBaseTemplateView):
         elif must_refresh_prefilled_form:
             async_task(delete_prefilled_form, ngo.id)
 
-        # XXX: [MULTI-FORM] remove these once we have multiple forms
-        if ngo.causes.exists():
-            cause: Cause = ngo.causes.first()
-            cause.sync_with_ngo()
-
         context["ngo"] = ngo
 
         return render(request, self.template_name, context)
