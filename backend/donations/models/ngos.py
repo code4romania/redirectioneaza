@@ -139,12 +139,12 @@ class CauseActiveManager(models.Manager):
 
 class CausePublicFormManager(CauseActiveManager):
     def get_queryset(self):
-        return super().get_queryset().filter(visibility="pub")
+        return super().get_queryset().filter(visibility=CauseVisibilityChoices.PUBLIC)
 
 
 class CauseNonPrivateFormManager(CauseActiveManager):
     def get_queryset(self):
-        return super().get_queryset().exclude(visibility="pri")
+        return super().get_queryset().exclude(visibility=CauseVisibilityChoices.PRIVATE)
 
 
 class CauseMainManager(CauseActiveManager):
@@ -432,13 +432,13 @@ class Ngo(models.Model):
             cause.delete_prefilled_form()
 
 
-class Cause(models.Model):
-    VISIBILITY_CHOICES = (
-        ("pub", _("public")),
-        ("unl", _("unlisted")),
-        ("pri", _("private")),
-    )
+class CauseVisibilityChoices(models.TextChoices):
+    PUBLIC = "pub", _("public")
+    UNLISTED = "unl", _("unlisted")
+    PRIVATE = "pri", _("private")
 
+
+class Cause(models.Model):
     ngo = models.ForeignKey(Ngo, on_delete=models.CASCADE, related_name="causes")
 
     # XXX: [MULTI-FORM] set the default to False when we have multiple forms
@@ -448,11 +448,11 @@ class Cause(models.Model):
     visibility = models.CharField(
         verbose_name=_("form visibility"),
         max_length=3,
-        default="pub",
+        default=CauseVisibilityChoices.PUBLIC,
         blank=False,
         null=False,
         db_index=True,
-        choices=VISIBILITY_CHOICES,
+        choices=CauseVisibilityChoices.choices,
     )
 
     display_image = models.ImageField(
@@ -530,11 +530,11 @@ class Cause(models.Model):
 
     @property
     def is_public(self):
-        return self.visibility == "pub"
+        return self.visibility == CauseVisibilityChoices.PUBLIC
 
     @property
     def is_private(self):
-        return self.visibility == "pri"
+        return self.visibility == CauseVisibilityChoices.PRIVATE
 
     @property
     def missing_mandatory_fields(self):
