@@ -437,6 +437,17 @@ class CauseVisibilityChoices(models.TextChoices):
     UNLISTED = "unl", _("unlisted")
     PRIVATE = "pri", _("private")
 
+    @staticmethod
+    def as_dict():
+        result = []
+        for choice in CauseVisibilityChoices.choices:
+            result.append({"title": choice[1], "value": choice[0]})
+        return result
+
+    @staticmethod
+    def as_str():
+        return str(CauseVisibilityChoices.as_dict())
+
 
 class Cause(models.Model):
     ngo = models.ForeignKey(Ngo, on_delete=models.CASCADE, related_name="causes")

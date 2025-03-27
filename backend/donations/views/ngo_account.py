@@ -23,7 +23,7 @@ from ..common.validation.registration_number import (
 from ..forms.ngo_account import CauseForm, NgoPresentationForm
 from ..models.donors import Donor
 from ..models.jobs import Job
-from ..models.ngos import Cause, Ngo
+from ..models.ngos import Cause, Ngo, CauseVisibilityChoices
 from .base import BaseContextPropertiesMixin, BaseVisibleTemplateView
 from .common.misc import get_ngo_archive_download_status
 from .common.search import DonorSearchMixin
@@ -146,6 +146,7 @@ class NgoCauseCommonView(NgoBaseTemplateView):
         ngo: Ngo = context["ngo"]
 
         context["info_banner_items"] = self.get_ngo_cause_banner_list_items(ngo)
+        context["visibility_choices"] = CauseVisibilityChoices.as_str()
 
         return context
 
