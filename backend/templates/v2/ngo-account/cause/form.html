@@ -113,7 +113,7 @@
             {% if not form_visibility_input_title %}
               {% trans "Form visibility" as form_visibility_input_title %}
             {% endif %}
-            {% include "components/input/select.html" with input_title=form_visibility_input_title input_id="form_visibility" input_name="form_visibility" current_value=cause.form_visibility field=django_form.form_visibility options="{title:'a',value:'b'}" is_required=True %}
+            {% include "components/input/select.html" with input_id="visibility" input_name="visibility" current_value=cause.visibility field=django_form.visibility options=visibility_choices is_required=True %}
           {% endif %}
 
 
