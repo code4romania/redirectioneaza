@@ -86,7 +86,8 @@
           {% if not logo_input_title %}
             {% trans "Display image" as logo_input_title %}
           {% endif %}
-          {% include "components/input/image.html" with input_title=logo_input_title help_text=logo_help_text input_id="logo" input_name="logo" is_required=False is_disabled=disable_ngohub_fields image=cause.display_image %}
+
+          {% include "components/input/image.html" with input_title=logo_input_title help_text=logo_help_text input_id="display_image" input_name="display_image" is_required=False is_disabled=disable_ngohub_fields image=cause.display_image %}
 
         </div>
 

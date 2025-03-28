@@ -182,7 +182,7 @@ class NgoCauseCommonView(NgoBaseTemplateView):
             return response
 
         existing_cause = context.get("cause")
-        form = CauseForm(post, instance=existing_cause)
+        form = CauseForm(post, files=request.FILES, instance=existing_cause)
 
         context.update({"django_form": form})
 
