@@ -20,7 +20,6 @@
 
       {% url "my-organization:presentation" as banner_cta_url %}
       {% trans "See the Organization's Information" as banner_cta_message %}
-
       {% include "components/info-banner.html" with banner_message=banner_message banner_list=info_banner_items %}
 
 
@@ -62,7 +61,9 @@
 
     <div class="flex flex-col gap-8">
       <fieldset>
-        {% trans "Form page" as form_page_legend_title %}
+        {% if not form_page_legend_title %}
+          {% trans "Form page" as form_page_legend_title %}
+        {% endif %}
         {# Datele din această secțiune vor fi vizibile pe pagina publică a formularului. #}
         {% blocktrans trimmed asvar form_page_info_tooltip %}
           The information in this section will be visible on the public page of the form.
@@ -72,14 +73,20 @@
 
         <div class="flex flex-col gap-8 py-4">
 
-          {% trans "Form title" as input_title %}
-          {% include "components/input/input.html" with input_id="name" input_type="text" input_name="name" placeholder=input_title is_required=True value=cause.name field=django_form.name %}
+          {% if not name_input_title %}
+            {% trans "Form title" as name_input_title %}
+          {% endif %}
+          {% include "components/input/input.html" with input_title=name_input_title help_text=name_help_text input_id="name" input_type="text" input_name="name" placeholder=name_input_title is_required=True value=cause.name field=django_form.name %}
 
-          {% trans "Form description" as input_title %}
-          {% include "components/input/textarea.html" with input_id="description" input_type="textarea" input_name="description" is_required=True value=cause.description field=django_form.description %}
+          {% if not description_input_title %}
+            {% trans "Form description" as description_input_title %}
+          {% endif %}
+          {% include "components/input/textarea.html" with input_title=description_input_title help_text=description_help_text input_id="description" input_type="textarea" input_name="description" is_required=True value=cause.description field=django_form.description %}
 
-          {% trans "Logo" as input_title %}
-          {% include "components/input/image.html" with input_id="logo" input_name="logo" is_required=False is_disabled=disable_ngohub_fields image=cause.display_image %}
+          {% if not logo_input_title %}
+            {% trans "Display image" as logo_input_title %}
+          {% endif %}
+          {% include "components/input/image.html" with input_title=logo_input_title help_text=logo_help_text input_id="logo" input_name="logo" is_required=False is_disabled=disable_ngohub_fields image=cause.display_image %}
 
         </div>
 
@@ -87,7 +94,9 @@
 
       <fieldset>
 
-        {% trans "Form settings" as form_settings_legend_title %}
+        {% if not form_settings_legend_title %}
+          {% trans "Form settings" as form_settings_legend_title %}
+        {% endif %}
         {# Din această secțiune poți gestiona vizibilitatea formularului, semnarea online și notificările prin email. #}
         {% blocktrans trimmed asvar form_settings_info_tooltip %}
           From this section, you can manage the form's visibility,
@@ -100,31 +109,41 @@
           class="flex flex-col gap-8 py-4"
           x-data="clearElementOnCheckboxChange(elementId='notifications_email',alpineVariable='allow_online_notifications',triggerValue=false,isRequired=true)">
 
-          {% trans "Form visibility" as input_title %}
-          {% include "components/input/select.html" with input_id="visibility" input_name="visibility" current_value=cause.visibility field=django_form.visibility options=visibility_choices is_required=True %}
+          {% if not is_main_cause %}
+            {% if not form_visibility_input_title %}
+              {% trans "Form visibility" as form_visibility_input_title %}
+            {% endif %}
+            {% include "components/input/select.html" with input_title=form_visibility_input_title input_id="form_visibility" input_name="form_visibility" current_value=cause.form_visibility field=django_form.form_visibility options="{title:'a',value:'b'}" is_required=True %}
+          {% endif %}
 
 
-          {% trans "Allow users to sign the form online" as input_title %}
+          {% if not allow_online_collection_input_title %}
+            {% trans "Allow users to sign the form online" as allow_online_collection_input_title %}
+          {% endif %}
           {% blocktrans trimmed asvar signing_helptext %}
             Choose the IBAN you will use for collecting and submitting to ANAF.
             Changing the IBAN will not update the forms already completed by taxpayers.
           {% endblocktrans %}
-          {% include "components/input/checkbox.html" with input_id="allow_online_collection" input_name="allow_online_collection" value=cause.allow_online_collection field=django_form.allow_online_collection help_text=signing_helptext style="isolated" %}
+          {% include "components/input/checkbox.html" with input_title=allow_online_collection_input_title input_id="allow_online_collection" input_name="allow_online_collection" value=cause.allow_online_collection field=django_form.allow_online_collection help_text=signing_helptext style="isolated" %}
 
 
-          {% trans "Receive notifications for each signed form" as input_title %}
+          {% if not allow_online_notifications_input_title %}
+            {% trans "Receive notifications for each signed form" as allow_online_notifications_input_title %}
+          {% endif %}
           {% blocktrans trimmed asvar notifications_helptext %}
             Choose the IBAN you will use for collecting and submitting to ANAF.
             Changing the IBAN will not update the forms already completed by taxpayers.
           {% endblocktrans %}
-          {% include "components/input/checkbox.html" with input_id="allow_online_notifications" input_name="allow_online_notifications" value=cause.allow_online_notifications field=django_form.allow_online_notifications help_text=notifications_helptext style="isolated" %}
+          {% include "components/input/checkbox.html" with input_title=allow_online_notifications_input_title input_id="allow_online_notifications" input_name="allow_online_notifications" value=cause.allow_online_notifications field=django_form.allow_online_notifications help_text=notifications_helptext style="isolated" %}
 
 
           <div
             x-cloak
             x-show="allow_online_notifications">
-            {% trans "Notifications e-mail address" as input_title %}
-            {% include "components/input/input.html" with input_id="notifications_email" input_type="email" input_name="notifications_email" is_disabled=disable_ngohub_fields value=cause.notifications_email field=django_form.notifications_email max_length=254 %}
+            {% if not notifications_email_input_title %}
+              {% trans "Notifications e-mail address" as notifications_email_input_title %}
+            {% endif %}
+            {% include "components/input/input.html" with input_title=notifications_email_input_title input_id="notifications_email" input_type="email" input_name="notifications_email" is_disabled=disable_ngohub_fields value=cause.notifications_email field=django_form.notifications_email max_length=254 %}
           </div>
 
         </div>
