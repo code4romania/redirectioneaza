@@ -4,10 +4,9 @@ from typing import Any, Dict, List
 from django.contrib.auth import get_user_model
 from django.core.management import BaseCommand
 from django.db import IntegrityError
+from donations.models.ngos import Cause, Ngo
 from faker import Faker
 from localflavor.ro.ro_counties import COUNTIES_CHOICES
-
-from donations.models.ngos import Cause, Ngo
 
 fake = Faker("ro_RO")
 
@@ -150,9 +149,9 @@ class Command(BaseCommand):
             type_ = MOCK_NGO_NAMES["types"][random.randint(0, len(MOCK_NGO_NAMES["types"]) - 1)]
             name_ = MOCK_NGO_NAMES["names"][random.randint(0, len(MOCK_NGO_NAMES["names"]) - 1)]
 
-            name = " ".join((type_, name_)).strip()
+            org_name = " ".join((type_, name_)).strip()
 
-            if name in generated_organization_names:
+            if org_name in generated_organization_names:
                 consecutive_identical_names += 1
                 if consecutive_identical_names > 5:
                     self.stdout.write(
@@ -162,9 +161,9 @@ class Command(BaseCommand):
                 continue
 
             consecutive_identical_names = 0
-            generated_organization_names.append(name)
+            generated_organization_names.append(org_name)
 
-            clean_name = name.lower().replace('"', "").replace(".", "").replace(",", "").replace("/", "")
+            clean_name = org_name.lower().replace('"', "").replace(".", "").replace(",", "").replace("/", "")
             kebab_case_name = (
                 "-".join(clean_name.split(" "))
                 .replace("ă", "a")
@@ -192,11 +191,10 @@ class Command(BaseCommand):
                 continue
 
             organization_details = {
-                "name": name,
-                "slug": kebab_case_name,
-                "description": fake.paragraph(nb_sentences=3, variable_nb_sentences=True),
+                "name": "Asoc." + org_name,
+                "slug": "asoc-" + kebab_case_name,
                 "bank_account": fake.iban(),
-                "registration_number": fake.ssn()[:8],
+                "registration_number": fake.vat_id(),
                 "address": address,
                 "county": county,
                 "active_region": county,
@@ -219,13 +217,19 @@ class Command(BaseCommand):
             owner.ngo = org
             owner.save()
 
+            ignore_cause = not create_valid or random.choice(range(0, 6)) == 3
+
+            if ignore_cause:
+                continue
+
             ngo_cause = Cause.objects.create(
                 ngo=org,
-                name=org.name,
-                slug=org.slug,
-                description=org.description,
-                bank_account=org.bank_account,
-                allow_online_collection=True,
+                is_main=True,
+                allow_online_collection=org.is_accepting_forms or random.choice(range(0, 6)) == 3,
+                slug=kebab_case_name,
+                name=org_name,
+                description=fake.paragraph(nb_sentences=3, variable_nb_sentences=True),
+                bank_account=fake.iban(),
             )
             ngo_cause.save()
 
