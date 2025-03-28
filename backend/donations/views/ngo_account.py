@@ -100,6 +100,35 @@ class NgoBaseTemplateView(NgoBaseView, BaseVisibleTemplateView):
 
         return context
 
+    def get_missing_fields(
+        self,
+        *,
+        source: str,
+        ngo: Optional[Ngo],
+        cause: Optional[Cause],
+    ) -> Optional[Dict[str, str]]:
+        """
+        Returns a dictionary with the missing fields for the organization or the cause.
+        If there are no missing fields, it returns None.
+        """
+
+        if missing_ngo_fields := self.get_missing_ngo_fields(ngo):
+            return {
+                "type": "ngo",
+                "fields": missing_ngo_fields,
+                "cta_message": _("Go to the organization details.") if source == "cause" else "",
+                "cta_url": reverse_lazy("my-organization:presentation") if source == "cause" else "",
+            }
+        elif missing_cause_fields := self.get_cause_missing_fields(cause):
+            return {
+                "type": "cause",
+                "fields": missing_cause_fields,
+                "cta_message": _("Go to the form.") if source == "ngo" else "",
+                "cta_url": reverse_lazy("my-organization:forms") if source == "ngo" else "",
+            }
+
+        return None
+
     def get_cause_missing_fields(self, cause: Optional[Cause]) -> Optional[List[str]]:
         if not cause:
             missing_fields = Cause.mandatory_fields_names_capitalized()
@@ -232,10 +261,12 @@ class NgoPresentationView(NgoBaseTemplateView):
         if has_ngohub:
             ngohub_url = f"{settings.NGOHUB_APP_BASE}organizations/{ngo.ngohub_org_id}/general"
 
-        context["missing_cause_fields"] = self.get_cause_missing_fields(context.get("cause"))
-        context["missing_ngo_fields"] = self.get_missing_ngo_fields(context.get("ngo"))
-        context["missing_fields_banner_cta_message"] = _("Go to the form.")
-        context["missing_fields_banner_cta_url"] = reverse_lazy("my-organization:forms")
+        if missing_fields := self.get_missing_fields(
+            source="ngo",
+            ngo=context.get("ngo"),
+            cause=context.get("cause"),
+        ):
+            context["missing_fields"] = missing_fields
 
         context.update(
             {
@@ -351,10 +382,12 @@ class NgoMainCauseView(NgoCauseCommonView):
         context["cause"] = self.get_main_cause(context.get("ngo"))
         context["is_main_cause"] = True
 
-        context["missing_cause_fields"] = self.get_cause_missing_fields(context.get("cause"))
-        context["missing_ngo_fields"] = self.get_missing_ngo_fields(context.get("ngo"))
-        context["missing_fields_banner_cta_message"] = ""
-        context["missing_fields_banner_cta_url"] = ""
+        if missing_fields := self.get_missing_fields(
+            source="cause",
+            ngo=context.get("ngo"),
+            cause=context.get("cause"),
+        ):
+            context["missing_fields"] = missing_fields
 
         context["active_tab"] = self.tab_title
 
