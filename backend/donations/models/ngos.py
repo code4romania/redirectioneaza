@@ -137,6 +137,16 @@ class CauseActiveManager(models.Manager):
         )
 
 
+class CausePublicFormManager(CauseActiveManager):
+    def get_queryset(self):
+        return super().get_queryset().filter(visibility=CauseVisibilityChoices.PUBLIC)
+
+
+class CauseNonPrivateFormManager(CauseActiveManager):
+    def get_queryset(self):
+        return super().get_queryset().exclude(visibility=CauseVisibilityChoices.PRIVATE)
+
+
 class CauseMainManager(CauseActiveManager):
     def get_queryset(self):
         return super().get_queryset().filter(is_main=True)
@@ -422,12 +432,39 @@ class Ngo(models.Model):
             cause.delete_prefilled_form()
 
 
+class CauseVisibilityChoices(models.TextChoices):
+    PUBLIC = "pub", _("public")
+    UNLISTED = "unl", _("unlisted")
+    PRIVATE = "pri", _("private")
+
+    @staticmethod
+    def as_dict():
+        result = []
+        for choice in CauseVisibilityChoices.choices:
+            result.append({"title": choice[1], "value": choice[0]})
+        return result
+
+    @staticmethod
+    def as_str():
+        return str(CauseVisibilityChoices.as_dict())
+
+
 class Cause(models.Model):
     ngo = models.ForeignKey(Ngo, on_delete=models.CASCADE, related_name="causes")
 
     # XXX: [MULTI-FORM] set the default to False when we have multiple forms
     is_main = models.BooleanField(verbose_name=_("is main cause"), db_index=True, default=True)
     allow_online_collection = models.BooleanField(verbose_name=_("allow online collection"), default=False)
+
+    visibility = models.CharField(
+        verbose_name=_("form visibility"),
+        max_length=3,
+        default=CauseVisibilityChoices.PUBLIC,
+        blank=False,
+        null=False,
+        db_index=True,
+        choices=CauseVisibilityChoices.choices,
+    )
 
     display_image = models.ImageField(
         verbose_name=_("logo"),
@@ -467,6 +504,8 @@ class Cause(models.Model):
     active = CauseActiveManager()
     main = CauseMainManager()
     other = CauseOtherManager()
+    public_active = CausePublicFormManager()
+    nonprivate_active = CauseNonPrivateFormManager()
 
     class Meta:
         verbose_name = _("Cause")
@@ -499,6 +538,14 @@ class Cause(models.Model):
     @classmethod
     def mandatory_fields_names_capitalized(cls):
         return [field.capitalize() for field in cls.mandatory_fields_names()]
+
+    @property
+    def is_public(self):
+        return self.visibility == CauseVisibilityChoices.PUBLIC
+
+    @property
+    def is_private(self):
+        return self.visibility == CauseVisibilityChoices.PRIVATE
 
     @property
     def missing_mandatory_fields(self):

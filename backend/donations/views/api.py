@@ -41,7 +41,7 @@ class UpdateFromNgohub(BaseTemplateView):
 
 
 class SearchCausesApi(TemplateView, NgoCauseMixedSearchMixin):
-    queryset = Cause.active
+    queryset = Cause.public_active
 
     def get(self, request, *args, **kwargs):
         causes = self.search()

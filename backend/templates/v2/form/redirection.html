@@ -11,6 +11,10 @@
     <meta property="og:image:secure_url" content="{{ cause.display_image.url }}"/>
   {% endif %}
 
+  {% if not cause.is_public %}
+    <meta name="robots" content="noindex, nofollow">
+  {% endif %}
+
   <meta property="og:type" content="website"/>
 
   <script src="https://www.google.com/recaptcha/api.js?hl=ro" async defer></script>
