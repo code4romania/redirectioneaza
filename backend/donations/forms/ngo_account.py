@@ -112,8 +112,6 @@ class CauseForm(forms.ModelForm):
             "ngo",
             "date_created",
             "date_updated",
-            # XXX: [MULTI-FORM] remove these once we have multiple forms
-            "name",
         ]
 
     def clean_slug(self):
@@ -122,7 +120,7 @@ class CauseForm(forms.ModelForm):
         ngo_slug_validator(slug)
 
         if Cause.objects.filter(slug=slug).exclude(pk=self.instance.pk).exists():
-            raise forms.ValidationError(_("An NGO with this slug already exists."))
+            raise forms.ValidationError(_("A cause with this URL already exists."))
 
         if NgoSlugValidator.is_reused(slug, self.instance.pk):
             raise forms.ValidationError(_("This slug is already used by another form."))
@@ -134,3 +132,11 @@ class CauseForm(forms.ModelForm):
 
     def clean_description(self):
         return self.cleaned_data.get("description").strip()
+
+    def clean_bank_account(self):
+        bank_account = self.cleaned_data.get("bank_account")
+
+        if Cause.objects.filter(bank_account=bank_account).exclude(pk=self.instance.pk).exists():
+            raise forms.ValidationError(_("A cause with this IBAN already exists."))
+
+        return bank_account

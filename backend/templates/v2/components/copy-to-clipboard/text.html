@@ -1,0 +1,12 @@
+{% extends "components/copy-to-clipboard/base.html" %}
+
+{% load i18n %}
+
+
+{% block clickable_content %}
+  {% if button_text %}
+    {{ button_text }}
+  {% else %}
+    {{ block.super }}
+  {% endif %}
+{% endblock %}

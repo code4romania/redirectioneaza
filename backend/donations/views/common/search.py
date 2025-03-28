@@ -110,7 +110,7 @@ class NgoCauseMixedSearchMixin(CommonSearchMixin):
     @classmethod
     def get_search_results(cls, queryset: QuerySet, query: str, language_code: str) -> QuerySet[Cause]:
         ngos = NgoSearchMixin.get_search_results(Ngo.active, query, language_code)
-        ngos_causes = Cause.active.filter(ngo__in=ngos).distinct("name")
+        ngos_causes = Cause.public_active.filter(ngo__in=ngos).distinct("name")
 
         searched_causes = CauseSearchMixin.get_search_results(queryset, query, language_code)
 

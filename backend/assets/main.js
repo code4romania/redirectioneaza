@@ -19,6 +19,7 @@ import ngoSearch from './ngoSearch';
 import signature from './signature';
 import twoPercentForm from './twoPercentForm';
 import imageUpload from './imageUpload';
+import clearElementOnCheckboxChange from './clearElementOnCheckboxChange';
 
 Alpine.plugin(collapse);
 Alpine.plugin(focus);
@@ -30,6 +31,7 @@ Alpine.data('ngoSearch', ngoSearch);
 Alpine.data('signature', signature);
 Alpine.data('twoPercentForm', twoPercentForm);
 Alpine.data('imageUpload', imageUpload);
+Alpine.data('clearElementOnCheckboxChange', clearElementOnCheckboxChange);
 
 window.Alpine = Alpine;
 

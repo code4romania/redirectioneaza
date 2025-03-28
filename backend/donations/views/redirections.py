@@ -12,7 +12,6 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 from ipware import get_client_ip
-
 from redirectioneaza.common.messaging import extend_email_context, send_email
 
 from ..forms.redirection import DonationForm
@@ -81,12 +80,18 @@ class RedirectionHandler(TemplateView):
         if (cause is None or not cause.ngo.can_receive_forms()) and (ngo is None or not ngo.can_receive_forms()):
             raise Http404
 
+        if cause.is_main:
+            main_cause = cause
+        else:
+            main_cause = ngo.causes.filter(is_main=True).first()
+
         absolute_path = request.build_absolute_uri(reverse("twopercent", kwargs={"ngo_url": ngo_url}))
 
         context.update(
             {
                 "title": cause.name if cause else ngo.name,
                 "cause": cause,
+                "main_cause": main_cause,
                 "ngo": ngo,
                 "absolute_path": absolute_path,
             }

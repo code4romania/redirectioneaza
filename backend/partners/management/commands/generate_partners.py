@@ -41,7 +41,7 @@ class Command(BaseCommand):
             f"organizations each"
         )
 
-        causes = list(Cause.active.all())
+        causes = list(Cause.public_active.all())
         if not causes:
             self.stdout.write("No active Causes found. Exiting...")
             return

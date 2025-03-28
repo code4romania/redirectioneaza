@@ -1,0 +1,39 @@
+{% load i18n %}
+
+{% if visibility == "public" %}
+
+  {% trans "Public" as badge_title %}
+  {% blocktrans trimmed asvar tooltip_text %}
+    The form is public for contributors.
+    Anyone with the link can access this form.
+  {% endblocktrans %}
+  {% include "components/badge.html" with style="info" %}
+
+{% elif visibility == "unlisted" %}
+
+  {% trans "Unlisted" as badge_title %}
+  {% blocktrans trimmed asvar tooltip_text %}
+    The form is not listed on the platform.
+    Only people with the link can access this form.
+  {% endblocktrans %}
+  {% include "components/badge.html" with style="warning" %}
+
+{% elif visibility == "private" %}
+
+  {% trans "Private" as badge_title %}
+  {% blocktrans trimmed asvar tooltip_text %}
+    The form is visible only to you
+    until you choose to make it public for contributors.
+  {% endblocktrans %}
+  {% include "components/badge.html" %}
+
+{% else %}
+
+  {% trans "Necunoscut" as badge_title %}
+  {% blocktrans trimmed asvar tooltip_text %}
+    This is an issue.
+    Please contact support.
+  {% endblocktrans %}
+  {% include "components/badge.html" with style="error" %}
+
+{% endif %}

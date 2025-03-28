@@ -87,13 +87,13 @@ def get_cause_response_item(cause: Cause) -> Dict:
 def get_ngo_cause(slug: str) -> Tuple[Optional[Cause], Ngo]:
     #  XXX: [MULTI-FORM] This is a temporary solution to handle both causes and NGOs
     try:
-        cause: Optional[Cause] = Cause.active.get(slug=slug)
+        cause: Optional[Cause] = Cause.nonprivate_active.get(slug=slug)
         ngo: Ngo = cause.ngo
     except Cause.DoesNotExist:
         try:
             ngo: Ngo = Ngo.active.get(slug=slug)
-            cause = ngo.causes.first()
-        except Ngo.DoesNotExist:
+            cause = Cause.main.filter(ngo=ngo).first()
+        except (Cause.DoesNotExist, Ngo.DoesNotExist):
             raise Http404
 
     return cause, ngo

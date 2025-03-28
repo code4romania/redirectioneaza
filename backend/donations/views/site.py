@@ -33,7 +33,7 @@ class HomePage(BaseVisibleTemplateView):
             now = timezone.now()
 
         if queryset is None:
-            queryset = Cause.active
+            queryset = Cause.public_active
 
         start_of_year = datetime(now.year, 1, 1, 0, 0, 0, tzinfo=now.tzinfo)
 
@@ -61,7 +61,7 @@ class HomePage(BaseVisibleTemplateView):
 
     @cache_decorator(timeout=settings.TIMEOUT_CACHE_SHORT, cache_key_prefix=FRONTPAGE_NGOS_KEY)
     def _get_random_causes(self, queryset: QuerySet, num_items: int):
-        all_cause_ids = list(Cause.active.values_list("pk", flat=True))
+        all_cause_ids = list(Cause.public_active.values_list("pk", flat=True))
         return queryset.filter(id__in=random.sample(all_cause_ids, num_items))
 
     def _partner_response(self, context: Dict, partner: Partner):
@@ -98,7 +98,7 @@ class HomePage(BaseVisibleTemplateView):
         if partner:
             return self._partner_response(context, partner)
 
-        queryset = Cause.active
+        queryset = Cause.public_active
 
         context["stats"] = self._get_stats(now, queryset)
         context["causes"] = self._get_random_causes(queryset, num_items=min(4, queryset.count()))
@@ -114,7 +114,7 @@ class AboutHandler(BaseVisibleTemplateView):
 class CausesListHandler(CauseSearchMixin):
     template_name = "public/all-causes.html"
     context_object_name = "causes"
-    queryset = Cause.active
+    queryset = Cause.public_active
     ordering = "title"
     paginate_by = 8
 
@@ -138,7 +138,7 @@ class CausesListHandler(CauseSearchMixin):
 class NgoListHandler(NgoCauseMixedSearchMixin):
     template_name = "public/all-ngos.html"
     context_object_name = "causes"
-    queryset = Cause.active
+    queryset = Cause.public_active
     ordering = "name"
     paginate_by = 8
 

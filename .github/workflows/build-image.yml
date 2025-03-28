@@ -3,6 +3,7 @@ on:
     branches:
       - 'main'
       - 'refactor/frontend'
+      - 'feature/multi-forms/main'
     tags:
       - 'v*'
     paths:

@@ -11,3 +11,13 @@ def to_county(value):
         return _("Sector %s") % sector_value
     except ValueError:
         return value
+
+
+@register.filter
+def iban(value: str) -> str:
+    """
+    Format IBAN number to human-readable format
+    AAAABBBBCCCCDDDDEEEEFFFF -> AAAA BBBB CCCC DDDD EEEE FFFF
+    """
+
+    return " ".join([value[i : i + 4] for i in range(0, len(value), 4)])

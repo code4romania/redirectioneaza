@@ -1,7 +1,7 @@
 import logging
 import re
 from functools import partial
-from typing import List
+from typing import Any, List, Optional
 
 from django.conf import settings
 from django.core.cache import cache
@@ -13,10 +13,12 @@ from django.db.models.functions import Lower
 from django.db.models.query_utils import DeferredAttribute
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-
 from donations.common.models_hashing import hash_id_secret
 from donations.common.validation.clean_slug import clean_slug
-from donations.common.validation.registration_number import REGISTRATION_NUMBER_REGEX_WITH_VAT, ngo_id_number_validator
+from donations.common.validation.registration_number import (
+    REGISTRATION_NUMBER_REGEX_WITH_VAT,
+    ngo_id_number_validator,
+)
 from donations.models.donors import Donor
 
 ALL_NGOS_CACHE_KEY = "ALL_NGOS"
@@ -135,9 +137,24 @@ class CauseActiveManager(models.Manager):
         )
 
 
+class CausePublicFormManager(CauseActiveManager):
+    def get_queryset(self):
+        return super().get_queryset().filter(visibility=CauseVisibilityChoices.PUBLIC)
+
+
+class CauseNonPrivateFormManager(CauseActiveManager):
+    def get_queryset(self):
+        return super().get_queryset().exclude(visibility=CauseVisibilityChoices.PRIVATE)
+
+
 class CauseMainManager(CauseActiveManager):
     def get_queryset(self):
         return super().get_queryset().filter(is_main=True)
+
+
+class CauseOtherManager(CauseActiveManager):
+    def get_queryset(self):
+        return super().get_queryset().filter(is_main=False)
 
 
 class NgoHubManager(models.Manager):
@@ -380,6 +397,9 @@ class Ngo(models.Model):
     def missing_mandatory_fields_names_capitalize(self):
         return [field.capitalize() for field in self.missing_mandatory_fields_names]
 
+    def main_cause(self) -> "Cause":
+        return self.causes.filter(is_main=True).first()
+
     def mandatory_fields_values(self):
         return [getattr(self, field.name) for field in self.mandatory_fields]
 
@@ -387,7 +407,11 @@ class Ngo(models.Model):
         if not self.is_active:
             return False
 
-        if not all(self.mandatory_fields_values()):
+        main_cause: Optional[Cause] = self.main_cause()
+        if not main_cause:
+            return False
+
+        if not all(main_cause.mandatory_fields_values):
             return False
 
         return True
@@ -408,12 +432,39 @@ class Ngo(models.Model):
             cause.delete_prefilled_form()
 
 
+class CauseVisibilityChoices(models.TextChoices):
+    PUBLIC = "pub", _("public")
+    UNLISTED = "unl", _("unlisted")
+    PRIVATE = "pri", _("private")
+
+    @staticmethod
+    def as_dict():
+        result = []
+        for choice in CauseVisibilityChoices.choices:
+            result.append({"title": choice[1], "value": choice[0]})
+        return result
+
+    @staticmethod
+    def as_str():
+        return str(CauseVisibilityChoices.as_dict())
+
+
 class Cause(models.Model):
     ngo = models.ForeignKey(Ngo, on_delete=models.CASCADE, related_name="causes")
 
     # XXX: [MULTI-FORM] set the default to False when we have multiple forms
     is_main = models.BooleanField(verbose_name=_("is main cause"), db_index=True, default=True)
     allow_online_collection = models.BooleanField(verbose_name=_("allow online collection"), default=False)
+
+    visibility = models.CharField(
+        verbose_name=_("form visibility"),
+        max_length=3,
+        default=CauseVisibilityChoices.PUBLIC,
+        blank=False,
+        null=False,
+        db_index=True,
+        choices=CauseVisibilityChoices.choices,
+    )
 
     display_image = models.ImageField(
         verbose_name=_("logo"),
@@ -452,6 +503,9 @@ class Cause(models.Model):
     objects = models.Manager()
     active = CauseActiveManager()
     main = CauseMainManager()
+    other = CauseOtherManager()
+    public_active = CausePublicFormManager()
+    nonprivate_active = CauseNonPrivateFormManager()
 
     class Meta:
         verbose_name = _("Cause")
@@ -464,8 +518,8 @@ class Cause(models.Model):
     def __str__(self):
         return f"{self.ngo.name} - {self.name}"
 
-    @property
-    def mandatory_fields(self):
+    @classmethod
+    def mandatory_fields(cls):
 
         # noinspection PyTypeChecker
         field_names: List[DeferredAttribute] = [
@@ -477,56 +531,39 @@ class Cause(models.Model):
 
         return [field.field for field in field_names]
 
+    @classmethod
+    def mandatory_fields_names(cls):
+        return [field.verbose_name for field in cls.mandatory_fields()]
+
+    @classmethod
+    def mandatory_fields_names_capitalized(cls):
+        return [field.capitalize() for field in cls.mandatory_fields_names()]
+
+    @property
+    def is_public(self):
+        return self.visibility == CauseVisibilityChoices.PUBLIC
+
+    @property
+    def is_private(self):
+        return self.visibility == CauseVisibilityChoices.PRIVATE
+
     @property
     def missing_mandatory_fields(self):
-        return [field for field in self.mandatory_fields if not getattr(self, field.name)]
+        return [field for field in Cause.mandatory_fields() if not getattr(self, field.name)]
 
     @property
     def missing_mandatory_fields_names(self):
         return [field.verbose_name for field in self.missing_mandatory_fields]
 
+    def missing_mandatory_fields_names_capitalized(self):
+        return [field.capitalize() for field in self.missing_mandatory_fields_names]
+
     @property
-    def mandatory_fields_values(self):
-        return [getattr(self, field.name) for field in self.mandatory_fields]
+    def mandatory_fields_values(self) -> List[Any]:
+        return [getattr(self, field.name) for field in Cause.mandatory_fields()]
 
-    def sync_with_ngo(self, force_cause_save: bool = False, force_ngo_save: bool = False):
-        """
-        XXX: [MULTI-FORM] remove these once we have multiple forms
-        The name and logo can be edited from the NGO's presentation,
-        while the other fields from the Cause page
-        """
-        cause_changed: bool = force_cause_save
-        ngo_changed: bool = force_ngo_save
-
-        if self.name != self.ngo.name:
-            self.name = self.ngo.name
-            cause_changed = True
-
-        if self.display_image != self.ngo.logo:
-            self.display_image = self.ngo.logo
-            cause_changed = True
-
-        if cause_changed:
-            self.save()
-
-        if self.ngo.slug != self.slug:
-            self.ngo.slug = self.slug
-            ngo_changed = True
-
-        if self.ngo.description != self.description:
-            self.ngo.description = self.description
-            ngo_changed = True
-
-        if self.ngo.bank_account != self.bank_account:
-            self.ngo.bank_account = self.bank_account
-            ngo_changed = True
-
-        if self.ngo.is_accepting_forms != self.allow_online_collection:
-            self.ngo.is_accepting_forms = self.allow_online_collection
-            ngo_changed = True
-
-        if ngo_changed:
-            self.ngo.save()
+    def contributions(self):
+        return self.donor_set.count()
 
     def can_receive_forms(self):
         if not self.ngo.can_receive_forms():
