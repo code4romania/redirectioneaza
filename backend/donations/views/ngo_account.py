@@ -5,7 +5,8 @@ from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied, ValidationError
-from django.db.models import QuerySet
+from django.db.models import Count, F, OuterRef, QuerySet, Subquery
+from django.db.models.functions import JSONObject
 from django.http import Http404, HttpRequest, QueryDict
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
@@ -23,9 +24,9 @@ from ..common.validation.registration_number import (
 from ..forms.ngo_account import CauseForm, NgoPresentationForm
 from ..models.donors import Donor
 from ..models.jobs import Job
-from ..models.ngos import Cause, Ngo, CauseVisibilityChoices
+from ..models.ngos import Cause, CauseVisibilityChoices, Ngo
 from .base import BaseContextPropertiesMixin, BaseVisibleTemplateView
-from .common.misc import get_ngo_archive_download_status
+from .common.misc import get_ngo_archive_download_status, get_time_between_retries
 from .common.search import DonorSearchMixin
 from .ngo_account_filters import (
     CauseQueryFilter,
@@ -585,6 +586,69 @@ class NgoRedirectionsView(NgoBaseListView, DonorSearchMixin):
     paginate_by = 8
     sidebar_item_target = "org-redirections"
 
+    def get_context_data(self, **kwargs):
+        search_query = self._search_query()
+
+        query_dict = QueryDict(mutable=True)
+        query_dict["q"] = search_query
+
+        context = super().get_context_data(**kwargs)
+
+        user: User = self.request.user
+        ngo: Ngo = user.ngo if user.ngo else None
+
+        context.update(
+            {
+                "user": user,
+                "ngo": ngo,
+                "title": self.title,
+                "causes": self._get_ngo_causes(ngo=ngo),
+                "period_between_retries": get_time_between_retries(),
+                "search_query": search_query,
+                "url_search_query": query_dict.urlencode(),
+                "filters": self.get_filters_dict(ngo=ngo),
+                "filters_active": self.get_frontend_filters(ngo=ngo),
+            }
+        )
+
+        if search_placeholder := self._search_placeholder():
+            context["search_placeholder"] = search_placeholder
+
+        context.update(get_ngo_archive_download_status(ngo))
+
+        return context
+
+    def _get_ngo_causes(self, ngo: Ngo) -> QuerySet:
+        if not ngo:
+            return Cause.objects.none()
+
+        if ngo.causes.count() == 0:
+            return Cause.objects.none()
+
+        if ngo.causes.count() == 1:
+            cause_queryset = ngo.causes.filter(is_main=True)
+        else:
+            cause_queryset = ngo.causes.annotate(redirections_count=Count("donor")).order_by(
+                "-redirections_count", "name"
+            )
+
+        ngo_archive_jobs = (
+            Job.objects.filter(ngo=ngo, cause=OuterRef("pk"))
+            .order_by("-date_created")
+            .values(obj=JSONObject(date_created=F("date_created"), status=F("status")))
+        )
+
+        return cause_queryset.annotate(
+            last_archive_job=Subquery(ngo_archive_jobs[:1]),
+        ).values(
+            "id",
+            "name",
+            "slug",
+            "is_main",
+            "redirections_count",
+            "last_archive_job",
+        )
+
     def get_filters(self, ngo: Ngo) -> List[QueryFilter]:
         return [
             CountyQueryFilter(ngo=ngo),
@@ -627,36 +691,6 @@ class NgoRedirectionsView(NgoBaseListView, DonorSearchMixin):
                 queryset_filters[search_filter.queryset_key] = search_filter.transform(filter_value)
 
         return queryset_filters
-
-    def get_context_data(self, **kwargs):
-        search_query = self._search_query()
-
-        query_dict = QueryDict(mutable=True)
-        query_dict["q"] = search_query
-
-        context = super().get_context_data(**kwargs)
-
-        user: User = self.request.user
-        ngo: Ngo = user.ngo if user.ngo else None
-
-        context.update(
-            {
-                "user": user,
-                "ngo": ngo,
-                "title": self.title,
-                "search_query": search_query,
-                "url_search_query": query_dict.urlencode(),
-                "filters": self.get_filters_dict(ngo=ngo),
-                "filters_active": self.get_frontend_filters(ngo=ngo),
-            }
-        )
-
-        if search_placeholder := self._search_placeholder():
-            context["search_placeholder"] = search_placeholder
-
-        context.update(get_ngo_archive_download_status(ngo))
-
-        return context
 
     def get_queryset(self):
         user: User = self.request.user

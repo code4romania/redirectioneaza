@@ -1,0 +1,42 @@
+{% load i18n %}
+
+<form action="{% url 'api-generate-archive' %}" method="post">
+
+  {% csrf_token %}
+
+  {% blocktrans trimmed asvar multiple_info_tooltip_text %}
+    Select the cause for which you want to generate the ANAF archive.
+    You can select them one by one, but you can't generate an archive more than once every
+    {{ period_between_retries }}.
+  {% endblocktrans %}
+
+
+  {% blocktrans trimmed asvar info_tooltip_text %}
+    Generate the ANAF archive for your organization.
+    You can generate the archive once every
+    {{ period_between_retries }}.
+  {% endblocktrans %}
+
+
+  {% blocktrans trimmed asvar forbidden_timeout_tooltip_text %}
+    Because the download operation of the redirections can take longer, depending on the number of donors,
+    you can currently download one archive every {{ period_between_retries }}.
+  {% endblocktrans %}
+
+
+  {% blocktrans trimmed asvar forbidden_no_data_tooltip_text %}
+    You can’t generate the archive because you don’t have any redirections.
+  {% endblocktrans %}
+
+
+  {% if causes|length > 1 %}
+
+    {% include "ngo-account/redirections/generate-archive/multiple-button.html" %}
+
+  {% else %}
+
+    {% include "ngo-account/redirections/generate-archive/single-button.html" %}
+
+  {% endif %}
+
+</form>

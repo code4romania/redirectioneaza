@@ -1,10 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-
 from users.models import User
-
-from .ngos import Cause, Ngo
 
 
 class JobError(Exception):
@@ -25,14 +22,14 @@ class Job(models.Model):
     """Keep track of download jobs"""
 
     ngo = models.ForeignKey(
-        Ngo,
+        "Ngo",
         verbose_name=_("NGO"),
         on_delete=models.CASCADE,
         db_index=True,
         related_name="jobs",
     )
     cause = models.ForeignKey(
-        Cause,
+        "Cause",
         verbose_name=_("cause"),
         on_delete=models.CASCADE,
         db_index=True,

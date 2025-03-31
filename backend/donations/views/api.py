@@ -1,12 +1,15 @@
 import logging
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 from django.conf import settings
+from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
 from django.core.files import File
 from django.core.management import call_command
 from django.http import Http404, JsonResponse
 from django.shortcuts import redirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
+from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
 
 from ..models.jobs import Job, JobStatusChoices
@@ -15,14 +18,17 @@ from ..pdf import create_cause_pdf
 from ..workers.update_organization import update_organization
 from .base import BaseTemplateView
 from .common.misc import (
+    can_generate_archive,
     get_cause_response_item,
-    get_is_over_donation_archival_limit,
     get_ngo_cause,
     get_was_last_job_recent,
+    has_archive_generation_deadline_passed,
 )
 from .common.search import NgoCauseMixedSearchMixin
 
 logger = logging.getLogger(__name__)
+
+UserModel = get_user_model()
 
 
 class UpdateFromNgohub(BaseTemplateView):
@@ -103,7 +109,7 @@ class DownloadNgoForms(BaseTemplateView):
         if last_job_was_recent:
             return redirect(failure_redirect_url)
 
-        if get_is_over_donation_archival_limit():
+        if has_archive_generation_deadline_passed():
             return redirect(failure_redirect_url)
 
         cause: Cause = ngo.causes.first()
@@ -120,5 +126,58 @@ class DownloadNgoForms(BaseTemplateView):
 
             new_job.status = JobStatusChoices.ERROR
             new_job.save()
+
+        return redirect(success_redirect_url)
+
+
+class GenerateCauseArchive(BaseTemplateView):
+    def generate_archive_for_cause_url(self, cause_url: Optional[str], request) -> Optional[Job]:
+        if not cause_url:
+            return None
+
+        ngo: Ngo = request.user.ngo
+        if not ngo or not ngo.can_receive_forms:
+            return None
+
+        try:
+            cause = ngo.causes.get(slug=cause_url)
+        except Cause.DoesNotExist:
+            return None
+
+        if can_generate_archive(cause):
+            return None
+
+        if has_archive_generation_deadline_passed():
+            return None
+
+        new_job: Job = Job(ngo=ngo, cause=cause, owner=request.user)
+        new_job.save()
+
+        try:
+            if settings.FORMS_DOWNLOAD_METHOD == "async":
+                call_command("download_donations", new_job.id)
+            else:
+                call_command("download_donations", new_job.id, "--run")
+        except Exception as e:
+            logging.error(e)
+
+            new_job.status = JobStatusChoices.ERROR
+            new_job.save()
+
+        return new_job
+
+    @method_decorator(login_required(login_url=reverse_lazy("login")))
+    def post(self, request, *args, **kwargs):
+        success_redirect_url = reverse("my-organization:archives")
+
+        failure_redirect_url = reverse("my-organization:redirections")
+        failure_response = redirect(failure_redirect_url)
+
+        post_data = request.POST
+        cause_url: str = post_data.get("cause_url")
+
+        status = self.generate_archive_for_cause_url(cause_url, request)
+        if not status:
+            return failure_response
 
         return redirect(success_redirect_url)
