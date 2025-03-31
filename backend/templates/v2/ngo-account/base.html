@@ -6,6 +6,13 @@
   <div class="flex-1 bg-gray-50">
     <main class="container py-10">
 
+      <div class="mb-6">
+        {% if django_form.non_field_errors %}
+          {% trans "There are some errors on the form." as error_title %}
+          {% include "components/info-banner.html" with style="error" banner_title=error_title banner_message=django_form.non_field_errors %}
+        {% endif %}
+      </div>
+
       {% if breadcrumbs %}
         {% block breadcrumbs %}
 
