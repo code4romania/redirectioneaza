@@ -1,4 +1,5 @@
-from typing import Callable, Dict, List, Optional, Union
+import logging
+from typing import Any, Callable, Dict, List, Optional, Union
 
 from django.conf import settings
 from django.contrib import messages
@@ -7,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied, ValidationError
 from django.db.models import Count, F, OuterRef, QuerySet, Subquery
 from django.db.models.functions import JSONObject
+from django.forms.forms import BaseForm
 from django.http import Http404, HttpRequest, QueryDict
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
@@ -36,6 +38,8 @@ from .ngo_account_filters import (
     FormStatusQueryFilter,
     LocalityQueryFilter,
 )
+
+logger = logging.getLogger(__name__)
 
 UserModel = get_user_model()
 
@@ -188,6 +192,20 @@ class NgoCauseCommonView(NgoBaseTemplateView):
         ]
         return banner_list_items
 
+    def _check_field_altered(self, form: BaseForm, field_name: str, expected_value: Any) -> None:
+        """
+        Check if a field in the form has been altered from its expected value.
+        """
+        user_error_message = _("The form was altered.")
+
+        if field_name not in form.cleaned_data:
+            logger.error(f"The parameter '{field_name}' was altered and is missing from the form")
+            raise ValidationError(user_error_message)
+
+        if form.cleaned_data[field_name] != expected_value:
+            logger.error(f"The parameter '{field_name}' was altered with value {form.cleaned_data[field_name]}")
+            raise ValidationError(user_error_message)
+
     @method_decorator(login_required(login_url=reverse_lazy("login")))
     def do_post(self, request, **kwargs):
         context = self.get_context_data(**kwargs)
@@ -206,8 +224,8 @@ class NgoCauseCommonView(NgoBaseTemplateView):
             response["error"] = redirect(reverse("my-organization:presentation"))
             return response
 
-        is_main_cause = context.get("is_main_cause", False)
-        if not is_main_cause and not ngo.can_create_causes:
+        is_main_cause_form = context.get("is_main_cause", False)
+        if not is_main_cause_form and not ngo.can_create_causes:
             messages.error(request, _("You need to first create the form with the organization's details."))
             response["error"] = redirect(reverse("my-organization:presentation"))
             return response
@@ -222,9 +240,12 @@ class NgoCauseCommonView(NgoBaseTemplateView):
             response["error"] = render(request, self.template_name, context)
             return response
 
+        if is_main_cause_form:
+            self._check_field_altered(form, "is_main", True)
+            self._check_field_altered(form, "visibility", CauseVisibilityChoices.PUBLIC)
+
         cause = form.save(commit=False)
-        if is_main_cause:
-            cause.is_main = True
+        cause.is_main = is_main_cause_form
         cause.ngo = ngo
         cause.save()
 
