@@ -145,7 +145,7 @@ class NgoBaseTemplateView(NgoBaseView, BaseVisibleTemplateView):
 
     def get_missing_ngo_fields(self, ngo: Optional[Ngo]) -> Optional[List[str]]:
         if not ngo:
-            missing_fields = Ngo.mandatory_fields_names_capitalize
+            missing_fields = Ngo.mandatory_fields_names_capitalized()
         else:
             missing_fields = ngo.missing_mandatory_fields_names_capitalize
 
