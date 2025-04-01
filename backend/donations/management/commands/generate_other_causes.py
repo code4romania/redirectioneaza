@@ -258,10 +258,10 @@ class Command(BaseCommand):
         consecutive_identical_names: int = 0
         while len(causes) < total_causes:
             if target_org:
-                ngo = target_org
+                ngo: Ngo = target_org
             else:
-                ngo = Ngo.active.order_by("?").first()
-                if not ngo.can_receive_forms:
+                ngo: Ngo = Ngo.active.order_by("?").first()
+                if not ngo.can_create_causes:
                     continue
 
             cause_title = MOCK_CAUSE_NAMES["titles"][random.randint(0, len(MOCK_CAUSE_NAMES["titles"]) - 1)]

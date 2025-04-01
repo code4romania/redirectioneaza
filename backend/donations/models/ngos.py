@@ -363,10 +363,7 @@ class Ngo(models.Model):
         # noinspection PyTypeChecker
         field_names: List[DeferredAttribute] = [
             Ngo.name,
-            Ngo.slug,
-            Ngo.description,
             Ngo.registration_number,
-            Ngo.bank_account,
         ]
 
         return [field.field for field in field_names]
@@ -409,15 +406,32 @@ class Ngo(models.Model):
     def mandatory_fields_values(self):
         return [getattr(self, field.name) for field in self.mandatory_fields]
 
-    def can_receive_forms(self):
+    @property
+    def can_create_causes(self):
+        """
+        An NGO can create causes if they are active and have all the mandatory fields filled
+        """
         if not self.is_active:
+            return False
+
+        if any(self.missing_mandatory_fields()):
+            return False
+
+        return True
+
+    @property
+    def can_receive_redirections(self):
+        """
+        An NGO can receive donations if it is active and has all the mandatory fields filled
+        """
+        if not self.can_create_causes:
             return False
 
         main_cause: Optional[Cause] = self.main_cause
         if not main_cause:
             return False
 
-        if not all(main_cause.mandatory_fields_values):
+        if not main_cause.can_receive_redirections:
             return False
 
         return True
@@ -577,10 +591,11 @@ class Cause(models.Model):
     def redirections_count(self):
         return self.donor_set.count()
 
-    def can_receive_forms(self):
-        if not self.ngo.can_receive_forms():
-            return False
-
+    @property
+    def can_receive_redirections(self):
+        """
+        A cause can receive donations if all the mandatory fields are filled
+        """
         if not all(self.mandatory_fields_values):
             return False
 

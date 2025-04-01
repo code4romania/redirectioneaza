@@ -39,7 +39,7 @@
       <div class="inline-flex">
 
         <a
-          {% if ngo.can_receive_forms %}
+          {% if ngo.can_create_causes %}
             href="{% url 'my-organization:cause-create' %}"
           {% else %}
             href="{% url 'my-organization:forms' %}"

@@ -207,7 +207,7 @@ class NgoCauseCommonView(NgoBaseTemplateView):
             return response
 
         is_main_cause = context.get("is_main_cause", False)
-        if not is_main_cause and not ngo.can_receive_forms():
+        if not is_main_cause and not ngo.can_create_causes:
             messages.error(request, _("You need to first create the form with the organization's details."))
             response["error"] = redirect(reverse("my-organization:presentation"))
             return response
@@ -471,7 +471,7 @@ class NgoCauseCreateView(NgoCauseCommonView):
     def get(self, request, *args, **kwargs):
         user: User = request.user
 
-        if user.ngo and not user.ngo.can_receive_forms():
+        if user.ngo and not user.ngo.can_create_causes:
             messages.error(request, _("You need to first create the form with the organization's details."))
             return redirect(reverse("my-organization:forms"))
 
