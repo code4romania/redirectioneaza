@@ -14,6 +14,7 @@ from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import ListView
 from django_q.tasks import async_task
+from redirectioneaza.common.cache import cache_decorator
 from redirectioneaza.common.filters import QueryFilter
 from users.models import User
 
@@ -24,7 +25,7 @@ from ..common.validation.registration_number import (
 from ..forms.ngo_account import CauseForm, NgoPresentationForm
 from ..models.donors import Donor
 from ..models.jobs import Job
-from ..models.ngos import Cause, CauseVisibilityChoices, Ngo
+from ..models.ngos import NGO_CAUSES_QUERY_CACHE_KEY, Cause, CauseVisibilityChoices, Ngo
 from .base import BaseContextPropertiesMixin, BaseVisibleTemplateView
 from .common.misc import get_ngo_archive_download_status, get_time_between_retries
 from .common.search import DonorSearchMixin
@@ -618,7 +619,11 @@ class NgoRedirectionsView(NgoBaseListView, DonorSearchMixin):
 
         return context
 
-    def _get_ngo_causes(self, ngo: Ngo) -> QuerySet:
+    @cache_decorator(
+        timeout=min(settings.TIMEOUT_CACHE_NORMAL, settings.TIMEDELTA_FORMS_DOWNLOAD_MINUTES),
+        cache_key_custom=NGO_CAUSES_QUERY_CACHE_KEY,
+    )
+    def _get_ngo_causes(self, *, ngo: Ngo) -> QuerySet:
         if not ngo:
             return Cause.objects.none()
 
