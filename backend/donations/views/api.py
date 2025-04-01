@@ -4,6 +4,7 @@ from typing import Dict, List, Optional
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
+from django.core.cache import cache
 from django.core.files import File
 from django.core.management import call_command
 from django.http import JsonResponse
@@ -13,7 +14,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
 
 from ..models.jobs import Job, JobStatusChoices
-from ..models.ngos import Cause, Ngo
+from ..models.ngos import NGO_CAUSES_QUERY_CACHE_KEY, Cause, Ngo
 from ..pdf import create_cause_pdf
 from ..workers.update_organization import update_organization
 from .base import BaseTemplateView
@@ -119,6 +120,9 @@ class GenerateCauseArchive(BaseTemplateView):
 
             new_job.status = JobStatusChoices.ERROR
             new_job.save()
+
+        # noinspection StrFormat
+        cache.delete(NGO_CAUSES_QUERY_CACHE_KEY.format(ngo.pk))
 
         return new_job
 
