@@ -1,15 +1,15 @@
 {% load i18n %}
 
-{% if visibility == "public" %}
+{% if visibility == "pub" %}
 
   {% trans "Public" as badge_title %}
   {% blocktrans trimmed asvar tooltip_text %}
     The form is public for contributors.
-    Anyone with the link can access this form.
+    Anyone can search for the form and find it.
   {% endblocktrans %}
   {% include "components/badge.html" with style="info" %}
 
-{% elif visibility == "unlisted" %}
+{% elif visibility == "unl" %}
 
   {% trans "Unlisted" as badge_title %}
   {% blocktrans trimmed asvar tooltip_text %}
@@ -18,7 +18,7 @@
   {% endblocktrans %}
   {% include "components/badge.html" with style="warning" %}
 
-{% elif visibility == "private" %}
+{% elif visibility == "pri" %}
 
   {% trans "Private" as badge_title %}
   {% blocktrans trimmed asvar tooltip_text %}
