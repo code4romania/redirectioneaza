@@ -357,8 +357,8 @@ class Ngo(models.Model):
         if commit:
             self.save()
 
-    @property
-    def mandatory_fields(self):
+    @classmethod
+    def mandatory_fields(cls):
 
         # noinspection PyTypeChecker
         field_names: List[DeferredAttribute] = [
@@ -369,42 +369,27 @@ class Ngo(models.Model):
         return [field.field for field in field_names]
 
     def missing_mandatory_fields(self):
-        return [field for field in self.mandatory_fields if not getattr(self, field.name)]
+        return [field for field in self.mandatory_fields() if not getattr(self, field.name)]
 
-    @property
-    def mandatory_fields_names(self):
-        return [field.verbose_name for field in self.mandatory_fields]
+    @classmethod
+    def mandatory_fields_names(cls):
+        return [field.verbose_name for field in cls.mandatory_fields()]
 
-    @property
-    def mandatory_fields_names_lower(self):
-        return [field.lower() for field in self.mandatory_fields_names]
-
-    @property
-    def mandatory_fields_names_capitalize(self):
-        return [field.capitalize() for field in self.mandatory_fields_names]
+    @classmethod
+    def mandatory_fields_names_capitalized(cls):
+        return [field.capitalize() for field in cls.mandatory_fields_names()]
 
     @property
     def missing_mandatory_fields_names(self):
         return [field.verbose_name for field in self.missing_mandatory_fields()]
 
     @property
-    def missing_mandatory_fields_names_lower(self):
-        return [field.lower() for field in self.missing_mandatory_fields_names]
-
-    @property
     def missing_mandatory_fields_names_capitalize(self):
         return [field.capitalize() for field in self.missing_mandatory_fields_names]
 
     @property
-    def causes_count(self) -> int:
-        return self.causes.count()
-
-    @property
     def main_cause(self) -> "Cause":
         return self.causes.filter(is_main=True).first()
-
-    def mandatory_fields_values(self):
-        return [getattr(self, field.name) for field in self.mandatory_fields]
 
     @property
     def can_create_causes(self):

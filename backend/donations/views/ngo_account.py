@@ -145,7 +145,7 @@ class NgoBaseTemplateView(NgoBaseView, BaseVisibleTemplateView):
 
     def get_missing_ngo_fields(self, ngo: Optional[Ngo]) -> Optional[List[str]]:
         if not ngo:
-            missing_fields = Ngo.mandatory_fields_names_capitalize
+            missing_fields = Ngo.mandatory_fields_names_capitalized()
         else:
             missing_fields = ngo.missing_mandatory_fields_names_capitalize
 
@@ -175,6 +175,11 @@ class NgoBaseListView(NgoBaseView, ListView):
 
 
 class NgoCauseCommonView(NgoBaseTemplateView):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.is_main_cause = False
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
@@ -224,14 +229,13 @@ class NgoCauseCommonView(NgoBaseTemplateView):
             response["error"] = redirect(reverse("my-organization:presentation"))
             return response
 
-        is_main_cause_form = context.get("is_main_cause", False)
-        if not is_main_cause_form and not ngo.can_create_causes:
+        if not self.is_main_cause and not ngo.can_create_causes:
             messages.error(request, _("You need to first create the form with the organization's details."))
             response["error"] = redirect(reverse("my-organization:presentation"))
             return response
 
         existing_cause = context.get("cause")
-        form = CauseForm(post, files=request.FILES, instance=existing_cause)
+        form = CauseForm(post, for_main_cause=self.is_main_cause, files=request.FILES, instance=existing_cause)
 
         context.update({"django_form": form})
 
@@ -240,12 +244,7 @@ class NgoCauseCommonView(NgoBaseTemplateView):
             response["error"] = render(request, self.template_name, context)
             return response
 
-        if is_main_cause_form:
-            self._check_field_altered(form, "is_main", True)
-            self._check_field_altered(form, "visibility", CauseVisibilityChoices.PUBLIC)
-
         cause = form.save(commit=False)
-        cause.is_main = is_main_cause_form
         cause.ngo = ngo
         cause.save()
 
@@ -399,11 +398,15 @@ class NgoMainCauseView(NgoCauseCommonView):
     tab_title = "form"
     sidebar_item_target = "org-data"
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.is_main_cause = True
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(is_main_cause=True, **kwargs)
 
         context["cause"] = self.get_main_cause(context.get("ngo"))
-        context["is_main_cause"] = True
+        context["is_main_cause"] = self.is_main_cause
 
         if missing_fields := self.get_missing_fields(
             source="cause",
