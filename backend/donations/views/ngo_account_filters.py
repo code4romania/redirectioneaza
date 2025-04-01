@@ -21,7 +21,7 @@ class CountyQueryFilter(NgoQueryFilter):
         super().__init__(*args, **kwargs)
 
         self.id = "filter_dropdown_county"
-        self.key = "c"
+        self.key = "county"
         self.type = "combobox"
 
         self.title = _("County")
@@ -41,7 +41,7 @@ class LocalityQueryFilter(NgoQueryFilter):
         super().__init__(*args, **kwargs)
 
         self.id = "filter_dropdown_locality"
-        self.key = "l"
+        self.key = "city"
         self.type = "combobox"
 
         self.title = _("Locality")
@@ -60,7 +60,7 @@ class FormPeriodQueryFilter(NgoQueryFilter):
         super().__init__(*args, **kwargs)
 
         self.id = "filter_dropdown_period"
-        self.key = "p"
+        self.key = "period"
         self.type = "select"
 
         self.title = _("Period")
@@ -80,7 +80,7 @@ class FormStatusQueryFilter(NgoQueryFilter):
         super().__init__(*args, **kwargs)
 
         self.id = "filter_dropdown_status"
-        self.key = "s"
+        self.key = "signed"
         self.type = "select"
 
         self.title = _("Status")
@@ -100,7 +100,7 @@ class CauseQueryFilter(NgoQueryFilter):
         super().__init__(*args, **kwargs)
 
         self.id = "filter_dropdown_cause"
-        self.key = "f"
+        self.key = "cause"
         self.type = "combobox"
 
         self.title = _("Cause")
