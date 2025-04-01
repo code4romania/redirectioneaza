@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.core.files import File
 from django.core.management import call_command
-from django.http import Http404, JsonResponse
+from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
@@ -20,7 +20,6 @@ from .base import BaseTemplateView
 from .common.misc import (
     get_cause_response_item,
     get_ngo_cause,
-    get_was_last_job_recent,
     has_archive_generation_deadline_passed,
     has_recent_archive_job,
 )
@@ -85,49 +84,6 @@ class GetNgoForm(TemplateView):
         pdf.close()
 
         return redirect(cause.prefilled_form.url)
-
-
-class DownloadNgoForms(BaseTemplateView):
-    def get(self, request, *args, **kwargs):
-        raise Http404
-
-    def post(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            return redirect(reverse("login"))
-
-        failure_redirect_url = reverse("my-organization:redirections")
-        success_redirect_url = reverse("my-organization:archives")
-
-        ngo: Ngo = request.user.ngo
-        if not ngo:
-            return redirect(failure_redirect_url)
-
-        if not ngo.is_active:
-            return redirect(failure_redirect_url)
-
-        last_job_was_recent = get_was_last_job_recent(ngo)
-        if last_job_was_recent:
-            return redirect(failure_redirect_url)
-
-        if has_archive_generation_deadline_passed():
-            return redirect(failure_redirect_url)
-
-        cause: Cause = ngo.causes.first()
-        new_job: Job = Job(ngo=ngo, cause=cause, owner=request.user)
-        new_job.save()
-
-        try:
-            if settings.FORMS_DOWNLOAD_METHOD == "async":
-                call_command("download_donations", new_job.id)
-            else:
-                call_command("download_donations", new_job.id, "--run")
-        except Exception as e:
-            logging.error(e)
-
-            new_job.status = JobStatusChoices.ERROR
-            new_job.save()
-
-        return redirect(success_redirect_url)
 
 
 class GenerateCauseArchive(BaseTemplateView):
