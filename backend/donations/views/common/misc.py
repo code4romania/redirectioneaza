@@ -6,7 +6,6 @@ from django.http import Http404
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import ngettext_lazy
-
 from donations.models.jobs import Job, JobStatusChoices
 from donations.models.ngos import Cause, Ngo
 
@@ -30,6 +29,27 @@ def get_was_last_job_recent(ngo: Optional[Ngo]) -> bool:
             return True
 
     return False
+
+
+def archive_job_was_recent(job_status: str, job_created: datetime) -> bool:
+    if job_status == JobStatusChoices.ERROR:
+        return False
+
+    timedelta = datetime.timedelta(minutes=settings.TIMEDELTA_FORMS_DOWNLOAD_MINUTES)
+
+    if job_created > timezone.now() - timedelta:
+        return True
+
+    return False
+
+
+def has_recent_archive_job(cause: Cause) -> bool:
+    last_cause_archive: Job = cause.jobs.order_by("-date_created").first()
+
+    if not last_cause_archive:
+        return False
+
+    return archive_job_was_recent(last_cause_archive.status, last_cause_archive.date_created)
 
 
 def get_time_between_retries() -> str:
@@ -66,7 +86,7 @@ def get_ngo_archive_download_status(ngo: Optional[Ngo]) -> Dict:
     return context
 
 
-def get_is_over_donation_archival_limit() -> bool:
+def has_archive_generation_deadline_passed() -> bool:
     if timezone.now().date() > settings.DONATIONS_LIMIT + datetime.timedelta(
         days=settings.TIMEDELTA_DONATIONS_LIMIT_DOWNLOAD_DAYS
     ):

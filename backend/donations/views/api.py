@@ -1,12 +1,15 @@
 import logging
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 from django.conf import settings
+from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
 from django.core.files import File
 from django.core.management import call_command
-from django.http import Http404, JsonResponse
+from django.http import JsonResponse
 from django.shortcuts import redirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
+from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
 
 from ..models.jobs import Job, JobStatusChoices
@@ -16,13 +19,15 @@ from ..workers.update_organization import update_organization
 from .base import BaseTemplateView
 from .common.misc import (
     get_cause_response_item,
-    get_is_over_donation_archival_limit,
     get_ngo_cause,
-    get_was_last_job_recent,
+    has_archive_generation_deadline_passed,
+    has_recent_archive_job,
 )
 from .common.search import NgoCauseMixedSearchMixin
 
 logger = logging.getLogger(__name__)
+
+UserModel = get_user_model()
 
 
 class UpdateFromNgohub(BaseTemplateView):
@@ -81,32 +86,26 @@ class GetNgoForm(TemplateView):
         return redirect(cause.prefilled_form.url)
 
 
-class DownloadNgoForms(BaseTemplateView):
-    def get(self, request, *args, **kwargs):
-        raise Http404
-
-    def post(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            return redirect(reverse("login"))
-
-        failure_redirect_url = reverse("my-organization:redirections")
-        success_redirect_url = reverse("my-organization:archives")
+class GenerateCauseArchive(BaseTemplateView):
+    def generate_archive_for_cause_slug(self, cause_slug: Optional[str], request) -> Optional[Job]:
+        if not cause_slug:
+            return None
 
         ngo: Ngo = request.user.ngo
-        if not ngo:
-            return redirect(failure_redirect_url)
+        if not ngo or not ngo.can_receive_forms:
+            return None
 
-        if not ngo.is_active:
-            return redirect(failure_redirect_url)
+        try:
+            cause = ngo.causes.get(slug=cause_slug)
+        except Cause.DoesNotExist:
+            return None
 
-        last_job_was_recent = get_was_last_job_recent(ngo)
-        if last_job_was_recent:
-            return redirect(failure_redirect_url)
+        if has_recent_archive_job(cause):
+            return None
 
-        if get_is_over_donation_archival_limit():
-            return redirect(failure_redirect_url)
+        if has_archive_generation_deadline_passed():
+            return None
 
-        cause: Cause = ngo.causes.first()
         new_job: Job = Job(ngo=ngo, cause=cause, owner=request.user)
         new_job.save()
 
@@ -120,5 +119,21 @@ class DownloadNgoForms(BaseTemplateView):
 
             new_job.status = JobStatusChoices.ERROR
             new_job.save()
+
+        return new_job
+
+    @method_decorator(login_required(login_url=reverse_lazy("login")))
+    def post(self, request, *args, **kwargs):
+        success_redirect_url = reverse("my-organization:archives")
+
+        failure_redirect_url = reverse("my-organization:redirections")
+        failure_response = redirect(failure_redirect_url)
+
+        post_data = request.POST
+        cause_slug: str = post_data.get("cause_slug")
+
+        status = self.generate_archive_for_cause_slug(cause_slug, request)
+        if not status:
+            return failure_response
 
         return redirect(success_redirect_url)

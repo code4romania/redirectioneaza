@@ -397,6 +397,11 @@ class Ngo(models.Model):
     def missing_mandatory_fields_names_capitalize(self):
         return [field.capitalize() for field in self.missing_mandatory_fields_names]
 
+    @property
+    def causes_count(self) -> int:
+        return self.causes.count()
+
+    @property
     def main_cause(self) -> "Cause":
         return self.causes.filter(is_main=True).first()
 
@@ -407,7 +412,7 @@ class Ngo(models.Model):
         if not self.is_active:
             return False
 
-        main_cause: Optional[Cause] = self.main_cause()
+        main_cause: Optional[Cause] = self.main_cause
         if not main_cause:
             return False
 
@@ -562,7 +567,8 @@ class Cause(models.Model):
     def mandatory_fields_values(self) -> List[Any]:
         return [getattr(self, field.name) for field in Cause.mandatory_fields()]
 
-    def contributions(self):
+    @property
+    def redirections_count(self):
         return self.donor_set.count()
 
     def can_receive_forms(self):
