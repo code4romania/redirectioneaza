@@ -2,19 +2,21 @@ import logging
 from typing import Dict, List, Optional
 
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
 from django.core.files import File
 from django.core.management import call_command
-from django.http import JsonResponse
+from django.http import Http404, JsonResponse
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 
 from ..models.jobs import Job, JobStatusChoices
-from ..models.ngos import NGO_CAUSES_QUERY_CACHE_KEY, Cause, Ngo
+from ..models.ngos import NGO_CAUSES_QUERY_CACHE_KEY, Cause, CauseVisibilityChoices, Ngo
 from ..pdf import create_cause_pdf
 from ..workers.update_organization import update_organization
 from .base import BaseTemplateView
@@ -87,6 +89,36 @@ class GetNgoForm(TemplateView):
         return redirect(cause.prefilled_form.url)
 
 
+class GetCausePrefilledForm(TemplateView):
+    def get(self, request, ngo_url, *args, **kwargs):
+        cause_slug = kwargs.get("cause_slug")
+
+        try:
+            cause = Cause.objects.get(slug=cause_slug)
+        except Cause.DoesNotExist:
+            raise Http404
+
+        # if we have a form created for this ngo, return the url
+        if cause.prefilled_form:
+            return redirect(cause.prefilled_form.url)
+
+        pdf = create_cause_pdf(cause, cause.ngo)
+
+        # filename = "Formular 2% - {0}.pdf".format(ngo.name)
+        filename = "formular_donatie.pdf"
+        try:
+            cause.prefilled_form.save(filename, File(pdf))
+        except AttributeError:
+            # if the form file didn't reach the storage yet, redirect the user back to the download page
+            pdf.close()
+            return redirect(reverse("api-ngo-form-url", kwargs={"ngo_url": ngo_url}))
+
+        # close the file after it has been uploaded
+        pdf.close()
+
+        return redirect(cause.prefilled_form.url)
+
+
 class GenerateCauseArchive(BaseTemplateView):
     def generate_archive_for_cause_slug(self, cause_slug: Optional[str], request) -> Optional[Job]:
         if not cause_slug:
@@ -140,3 +172,40 @@ class GenerateCauseArchive(BaseTemplateView):
             return failure_response
 
         return redirect(success_redirect_url)
+
+
+class ChangeCauseVisibility(BaseTemplateView):
+    @method_decorator(login_required(login_url=reverse_lazy("login")))
+    def post(self, request, *args, **kwargs):
+        response_url = redirect(reverse("my-organization:causes"))
+
+        post_data = request.POST
+        cause_slug: str = post_data.get("cause_slug")
+        visibility: str = post_data.get("visibility")
+
+        ngo: Ngo = request.user.ngo
+        if not ngo or not ngo.can_receive_forms:
+            messages.error(request, _("Your organization can not receive forms currently."))
+            return redirect(reverse("my-organization:presentation"))
+
+        try:
+            cause = ngo.causes.get(slug=cause_slug)
+        except Cause.DoesNotExist:
+            messages.error(request, _("The cause you are trying to edit does not exist."))
+            return response_url
+
+        if visibility not in CauseVisibilityChoices.values:
+            messages.error(request, _("The visibility value is not valid."))
+            return response_url
+
+        cause.visibility = visibility
+        cause.save()
+
+        messages.success(
+            request, _("The visibility of '%(cause_name)s' has been updated successfully.") % {"cause_name": cause.name}
+        )
+
+        # noinspection StrFormat
+        cache.delete(NGO_CAUSES_QUERY_CACHE_KEY.format(ngo=ngo))
+
+        return response_url

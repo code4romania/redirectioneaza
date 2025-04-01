@@ -1,0 +1,28 @@
+<form action="{{ action.form }}" method="post">
+
+  {% csrf_token %}
+
+  {% if action.extra_inputs %}
+    {% for extra_input in action.extra_inputs %}
+      <input type="hidden" name="{{ extra_input.name }}" value="{{ extra_input.value }}">
+    {% endfor %}
+  {% endif %}
+
+  <button
+    {% if active %}
+      name="{{ action.name }}"
+      value="{{ action.value }}"
+      class="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+    {% else %}
+      class="w-full px-4 py-2 text-left text-sm text-gray-400"
+    {% endif %}
+      role="menuitem"
+      tabindex="-1"
+      id="menu-item-{{ index }}">
+
+    <span>{{ title }}</span>
+
+  </button>
+
+
+</form>
