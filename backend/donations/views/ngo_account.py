@@ -625,28 +625,25 @@ class NgoRedirectionsView(NgoBaseListView, DonorSearchMixin):
         if ngo.causes.count() == 0:
             return Cause.objects.none()
 
-        if ngo.causes.count() == 1:
-            cause_queryset = ngo.causes.filter(is_main=True)
-        else:
-            cause_queryset = ngo.causes.annotate(redirections_count=Count("donor")).order_by(
-                "-redirections_count", "name"
-            )
-
-        ngo_archive_jobs = (
+        ngo_archive_jobs: QuerySet[Job, Dict[str, str]] = (
             Job.objects.filter(ngo=ngo, cause=OuterRef("pk"))
             .order_by("-date_created")
             .values(obj=JSONObject(date_created=F("date_created"), status=F("status")))
         )
 
-        return cause_queryset.annotate(
-            last_archive_job=Subquery(ngo_archive_jobs[:1]),
-        ).values(
-            "id",
-            "name",
-            "slug",
-            "is_main",
-            "redirections_count",
-            "last_archive_job",
+        return (
+            ngo.causes.annotate(
+                redirections_count=Count("donor"),
+                last_archive_job=Subquery(ngo_archive_jobs[:1]),
+            )
+            .values(
+                "name",
+                "slug",
+                "is_main",
+                "redirections_count",
+                "last_archive_job",
+            )
+            .order_by("-redirections_count", "name")
         )
 
     def get_filters(self, ngo: Ngo) -> List[QueryFilter]:
