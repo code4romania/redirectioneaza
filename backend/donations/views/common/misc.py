@@ -43,7 +43,7 @@ def archive_job_was_recent(job_status: str, job_created: datetime) -> bool:
     return False
 
 
-def can_generate_archive(cause: Cause) -> bool:
+def has_recent_archive_job(cause: Cause) -> bool:
     last_cause_archive: Job = cause.jobs.order_by("-date_created").first()
 
     if not last_cause_archive:

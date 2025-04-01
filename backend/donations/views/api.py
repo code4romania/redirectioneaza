@@ -18,11 +18,11 @@ from ..pdf import create_cause_pdf
 from ..workers.update_organization import update_organization
 from .base import BaseTemplateView
 from .common.misc import (
-    can_generate_archive,
     get_cause_response_item,
     get_ngo_cause,
     get_was_last_job_recent,
     has_archive_generation_deadline_passed,
+    has_recent_archive_job,
 )
 from .common.search import NgoCauseMixedSearchMixin
 
@@ -144,7 +144,7 @@ class GenerateCauseArchive(BaseTemplateView):
         except Cause.DoesNotExist:
             return None
 
-        if can_generate_archive(cause):
+        if has_recent_archive_job(cause):
             return None
 
         if has_archive_generation_deadline_passed():
