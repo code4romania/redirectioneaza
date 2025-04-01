@@ -56,7 +56,7 @@
         {{ cause.date_updated|time:"TIME_FORMAT" }}
       </td>
       <td class="px-3 py-4">
-        {{ cause.contributions }}
+        {{ cause.redirections_count }}
       </td>
       <td>
         {% include "components/action-menu/main.html" with items=cause|dropdown button_disabled=cause|button_disabled button_title=cause|button_title %}

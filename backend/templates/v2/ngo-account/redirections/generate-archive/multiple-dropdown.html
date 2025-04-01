@@ -1,0 +1,32 @@
+{% load i18n redirection_helpers %}
+
+<button
+  type="submit"
+  name="cause_slug"
+  value="{{ cause.slug }}"
+  class="flex flex-col content-start w-full p-4 text-sm text-gray-700 disabled:text-gray-500 enabled:hover:bg-gray-100 enabled:hover:text-gray-900 enabled:hover:outline-none enabled:hover:cursor-pointer border-b {% if cause.is_main %}border-gray-500{% else %}border-gray-200§{% endif %}"
+  role="menuitem"
+  tabindex="-1"
+  id="option-menu-item-0"
+  {% if cause.last_archive_job|job_was_recent %}
+  disabled
+  x-tooltip.raw="{{ forbidden_timeout_tooltip_text }}"
+  {% elif cause.redirections_count < 1 %}
+  disabled
+  x-tooltip.raw="{{ forbidden_no_data_tooltip_text }}"
+  {% endif %}
+>
+
+  <span class="flex grow content-start font-semibold">
+    {{ cause.name }}
+  </span>
+
+  <span class="flex grow content-start">
+    {% blocktrans count cause.redirections_count as redirections_count %}
+      {{ redirections_count }} form collected
+      {% plural %}
+      {{ redirections_count }} forms collected
+    {% endblocktrans %}
+  </span>
+
+</button>
