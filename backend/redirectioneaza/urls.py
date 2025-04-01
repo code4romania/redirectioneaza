@@ -123,7 +123,7 @@ urlpatterns = (
         path("api/ngohub-refresh/", UpdateFromNgohub.as_view(), name="api-ngohub-refresh"),
         path("api/ngo/form/<ngo_url>/", GetNgoForm.as_view(), name="api-ngo-form-url"),
         path("api/ngo/forms/download/", DownloadNgoForms.as_view(), name="api-ngo-forms"),
-        path("api/ngo/forms/archive/", GenerateCauseArchive.as_view(), name="api-generate-archive"),
+        path("api/ngo/forms/archive/", GenerateCauseArchive.as_view(), name="api-generate-cause-archive"),
         #
         path("api/search/", SearchCausesApi.as_view(), name="api-search-ngos"),
         # Django Admin
