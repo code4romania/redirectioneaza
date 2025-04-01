@@ -77,7 +77,7 @@ class RedirectionHandler(TemplateView):
         cause, ngo = get_ngo_cause(ngo_url)
 
         # if we didn't find it or the ngo doesn't have an active page
-        if (cause is None or not cause.ngo.can_receive_forms()) and (ngo is None or not ngo.can_receive_forms()):
+        if (cause is None or not cause.ngo.can_create_causes) and (ngo is None or not ngo.can_create_causes):
             raise Http404
 
         if cause.is_main:

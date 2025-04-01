@@ -7,7 +7,7 @@
   </h2>
 
   <div class="grid items-center justify-end gap-2 sm:flex md:col-span-2">
-    {% if not hide_public_page_button and ngo.can_receive_forms and cause %}
+    {% if not hide_public_page_button and ngo.can_create_causes and cause %}
       <a
         {# XXX: [MULTI-FORM] If we have an NGO page this should take us to that page #}
         href="{% url 'twopercent' cause.slug %}"
@@ -36,7 +36,7 @@
       </a>
     {% endif %}
 
-    {% if ngo and ngo.can_receive_forms and not hide_public_download_button and cause %}
+    {% if ngo and ngo.can_create_causes and not hide_public_download_button and cause %}
       {% blocktrans trimmed asvar tooltip_text %}
         Download the form filled with the organization's data, print it, and collect contributions offline.
       {% endblocktrans %}
