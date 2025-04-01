@@ -454,6 +454,11 @@ class CauseVisibilityChoices(models.TextChoices):
     def as_str():
         return str(CauseVisibilityChoices.as_dict())
 
+    @staticmethod
+    def as_str_pretty():
+        choices = CauseVisibilityChoices.as_dict()
+        return [{**choice, "title": choice["title"].capitalize()} for choice in choices]
+
 
 class Cause(models.Model):
     ngo = models.ForeignKey(Ngo, on_delete=models.CASCADE, related_name="causes")
