@@ -12,24 +12,24 @@ register = template.Library()
 def dropdown(cause: Cause) -> List[Dict[str, Any]]:
     edit_cause_link = ""
     download_form_link = ""
-    if is_active := cause.can_receive_forms():
+    if can_receive_forms := cause.can_receive_forms():
         edit_cause_link = reverse("my-organization:cause", kwargs={"cause_id": cause.pk})
         download_form_link = reverse("api-cause-form", kwargs={"cause_slug": cause.slug})
 
     return [
         {
             "title": _("Edit cause"),
-            "active": is_active,
+            "active": can_receive_forms,
             "link": edit_cause_link,
         },
         {
             "title": _("Download prefilled form"),
-            "active": is_active,
+            "active": can_receive_forms,
             "link": download_form_link,
         },
         {
             "title": _("Change to public"),
-            "active": is_active and cause.visibility != CauseVisibilityChoices.PUBLIC,
+            "active": can_receive_forms and cause.visibility != CauseVisibilityChoices.PUBLIC,
             "action": {
                 "form": reverse_lazy("api-change-cause-visibility"),
                 "name": "visibility",
@@ -44,7 +44,7 @@ def dropdown(cause: Cause) -> List[Dict[str, Any]]:
         },
         {
             "title": _("Change to unlisted"),
-            "active": is_active and cause.visibility != CauseVisibilityChoices.UNLISTED,
+            "active": can_receive_forms and cause.visibility != CauseVisibilityChoices.UNLISTED,
             "action": {
                 "form": reverse_lazy("api-change-cause-visibility"),
                 "name": "visibility",
@@ -59,7 +59,7 @@ def dropdown(cause: Cause) -> List[Dict[str, Any]]:
         },
         {
             "title": _("Change to private"),
-            "active": is_active and cause.visibility != CauseVisibilityChoices.PRIVATE,
+            "active": can_receive_forms and cause.visibility != CauseVisibilityChoices.PRIVATE,
             "action": {
                 "form": reverse_lazy("api-change-cause-visibility"),
                 "name": "visibility",

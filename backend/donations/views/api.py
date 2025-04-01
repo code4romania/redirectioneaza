@@ -6,8 +6,10 @@ from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
+from django.core.exceptions import SuspiciousOperation
 from django.core.files import File
 from django.core.management import call_command
+from django.db import DatabaseError
 from django.http import Http404, JsonResponse
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
@@ -90,9 +92,7 @@ class GetNgoForm(TemplateView):
 
 
 class GetCausePrefilledForm(TemplateView):
-    def get(self, request, ngo_url, *args, **kwargs):
-        cause_slug = kwargs.get("cause_slug")
-
+    def get(self, request, cause_slug, *args, **kwargs):
         try:
             cause = Cause.objects.get(slug=cause_slug)
         except Cause.DoesNotExist:
@@ -108,13 +108,26 @@ class GetCausePrefilledForm(TemplateView):
         filename = "formular_donatie.pdf"
         try:
             cause.prefilled_form.save(filename, File(pdf))
-        except AttributeError:
+            logger.info(f"Prefilled form saved successfully: {filename}")
+        except (IOError, OSError) as file_error:
+            logger.error(f"File handling error while saving {filename}: {file_error}")
+        except DatabaseError as db_error:
+            logger.error(f"Database error while saving prefilled form {filename}: {db_error}")
+        except SuspiciousOperation as sus_error:
+            logger.warning(f"Suspicious operation detected when saving {filename}: {sus_error}")
+        except AttributeError as attr_error:
             # if the form file didn't reach the storage yet, redirect the user back to the download page
-            pdf.close()
-            return redirect(reverse("api-ngo-form-url", kwargs={"ngo_url": ngo_url}))
+            logger.exception(f"{filename}: {attr_error}")
+        except Exception as e:
+            logger.exception(f"Unexpected error while saving prefilled form {filename}: {e}")
 
         # close the file after it has been uploaded
         pdf.close()
+
+        if not cause.prefilled_form:
+            logger.error(f"Prefilled form was not created for cause {cause_slug}.")
+            messages.error(request, _("An error occurred while generating the prefilled form."))
+            return redirect(reverse("my-organization:causes"))
 
         return redirect(cause.prefilled_form.url)
 
