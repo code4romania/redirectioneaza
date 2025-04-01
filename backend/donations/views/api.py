@@ -120,9 +120,9 @@ class GetCausePrefilledForm(TemplateView):
             logger.exception(f"{filename}: {attr_error}")
         except Exception as e:
             logger.exception(f"Unexpected error while saving prefilled form {filename}: {e}")
-
-        # close the file after it has been uploaded
-        pdf.close()
+        finally:
+            # close the file after it has been uploaded
+            pdf.close()
 
         if not cause.prefilled_form:
             logger.error(f"Prefilled form was not created for cause {cause_slug}.")
