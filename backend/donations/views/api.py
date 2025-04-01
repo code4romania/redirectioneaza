@@ -131,8 +131,8 @@ class DownloadNgoForms(BaseTemplateView):
 
 
 class GenerateCauseArchive(BaseTemplateView):
-    def generate_archive_for_cause_url(self, cause_url: Optional[str], request) -> Optional[Job]:
-        if not cause_url:
+    def generate_archive_for_cause_slug(self, cause_slug: Optional[str], request) -> Optional[Job]:
+        if not cause_slug:
             return None
 
         ngo: Ngo = request.user.ngo
@@ -140,7 +140,7 @@ class GenerateCauseArchive(BaseTemplateView):
             return None
 
         try:
-            cause = ngo.causes.get(slug=cause_url)
+            cause = ngo.causes.get(slug=cause_slug)
         except Cause.DoesNotExist:
             return None
 
@@ -174,9 +174,9 @@ class GenerateCauseArchive(BaseTemplateView):
         failure_response = redirect(failure_redirect_url)
 
         post_data = request.POST
-        cause_url: str = post_data.get("cause_url")
+        cause_slug: str = post_data.get("cause_slug")
 
-        status = self.generate_archive_for_cause_url(cause_url, request)
+        status = self.generate_archive_for_cause_slug(cause_slug, request)
         if not status:
             return failure_response
 
