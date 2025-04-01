@@ -122,8 +122,7 @@ class GenerateCauseArchive(BaseTemplateView):
             new_job.save()
 
         # noinspection StrFormat
-        cache.delete(NGO_CAUSES_QUERY_CACHE_KEY.format(ngo.pk))
-
+        cache.delete(NGO_CAUSES_QUERY_CACHE_KEY.format(ngo=ngo))
         return new_job
 
     @method_decorator(login_required(login_url=reverse_lazy("login")))
