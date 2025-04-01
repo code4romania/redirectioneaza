@@ -12,7 +12,7 @@ register = template.Library()
 def dropdown(cause: Cause) -> List[Dict[str, Any]]:
     edit_cause_link = ""
     download_form_link = ""
-    if can_receive_forms := cause.can_receive_forms():
+    if can_receive_forms := cause.can_receive_redirections:
         edit_cause_link = reverse("my-organization:cause", kwargs={"cause_id": cause.pk})
         download_form_link = reverse("api-cause-form", kwargs={"cause_slug": cause.slug})
 

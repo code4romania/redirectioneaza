@@ -138,7 +138,7 @@ class GenerateCauseArchive(BaseTemplateView):
             return None
 
         ngo: Ngo = request.user.ngo
-        if not ngo or not ngo.can_receive_forms:
+        if not ngo or not ngo.can_receive_redirections:
             return None
 
         try:
@@ -197,7 +197,7 @@ class ChangeCauseVisibility(BaseTemplateView):
         visibility: str = post_data.get("visibility")
 
         ngo: Ngo = request.user.ngo
-        if not ngo or not ngo.can_receive_forms:
+        if not ngo or not ngo.can_receive_redirections:
             messages.error(request, _("Your organization can not receive forms currently."))
             return redirect(reverse("my-organization:presentation"))
 
