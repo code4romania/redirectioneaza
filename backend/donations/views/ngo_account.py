@@ -672,6 +672,7 @@ class NgoRedirectionsView(NgoBaseListView, DonorSearchMixin):
                 "redirections_count",
                 "last_archive_job",
             )
+            .filter(allow_online_collection=True)
             .order_by("-redirections_count", "name")
         )
 
