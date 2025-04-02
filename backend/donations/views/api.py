@@ -24,7 +24,6 @@ from ..workers.update_organization import update_organization
 from .base import BaseTemplateView
 from .common.misc import (
     get_cause_response_item,
-    get_ngo_cause,
     has_archive_generation_deadline_passed,
     has_recent_archive_job,
 )
@@ -64,31 +63,6 @@ class SearchCausesApi(TemplateView, NgoCauseMixedSearchMixin):
             response.append(get_cause_response_item(cause))
 
         return JsonResponse(response, safe=False)
-
-
-class GetNgoForm(TemplateView):
-    def get(self, request, ngo_url, *args, **kwargs):
-        cause, ngo = get_ngo_cause(ngo_url)
-
-        # if we have a form created for this ngo, return the url
-        if cause.prefilled_form:
-            return redirect(cause.prefilled_form.url)
-
-        pdf = create_cause_pdf(cause, ngo)
-
-        # filename = "Formular 2% - {0}.pdf".format(ngo.name)
-        filename = "formular_donatie.pdf"
-        try:
-            cause.prefilled_form.save(filename, File(pdf))
-        except AttributeError:
-            # if the form file didn't reach the storage yet, redirect the user back to the download page
-            pdf.close()
-            return redirect(reverse("api-ngo-form-url", kwargs={"ngo_url": ngo_url}))
-
-        # close the file after it has been uploaded
-        pdf.close()
-
-        return redirect(cause.prefilled_form.url)
 
 
 class GetCausePrefilledForm(TemplateView):
