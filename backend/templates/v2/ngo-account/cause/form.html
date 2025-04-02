@@ -110,7 +110,10 @@
           class="flex flex-col gap-8 py-4"
           x-data="clearElementOnCheckboxChange(elementId='notifications_email',alpineVariable='allow_online_notifications',triggerValue=false,isRequired=true)">
 
-          {% if not is_main_cause %}
+          {% if is_main_cause %}
+            <input type="hidden" name="visibility" value="pub">
+            <input type="hidden" name="is_main" value=True>
+          {% else %}
             {% if not form_visibility_input_title %}
               {% trans "Form visibility" as form_visibility_input_title %}
             {% endif %}
