@@ -462,8 +462,7 @@ class CauseVisibilityChoices(models.TextChoices):
 class Cause(models.Model):
     ngo = models.ForeignKey(Ngo, on_delete=models.CASCADE, related_name="causes")
 
-    # XXX: [MULTI-FORM] set the default to False when we have multiple forms
-    is_main = models.BooleanField(verbose_name=_("is main cause"), db_index=True, default=True)
+    is_main = models.BooleanField(verbose_name=_("is main cause"), db_index=True, default=False)
     allow_online_collection = models.BooleanField(verbose_name=_("allow online collection"), default=False)
 
     visibility = models.CharField(
