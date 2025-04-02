@@ -6,7 +6,7 @@ from localflavor.ro.forms import ROCIFField
 
 from donations.common.validation.phone_number import validate_phone_number
 from donations.common.validation.validate_slug import NgoSlugValidator
-from donations.models.ngos import Cause, Ngo, ngo_slug_validator
+from donations.models.ngos import Cause, Ngo, ngo_slug_validator, CauseVisibilityChoices
 
 
 class NgoPresentationForm(forms.Form):
@@ -113,6 +113,22 @@ class CauseForm(forms.ModelForm):
             "date_created",
             "date_updated",
         ]
+
+    def __init__(self, *args, for_main_cause=False, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.for_main_cause = for_main_cause
+
+    def save(self, commit=True):
+        cause = super().save(commit=False)
+
+        if self.for_main_cause:
+            cause.is_main = True
+            cause.visibility = CauseVisibilityChoices.PUBLIC
+
+        if commit:
+            cause.save()
+
+        return cause
 
     def clean_slug(self):
         slug = self.cleaned_data.get("slug").lower()

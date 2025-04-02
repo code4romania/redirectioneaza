@@ -1,4 +1,5 @@
-from typing import Callable, Dict, List, Optional, Union
+import logging
+from typing import Any, Callable, Dict, List, Optional, Union
 
 from django.conf import settings
 from django.contrib import messages
@@ -7,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied, ValidationError
 from django.db.models import Count, F, OuterRef, QuerySet, Subquery
 from django.db.models.functions import JSONObject
+from django.forms.forms import BaseForm
 from django.http import Http404, HttpRequest, QueryDict
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
@@ -36,6 +38,8 @@ from .ngo_account_filters import (
     FormStatusQueryFilter,
     LocalityQueryFilter,
 )
+
+logger = logging.getLogger(__name__)
 
 UserModel = get_user_model()
 
@@ -141,7 +145,7 @@ class NgoBaseTemplateView(NgoBaseView, BaseVisibleTemplateView):
 
     def get_missing_ngo_fields(self, ngo: Optional[Ngo]) -> Optional[List[str]]:
         if not ngo:
-            missing_fields = Ngo.mandatory_fields_names_capitalize
+            missing_fields = Ngo.mandatory_fields_names_capitalized()
         else:
             missing_fields = ngo.missing_mandatory_fields_names_capitalize
 
@@ -171,6 +175,11 @@ class NgoBaseListView(NgoBaseView, ListView):
 
 
 class NgoCauseCommonView(NgoBaseTemplateView):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.is_main_cause = False
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
@@ -187,6 +196,20 @@ class NgoCauseCommonView(NgoBaseTemplateView):
             _("Organization CIF: ") + ngo.registration_number,
         ]
         return banner_list_items
+
+    def _check_field_altered(self, form: BaseForm, field_name: str, expected_value: Any) -> None:
+        """
+        Check if a field in the form has been altered from its expected value.
+        """
+        user_error_message = _("The form was altered.")
+
+        if field_name not in form.cleaned_data:
+            logger.error(f"The parameter '{field_name}' was altered and is missing from the form")
+            raise ValidationError(user_error_message)
+
+        if form.cleaned_data[field_name] != expected_value:
+            logger.error(f"The parameter '{field_name}' was altered with value {form.cleaned_data[field_name]}")
+            raise ValidationError(user_error_message)
 
     @method_decorator(login_required(login_url=reverse_lazy("login")))
     def do_post(self, request, **kwargs):
@@ -206,14 +229,13 @@ class NgoCauseCommonView(NgoBaseTemplateView):
             response["error"] = redirect(reverse("my-organization:presentation"))
             return response
 
-        is_main_cause = context.get("is_main_cause", False)
-        if not is_main_cause and not ngo.can_create_causes:
+        if not self.is_main_cause and not ngo.can_create_causes:
             messages.error(request, _("You need to first create the form with the organization's details."))
             response["error"] = redirect(reverse("my-organization:presentation"))
             return response
 
         existing_cause = context.get("cause")
-        form = CauseForm(post, files=request.FILES, instance=existing_cause)
+        form = CauseForm(post, for_main_cause=self.is_main_cause, files=request.FILES, instance=existing_cause)
 
         context.update({"django_form": form})
 
@@ -223,8 +245,6 @@ class NgoCauseCommonView(NgoBaseTemplateView):
             return response
 
         cause = form.save(commit=False)
-        if is_main_cause:
-            cause.is_main = True
         cause.ngo = ngo
         cause.save()
 
@@ -378,11 +398,15 @@ class NgoMainCauseView(NgoCauseCommonView):
     tab_title = "form"
     sidebar_item_target = "org-data"
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.is_main_cause = True
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(is_main_cause=True, **kwargs)
 
         context["cause"] = self.get_main_cause(context.get("ngo"))
-        context["is_main_cause"] = True
+        context["is_main_cause"] = self.is_main_cause
 
         if missing_fields := self.get_missing_fields(
             source="cause",
