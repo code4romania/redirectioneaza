@@ -110,7 +110,15 @@
 
         <div
           class="flex flex-col gap-8 py-4"
-          x-data="clearElementOnAlpineVariableChange(elementId='notifications_section',alpineVariable='allow_online_collection',triggerValue=false,isRequired=false)">
+          x-data="{ allow_online_collection: '{{ django_form.allow_online_collection.value|lower }}' }"
+          x-init="$watch('allow_online_collection', value => {
+            if (!value) {
+              document.getElementById('allow_online_notifications').checked = false;
+              document.getElementById('notifications_email').value = '';
+              document.getElementById('notifications_email').required = false;
+            }
+          })"
+        >
 
           {% if is_main_cause %}
             <input type="hidden" name="visibility" value="pub">
@@ -135,7 +143,15 @@
 
           <div
             id="notifications_section"
-            x-data="clearElementOnAlpineVariableChange(elementId='notifications_email',alpineVariable='allow_online_notifications',triggerValue=false,isRequired=true)"
+            x-data="{ allow_online_notifications: '{{ django_form.allow_online_notifications.value|lower }}' }"
+            x-init="$watch('allow_online_notifications', value => {
+              if (!value) {
+                document.getElementById('notifications_email').value = '';
+                document.getElementById('notifications_email').required = false;
+              } else {
+                document.getElementById('notifications_email').required = true;
+              }
+            })"
             x-cloak
             x-show="allow_online_collection"
             class="flex flex-col gap-8">

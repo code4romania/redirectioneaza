@@ -237,8 +237,6 @@ class NgoCauseCommonView(NgoBaseTemplateView):
         existing_cause = context.get("cause")
         form = CauseForm(post, for_main_cause=self.is_main_cause, files=request.FILES, instance=existing_cause)
 
-        context.update({"django_form": form})
-
         if not form.is_valid():
             messages.error(request, _("There are some errors on the redirection form."))
             response["error"] = render(request, self.template_name, context)
@@ -250,6 +248,7 @@ class NgoCauseCommonView(NgoBaseTemplateView):
 
         context["cause"] = cause
         context["ngo"] = ngo
+        context["django_form"] = form
 
         success_message = _("The cause has been created.")
         if existing_cause:
@@ -408,6 +407,8 @@ class NgoMainCauseView(NgoCauseCommonView):
         context["cause"] = self.get_main_cause(context.get("ngo"))
         context["is_main_cause"] = self.is_main_cause
 
+        context["django_form"] = CauseForm(instance=context["cause"], for_main_cause=self.is_main_cause)
+
         if missing_fields := self.get_missing_fields(
             source="cause",
             ngo=context.get("ngo"),
@@ -524,6 +525,7 @@ class NgoCauseEditView(NgoCauseCommonView):
         page_title = _("Edit cause")
 
         context["cause"] = self.get_cause(cause_id=kwargs["cause_id"], ngo=context["ngo"])
+        context["django_form"] = CauseForm(instance=context["cause"], for_main_cause=self.is_main_cause)
 
         context["page_title"] = f"{page_title}: \"{context['cause'].name}\""
         context["breadcrumbs"] = [
