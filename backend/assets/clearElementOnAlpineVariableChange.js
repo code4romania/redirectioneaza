@@ -3,12 +3,32 @@ export default function (elementId, alpineVariable, triggerValue, isRequired = f
     isRequired: null,
     element: null,
     triggerValue: null,
-    clearElement() {
-      this.element.value = '';
-      this.element.required = false;
+    removeElementValue(element) {
+      if (element.type === 'checkbox' || element.type === 'radio') {
+        element.checked = false;
+      } else if (element.type !== undefined) {
+        element.value = '';
+      } else {
+        let descendentInputs = element.getElementsByTagName('input');
+        if (descendentInputs.length === 0) return;
+        for (let i = 0; i < descendentInputs.length; i++) {
+          this.clearElement(descendentInputs[i]);
+        }
+      }
     },
-    unclearElement() {
-      this.element.required = this.isRequired;
+    clearElement(element = null) {
+      if (element === null) {
+        element = this.element;
+      }
+
+      this.removeElementValue(element);
+      element.required = false;
+    },
+    unclearElement(element = null) {
+      if (element === null) {
+        element = this.element;
+      }
+      element.required = this.isRequired;
     },
     setAlpineVariableDefault(alpineVariable) {
       let defaultValue = !this.triggerValue;

@@ -13,6 +13,7 @@
   {% include "ngo-account/components/form-title.html" with hide_public_page_button=hide_public_page_button|default_if_none:True hide_public_download_button=hide_public_download_button|default_if_none:True hide_ngohub_button=hide_ngohub_button|default_if_none:True %}
 
   <div class="flex flex-col gap-8 lg:flex-row-reverse lg:gap-16">
+
     <div>
       {% blocktrans trimmed asvar banner_message %}
         For filling in the form, we will use the following organization data:
@@ -24,6 +25,7 @@
 
 
       <fieldset>
+
         <legend class="sr-only">
           {% trans "Legal information" %}
         </legend>
@@ -58,9 +60,9 @@
       </fieldset>
     </div>
 
-
     <div class="flex flex-col gap-8">
       <fieldset>
+
         {% if not form_page_legend_title %}
           {% trans "Form page" as form_page_legend_title %}
         {% endif %}
@@ -108,7 +110,7 @@
 
         <div
           class="flex flex-col gap-8 py-4"
-          x-data="clearElementOnCheckboxChange(elementId='notifications_email',alpineVariable='allow_online_notifications',triggerValue=false,isRequired=true)">
+          x-data="clearElementOnAlpineVariableChange(elementId='notifications_section',alpineVariable='allow_online_collection',triggerValue=false,isRequired=false)">
 
           {% if is_main_cause %}
             <input type="hidden" name="visibility" value="pub">
@@ -131,29 +133,38 @@
           {% include "components/input/checkbox.html" with input_title=allow_online_collection_input_title input_id="allow_online_collection" input_name="allow_online_collection" value=cause.allow_online_collection field=django_form.allow_online_collection help_text=signing_helptext style="isolated" %}
 
 
-          {% if not allow_online_notifications_input_title %}
-            {% trans "Receive notifications for each signed form" as allow_online_notifications_input_title %}
-          {% endif %}
-          {% blocktrans trimmed asvar notifications_helptext %}
-            Choose the IBAN you will use for collecting and submitting to ANAF.
-            Changing the IBAN will not update the forms already completed by taxpayers.
-          {% endblocktrans %}
-          {% include "components/input/checkbox.html" with input_title=allow_online_notifications_input_title input_id="allow_online_notifications" input_name="allow_online_notifications" value=cause.allow_online_notifications field=django_form.allow_online_notifications help_text=notifications_helptext style="isolated" %}
-
-
           <div
+            id="notifications_section"
+            x-data="clearElementOnAlpineVariableChange(elementId='notifications_email',alpineVariable='allow_online_notifications',triggerValue=false,isRequired=true)"
             x-cloak
-            x-show="allow_online_notifications">
-            {% if not notifications_email_input_title %}
-              {% trans "Notifications e-mail address" as notifications_email_input_title %}
+            x-show="allow_online_collection"
+            class="flex flex-col gap-8">
+
+            {% if not allow_online_notifications_input_title %}
+              {% trans "Receive notifications for each signed form" as allow_online_notifications_input_title %}
             {% endif %}
-            {% include "components/input/input.html" with input_title=notifications_email_input_title input_id="notifications_email" input_type="email" input_name="notifications_email" is_disabled=disable_ngohub_fields value=cause.notifications_email field=django_form.notifications_email max_length=254 %}
+            {% blocktrans trimmed asvar notifications_helptext %}
+              Choose the IBAN you will use for collecting and submitting to ANAF.
+              Changing the IBAN will not update the forms already completed by taxpayers.
+            {% endblocktrans %}
+            {% include "components/input/checkbox.html" with input_title=allow_online_notifications_input_title input_id="allow_online_notifications" input_name="allow_online_notifications" value=cause.allow_online_notifications field=django_form.allow_online_notifications help_text=notifications_helptext style="isolated" %}
+
+            <div
+              x-cloak
+              x-show="allow_online_notifications">
+              {% if not notifications_email_input_title %}
+                {% trans "Notifications e-mail address" as notifications_email_input_title %}
+              {% endif %}
+              {% include "components/input/input.html" with input_title=notifications_email_input_title input_id="notifications_email" input_type="email" input_name="notifications_email" is_disabled=disable_ngohub_fields value=cause.notifications_email field=django_form.notifications_email max_length=254 %}
+            </div>
+
           </div>
 
         </div>
 
       </fieldset>
     </div>
+
   </div>
 
 </form>
