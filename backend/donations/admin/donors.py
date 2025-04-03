@@ -8,14 +8,13 @@ from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import ngettext_lazy
-from unfold.admin import ModelAdmin
-from unfold.contrib.filters.admin import TextFilter
-from unfold.decorators import action
-
 from donations.models.donors import Donor
 from redirectioneaza.common.admin import HasNgoFilter
 from redirectioneaza.common.app_url import build_uri
 from redirectioneaza.common.messaging import extend_email_context, send_email
+from unfold.admin import ModelAdmin
+from unfold.contrib.filters.admin import TextFilter
+from unfold.decorators import action
 
 logger = logging.getLogger(__name__)
 
@@ -31,7 +30,7 @@ def soft_delete_donor(donor_pk: int):
 
         mail_context = {
             "cause_name": donor.cause.name,
-            "action_url": build_uri(reverse("twopercent", kwargs={"ngo_url": donor.cause.slug})),
+            "action_url": build_uri(reverse("twopercent", kwargs={"cause_slug": donor.cause.slug})),
         }
         mail_context.update(extend_email_context())
 

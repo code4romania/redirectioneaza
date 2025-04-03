@@ -97,7 +97,7 @@ def has_archive_generation_deadline_passed() -> bool:
 def get_cause_response_item(cause: Cause) -> Dict:
     return {
         "name": cause.name,
-        "url": reverse("twopercent", kwargs={"ngo_url": cause.slug}),
+        "url": reverse("twopercent", kwargs={"cause_slug": cause.slug}),
         "logo": cause.display_image.url if cause.display_image else None,
         "description": cause.description,
     }
