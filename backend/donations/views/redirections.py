@@ -183,7 +183,7 @@ class RedirectionHandler(TemplateView):
         except Cause.DoesNotExist:
             raise Http404("Cause not found")
 
-        if not cause and not ngo:
+        if not ngo:
             raise Http404
 
         # if we have an ajax request, return an answer
