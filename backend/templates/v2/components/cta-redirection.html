@@ -72,7 +72,7 @@
           <div class="p-6 rounded-bl-2xl rounded-br-2xl bg-slate-50 md:px-8">
             {% trans "Download the form" as download_action_title %}
             {% if cause %}
-              <a href="{% url "api-ngo-form-url" ngo_url=cause.slug %}" class="text-base font-medium text-cyan-700 hover:text-cyan-800 hover:cursor-pointer" target="_blank">
+              <a href="{% url "api-cause-form" cause_slug=cause.slug %}" class="text-base font-medium text-cyan-700 hover:text-cyan-800 hover:cursor-pointer" target="_blank">
                 {{ download_action_title }}
               </a>
             {% else %}

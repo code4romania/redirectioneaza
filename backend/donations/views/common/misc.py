@@ -1,8 +1,7 @@
 import datetime
-from typing import Dict, Optional, Tuple
+from typing import Dict, Optional
 
 from django.conf import settings
-from django.http import Http404
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import ngettext_lazy
@@ -102,18 +101,3 @@ def get_cause_response_item(cause: Cause) -> Dict:
         "logo": cause.display_image.url if cause.display_image else None,
         "description": cause.description,
     }
-
-
-def get_ngo_cause(slug: str) -> Tuple[Optional[Cause], Ngo]:
-    #  XXX: [MULTI-FORM] This is a temporary solution to handle both causes and NGOs
-    try:
-        cause: Optional[Cause] = Cause.nonprivate_active.get(slug=slug)
-        ngo: Ngo = cause.ngo
-    except Cause.DoesNotExist:
-        try:
-            ngo: Ngo = Ngo.active.get(slug=slug)
-            cause = Cause.main.filter(ngo=ngo).first()
-        except (Cause.DoesNotExist, Ngo.DoesNotExist):
-            raise Http404
-
-    return cause, ngo

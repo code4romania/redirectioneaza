@@ -1,5 +1,6 @@
 import logging
 from datetime import datetime, timedelta
+from typing import Optional
 from urllib.parse import urlparse
 
 from django.conf import settings
@@ -16,9 +17,9 @@ from redirectioneaza.common.messaging import extend_email_context, send_email
 
 from ..forms.redirection import DonationForm
 from ..models.donors import Donor
+from ..models.ngos import Cause, Ngo
 from ..pdf import create_full_pdf
 from .base import BaseVisibleTemplateView
-from .common.misc import get_ngo_cause
 
 logger = logging.getLogger(__name__)
 
@@ -33,9 +34,13 @@ class RedirectionSuccessHandler(BaseVisibleTemplateView):
         request = self.request
 
         cause_url = ngo_url.lower().strip()
-        cause, ngo = get_ngo_cause(cause_url)
+        try:
+            cause: Optional[Cause] = Cause.nonprivate_active.get(slug=cause_url)
+            ngo: Ngo = cause.ngo
+        except Cause.DoesNotExist:
+            raise Http404("Cause not found")
 
-        if not cause and not ngo:
+        if not ngo:
             raise Http404("NGO not found")
 
         try:
@@ -74,7 +79,11 @@ class RedirectionHandler(TemplateView):
         request = self.request
         ngo_url = kwargs.get("ngo_url", "")
 
-        cause, ngo = get_ngo_cause(ngo_url)
+        try:
+            cause: Optional[Cause] = Cause.nonprivate_active.get(slug=ngo_url)
+            ngo: Ngo = cause.ngo
+        except Cause.DoesNotExist:
+            raise Http404("Cause not found")
 
         # if we didn't find it or the ngo doesn't have an active page
         if (cause is None or not cause.ngo.can_create_causes) and (ngo is None or not ngo.can_create_causes):
@@ -167,12 +176,14 @@ class RedirectionHandler(TemplateView):
     def post(self, request, ngo_url):
         post = self.request.POST
 
-        (
-            cause,
-            ngo,
-        ) = get_ngo_cause(ngo_url)
+        cause_url = ngo_url.lower().strip()
+        try:
+            cause: Optional[Cause] = Cause.nonprivate_active.get(slug=cause_url)
+            ngo: Ngo = cause.ngo
+        except Cause.DoesNotExist:
+            raise Http404("Cause not found")
 
-        if not cause and not ngo:
+        if not ngo:
             raise Http404
 
         # if we have an ajax request, return an answer

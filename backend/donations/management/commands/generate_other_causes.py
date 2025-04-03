@@ -3,7 +3,7 @@ from typing import List
 
 from django.core.management import BaseCommand
 from django.db import IntegrityError
-from donations.models.ngos import Cause, Ngo
+from donations.models.ngos import Cause, CauseVisibilityChoices, Ngo
 from faker import Faker
 
 fake = Faker("ro_RO")
@@ -243,8 +243,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         total_causes = options["total_causes"]
         target_org_id = options.get("org", None)
-        # XXX: [MULTI-FORM] Implement this
-        # create_visible = options.get("visible", None)
+        create_visible = options.get("visible", None)
 
         causes: List[Cause] = []
         generated_cause_names: List[str] = []
@@ -292,6 +291,16 @@ class Command(BaseCommand):
                 .replace("î", "i")
             )
 
+            visibility = CauseVisibilityChoices.PUBLIC
+            if not create_visible:
+                visibility = random.choice(
+                    [
+                        CauseVisibilityChoices.PUBLIC,
+                        CauseVisibilityChoices.UNLISTED,
+                        CauseVisibilityChoices.PRIVATE,
+                    ]
+                )
+
             is_accepting_forms_choice = (
                 ngo.is_accepting_forms if not ngo.is_accepting_forms else random.choice(range(0, 6)) == 3
             )
@@ -299,6 +308,7 @@ class Command(BaseCommand):
                 Cause(
                     ngo=ngo,
                     is_main=False,
+                    visibility=visibility,
                     allow_online_collection=is_accepting_forms_choice,
                     slug=kebab_case_name,
                     name=cause_name,
