@@ -24,7 +24,7 @@
           <div class="flex flex-row gap-2 text-cyan-800 justify-start">
 
             <a
-              href="{% url 'twopercent' cause.slug %}"
+              href="{% url 'twopercent' cause_slug=cause.slug %}"
               class="hover:underline hover:cursor-pointer">
             <span>
               /{{ cause.slug }}

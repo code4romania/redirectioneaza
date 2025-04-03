@@ -28,12 +28,12 @@ class RedirectionSuccessHandler(BaseVisibleTemplateView):
     template_name = "form/success/main.html"
     title = _("Successful redirection")
 
-    def get_context_data(self, ngo_url, **kwargs):
+    def get_context_data(self, cause_slug, **kwargs):
         context = super().get_context_data(**kwargs)
 
         request = self.request
 
-        cause_url = ngo_url.lower().strip()
+        cause_url = cause_slug.lower().strip()
         try:
             cause: Optional[Cause] = Cause.nonprivate_active.get(slug=cause_url)
             ngo: Ngo = cause.ngo
@@ -49,7 +49,7 @@ class RedirectionSuccessHandler(BaseVisibleTemplateView):
         except Donor.DoesNotExist:
             donor = None
 
-        absolute_path = request.build_absolute_uri(reverse("twopercent", kwargs={"ngo_url": ngo_url}))
+        absolute_path = request.build_absolute_uri(reverse("twopercent", kwargs={"cause_slug": cause_slug}))
 
         context.update(
             {
@@ -65,7 +65,7 @@ class RedirectionSuccessHandler(BaseVisibleTemplateView):
         context = self.get_context_data(**kwargs)
 
         if not context["donor"] and not settings.DEBUG:
-            return redirect(reverse("twopercent", kwargs={"ngo_url": kwargs["ngo_url"]}))
+            return redirect(reverse("twopercent", kwargs={"cause_slug": kwargs["cause_slug"]}))
 
         return self.render_to_response(context)
 
@@ -73,14 +73,13 @@ class RedirectionSuccessHandler(BaseVisibleTemplateView):
 class RedirectionHandler(TemplateView):
     template_name = "form/redirection.html"
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, cause_slug, **kwargs):
         context = super().get_context_data(**kwargs)
 
         request = self.request
-        ngo_url = kwargs.get("ngo_url", "")
 
         try:
-            cause: Optional[Cause] = Cause.nonprivate_active.get(slug=ngo_url)
+            cause: Optional[Cause] = Cause.nonprivate_active.get(slug=cause_slug)
             ngo: Ngo = cause.ngo
         except Cause.DoesNotExist:
             raise Http404("Cause not found")
@@ -94,7 +93,7 @@ class RedirectionHandler(TemplateView):
         else:
             main_cause = ngo.causes.filter(is_main=True).first()
 
-        absolute_path = request.build_absolute_uri(reverse("twopercent", kwargs={"ngo_url": ngo_url}))
+        absolute_path = request.build_absolute_uri(reverse("twopercent", kwargs={"cause_slug": cause_slug}))
 
         context.update(
             {
@@ -173,10 +172,10 @@ class RedirectionHandler(TemplateView):
 
         return context
 
-    def post(self, request, ngo_url):
+    def post(self, request, cause_slug):
         post = self.request.POST
 
-        cause_url = ngo_url.lower().strip()
+        cause_url = cause_slug.lower().strip()
         try:
             cause: Optional[Cause] = Cause.nonprivate_active.get(slug=cause_url)
             ngo: Ngo = cause.ngo
@@ -192,7 +191,7 @@ class RedirectionHandler(TemplateView):
         form = DonationForm(post)
         if not form.is_valid():
             messages.error(request, _("There are some errors on the redirection form."))
-            return self.return_error(request, form, is_ajax, ngo_url=ngo_url)
+            return self.return_error(request, form, is_ajax, cause_slug=cause_slug)
 
         signature: str = form.cleaned_data["signature"]
 
@@ -255,7 +254,7 @@ class RedirectionHandler(TemplateView):
         donor_email_context = mail_context.copy()
         donor_email_context.update(
             {
-                "ngo_url": request.build_absolute_uri(reverse("twopercent", kwargs={"ngo_url": ngo_url})),
+                "cause_url": request.build_absolute_uri(reverse("twopercent", kwargs={"cause_slug": cause_slug})),
                 "ngo_name": ngo.name,
                 "donation_is_two_years": new_donor.two_years,
             }
@@ -299,7 +298,7 @@ class RedirectionHandler(TemplateView):
                 context=donor_email_context,
             )
 
-        url = reverse("ngo-twopercent-success", kwargs={"ngo_url": ngo_url})
+        url = reverse("ngo-twopercent-success", kwargs={"cause_slug": cause_slug})
 
         # if not an ajax request, redirect
         if is_ajax:
@@ -308,11 +307,11 @@ class RedirectionHandler(TemplateView):
         else:
             return redirect(url)
 
-    def return_error(self, request, form, is_ajax, ngo_url):
+    def return_error(self, request, form, is_ajax, cause_slug):
         if is_ajax:
             return JsonResponse(form.errors)
 
-        context = self.get_context_data(ngo_url=ngo_url)
+        context = self.get_context_data(cause_slug=cause_slug)
         context.update({"redirection_form": form})
 
         for key in self.request.POST:

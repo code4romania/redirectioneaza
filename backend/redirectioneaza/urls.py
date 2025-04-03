@@ -135,10 +135,11 @@ urlpatterns = (
         path("admin/organizatii/", RedirectView.as_view(pattern_name="admin:index", permanent=True)),
         path("admin/", admin.site.urls),
         # must always be the last set of urls
-        re_path(r"^(?P<ngo_url>[\w-]+)/doilasuta/", RedirectView.as_view(pattern_name="twopercent", permanent=True)),
-        # re_path(r"^(?P<ngo_url>[\w-]+)/semnatura/", FormSignature.as_view(), name="ngo-twopercent-signature"),
-        re_path(r"^(?P<ngo_url>[\w-]+)/succes/", RedirectionSuccessHandler.as_view(), name="ngo-twopercent-success"),
-        re_path(r"^(?P<ngo_url>[\w-]+)/$", RedirectionHandler.as_view(), name="twopercent"),
+        # people could initially redirect 2%; we kept this name because it is easier to find than redirection
+        re_path(r"^(?P<cause_slug>[\w-]+)/doilasuta/", RedirectView.as_view(pattern_name="twopercent", permanent=True)),
+        # re_path(r"^(?P<cause_slug>[\w-]+)/semnatura/", FormSignature.as_view(), name="ngo-twopercent-signature"),
+        re_path(r"^(?P<cause_slug>[\w-]+)/succes/", RedirectionSuccessHandler.as_view(), name="ngo-twopercent-success"),
+        re_path(r"^(?P<cause_slug>[\w-]+)/$", RedirectionHandler.as_view(), name="twopercent"),
         # Skip the login provider selector page and redirect to Cognito
         path(
             "allauth/login/",

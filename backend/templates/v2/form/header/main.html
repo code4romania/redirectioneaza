@@ -21,7 +21,7 @@
             {% if main_cause.slug and main_cause.slug != cause.slug %}
               <li>
                 <div class="flex items-center text-sm">
-                  <a href="{% url 'twopercent' ngo_url=main_cause.slug %}" class="font-medium text-gray-500 hover:text-gray-900">
+                  <a href="{% url 'twopercent' cause_slug=main_cause.slug %}" class="font-medium text-gray-500 hover:text-gray-900">
                     {{ main_cause.name }}
                   </a>
 
