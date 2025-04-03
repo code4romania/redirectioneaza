@@ -34,7 +34,6 @@ from donations.views.api import (
     ChangeCauseVisibility,
     GenerateCauseArchive,
     GetCausePrefilledForm,
-    GetNgoForm,
     SearchCausesApi,
     UpdateFromNgohub,
 )
@@ -122,7 +121,6 @@ urlpatterns = (
         ),
         # APIs
         path("api/ngohub-refresh/", UpdateFromNgohub.as_view(), name="api-ngohub-refresh"),
-        path("api/ngo/form/<ngo_url>/", GetNgoForm.as_view(), name="api-ngo-form-url"),
         path("api/ngo/form/<cause_slug>/", GetCausePrefilledForm.as_view(), name="api-cause-form"),
         path("api/ngo/forms/archive/", GenerateCauseArchive.as_view(), name="api-generate-cause-archive"),
         path("api/ngo/forms/visibility/", ChangeCauseVisibility.as_view(), name="api-change-cause-visibility"),
