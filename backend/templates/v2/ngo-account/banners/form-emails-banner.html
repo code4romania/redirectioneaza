@@ -1,10 +1,33 @@
 {% load i18n %}
 
+
+{% comment %}
+  Organizația ta nu a activat momentan semnarea online a formularului de redirecțonare.
+{% endcomment %}
+{% trans "Your organization has not yet activated the online signing of this redirection form." as banner_title %}
+
+{% comment %}
+  Acum, utilizatorii pot genera formularul,
+  însă vor trebui să descarce și să imprime formularul,
+  să-l completeze manual
+  și să-l trimită fie la adresa organizației,
+  fie la un oficiu ANAF.
+  Pentru a primi formularele online,
+  permite semnarea online,
+  bifând opțiunea din pagina “Formular organizație”.
+{% endcomment %}
+{% trans "Allow users to sign the form online" as button_input_title %}
 {% blocktranslate trimmed asvar banner_message %}
   <p>
-    Your organization is not accepting forms by e-mail.
-    This means that users will have to download and print the form, fill it in,
-    and send it to the organization's address or to their ANAF office.
+    Currently, users can fill in the form,
+    but they will need to download and print it,
+    then fill it in manually,
+    and send it either to the organization's address
+    or to an ANAF office.
+    If you have an SPV account, you can choose to enable online signing
+    by checking the
+    <strong>"{{ button_input_title }}"</strong>
+    option.
   </p>
 {% endblocktranslate %}
 

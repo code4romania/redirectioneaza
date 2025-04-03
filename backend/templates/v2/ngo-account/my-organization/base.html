@@ -4,10 +4,49 @@
 
 {% block page_heading %}
 
+  <div
+    x-data="{ activeTab: '{{ active_tab }}' }"
+    class="max-w-none">
+
+    <h1 class="text-2xl text-gray-900 font-semibold">
+      {% trans "Organization Data" %}
+    </h1>
+
+    <p class="text-lg pt-2 mt-2 text-gray-500">
+      {% blocktrans trimmed %}
+        Fill out the organization's profile on redirectioneaza.ro
+      {% endblocktrans %}
+    </p>
+
+    {% trans "Presentation Data" as tab_presentation %}
+    {% trans "Form Data" as tab_form %}
+
+    <div class="pt-2 mt-2">
+      <nav
+        class="flex space-x-4"
+        aria-label="Tabs">
+
+        {% url "my-organization:presentation" as target_url %}
+        {% include "ngo-account/components/tab.html" with tab_title=tab_presentation target="presentation" %}
+
+        {% url "my-organization:forms" as target_url %}
+        {% if ngo %}
+          {% include "ngo-account/components/tab.html" with tab_title=tab_form target="form" %}
+        {% else %}
+          {% include "ngo-account/components/tab.html" with tab_title=tab_form target="form" is_disabled=True %}
+        {% endif %}
+
+      </nav>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block page_errors %}
+
   {% if ngo %}
 
     {% if not ngo.can_receive_redirections %}
-      <div class="py-6">
 
         {% if not ngo.is_active %}
           {% comment %}
@@ -60,52 +99,14 @@
 
           {% include "components/info-banner.html" with style="error" banner_message=banner_message banner_list=missing_fields.fields banner_cta_message=missing_fields.cta_message banner_cta_url=missing_fields.cta_url %}
         {% endif %}
-      </div>
     {% endif %}
 
-    {% if not ngo.is_accepting_forms %}
-      <div class="py-6">
-        {% include "ngo-account/banners/form-emails-banner.html" %}
-      </div>
+    {% if not cause.allow_online_collection %}
+      {% include "ngo-account/banners/form-emails-banner.html" %}
+    {% elif not cause.notifications_email %}
+      {% include "ngo-account/banners/form-notifications-banner.html" %}
     {% endif %}
 
   {% endif %}
-
-  <div
-    x-data="{ activeTab: '{{ active_tab }}' }"
-    class="max-w-none">
-
-    <h1 class="text-2xl text-gray-900 font-semibold">
-      {% trans "Organization Data" %}
-    </h1>
-
-    <p class="text-lg pt-2 mt-2 text-gray-500">
-      {% blocktrans trimmed %}
-        Fill out the organization's profile on redirectioneaza.ro
-      {% endblocktrans %}
-    </p>
-
-    {% trans "Presentation Data" as tab_presentation %}
-    {% trans "Form Data" as tab_form %}
-
-    <div class="pt-2 mt-2">
-      <nav
-        class="flex space-x-4"
-        aria-label="Tabs">
-
-        {% url "my-organization:presentation" as target_url %}
-        {% include "ngo-account/components/tab.html" with tab_title=tab_presentation target="presentation" %}
-
-        {% url "my-organization:forms" as target_url %}
-        {% if ngo %}
-          {% include "ngo-account/components/tab.html" with tab_title=tab_form target="form" %}
-        {% else %}
-          {% include "ngo-account/components/tab.html" with tab_title=tab_form target="form" is_disabled=True %}
-        {% endif %}
-
-      </nav>
-    </div>
-  </div>
-
 
 {% endblock %}

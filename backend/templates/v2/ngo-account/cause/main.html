@@ -23,6 +23,16 @@
 
 {% endblock %}
 
+{% block page_errors %}
+
+    {% if not cause.allow_online_collection %}
+      {% include "ngo-account/banners/form-emails-banner.html" %}
+    {% elif not cause.notifications_email %}
+      {% include "ngo-account/banners/form-notifications-banner.html" %}
+    {% endif %}
+
+{% endblock %}
+
 {% block content %}
 
   {% include "ngo-account/cause/form.html" with hide_public_page_button=False hide_public_download_button=False %}
