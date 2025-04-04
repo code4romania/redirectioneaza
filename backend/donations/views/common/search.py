@@ -1,14 +1,19 @@
 from typing import Any, List, Optional
 
 from django.conf import settings
-from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector, TrigramSimilarity
-from django.db.models import Q, QuerySet
+from django.contrib.postgres.search import (
+    SearchQuery,
+    SearchRank,
+    SearchVector,
+    TrigramSimilarity,
+)
+from django.db.models import Q, QuerySet, Value
 from django.db.models.functions import Greatest
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import ListView
-
 from donations.models.donors import Donor
 from donations.models.ngos import Cause, Ngo
+from redirectioneaza.common.cache import cache_decorator
 
 
 class ConfigureSearch:
@@ -66,22 +71,14 @@ class CommonSearchMixin(ListView):
         return self.get_search_results(queryset, query, language_code)
 
 
-class NgoSearchMixin(CommonSearchMixin):
+class NgoRegNumberSearchMixin(CommonSearchMixin):
     @classmethod
     def get_search_results(cls, queryset: QuerySet, query: str, language_code: str) -> QuerySet:
-        search_fields = ["name", "registration_number"]
+        search_fields = ["registration_number"]
         search_vector: SearchVector = ConfigureSearch.vector(search_fields, language_code)
         search_query: SearchQuery = ConfigureSearch.query(query, language_code)
 
-        ngos: QuerySet[Ngo] = (
-            queryset.annotate(
-                rank=SearchRank(search_vector, search_query),
-                similarity=TrigramSimilarity("name", query),
-            )
-            .filter(Q(rank__gte=0.3) | Q(similarity__gt=0.3))
-            .order_by("name")
-            .distinct("name")
-        )
+        ngos: QuerySet[Ngo] = queryset.annotate(rank=SearchRank(search_vector, search_query)).filter(Q(rank__gte=0.3))
 
         return ngos
 
@@ -98,9 +95,9 @@ class CauseSearchMixin(CommonSearchMixin):
                 rank=SearchRank(search_vector, search_query),
                 similarity=TrigramSimilarity("name", query),
             )
-            .filter(Q(rank__gte=0.3) | Q(similarity__gt=0.3))
-            .order_by("name")
-            .distinct("name")
+            .filter(Q(rank__gte=0.3) | Q(similarity__gt=0.1))
+            .order_by("-rank", "-similarity", "name")
+            .distinct()
         )
 
         return causes
@@ -108,13 +105,25 @@ class CauseSearchMixin(CommonSearchMixin):
 
 class NgoCauseMixedSearchMixin(CommonSearchMixin):
     @classmethod
+    @cache_decorator(timeout=settings.TIMEOUT_CACHE_NORMAL, cache_key_prefix="NGO_CAUSE_SEARCH")
     def get_search_results(cls, queryset: QuerySet, query: str, language_code: str) -> QuerySet[Cause]:
-        ngos = NgoSearchMixin.get_search_results(Ngo.active, query, language_code)
-        ngos_causes = Cause.public_active.filter(ngo__in=ngos).distinct("name")
+        """
+        This method combines the results of NGO and Cause searches.
+        If the search query is a 'CUI/CIF' (Romanian company registration number),
+        it will return the main cause of the NGO with that registration number.
+        Otherwise, it will return the causes that match the search query.
+        It will likely never return results in both ngos_causes and searched_causes for the same query.
+        """
+        ngos = NgoRegNumberSearchMixin.get_search_results(Ngo.active, query, language_code)
+        ngos_causes: QuerySet[Cause] = (
+            Cause.public_active.annotate(rank=Value(1), similarity=Value(1))
+            .filter(ngo__in=ngos, is_main=True)
+            .distinct()
+        )
 
-        searched_causes = CauseSearchMixin.get_search_results(queryset, query, language_code)
+        searched_causes: QuerySet[Cause] = CauseSearchMixin.get_search_results(queryset, query, language_code)
 
-        return searched_causes | ngos_causes
+        return ngos_causes | searched_causes
 
 
 class DonorSearchMixin(CommonSearchMixin):
