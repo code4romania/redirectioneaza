@@ -498,6 +498,9 @@ class Cause(models.Model):
 
     bank_account = models.CharField(verbose_name=_("bank account"), max_length=100)
 
+    allow_online_notifications = models.BooleanField(verbose_name=_("allow online notifications"), default=False)
+    notifications_email = models.EmailField(verbose_name=_("notifications email"), blank=True, null=False, default="")
+
     prefilled_form = models.FileField(
         verbose_name=_("form with prefilled cause"),
         blank=True,

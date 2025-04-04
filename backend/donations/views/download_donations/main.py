@@ -72,9 +72,10 @@ def download_donations_job(job_id: int = 0):
     }
     mail_context.update(extend_email_context())
 
+    notification_email = job.cause.notifications_email or job.cause.ngo.email
     send_email(
         subject=_("Documents ready for download"),
-        to_emails=[job.cause.ngo.email],
+        to_emails=[notification_email],
         html_template="emails/ngo/download-archive/main.html",
         text_template="emails/ngo/download-archive/main.txt",
         context=mail_context,

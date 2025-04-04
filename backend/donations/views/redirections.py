@@ -263,13 +263,14 @@ class RedirectionHandler(TemplateView):
         # TODO: add a text for two-year donations
         # send and email to the donor with a link to the PDF file
         if signature:
-            send_email(
-                subject=_("Un nou formular de redirecționare"),
-                to_emails=[ngo.email],
-                html_template="emails/ngo/new-form-received/main.html",
-                text_template="emails/ngo/new-form-received/main.txt",
-                context=mail_context,
-            )
+            if cause.notifications_email and cause.allow_online_notifications:
+                send_email(
+                    subject=_("Un nou formular de redirecționare"),
+                    to_emails=[cause.notifications_email],
+                    html_template="emails/ngo/new-form-received/main.html",
+                    text_template="emails/ngo/new-form-received/main.txt",
+                    context=mail_context,
+                )
             send_email(
                 subject=_("Formularul tău de redirecționare"),
                 to_emails=[new_donor.email],
