@@ -13,6 +13,10 @@ def initialize_notifications_email(apps, schema_editor):
     Cause.objects.bulk_update(batch, ["notifications_email", "allow_online_notifications"])
 
 
+def go_backwards(apps, schema_editor):
+    pass
+
+
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -20,5 +24,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(initialize_notifications_email),
+        migrations.RunPython(initialize_notifications_email, go_backwards),
     ]
