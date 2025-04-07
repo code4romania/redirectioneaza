@@ -20,7 +20,7 @@ def go_backwards(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("donations", "0031_cause_allow_online_notifications_and_more"),
+        ("donations", "0031_cause_notification_email"),
     ]
 
     operations = [

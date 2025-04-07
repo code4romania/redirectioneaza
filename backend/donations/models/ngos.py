@@ -529,6 +529,10 @@ class Cause(models.Model):
     def __str__(self):
         return f"{self.ngo.name} - {self.name}"
 
+    @property
+    def allow_online_notifications(self):
+        return bool(self.notifications_email)
+
     @classmethod
     def mandatory_fields(cls):
 
