@@ -236,6 +236,7 @@ class NgoCauseCommonView(NgoBaseTemplateView):
 
         existing_cause = context.get("cause")
         form = CauseForm(post, for_main_cause=self.is_main_cause, files=request.FILES, instance=existing_cause)
+        context["django_form"] = form
 
         if not form.is_valid():
             messages.error(request, _("There are some errors on the redirection form."))
