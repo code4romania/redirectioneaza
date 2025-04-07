@@ -8,9 +8,8 @@ def initialize_notifications_email(apps, schema_editor):
     batch = []
     for cause in Cause.objects.filter(ngo__is_accepting_forms=True, notifications_email="").select_related("ngo"):
         cause.notifications_email = cause.ngo.email
-        cause.allow_online_notifications = True
         batch.append(cause)
-    Cause.objects.bulk_update(batch, ["notifications_email", "allow_online_notifications"])
+    Cause.objects.bulk_update(batch, ["notifications_email"])
 
 
 def go_backwards(apps, schema_editor):
