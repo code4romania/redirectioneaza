@@ -161,7 +161,7 @@
               Choose the IBAN you will use for collecting and submitting to ANAF.
               Changing the IBAN will not update the forms already completed by taxpayers.
             {% endblocktrans %}
-            {% include "components/input/checkbox.html" with input_title=allow_online_notifications_input_title input_id="allow_online_notifications" input_name="allow_online_notifications" x_model="x_allow_online_notifications" value=cause.allow_online_notifications help_text=notifications_helptext style="isolated" %}
+            {% include "components/input/checkbox.html" with input_title=allow_online_notifications_input_title input_id="allow_online_notifications" input_name="allow_online_notifications" x_ref="x_allow_online_notifications" x_model="x_allow_online_notifications" value=cause.allow_online_notifications help_text=notifications_helptext style="isolated" %}
 
             <div
               x-cloak

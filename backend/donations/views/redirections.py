@@ -6,8 +6,9 @@ from urllib.parse import urlparse
 from django.conf import settings
 from django.contrib import messages
 from django.core.files import File
+from django.db.models import Prefetch
 from django.http import Http404, JsonResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
@@ -35,7 +36,7 @@ class RedirectionSuccessHandler(BaseVisibleTemplateView):
 
         cause_url = cause_slug.lower().strip()
         try:
-            cause: Optional[Cause] = Cause.nonprivate_active.get(slug=cause_url)
+            cause: Optional[Cause] = Cause.nonprivate_active.get(slug=cause_url).select_related("ngo")
             ngo: Ngo = cause.ngo
         except Cause.DoesNotExist:
             raise Http404("Cause not found")
@@ -78,32 +79,31 @@ class RedirectionHandler(TemplateView):
 
         request = self.request
 
-        try:
-            cause: Optional[Cause] = Cause.nonprivate_active.get(slug=cause_slug)
-            ngo: Ngo = cause.ngo
-        except Cause.DoesNotExist:
-            raise Http404("Cause not found")
+        main_cause_qs = Cause.objects.filter(is_main=True).only("id", "slug", "name", "description")
+
+        cause: Cause = get_object_or_404(
+            Cause.nonprivate_active.select_related("ngo").prefetch_related(
+                Prefetch(
+                    lookup="ngo__causes",
+                    queryset=main_cause_qs,
+                    to_attr="main_cause_list",
+                )
+            ),
+            slug=cause_slug,
+        )
 
         # if we didn't find it or the ngo doesn't have an active page
-        if (cause is None or not cause.ngo.can_create_causes) and (ngo is None or not ngo.can_create_causes):
+        if (ngo := cause.ngo) is None:
+            logger.exception(f"NGO not found for cause {cause.pk}")
             raise Http404
 
-        if cause.is_main:
-            main_cause = cause
-        else:
-            main_cause = ngo.causes.filter(is_main=True).first()
+        if not ngo.can_create_causes:
+            raise Http404
+
+        # noinspection PyUnresolvedReferences
+        main_cause = cause if cause.is_main else (ngo.main_cause_list[0] if ngo.main_cause_list else None)
 
         absolute_path = request.build_absolute_uri(reverse("twopercent", kwargs={"cause_slug": cause_slug}))
-
-        context.update(
-            {
-                "title": cause.name if cause else ngo.name,
-                "cause": cause,
-                "main_cause": main_cause,
-                "ngo": ngo,
-                "absolute_path": absolute_path,
-            }
-        )
 
         # if we still have a cookie from an old session, remove it
         if "donor_id" in request.session:
@@ -119,6 +119,11 @@ class RedirectionHandler(TemplateView):
 
         context.update(
             {
+                "title": cause.name if cause else ngo.name,
+                "cause": cause,
+                "main_cause": main_cause,
+                "ngo": ngo,
+                "absolute_path": absolute_path,
                 "donation_status": donation_status,
                 "is_admin": request.user.is_staff,
                 "limit": settings.DONATIONS_LIMIT,
@@ -177,7 +182,7 @@ class RedirectionHandler(TemplateView):
 
         cause_url = cause_slug.lower().strip()
         try:
-            cause: Optional[Cause] = Cause.nonprivate_active.get(slug=cause_url)
+            cause: Optional[Cause] = Cause.nonprivate_active.get(slug=cause_url).select_related("ngo")
             ngo: Ngo = cause.ngo
         except Cause.DoesNotExist:
             raise Http404("Cause not found")
@@ -327,7 +332,7 @@ class OwnFormDownloadLinkHandler(TemplateView):
         # Don't allow downloading donation forms older than this
         cutoff_date = timezone.now() - timedelta(days=365)
         try:
-            donor = Donor.available.get(pk=donor_id, date_created__gte=cutoff_date)
+            donor = Donor.available.get(pk=donor_id, date_created__gte=cutoff_date).select_related("ngo")
         except Donor.DoesNotExist:
             raise Http404
         else:
