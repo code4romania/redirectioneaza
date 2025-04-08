@@ -22,7 +22,7 @@
   </span>
 
   <span class="flex grow content-start">
-    {% blocktrans count cause.redirections_count as redirections_count %}
+    {% blocktrans trimmed count cause.redirections_count as redirections_count %}
       {{ redirections_count }} form collected
       {% plural %}
       {{ redirections_count }} forms collected

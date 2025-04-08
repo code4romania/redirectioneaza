@@ -27,19 +27,21 @@
 
       <fieldset>
 
-        <legend class="sr-only">
-          {% trans "Legal information" %}
-        </legend>
+        {% if not form_data_legend_title %}
+          {% trans "Form data" as form_data_legend_title %}
+        {% endif %}
+        {% blocktrans trimmed asvar form_data_info_tooltip %}
+          This information will appear on the filled form.
+        {% endblocktrans %}
+        {% include "components/form/legend.html" with legend_title=form_data_legend_title info_tooltip=form_data_info_tooltip %}
 
         <div class="flex flex-col gap-8 py-4">
 
           {% trans "IBAN on form" as input_title %}
-          {#Alege IBAN-ul pe care îl vei utiliza pentru colectarea și depunerea la ANAF. Modificarea IBAN-ului nu va actualiza formularele deja completate de contribuabili.  Află mai multe      #}
-          {% if cause %}
-            {% blocktrans trimmed asvar iban_helptext %}
-              Changing the IBAN will not update the forms already completed by taxpayers.
-            {% endblocktrans %}
-          {% else %}
+          {% blocktrans trimmed asvar iban_helptext %}
+            Changing the IBAN will not update the forms already completed by taxpayers.
+          {% endblocktrans %}
+          {% if not cause %}
             {% blocktrans trimmed asvar iban_helptext %}
               Choose the IBAN you will use for collecting and submitting to ANAF.
               {{ iban_helptext }}
@@ -67,7 +69,6 @@
         {% if not form_page_legend_title %}
           {% trans "Form page" as form_page_legend_title %}
         {% endif %}
-        {# Datele din această secțiune vor fi vizibile pe pagina publică a formularului. #}
         {% blocktrans trimmed asvar form_page_info_tooltip %}
           The information in this section will be visible on the public page of the form.
         {% endblocktrans %}
@@ -100,7 +101,6 @@
         {% if not form_settings_legend_title %}
           {% trans "Form settings" as form_settings_legend_title %}
         {% endif %}
-        {# Din această secțiune poți gestiona URL-ul formularului, vizibilitatea sa și semnarea online. #}
         {% blocktrans trimmed asvar form_settings_info_tooltip %}
           From this section, you can manage
           the form's URL,
@@ -113,7 +113,6 @@
         <div class="flex flex-col gap-8 py-4">
 
           {% trans "Form URL" as input_title %}
-          {#        Acesta este link-ul prin care utilizatorii vor accesa formularul tău pe site-ul redirectioneaza.ro. Poate conține doar litere, cifre și cratime. Exemplu: /formular-cauza.#}
           {% blocktrans trimmed asvar slug_helptext %}
             This is the link through which users will access your form on the site.
             It can only contain letters, numbers, and hyphens.
@@ -152,7 +151,6 @@
         {% if not form_settings_legend_title %}
           {% trans "Form notifications" as form_settings_legend_title %}
         {% endif %}
-        {# Din această secțiune poți gestiona notificările prin email. #}
         {% blocktrans trimmed asvar form_settings_info_tooltip %}
           From this section, you can manage the form's email notifications.
         {% endblocktrans %}

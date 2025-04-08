@@ -1,5 +1,7 @@
 msgid ""
 msgstr ""
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-04-08 13:43+0300\n"
 "PO-Revision-Date: 2025-02-12 12:44+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Armenian <https://translate.commitglobal.org/projects/"
@@ -11,427 +13,1557 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: Weblate 5.6.2\n"
 
-#: donations/admin.py:36
-msgid "User Link"
-msgstr "Օգտատիրոջ հղում"
-
-#: donations/admin.py:40
-msgid "User Details"
-msgstr "Օգտատիրոջ տվյալներ"
-
-#: donations/admin.py:52
-msgid "User"
-msgstr "Օգտատեր"
-
-#: donations/admin.py:63
-msgid "Yes"
-msgstr "այո"
-
-#: donations/admin.py:63
-msgid "No"
-msgstr "ոչ"
-
-#: donations/admin.py:44
-msgid "User Permissions"
-msgstr "Օգտատիրոջ թույլտվություն"
-
-#: donations/forms/account.py:24 donations/forms/common.py:31
-msgid "Password is required"
-msgstr "Գաղտնաբառը պարտադիր է"
-
-#: donations/admin.py:102 donations/admin.py:182 donations/admin.py:222
-#: donations/models/jobs.py:28 donations/models/main.py:234
-#: donations/models/main.py:294 partners/admin.py:11 users/models.py:70
-msgid "NGO"
-msgstr "ՀԿ"
-
-#: donations/admin.py:59
-msgid "Has owner"
-msgstr "Ունի օգտատեր"
-
-#: donations/admin.py:106
-msgid "Activity"
-msgstr "Գործունեություն"
-
-#: donations/admin.py:110
-msgid "Logo"
-msgstr "Լոգո"
-
-#: donations/admin.py:114
-msgid "Contact"
-msgstr "Կապ"
-
-#: donations/admin.py:118
-msgid "Details"
-msgstr "Մանրամասներ"
-
-#: donations/admin.py:122 donations/admin.py:198 donations/admin.py:234
-msgid "Date"
-msgstr "Ամսաթիվ"
-
-#: donations/admin.py:129
-msgid "Open the NGO donor list"
-msgstr "Բացել ՀԿ-ների դոնորների ցանկը"
-
-#: donations/admin.py:186
-msgid "Identity"
-msgstr "Ինքնություն"
-
-#: donations/admin.py:190
-msgid "Info"
-msgstr "Տեղեկություն"
-
-#: donations/admin.py:194 donations/admin.py:230 importer/models.py:28
-msgid "File"
-msgstr "Ֆայլ"
-
-#: donations/admin.py:206
-msgid "Form"
-msgstr "հարցաթերթ"
-
-#: donations/admin.py:226 importer/models.py:24
-msgid "Status"
-msgstr "Կարգավիճակ"
-
-#: donations/forms/account.py:18 donations/forms/account.py:56
-#: donations/forms/account.py:69
-msgid "Email is required"
-msgstr "Էլ. փոստը պարտադիր է"
-
-#: donations/forms/account.py:44
-msgid "First name is required"
-msgstr "Անունը պարտադիր է"
-
-#: donations/forms/account.py:50
-msgid "Last name is required"
-msgstr "Ազգանունը պարտադիր է"
-
-#: donations/forms/common.py:39
-msgid "Passwords do not match"
-msgstr "Գաղտնաբառերը չեն համընկնում"
-
-#: donations/forms/donation.py:9
-msgid "Street"
-msgstr "Փողոց"
-
-#: donations/forms/donation.py:10
-msgid "Number"
-msgstr "Թիվ"
-
-#: donations/forms/donation.py:11
-msgid "Building"
-msgstr "Շենք"
-
-#: donations/forms/donation.py:12
-msgid "Entrance"
-msgstr "Մուտք"
-
-#: donations/forms/donation.py:13
-msgid "Floor"
-msgstr "Հարկ"
-
-#: donations/forms/donation.py:14
-msgid "Apartment"
-msgstr "Բնակարան"
-
-#: donations/models/jobs.py:18
-msgid "New"
-msgstr "Նոր"
-
-#: donations/models/jobs.py:19 importer/models.py:18
-msgid "Error"
-msgstr "Սխալ"
-
-#: donations/models/jobs.py:20 importer/models.py:17
-msgid "Done"
-msgstr "Կատարված է"
-
-#: donations/models/jobs.py:35
-msgid "owner"
-msgstr "օգտատեր"
-
-#: donations/models/jobs.py:41
-msgid "status"
-msgstr "կարգավիճակ"
-
-#: donations/models/jobs.py:65
-msgid "job"
-msgstr "աշխատանք"
-
-#: donations/models/jobs.py:66
-msgid "jobs"
-msgstr "աշխատանքներ"
-
-#: donations/models/main.py:85
-msgid "The ID number must contain only digits"
-msgstr "ID համարը պետք է պարունակի միայն թվանշաններ"
-
-#: donations/models/main.py:88
-msgid "The ID number must be between 2 and 10 digits long"
-msgstr "ID համարը պետք է լինի 2-ից 10 նիշ"
-
-#: donations/models/main.py:107
-msgid "The ID number is not valid"
-msgstr "ID համարը վավեր չէ"
-
-#: donations/models/main.py:127
-msgid "description"
-msgstr "նկարագրություն"
-
-#: donations/models/main.py:132
-msgid "logo"
-msgstr "լոգո"
-
-#: donations/models/main.py:149
-msgid "bank account"
-msgstr "բանկային հաշիվ"
-
-#: donations/models/main.py:162 donations/models/main.py:320
-msgid "address"
-msgstr "հասցե"
-
-#: donations/models/main.py:164 donations/models/main.py:313
-#: donations/views/donations_download.py:166
-msgid "county"
-msgstr "մարզ"
-
-#: donations/models/main.py:172
-msgid "active region"
-msgstr "ակտիվ տարածաշրջան"
-
-#: donations/models/main.py:181 donations/models/main.py:323
-msgid "telephone"
-msgstr "հեռախոս"
-
-#: donations/models/main.py:183 donations/models/main.py:324
-#: donations/views/donations_download.py:165
-msgid "email"
-msgstr "էլ. փոստ"
-
-#: donations/models/main.py:184
-msgid "website"
-msgstr "վեբկայք"
-
-#: donations/models/main.py:189 users/models.py:78
-msgid "is verified"
-msgstr "վավերացված է"
-
-#: donations/models/main.py:193
-msgid "has special status"
-msgstr "ունի հատուկ կարգավիճակ"
-
-#: donations/models/main.py:197
-msgid "is accepting forms"
-msgstr "ընդունում է ձևաթղթեր"
-
-#: donations/views/donations_download.py:173
-msgid "floor"
-msgstr "հարկ"
-
-#: donations/views/donations_download.py:174
-msgid "apartment"
-msgstr "բնակարան"
-
-#: donations/views/donations_download.py:176
-msgid "date"
-msgstr "ամսաթիվ"
-
-#: donations/views/donations_download.py:177
-msgid "duration"
-msgstr "տևողություն"
-
-#: donations/admin.py:98 donations/admin.py:127
-msgid "Donations"
-msgstr "Նվիրատվություններ"
-
-#: donations/models/jobs.py:52 donations/models/main.py:218
-#: donations/models/main.py:363 partners/models.py:54 users/models.py:86
-msgid "date created"
-msgstr "ամսաթիվը ստեղծվել է"
-
-#: partners/admin.py:43 partners/models.py:61
-msgid "Partner"
-msgstr "Գործընկեր"
-
-#: partners/admin.py:52
-msgid "Options"
-msgstr "Տարբերակներ"
-
-#: partners/admin.py:63
-msgid "Metadata"
-msgstr "Մետատվյալներ"
-
-#: partners/models.py:11
-msgid "Alphabetical"
-msgstr "Այբբենական"
-
-#: partners/models.py:13
-msgid "Random"
-msgstr "Պատահական"
-
-#: partners/models.py:23
-msgid "name"
-msgstr "անուն"
-
-#: partners/models.py:62
-msgid "Partners"
-msgstr "Գործընկերներ"
-
-#: donations/models/main.py:126
-msgid "Name"
-msgstr "Անուն"
-
-#: donations/models/main.py:153
-msgid "registration number"
-msgstr "գրանցման համարը"
-
-#: donations/views/donations_download.py:172
-msgid "entrance"
-msgstr "մուտք"
-
-#: partners/models.py:30
-msgid "subdomain"
-msgstr "ենթադոմեյն"
-
-#: donations/admin.py:135
+#: donations/admin/causes.py:37
 msgid "Generate donations archive"
 msgstr "Ստեղծել նվիրատվությունների արխիվ"
 
-#: donations/admin.py:153
+#: donations/admin/causes.py:60
 msgid "The donations archive has been generated for the following NGOs: "
 msgstr "Նվիրատվությունների արխիվը ստեղծվել է հետևյալ ՀԿ-ների համար "
 
-#: donations/admin.py:155
+#: donations/admin/causes.py:62
 msgid ""
 "The donations archive could not be generated for any of the selected NGOs."
 msgstr ""
 "Նվիրատվությունների արխիվը չի կարող ստեղծվել ընտրված ՀԿ-ներից որևէ մեկի համար"
 
-#: donations/models/main.py:357
-msgid "PDF file"
-msgstr "PDF ֆայլ"
+#: donations/admin/causes.py:66 donations/admin/common.py:9
+#: donations/admin/donors.py:110 donations/admin/jobs.py:19
+#: donations/admin/ngos.py:187 donations/admin/ngos.py:290
+#: donations/models/donors.py:71 donations/models/jobs.py:26
+#: donations/models/ngos.py:326 partners/models.py:141 users/models.py:71
+msgid "NGO"
+msgstr "ՀԿ"
 
-#: donations/models/main.py:353 donations/views/donations_download.py:175
-msgid "filename"
-msgstr "ֆայլի անունը"
+#: donations/admin/common.py:14 donations/models/ngos.py:526
+#: donations/views/ngo_account_filters.py:106 partners/admin.py:49
+#: partners/models.py:175 templates/v2/ngo-account/causes/list-header.html:4
+msgid "Cause"
+msgstr ""
 
-#: donations/models/main.py:354
-msgid "has signed"
-msgstr "ստորագրել է"
+#: donations/admin/common.py:28 donations/admin/donors.py:136
+#: donations/admin/jobs.py:31 donations/admin/ngos.py:240
+msgid "Date"
+msgstr "Ամսաթիվ"
 
-#: donations/models/main.py:305 donations/views/donations_download.py:167
-msgid "city"
-msgstr "քաղաք"
+#: donations/admin/donors.py:38
+#, fuzzy
+#| msgid "Donation exports"
+msgid "Donation removal"
+msgstr "Նվիրատվության արտահանումները"
 
-#: donations/models/main.py:328
-msgid "anonymous"
-msgstr "անանուն"
+#: donations/admin/donors.py:61
+#, python-format
+msgid "Invalid value for the %(title)s filter."
+msgstr ""
 
-#: donations/models/main.py:331
-msgid "If the user would like the ngo to see the donation"
-msgstr "Թե օգտատերը ցանկանում է, որ ՀԿ-ն տեսնի նվիրատվությունը"
+#: donations/admin/donors.py:70 templates/v2/emails/admin/new-ngo/main.html:30
+#: templates/v2/emails/admin/new-ngo/main.txt:7
+msgid "NGO ID"
+msgstr ""
 
-#: donations/models/main.py:336
-msgid "income type"
-msgstr "եկամտի տեսակը"
+#: donations/admin/donors.py:75
+msgid "Cause ID"
+msgstr ""
 
-#: donations/models/main.py:345
-msgid "two years"
+#: donations/admin/donors.py:106
+msgid "Availability"
+msgstr ""
+
+#: donations/admin/donors.py:114
+msgid "Identity"
+msgstr "Ինքնություն"
+
+#: donations/admin/donors.py:128
+msgid "Info"
+msgstr "Տեղեկություն"
+
+#: donations/admin/donors.py:132 donations/admin/jobs.py:27
+msgid "File"
+msgstr "Ֆայլ"
+
+#: donations/admin/donors.py:149
+msgid "Form"
+msgstr "հարցաթերթ"
+
+#: donations/admin/donors.py:153
+msgid "Remove donations and notify donors"
+msgstr ""
+
+#: donations/admin/donors.py:163
+#, python-format
+msgid "Out of %(queryset_size)d donor"
+msgid_plural "Out of %(queryset_size)d donors"
+msgstr[0] ""
+msgstr[1] ""
+
+#: donations/admin/donors.py:169
+#, python-format
+msgid "%(success)d was deleted"
+msgid_plural "%(success)d were deleted"
+msgstr[0] ""
+msgstr[1] ""
+
+#: donations/admin/donors.py:175
+#, python-format
+msgid "%(failure)d was not deleted"
+msgid_plural "%(failure)d were not deleted"
+msgstr[0] ""
+msgstr[1] ""
+
+#: donations/admin/jobs.py:23 donations/views/ngo_account_filters.py:86
+#: templates/v2/ngo-account/archives/list-header.html:10
+#: templates/v2/ngo-account/redirections/list-header.html:25
+msgid "Status"
+msgstr "Կարգավիճակ"
+
+#: donations/admin/ngos.py:38
+msgid "Existing User"
+msgstr ""
+
+#: donations/admin/ngos.py:39
+msgid ""
+"Select the new owner of the NGO. You can only select active users that don't "
+"have an NGO."
+msgstr ""
+
+#: donations/admin/ngos.py:84
+msgid "User Link"
+msgstr "Օգտատիրոջ հղում"
+
+#: donations/admin/ngos.py:88
+msgid "User Details"
+msgstr "Օգտատիրոջ տվյալներ"
+
+#: donations/admin/ngos.py:92
+msgid "User Permissions"
+msgstr "Օգտատիրոջ թույլտվություն"
+
+#: donations/admin/ngos.py:100
+msgid "User"
+msgstr "Օգտատեր"
+
+#: donations/admin/ngos.py:107
+msgid "Has NGO Hub account"
+msgstr "Ունի NGO Hub օգտահաշիվ"
+
+#: donations/admin/ngos.py:111 donations/admin/ngos.py:129
+#: templates/v2/ngo-account/causes/list-items.html:46
+#: templates/v2/ngo-account/redirections/list-items.html:48
+msgid "Yes"
+msgstr "այո"
+
+#: donations/admin/ngos.py:111 donations/admin/ngos.py:129
+#: templates/v2/ngo-account/causes/list-items.html:48
+#: templates/v2/ngo-account/redirections/list-items.html:50
+msgid "No"
+msgstr "ոչ"
+
+#: donations/admin/ngos.py:125
+msgid "Has owner"
+msgstr "Ունի օգտատեր"
+
+#: donations/admin/ngos.py:183 donations/admin/ngos.py:322 donations/apps.py:8
+#: donations/views/dashboard/admin_dashboard.py:148
+#: redirectioneaza/context_processors/headers.py:69
+#: redirectioneaza/settings/unfold.py:30 redirectioneaza/settings/unfold.py:45
+msgid "Donations"
+msgstr "Նվիրատվություններ"
+
+#: donations/admin/ngos.py:200
+msgid "Activity"
+msgstr "Գործունեություն"
+
+#: donations/admin/ngos.py:211 donations/admin/ngos.py:301
+#: donations/forms/ngo_account.py:19
+msgid "Logo"
+msgstr "Լոգո"
+
+#: donations/admin/ngos.py:215 redirectioneaza/context_processors/headers.py:44
+msgid "Contact"
+msgstr "Կապ"
+
+#: donations/admin/ngos.py:231
+msgid "Details"
+msgstr "Մանրամասներ"
+
+#: donations/admin/ngos.py:308
+msgid "NGO Hub link"
+msgstr ""
+
+#: donations/admin/ngos.py:318
+msgid "CIF"
+msgstr ""
+
+#: donations/admin/ngos.py:324
+msgid "Open the NGO donor list"
+msgstr "Բացել ՀԿ-ների դոնորների ցանկը"
+
+#: donations/admin/ngos.py:335
+msgid "This user already has an NGO."
+msgstr ""
+
+#: donations/admin/ngos.py:341
+msgid "This user is a staff member."
+msgstr ""
+
+#: donations/admin/ngos.py:347
+msgid "This user is an NGO Hub user."
+msgstr ""
+
+#: donations/admin/ngos.py:359
+#, fuzzy
+#| msgid "The import has been processed."
+msgid "Owner changed successfully."
+msgstr "Ներմուծումը կատարվել է։"
+
+#: donations/admin/ngos.py:362
+#, fuzzy
+#| msgid "old password"
+msgid "Change owner"
+msgstr "հին գաղտնաբառ"
+
+#: donations/admin/ngos.py:379 partners/admin.py:182
+#, fuzzy
+#| msgid "The ID number format is not valid"
+msgid "The form is not valid."
+msgstr "Նույնականացման համարի ձևաչափը վավեր չէ"
+
+#: donations/admin/ngos.py:389
+#, python-format
+msgid "Change owner of NGO '%(name)s'"
+msgstr ""
+
+#: donations/admin/ngos.py:394
+msgid "Clean up registration numbers"
+msgstr "Մաքրել գրանցման համարները"
+
+#: donations/admin/ngos.py:406
+#, fuzzy
+#| msgid "Clean up registration numbers"
+msgid "Successfully cleaned registration numbers"
+msgstr "Մաքրել գրանցման համարները"
+
+#: donations/admin/ngos.py:409
+#, python-format
+msgid " for 1 NGO."
+msgid_plural " for %(ngos)d NGOs."
+msgstr[0] ""
+msgstr[1] ""
+
+#: donations/admin/ngos.py:418
+msgid "Update from NGO Hub synchronously"
+msgstr "Թարմացում NGO Hub-ին համաժամանակյա"
+
+#: donations/admin/ngos.py:423
+msgid "NGOs updated from NGO Hub."
+msgstr "ՀԿ-ները թարմացվել են NGO Hub-ից:"
+
+#: donations/admin/ngos.py:425
+msgid "Update from NGO Hub asynchronously"
+msgstr "Թարմացում NGO Hub-ին ոչ համաժամանակյա"
+
+#: donations/admin/ngos.py:430
+msgid "NGOs are being updated from NGO Hub."
+msgstr "ՀԿ-ները թարմացվում են NGO Hub-ից:"
+
+#: donations/admin/ngos.py:432
+msgid "Remove prefilled forms"
+msgstr ""
+
+#: donations/common/validation/phone_number.py:17
+#, fuzzy
+#| msgid "street number"
+msgid "Invalid country code"
+msgstr "փողոցի համարը"
+
+#: donations/common/validation/phone_number.py:22
+msgid "Unknown phone number format"
+msgstr ""
+
+#: donations/common/validation/phone_number.py:30
+#: donations/common/validation/phone_number.py:36
+#, fuzzy
+#| msgid "street number"
+msgid "Invalid phone number"
+msgstr "փողոցի համարը"
+
+#: donations/common/validation/registration_number.py:72
+msgid "The ID number cannot be all zeros"
+msgstr "Նույնականացման համարը չի կարող լինել միայն զրոներ"
+
+#: donations/common/validation/registration_number.py:75
+msgid "The ID number format is not valid"
+msgstr "Նույնականացման համարի ձևաչափը վավեր չէ"
+
+#: donations/common/validation/registration_number.py:81
+msgid "The ID number must contain only digits"
+msgstr "ID համարը պետք է պարունակի միայն թվանշաններ"
+
+#: donations/common/validation/registration_number.py:84
+msgid "The ID number must be between 2 and 10 digits long"
+msgstr "ID համարը պետք է լինի 2-ից 10 նիշ"
+
+#: donations/common/validation/registration_number.py:106
+msgid "The ID number is not valid"
+msgstr "ID համարը վավեր չէ"
+
+#: donations/forms/account.py:20 donations/forms/account.py:58
+#: donations/forms/account.py:71
+msgid "Email is required"
+msgstr "Էլ. փոստը պարտադիր է"
+
+#: donations/forms/account.py:26 donations/forms/common.py:33
+msgid "Password is required"
+msgstr "Գաղտնաբառը պարտադիր է"
+
+#: donations/forms/account.py:46
+msgid "First name is required"
+msgstr "Անունը պարտադիր է"
+
+#: donations/forms/account.py:52
+msgid "Last name is required"
+msgstr "Ազգանունը պարտադիր է"
+
+#: donations/forms/common.py:41
+msgid "Passwords do not match"
+msgstr "Գաղտնաբառերը չեն համընկնում"
+
+#: donations/forms/ngo_account.py:13 donations/models/ngos.py:188
+#: templates/v2/emails/donor/redirection-sans-signature/main.txt:26
+#: templates/v2/ngo-account/redirections/list-header.html:10
+msgid "Name"
+msgstr "Անուն"
+
+#: donations/forms/ngo_account.py:15 donations/forms/ngo_account.py:17
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:57
+msgid "CUI/CIF"
+msgstr ""
+
+#: donations/forms/ngo_account.py:20
+#, fuzzy
+#| msgid "website"
+msgid "Website"
+msgstr "վեբկայք"
+
+#: donations/forms/ngo_account.py:22
+#, fuzzy
+#| msgid "Contact"
+msgid "Contact email"
+msgstr "Կապ"
+
+#: donations/forms/ngo_account.py:23
+#, fuzzy
+#| msgid "display ordering"
+msgid "Display email"
+msgstr "ցուցադրման պատվեր"
+
+#: donations/forms/ngo_account.py:25
+#, fuzzy
+#| msgid "Contact"
+msgid "Contact phone"
+msgstr "Կապ"
+
+#: donations/forms/ngo_account.py:26
+#, fuzzy
+#| msgid "display ordering"
+msgid "Display phone"
+msgstr "ցուցադրման պատվեր"
+
+#: donations/forms/ngo_account.py:28
+#: templates/v2/emails/donor/redirection-sans-signature/main.txt:27
+#, fuzzy
+#| msgid "address"
+msgid "Address"
+msgstr "հասցե"
+
+#: donations/forms/ngo_account.py:29 donations/forms/redirection.py:33
+#: donations/views/ngo_account_filters.py:47
+#: templates/v2/form/redirection-open.html:115
+msgid "Locality"
+msgstr ""
+
+#: donations/forms/ngo_account.py:31 donations/forms/redirection.py:32
+#: donations/views/dashboard/ngo_dashboard.py:56
+#: donations/views/ngo_account_filters.py:27
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:118
+msgid "County"
+msgstr "Շրջան"
+
+#: donations/forms/ngo_account.py:36
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:128
+#, fuzzy
+#| msgid "active region"
+msgid "Active region"
+msgstr "ակտիվ տարածաշրջան"
+
+#: donations/forms/ngo_account.py:67
+msgid "An NGO with this CUI/CIF already exists."
+msgstr ""
+
+#: donations/forms/ngo_account.py:79
+#, fuzzy
+#| msgid "Your current role isn't supported."
+msgid "The logo type is not supported."
+msgstr "Ձեր ներկայիս դերը չի աջակցվում:"
+
+#: donations/forms/ngo_account.py:82
+#, fuzzy
+#| msgid "Your current role isn't supported."
+msgid "The logo size is too large."
+msgstr "Ձեր ներկայիս դերը չի աջակցվում:"
+
+#: donations/forms/ngo_account.py:101
+msgid "Slug"
+msgstr ""
+
+#: donations/forms/ngo_account.py:104 donations/forms/ngo_account.py:106
+#: templates/v2/ngo-account/causes/list-header.html:7
+msgid "IBAN"
+msgstr ""
+
+#: donations/forms/ngo_account.py:139
+msgid "A cause with this URL already exists."
+msgstr ""
+
+#: donations/forms/ngo_account.py:142
+msgid "This slug is already used by another form."
+msgstr ""
+
+#: donations/forms/ngo_account.py:145
+#, fuzzy
+#| msgid "The ID number format is not valid"
+msgid "This slug is not allowed."
+msgstr "Նույնականացման համարի ձևաչափը վավեր չէ"
+
+#: donations/forms/ngo_account.py:156
+msgid "A cause with this IBAN already exists."
+msgstr ""
+
+#: donations/forms/redirection.py:12
+#: templates/v2/account/snippets/register-form.html:62
+#: templates/v2/form/redirection-open.html:40
+#: templates/v2/ngo-account/settings-account/main.html:63
+#, fuzzy
+#| msgid "last name"
+msgid "Last name"
+msgstr "ազգանուն"
+
+#: donations/forms/redirection.py:13
+#: templates/v2/account/snippets/register-form.html:58
+#: templates/v2/form/redirection-open.html:45
+#: templates/v2/ngo-account/settings-account/main.html:58
+#, fuzzy
+#| msgid "first name"
+msgid "First name"
+msgstr "անուն"
+
+#: donations/forms/redirection.py:14
+#, fuzzy
+#| msgid "initial"
+msgid "Initial"
+msgstr "սկզբնական"
+
+#: donations/forms/redirection.py:22
+#: templates/v2/account/snippets/register-form.html:67
+#: templates/v2/emails/donor/redirection-sans-signature/main.txt:28
+#: templates/v2/form/redirection-open.html:60
+#, fuzzy
+#| msgid "email"
+msgid "Email"
+msgstr "էլ. փոստ"
+
+#: donations/forms/redirection.py:23
+#, fuzzy
+#| msgid "phone"
+msgid "Phone"
+msgstr "հեռախոս"
+
+#: donations/forms/redirection.py:25
+msgid "Street"
+msgstr "Փողոց"
+
+#: donations/forms/redirection.py:26 templates/v2/form/redirection-open.html:85
+msgid "Number"
+msgstr "Թիվ"
+
+#: donations/forms/redirection.py:27
+msgid "Building"
+msgstr "Շենք"
+
+#: donations/forms/redirection.py:28 templates/v2/form/redirection-open.html:95
+msgid "Entrance"
+msgstr "Մուտք"
+
+#: donations/forms/redirection.py:29
+#: templates/v2/form/redirection-open.html:100
+msgid "Floor"
+msgstr "Հարկ"
+
+#: donations/forms/redirection.py:30
+#: templates/v2/form/redirection-open.html:105
+msgid "Apartment"
+msgstr "Բնակարան"
+
+#: donations/forms/redirection.py:35 donations/views/ngo_account_filters.py:74
+#, fuzzy
+#| msgid "two years"
+msgid "Two years"
 msgstr "երկու տարի"
 
-#: donations/models/main.py:347
-msgid "If the user wants to donate for 2 years"
-msgstr "Եթե օգտատերը ցանկանում է նվիրատվություն անել 2 տարի"
+#: donations/forms/redirection.py:36 donations/models/donors.py:126
+msgid "ANAF GDPR"
+msgstr ""
 
-#: donations/models/main.py:235 partners/admin.py:12 partners/models.py:52
-msgid "NGOs"
-msgstr "ՀԿ-ներ"
+#: donations/forms/redirection.py:37
+#, fuzzy
+#| msgid "Contact"
+msgid "Agree contact"
+msgstr "Կապ"
 
-#: donations/models/main.py:290
+#: donations/forms/redirection.py:38
+msgid "Agree terms"
+msgstr ""
+
+#: donations/forms/redirection.py:40 templates/v2/form/modals/signature.html:7
+#, fuzzy
+#| msgid "Sign In"
+msgid "Signature"
+msgstr "Գրանցվել"
+
+#: donations/models/donors.py:60
 msgid "wage"
 msgstr "աշխատավարձ"
 
-#: donations/models/main.py:291
+#: donations/models/donors.py:61
 msgid "pension"
 msgstr "կենսաթոշակ"
 
-#: donations/models/main.py:298 donations/views/donations_download.py:159
+#: donations/models/donors.py:65
+msgid "is available"
+msgstr ""
+
+#: donations/models/donors.py:66
+msgid "If the donation is available on the platform (not removed)"
+msgstr ""
+
+#: donations/models/donors.py:72 donations/models/jobs.py:33
+msgid "cause"
+msgstr ""
+
+#: donations/models/donors.py:75 donations/views/download_donations/main.py:184
 msgid "last name"
 msgstr "ազգանուն"
 
-#: donations/models/main.py:299 donations/views/donations_download.py:160
+#: donations/models/donors.py:78 donations/views/download_donations/main.py:185
 msgid "first name"
 msgstr "անուն"
 
-#: donations/models/main.py:300
+#: donations/models/donors.py:80
 msgid "initials"
 msgstr "սկզբնատառերը"
 
-#: donations/models/main.py:219 partners/models.py:55 users/models.py:87
-msgid "date updated"
-msgstr "ամսաթիվը թարմացվել է"
+#: donations/models/donors.py:82 donations/views/download_donations/main.py:187
+msgid "CNP"
+msgstr "Վկայագրված բուժքույր"
 
-#: donations/models/main.py:200 partners/models.py:38
-msgid "is active"
-msgstr "ակտիվ է"
+#: donations/models/donors.py:85 donations/views/download_donations/main.py:192
+msgid "city"
+msgstr "քաղաք"
 
-#: donations/models/main.py:211
-msgid "form with prefilled ngo data"
-msgstr "ձևաթուղթ՝ նախապես լրացված ՀԿ-ի տվյալներով"
+#: donations/models/donors.py:93 donations/models/ngos.py:251
+#: donations/views/download_donations/main.py:191
+msgid "county"
+msgstr "մարզ"
 
-#: donations/models/main.py:371
+#: donations/models/donors.py:100 donations/models/ngos.py:241
+msgid "address"
+msgstr "հասցե"
+
+#: donations/models/donors.py:104 donations/models/ngos.py:268
+msgid "telephone"
+msgstr "հեռախոս"
+
+#: donations/models/donors.py:112 donations/models/ngos.py:267
+#: donations/views/download_donations/main.py:190
+msgid "email"
+msgstr "էլ. փոստ"
+
+#: donations/models/donors.py:120
+msgid "anonymous"
+msgstr "անանուն"
+
+#: donations/models/donors.py:123
+msgid "If the user would like the ngo to see the donation"
+msgstr "Թե օգտատերը ցանկանում է, որ ՀԿ-ն տեսնի նվիրատվությունը"
+
+#: donations/models/donors.py:128
+msgid "If the user agrees for ANAF to share their data with the NGO"
+msgstr ""
+
+#: donations/models/donors.py:133
+msgid "income type"
+msgstr "եկամտի տեսակը"
+
+#: donations/models/donors.py:142
+msgid "two years"
+msgstr "երկու տարի"
+
+#: donations/models/donors.py:144
+msgid "If the user wants to donate for 2 years"
+msgstr "Եթե օգտատերը ցանկանում է նվիրատվություն անել 2 տարի"
+
+#: donations/models/donors.py:147
+msgid "Geo IP"
+msgstr "Geo IP"
+
+#: donations/models/donors.py:149
+#: donations/views/download_donations/main.py:200
+msgid "filename"
+msgstr "ֆայլի անունը"
+
+#: donations/models/donors.py:150
+msgid "has signed"
+msgstr "ստորագրել է"
+
+#: donations/models/donors.py:153
+msgid "PDF file"
+msgstr "PDF ֆայլ"
+
+#: donations/models/donors.py:160 donations/models/jobs.py:59
+#: donations/models/ngos.py:300 donations/models/ngos.py:515
+#: partners/models.py:75 users/models.py:95
+msgid "date created"
+msgstr "ամսաթիվը ստեղծվել է"
+
+#: donations/models/donors.py:172
 msgid "donor"
 msgstr "դոնոր"
 
-#: donations/models/main.py:372
+#: donations/models/donors.py:173
 msgid "donors"
 msgstr "դոնորներ"
 
-#: donations/views/account_management.py:43
-msgid ""
-"If the email address is valid, you will receive an email with instructions."
-msgstr "Եթե էլփոստի հասցեն վավեր է, դուք կստանաք նամակ` հրահանգներով:"
+#: donations/models/jobs.py:16
+msgid "New"
+msgstr "Նոր"
 
-#: donations/views/account_management.py:65
+#: donations/models/jobs.py:17
+#: templates/v2/ngo-account/archives/list-items.html:31
+msgid "Error"
+msgstr "Սխալ"
+
+#: donations/models/jobs.py:18
+#: templates/v2/ngo-account/archives/list-items.html:27
+msgid "Done"
+msgstr "Կատարված է"
+
+#: donations/models/jobs.py:41
+msgid "owner"
+msgstr "օգտատեր"
+
+#: donations/models/jobs.py:47
+msgid "status"
+msgstr "կարգավիճակ"
+
+#: donations/models/jobs.py:56
+#, fuzzy
+#| msgid "Donations"
+msgid "donations count"
+msgstr "Նվիրատվություններ"
+
+#: donations/models/jobs.py:57
+msgid "ZIP"
+msgstr "ZIP"
+
+#: donations/models/jobs.py:60
+msgid "date finished"
+msgstr "Ավարտման ամսաթիվ"
+
+#: donations/models/jobs.py:72
+msgid "job"
+msgstr "աշխատանք"
+
+#: donations/models/jobs.py:73
+msgid "jobs"
+msgstr "աշխատանքներ"
+
+#: donations/models/ngos.py:89
+#, python-format
+msgid ""
+"'%(value)s' is not a valid identifier. The identifier must look like "
+"%(sample)s"
+msgstr ""
+
+#: donations/models/ngos.py:179 donations/models/ngos.py:491
+msgid "slug"
+msgstr "slug"
+
+#: donations/models/ngos.py:190 donations/models/ngos.py:501
+msgid "description"
+msgstr "նկարագրություն"
+
+#: donations/models/ngos.py:194
+msgid "NGO Hub organization ID"
+msgstr "NGO Hub կազմակերպության նույնականացման համար"
+
+#: donations/models/ngos.py:200 donations/models/ngos.py:201
+msgid "Last NGO Hub update"
+msgstr "NGO Hub-ի վերջին թարմացումը"
+
+#: donations/models/ngos.py:206 donations/models/ngos.py:483
+msgid "logo"
+msgstr "լոգո"
+
+#: donations/models/ngos.py:214 donations/models/ngos.py:503
+msgid "bank account"
+msgstr "բանկային հաշիվ"
+
+#: donations/models/ngos.py:219
+msgid "registration number"
+msgstr "գրանցման համարը"
+
+#: donations/models/ngos.py:228
+msgid "VAT ID"
+msgstr "ԱԱՀ նույնականացման համար"
+
+#: donations/models/ngos.py:236
+msgid "registration validation failed"
+msgstr "գրանցման վավերացումը ձախողվեց"
+
+#: donations/models/ngos.py:243
+msgid "locality"
+msgstr ""
+
+#: donations/models/ngos.py:259
+msgid "active region"
+msgstr "ակտիվ տարածաշրջան"
+
+#: donations/models/ngos.py:270
+#, fuzzy
+#| msgid "display ordering"
+msgid "display email"
+msgstr "ցուցադրման պատվեր"
+
+#: donations/models/ngos.py:271
+#, fuzzy
+#| msgid "display ordering"
+msgid "display phone"
+msgstr "ցուցադրման պատվեր"
+
+#: donations/models/ngos.py:273
+msgid "website"
+msgstr "վեբկայք"
+
+#: donations/models/ngos.py:276 users/models.py:87
+msgid "is verified"
+msgstr "վավերացված է"
+
+#: donations/models/ngos.py:280
+msgid "has special status"
+msgstr "ունի հատուկ կարգավիճակ"
+
+#: donations/models/ngos.py:284
+msgid "is accepting forms"
+msgstr "ընդունում է ձևաթղթեր"
+
+#: donations/models/ngos.py:287 partners/models.py:46
+msgid "is active"
+msgstr "ակտիվ է"
+
+#: donations/models/ngos.py:291
+msgid "form with prefilled ngo data"
+msgstr "ձևաթուղթ՝ նախապես լրացված ՀԿ-ի տվյալներով"
+
+#: donations/models/ngos.py:298
+msgid "Filename cache"
+msgstr "Ֆայլի անվան քեշ"
+
+#: donations/models/ngos.py:301 donations/models/ngos.py:516
+#: partners/models.py:76 users/models.py:96
+msgid "date updated"
+msgstr "ամսաթիվը թարմացվել է"
+
+#: donations/models/ngos.py:327 partners/models.py:61
+#: redirectioneaza/context_processors/headers.py:64
+#: redirectioneaza/settings/unfold.py:33
+msgid "NGOs"
+msgstr "ՀԿ-ներ"
+
+#: donations/models/ngos.py:445
+msgid "public"
+msgstr ""
+
+#: donations/models/ngos.py:446
+msgid "unlisted"
+msgstr ""
+
+#: donations/models/ngos.py:447
+msgid "private"
+msgstr ""
+
+#: donations/models/ngos.py:469
+msgid "is main cause"
+msgstr ""
+
+#: donations/models/ngos.py:470
+msgid "allow online collection"
+msgstr ""
+
+#: donations/models/ngos.py:473
+msgid "form visibility"
+msgstr ""
+
+#: donations/models/ngos.py:500 partners/models.py:31
+msgid "name"
+msgstr "անուն"
+
+#: donations/models/ngos.py:505
+#, fuzzy
+#| msgid "Contact"
+msgid "notifications email"
+msgstr "Կապ"
+
+#: donations/models/ngos.py:508
+#, fuzzy
+#| msgid "form with prefilled ngo data"
+msgid "form with prefilled cause"
+msgstr "ձևաթուղթ՝ նախապես լրացված ՀԿ-ի տվյալներով"
+
+#: donations/models/ngos.py:527 donations/views/ngo_account.py:487
+#: donations/views/ngo_account.py:535 partners/admin.py:50
+#: partners/models.py:68 redirectioneaza/settings/unfold.py:39
+#: templates/v2/ngo-account/causes/main.html:11
+msgid "Causes"
+msgstr ""
+
+#: donations/templatetags/cause_action_menu.py:21
+#: donations/views/ngo_account.py:526
+msgid "Edit cause"
+msgstr ""
+
+#: donations/templatetags/cause_action_menu.py:26
+#, fuzzy
+#| msgid "Sign In Error"
+msgid "Download prefilled form"
+msgstr "Մուտք գործելու սխալ"
+
+#: donations/templatetags/cause_action_menu.py:31
+msgid "Change to public"
+msgstr ""
+
+#: donations/templatetags/cause_action_menu.py:46
+#, fuzzy
+#| msgid "old password"
+msgid "Change to unlisted"
+msgstr "հին գաղտնաբառ"
+
+#: donations/templatetags/cause_action_menu.py:61
+#, fuzzy
+#| msgid "old password"
+msgid "Change to private"
+msgstr "հին գաղտնաբառ"
+
+#: donations/templatetags/cause_action_menu.py:88
+msgid "Cause doesn't exist"
+msgstr ""
+
+#: donations/templatetags/cause_action_menu.py:89
+#: donations/templatetags/redirection_action_menu.py:33
+#, fuzzy
+#| msgid "description"
+msgid "Form options"
+msgstr "նկարագրություն"
+
+#: donations/templatetags/redirection_action_menu.py:18
+#: templates/v2/emails/donor/redirection-sans-signature/main.html:18
+#: templates/v2/emails/donor/redirection-with-signature/main.html:20
+#: templates/v2/emails/ngo/new-form-received/main.html:19
+#: templates/v2/ngo-account/components/form-title.html:64
+#, fuzzy
+#| msgid "Sign In Error"
+msgid "Download form"
+msgstr "Մուտք գործելու սխալ"
+
+#: donations/templatetags/redirection_action_menu.py:34
+msgid "Downloads are disabled for unsigned redirections"
+msgstr ""
+
+#: donations/templatetags/text_format.py:11
+#, fuzzy, python-format
+#| msgid "Options"
+msgid "Sector %s"
+msgstr "Ընտրանքներ"
+
+#: donations/views/account_management.py:30
+#: templates/v2/emails/account/reset-password/main.html:19
+#, fuzzy
+msgid "Reset password"
+msgstr "Վերակայել գաղտնաբառը"
+
+#: donations/views/account_management.py:52
 #, fuzzy
 msgid "Reset redirectioneaza.ro password"
 msgstr "Վերականգնել redirectioneaza.ro գաղտնաբառը"
 
-#: donations/views/donations_download.py:59
+#: donations/views/account_management.py:69
+#, fuzzy
+#| msgid "Welcome to redirectioneaza.ro"
+msgid "Your redirectioneaza.ro account"
+msgstr "էլփոստ"
+
+#: donations/views/account_management.py:101
+msgid ""
+"If the email address is valid, you will receive an email with instructions."
+msgstr "Եթե էլփոստի հասցեն վավեր է, դուք կստանաք նամակ` հրահանգներով:"
+
+#: donations/views/account_management.py:109
+#: templates/v2/socialaccount/login.html:6
+msgid "Sign In"
+msgstr "Գրանցվել"
+
+#: donations/views/account_management.py:131
+#: templates/v2/emails/account/ngohub-notification/main.html:22
+#, fuzzy
+#| msgid "Login through NGO Hub"
+msgid "Continue with NGO Hub"
+msgstr "Մուտք գործել NGO Hub-ի միջոցով"
+
+#: donations/views/account_management.py:132
+#, fuzzy
+#| msgid "Has NGO Hub account"
+msgid "I have an NGO Hub account"
+msgstr "Ունի NGO Hub օգտահաշիվ"
+
+#: donations/views/account_management.py:156
+msgid "It seems that this email and password combination is incorrect."
+msgstr "Կարծես թե այս էլփոստի և գաղտնաբառի համակցությունը սխալ է:"
+
+#: donations/views/account_management.py:172
+#, fuzzy
+#| msgid "Sign In"
+msgid "Sign Out"
+msgstr "Գրանցվել"
+
+#: donations/views/account_management.py:181
+#, fuzzy
+#| msgid "Reset password"
+msgid "Set New Password"
+msgstr "Վերակայել գաղտնաբառը"
+
+#: donations/views/account_management.py:216
+#, fuzzy
+#| msgid "bank account"
+msgid "New account"
+msgstr "բանկային հաշիվ"
+
+#: donations/views/account_management.py:232
+#, fuzzy
+#| msgid "Create an account"
+msgid "Register new account"
+msgstr "Ստեղծել հաշիվ"
+
+#: donations/views/account_management.py:234
+#, fuzzy
+#| msgid "Login through NGO Hub"
+msgid "Register through NGO Hub"
+msgstr "Մուտք գործել NGO Hub-ի միջոցով"
+
+#: donations/views/account_management.py:295
+#, fuzzy
+msgid "Welcome to redirectioneaza.ro"
+msgstr "էլփոստ"
+
+#: donations/views/account_management.py:308
+#, fuzzy
+#| msgid "date created"
+msgid "Account created"
+msgstr "ամսաթիվը ստեղծվել է"
+
+#: donations/views/account_management.py:313
+#, fuzzy
+#| msgid "date created"
+msgid "Account verified"
+msgstr "ամսաթիվը ստեղծվել է"
+
+#: donations/views/account_management.py:324
+#, fuzzy
+#| msgid "description"
+msgid "Verification"
+msgstr "նկարագրություն"
+
+#: donations/views/api.py:103
+msgid "An error occurred while generating the prefilled form."
+msgstr ""
+
+#: donations/views/api.py:175
+msgid "Your organization can not receive forms currently."
+msgstr ""
+
+#: donations/views/api.py:181
+msgid "The cause you are trying to edit does not exist."
+msgstr ""
+
+#: donations/views/api.py:185
+#, fuzzy
+#| msgid "The ID number is not valid"
+msgid "The visibility value is not valid."
+msgstr "ID համարը վավեր չէ"
+
+#: donations/views/api.py:192
+#, python-format
+msgid "The visibility of '%(cause_name)s' has been updated successfully."
+msgstr ""
+
+#: donations/views/common/misc.py:60
+#, python-format
+msgid "%(time)d hour"
+msgid_plural "%(time)d hours"
+msgstr[0] ""
+msgstr[1] ""
+
+#: donations/views/common/misc.py:66
+#, python-format
+msgid "%(time)d minute"
+msgid_plural "%(time)d minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: donations/views/common/search.py:46
+#, fuzzy
+#| msgid "The IBAN number must have 24 characters"
+msgid "The search query must be at least 3 characters long"
+msgstr "IBAN համարը պետք է ունենա 24 նիշ"
+
+#: donations/views/dashboard/admin_dashboard.py:55
+msgid "Donations this year"
+msgstr "Նվիրատվություններն այս տարի"
+
+#: donations/views/dashboard/admin_dashboard.py:59
+#: donations/views/dashboard/admin_dashboard.py:66
+#: donations/views/dashboard/admin_dashboard.py:73
+#: donations/views/dashboard/admin_dashboard.py:80
+#: donations/views/dashboard/admin_dashboard.py:87
+#: donations/views/dashboard/admin_dashboard.py:154
+#: donations/views/dashboard/admin_dashboard.py:164
+#: donations/views/dashboard/admin_dashboard.py:174
+msgid "View all"
+msgstr "Տեսնել բոլորը"
+
+#: donations/views/dashboard/admin_dashboard.py:63
+msgid "Donations all-time"
+msgstr "Բոլոր ժամանակների նվիրատվությունները"
+
+#: donations/views/dashboard/admin_dashboard.py:69
+#: donations/views/dashboard/admin_dashboard.py:158
+msgid "NGOs registered"
+msgstr "Գրանցված ՀԿ-ները"
+
+#: donations/views/dashboard/admin_dashboard.py:77
+msgid "Functioning NGOs"
+msgstr ""
+
+#: donations/views/dashboard/admin_dashboard.py:83
+msgid "NGOs from NGO Hub"
+msgstr "NGO Hub-ի ՀԿ-ները"
+
+#: donations/views/dashboard/admin_dashboard.py:168
+msgid "NGOs with forms"
+msgstr "ՀԿ-ներ՝ ձևաթղթերով"
+
+#: donations/views/dashboard/helpers.py:68
+msgid "Donations per month"
+msgstr "Ամսական նվիրատվություններ"
+
+#: donations/views/dashboard/ngo_dashboard.py:57
+msgid "Number of donations"
+msgstr "Նվիրատվությունների քանակը"
+
+#: donations/views/dashboard/ngo_dashboard.py:76
+msgid "Current year donations per county"
+msgstr "Ընթացիկ տարվա նվիրատվությունները յուրաքանչյուր շրջանի համար"
+
+#: donations/views/dashboard/ngo_dashboard.py:96
+#, python-format
+msgid "Donations in %d"
+msgstr "Նվիրատվություններ %d-ում"
+
+#: donations/views/download_donations/main.py:77
 msgid "Documents ready for download"
 msgstr "Ներբեռնման համար պատրաստ փաստաթղթերը"
 
-#: donations/views/donations_download.py:158
+#: donations/views/download_donations/main.py:183
 msgid "no."
 msgstr "ոչ:"
 
-#: donations/views/donations_download.py:161
+#: donations/views/download_donations/main.py:186
 msgid "initial"
 msgstr "սկզբնական"
 
-#: donations/views/donations_download.py:163
+#: donations/views/download_donations/main.py:188
 msgid "duplicate"
 msgstr "կրկնօրինակել"
 
-#: donations/views/donations_download.py:164
+#: donations/views/download_donations/main.py:189
 msgid "phone"
 msgstr "հեռախոս"
 
-#: donations/views/donations_download.py:168
+#: donations/views/download_donations/main.py:193
 msgid "full address"
 msgstr "ամբողջական հասցե"
 
-#: donations/views/donations_download.py:169
+#: donations/views/download_donations/main.py:194
 msgid "street name"
 msgstr "փողոցի անվանումը"
 
-#: donations/views/donations_download.py:170
+#: donations/views/download_donations/main.py:195
 msgid "street number"
 msgstr "փողոցի համարը"
 
-#: donations/views/donations_download.py:171
+#: donations/views/download_donations/main.py:196
 msgid "building"
 msgstr "շենք"
+
+#: donations/views/download_donations/main.py:197
+msgid "entrance"
+msgstr "մուտք"
+
+#: donations/views/download_donations/main.py:198
+msgid "floor"
+msgstr "հարկ"
+
+#: donations/views/download_donations/main.py:199
+msgid "apartment"
+msgstr "բնակարան"
+
+#: donations/views/download_donations/main.py:201
+msgid "date"
+msgstr "ամսաթիվ"
+
+#: donations/views/download_donations/main.py:202
+msgid "duration"
+msgstr "տևողություն"
+
+#: donations/views/ngo_account.py:52
+msgid "The IBAN number must have 24 characters"
+msgstr "IBAN համարը պետք է ունենա 24 նիշ"
+
+#: donations/views/ngo_account.py:55
+msgid "The IBAN number must contain only letters and digits"
+msgstr "IBAN համարը պետք է պարունակի միայն տառեր և թվեր"
+
+#: donations/views/ngo_account.py:58
+msgid "The IBAN number must start with 'RO'"
+msgstr "IBAN համարը պետք է սկսվի «RO»-ով"
+
+#: donations/views/ngo_account.py:84 donations/views/ngo_account.py:268
+#, fuzzy
+#| msgid "NGO Hub organization ID"
+msgid "Organization details"
+msgstr "NGO Hub կազմակերպության նույնականացման համար"
+
+#: donations/views/ngo_account.py:125
+#, fuzzy
+#| msgid "NGO Hub organization ID"
+msgid "Go to the organization details."
+msgstr "NGO Hub կազմակերպության նույնականացման համար"
+
+#: donations/views/ngo_account.py:132
+#, fuzzy
+#| msgid "Sign In Error"
+msgid "Go to the form."
+msgstr "Մուտք գործելու սխալ"
+
+#: donations/views/ngo_account.py:195
+#, fuzzy
+#| msgid "NGO Hub organization ID"
+msgid "Organization name: "
+msgstr "NGO Hub կազմակերպության նույնականացման համար"
+
+#: donations/views/ngo_account.py:196
+#, fuzzy
+#| msgid "NGO Hub organization ID"
+msgid "Organization CIF: "
+msgstr "NGO Hub կազմակերպության նույնականացման համար"
+
+#: donations/views/ngo_account.py:204
+#, fuzzy
+#| msgid "The ID number format is not valid"
+msgid "The form was altered."
+msgstr "Նույնականացման համարի ձևաչափը վավեր չէ"
+
+#: donations/views/ngo_account.py:228
+msgid "Please fill in the organization details first."
+msgstr ""
+
+#: donations/views/ngo_account.py:233 donations/views/ngo_account.py:501
+msgid "You need to first create the form with the organization's details."
+msgstr ""
+
+#: donations/views/ngo_account.py:242 donations/views/redirections.py:198
+msgid "There are some errors on the redirection form."
+msgstr ""
+
+#: donations/views/ngo_account.py:254
+#, fuzzy
+#| msgid "The import has been processed."
+msgid "The cause has been created."
+msgstr "Ներմուծումը կատարվել է։"
+
+#: donations/views/ngo_account.py:257
+#, fuzzy
+#| msgid "The ID number format is not valid"
+msgid "The form has been saved."
+msgstr "Նույնականացման համարի ձևաչափը վավեր չէ"
+
+#: donations/views/ngo_account.py:345
+msgid "There are some errors on the presentation form."
+msgstr ""
+
+#: donations/views/ngo_account.py:397 donations/views/ngo_account.py:475
+#: donations/views/ngo_account.py:520
+#, fuzzy
+#| msgid "NGO Hub organization ID"
+msgid "Organization form"
+msgstr "NGO Hub կազմակերպության նույնականացման համար"
+
+#: donations/views/ngo_account.py:448
+#: redirectioneaza/context_processors/headers.py:106
+#, fuzzy
+#| msgid "NGO Hub organization ID"
+msgid "Organization Causes"
+msgstr "NGO Hub կազմակերպության նույնականացման համար"
+
+#: donations/views/ngo_account.py:481
+msgid "Add new cause form"
+msgstr ""
+
+#: donations/views/ngo_account.py:569
+#: templates/v2/ngo-account/settings-account/main.html:10
+#, fuzzy
+#| msgid "date created"
+msgid "Account settings"
+msgstr "ամսաթիվը ստեղծվել է"
+
+#: donations/views/ngo_account.py:612
+#: redirectioneaza/context_processors/headers.py:112
+#: templates/v2/ngo-account/redirections/main.html:10
+#, fuzzy
+#| msgid "Options"
+msgid "Redirections"
+msgstr "Ընտրանքներ"
+
+#: donations/views/ngo_account.py:759
+#: templates/v2/ngo-account/archives/main.html:10
+msgid "Archives history"
+msgstr ""
+
+#: donations/views/ngo_account.py:801
+#, fuzzy
+#| msgid "Sign In Error"
+msgid "Download donor form"
+msgstr "Մուտք գործելու սխալ"
+
+#: donations/views/ngo_account.py:812
+#, fuzzy
+#| msgid "NGO Hub organization ID"
+msgid "Your organization is not active"
+msgstr "NGO Hub կազմակերպության նույնականացման համար"
+
+#: donations/views/ngo_account.py:826
+#: templates/v2/emails/ngo/download-archive/main.html:21
+#, fuzzy
+#| msgid "Sign In Error"
+msgid "Download archive"
+msgstr "Մուտք գործելու սխալ"
+
+#: donations/views/ngo_account_filters.py:66
+msgid "Period"
+msgstr ""
+
+#: donations/views/ngo_account_filters.py:73
+#, fuzzy
+#| msgid "two years"
+msgid "One year"
+msgstr "երկու տարի"
+
+#: donations/views/ngo_account_filters.py:93
+#: templates/v2/ngo-account/redirections/list-items.html:56
+#, fuzzy
+#| msgid "Sign In"
+msgid "Signed"
+msgstr "Գրանցվել"
+
+#: donations/views/ngo_account_filters.py:94
+#, fuzzy
+#| msgid "has signed"
+msgid "Not signed"
+msgstr "ստորագրել է"
+
+#: donations/views/redirections.py:30
+#, fuzzy
+#| msgid "Successful tasks"
+msgid "Successful redirection"
+msgstr "Հաջողված առաջադրանքներ"
+
+#: donations/views/redirections.py:273
+msgid "Un nou formular de redirecționare"
+msgstr ""
+
+#: donations/views/redirections.py:280 donations/views/redirections.py:300
+msgid "Formularul tău de redirecționare"
+msgstr ""
+
+#: donations/views/site.py:42
+msgid "form filled in"
+msgid_plural "forms filled in"
+msgstr[0] ""
+msgstr[1] "լրացված ձևերը"
+
+#: donations/views/site.py:49
+msgid "organizations registered in the platform"
+msgstr ""
+
+#: donations/views/site.py:57
+msgid "redirected to NGOs through the platform"
+msgstr ""
+
+#: donations/views/site.py:58
+msgid "> €2 million"
+msgstr ""
+
+#: donations/views/site.py:111
+#, fuzzy
+#| msgid "Welcome to redirectioneaza.ro"
+msgid "About redirectioneaza.ro"
+msgstr "Բարի գալուստ redirectioneaza.ro"
+
+#: donations/views/site.py:130
+msgid "All causes"
+msgstr ""
+
+#: donations/views/site.py:175 templates/v2/redirect/footer.html:196
+msgid "Information notice"
+msgstr ""
+
+#: donations/views/site.py:186 templates/v2/redirect/footer.html:186
+msgid "Privacy policy"
+msgstr ""
+
+#: donations/views/site.py:191 templates/v2/redirect/footer.html:191
+msgid "Terms & conditions"
+msgstr ""
+
+#: frequent_questions/apps.py:8
+#, fuzzy
+#| msgid "Frequently Asked Questions"
+msgid "Frequent Questions"
+msgstr "Հաճախակի Տրվող Հարցեր"
+
+#: frequent_questions/models.py:7
+msgid "Title"
+msgstr ""
+
+#: frequent_questions/models.py:9 frequent_questions/models.py:34
+msgid "Order"
+msgstr ""
+
+#: frequent_questions/models.py:14
+#, fuzzy
+#| msgid "description"
+msgid "Section"
+msgstr "նկարագրություն"
+
+#: frequent_questions/models.py:15 redirectioneaza/settings/unfold.py:68
+#, fuzzy
+#| msgid "Options"
+msgid "Sections"
+msgstr "Ընտրանքներ"
+
+#: frequent_questions/models.py:31 frequent_questions/models.py:39
+#, fuzzy
+#| msgid "description"
+msgid "Question"
+msgstr "նկարագրություն"
+
+#: frequent_questions/models.py:32
+msgid "Answer"
+msgstr ""
+
+#: frequent_questions/models.py:40 redirectioneaza/settings/unfold.py:74
+#, fuzzy
+#| msgid "Options"
+msgid "Questions"
+msgstr "Ընտրանքներ"
+
+#: frequent_questions/views.py:11 frequent_questions/views.py:17
+#: templates/v2/public/faq.html:11 templates/v2/redirect/footer.html:124
+#: templates/v2/redirect/footer.html:154 templates/v2/redirect/footer.html:167
+msgid "Frequently Asked Questions"
+msgstr "Հաճախակի Տրվող Հարցեր"
+
+#: importer/apps.py:8
+#, fuzzy
+#| msgid "Important dates"
+msgid "Importer"
+msgstr "Կարևոր ամսաթվեր"
+
+#: partners/admin.py:24
+#, fuzzy
+#| msgid "first name"
+msgid "First Name"
+msgstr "անուն"
+
+#: partners/admin.py:25
+msgid "The first name of the user who will be the administering the Partner."
+msgstr ""
+
+#: partners/admin.py:30
+#, fuzzy
+#| msgid "last name"
+msgid "Last Name"
+msgstr "ազգանուն"
+
+#: partners/admin.py:31
+msgid "The last name of the user who will be the administering the Partner."
+msgstr ""
+
+#: partners/admin.py:37
+#, fuzzy
+#| msgid "User Details"
+msgid "User Email"
+msgstr "Օգտատիրոջ տվյալներ"
+
+#: partners/admin.py:38
+msgid ""
+"The email address of the user who will be the administering the Partner."
+msgstr ""
+
+#: partners/admin.py:81 partners/models.py:82 users/models.py:79
+msgid "Partner"
+msgstr "Գործընկեր"
+
+#: partners/admin.py:90
+msgid "Options"
+msgstr "Տարբերակներ"
+
+#: partners/admin.py:101
+msgid "Metadata"
+msgstr "Մետատվյալներ"
+
+#: partners/admin.py:131
+#, python-format
+msgid "An error occurred while creating the user: %(error)s"
+msgstr ""
+
+#: partners/admin.py:156
+#, fuzzy
+#| msgid "Welcome to redirectioneaza.ro"
+msgid "Join redirectioneaza.ro"
+msgstr "Բարի գալուստ redirectioneaza.ro"
+
+#: partners/admin.py:165
+#, fuzzy
+#| msgid "The import has been processed."
+msgid "The user has been successfully invited."
+msgstr "Ներմուծումը կատարվել է։"
+
+#: partners/admin.py:168 partners/admin.py:192
+msgid "Invite new manager"
+msgstr ""
+
+#: partners/apps.py:8 partners/models.py:83
+#: redirectioneaza/context_processors/headers.py:74
+#: redirectioneaza/settings/unfold.py:57
+msgid "Partners"
+msgstr "Գործընկերներ"
+
+#: partners/models.py:13
+msgid "Custom"
+msgstr ""
+
+#: partners/models.py:15
+msgid "Alphabetical"
+msgstr "Այբբենական"
+
+#: partners/models.py:16
+#, fuzzy
+#| msgid "Alphabetical"
+msgid "Alphabetical (reverse)"
+msgstr "Այբբենական"
+
+#: partners/models.py:18
+msgid "Newest"
+msgstr "Ամենանոր"
+
+#: partners/models.py:19
+msgid "Oldest"
+msgstr ""
+
+#: partners/models.py:21
+msgid "Random"
+msgstr "Պատահական"
+
+#: partners/models.py:38
+msgid "subdomain"
+msgstr "ենթադոմեյն"
+
+#: partners/models.py:51
+#, fuzzy
+msgid "has custom header"
+msgstr "ունի հատուկ վերնագիր"
+
+#: partners/models.py:52
+msgid "has custom note"
+msgstr "ունի մաքսային նշում"
+
+#: partners/models.py:54
+msgid "display ordering"
+msgstr "ցուցադրման պատվեր"
+
+#: partners/models.py:135 partners/models.py:169
+#, fuzzy
+#| msgid "Partner"
+msgid "partner"
+msgstr "Գործընկեր"
+
+#: partners/models.py:147 partners/models.py:181
+#, fuzzy
+#| msgid "display ordering"
+msgid "display order"
+msgstr "ցուցադրման պատվեր"
+
+#: partners/models.py:150
+#, fuzzy
+#| msgid "Partner"
+msgid "Partner NGO"
+msgstr "Գործընկեր"
+
+#: partners/models.py:151
+#, fuzzy
+#| msgid "Partners"
+msgid "Partner NGOs"
+msgstr "Գործընկերներ"
+
+#: partners/models.py:184
+#, fuzzy
+#| msgid "Partners"
+msgid "Partner Cause"
+msgstr "Գործընկերներ"
+
+#: partners/models.py:185
+#, fuzzy
+#| msgid "Partners"
+msgid "Partner Causes"
+msgstr "Գործընկերներ"
+
+#: redirectioneaza/common/admin.py:6
+msgid "Has NGO"
+msgstr ""
+
+#: redirectioneaza/common/messaging.py:49
+msgid "Invalid email send method. Must be 'async' or 'sync'."
+msgstr "Էլ. փոստի ուղարկման սխալ եղանակ: Պետք է լինի «async» կամ «sync»:"
 
 #: redirectioneaza/common/validators.py:7
 msgid "This subdomain is reserved."
@@ -449,287 +1581,318 @@ msgstr "Ենթադոմեյնը պետք է պարունակի միայն տառ�
 msgid "Subdomain must have between 3 and 100 characters."
 msgstr "Ենթադոմեյնը պետք է պարունակի 3-ից 100 նիշ:"
 
-#: users/admin.py:37
-msgid "Permissions"
-msgstr "Թույլտվություններ"
+#: redirectioneaza/context_processors/headers.py:9
+#: templates/v2/redirect/footer.html:108
+msgid "About"
+msgstr ""
 
-#: users/admin.py:46
-msgid "Important dates"
-msgstr "Կարևոր ամսաթվեր"
-
-#: users/models.py:56
-msgid "username"
-msgstr "օգտանուն"
-
-#: users/models.py:59
-msgid "We do not use this field"
-msgstr "Մենք չենք օգտագործում այս դաշտը"
-
-#: users/models.py:66
-msgid "email address"
-msgstr "էլ. փոստի հասցեն"
-
-#: users/models.py:80
-msgid "validation token"
-msgstr "վավերացման նշան"
-
-#: users/models.py:82
-msgid "validation token timestamp"
-msgstr "վավերացման նշանի ժամանակի դրոշմ"
-
-#: users/models.py:84
-msgid "old password"
-msgstr "հին գաղտնաբառ"
-
-#: partners/models.py:12
-msgid "Newest"
-msgstr "Ամենանոր"
-
-#: partners/models.py:46
-msgid "display ordering"
-msgstr "ցուցադրման պատվեր"
-
-#: donations/views/account_management.py:223
+#: redirectioneaza/context_processors/headers.py:13
+#: templates/v2/redirect/footer.html:139
 #, fuzzy
-msgid "Welcome to redirectioneaza.ro"
-msgstr "էլփոստ"
+#| msgid "NGO Hub organization ID"
+msgid "Discover organizations"
+msgstr "NGO Hub կազմակերպության նույնականացման համար"
 
-#: redirectioneaza/common/messaging.py:31
-msgid "Invalid email send method. Must be 'async' or 'sync'."
-msgstr "Էլ. փոստի ուղարկման սխալ եղանակ: Պետք է լինի «async» կամ «sync»:"
+#: redirectioneaza/context_processors/headers.py:17
+msgid ""
+"Still undecided about the cause you want to support? Discover the "
+"organizations you can redirect to through the platform."
+msgstr ""
 
-#: partners/models.py:43
+#: redirectioneaza/context_processors/headers.py:22
+msgid "How it works"
+msgstr ""
+
+#: redirectioneaza/context_processors/headers.py:25
+msgid ""
+"What is the 230 form? Who can redirect? How can you contribute? What are the "
+"rules?"
+msgstr ""
+
+#: redirectioneaza/context_processors/headers.py:28
+#: redirectioneaza/context_processors/headers.py:38
+#: redirectioneaza/settings/unfold.py:65
 #, fuzzy
-msgid "has custom header"
-msgstr "ունի հատուկ վերնագիր"
+#| msgid "Frequently Asked Questions"
+msgid "Frequently asked questions"
+msgstr "Հաճախակի Տրվող Հարցեր"
 
-#: partners/models.py:44
-msgid "has custom note"
-msgstr "ունի մաքսային նշում"
+#: redirectioneaza/context_processors/headers.py:32
+msgid ""
+"How can you create an account for your organization? Issues using the "
+"platform? Find the answers to your questions."
+msgstr ""
 
+#: redirectioneaza/context_processors/headers.py:41
+msgid ""
+"What happens with your data? What else? Find the answers to your questions."
+msgstr ""
+
+#: redirectioneaza/context_processors/headers.py:47
+msgid "The contact form for donors."
+msgstr ""
+
+#: redirectioneaza/context_processors/headers.py:50
+#, fuzzy
+#| msgid "User Link"
+msgid "User guide"
+msgstr "Օգտատիրոջ հղում"
+
+#: redirectioneaza/context_processors/headers.py:54
+msgid ""
+"Find out how you can use redirectioneaza.ro to collect the 230 forms for "
+"your organization and discover the features."
+msgstr ""
+
+#: redirectioneaza/context_processors/headers.py:59
+#, fuzzy
+#| msgid "Dashboard"
+msgid "Admin Dashboard"
+msgstr "Վահանակ"
+
+#: redirectioneaza/context_processors/headers.py:79
+#, fuzzy
+#| msgid "Options"
+msgid "FAQ Questions"
+msgstr "Ընտրանքներ"
+
+#: redirectioneaza/context_processors/headers.py:84
+#: redirectioneaza/settings/unfold.py:82 redirectioneaza/settings/unfold.py:85
 #: users/apps.py:8
 #, fuzzy
 msgid "Users"
 msgstr "Օգտագործողներ"
 
-#: donations/admin.py:162
-msgid "Clean up registration numbers"
-msgstr "Մաքրել գրանցման համարները"
-
-#: donations/models/jobs.py:50
-msgid "ZIP"
-msgstr "ZIP"
-
-#: donations/views/my_account.py:341
-msgid "The IBAN number must have 24 characters"
-msgstr "IBAN համարը պետք է ունենա 24 նիշ"
-
-#: donations/views/my_account.py:344
-msgid "The IBAN number must contain only letters and digits"
-msgstr "IBAN համարը պետք է պարունակի միայն տառեր և թվեր"
-
-#: donations/views/my_account.py:347
-msgid "The IBAN number must start with 'RO'"
-msgstr "IBAN համարը պետք է սկսվի «RO»-ով"
-
-#: donations/views/site.py:125
-msgid "Frequently Asked Questions"
-msgstr "Հաճախակի Տրվող Հարցեր"
-
-#: donations/models/main.py:162 donations/models/main.py:163
-msgid "Last NGO Hub update"
-msgstr "NGO Hub-ի վերջին թարմացումը"
-
-#: donations/models/main.py:197
-msgid "registration validation failed"
-msgstr "գրանցման վավերացումը ձախողվեց"
-
-#: donations/models/main.py:249
-msgid "Filename cache"
-msgstr "Ֆայլի անվան քեշ"
-
-#: donations/models/main.py:88
-msgid "The ID number cannot be all zeros"
-msgstr "Նույնականացման համարը չի կարող լինել միայն զրոներ"
-
+#: redirectioneaza/context_processors/headers.py:89
 #: redirectioneaza/settings/unfold.py:13 redirectioneaza/settings/unfold.py:16
 msgid "Dashboard"
 msgstr "Վահանակ"
 
-#: donations/models/jobs.py:53
-msgid "date finished"
-msgstr "Ավարտման ամսաթիվ"
+#: redirectioneaza/context_processors/headers.py:94
+#: templates/v2/ngo-account/my-organization/base.html:12
+#, fuzzy
+#| msgid "NGO Hub organization ID"
+msgid "Organization Data"
+msgstr "NGO Hub կազմակերպության նույնականացման համար"
 
-#: donations/admin.py:223
-msgid "NGOs updated from NGO Hub."
-msgstr "ՀԿ-ները թարմացվել են NGO Hub-ից:"
+#: redirectioneaza/context_processors/headers.py:100
+#, fuzzy
+#| msgid "NGO Hub organization ID"
+msgid "Organization Form"
+msgstr "NGO Hub կազմակերպության նույնականացման համար"
 
-#: donations/admin.py:225
-msgid "Update from NGO Hub asynchronously"
-msgstr "Թարմացում NGO Hub-ին ոչ համաժամանակյա"
+#: redirectioneaza/context_processors/headers.py:118
+msgid "Archive History"
+msgstr ""
 
-#: donations/admin.py:230
-msgid "NGOs are being updated from NGO Hub."
-msgstr "ՀԿ-ները թարմացվում են NGO Hub-ից:"
+#: redirectioneaza/context_processors/headers.py:124
+#, fuzzy
+#| msgid "date created"
+msgid "Account Settings"
+msgstr "ամսաթիվը ստեղծվել է"
 
-#: donations/models/main.py:357 donations/views/donations_download.py:169
-msgid "CNP"
-msgstr "Վկայագրված բուժքույր"
+#: redirectioneaza/context_processors/headers.py:130
+msgid "Log in"
+msgstr ""
 
-#: donations/models/main.py:405
-msgid "Geo IP"
-msgstr "Geo IP"
+#: redirectioneaza/context_processors/headers.py:135
+#: redirectioneaza/context_processors/headers.py:187
+#, fuzzy
+#| msgid "Login through NGO Hub"
+msgid "Register Organization"
+msgstr "Մուտք գործել NGO Hub-ի միջոցով"
 
-#: donations/views/dashboard/admin_dashboard.py:63
-msgid "Donations this year"
-msgstr "Նվիրատվություններն այս տարի"
+#: redirectioneaza/context_processors/headers.py:140
+msgid "Log out"
+msgstr ""
 
-#: donations/views/dashboard/admin_dashboard.py:71
-msgid "Donations all-time"
-msgstr "Բոլոր ժամանակների նվիրատվությունները"
+#: redirectioneaza/context_processors/headers.py:159
+#, fuzzy
+#| msgid "donors"
+msgid "For donors"
+msgstr "դոնորներ"
 
-#: donations/views/dashboard/admin_dashboard.py:77
-#: donations/views/dashboard/admin_dashboard.py:160
-msgid "NGOs registered"
-msgstr "Գրանցված ՀԿ-ները"
+#: redirectioneaza/context_processors/headers.py:174
+#: templates/v2/redirect/footer.html:162
+#, fuzzy
+#| msgid "NGO Hub organization ID"
+msgid "For organizations"
+msgstr "NGO Hub կազմակերպության նույնականացման համար"
 
-#: donations/views/dashboard/admin_dashboard.py:85
-msgid "NGOs from NGO Hub"
-msgstr "NGO Hub-ի ՀԿ-ները"
+#: redirectioneaza/context_processors/headers.py:200
+msgid "Admin"
+msgstr ""
 
-#: donations/views/dashboard/admin_dashboard.py:170
-msgid "NGOs with forms"
-msgstr "ՀԿ-ներ՝ ձևաթղթերով"
+#: redirectioneaza/context_processors/headers.py:227
+#, fuzzy
+#| msgid "NGO Hub organization ID"
+msgid "My Organization"
+msgstr "NGO Hub կազմակերպության նույնականացման համար"
 
-#: donations/views/dashboard/helpers.py:68
-msgid "Donations per month"
-msgstr "Ամսական նվիրատվություններ"
-
-#: donations/views/dashboard/ngo_dashboard.py:56
-msgid "Number of donations"
-msgstr "Նվիրատվությունների քանակը"
-
-#: donations/views/dashboard/ngo_dashboard.py:55
-msgid "County"
-msgstr "Շրջան"
-
-#: donations/views/dashboard/ngo_dashboard.py:95
-#, python-format
-msgid "Donations in %d"
-msgstr "Նվիրատվություններ %d-ում"
-
-#: redirectioneaza/settings/app_configs.py:34
+#: redirectioneaza/settings/app_configs.py:37
 msgid "January"
 msgstr "Հունվար"
 
-#: redirectioneaza/settings/app_configs.py:35
+#: redirectioneaza/settings/app_configs.py:38
 msgid "Jan"
 msgstr "Հունվ"
 
-#: redirectioneaza/settings/app_configs.py:38
+#: redirectioneaza/settings/app_configs.py:41
 msgid "February"
 msgstr "Փետրվար"
 
-#: redirectioneaza/settings/app_configs.py:39
+#: redirectioneaza/settings/app_configs.py:42
 msgid "Feb"
 msgstr "Փետրվ"
 
-#: redirectioneaza/settings/app_configs.py:42
+#: redirectioneaza/settings/app_configs.py:45
 msgid "March"
 msgstr "Մարտ"
 
-#: redirectioneaza/settings/app_configs.py:43
+#: redirectioneaza/settings/app_configs.py:46
 msgid "Mar"
 msgstr "Մարտ"
 
-#: redirectioneaza/settings/app_configs.py:47
+#: redirectioneaza/settings/app_configs.py:49
+msgid "April"
+msgstr "Ապրիլ"
+
+#: redirectioneaza/settings/app_configs.py:50
 msgid "Apr"
 msgstr "Ապր"
 
-#: redirectioneaza/settings/app_configs.py:50
-#: redirectioneaza/settings/app_configs.py:51
+#: redirectioneaza/settings/app_configs.py:53
+#: redirectioneaza/settings/app_configs.py:54
 msgid "May"
 msgstr "Մայիս"
 
-#: redirectioneaza/settings/app_configs.py:54
+#: redirectioneaza/settings/app_configs.py:57
 msgid "June"
 msgstr "Հունիս"
 
-#: redirectioneaza/settings/app_configs.py:55
+#: redirectioneaza/settings/app_configs.py:58
 msgid "Jun"
 msgstr "Հունիս"
 
-#: redirectioneaza/settings/app_configs.py:58
+#: redirectioneaza/settings/app_configs.py:61
 msgid "July"
 msgstr "Հուլիս"
 
-#: redirectioneaza/settings/app_configs.py:59
+#: redirectioneaza/settings/app_configs.py:62
 msgid "Jul"
 msgstr "Հուլ"
 
-#: redirectioneaza/settings/app_configs.py:62
+#: redirectioneaza/settings/app_configs.py:65
 msgid "August"
 msgstr "Օգոստոս"
 
-#: redirectioneaza/settings/app_configs.py:63
+#: redirectioneaza/settings/app_configs.py:66
 msgid "Aug"
 msgstr "Օգ"
 
-#: redirectioneaza/settings/app_configs.py:66
+#: redirectioneaza/settings/app_configs.py:69
 msgid "September"
 msgstr "Սեպտեմբեր"
 
-#: redirectioneaza/settings/app_configs.py:67
+#: redirectioneaza/settings/app_configs.py:70
 msgid "Sep"
 msgstr "Սեպտ"
 
-#: redirectioneaza/settings/app_configs.py:70
+#: redirectioneaza/settings/app_configs.py:73
 msgid "October"
 msgstr "Հոկտեմբեր"
 
-#: redirectioneaza/settings/app_configs.py:71
+#: redirectioneaza/settings/app_configs.py:74
 msgid "Oct"
 msgstr "Հոկտ"
 
-#: redirectioneaza/settings/app_configs.py:75
+#: redirectioneaza/settings/app_configs.py:77
+msgid "November"
+msgstr "Նոյեմբեր"
+
+#: redirectioneaza/settings/app_configs.py:78
 msgid "Nov"
 msgstr "Նոյ"
 
-#: redirectioneaza/settings/app_configs.py:78
+#: redirectioneaza/settings/app_configs.py:81
 msgid "December"
 msgstr "Դեկտեմբեր"
 
-#: redirectioneaza/settings/app_configs.py:79
+#: redirectioneaza/settings/app_configs.py:82
 msgid "Dec"
 msgstr "Դեկտ"
 
-#: redirectioneaza/settings/unfold.py:44
+#: redirectioneaza/settings/django_q.py:23
+#: redirectioneaza/settings/unfold.py:99
+msgid "Background Tasks"
+msgstr ""
+
+#: redirectioneaza/settings/unfold.py:22
+#, fuzzy
+#| msgid "address"
+msgid "Home page"
+msgstr "հասցե"
+
+#: redirectioneaza/settings/unfold.py:51
 msgid "Donation exports"
 msgstr "Նվիրատվության արտահանումները"
 
-#: redirectioneaza/settings/unfold.py:61 users/models.py:209
+#: redirectioneaza/settings/unfold.py:91 users/models.py:179
 msgid "Groups"
 msgstr "Խմբեր"
 
-#: redirectioneaza/settings/unfold.py:78
+#: redirectioneaza/settings/unfold.py:102
+msgid "Failed tasks"
+msgstr "Չհաջողված առաջադրանքներ"
+
+#: redirectioneaza/settings/unfold.py:108
 msgid "Queued tasks"
 msgstr "Հերթագրված առաջադրանքներ"
 
-#: redirectioneaza/settings/unfold.py:84
+#: redirectioneaza/settings/unfold.py:114
 msgid "Scheduled tasks"
 msgstr "Պլանավորված առաջադրանքներ"
 
-#: redirectioneaza/settings/unfold.py:90
+#: redirectioneaza/settings/unfold.py:120
 msgid "Successful tasks"
 msgstr "Հաջողված առաջադրանքներ"
 
-#: templates/v2/account/errors/login/app_missing.html:9
+#: templates/v2/account/components/password-input.html:4
+#: templates/v2/account/snippets/login-form.html:64
+#: templates/v2/account/snippets/register-form.html:71
+#, fuzzy
+#| msgid "old password"
+msgid "Password"
+msgstr "հին գաղտնաբառ"
+
+#: templates/v2/account/errors/login/app_missing.html:5
+msgid "Application not activated"
+msgstr "Հավելվածն ակտիվացված չէ"
+
+#: templates/v2/account/errors/login/app_missing.html:10
 msgid "The application is not activated for this user/organization."
 msgstr "Այս օգտատիրոջ/կազմակերպության համար հավելվածն ակտիվացված չէ:"
+
+#: templates/v2/account/errors/login/app_missing.html:14
+msgid ""
+"If you are the owner of the organization, please activate it in NGO Hub."
+msgstr ""
 
 #: templates/v2/account/errors/login/base_login.html:6
 msgid "Return to login"
 msgstr "Վերադառնալ մուտք գործելու դաշտ"
+
+#: templates/v2/account/errors/login/multiple_ngos.html:5
+msgid "Multiple NGOs for this CUI"
+msgstr "Բազմաթիվ ՀԿ-ներ այս վերահսկվող ոչ գաղտնի տեղեկատվության համար"
+
+#: templates/v2/account/errors/login/multiple_ngos.html:9
+msgid ""
+"Multiple NGOs have been found during synchronization. Admins have been "
+"notified and will resolve the issue shortly."
+msgstr ""
+"Համաժամացման ընթացքում հայտնաբերվել են բազմաթիվ ՀԿ-ներ: Ադմինները ծանուցվել "
+"են և շուտով կլուծեն խնդիրը:"
 
 #: templates/v2/account/errors/login/unknown_role.html:5
 msgid "Unknown role"
@@ -739,34 +1902,1835 @@ msgstr "Անհայտ դեր"
 msgid "Your current role isn't supported."
 msgstr "Ձեր ներկայիս դերը չի աջակցվում:"
 
-#: templates/v2/account/login.html:5 templates/v2/account/login.html:10
-#: templates/v2/socialaccount/login.html:5
-msgid "Sign In"
-msgstr "Գրանցվել"
+#: templates/v2/account/reset-password.html:16
+#, fuzzy
+#| msgid "Password is required"
+msgid "Password recovery"
+msgstr "Գաղտնաբառը պարտադիր է"
 
-#: templates/v2/account/login.html:22
+#: templates/v2/account/reset-password.html:26
+#, fuzzy
+#| msgid "Email address"
+msgid "E-mail address"
+msgstr "էլ. փոստի հասցեն"
+
+#: templates/v2/account/reset-password.html:30
+msgid ""
+"To recover your password, please enter the email address you registered with "
+"and then press the Send button."
+msgstr ""
+
+#: templates/v2/account/reset-password.html:40
+msgid "Send"
+msgstr ""
+
+#: templates/v2/account/set-password.html:16
+#, fuzzy
+#| msgid "Reset password"
+msgid "Set a new password"
+msgstr "Վերակայել գաղտնաբառը"
+
+#: templates/v2/account/set-password.html:26
+#, fuzzy
+#| msgid "Reset password"
+msgid "New password"
+msgstr "Վերակայել գաղտնաբառը"
+
+#: templates/v2/account/set-password.html:29
+#: templates/v2/account/snippets/register-form.html:72
+#, fuzzy
+#| msgid "old password"
+msgid "Confirm password"
+msgstr "հին գաղտնաբառ"
+
+#: templates/v2/account/set-password.html:37
+#, fuzzy
+#| msgid "old password"
+msgid "Change password"
+msgstr "հին գաղտնաբառ"
+
+#: templates/v2/account/signup-confirmation.html:8
+#, fuzzy
+#| msgid "email address"
+msgid "Check your email address"
+msgstr "էլ. փոստի հասցեն"
+
+#: templates/v2/account/signup-confirmation.html:12
+msgid ""
+"Your account has been succesfully created! You will receive an email message "
+"shortly. Click on the link in the email to finish your account validation."
+"<br> Unable to find the email? Be sure to also check the spam folder."
+msgstr ""
+
+#: templates/v2/account/signup-confirmation.html:21
+#, fuzzy
+#| msgid "Work in progress"
+msgid "Authentication problems?"
+msgstr "Աշխատանքն ընթացքի մեջ է"
+
+#: templates/v2/account/signup-confirmation.html:25
+#: templates/v2/account/snippets/third-party.html:69
+#: templates/v2/account/snippets/third-party.html:174
+msgid "Check the support page"
+msgstr ""
+
+#: templates/v2/account/signup-confirmation.html:26
+#, fuzzy
+#| msgid "Contact us"
+msgid "or contact us at"
+msgstr "Կապ հաստասեք մեզ հետ"
+
+#: templates/v2/account/signup-verification.html:8
+#, fuzzy
+#| msgid "The import has been processed."
+msgid "Your account has been succesfully validated!"
+msgstr "Ներմուծումը կատարվել է։"
+
+#: templates/v2/account/signup-verification.html:12
+msgid ""
+"Congratulations! You have completed your redirectioneaza.ro account "
+"validation. Now you can return to the authentication page and log into your "
+"account."
+msgstr ""
+
+#: templates/v2/account/signup-verification.html:19
+#, fuzzy
+#| msgid "Work in progress"
+msgid "Authenticate"
+msgstr "Աշխատանքն ընթացքի մեջ է"
+
+#: templates/v2/account/snippets/cta-ngohub.html:15
+msgid "Do you represent an NGO? Join NGO Hub"
+msgstr ""
+
+#: templates/v2/account/snippets/cta-ngohub.html:19
+msgid ""
+"We provide redirectioneaza.ro, through which NGOs can more easily collect "
+"the 230 forms. The platform is part of the NGO Hub ecosystem, along with "
+"other digital solutions created for the needs of non-profit organizations. "
+"And your organization can have access, for free!"
+msgstr ""
+
+#: templates/v2/account/snippets/cta-ngohub.html:32
+#, fuzzy
+#| msgid "Login through NGO Hub"
+msgid "Register organization"
+msgstr "Մուտք գործել NGO Hub-ի միջոցով"
+
+#: templates/v2/account/snippets/cta-ngohub.html:35
+msgid "Find out more"
+msgstr ""
+
+#: templates/v2/account/snippets/errors.html:6
 msgid "Error!"
 msgstr "Սխա՛լ"
 
-#: templates/v2/account/snippets/classic-login.html:10
+#: templates/v2/account/snippets/login-form.html:40
 msgid "Login with email & password"
 msgstr "Մուտք գործեք էլ.փոստով և գաղտնաբառով"
 
-#: templates/v2/account/snippets/third-party.html:13
+#: templates/v2/account/snippets/login-form.html:46
+msgid ""
+"Did you previously log in to redirectioneaza.ro? You can use the same login "
+"details. For access to more features and a simpler login, you can switch to "
+"NGO Hub without losing your existing data and forms."
+msgstr ""
+
+#: templates/v2/account/snippets/login-form.html:60
+#, fuzzy
+msgid "Email address"
+msgstr "էլ. փոստի հասցեն"
+
+#: templates/v2/account/snippets/register-form.html:38
+#, fuzzy
+#| msgid "Login through NGO Hub"
+msgid "Register without NGO Hub"
+msgstr "Մուտք գործել NGO Hub-ի միջոցով"
+
+#: templates/v2/account/snippets/register-form.html:44
+msgid ""
+"You can use redirectioneaza.ro without having an account in NGO Hub. "
+"Register by filling out the form below."
+msgstr ""
+
+#: templates/v2/account/snippets/register-form.html:97
+msgid "I agree with"
+msgstr ""
+
+#: templates/v2/account/snippets/register-form.html:98
+msgid "the terms of the platform"
+msgstr ""
+
+#: templates/v2/account/snippets/register-form.html:108
+#, fuzzy
+#| msgid "bank account"
+msgid "Create account"
+msgstr "բանկային հաշիվ"
+
+#: templates/v2/account/snippets/third-party.html:4
+msgid "Go to account"
+msgstr "Գնալ դեպի օգտահաշիվ"
+
+#: templates/v2/account/snippets/third-party.html:8
+#, fuzzy
+#| msgid "To access your account, you need to authenticate through NGO Hub."
+msgid "Access your account through NGO Hub"
+msgstr ""
+"Ձեր օգտահաշիվ մուտք գործելու համար դուք պետք է նույնականացնեք NGO Hub-ի "
+"միջոցով:"
+
+#: templates/v2/account/snippets/third-party.html:31
 msgid "To access your account, you need to authenticate through NGO Hub."
 msgstr ""
 "Ձեր օգտահաշիվ մուտք գործելու համար դուք պետք է նույնականացնեք NGO Hub-ի "
 "միջոցով:"
 
-#: templates/v2/account/snippets/third-party.html:27
-msgid "Go to account"
-msgstr "Գնալ դեպի օգտահաշիվ"
+#: templates/v2/account/snippets/third-party.html:37
+msgid ""
+"Use your NGO Hub account to access redirectioneaza.ro and other applications "
+"dedicated to civil society, all in one place."
+msgstr ""
 
-#: templates/v2/socialaccount/login.html:28
+#: templates/v2/account/snippets/third-party.html:41
+msgid ""
+"If you are an NGO you can access our entire civil society ecosystem for free "
+"through NGO Hub."
+msgstr ""
+
+#: templates/v2/account/snippets/third-party.html:64
+#, fuzzy
+#| msgid "Has NGO Hub account"
+msgid "You don't have an NGO HUB account?"
+msgstr "Ունի NGO Hub օգտահաշիվ"
+
+#: templates/v2/account/snippets/third-party.html:65
+#, fuzzy
+#| msgid "Create an account"
+msgid "Register here"
+msgstr "Ստեղծել հաշիվ"
+
+#: templates/v2/account/snippets/third-party.html:68
+#: templates/v2/account/snippets/third-party.html:173
+#, fuzzy
+#| msgid "Work in progress"
+msgid "Log in problems?"
+msgstr "Աշխատանքն ընթացքի մեջ է"
+
+#: templates/v2/account/snippets/third-party.html:80
+msgid "To access redirectioneaza.ro through your NGO Hub account, make sure:"
+msgstr ""
+
+#: templates/v2/account/snippets/third-party.html:84
+msgid ""
+"To access redirectioneaza.ro through your NGO Hub account, follow the steps:"
+msgstr ""
+
+#: templates/v2/account/snippets/third-party.html:97
+msgid "You have an active account in NGO Hub"
+msgstr ""
+
+#: templates/v2/account/snippets/third-party.html:99
+#, fuzzy
+#| msgid "Login through NGO Hub"
+msgid "Create an account for your organization in NGO Hub"
+msgstr "Մուտք գործել NGO Hub-ի միջոցով"
+
+#: templates/v2/account/snippets/third-party.html:104
+msgid ""
+"If you don't have an account in NGO Hub, you can create one for free. Learn "
+"more about the"
+msgstr ""
+
+#: templates/v2/account/snippets/third-party.html:108
+#, fuzzy
+#| msgid "NGOs from NGO Hub"
+msgid "benefits of NGO Hub"
+msgstr "NGO Hub-ի ՀԿ-ները"
+
+#: templates/v2/account/snippets/third-party.html:110
+msgid ""
+"Register your organization and discover all NGO Hub apps dedicated to the "
+"civic society. Simple and free."
+msgstr ""
+
+#: templates/v2/account/snippets/third-party.html:113
+msgid "Read more"
+msgstr ""
+
+#: templates/v2/account/snippets/third-party.html:124
+msgid "You have activated the Redirecționează platform in your NGO Hub account"
+msgstr ""
+
+#: templates/v2/account/snippets/third-party.html:126
+#, fuzzy
+#| msgid "Login through NGO Hub"
+msgid ""
+"Activate the Redirecționează application for your organization in NGO Hub"
+msgstr "Մուտք գործել NGO Hub-ի միջոցով"
+
+#: templates/v2/account/snippets/third-party.html:131
+msgid ""
+"Check with your organization's administrator if access to this platform is "
+"correctly configured."
+msgstr ""
+
+#: templates/v2/account/snippets/third-party.html:133
+msgid ""
+"Add the Redirecționează application for your organization in the All "
+"applications section of your administrator account. You and the team will be "
+"able to manage the online form collection."
+msgstr ""
+
+#: templates/v2/account/snippets/third-party.html:144
+msgid ""
+"You have access permission from the organization's administrator in NGO Hub"
+msgstr ""
+
+#: templates/v2/account/snippets/third-party.html:146
+#, fuzzy
+#| msgid "To access your account, you need to authenticate through NGO Hub."
+msgid "Give access to your colleagues in NGO Hub"
+msgstr ""
+"Ձեր օգտահաշիվ մուտք գործելու համար դուք պետք է նույնականացնեք NGO Hub-ի "
+"միջոցով:"
+
+#: templates/v2/account/snippets/third-party.html:151
+msgid ""
+"Check with your organization's administrator if they have given you access "
+"to the Redirecționează application."
+msgstr ""
+
+#: templates/v2/account/snippets/third-party.html:153
+msgid ""
+"Add colleagues in NGO Hub by giving them redirectioneaza.ro accounts. For "
+"them to use the application, be sure to grant them access from the "
+"organization's administration account."
+msgstr ""
+
+#: templates/v2/components/action-menu/main.html:22
+#, fuzzy
+#| msgid "Options"
+msgid "Open options"
+msgstr "Տարբերակներ"
+
+#: templates/v2/components/action-menu/main.html:35
+msgid "Action menu, show/hide based on menu state."
+msgstr ""
+
+#: templates/v2/components/copy-to-clipboard/base.html:3
+msgid "Copy the link"
+msgstr ""
+
+#: templates/v2/components/copy-to-clipboard/base.html:25
+msgid "Copied the link"
+msgstr ""
+
+#: templates/v2/components/cta-redirection.html:7
+msgid "Be a civic superhero"
+msgstr ""
+
+#: templates/v2/components/cta-redirection.html:10
+msgid ""
+"If you can't redirect your income tax, or you want to give an extra hand, "
+"you can support the organization to collect more forms, or you can support "
+"the redirectioneaza.ro project through a donation."
+msgstr ""
+
+#: templates/v2/components/cta-redirection.html:24
+msgid "Give an extra hand"
+msgstr ""
+
+#: templates/v2/components/cta-redirection.html:38
+msgid "Share the page"
+msgstr ""
+
+#: templates/v2/components/cta-redirection.html:41
+msgid ""
+"Share this page on social networks, and encourage your friends to complete "
+"the online form for the organization you believe in, simply and safely, on "
+"redirectioneaza.ro"
+msgstr ""
+
+#: templates/v2/components/cta-redirection.html:62
+msgid "Collect printed forms"
+msgstr ""
+
+#: templates/v2/components/cta-redirection.html:65
+msgid ""
+"Download the uncompleted form, print multiple copies. Convince as many "
+"friends as possible to complete it, and send the documents to the "
+"organization."
+msgstr ""
+
+#: templates/v2/components/cta-redirection.html:73
+#: templates/v2/form/success/signed.html:22
+#: templates/v2/form/success/unsigned.html:22
+#, fuzzy
+#| msgid "Sign In Error"
+msgid "Download the form"
+msgstr "Մուտք գործելու սխալ"
+
+#: templates/v2/components/cta-redirection.html:96
+#, fuzzy
+#| msgid "Welcome to redirectioneaza.ro"
+msgid "Support redirectioneaza.ro"
+msgstr "Բարի գալուստ redirectioneaza.ro"
+
+#: templates/v2/components/cta-redirection.html:99
+msgid ""
+"Together we digitize Romania! Redirecționează is a project dedicated to "
+"NGOs, developed by the Code4Romania. Find out how you can support our "
+"activity."
+msgstr ""
+
+#: templates/v2/components/cta-redirection.html:109
+msgid "Support the Infrastructure for Good"
+msgstr ""
+
+#: templates/v2/components/input/combobox.html:8
+msgid "Reset filter"
+msgstr ""
+
+#: templates/v2/components/input/combobox.html:40
+msgid "Toggle dropdown"
+msgstr ""
+
+#: templates/v2/components/input/image.html:37
+msgid "Upload a logo in NGO Hub"
+msgstr ""
+
+#: templates/v2/components/input/image.html:39
+#, fuzzy
+#| msgid "Uploaded at"
+msgid "Upload an image"
+msgstr "Վերբեռնված է"
+
+#: templates/v2/components/input/search-box.html:39
+msgid "Clear search"
+msgstr ""
+
+#: templates/v2/components/notifications/message.html:31
+msgid "Close"
+msgstr ""
+
+#: templates/v2/emails/account/activate-account/main.html:6
+#: templates/v2/emails/account/activate-account/main.txt:3
+#: templates/v2/emails/account/invite-partner/main.html:6
+#: templates/v2/emails/account/invite-partner/main.txt:3
+#: templates/v2/emails/account/ngohub-notification/main.html:6
+#: templates/v2/emails/account/ngohub-notification/main.txt:3
+#: templates/v2/emails/account/reset-password/main.html:6
+#: templates/v2/emails/account/reset-password/main.txt:3
+#: templates/v2/emails/ngo/download-archive/main.html:6
+#: templates/v2/emails/ngo/download-archive/main.txt:3
+msgid "Hello,"
+msgstr ""
+
+#: templates/v2/emails/account/activate-account/main.html:13
+#: templates/v2/emails/account/activate-account/main.txt:5
+#, fuzzy
+#| msgid "Welcome to redirectioneaza.ro"
+msgid "Welcome to redirectioneaza.ro!"
+msgstr "Բարի գալուստ redirectioneaza.ro"
+
+#: templates/v2/emails/account/activate-account/main.html:19
+#: templates/v2/emails/account/activate-account/main.txt:9
+msgid ""
+"We're happy to have you on the platform! To activate your account, you have "
+"to confirm your email address by clicking the button below."
+msgstr ""
+
+#: templates/v2/emails/account/activate-account/main.html:25
+#, fuzzy
+#| msgid "bank account"
+msgid "Activate your account"
+msgstr "բանկային հաշիվ"
+
+#: templates/v2/emails/account/activate-account/main.html:28
+#: templates/v2/emails/account/activate-account/main.txt:16
+#: templates/v2/emails/ngo/download-archive/main.html:24
+#: templates/v2/emails/ngo/download-archive/main.txt:15
+msgid "Thank you for being part of this community!"
+msgstr ""
+
+#: templates/v2/emails/account/ignore-email.html:4
+#, python-format
+msgid ""
+"If you didn't request a password reset, you can ignore this email. For any "
+"other questions or concerns, feel free to write to us at <a href=\"mailto:"
+"%(contact_email)s\">%(contact_email)s</a> or <a href=\"https://www.ngohub.ro/"
+"ro/suport-tehnic-redirectioneaza\">check out the support page</a>."
+msgstr ""
+
+#: templates/v2/emails/account/ignore-email.txt:3
+#, python-format
+msgid ""
+"If you didn't request a password reset, you can ignore this email. For any "
+"other questions or concerns, feel free to write to us at %(contact_email)s "
+"or check out the support page."
+msgstr ""
+
+#: templates/v2/emails/account/invite-partner/main.html:13
+#: templates/v2/emails/account/invite-partner/main.txt:5
+#, python-format
+msgid ""
+"You have been invited to join redirectioneaza.ro and manage the partner "
+"account for %(partner_name)s. To accept the invitation and set up your "
+"account, please click the button below."
+msgstr ""
+
+#: templates/v2/emails/account/invite-partner/main.html:20
+msgid "Confirm invite"
+msgstr ""
+
+#: templates/v2/emails/account/ngohub-notification/main.html:13
+#: templates/v2/emails/account/ngohub-notification/main.txt:5
+#, fuzzy
+msgid ""
+"We received a request to reset your password on redirectioneaza.ro. Your "
+"account is managed through the NGO Hub platform. To log in or manage your "
+"password, please use your NGO Hub account credentials and log in to "
+"redirectioneaza.ro through NGO Hub."
+msgstr ""
+"Ես ստացել եմ գաղտնաբառը վերագործարկելու խնդրանք "
+"Redirectioneaza.ro.Կազմակերպության հաշիվը կառավարվում է NGO Hub.ru հարթակից: "
+"Որպեսզի դուք միանաք կամ կառավարեք բառը, դուք պետք է օգտագործեք վավերացման "
+"տվյալներ ՀԲ-ի ՀԲ-ի հաշվում և միացեք ձեզ վերահասցեավորման.ro ՀԿ-ի հանգույցի "
+"միջոցով:"
+
+#: templates/v2/emails/account/reset-password/main.html:13
+#: templates/v2/emails/account/reset-password/main.txt:5
+msgid ""
+"We received a request to reset your password on redirectioneaza.ro. You can "
+"reset your password by clicking the button below."
+msgstr ""
+
+#: templates/v2/emails/admin/new-ngo/main.html:6
+#: templates/v2/emails/admin/new-ngo/main.txt:3
+#, fuzzy
+#| msgid "Welcome to redirectioneaza.ro"
+msgid "A new NGO has registered on redirectioneaza.ro"
+msgstr "Վերբեռնված է"
+
+#: templates/v2/emails/admin/new-ngo/main.html:14
+#: templates/v2/emails/admin/new-ngo/main.txt:5
+#, fuzzy
+#| msgid "name"
+msgid "NGO name"
+msgstr "անուն"
+
+#: templates/v2/emails/admin/new-ngo/main.html:22
+#: templates/v2/emails/admin/new-ngo/main.txt:6
+#, fuzzy
+#| msgid "email"
+msgid "NGO email"
+msgstr "էլ. փոստ"
+
+#: templates/v2/emails/base-footer.html:19
+msgid "If you have any questions, please contact us at"
+msgstr ""
+
+#: templates/v2/emails/base-footer.html:50
+#: templates/v2/redirect/footer.html:209
+msgid ""
+"Independent Non-profit organization, politically unaffiliated, and "
+"apolitical."
+msgstr ""
+
+#: templates/v2/emails/base-header.html:9
+#, fuzzy
+#| msgid "Welcome to redirectioneaza.ro"
+msgid "Redirecționează logo"
+msgstr "էլփոստ"
+
+#: templates/v2/emails/components/extra-hand.html:4
+#: templates/v2/emails/components/extra-hand.txt:3
+msgid "Do you want to give an extra helping hand?"
+msgstr ""
+
+#: templates/v2/emails/components/extra-hand.html:8
+#: templates/v2/emails/components/extra-hand.txt:5
+msgid ""
+"If you want to be a true civic superhero, you can help the organization "
+"collect more forms! Here's how:"
+msgstr ""
+
+#: templates/v2/emails/components/extra-hand.html:17
+#, python-format
+msgid ""
+"Share the <a href=\"%(cause_url)s\">organization's page</a> on social "
+"networks and encourage your friends to complete the form online for the "
+"organization you believe in, simply and safely, on redirectioneaza.ro."
+msgstr ""
+
+#: templates/v2/emails/components/extra-hand.html:27
+#, python-format
+msgid ""
+"Download the form 230 template for <a href=\"%(cause_url)s\">%(ngo_name)s</"
+"a>, print multiple copies and convince your colleagues, friends or family to "
+"complete it."
+msgstr ""
+
+#: templates/v2/emails/components/extra-hand.txt:10
+msgid ""
+"Share the organization's page on social networks and encourage your friends "
+"to complete the form online for the organization you believe in, simply and "
+"safely, on redirectioneaza.ro."
+msgstr ""
+
+#: templates/v2/emails/components/extra-hand.txt:19
+#, python-format
+msgid ""
+"Download the form 230 template for %(ngo_name)s, print multiple copies and "
+"convince your colleagues, friends or family to complete it."
+msgstr ""
+
+#: templates/v2/emails/components/misdelivered.html:4
+#, python-format
+msgid ""
+"Did you receive this email by mistake? Please let us know at <a "
+"href=\"mailto:%(contact_email)s\">%(contact_email)s</a>."
+msgstr ""
+
+#: templates/v2/emails/components/misdelivered.txt:3
+#, python-format
+msgid ""
+"Did you receive this email by mistake? Please let us know at "
+"%(contact_email)s."
+msgstr ""
+
+#: templates/v2/emails/components/subcopy.html:6
+#, python-format
+msgid ""
+"<p> If you're having trouble clicking the %(title)s button, copy and paste "
+"the URL below into your web browser: <a href=\"%(url)s\" class=\"break-"
+"all\">%(url)s</a> </p>"
+msgstr ""
+
+#: templates/v2/emails/donor/redirection-sans-signature/main.html:6
+#: templates/v2/emails/donor/redirection-sans-signature/main.txt:3
+msgid ""
+"You're one step closer to redirecting your income tax to the cause you "
+"believe in"
+msgstr ""
+
+#: templates/v2/emails/donor/redirection-sans-signature/main.html:12
+#: templates/v2/emails/donor/redirection-sans-signature/main.txt:5
+#, python-format
+msgid ""
+"Thank you for choosing to support %(ngo_name)s! You can download the "
+"completed form by clicking the button below."
+msgstr ""
+
+#: templates/v2/emails/donor/redirection-sans-signature/main.html:22
+#: templates/v2/emails/donor/redirection-sans-signature/main.txt:13
+msgid "The next steps"
+msgstr ""
+
+#: templates/v2/emails/donor/redirection-sans-signature/main.html:26
+#: templates/v2/emails/donor/redirection-sans-signature/main.txt:15
+msgid ""
+"To complete the redirection, all you need to do is print the form, sign it, "
+"and then choose one of the following options:"
+msgstr ""
+
+#: templates/v2/emails/donor/redirection-sans-signature/main.html:33
+#: templates/v2/emails/donor/redirection-sans-signature/main.txt:20
+msgid ""
+"Send it to the beneficiary NGO, which will then take care of submitting it "
+"to ANAF."
+msgstr ""
+
+#: templates/v2/emails/donor/redirection-sans-signature/main.html:36
+#, python-format
+msgid ""
+"Send it or submit it directly to the tax office (ANAF) in the area where you "
+"are domiciled, until <strong>%(donation_limit_day)s "
+"%(donation_limit_month_name)s %(donation_limit_year)s</strong>."
+msgstr ""
+
+#: templates/v2/emails/donor/redirection-sans-signature/main.html:43
+#, python-format
+msgid ""
+"<dl> <div> <dt>Name:</dt> <dd>%(ngo_name)s</dd> </div> <div> <dt>Address:</"
+"dt> <dd>%(ngo_address)s</dd> </div> <div> <dt>Email:</dt> <dd><a "
+"href=\"mailto:%(ngo_email)s\">%(ngo_email)s</a></dd> </div> </dl>"
+msgstr ""
+
+#: templates/v2/emails/donor/redirection-sans-signature/main.html:67
+#: templates/v2/emails/donor/redirection-sans-signature/main.txt:32
+#: templates/v2/emails/donor/redirection-with-signature/main.html:26
+#: templates/v2/emails/donor/redirection-with-signature/main.txt:16
+#: templates/v2/emails/donor/removed-redirection/main.html:24
+#: templates/v2/emails/donor/removed-redirection/main.txt:16
+msgid "Thank you for your involvement!"
+msgstr ""
+
+#: templates/v2/emails/donor/redirection-sans-signature/main.txt:21
+msgid ""
+"Send it or submit it directly to the tax office (ANAF) in the area where you "
+"are domiciled, until {{ donation_limit_day }} "
+"{{ donation_limit_month_name }} {{ donation_limit_year }}."
+msgstr ""
+
+#: templates/v2/emails/donor/redirection-sans-signature/main.txt:24
+#, fuzzy
+#| msgid "NGO Hub organization ID"
+msgid "The organization's contact info"
+msgstr "NGO Hub կազմակերպության նույնականացման համար"
+
+#: templates/v2/emails/donor/redirection-with-signature/main.html:6
+#: templates/v2/emails/donor/redirection-with-signature/main.txt:3
+#, fuzzy
+#| msgid "Options"
+msgid "Good news! You have just redirected a part of your income tax!"
+msgstr "Ընտրանքներ"
+
+#: templates/v2/emails/donor/redirection-with-signature/main.html:12
+#: templates/v2/emails/donor/redirection-with-signature/main.txt:5
+#, python-format
+msgid ""
+"Thank you for choosing to support %(ngo_name)s! Your form has reached the "
+"organization, so you don't have to worry about anything else. You can see "
+"the form you have filled in by clicking the button below."
+msgstr ""
+
+#: templates/v2/emails/donor/removed-redirection/main.html:6
+#: templates/v2/emails/donor/removed-redirection/main.txt:3
+#, fuzzy
+#| msgid "Welcome to redirectioneaza.ro"
+msgid "Your redirection form was removed from redirectioneaza.ro"
+msgstr "Վերբեռնված է"
+
+#: templates/v2/emails/donor/removed-redirection/main.html:12
+#: templates/v2/emails/donor/removed-redirection/main.txt:5
+#, python-format
+msgid ""
+"Thank you for choosing to support %(cause_name)s! The administrators of the "
+"platform have unfortunately removed the redirection because of an error or a "
+"request from the NGO. If you wish to redirect again to the same cause, "
+"please go to the following link:"
+msgstr ""
+
+#: templates/v2/emails/donor/removed-redirection/main.html:20
+#, fuzzy
+#| msgid "Options"
+msgid "Redirect"
+msgstr "Ընտրանքներ"
+
+#: templates/v2/emails/ngo/download-archive/main.html:12
+#: templates/v2/emails/ngo/download-archive/main.txt:5
+msgid ""
+"We have received your request and prepared the archive with your "
+"organization's forms. You can access the documents by clicking the button "
+"below. Remember that the deadline for submitting the forms to ANAF is"
+msgstr ""
+
+#: templates/v2/emails/ngo/new-form-received/main.html:6
+#: templates/v2/emails/ngo/new-form-received/main.txt:3
+#, fuzzy
+#| msgid "Options"
+msgid "Good news! You have a new redirection form"
+msgstr "Ընտրանքներ"
+
+#: templates/v2/emails/ngo/new-form-received/main.html:12
+#: templates/v2/emails/ngo/new-form-received/main.txt:5
+msgid ""
+"A new superhero has decided to support your organization by redirecting "
+"income tax. You can access the completed form by clicking the button below. "
+"Remember to submit it to ANAF to complete the process!"
+msgstr ""
+
+#: templates/v2/form/header/main.html:14 templates/v2/public/all-ngos.html:9
+#, fuzzy
+#| msgid "NGO Hub organization ID"
+msgid "Explore organizations"
+msgstr "NGO Hub կազմակերպության նույնականացման համար"
+
+#: templates/v2/form/header/main.html:53
+#, fuzzy
+#| msgid "NGO Hub organization ID"
+msgid "Organization information"
+msgstr "NGO Hub կազմակերպության նույնականացման համար"
+
+#: templates/v2/form/header/other-form.html:16
+msgid "Cause information"
+msgstr ""
+
+#: templates/v2/form/modals/confirmation.html:35
+#, fuzzy
+#| msgid "Login through NGO Hub"
+msgid "Continue without signing?"
+msgstr "Մուտք գործել NGO Hub-ի միջոցով"
+
+#: templates/v2/form/modals/confirmation.html:39
+msgid ""
+"If you continue without signing online, your form will be generated, and you "
+"will be able to download the PDF, but it will not reach the NGO. We rely on "
+"you to print, sign the form by hand, and send it to the NGO by post or "
+"email, or you will submit it independently to ANAF."
+msgstr ""
+
+#: templates/v2/form/modals/confirmation.html:55
+msgid "Back"
+msgstr ""
+
+#: templates/v2/form/modals/confirmation.html:64
+msgid "Continue"
+msgstr ""
+
+#: templates/v2/form/modals/signature.html:57
+#, fuzzy
+#| msgid "Sign In"
+msgid "Signature modal"
+msgstr "Գրանցվել"
+
+#: templates/v2/form/modals/signature.html:111
+#, fuzzy
+#| msgid "Sign In"
+msgid "Add signature"
+msgstr "Գրանցվել"
+
+#: templates/v2/form/modals/signature.html:115
+msgid "Draw your signature in the canvas below."
+msgstr ""
+
+#: templates/v2/form/modals/signature.html:132
+msgid "Reset"
+msgstr ""
+
+#: templates/v2/form/modals/signature.html:142
+msgid "Ok"
+msgstr ""
+
+#: templates/v2/form/redirection-closed.html:6
+msgid "Notice!"
+msgstr ""
+
+#: templates/v2/form/redirection-closed.html:9
+#, python-format
+msgid ""
+"The donation form can only be filled out between <span class=\"text-"
+"amber-600\">January 1st</span> and <span class=\"text-"
+"amber-600\">%(limit.day)s %(month_limit)s</span> of the current year."
+msgstr ""
+
+#: templates/v2/form/redirection-header.html:67
+#, fuzzy
+#| msgid "description"
+msgid "Description"
+msgstr "նկարագրություն"
+
+#: templates/v2/form/redirection-open.html:5
+msgid "Redirect easily and quickly"
+msgstr ""
+
+#: templates/v2/form/redirection-open.html:9
+msgid ""
+"Since 2022, form 230 can be submitted online. Fill in the form with the data "
+"from your ID, sign it online, and it will be automatically sent to the "
+"organization. Alternatively, your form will be generated, and you will be "
+"able to download the PDF, but it will not reach the NGO. We rely on you to "
+"print, sign the form by hand, and send it to the NGO by mail or email, or "
+"submit it directly to ANAF."
+msgstr ""
+
+#: templates/v2/form/redirection-open.html:36
+#, fuzzy
+#| msgid "description"
+msgid "Personal data"
+msgstr "նկարագրություն"
+
+#: templates/v2/form/redirection-open.html:50
+#, fuzzy
+#| msgid "initial"
+msgid "Father's initial"
+msgstr "սկզբնական"
+
+#: templates/v2/form/redirection-open.html:55
+#, fuzzy
+#| msgid "registration number"
+msgid "Personal identification number"
+msgstr "գրանցման համարը"
+
+#: templates/v2/form/redirection-open.html:65
+#: templates/v2/ngo-account/redirections/list-header.html:19
+#, fuzzy
+#| msgid "street number"
+msgid "Phone number"
+msgstr "փողոցի համարը"
+
+#: templates/v2/form/redirection-open.html:76
+#, fuzzy
+#| msgid "address"
+msgid "Home address"
+msgstr "հասցե"
+
+#: templates/v2/form/redirection-open.html:80
+#, fuzzy
+#| msgid "street name"
+msgid "Street name"
+msgstr "փողոցի անվանումը"
+
+#: templates/v2/form/redirection-open.html:90
+msgid "Flat"
+msgstr ""
+
+#: templates/v2/form/redirection-open.html:110
+#, fuzzy
+#| msgid "County"
+msgid "County/Sector"
+msgstr "Շրջան"
+
+#: templates/v2/form/redirection-open.html:128
+msgid "Handwritten signature"
+msgstr ""
+
+#: templates/v2/form/redirection-open.html:139
+msgid "Data sharing information"
+msgstr ""
+
+#: templates/v2/form/redirection-open.html:142
+msgid "I want my redirection to be valid for two years"
+msgstr ""
+
+#: templates/v2/form/redirection-open.html:147
+msgid ""
+"I agree that ANAF may communicate to the beneficiary entity my "
+"identification data (name, surname, and personal identification code/tax "
+"identification number), as well as the amount directed."
+msgstr ""
+
+#: templates/v2/form/redirection-open.html:160
+msgid ""
+"I agree that this NGO may contact me in the future with details about the "
+"projects implemented"
+msgstr ""
+
+#: templates/v2/form/redirection-open.html:169
+#, python-format
+msgid ""
+"I agree with <a class=\"%(href_class)s\" href=\"%(terms_url)s\"> the Terms "
+"of the application </a>. <a class=\"%(href_class)s\" "
+"href=\"%(policy_url)s\"> the Privacy Policy </a>."
+msgstr ""
+
+#: templates/v2/form/redirection-open.html:188
+msgid "Captcha"
+msgstr ""
+
+#: templates/v2/form/redirection-open.html:206
+msgid "Confirm sending without signature modal"
+msgstr ""
+
+#: templates/v2/form/redirection-open.html:225
+#, fuzzy
+#| msgid "Sign In Error"
+msgid "Send signed form"
+msgstr "Մուտք գործելու սխալ"
+
+#: templates/v2/form/redirection-open.html:234
+#, fuzzy
+#| msgid "Login through NGO Hub"
+msgid "Continue without signing"
+msgstr "Մուտք գործել NGO Hub-ի միջոցով"
+
+#: templates/v2/form/redirection-open.html:244
+#: templates/v3/admin/forms/action.html:25
+#, fuzzy
+#| msgid "Sign In Error"
+msgid "Send the form"
+msgstr "Մուտք գործելու սխալ"
+
+#: templates/v2/form/success/signed.html:4
+msgid "Thank you! Part of your income tax will go to the cause you believe in"
+msgstr ""
+
+#: templates/v2/form/success/signed.html:10
+msgid ""
+"Your form has been sent to the organization, and they will take care of "
+"submitting it to the tax office. You will receive a copy of it by email "
+"shortly."
+msgstr ""
+
+#: templates/v2/form/success/signed.html:26
+#: templates/v2/form/success/unsigned.html:97
+msgid ""
+"Together we can make a positive change in society, that's why we need as "
+"many people like you as possible. See below how you can contribute more."
+msgstr ""
+
+#: templates/v2/form/success/unsigned.html:4
+msgid "You are one step closer to redirecting your income tax..."
+msgstr ""
+
+#: templates/v2/form/success/unsigned.html:10
+msgid ""
+"We have generated the form with your data. Next, it needs to be signed and "
+"sent. See below, or in the email, the steps you need to follow."
+msgstr ""
+
+#: templates/v2/form/success/unsigned.html:31
+msgid "After you print and sign the form, you have the following options:"
+msgstr ""
+
+#: templates/v2/form/success/unsigned.html:42
+msgid ""
+"You scan and send it by email to the NGO, and they will take care of "
+"submitting it. The NGO's email address is:"
+msgstr ""
+
+#: templates/v2/form/success/unsigned.html:55
+msgid ""
+"You send it by post with a registered letter to the tax office (ANAF) you "
+"belong to."
+msgstr ""
+
+#: templates/v2/form/success/unsigned.html:60
+msgid "Search for the office you belong to in this list;"
+msgstr ""
+
+#: templates/v2/form/success/unsigned.html:73
+msgid ""
+"You send it by post or courier to the NGO's address, and they will take care "
+"of submitting it. Their address is:"
+msgstr ""
+
+#: templates/v2/form/success/unsigned.html:78
+#, fuzzy
+#| msgid "county"
+msgid "the county"
+msgstr "մարզ"
+
+#: templates/v2/form/success/unsigned.html:88
+msgid ""
+"Alternatively, you can choose to refill the form and sign it online at any "
+"time, in which case it will go directly to the organization in digital "
+"format, and they will complete the redirection process."
+msgstr ""
+
+#: templates/v2/ngo-account/archives/list-header.html:4
+#: templates/v2/ngo-account/redirections/list-header.html:4
+msgid "#"
+msgstr ""
+
+#: templates/v2/ngo-account/archives/list-header.html:7
+#, fuzzy
+#| msgid "date created"
+msgid "Date generated"
+msgstr "ամսաթիվը ստեղծվել է"
+
+#: templates/v2/ngo-account/archives/list-header.html:13
+msgid "No. of Forms"
+msgstr ""
+
+#: templates/v2/ngo-account/archives/list-header.html:16
+#, fuzzy
+#| msgid "Sign In Error"
+msgid "Download link"
+msgstr "Մուտք գործելու սխալ"
+
+#: templates/v2/ngo-account/archives/list-items.html:7
+#, fuzzy
+#| msgid "date created"
+msgid "No archives were generated"
+msgstr "ամսաթիվը ստեղծվել է"
+
+#: templates/v2/ngo-account/archives/list-items.html:29
+#, fuzzy
+#| msgid "Work in progress"
+msgid "In progress"
+msgstr "Աշխատանքն ընթացքի մեջ է"
+
+#: templates/v2/ngo-account/archives/list-items.html:33
+#, fuzzy
+#| msgid "Unknown role"
+msgid "Unknown"
+msgstr "Անհայտ դեր"
+
+#: templates/v2/ngo-account/archives/list-items.html:46
+#, fuzzy
+#| msgid "Sign In Error"
+msgid "Download"
+msgstr "Մուտք գործելու սխալ"
+
+#: templates/v2/ngo-account/archives/listing.html:14
+#, fuzzy
+#| msgid "Imports"
+msgid "exports"
+msgstr "Ներմուծում"
+
+#: templates/v2/ngo-account/archives/main.html:14
+msgid ""
+"Here you can find the archives of forms that have been exported. If are "
+"collecting signed forms, the archive containing those forms will also "
+"contain the documents for the ANAF dynamic PDF."
+msgstr ""
+
+#: templates/v2/ngo-account/banners/form-emails-banner.html:7
+msgid ""
+"Your organization has not yet activated the online signing of this "
+"redirection form."
+msgstr ""
+
+#: templates/v2/ngo-account/banners/form-emails-banner.html:19
+#: templates/v2/ngo-account/cause/form.html:141
+msgid "Allow users to sign the form online"
+msgstr ""
+
+#: templates/v2/ngo-account/banners/form-emails-banner.html:20
+#, python-format
+msgid ""
+"<p> Currently, users can fill in the form, but they will need to download "
+"and print it, then fill it in manually, and send it either to the "
+"organization's address or to an ANAF office. If you have an SPV account, you "
+"can choose to enable online signing by checking the "
+"<strong>\"%(button_input_title)s\"</strong> option. </p>"
+msgstr ""
+
+#: templates/v2/ngo-account/banners/form-emails-banner.html:36
+#: templates/v2/ngo-account/banners/form-notifications-banner.html:18
+#, fuzzy
+#| msgid "Sign In Error"
+msgid "Go to the form page"
+msgstr "Մուտք գործելու սխալ"
+
+#: templates/v2/ngo-account/banners/form-ngohub.html:3
+msgid ""
+"<p> The information below is public for redirectioneaza.ro users. </p> <p> "
+"Some fields are disabled because they are automatically taken from your "
+"organization's account in NGO Hub. You can modify them at any time directly "
+"in NGO Hub, then update them on redirectioneaza.ro by pressing the \"Fetch "
+"from NGO Hub\" button. </p>"
+msgstr ""
+
+#: templates/v2/ngo-account/banners/form-ngohub.html:16
+#, fuzzy
+#| msgid "NGOs from NGO Hub"
+msgid "Go to NGO Hub"
+msgstr "NGO Hub-ի ՀԿ-ները"
+
+#: templates/v2/ngo-account/banners/form-notifications-banner.html:4
+msgid "Your organization is not receiving notifications for signed forms."
+msgstr ""
+
+#: templates/v2/ngo-account/banners/form-notifications-banner.html:6
+#: templates/v2/ngo-account/cause/form.html:178
+msgid "Receive notifications for each signed form"
+msgstr ""
+
+#: templates/v2/ngo-account/banners/form-notifications-banner.html:7
+#, python-format
+msgid ""
+"<p> Users can sign the form, but your organization will not receive any "
+"notifications. If you want to receive notifications for each signed form, "
+"please enable the <strong>\"%(button_input_title)s\"</strong> option and "
+"fill in the email address where you want to receive the notifications. </p>"
+msgstr ""
+
+#: templates/v2/ngo-account/base.html:11
+msgid "There are some errors on the form."
+msgstr ""
+
+#: templates/v2/ngo-account/cause/form.html:12
+#: templates/v2/ngo-account/cause/form.html:31
+#, fuzzy
+#| msgid "Form"
+msgid "Form data"
+msgstr "հարցաթերթ"
+
+#: templates/v2/ngo-account/cause/form.html:18
+msgid "For filling in the form, we will use the following organization data:"
+msgstr ""
+
+#: templates/v2/ngo-account/cause/form.html:23
+#, fuzzy
+#| msgid "NGO Hub organization ID"
+msgid "See the Organization's Information"
+msgstr "NGO Hub կազմակերպության նույնականացման համար"
+
+#: templates/v2/ngo-account/cause/form.html:33
+msgid "This information will appear on the filled form."
+msgstr ""
+
+#: templates/v2/ngo-account/cause/form.html:40
+msgid "IBAN on form"
+msgstr ""
+
+#: templates/v2/ngo-account/cause/form.html:42
+msgid ""
+"Changing the IBAN will not update the forms already completed by taxpayers."
+msgstr ""
+
+#: templates/v2/ngo-account/cause/form.html:46
+#, python-format
+msgid ""
+"Choose the IBAN you will use for collecting and submitting to ANAF. "
+"%(iban_helptext)s"
+msgstr ""
+
+#: templates/v2/ngo-account/cause/form.html:71
+#, fuzzy
+#| msgid "address"
+msgid "Form page"
+msgstr "հասցե"
+
+#: templates/v2/ngo-account/cause/form.html:74
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:68
+msgid ""
+"The information in this section will be visible on the public page of the "
+"form."
+msgstr ""
+
+#: templates/v2/ngo-account/cause/form.html:83
+#, fuzzy
+#| msgid "Form"
+msgid "Form title"
+msgstr "հարցաթերթ"
+
+#: templates/v2/ngo-account/cause/form.html:88
+#, fuzzy
+#| msgid "description"
+msgid "Form description"
+msgstr "նկարագրություն"
+
+#: templates/v2/ngo-account/cause/form.html:93
+#, fuzzy
+#| msgid "display ordering"
+msgid "Display image"
+msgstr "ցուցադրման պատվեր"
+
+#: templates/v2/ngo-account/cause/form.html:104
+#, fuzzy
+#| msgid "description"
+msgid "Form settings"
+msgstr "նկարագրություն"
+
+#: templates/v2/ngo-account/cause/form.html:107
+msgid ""
+"From this section, you can manage the form's URL, its visibility and online "
+"signing."
+msgstr ""
+
+#: templates/v2/ngo-account/cause/form.html:118
+#: templates/v2/ngo-account/causes/list-header.html:10
+#, fuzzy
+#| msgid "Form"
+msgid "Form URL"
+msgstr "հարցաթերթ"
+
+#: templates/v2/ngo-account/cause/form.html:120
+msgid ""
+"This is the link through which users will access your form on the site. It "
+"can only contain letters, numbers, and hyphens. Example: cause-form."
+msgstr ""
+
+#: templates/v2/ngo-account/cause/form.html:134
+msgid "Form visibility"
+msgstr ""
+
+#: templates/v2/ngo-account/cause/form.html:143
+#: templates/v2/ngo-account/cause/form.html:180
+msgid ""
+"Choose the IBAN you will use for collecting and submitting to ANAF. Changing "
+"the IBAN will not update the forms already completed by taxpayers."
+msgstr ""
+
+#: templates/v2/ngo-account/cause/form.html:156
+#, fuzzy
+#| msgid "NGO Hub organization ID"
+msgid "Form notifications"
+msgstr "NGO Hub կազմակերպության նույնականացման համար"
+
+#: templates/v2/ngo-account/cause/form.html:159
+msgid "From this section, you can manage the form's email notifications."
+msgstr ""
+
+#: templates/v2/ngo-account/cause/form.html:190
+#, fuzzy
+#| msgid "email address"
+msgid "Notifications e-mail address"
+msgstr "էլ. փոստի հասցեն"
+
+#: templates/v2/ngo-account/cause/main.html:11
+msgid "Back to causes"
+msgstr ""
+
+#: templates/v2/ngo-account/causes/list-header.html:13
+msgid "Online Signing"
+msgstr ""
+
+#: templates/v2/ngo-account/causes/list-header.html:16
+msgid "Visibility"
+msgstr ""
+
+#: templates/v2/ngo-account/causes/list-header.html:19
+msgid "Edited at"
+msgstr ""
+
+#: templates/v2/ngo-account/causes/list-header.html:22
+#, fuzzy
+#| msgid "donors"
+msgid "Contributions"
+msgstr "դոնորներ"
+
+#: templates/v2/ngo-account/causes/list-header.html:26
+#: templates/v2/ngo-account/redirections/list-header.html:29
+#, fuzzy
+#| msgid "Options"
+msgid "Actions"
+msgstr "Ընտրանքներ"
+
+#: templates/v2/ngo-account/causes/list-items.html:7
+#, fuzzy
+#| msgid "Options"
+msgid "No causes found"
+msgstr "Ընտրանքներ"
+
+#: templates/v2/ngo-account/causes/listing.html:14
+msgid "causes"
+msgstr ""
+
+#: templates/v2/ngo-account/causes/main.html:15
+msgid ""
+"Here, you can create and edit separate forms for causes or projects in your "
+"organization. You can manage the visibility of each form according to your "
+"needs."
+msgstr ""
+
+#: templates/v2/ngo-account/causes/main.html:31
+#, fuzzy, python-format
+#| msgid "date created"
+msgid "%(counter)s cause created"
+msgid_plural "%(counter)s causes created"
+msgstr[0] "ամսաթիվը ստեղծվել է"
+msgstr[1] "ամսաթիվը ստեղծվել է"
+
+#: templates/v2/ngo-account/causes/main.html:47
+msgid ""
+"You need to first create the organization's form. Go to the 'Organization "
+"Form' page for this."
+msgstr ""
+
+#: templates/v2/ngo-account/causes/main.html:64
+msgid "Add form"
+msgstr ""
+
+#: templates/v2/ngo-account/causes/visibility-badge.html:5
+msgid "Public"
+msgstr ""
+
+#: templates/v2/ngo-account/causes/visibility-badge.html:6
+msgid ""
+"The form is public for contributors. Anyone can search for the form and find "
+"it."
+msgstr ""
+
+#: templates/v2/ngo-account/causes/visibility-badge.html:14
+msgid "Unlisted"
+msgstr ""
+
+#: templates/v2/ngo-account/causes/visibility-badge.html:15
+msgid ""
+"The form is not listed on the platform. Only people with the link can access "
+"this form."
+msgstr ""
+
+#: templates/v2/ngo-account/causes/visibility-badge.html:23
+msgid "Private"
+msgstr ""
+
+#: templates/v2/ngo-account/causes/visibility-badge.html:24
+msgid ""
+"The form is visible only to you until you choose to make it public for "
+"contributors."
+msgstr ""
+
+#: templates/v2/ngo-account/causes/visibility-badge.html:32
+msgid "Necunoscut"
+msgstr ""
+
+#: templates/v2/ngo-account/causes/visibility-badge.html:33
+msgid "This is an issue. Please contact support."
+msgstr ""
+
+#: templates/v2/ngo-account/components/filters.html:5
+#: templates/v2/ngo-account/components/filters.html:15
+msgid "Filters"
+msgstr ""
+
+#: templates/v2/ngo-account/components/filters.html:32
+msgid "Clear filters and search"
+msgstr ""
+
+#: templates/v2/ngo-account/components/form-title.html:31
+msgid "View public page"
+msgstr ""
+
+#: templates/v2/ngo-account/components/form-title.html:39
+msgid ""
+"Download the form filled with the organization's data, print it, and collect "
+"contributions offline."
+msgstr ""
+
+#: templates/v2/ngo-account/components/form-title.html:73
+#, fuzzy
+#| msgid "NGOs from NGO Hub"
+msgid "Get from NGO Hub"
+msgstr "NGO Hub-ի ՀԿ-ները"
+
+#: templates/v2/ngo-account/components/form-title.html:105
+msgid "Save changes"
+msgstr ""
+
+#: templates/v2/ngo-account/my-organization/base.html:16
+#, fuzzy
+#| msgid "Welcome to redirectioneaza.ro"
+msgid "Fill out the organization's profile on redirectioneaza.ro"
+msgstr "Վերբեռնված է"
+
+#: templates/v2/ngo-account/my-organization/base.html:21
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:27
+#, fuzzy
+#| msgid "NGO Hub organization ID"
+msgid "Presentation Data"
+msgstr "NGO Hub կազմակերպության նույնականացման համար"
+
+#: templates/v2/ngo-account/my-organization/base.html:22
+#, fuzzy
+#| msgid "Form"
+msgid "Form Data"
+msgstr "հարցաթերթ"
+
+#: templates/v2/ngo-account/my-organization/base.html:60
+#, python-format
+msgid ""
+"<p> At this moment, donors can't access your form and your organization is "
+"not visible on redirectioneaza.ro. To reactivate your profile, please "
+"contact us at <a href=\"mailto:%(contact_email)s\" class=\"text-blue-600 "
+"underline\">%(contact_email)s</a>. </p>"
+msgstr ""
+
+#: templates/v2/ngo-account/my-organization/base.html:80
+msgid ""
+"<p> Your organization can't currently receive forms because not all "
+"necessary information has been completed. Please complete the organization's "
+"data: </p>"
+msgstr ""
+
+#: templates/v2/ngo-account/my-organization/base.html:94
+msgid ""
+"<p> Your organization can't currently receive forms because not all "
+"necessary information has been completed. Please complete the form data: </p>"
+msgstr ""
+
+#: templates/v2/ngo-account/my-organization/ngo-form.html:10
+#, fuzzy
+#| msgid "NGO Hub organization ID"
+msgid "Organization name"
+msgstr "NGO Hub կազմակերպության նույնականացման համար"
+
+#: templates/v2/ngo-account/my-organization/ngo-form.html:11
+#, fuzzy
+#| msgid "NGO Hub organization ID"
+msgid "Organization description"
+msgstr "NGO Hub կազմակերպության նույնականացման համար"
+
+#: templates/v2/ngo-account/my-organization/ngo-form.html:12
+#, fuzzy
+#| msgid "NGO Hub organization ID"
+msgid "Organization logo"
+msgstr "NGO Hub կազմակերպության նույնականացման համար"
+
+#: templates/v2/ngo-account/my-organization/ngo-form.html:14
+msgid ""
+"This is the name of your organization. It will be displayed on the public "
+"page of the main form as well as all the other forms created by your "
+"organization."
+msgstr ""
+
+#: templates/v2/ngo-account/my-organization/ngo-form.html:20
+msgid ""
+"Choose a text that best describes your organization. This will be displayed "
+"on the public page of the main form as well as all the other forms created "
+"by your organization."
+msgstr ""
+
+#: templates/v2/ngo-account/my-organization/ngo-form.html:26
+msgid ""
+"The logo of the organization will be displayed on the public page of the "
+"main form as well as all the other forms created by your organization."
+msgstr ""
+
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:39
+msgid "Official data"
+msgstr ""
+
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:40
+msgid ""
+"This data will appear on the filled-out form and, if you activate online "
+"signing, on the archive generated for ANAF."
+msgstr ""
+
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:49
+#, fuzzy
+#| msgid "filename"
+msgid "Official name"
+msgstr "ֆայլի անունը"
+
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:50
+msgid ""
+"This is the official name of your organization, as it appears in the "
+"registration documents."
+msgstr ""
+
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:66
+#, fuzzy
+#| msgid "Welcome to redirectioneaza.ro"
+msgid "Your organization on redirectioneaza.ro"
+msgstr "Բարի գալուստ redirectioneaza.ro"
+
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:74
+#, fuzzy
+#| msgid "NGO Hub organization ID"
+msgid "Organization website"
+msgstr "NGO Hub կազմակերպության նույնականացման համար"
+
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:80
+#, fuzzy
+#| msgid "NGO Hub organization ID"
+msgid "Organization contact e-mail"
+msgstr "NGO Hub կազմակերպության նույնականացման համար"
+
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:85
+#, fuzzy
+#| msgid "display ordering"
+msgid "Display e-mail in the profile"
+msgstr "ցուցադրման պատվեր"
+
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:94
+#, fuzzy
+#| msgid "NGO Hub organization ID"
+msgid "Organization contact phone"
+msgstr "NGO Hub կազմակերպության նույնականացման համար"
+
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:99
+#, fuzzy
+#| msgid "display ordering"
+msgid "Display phone in the profile"
+msgstr "ցուցադրման պատվեր"
+
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:108
+#, fuzzy
+#| msgid "NGO Hub organization ID"
+msgid "Organization address"
+msgstr "NGO Hub կազմակերպության նույնականացման համար"
+
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:113
+msgid "Locality/Sector"
+msgstr ""
+
+#: templates/v2/ngo-account/redirections/generate-archive/button.html:7
+#, python-format
+msgid ""
+"Select the cause for which you want to generate the ANAF archive. You can "
+"select them one by one, but you can't generate an archive more than once "
+"every %(period_between_retries)s. Only the causes that allow online "
+"collection of signatures are shown."
+msgstr ""
+
+#: templates/v2/ngo-account/redirections/generate-archive/button.html:15
+#, python-format
+msgid ""
+"Generate the ANAF archive for your organization. You can generate the "
+"archive once every %(period_between_retries)s."
+msgstr ""
+
+#: templates/v2/ngo-account/redirections/generate-archive/button.html:22
+#, python-format
+msgid ""
+"Because the download operation of the redirections can take longer, "
+"depending on the number of donors, you can currently download one archive "
+"every %(period_between_retries)s."
+msgstr ""
+
+#: templates/v2/ngo-account/redirections/generate-archive/button.html:28
+msgid "You can’t generate the archive because you don’t have any redirections."
+msgstr ""
+
+#: templates/v2/ngo-account/redirections/generate-archive/multiple-button.html:19
+#: templates/v2/ngo-account/redirections/generate-archive/single-button.html:34
+#, fuzzy
+#| msgid "Generate donations archive"
+msgid "Generate ANAF Archive"
+msgstr "Ստեղծել նվիրատվությունների արխիվ"
+
+#: templates/v2/ngo-account/redirections/generate-archive/multiple-dropdown.html:25
+#, python-format
+msgid "%(redirections_count)s form collected"
+msgid_plural "%(redirections_count)s forms collected"
+msgstr[0] ""
+msgstr[1] ""
+
+#: templates/v2/ngo-account/redirections/list-header.html:7
+#, fuzzy
+#| msgid "date finished"
+msgid "Date filled"
+msgstr "Ավարտման ամսաթիվ"
+
+#: templates/v2/ngo-account/redirections/list-header.html:13
+msgid "Locality, County"
+msgstr ""
+
+#: templates/v2/ngo-account/redirections/list-header.html:16
+#: templates/v2/ngo-account/settings-account/main.html:47
+#, fuzzy
+#| msgid "email"
+msgid "E-mail"
+msgstr "էլ. փոստ"
+
+#: templates/v2/ngo-account/redirections/list-header.html:22
+#, fuzzy
+#| msgid "two years"
+msgid "2 years"
+msgstr "երկու տարի"
+
+#: templates/v2/ngo-account/redirections/list-items.html:7
+#, fuzzy
+#| msgid "Options"
+msgid "No redirections found"
+msgstr "Ընտրանքներ"
+
+#: templates/v2/ngo-account/redirections/list-items.html:36
+msgid "This person does not wish to share their contact details."
+msgstr ""
+
+#: templates/v2/ngo-account/redirections/list-items.html:58
+#, fuzzy
+#| msgid "has signed"
+msgid "Unsigned"
+msgstr "ստորագրել է"
+
+#: templates/v2/ngo-account/redirections/listing.html:14
+#, fuzzy
+#| msgid "Donations"
+msgid "donations"
+msgstr "Նվիրատվություններ"
+
+#: templates/v2/ngo-account/redirections/main.html:14
+msgid ""
+"Here you can find the redirection forms filled in, which you can export."
+msgstr ""
+
+#: templates/v2/ngo-account/redirections/main.html:30
+#, python-format
+msgid "%(counter)s redirection form"
+msgid_plural "%(counter)s redirection forms"
+msgstr[0] ""
+msgstr[1] "Տարբերակներ"
+
+#: templates/v2/ngo-account/redirections/main.html:76
+#, fuzzy
+#| msgid "donors"
+msgid "Search for donors"
+msgstr "դոնորներ"
+
+#: templates/v2/ngo-account/redirections/main.html:93
+msgid "Filter list"
+msgstr ""
+
+#: templates/v2/ngo-account/settings-account/main.html:16
+#, fuzzy
+#| msgid "To access your account, you need to authenticate through NGO Hub."
+msgid "Manage your account settings in NGO Hub"
+msgstr ""
+"Ձեր օգտահաշիվ մուտք գործելու համար դուք պետք է նույնականացնեք NGO Hub-ի "
+"միջոցով:"
+
+#: templates/v2/ngo-account/settings-account/main.html:21
+msgid "Here you can manage your account settings."
+msgstr ""
+
+#: templates/v2/ngo-account/settings-account/main.html:40
+#, fuzzy
+#| msgid "bank account"
+msgid "User Account"
+msgstr "բանկային հաշիվ"
+
+#: templates/v2/ngo-account/settings-account/main.html:53
+#, fuzzy
+#| msgid "last name"
+msgid "Full name"
+msgstr "ազգանուն"
+
+#: templates/v2/public/all-causes.html:9
+msgid "Explore causes"
+msgstr ""
+
+#: templates/v2/public/all-causes.html:13
+msgid ""
+"Without costing you anything extra, by redirecting, you give a little extra "
+"power to a cause to do good in your name. You can opt for the redistribution "
+"of the amount until"
+msgstr ""
+
+#: templates/v2/public/all-causes.html:34 templates/v2/public/all-ngos.html:37
+#, fuzzy
+#| msgid "NGO Hub organization ID"
+msgid "No organizations found."
+msgstr "NGO Hub կազմակերպության նույնականացման համար"
+
+#: templates/v2/public/all-causes.html:38 templates/v2/public/all-ngos.html:41
+#, fuzzy
+#| msgid "NGO Hub organization ID"
+msgid "organizations"
+msgstr "NGO Hub կազմակերպության նույնականացման համար"
+
+#: templates/v2/public/all-ngos.html:13
+#: templates/v2/public/components/home/hero.html:40
+msgid ""
+"Without costing you anything extra, by redirecting, you give a little extra "
+"power to an NGO to do good in your name. You can opt for the redistribution "
+"of the amount until"
+msgstr ""
+
+#: templates/v2/public/all-ngos.html:27
+msgid "Search for an NGO by its name or CUI/CIF"
+msgstr ""
+
+#: templates/v2/public/components/cause-search.html:5
+#: templates/v2/public/components/home/dropdown-search.html:35
+msgid "Search for a cause by its name or its NGO's CUI/CIF"
+msgstr ""
+
+#: templates/v2/public/components/home/explore.html:7
+msgid "Explore the NGOs"
+msgstr ""
+
+#: templates/v2/public/components/home/explore.html:9
+msgid "Explore NGOs"
+msgstr ""
+
+#: templates/v2/public/components/home/explore.html:13
+msgid "Choose the organization you want to redirect to!"
+msgstr ""
+
+#: templates/v2/public/components/home/explore.html:25
+#, fuzzy
+#| msgid "NGO Hub organization ID"
+msgid "See all organizations"
+msgstr "NGO Hub կազմակերպության նույնականացման համար"
+
+#: templates/v2/public/components/home/hero.html:12
+#, python-format
+msgid "Redirect 3.5%% of your income tax"
+msgstr ""
+
+#: templates/v2/public/components/home/hero.html:13
+msgid "to a cause of your choice"
+msgstr ""
+
+#: templates/v2/public/components/home/hero.html:15
+#, python-format
+msgid "Redirect 3.5%% of your tax to one of the NGOs"
+msgstr ""
+
+#: templates/v2/public/components/home/hero.html:16
+#, python-format
+msgid "supported by %(company_name)s"
+msgstr ""
+
+#: templates/v2/public/components/home/hero.html:21
+msgid "You decide what happens"
+msgstr ""
+
+#: templates/v2/public/components/home/hero.html:22
+#, python-format
+msgid "with 3.5%% of the income tax"
+msgstr ""
+
+#: templates/v2/public/components/home/hero.html:51
+msgid ""
+"If your favorite NGO is not on this page, check the full list of "
+"organizations on <a class=\"underline text-cyan-700\" href=\"https://"
+"redirectioneaza.ro\">redirectioneaza.ro</a>."
+msgstr ""
+
+#: templates/v2/public/components/pagination.html:11
+#: templates/v2/public/components/pagination.html:41
+msgid "Previous"
+msgstr ""
+
+#: templates/v2/public/components/pagination.html:18
+#: templates/v2/public/components/pagination.html:71
+msgid "Next"
+msgstr ""
+
+#: templates/v2/public/components/pagination.html:33
+#, fuzzy
+#| msgid "address"
+msgid "per page"
+msgstr "հասցե"
+
+#: templates/v2/public/faq.html:37
+msgid "Couldn't find what you were looking for?"
+msgstr ""
+
+#: templates/v2/public/faq.html:41
+#, python-format
+msgid ""
+"Send us your question at <a href=\"mailto:"
+"%(contact_email)s\">%(contact_email)s</a> and we will get back to you as "
+"soon as possible."
+msgstr ""
+
+#: templates/v2/redirect/footer.html:4
+msgid "Footer"
+msgstr ""
+
+#: templates/v2/redirect/footer.html:79
+msgid "Code for Romania"
+msgstr ""
+
+#: templates/v2/redirect/footer.html:84
+msgid "About Code for Romania"
+msgstr ""
+
+#: templates/v2/redirect/footer.html:89
+msgid "Support our projects"
+msgstr ""
+
+#: templates/v2/redirect/footer.html:98
+#, fuzzy
+#| msgid "Welcome to redirectioneaza.ro"
+msgid "redirectioneaza.ro"
+msgstr "էլփոստ"
+
+#: templates/v2/redirect/footer.html:103
+#, fuzzy
+#| msgid "address"
+msgid "Home"
+msgstr "հասցե"
+
+#: templates/v2/redirect/footer.html:134
+#, fuzzy
+#| msgid "donors"
+msgid "For contributors"
+msgstr "դոնորներ"
+
+#: templates/v2/redirect/footer.html:172
+msgid "Technical support"
+msgstr ""
+
+#: templates/v2/redirect/footer.html:181
+msgid "Useful links"
+msgstr ""
+
+#: templates/v2/socialaccount/login.html:33
 msgid "Redirecting to authentication..."
 msgstr "Վերահղում դեպի նույնականացում..."
 
-#: templates/v2/socialaccount/login.html:34
+#: templates/v2/socialaccount/login.html:49
 msgid "or click here to sign in"
 msgstr "կամ սեղմեք այստեղ՝ մուտք գործելու համար"
 
@@ -794,963 +3758,50 @@ msgstr "Ջանգո կայքի ադմին"
 msgid "Django administration"
 msgstr "Ջանգոյի ադմինիստրացիա"
 
-#: users/models.py:39
+#: users/admin.py:57
+msgid "Permissions"
+msgstr "Թույլտվություններ"
+
+#: users/admin.py:66
+msgid "Important dates"
+msgstr "Կարևոր ամսաթվեր"
+
+#: users/models.py:38
 msgid "Superuser must have is_staff=True."
 msgstr "Գերօգտատերը պետք է ունենա is_staff=True:"
 
-#: users/models.py:41
+#: users/models.py:40
 msgid "Superuser must have is_superuser=True."
 msgstr "Գերօգտագործողը պետք է ունենա is_superuser= True:"
 
-#: users/models.py:208
+#: users/models.py:56
+msgid "username"
+msgstr "օգտանուն"
+
+#: users/models.py:59
+msgid "We do not use this field"
+msgstr "Մենք չենք օգտագործում այս դաշտը"
+
+#: users/models.py:66
+msgid "email address"
+msgstr "էլ. փոստի հասցեն"
+
+#: users/models.py:67
+msgid "is ngohub user"
+msgstr ""
+
+#: users/models.py:89
+msgid "validation token"
+msgstr "վավերացման նշան"
+
+#: users/models.py:91
+msgid "validation token timestamp"
+msgstr "վավերացման նշանի ժամանակի դրոշմ"
+
+#: users/models.py:93
+msgid "old password"
+msgstr "հին գաղտնաբառ"
+
+#: users/models.py:178
 msgid "Group"
 msgstr "Խումբ"
-
-#: donations/admin.py:61
-msgid "Has NGO Hub account"
-msgstr "Ունի NGO Hub օգտահաշիվ"
-
-#: donations/models/main.py:91
-msgid "The ID number format is not valid"
-msgstr "Նույնականացման համարի ձևաչափը վավեր չէ"
-
-#: donations/views/dashboard/ngo_dashboard.py:75
-msgid "Current year donations per county"
-msgstr "Ընթացիկ տարվա նվիրատվությունները յուրաքանչյուր շրջանի համար"
-
-#: redirectioneaza/settings/app_configs.py:46
-msgid "April"
-msgstr "Ապրիլ"
-
-#: templates/v2/account/errors/login/multiple_ngos.html:5
-msgid "Multiple NGOs for this CUI"
-msgstr "Բազմաթիվ ՀԿ-ներ այս վերահսկվող ոչ գաղտնի տեղեկատվության համար"
-
-#: donations/models/main.py:142
-msgid "slug"
-msgstr "slug"
-
-#: donations/models/main.py:189
-msgid "VAT ID"
-msgstr "ԱԱՀ նույնականացման համար"
-
-#: donations/views/dashboard/admin_dashboard.py:67
-#: donations/views/dashboard/admin_dashboard.py:74
-#: donations/views/dashboard/admin_dashboard.py:81
-#: donations/views/dashboard/admin_dashboard.py:89
-#: donations/views/dashboard/admin_dashboard.py:156
-#: donations/views/dashboard/admin_dashboard.py:166
-#: donations/views/dashboard/admin_dashboard.py:176
-msgid "View all"
-msgstr "Տեսնել բոլորը"
-
-#: redirectioneaza/settings/unfold.py:72
-msgid "Failed tasks"
-msgstr "Չհաջողված առաջադրանքներ"
-
-#: templates/v2/account/errors/login/app_missing.html:5
-msgid "Application not activated"
-msgstr "Հավելվածն ակտիվացված չէ"
-
-#: donations/admin.py:218
-msgid "Update from NGO Hub synchronously"
-msgstr "Թարմացում NGO Hub-ին համաժամանակյա"
-
-#: donations/models/main.py:156
-msgid "NGO Hub organization ID"
-msgstr "NGO Hub կազմակերպության նույնականացման համար"
-
-#: donations/views/account_management.py:136
-msgid "It seems that this email and password combination is incorrect."
-msgstr "Կարծես թե այս էլփոստի և գաղտնաբառի համակցությունը սխալ է:"
-
-#: redirectioneaza/settings/app_configs.py:74
-msgid "November"
-msgstr "Նոյեմբեր"
-
-#: templates/v2/account/errors/login/multiple_ngos.html:9
-msgid ""
-"Multiple NGOs have been found during synchronization. Admins have been "
-"notified and will resolve the issue shortly."
-msgstr ""
-"Համաժամացման ընթացքում հայտնաբերվել են բազմաթիվ ՀԿ-ներ: Ադմինները ծանուցվել "
-"են և շուտով կլուծեն խնդիրը:"
-
-#: templates/v2/components/cta-redirection.html:68
-#, fuzzy
-#| msgid "Sign In Error"
-msgid "Download the form"
-msgstr "Մուտք գործելու սխալ"
-
-#: templates/v2/emails/admin/new-ngo/main.html:6
-#: templates/v2/emails/admin/new-ngo/main.txt:3
-#, fuzzy
-#| msgid "Welcome to redirectioneaza.ro"
-msgid "A new NGO has registered on redirectioneaza.ro"
-msgstr "Վերբեռնված է"
-
-#: donations/views/site.py:39
-#, fuzzy
-msgid "form filled in"
-msgid_plural "forms filled in"
-msgstr[0] ""
-msgstr[1] "լրացված ձևերը"
-
-#: donations/views/site.py:105
-#, fuzzy
-#| msgid "Welcome to redirectioneaza.ro"
-msgid "About redirectioneaza.ro"
-msgstr "Բարի գալուստ redirectioneaza.ro"
-
-#: partners/admin.py:156
-#, fuzzy
-#| msgid "Welcome to redirectioneaza.ro"
-msgid "Join redirectioneaza.ro"
-msgstr "Բարի գալուստ redirectioneaza.ro"
-
-#: templates/v2/account/snippets/third-party.html:65
-#, fuzzy
-#| msgid "Create an account"
-msgid "Register here"
-msgstr "Ստեղծել հաշիվ"
-
-#: templates/v2/components/cta-redirection.html:83
-#, fuzzy
-#| msgid "Welcome to redirectioneaza.ro"
-msgid "Support redirectioneaza.ro"
-msgstr "Բարի գալուստ redirectioneaza.ro"
-
-#: templates/v2/components/input/image.html:32
-#, fuzzy
-#| msgid "Uploaded at"
-msgid "Upload an image"
-msgstr "Վերբեռնված է"
-
-#: templates/v2/emails/account/activate-account/main.html:13
-#: templates/v2/emails/account/activate-account/main.txt:5
-#, fuzzy
-#| msgid "Welcome to redirectioneaza.ro"
-msgid "Welcome to redirectioneaza.ro!"
-msgstr "Բարի գալուստ redirectioneaza.ro"
-
-#: templates/v2/emails/account/ngohub-notification/main.html:13
-#: templates/v2/emails/account/ngohub-notification/main.txt:5
-#, fuzzy
-msgid ""
-"We received a request to reset your password on redirectioneaza.ro. Your "
-"account is managed through the NGO Hub platform. To log in or manage your "
-"password, please use your NGO Hub account credentials and log in to "
-"redirectioneaza.ro through NGO Hub."
-msgstr ""
-"Ես ստացել եմ գաղտնաբառը վերագործարկելու խնդրանք "
-"Redirectioneaza.ro.Կազմակերպության հաշիվը կառավարվում է NGO Hub.ru հարթակից: "
-"Որպեսզի դուք միանաք կամ կառավարեք բառը, դուք պետք է օգտագործեք վավերացման "
-"տվյալներ ՀԲ-ի ՀԲ-ի հաշվում և միացեք ձեզ վերահասցեավորման.ro ՀԿ-ի հանգույցի "
-"միջոցով:"
-
-#: templates/v2/emails/donor/redirection-sans-signature/main.html:18
-#: templates/v2/emails/donor/redirection-with-signature/main.html:20
-#: templates/v2/emails/ngo/new-form-received/main.html:19
-#, fuzzy
-#| msgid "Sign In Error"
-msgid "Download form"
-msgstr "Մուտք գործելու սխալ"
-
-#: templates/v2/form/redirection-open.html:223
-#, fuzzy
-#| msgid "Sign In Error"
-msgid "Send signed form"
-msgstr "Մուտք գործելու սխալ"
-
-#: templates/v2/form/redirection-open.html:242
-#: templates/v3/admin/forms/action.html:25
-#, fuzzy
-#| msgid "Sign In Error"
-msgid "Send the form"
-msgstr "Մուտք գործելու սխալ"
-
-#: templates/v2/ngo-account/archives/listing.html:14
-#, fuzzy
-#| msgid "Imports"
-msgid "exports"
-msgstr "Ներմուծում"
-
-#: templates/v2/redirect/footer.html:97
-#, fuzzy
-#| msgid "Welcome to redirectioneaza.ro"
-msgid "redirectioneaza.ro"
-msgstr "էլփոստ"
-
-#: donations/views/account_management.py:230
-#, fuzzy
-#| msgid "Create an account"
-msgid "Register new account"
-msgstr "Ստեղծել հաշիվ"
-
-#: donations/views/account_management.py:69
-#, fuzzy
-#| msgid "Welcome to redirectioneaza.ro"
-msgid "Your redirectioneaza.ro account"
-msgstr "էլփոստ"
-
-#: donations/views/account_management.py:30
-#: templates/v2/emails/account/reset-password/main.html:19
-#, fuzzy
-msgid "Reset password"
-msgstr "Վերակայել գաղտնաբառը"
-
-#: donations/views/ngo_account.py:237
-#, fuzzy
-#| msgid "NGO Hub organization ID"
-msgid "Organization forms"
-msgstr "NGO Hub կազմակերպության նույնականացման համար"
-
-#: partners/models.py:136
-#, fuzzy
-#| msgid "Partners"
-msgid "Partner NGOs"
-msgstr "Գործընկերներ"
-
-#: templates/v2/account/snippets/register-form.html:38
-#, fuzzy
-#| msgid "Login through NGO Hub"
-msgid "Register without NGO Hub"
-msgstr "Մուտք գործել NGO Hub-ի միջոցով"
-
-#: templates/v2/account/snippets/third-party.html:64
-#, fuzzy
-#| msgid "Has NGO Hub account"
-msgid "You don't have an NGO HUB account?"
-msgstr "Ունի NGO Hub օգտահաշիվ"
-
-#: templates/v2/account/snippets/third-party.html:8
-#, fuzzy
-#| msgid "To access your account, you need to authenticate through NGO Hub."
-msgid "Access your account through NGO Hub"
-msgstr ""
-"Ձեր օգտահաշիվ մուտք գործելու համար դուք պետք է նույնականացնեք NGO Hub-ի "
-"միջոցով:"
-
-#: templates/v2/account/snippets/third-party.html:99
-#, fuzzy
-#| msgid "Login through NGO Hub"
-msgid "Create an account for your organization in NGO Hub"
-msgstr "Մուտք գործել NGO Hub-ի միջոցով"
-
-#: templates/v2/account/snippets/third-party.html:108
-#, fuzzy
-#| msgid "NGOs from NGO Hub"
-msgid "benefits of NGO Hub"
-msgstr "NGO Hub-ի ՀԿ-ները"
-
-#: donations/views/account_management.py:170
-#, fuzzy
-#| msgid "Sign In"
-msgid "Sign Out"
-msgstr "Գրանցվել"
-
-#: donations/views/account_management.py:232
-#, fuzzy
-#| msgid "Login through NGO Hub"
-msgid "Register through NGO Hub"
-msgstr "Մուտք գործել NGO Hub-ի միջոցով"
-
-#: donations/views/ngo_account.py:370
-#: redirectioneaza/context_processors/headers.py:100
-#: templates/v2/ngo-account/redirections/main.html:10
-#, fuzzy
-#| msgid "Options"
-msgid "Redirections"
-msgstr "Ընտրանքներ"
-
-#: partners/admin.py:38
-#, fuzzy
-#| msgid "User Details"
-msgid "User Email"
-msgstr "Օգտատիրոջ տվյալներ"
-
-#: partners/admin.py:165
-#, fuzzy
-#| msgid "The import has been processed."
-msgid "The user has been successfully invited."
-msgstr "Ներմուծումը կատարվել է։"
-
-#: redirectioneaza/context_processors/headers.py:28
-#: redirectioneaza/context_processors/headers.py:38
-#: redirectioneaza/settings/unfold.py:59
-#, fuzzy
-#| msgid "Frequently Asked Questions"
-msgid "Frequently asked questions"
-msgstr "Հաճախակի Տրվող Հարցեր"
-
-#: redirectioneaza/context_processors/headers.py:50
-#, fuzzy
-#| msgid "User Link"
-msgid "User guide"
-msgstr "Օգտատիրոջ հղում"
-
-#: redirectioneaza/context_processors/headers.py:59
-#, fuzzy
-#| msgid "Dashboard"
-msgid "Admin Dashboard"
-msgstr "Վահանակ"
-
-#: redirectioneaza/context_processors/headers.py:79
-#, fuzzy
-#| msgid "Options"
-msgid "FAQ Questions"
-msgstr "Ընտրանքներ"
-
-#: redirectioneaza/context_processors/headers.py:94
-#: templates/v2/ngo-account/my-organization/base.html:26
-#, fuzzy
-#| msgid "NGO Hub organization ID"
-msgid "Organization Data"
-msgstr "NGO Hub կազմակերպության նույնականացման համար"
-
-#: redirectioneaza/context_processors/headers.py:123
-#: redirectioneaza/context_processors/headers.py:175
-#, fuzzy
-#| msgid "Login through NGO Hub"
-msgid "Register Organization"
-msgstr "Մուտք գործել NGO Hub-ի միջոցով"
-
-#: redirectioneaza/context_processors/headers.py:162
-#: templates/v2/redirect/footer.html:161
-#, fuzzy
-#| msgid "NGO Hub organization ID"
-msgid "For organizations"
-msgstr "NGO Hub կազմակերպության նույնականացման համար"
-
-#: redirectioneaza/context_processors/headers.py:215
-#, fuzzy
-#| msgid "NGO Hub organization ID"
-msgid "My Organization"
-msgstr "NGO Hub կազմակերպության նույնականացման համար"
-
-#: templates/v2/account/set-password.html:16
-#, fuzzy
-#| msgid "Reset password"
-msgid "Set a new password"
-msgstr "Վերակայել գաղտնաբառը"
-
-#: templates/v2/account/set-password.html:26
-#, fuzzy
-#| msgid "Reset password"
-msgid "New password"
-msgstr "Վերակայել գաղտնաբառը"
-
-#: templates/v2/account/signup-confirmation.html:8
-#, fuzzy
-#| msgid "email address"
-msgid "Check your email address"
-msgstr "էլ. փոստի հասցեն"
-
-#: templates/v2/account/signup-confirmation.html:21
-#, fuzzy
-#| msgid "Work in progress"
-msgid "Authentication problems?"
-msgstr "Աշխատանքն ընթացքի մեջ է"
-
-#: templates/v2/account/signup-confirmation.html:23
-#, fuzzy
-#| msgid "Contact us"
-msgid "or contact us at"
-msgstr "Կապ հաստասեք մեզ հետ"
-
-#: templates/v2/account/signup-verification.html:19
-#, fuzzy
-#| msgid "Work in progress"
-msgid "Authenticate"
-msgstr "Աշխատանքն ընթացքի մեջ է"
-
-#: templates/v2/account/snippets/cta-ngohub.html:32
-#, fuzzy
-#| msgid "Login through NGO Hub"
-msgid "Register organization"
-msgstr "Մուտք գործել NGO Hub-ի միջոցով"
-
-#: templates/v2/account/snippets/third-party.html:68
-#: templates/v2/account/snippets/third-party.html:173
-#, fuzzy
-#| msgid "Work in progress"
-msgid "Log in problems?"
-msgstr "Աշխատանքն ընթացքի մեջ է"
-
-#: templates/v2/account/snippets/third-party.html:146
-#, fuzzy
-#| msgid "To access your account, you need to authenticate through NGO Hub."
-msgid "Give access to your colleagues in NGO Hub"
-msgstr ""
-"Ձեր օգտահաշիվ մուտք գործելու համար դուք պետք է նույնականացնեք NGO Hub-ի "
-"միջոցով:"
-
-#: templates/v2/emails/donor/redirection-sans-signature/main.txt:24
-#, fuzzy
-#| msgid "NGO Hub organization ID"
-msgid "The organization's contact info"
-msgstr "NGO Hub կազմակերպության նույնականացման համար"
-
-#: templates/v2/emails/ngo/new-form-received/main.html:6
-#: templates/v2/emails/ngo/new-form-received/main.txt:3
-#, fuzzy
-#| msgid "Options"
-msgid "Good news! You have a new redirection form"
-msgstr "Ընտրանքներ"
-
-#: templates/v2/form/confirmation.html:35
-#, fuzzy
-#| msgid "Login through NGO Hub"
-msgid "Continue without signing?"
-msgstr "Մուտք գործել NGO Hub-ի միջոցով"
-
-#: templates/v2/form/redirection-open.html:232
-#, fuzzy
-#| msgid "Login through NGO Hub"
-msgid "Continue without signing"
-msgstr "Մուտք գործել NGO Hub-ի միջոցով"
-
-#: templates/v2/form/signature.html:57
-#, fuzzy
-#| msgid "Sign In"
-msgid "Signature modal"
-msgstr "Գրանցվել"
-
-#: templates/v2/ngo-account/archives/list-items.html:27
-#, fuzzy
-#| msgid "Work in progress"
-msgid "In progress"
-msgstr "Աշխատանքն ընթացքի մեջ է"
-
-#: templates/v2/ngo-account/components/form-title.html:12
-#, fuzzy
-#| msgid "NGOs from NGO Hub"
-msgid "Get from NGO Hub"
-msgstr "NGO Hub-ի ՀԿ-ները"
-
-#: templates/v2/ngo-account/my-organization/base.html:36
-#: templates/v2/ngo-account/my-organization/ngo-form.html:17
-#, fuzzy
-#| msgid "Form"
-msgid "Form Data"
-msgstr "հարցաթերթ"
-
-#: templates/v2/ngo-account/my-organization/ngo-form.html:23
-#, fuzzy
-#| msgid "NGO Hub organization ID"
-msgid "Organization URL"
-msgstr "NGO Hub կազմակերպության նույնականացման համար"
-
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:46
-#, fuzzy
-#| msgid "NGOs from NGO Hub"
-msgid "Go to NGO Hub"
-msgstr "NGO Hub-ի ՀԿ-ները"
-
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:90
-#, fuzzy
-#| msgid "NGO Hub organization ID"
-msgid "Organization website"
-msgstr "NGO Hub կազմակերպության նույնականացման համար"
-
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:96
-#, fuzzy
-#| msgid "NGO Hub organization ID"
-msgid "Organization contact e-mail"
-msgstr "NGO Hub կազմակերպության նույնականացման համար"
-
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:110
-#, fuzzy
-#| msgid "NGO Hub organization ID"
-msgid "Organization contact phone"
-msgstr "NGO Hub կազմակերպության նույնականացման համար"
-
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:124
-#, fuzzy
-#| msgid "NGO Hub organization ID"
-msgid "Organization address"
-msgstr "NGO Hub կազմակերպության նույնականացման համար"
-
-#: templates/v2/ngo-account/redirections/list-header.html:23
-#, fuzzy
-#| msgid "date finished"
-msgid "Date filled"
-msgstr "Ավարտման ամսաթիվ"
-
-#: templates/v2/ngo-account/redirections/list-items.html:7
-#, fuzzy
-#| msgid "Options"
-msgid "No redirections found"
-msgstr "Ընտրանքներ"
-
-#: templates/v2/ngo-account/redirections/list-items.html:52
-#, fuzzy
-#| msgid "Sign In"
-msgid "Signed"
-msgstr "Գրանցվել"
-
-#: templates/v2/ngo-account/redirections/listing.html:14
-#, fuzzy
-#| msgid "Donations"
-msgid "donations"
-msgstr "Նվիրատվություններ"
-
-#: templates/v2/public/all-ngos.html:9
-#, fuzzy
-#| msgid "NGO Hub organization ID"
-msgid "Explore organizations"
-msgstr "NGO Hub կազմակերպության նույնականացման համար"
-
-#: templates/v2/public/all-ngos.html:34
-#, fuzzy
-#| msgid "NGO Hub organization ID"
-msgid "No organizations found."
-msgstr "NGO Hub կազմակերպության նույնականացման համար"
-
-#: templates/v2/public/all-ngos.html:38
-#, fuzzy
-#| msgid "NGO Hub organization ID"
-msgid "organizations"
-msgstr "NGO Hub կազմակերպության նույնականացման համար"
-
-#: templates/v2/public/components/home/explore.html:25
-#, fuzzy
-#| msgid "NGO Hub organization ID"
-msgid "See all organizations"
-msgstr "NGO Hub կազմակերպության նույնականացման համար"
-
-#: donations/forms/redirection.py:40 templates/v2/form/signature.html:7
-#, fuzzy
-#| msgid "Sign In"
-msgid "Signature"
-msgstr "Գրանցվել"
-
-#: donations/admin.py:347 partners/admin.py:182
-#, fuzzy
-#| msgid "The ID number format is not valid"
-msgid "The form is not valid."
-msgstr "Նույնականացման համարի ձևաչափը վավեր չէ"
-
-#: donations/forms/ngo_account.py:73
-#, fuzzy
-#| msgid "Your current role isn't supported."
-msgid "The logo type is not supported."
-msgstr "Ձեր ներկայիս դերը չի աջակցվում:"
-
-#: donations/forms/ngo_account.py:24
-#, fuzzy
-#| msgid "Contact"
-msgid "Contact email"
-msgstr "Կապ"
-
-#: donations/forms/ngo_account.py:27
-#, fuzzy
-#| msgid "Contact"
-msgid "Contact phone"
-msgstr "Կապ"
-
-#: donations/forms/ngo_account.py:117
-#, fuzzy
-#| msgid "The ID number format is not valid"
-msgid "This slug is not allowed."
-msgstr "Նույնականացման համարի ձևաչափը վավեր չէ"
-
-#: donations/forms/redirection.py:37
-#, fuzzy
-#| msgid "Contact"
-msgid "Agree contact"
-msgstr "Կապ"
-
-#: donations/templatetags/text_format.py:11
-#, fuzzy, python-format
-#| msgid "Options"
-msgid "Sector %s"
-msgstr "Ընտրանքներ"
-
-#: donations/views/account_management.py:128
-#: templates/v2/emails/account/ngohub-notification/main.html:22
-#, fuzzy
-#| msgid "Login through NGO Hub"
-msgid "Continue with NGO Hub"
-msgstr "Մուտք գործել NGO Hub-ի միջոցով"
-
-#: donations/views/account_management.py:129
-#, fuzzy
-#| msgid "Has NGO Hub account"
-msgid "I have an NGO Hub account"
-msgstr "Ունի NGO Hub օգտահաշիվ"
-
-#: donations/views/ngo_account.py:68 donations/views/ngo_account.py:116
-#, fuzzy
-#| msgid "NGO Hub organization ID"
-msgid "Organization details"
-msgstr "NGO Hub կազմակերպության նույնականացման համար"
-
-#: donations/views/redirections.py:29
-#, fuzzy
-#| msgid "Successful tasks"
-msgid "Successful redirection"
-msgstr "Հաջողված առաջադրանքներ"
-
-#: frequent_questions/models.py:15 redirectioneaza/settings/unfold.py:62
-#, fuzzy
-#| msgid "Options"
-msgid "Sections"
-msgstr "Ընտրանքներ"
-
-#: frequent_questions/models.py:40 redirectioneaza/settings/unfold.py:68
-#, fuzzy
-#| msgid "Options"
-msgid "Questions"
-msgstr "Ընտրանքներ"
-
-#: frequent_questions/apps.py:8
-#, fuzzy
-#| msgid "Frequently Asked Questions"
-msgid "Frequent Questions"
-msgstr "Հաճախակի Տրվող Հարցեր"
-
-#: partners/models.py:120
-#, fuzzy
-#| msgid "Partner"
-msgid "partner"
-msgstr "Գործընկեր"
-
-#: partners/models.py:132
-#, fuzzy
-#| msgid "display ordering"
-msgid "display order"
-msgstr "ցուցադրման պատվեր"
-
-#: partners/models.py:135
-#, fuzzy
-#| msgid "Partner"
-msgid "Partner NGO"
-msgstr "Գործընկեր"
-
-#: templates/v2/account/reset-password.html:16
-#, fuzzy
-#| msgid "Password is required"
-msgid "Password recovery"
-msgstr "Գաղտնաբառը պարտադիր է"
-
-#: templates/v2/account/snippets/login-form.html:61
-#, fuzzy
-msgid "Email address"
-msgstr "էլ. փոստի հասցեն"
-
-#: templates/v2/account/snippets/register-form.html:108
-#, fuzzy
-#| msgid "bank account"
-msgid "Create account"
-msgstr "բանկային հաշիվ"
-
-#: templates/v2/emails/admin/new-ngo/main.html:14
-#: templates/v2/emails/admin/new-ngo/main.txt:5
-#, fuzzy
-#| msgid "name"
-msgid "NGO name"
-msgstr "անուն"
-
-#: templates/v2/emails/admin/new-ngo/main.html:22
-#: templates/v2/emails/admin/new-ngo/main.txt:6
-#, fuzzy
-#| msgid "email"
-msgid "NGO email"
-msgstr "էլ. փոստ"
-
-#: partners/admin.py:25
-#, fuzzy
-#| msgid "first name"
-msgid "First Name"
-msgstr "անուն"
-
-#: partners/admin.py:31
-#, fuzzy
-#| msgid "last name"
-msgid "Last Name"
-msgstr "ազգանուն"
-
-#: partners/models.py:17
-#, fuzzy
-#| msgid "Alphabetical"
-msgid "Alphabetical (reverse)"
-msgstr "Այբբենական"
-
-#: redirectioneaza/context_processors/headers.py:147
-#, fuzzy
-#| msgid "donors"
-msgid "For donors"
-msgstr "դոնորներ"
-
-#: redirectioneaza/settings/unfold.py:22
-#, fuzzy
-#| msgid "address"
-msgid "Home page"
-msgstr "հասցե"
-
-#: templates/v2/account/components/password-input.html:4
-#: templates/v2/account/snippets/login-form.html:65
-#: templates/v2/account/snippets/register-form.html:71
-#, fuzzy
-#| msgid "old password"
-msgid "Password"
-msgstr "հին գաղտնաբառ"
-
-#: templates/v2/account/reset-password.html:26
-#: templates/v2/ngo-account/settings/main.html:46
-#, fuzzy
-#| msgid "Email address"
-msgid "E-mail address"
-msgstr "էլ. փոստի հասցեն"
-
-#: templates/v2/account/set-password.html:29
-#: templates/v2/account/snippets/register-form.html:72
-#, fuzzy
-#| msgid "old password"
-msgid "Confirm password"
-msgstr "հին գաղտնաբառ"
-
-#: templates/v2/account/set-password.html:37
-#, fuzzy
-#| msgid "old password"
-msgid "Change password"
-msgstr "հին գաղտնաբառ"
-
-#: templates/v2/form/redirection-open.html:34
-#, fuzzy
-#| msgid "description"
-msgid "Personal data"
-msgstr "նկարագրություն"
-
-#: templates/v2/form/redirection-open.html:48
-#, fuzzy
-#| msgid "initial"
-msgid "Father's initial"
-msgstr "սկզբնական"
-
-#: templates/v2/form/success.html:96
-#, fuzzy
-#| msgid "county"
-msgid "the county"
-msgstr "մարզ"
-
-#: templates/v2/ngo-account/archives/list-header.html:8
-#, fuzzy
-#| msgid "date created"
-msgid "Date generated"
-msgstr "ամսաթիվը ստեղծվել է"
-
-#: templates/v2/ngo-account/my-organization/ngo-form.html:31
-#, fuzzy
-#| msgid "description"
-msgid "Form description"
-msgstr "նկարագրություն"
-
-#: templates/v2/ngo-account/redirections/list-header.html:14
-#, fuzzy
-#| msgid "email"
-msgid "E-mail"
-msgstr "էլ. փոստ"
-
-#: templates/v2/ngo-account/redirections/list-header.html:20
-#, fuzzy
-#| msgid "two years"
-msgid "2 years"
-msgstr "երկու տարի"
-
-#: templates/v2/ngo-account/redirections/list-items.html:54
-#, fuzzy
-#| msgid "has signed"
-msgid "Unsigned"
-msgstr "ստորագրել է"
-
-#: templates/v2/ngo-account/redirections/main.html:31
-#, fuzzy, python-format
-#| msgid "Options"
-msgid "%(counter)s redirection form"
-msgid_plural "%(counter)s redirection forms"
-msgstr[0] ""
-msgstr[1] "Տարբերակներ"
-
-#: templates/v2/ngo-account/redirections/main.html:70
-#, fuzzy
-#| msgid "Generate donations archive"
-msgid "Generate ANAF Archive"
-msgstr "Ստեղծել նվիրատվությունների արխիվ"
-
-#: templates/v2/redirect/footer.html:133
-#, fuzzy
-#| msgid "donors"
-msgid "For contributors"
-msgstr "դոնորներ"
-
-#: donations/admin.py:330
-#, fuzzy
-#| msgid "old password"
-msgid "Change owner"
-msgstr "հին գաղտնաբառ"
-
-#: donations/common/validation/phone_number.py:30
-#: donations/common/validation/phone_number.py:36
-#, fuzzy
-#| msgid "street number"
-msgid "Invalid phone number"
-msgstr "փողոցի համարը"
-
-#: donations/forms/ngo_account.py:22
-#, fuzzy
-#| msgid "website"
-msgid "Website"
-msgstr "վեբկայք"
-
-#: donations/forms/ngo_account.py:25
-#, fuzzy
-#| msgid "display ordering"
-msgid "Display email"
-msgstr "ցուցադրման պատվեր"
-
-#: donations/forms/ngo_account.py:28
-#, fuzzy
-#| msgid "display ordering"
-msgid "Display phone"
-msgstr "ցուցադրման պատվեր"
-
-#: donations/forms/ngo_account.py:30
-#: templates/v2/emails/donor/redirection-sans-signature/main.txt:27
-#, fuzzy
-#| msgid "address"
-msgid "Address"
-msgstr "հասցե"
-
-#: donations/forms/ngo_account.py:33
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:145
-#, fuzzy
-#| msgid "active region"
-msgid "Active region"
-msgstr "ակտիվ տարածաշրջան"
-
-#: donations/forms/ngo_account.py:96
-#: templates/v2/form/redirection-header.html:65
-#, fuzzy
-#| msgid "description"
-msgid "Description"
-msgstr "նկարագրություն"
-
-#: donations/forms/redirection.py:12
-#: templates/v2/account/snippets/register-form.html:62
-#: templates/v2/form/redirection-open.html:38
-#: templates/v2/ngo-account/settings/main.html:62
-#, fuzzy
-#| msgid "last name"
-msgid "Last name"
-msgstr "ազգանուն"
-
-#: donations/forms/redirection.py:13
-#: templates/v2/account/snippets/register-form.html:58
-#: templates/v2/form/redirection-open.html:43
-#: templates/v2/ngo-account/settings/main.html:57
-#, fuzzy
-#| msgid "first name"
-msgid "First name"
-msgstr "անուն"
-
-#: donations/forms/redirection.py:14
-#, fuzzy
-#| msgid "initial"
-msgid "Initial"
-msgstr "սկզբնական"
-
-#: donations/forms/redirection.py:22
-#: templates/v2/account/snippets/register-form.html:67
-#: templates/v2/emails/donor/redirection-sans-signature/main.txt:28
-#: templates/v2/form/redirection-open.html:58
-#, fuzzy
-#| msgid "email"
-msgid "Email"
-msgstr "էլ. փոստ"
-
-#: donations/forms/redirection.py:23
-#, fuzzy
-#| msgid "phone"
-msgid "Phone"
-msgstr "հեռախոս"
-
-#: donations/forms/redirection.py:35
-#, fuzzy
-#| msgid "two years"
-msgid "Two years"
-msgstr "երկու տարի"
-
-#: donations/models/ngos.py:185
-#, fuzzy
-#| msgid "display ordering"
-msgid "display email"
-msgstr "ցուցադրման պատվեր"
-
-#: donations/models/ngos.py:186
-#, fuzzy
-#| msgid "display ordering"
-msgid "display phone"
-msgstr "ցուցադրման պատվեր"
-
-#: donations/views/account_management.py:214
-#, fuzzy
-#| msgid "bank account"
-msgid "New account"
-msgstr "բանկային հաշիվ"
-
-#: donations/views/account_management.py:306
-#, fuzzy
-#| msgid "date created"
-msgid "Account created"
-msgstr "ամսաթիվը ստեղծվել է"
-
-#: donations/views/account_management.py:311
-#, fuzzy
-#| msgid "date created"
-msgid "Account verified"
-msgstr "ամսաթիվը ստեղծվել է"
-
-#: donations/views/account_management.py:322
-#, fuzzy
-#| msgid "description"
-msgid "Verification"
-msgstr "նկարագրություն"
-
-#: frequent_questions/models.py:14
-#, fuzzy
-#| msgid "description"
-msgid "Section"
-msgstr "նկարագրություն"
-
-#: frequent_questions/models.py:31 frequent_questions/models.py:39
-#, fuzzy
-#| msgid "description"
-msgid "Question"
-msgstr "նկարագրություն"
-
-#: templates/v2/form/redirection-open.html:63
-#: templates/v2/ngo-account/redirections/list-header.html:17
-#, fuzzy
-#| msgid "street number"
-msgid "Phone number"
-msgstr "փողոցի համարը"
-
-#: templates/v2/form/redirection-open.html:74
-#, fuzzy
-#| msgid "address"
-msgid "Home address"
-msgstr "հասցե"
-
-#: templates/v2/form/redirection-open.html:78
-#, fuzzy
-#| msgid "street name"
-msgid "Street name"
-msgstr "փողոցի անվանումը"
-
-#: templates/v2/ngo-account/settings/main.html:52
-#, fuzzy
-#| msgid "last name"
-msgid "Full name"
-msgstr "ազգանուն"
