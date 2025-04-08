@@ -784,13 +784,15 @@ class NgoArchivesView(NgoBaseListView):
         archives = Job.objects.none()
         if ngo:
             archives = (
-                ngo.jobs.all()
+                ngo.jobs.prefetch_related("cause")
+                .all()
                 .order_by("-date_created")
                 .values(
                     "pk",
                     "date_created",
                     "number_of_donations",
                     "status",
+                    "cause__name",
                 )
             )
 

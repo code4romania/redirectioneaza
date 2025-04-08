@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-08 13:43+0300\n"
+"POT-Creation-Date: 2025-04-08 13:56+0300\n"
 "PO-Revision-Date: 2025-02-12 12:44+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Armenian <https://translate.commitglobal.org/projects/"
@@ -37,7 +37,8 @@ msgstr "ՀԿ"
 
 #: donations/admin/common.py:14 donations/models/ngos.py:526
 #: donations/views/ngo_account_filters.py:106 partners/admin.py:49
-#: partners/models.py:175 templates/v2/ngo-account/causes/list-header.html:4
+#: partners/models.py:175 templates/v2/ngo-account/archives/list-header.html:13
+#: templates/v2/ngo-account/causes/list-header.html:4
 msgid "Cause"
 msgstr ""
 
@@ -386,12 +387,12 @@ msgstr ""
 #: donations/forms/ngo_account.py:31 donations/forms/redirection.py:32
 #: donations/views/dashboard/ngo_dashboard.py:56
 #: donations/views/ngo_account_filters.py:27
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:118
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:117
 msgid "County"
 msgstr "Շրջան"
 
 #: donations/forms/ngo_account.py:36
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:128
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:127
 #, fuzzy
 #| msgid "active region"
 msgid "Active region"
@@ -1258,19 +1259,19 @@ msgstr "Ընտրանքներ"
 msgid "Archives history"
 msgstr ""
 
-#: donations/views/ngo_account.py:801
+#: donations/views/ngo_account.py:803
 #, fuzzy
 #| msgid "Sign In Error"
 msgid "Download donor form"
 msgstr "Մուտք գործելու սխալ"
 
-#: donations/views/ngo_account.py:812
+#: donations/views/ngo_account.py:814
 #, fuzzy
 #| msgid "NGO Hub organization ID"
 msgid "Your organization is not active"
 msgstr "NGO Hub կազմակերպության նույնականացման համար"
 
-#: donations/views/ngo_account.py:826
+#: donations/views/ngo_account.py:828
 #: templates/v2/emails/ngo/download-archive/main.html:21
 #, fuzzy
 #| msgid "Sign In Error"
@@ -2920,11 +2921,11 @@ msgstr ""
 msgid "Date generated"
 msgstr "ամսաթիվը ստեղծվել է"
 
-#: templates/v2/ngo-account/archives/list-header.html:13
+#: templates/v2/ngo-account/archives/list-header.html:16
 msgid "No. of Forms"
 msgstr ""
 
-#: templates/v2/ngo-account/archives/list-header.html:16
+#: templates/v2/ngo-account/archives/list-header.html:19
 #, fuzzy
 #| msgid "Sign In Error"
 msgid "Download link"
@@ -2948,7 +2949,7 @@ msgstr "Աշխատանքն ընթացքի մեջ է"
 msgid "Unknown"
 msgstr "Անհայտ դեր"
 
-#: templates/v2/ngo-account/archives/list-items.html:46
+#: templates/v2/ngo-account/archives/list-items.html:49
 #, fuzzy
 #| msgid "Sign In Error"
 msgid "Download"
@@ -2974,7 +2975,7 @@ msgid ""
 msgstr ""
 
 #: templates/v2/ngo-account/banners/form-emails-banner.html:19
-#: templates/v2/ngo-account/cause/form.html:141
+#: templates/v2/ngo-account/cause/form.html:137
 msgid "Allow users to sign the form online"
 msgstr ""
 
@@ -3015,7 +3016,7 @@ msgid "Your organization is not receiving notifications for signed forms."
 msgstr ""
 
 #: templates/v2/ngo-account/banners/form-notifications-banner.html:6
-#: templates/v2/ngo-account/cause/form.html:178
+#: templates/v2/ngo-account/cause/form.html:173
 msgid "Receive notifications for each signed form"
 msgstr ""
 
@@ -3057,96 +3058,96 @@ msgstr ""
 msgid "IBAN on form"
 msgstr ""
 
-#: templates/v2/ngo-account/cause/form.html:42
+#: templates/v2/ngo-account/cause/form.html:41
 msgid ""
 "Changing the IBAN will not update the forms already completed by taxpayers."
 msgstr ""
 
-#: templates/v2/ngo-account/cause/form.html:46
+#: templates/v2/ngo-account/cause/form.html:45
 #, python-format
 msgid ""
 "Choose the IBAN you will use for collecting and submitting to ANAF. "
 "%(iban_helptext)s"
 msgstr ""
 
-#: templates/v2/ngo-account/cause/form.html:71
+#: templates/v2/ngo-account/cause/form.html:70
 #, fuzzy
 #| msgid "address"
 msgid "Form page"
 msgstr "հասցե"
 
-#: templates/v2/ngo-account/cause/form.html:74
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:68
+#: templates/v2/ngo-account/cause/form.html:72
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:67
 msgid ""
 "The information in this section will be visible on the public page of the "
 "form."
 msgstr ""
 
-#: templates/v2/ngo-account/cause/form.html:83
+#: templates/v2/ngo-account/cause/form.html:81
 #, fuzzy
 #| msgid "Form"
 msgid "Form title"
 msgstr "հարցաթերթ"
 
-#: templates/v2/ngo-account/cause/form.html:88
+#: templates/v2/ngo-account/cause/form.html:86
 #, fuzzy
 #| msgid "description"
 msgid "Form description"
 msgstr "նկարագրություն"
 
-#: templates/v2/ngo-account/cause/form.html:93
+#: templates/v2/ngo-account/cause/form.html:91
 #, fuzzy
 #| msgid "display ordering"
 msgid "Display image"
 msgstr "ցուցադրման պատվեր"
 
-#: templates/v2/ngo-account/cause/form.html:104
+#: templates/v2/ngo-account/cause/form.html:102
 #, fuzzy
 #| msgid "description"
 msgid "Form settings"
 msgstr "նկարագրություն"
 
-#: templates/v2/ngo-account/cause/form.html:107
+#: templates/v2/ngo-account/cause/form.html:104
 msgid ""
 "From this section, you can manage the form's URL, its visibility and online "
 "signing."
 msgstr ""
 
-#: templates/v2/ngo-account/cause/form.html:118
+#: templates/v2/ngo-account/cause/form.html:115
 #: templates/v2/ngo-account/causes/list-header.html:10
 #, fuzzy
 #| msgid "Form"
 msgid "Form URL"
 msgstr "հարցաթերթ"
 
-#: templates/v2/ngo-account/cause/form.html:120
+#: templates/v2/ngo-account/cause/form.html:116
 msgid ""
 "This is the link through which users will access your form on the site. It "
 "can only contain letters, numbers, and hyphens. Example: cause-form."
 msgstr ""
 
-#: templates/v2/ngo-account/cause/form.html:134
+#: templates/v2/ngo-account/cause/form.html:130
 msgid "Form visibility"
 msgstr ""
 
-#: templates/v2/ngo-account/cause/form.html:143
-#: templates/v2/ngo-account/cause/form.html:180
+#: templates/v2/ngo-account/cause/form.html:139
+#: templates/v2/ngo-account/cause/form.html:175
 msgid ""
 "Choose the IBAN you will use for collecting and submitting to ANAF. Changing "
 "the IBAN will not update the forms already completed by taxpayers."
 msgstr ""
 
-#: templates/v2/ngo-account/cause/form.html:156
+#: templates/v2/ngo-account/cause/form.html:152
 #, fuzzy
 #| msgid "NGO Hub organization ID"
 msgid "Form notifications"
 msgstr "NGO Hub կազմակերպության նույնականացման համար"
 
-#: templates/v2/ngo-account/cause/form.html:159
+#: templates/v2/ngo-account/cause/form.html:154
 msgid "From this section, you can manage the form's email notifications."
 msgstr ""
 
-#: templates/v2/ngo-account/cause/form.html:190
+#: templates/v2/ngo-account/cause/form.html:185
 #, fuzzy
 #| msgid "email address"
 msgid "Notifications e-mail address"
@@ -3390,43 +3391,43 @@ msgstr ""
 msgid "Your organization on redirectioneaza.ro"
 msgstr "Բարի գալուստ redirectioneaza.ro"
 
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:74
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:73
 #, fuzzy
 #| msgid "NGO Hub organization ID"
 msgid "Organization website"
 msgstr "NGO Hub կազմակերպության նույնականացման համար"
 
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:80
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:79
 #, fuzzy
 #| msgid "NGO Hub organization ID"
 msgid "Organization contact e-mail"
 msgstr "NGO Hub կազմակերպության նույնականացման համար"
 
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:85
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:84
 #, fuzzy
 #| msgid "display ordering"
 msgid "Display e-mail in the profile"
 msgstr "ցուցադրման պատվեր"
 
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:94
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:93
 #, fuzzy
 #| msgid "NGO Hub organization ID"
 msgid "Organization contact phone"
 msgstr "NGO Hub կազմակերպության նույնականացման համար"
 
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:99
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:98
 #, fuzzy
 #| msgid "display ordering"
 msgid "Display phone in the profile"
 msgstr "ցուցադրման պատվեր"
 
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:108
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:107
 #, fuzzy
 #| msgid "NGO Hub organization ID"
 msgid "Organization address"
 msgstr "NGO Hub կազմակերպության նույնականացման համար"
 
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:113
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:112
 msgid "Locality/Sector"
 msgstr ""
 
