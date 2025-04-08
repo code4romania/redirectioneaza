@@ -498,6 +498,8 @@ class Cause(models.Model):
 
     bank_account = models.CharField(verbose_name=_("bank account"), max_length=100)
 
+    notifications_email = models.EmailField(verbose_name=_("notifications email"), blank=True, null=False, default="")
+
     prefilled_form = models.FileField(
         verbose_name=_("form with prefilled cause"),
         blank=True,
@@ -526,6 +528,10 @@ class Cause(models.Model):
 
     def __str__(self):
         return f"{self.ngo.name} - {self.name}"
+
+    @property
+    def allow_online_notifications(self):
+        return bool(self.notifications_email)
 
     @classmethod
     def mandatory_fields(cls):

@@ -36,7 +36,7 @@ class RedirectionSuccessHandler(BaseVisibleTemplateView):
 
         cause_url = cause_slug.lower().strip()
         try:
-            cause: Optional[Cause] = Cause.nonprivate_active.get(slug=cause_url).select_related("ngo")
+            cause: Optional[Cause] = Cause.nonprivate_active.select_related("ngo").get(slug=cause_url)
             ngo: Ngo = cause.ngo
         except Cause.DoesNotExist:
             raise Http404("Cause not found")
@@ -182,7 +182,7 @@ class RedirectionHandler(TemplateView):
 
         cause_url = cause_slug.lower().strip()
         try:
-            cause: Optional[Cause] = Cause.nonprivate_active.get(slug=cause_url).select_related("ngo")
+            cause: Optional[Cause] = Cause.nonprivate_active.select_related("ngo").get(slug=cause_url)
             ngo: Ngo = cause.ngo
         except Cause.DoesNotExist:
             raise Http404("Cause not found")
@@ -268,13 +268,14 @@ class RedirectionHandler(TemplateView):
         # TODO: add a text for two-year donations
         # send and email to the donor with a link to the PDF file
         if signature:
-            send_email(
-                subject=_("Un nou formular de redirecționare"),
-                to_emails=[ngo.email],
-                html_template="emails/ngo/new-form-received/main.html",
-                text_template="emails/ngo/new-form-received/main.txt",
-                context=mail_context,
-            )
+            if cause.notifications_email:
+                send_email(
+                    subject=_("Un nou formular de redirecționare"),
+                    to_emails=[cause.notifications_email],
+                    html_template="emails/ngo/new-form-received/main.html",
+                    text_template="emails/ngo/new-form-received/main.txt",
+                    context=mail_context,
+                )
             send_email(
                 subject=_("Formularul tău de redirecționare"),
                 to_emails=[new_donor.email],
@@ -331,7 +332,7 @@ class OwnFormDownloadLinkHandler(TemplateView):
         # Don't allow downloading donation forms older than this
         cutoff_date = timezone.now() - timedelta(days=365)
         try:
-            donor = Donor.available.get(pk=donor_id, date_created__gte=cutoff_date).select_related("ngo")
+            donor = Donor.available.select_related("ngo").get(pk=donor_id, date_created__gte=cutoff_date)
         except Donor.DoesNotExist:
             raise Http404
         else:
