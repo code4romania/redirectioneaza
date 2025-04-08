@@ -11,16 +11,21 @@
     <meta property="og:image:secure_url" content="{{ cause.display_image.url }}"/>
   {% endif %}
 
+  {% if not cause.is_public %}
+    <meta name="robots" content="noindex, nofollow">
+  {% endif %}
+
   <meta property="og:type" content="website"/>
 
   <script src="https://www.google.com/recaptcha/api.js?hl=ro" async defer></script>
 
 {% endblock %}
 
-{% block content %}
-  <div class="container">
+{% block content_container %}
 
-    {% include "form/redirection-header.html" %}
+  {% include "form/header/main.html" %}
+
+  <div class="container py-16">
 
     {% if donation_status == "open" %}
 

@@ -1,0 +1,69 @@
+{% load i18n cause_action_menu text_format %}
+
+{% if causes|length == 0 %}
+
+  <tr class="text-sm text-gray-600">
+    <td class="py-4 pl-4 pr-3 font-medium text-gray-900 sm:pl-0" colspan="8">
+      {% trans "No causes found" %}
+    </td>
+  </tr>
+
+{% else %}
+
+  {% for cause in causes %}
+    <tr class="text-sm text-left text-gray-900 odd:bg-white even:bg-gray-50">
+
+      <td class="sm:pl-0 py-4">
+        {{ cause.name }}
+      </td>
+      <td class="px-3 py-4">
+        {{ cause.bank_account|iban }}
+      </td>
+      <td class="px-3 py-4">
+        {% if cause.visibility != "private" %}
+          <div class="flex flex-row gap-2 text-cyan-800 justify-start">
+
+            <a
+              href="{% url 'twopercent' cause_slug=cause.slug %}"
+              target="_blank"
+              class="hover:underline hover:cursor-pointer">
+            <span>
+              /{{ cause.slug }}
+            </span>
+            </a>
+
+            {% include "components/copy-to-clipboard/icon.html" with clipboard_input=absolute_path|add:cause.slug button_classes="hover:cursor-pointer" view_box_size=20 %}
+
+          </div>
+        {% else %}
+          <p class="text-zinc-500">
+            {{ cause.slug }}
+          </p>
+        {% endif %}
+      </td>
+      <td class="px-3 py-4">
+        {% if cause.allow_online_collection %}
+          {% trans "Yes" %}
+        {% else %}
+          {% trans "No" %}
+        {% endif %}
+      </td>
+      <td class="px-3 py-4">
+        {% include "ngo-account/causes/visibility-badge.html" with visibility=cause.visibility %}
+      </td>
+      <td class="px-3 py-4">
+        {{ cause.date_updated|date:"SHORT_DATE_FORMAT" }}
+        <br>
+        {{ cause.date_updated|time:"TIME_FORMAT" }}
+      </td>
+      <td class="px-3 py-4">
+        {{ cause.redirections_count }}
+      </td>
+      <td>
+        {% include "components/action-menu/main.html" with items=cause|dropdown button_disabled=cause|button_disabled button_title=cause|button_title %}
+      </td>
+
+    </tr>
+  {% endfor %}
+
+{% endif %}

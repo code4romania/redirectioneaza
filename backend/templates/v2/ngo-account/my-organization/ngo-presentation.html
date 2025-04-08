@@ -31,12 +31,26 @@
           {% include "ngo-account/banners/form-ngohub.html" %}
         {% endif %}
 
-        <fieldset>
-          <div class="flex flex-col gap-8 py-4">
+        <div class="flex flex-col gap-8 lg:flex-row-reverse lg:gap-16">
+
+
+          <fieldset class="flex flex-col gap-8">
+
+            {% trans "Official data" as form_page_legend_title %}
+            {% blocktrans trimmed asvar legal_data_tooltip %}
+              This data will appear on the filled-out form and,
+              if you activate online signing,
+              on the archive generated for ANAF.
+            {% endblocktrans %}
+            {% include "components/form/legend.html" with legend_title=form_page_legend_title info_tooltip=legal_data_tooltip %}
+
 
             <div>
-              {% trans "Name" as input_title %}
-              {% include "components/input/input.html" with input_id="name" input_type="text" input_name="name" is_required=True is_disabled=disable_ngohub_fields value=ngo.name field=ngo_presentation.name max_length=200 %}
+              {% trans "Official name" as input_title %}
+              {% blocktrans trimmed asvar name_helptext %}
+                This is the official name of your organization, as it appears in the registration documents.
+              {% endblocktrans %}
+              {% include "components/input/input.html" with input_id="name" input_type="text" input_name="name" is_required=True is_disabled=disable_ngohub_fields value=ngo.name field=ngo_presentation.name help_text=name_helptext max_length=200 %}
             </div>
 
             <div>
@@ -44,10 +58,17 @@
               {% include "components/input/input.html" with input_id="cif" input_type="text" input_name="cif" is_required=True is_disabled=disable_ngohub_fields value=ngo.full_registration_number field=ngo_presentation.cif max_length=100 %}
             </div>
 
-            <div>
-              {% trans "Logo" as input_title %}
-              {% include "components/input/image.html" with input_id="logo" input_name="logo" is_required=False is_disabled=disable_ngohub_fields image=ngo.logo %}
-            </div>
+          </fieldset>
+
+
+          <fieldset class="flex flex-col gap-8">
+
+            {% trans "Your organization on redirectioneaza.ro" as your_org_title %}
+            {# Datele din această secțiune vor fi vizibile pe pagina publică a formularului. #}
+            {% blocktrans trimmed asvar official_data_tooltip %}
+              The information in this section will be visible on the public page of the form.
+            {% endblocktrans %}
+            {% include "components/form/legend.html" with legend_title=your_org_title info_tooltip=official_data_tooltip %}
 
             <div>
               {% trans "Organization website" as input_title %}
@@ -112,8 +133,9 @@
               {% endif %}
             </div>
 
-          </div>
-        </fieldset>
+          </fieldset>
+
+        </div>
 
       {% endwith %}
     </form>

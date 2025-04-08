@@ -20,7 +20,6 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path, re_path, reverse
 from django.views.generic import RedirectView
-
 from donations.views.account_management import (
     ForgotPasswordView,
     LoginView,
@@ -32,8 +31,9 @@ from donations.views.account_management import (
     VerificationView,
 )
 from donations.views.api import (
-    DownloadNgoForms,
-    GetNgoForm,
+    ChangeCauseVisibility,
+    GenerateCauseArchive,
+    GetCausePrefilledForm,
     SearchCausesApi,
     UpdateFromNgohub,
 )
@@ -121,8 +121,9 @@ urlpatterns = (
         ),
         # APIs
         path("api/ngohub-refresh/", UpdateFromNgohub.as_view(), name="api-ngohub-refresh"),
-        path("api/ngo/form/<ngo_url>/", GetNgoForm.as_view(), name="api-ngo-form-url"),
-        path("api/ngo/forms/download/", DownloadNgoForms.as_view(), name="api-ngo-forms"),
+        path("api/ngo/form/<cause_slug>/", GetCausePrefilledForm.as_view(), name="api-cause-form"),
+        path("api/ngo/forms/archive/", GenerateCauseArchive.as_view(), name="api-generate-cause-archive"),
+        path("api/ngo/forms/visibility/", ChangeCauseVisibility.as_view(), name="api-change-cause-visibility"),
         #
         path("api/search/", SearchCausesApi.as_view(), name="api-search-ngos"),
         # Django Admin
@@ -134,10 +135,11 @@ urlpatterns = (
         path("admin/organizatii/", RedirectView.as_view(pattern_name="admin:index", permanent=True)),
         path("admin/", admin.site.urls),
         # must always be the last set of urls
-        re_path(r"^(?P<ngo_url>[\w-]+)/doilasuta/", RedirectView.as_view(pattern_name="twopercent", permanent=True)),
-        # re_path(r"^(?P<ngo_url>[\w-]+)/semnatura/", FormSignature.as_view(), name="ngo-twopercent-signature"),
-        re_path(r"^(?P<ngo_url>[\w-]+)/succes/", RedirectionSuccessHandler.as_view(), name="ngo-twopercent-success"),
-        re_path(r"^(?P<ngo_url>[\w-]+)/$", RedirectionHandler.as_view(), name="twopercent"),
+        # people could initially redirect 2%; we kept this name because it is easier to find than redirection
+        re_path(r"^(?P<cause_slug>[\w-]+)/doilasuta/", RedirectView.as_view(pattern_name="twopercent", permanent=True)),
+        # re_path(r"^(?P<cause_slug>[\w-]+)/semnatura/", FormSignature.as_view(), name="ngo-twopercent-signature"),
+        re_path(r"^(?P<cause_slug>[\w-]+)/succes/", RedirectionSuccessHandler.as_view(), name="ngo-twopercent-success"),
+        re_path(r"^(?P<cause_slug>[\w-]+)/$", RedirectionHandler.as_view(), name="twopercent"),
         # Skip the login provider selector page and redirect to Cognito
         path(
             "allauth/login/",

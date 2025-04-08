@@ -2,14 +2,23 @@ from django.conf import settings
 from django.core.cache import cache
 
 
-def cache_decorator(*, timeout: int, cache_key: str = None, cache_key_prefix: str = None):
+def cache_decorator(
+    *,
+    timeout: int,
+    cache_key: str = None,
+    cache_key_prefix: str = None,
+    cache_key_custom: str = None,
+):
     def decorator(func):
         def wrapper(*args, **kwargs):
-            if not cache_key and not cache_key_prefix:
-                raise ValueError("Either cache_key or cache_key_prefix must be provided")
+            if not cache_key and not cache_key_prefix and not cache_key_custom:
+                raise ValueError("Either cache_key, cache_key_prefix, or cache_key_custom must be provided")
 
             if cache_key:
-                _cache_key = cache_key
+                _cache_key: str = cache_key
+            elif cache_key_custom:
+                # noinspection StrFormat
+                _cache_key: str = cache_key_custom.format(*args, **kwargs)
             else:
                 cache_suffix = (
                     hash(f"{func.__name__}__{str(args)}_{str(kwargs)}")

@@ -1,0 +1,21 @@
+{% load i18n %}
+
+
+{% trans "Your organization is not receiving notifications for signed forms." as banner_title %}
+
+{% trans "Receive notifications for each signed form" as button_input_title %}
+{% blocktranslate trimmed asvar banner_message %}
+  <p>
+    Users can sign the form, but your organization will not receive any notifications.
+    If you want to receive notifications for each signed form, please enable the
+    <strong>"{{ button_input_title }}"</strong>
+    option and fill in the email address where you want to receive the notifications.
+  </p>
+{% endblocktranslate %}
+
+{% if active_tab == "presentation" %}
+  {% url "my-organization:form" as banner_cta_url %}
+  {% trans "Go to the form page" as banner_cta_message %}
+{% endif %}
+
+{% include "components/info-banner.html" with style="warning" %}

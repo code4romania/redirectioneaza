@@ -1,25 +1,26 @@
 import logging
 from datetime import datetime, timedelta
+from typing import Optional
 from urllib.parse import urlparse
 
 from django.conf import settings
 from django.contrib import messages
 from django.core.files import File
+from django.db.models import Prefetch
 from django.http import Http404, JsonResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 from ipware import get_client_ip
-
 from redirectioneaza.common.messaging import extend_email_context, send_email
 
 from ..forms.redirection import DonationForm
 from ..models.donors import Donor
+from ..models.ngos import Cause, Ngo
 from ..pdf import create_full_pdf
 from .base import BaseVisibleTemplateView
-from .common.misc import get_ngo_cause
 
 logger = logging.getLogger(__name__)
 
@@ -28,15 +29,19 @@ class RedirectionSuccessHandler(BaseVisibleTemplateView):
     template_name = "form/success/main.html"
     title = _("Successful redirection")
 
-    def get_context_data(self, ngo_url, **kwargs):
+    def get_context_data(self, cause_slug, **kwargs):
         context = super().get_context_data(**kwargs)
 
         request = self.request
 
-        cause_url = ngo_url.lower().strip()
-        cause, ngo = get_ngo_cause(cause_url)
+        cause_url = cause_slug.lower().strip()
+        try:
+            cause: Optional[Cause] = Cause.nonprivate_active.select_related("ngo").get(slug=cause_url)
+            ngo: Ngo = cause.ngo
+        except Cause.DoesNotExist:
+            raise Http404("Cause not found")
 
-        if not cause and not ngo:
+        if not ngo:
             raise Http404("NGO not found")
 
         try:
@@ -45,7 +50,7 @@ class RedirectionSuccessHandler(BaseVisibleTemplateView):
         except Donor.DoesNotExist:
             donor = None
 
-        absolute_path = request.build_absolute_uri(reverse("twopercent", kwargs={"ngo_url": ngo_url}))
+        absolute_path = request.build_absolute_uri(reverse("twopercent", kwargs={"cause_slug": cause_slug}))
 
         context.update(
             {
@@ -61,7 +66,7 @@ class RedirectionSuccessHandler(BaseVisibleTemplateView):
         context = self.get_context_data(**kwargs)
 
         if not context["donor"] and not settings.DEBUG:
-            return redirect(reverse("twopercent", kwargs={"ngo_url": kwargs["ngo_url"]}))
+            return redirect(reverse("twopercent", kwargs={"cause_slug": kwargs["cause_slug"]}))
 
         return self.render_to_response(context)
 
@@ -69,28 +74,36 @@ class RedirectionSuccessHandler(BaseVisibleTemplateView):
 class RedirectionHandler(TemplateView):
     template_name = "form/redirection.html"
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, cause_slug, **kwargs):
         context = super().get_context_data(**kwargs)
 
         request = self.request
-        ngo_url = kwargs.get("ngo_url", "")
 
-        cause, ngo = get_ngo_cause(ngo_url)
+        main_cause_qs = Cause.objects.filter(is_main=True).only("id", "slug", "name", "description")
+
+        cause: Cause = get_object_or_404(
+            Cause.nonprivate_active.select_related("ngo").prefetch_related(
+                Prefetch(
+                    lookup="ngo__causes",
+                    queryset=main_cause_qs,
+                    to_attr="main_cause_list",
+                )
+            ),
+            slug=cause_slug,
+        )
 
         # if we didn't find it or the ngo doesn't have an active page
-        if (cause is None or not cause.ngo.can_receive_forms()) and (ngo is None or not ngo.can_receive_forms()):
+        if (ngo := cause.ngo) is None:
+            logger.exception(f"NGO not found for cause {cause.pk}")
             raise Http404
 
-        absolute_path = request.build_absolute_uri(reverse("twopercent", kwargs={"ngo_url": ngo_url}))
+        if not ngo.can_create_causes:
+            raise Http404
 
-        context.update(
-            {
-                "title": cause.name if cause else ngo.name,
-                "cause": cause,
-                "ngo": ngo,
-                "absolute_path": absolute_path,
-            }
-        )
+        # noinspection PyUnresolvedReferences
+        main_cause = cause if cause.is_main else (ngo.main_cause_list[0] if ngo.main_cause_list else None)
+
+        absolute_path = request.build_absolute_uri(reverse("twopercent", kwargs={"cause_slug": cause_slug}))
 
         # if we still have a cookie from an old session, remove it
         if "donor_id" in request.session:
@@ -106,6 +119,11 @@ class RedirectionHandler(TemplateView):
 
         context.update(
             {
+                "title": cause.name if cause else ngo.name,
+                "cause": cause,
+                "main_cause": main_cause,
+                "ngo": ngo,
+                "absolute_path": absolute_path,
                 "donation_status": donation_status,
                 "is_admin": request.user.is_staff,
                 "limit": settings.DONATIONS_LIMIT,
@@ -159,15 +177,17 @@ class RedirectionHandler(TemplateView):
 
         return context
 
-    def post(self, request, ngo_url):
+    def post(self, request, cause_slug):
         post = self.request.POST
 
-        (
-            cause,
-            ngo,
-        ) = get_ngo_cause(ngo_url)
+        cause_url = cause_slug.lower().strip()
+        try:
+            cause: Optional[Cause] = Cause.nonprivate_active.select_related("ngo").get(slug=cause_url)
+            ngo: Ngo = cause.ngo
+        except Cause.DoesNotExist:
+            raise Http404("Cause not found")
 
-        if not cause and not ngo:
+        if not ngo:
             raise Http404
 
         # if we have an ajax request, return an answer
@@ -176,7 +196,7 @@ class RedirectionHandler(TemplateView):
         form = DonationForm(post)
         if not form.is_valid():
             messages.error(request, _("There are some errors on the redirection form."))
-            return self.return_error(request, form, is_ajax, ngo_url=ngo_url)
+            return self.return_error(request, form, is_ajax, cause_slug=cause_slug)
 
         signature: str = form.cleaned_data["signature"]
 
@@ -239,7 +259,7 @@ class RedirectionHandler(TemplateView):
         donor_email_context = mail_context.copy()
         donor_email_context.update(
             {
-                "ngo_url": request.build_absolute_uri(reverse("twopercent", kwargs={"ngo_url": ngo_url})),
+                "cause_url": request.build_absolute_uri(reverse("twopercent", kwargs={"cause_slug": cause_slug})),
                 "ngo_name": ngo.name,
                 "donation_is_two_years": new_donor.two_years,
             }
@@ -248,13 +268,14 @@ class RedirectionHandler(TemplateView):
         # TODO: add a text for two-year donations
         # send and email to the donor with a link to the PDF file
         if signature:
-            send_email(
-                subject=_("Un nou formular de redirecționare"),
-                to_emails=[ngo.email],
-                html_template="emails/ngo/new-form-received/main.html",
-                text_template="emails/ngo/new-form-received/main.txt",
-                context=mail_context,
-            )
+            if cause.notifications_email:
+                send_email(
+                    subject=_("Un nou formular de redirecționare"),
+                    to_emails=[cause.notifications_email],
+                    html_template="emails/ngo/new-form-received/main.html",
+                    text_template="emails/ngo/new-form-received/main.txt",
+                    context=mail_context,
+                )
             send_email(
                 subject=_("Formularul tău de redirecționare"),
                 to_emails=[new_donor.email],
@@ -283,7 +304,7 @@ class RedirectionHandler(TemplateView):
                 context=donor_email_context,
             )
 
-        url = reverse("ngo-twopercent-success", kwargs={"ngo_url": ngo_url})
+        url = reverse("ngo-twopercent-success", kwargs={"cause_slug": cause_slug})
 
         # if not an ajax request, redirect
         if is_ajax:
@@ -292,11 +313,11 @@ class RedirectionHandler(TemplateView):
         else:
             return redirect(url)
 
-    def return_error(self, request, form, is_ajax, ngo_url):
+    def return_error(self, request, form, is_ajax, cause_slug):
         if is_ajax:
             return JsonResponse(form.errors)
 
-        context = self.get_context_data(ngo_url=ngo_url)
+        context = self.get_context_data(cause_slug=cause_slug)
         context.update({"redirection_form": form})
 
         for key in self.request.POST:
@@ -311,7 +332,7 @@ class OwnFormDownloadLinkHandler(TemplateView):
         # Don't allow downloading donation forms older than this
         cutoff_date = timezone.now() - timedelta(days=365)
         try:
-            donor = Donor.available.get(pk=donor_id, date_created__gte=cutoff_date)
+            donor = Donor.available.select_related("ngo").get(pk=donor_id, date_created__gte=cutoff_date)
         except Donor.DoesNotExist:
             raise Http404
         else:

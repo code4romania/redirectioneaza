@@ -1,0 +1,42 @@
+{% extends "ngo-account/base.html" %}
+
+{% load i18n static %}
+
+{% block page_heading %}
+
+  <h1 class="text-2xl font-semibold text-gray-900">
+    <span class="flex items-center">
+      <a href="{% url 'my-organization:causes' %}" class="text-cyan-700 hover:text-cyan-900 hover:cursor-pointer">
+        <span class="sr-only">
+          {% trans "Back to causes" %}
+        </span>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="4" stroke="currentColor" class="size-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"/>
+        </svg>
+      </a>
+
+      <span class="ml-4">
+        {{ page_title }}
+      </span>
+    </span>
+  </h1>
+
+{% endblock %}
+
+{% block page_errors %}
+
+  {% if cause %}
+    {% if not cause.allow_online_collection %}
+      {% include "ngo-account/banners/form-emails-banner.html" %}
+    {% elif not cause.notifications_email %}
+      {% include "ngo-account/banners/form-notifications-banner.html" %}
+    {% endif %}
+  {% endif %}
+
+{% endblock %}
+
+{% block content %}
+
+  {% include "ngo-account/cause/form.html" with hide_public_page_button=False hide_public_download_button=False %}
+
+{% endblock %}

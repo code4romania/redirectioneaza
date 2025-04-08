@@ -2,14 +2,16 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path
 from django.views.generic import RedirectView
-
 from donations.views.ngo_account import (
     ArchiveDownloadLinkView,
     NgoArchivesView,
-    NgoCausesView,
-    RedirectionDownloadLinkView,
+    NgoCauseCreateView,
+    NgoCauseEditView,
+    NgoCausesListView,
+    NgoMainCauseView,
     NgoPresentationView,
     NgoRedirectionsView,
+    RedirectionDownloadLinkView,
     UserSettingsView,
 )
 
@@ -21,7 +23,11 @@ urlpatterns = [
     # path("/", NgoDashboardView.as_view(), name="dashboard"),
     path("prezentare/", NgoPresentationView.as_view(), name="presentation"),
     path("", RedirectView.as_view(pattern_name="my-organization:presentation"), name="dashboard"),
-    path("formulare/", NgoCausesView.as_view(), name="forms"),
+    path("formular/", NgoMainCauseView.as_view(), name="form"),
+    path("formulare/", RedirectView.as_view(pattern_name="my-organization:form"), name="forms-redirect"),
+    path("cauze/", NgoCausesListView.as_view(), name="causes"),
+    path("cauze/creeaza", NgoCauseCreateView.as_view(), name="cause-create"),
+    path("cauze/<cause_id>/", NgoCauseEditView.as_view(), name="cause"),
     path("redirectionari/", NgoRedirectionsView.as_view(), name="redirections"),
     path("arhive/", NgoArchivesView.as_view(), name="archives"),
     path("setari-cont/", UserSettingsView.as_view(), name="settings-account"),

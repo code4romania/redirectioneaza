@@ -545,7 +545,7 @@ msgstr "Mărimea imaginii este prea mare."
 
 #: donations/forms/ngo_account.py:101
 msgid "Slug"
-msgstr "URL organizație"
+msgstr "URL"
 
 #: donations/forms/ngo_account.py:104 donations/forms/ngo_account.py:106
 #: donations/forms/ngo_account.py:102
@@ -982,7 +982,7 @@ msgstr ""
 #: donations/models/ngos.py:118 donations/models/main.py:142
 #: donations/models/main.py:132 donations/models/main.py:129
 msgid "slug"
-msgstr "URL organizație"
+msgstr "URL"
 
 #: donations/models/ngos.py:167 donations/models/ngos.py:430
 #: donations/models/ngos.py:160 donations/models/ngos.py:423

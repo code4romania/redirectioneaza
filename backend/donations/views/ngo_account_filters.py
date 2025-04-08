@@ -3,14 +3,25 @@ from typing import Dict, List, Optional, Union
 from django.conf import settings
 from django.db.models import QuerySet
 from django.utils.translation import gettext_lazy as _
-
+from donations.models.ngos import Ngo
 from redirectioneaza.common.filters import QueryFilter
 
 
-class CountyQueryFilter(QueryFilter):
-    def __init__(self):
+class NgoQueryFilter(QueryFilter):
+    ngo: Ngo = None
+
+    def __init__(self, ngo):
+        super().__init__()
+
+        self.ngo = ngo
+
+
+class CountyQueryFilter(NgoQueryFilter):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
         self.id = "filter_dropdown_county"
-        self.key = "c"
+        self.key = "county"
         self.type = "combobox"
 
         self.title = _("County")
@@ -25,10 +36,12 @@ class CountyQueryFilter(QueryFilter):
         return settings.COUNTIES_WITH_SECTORS_LIST
 
 
-class LocalityQueryFilter(QueryFilter):
-    def __init__(self):
+class LocalityQueryFilter(NgoQueryFilter):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
         self.id = "filter_dropdown_locality"
-        self.key = "l"
+        self.key = "city"
         self.type = "combobox"
 
         self.title = _("Locality")
@@ -42,10 +55,12 @@ class LocalityQueryFilter(QueryFilter):
         return []
 
 
-class FormPeriodQueryFilter(QueryFilter):
-    def __init__(self):
+class FormPeriodQueryFilter(NgoQueryFilter):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
         self.id = "filter_dropdown_period"
-        self.key = "p"
+        self.key = "period"
         self.type = "select"
 
         self.title = _("Period")
@@ -60,10 +75,12 @@ class FormPeriodQueryFilter(QueryFilter):
         ]
 
 
-class FormStatusQueryFilter(QueryFilter):
-    def __init__(self):
+class FormStatusQueryFilter(NgoQueryFilter):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
         self.id = "filter_dropdown_status"
-        self.key = "s"
+        self.key = "signed"
         self.type = "select"
 
         self.title = _("Status")
@@ -76,3 +93,26 @@ class FormStatusQueryFilter(QueryFilter):
             {"title": _("Signed"), "value": "signed"},
             {"title": _("Not signed"), "value": "unsigned"},
         ]
+
+
+class CauseQueryFilter(NgoQueryFilter):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.id = "filter_dropdown_cause"
+        self.key = "cause"
+        self.type = "combobox"
+
+        self.title = _("Cause")
+
+        self.queryset_key = "cause_id"
+
+    def options_default(self) -> List[Dict[str, Union[int, str]]]:
+        if self.ngo.causes.count() <= 1:
+            return []
+
+        options = []
+        for cause in self.ngo.causes.all():
+            options.append({"title": cause.name, "value": cause.pk})
+
+        return options

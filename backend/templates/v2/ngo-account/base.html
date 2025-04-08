@@ -5,13 +5,70 @@
 {% block content_container %}
   <div class="flex-1 bg-gray-50">
     <main class="container py-10">
+
+      <div class="mb-6">
+        {% if django_form.non_field_errors %}
+          {% trans "There are some errors on the form." as error_title %}
+          {% include "components/info-banner.html" with style="error" banner_title=error_title banner_message=django_form.non_field_errors %}
+        {% endif %}
+      </div>
+
+      {% if breadcrumbs %}
+        {% block breadcrumbs %}
+
+          <nav class="flex items-center mb-6 text-sm text-gray-500 gap-2" aria-label="Breadcrumb">
+            <ol role="list" class="flex items-center space-x-2">
+
+              {% for crumb in breadcrumbs %}
+
+                <li>
+                  <div
+                    {% if not forloop.first %}
+                      class="flex items-center"
+                    {% endif %}
+                  >
+
+                    {% if not forloop.first %}
+                      <svg
+                        class="size-5 shrink-0 text-gray-300"
+                        fill="currentColor"
+                        viewBox="0 0 20 20" aria-hidden="true">
+                        <path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z"/>
+                      </svg>
+                    {% endif %}
+
+                    <a
+                      href="{{ crumb.url|default_if_none:"#" }}"
+                      class="ml-2 text-sm text-gray-500 hover:text-gray-700 {% if forloop.last %}font-medium{% else %}font-semibold{% endif %}"
+                    >
+                      {{ crumb.title }}
+                    </a>
+
+                  </div>
+                </li>
+
+              {% endfor %}
+
+            </ol>
+          </nav>
+
+        {% endblock %}
+      {% endif %}
+
       <div class="mb-6">
         {% block page_heading %}{% endblock %}
+      </div>
+
+      <div class="mb-6">
+        <div class="flex flex-col gap-6">
+          {% block page_errors %}{% endblock %}
+        </div>
       </div>
 
       <div class="px-4 py-5 bg-white rounded-lg shadow sm:p-6">
         {% block content %}{% endblock %}
       </div>
+
     </main>
   </div>
 {% endblock %}

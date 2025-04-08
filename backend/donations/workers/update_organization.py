@@ -11,33 +11,32 @@ from django.core.files import File
 from django.utils import timezone
 from django.utils.text import slugify
 from django_q.tasks import async_task
+from donations.common.validation.validate_slug import NgoSlugValidator
+from donations.models.ngos import Cause, Ngo
 from ngohub import NGOHub
 from ngohub.models.organization import Organization, OrganizationGeneral
 from pycognito import Cognito
-from requests import Response
-
-from donations.common.validation.validate_slug import NgoSlugValidator
-from donations.models.ngos import Cause, Ngo
 from redirectioneaza.common.cache import cache_decorator
+from requests import Response
 
 logger = logging.getLogger(__name__)
 
 
-def remove_signature(s3_url: str) -> str:
+def _remove_signature(s3_url: str) -> str:
     """
     Extract the S3 file name without the URL signature and the directory path
     """
     if s3_url:
         return s3_url.split("?")[0].split("/")[-1]
-    else:
-        return ""
+
+    return ""
 
 
-def copy_file_to_organization(ngo: Ngo, signed_file_url: str, file_type: str):
+def _copy_file_to_organization(ngo: Ngo, signed_file_url: str, file_type: str):
     if not hasattr(ngo, file_type):
         raise AttributeError(f"Organization has no attribute '{file_type}'")
 
-    filename: str = remove_signature(signed_file_url)
+    filename: str = _remove_signature(signed_file_url)
     if not filename and getattr(ngo, file_type):
         getattr(ngo, file_type).delete()
         error_message = f"ERROR: {file_type.upper()} file URL is empty, deleting the existing file."
@@ -74,7 +73,7 @@ def copy_file_to_organization(ngo: Ngo, signed_file_url: str, file_type: str):
 
 
 @cache_decorator(timeout=settings.TIMEOUT_CACHE_NORMAL, cache_key="authenticate_with_ngohub")
-def authenticate_with_ngohub() -> str:
+def _authenticate_with_ngohub() -> str:
     u = Cognito(
         user_pool_id=settings.AWS_COGNITO_USER_POOL_ID,
         client_id=settings.AWS_COGNITO_CLIENT_ID,
@@ -87,7 +86,7 @@ def authenticate_with_ngohub() -> str:
     return u.id_token
 
 
-def get_ngo_hub_data(ngohub_org_id: int, token: str = "") -> Organization:
+def _get_ngo_hub_data(ngohub_org_id: int, token: str = "") -> Organization:
     hub = NGOHub(settings.NGOHUB_API_HOST)
 
     # if a token is already provided, use it for the profile endpoint
@@ -95,21 +94,18 @@ def get_ngo_hub_data(ngohub_org_id: int, token: str = "") -> Organization:
         return hub.get_organization_profile(ngo_token=token)
 
     # if no token is provided, attempt to authenticate as an admin for the organization endpoint
-    token: str = authenticate_with_ngohub()
+    token: str = _authenticate_with_ngohub()
     return hub.get_organization(organization_id=ngohub_org_id, admin_token=token)
 
 
-def create_default_cause(ngo: Ngo) -> Cause:
-    cause: Cause = Cause(ngo=ngo)
+def _create_main_cause(ngo: Ngo, ngohub_general_data: OrganizationGeneral) -> Cause:
+    cause: Cause = Cause(ngo=ngo, is_main=True)
 
-    cause.name = ngo.name
-    cause.description = ngo.description
+    cause.name = ngohub_general_data.alias or ngohub_general_data.name
+    cause.description = ngohub_general_data.description
 
-    new_slug = slugify(ngo.name).replace("_", "-")
-    if NgoSlugValidator.is_blocked(new_slug):
-        random_string = "".join(random.choices(string.ascii_lowercase + string.digits, k=5))
-        new_slug = f"{new_slug}-{random_string}"
-    elif NgoSlugValidator.is_reused(new_slug):
+    new_slug: str = slugify(ngo.name).replace("_", "-")
+    if NgoSlugValidator.is_blocked(new_slug) or NgoSlugValidator.is_reused(new_slug):
         random_string = "".join(random.choices(string.ascii_lowercase + string.digits, k=5))
         new_slug = f"{new_slug}-{random_string}"
 
@@ -123,7 +119,7 @@ def create_default_cause(ngo: Ngo) -> Cause:
     return cause
 
 
-def update_local_ngo_with_ngohub_data(ngo: Ngo, ngohub_ngo: Organization) -> Dict[str, Union[int, List[str]]]:
+def _update_local_ngo_with_ngohub_data(ngo: Ngo, ngohub_ngo: Organization) -> Dict[str, Union[int, List[str]]]:
     errors: List[str] = []
 
     if not ngo.filename_cache:
@@ -131,16 +127,16 @@ def update_local_ngo_with_ngohub_data(ngo: Ngo, ngohub_ngo: Organization) -> Dic
 
     ngohub_general_data: OrganizationGeneral = ngohub_ngo.general_data
 
-    ngo.name = ngohub_general_data.alias or ngohub_general_data.name
+    ngo.name = ngohub_general_data.name
 
+    # XXX: [MULTI-FORM] The NGO shouldn't have a description anymore, right?
     if ngo.description is None:
         ngo.description = ngohub_general_data.description or ""
 
     ngo.registration_number = ngohub_general_data.cui
 
     # Import the organization logo
-    logo_url: str = ngohub_general_data.logo
-    logo_url_error: Optional[str] = copy_file_to_organization(ngo, logo_url, "logo")
+    logo_url_error: Optional[str] = _copy_file_to_organization(ngo, ngohub_general_data.logo, "logo")
     if logo_url_error:
         errors.append(logo_url_error)
 
@@ -167,7 +163,7 @@ def update_local_ngo_with_ngohub_data(ngo: Ngo, ngohub_ngo: Organization) -> Dic
     ngo.save()
 
     if not ngo.causes.exists():
-        create_default_cause(ngo)
+        _create_main_cause(ngo, ngohub_general_data)
 
     ngo.ngohub_last_update_ended = timezone.now()
     ngo.save()
@@ -180,19 +176,21 @@ def update_local_ngo_with_ngohub_data(ngo: Ngo, ngohub_ngo: Organization) -> Dic
     return task_result
 
 
-def update_organization_process(organization_id: int, token: str = "") -> Dict[str, Union[int, List[str]]]:
+def _update_organization_task(organization_id: int, token: str = "") -> Dict[str, Union[int, List[str]]]:
     """
     Update the organization with the given ID.
     """
+    last_update_start = timezone.now()
+
     ngo: Ngo = Ngo.objects.get(pk=organization_id)
 
-    ngo.ngohub_last_update_started = timezone.now()
+    ngo.ngohub_last_update_started = last_update_start
     ngo.save()
 
     ngohub_id: int = ngo.ngohub_org_id
-    ngohub_org_data: Organization = get_ngo_hub_data(ngohub_id, token)
+    ngohub_org_data: Organization = _get_ngo_hub_data(ngohub_id, token)
 
-    task_result = update_local_ngo_with_ngohub_data(ngo, ngohub_org_data)
+    task_result = _update_local_ngo_with_ngohub_data(ngo, ngohub_org_data)
 
     return task_result
 
@@ -202,10 +200,11 @@ def update_organization(organization_id: int, update_method: str = None, token: 
     Update the organization with the given ID asynchronously.
     """
     update_method = update_method or settings.UPDATE_ORGANIZATION_METHOD
+    function_args = [organization_id, token]
     if update_method == "async":
-        async_task(update_organization_process, organization_id, token)
+        async_task(_update_organization_task, *function_args)
     else:
-        update_organization_process(organization_id, token)
+        _update_organization_task(*function_args)
 
 
 def create_organization_for_user(user, ngohub_org_data: Organization) -> Ngo:
@@ -216,7 +215,7 @@ def create_organization_for_user(user, ngohub_org_data: Organization) -> Ngo:
     ngo = Ngo(registration_number=ngohub_org_data.general_data.cui, ngohub_org_id=ngohub_org_data.id)
     ngo.save()
 
-    update_local_ngo_with_ngohub_data(ngo, ngohub_org_data)
+    _update_local_ngo_with_ngohub_data(ngo, ngohub_org_data)
 
     user.ngo = ngo
     user.save()

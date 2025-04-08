@@ -4,45 +4,9 @@
 
 {% block page_heading %}
 
-  {% if ngo %}
-
-    {% if not ngo.can_receive_forms %}
-      <div class="py-6">
-        {% if ngo.is_active %}
-          {% blocktranslate trimmed asvar banner_message %}
-            <p>
-              Your organization can't currently receive forms because not all the required information has been filled
-              in.
-              Please make sure the following fields are filled in:
-            </p>
-          {% endblocktranslate %}
-
-          {% include "components/info-banner.html" with style="error" banner_message=banner_message banner_list=ngo.missing_mandatory_fields_names_capitalize %}
-        {% else %}
-          {% blocktranslate trimmed asvar banner_message %}
-            <p>
-              Your organization can't currently receive forms because it is not active.
-              If you think this is a mistake, please contact us at
-              <a href="mailto:{{ contact_email }}" class="text-blue-600 underline">{{ contact_email }}</a>.
-            </p>
-          {% endblocktranslate %}
-
-          {% include "components/info-banner.html" with style="error" banner_message=banner_message %}
-        {% endif %}
-      </div>
-    {% endif %}
-
-    {% if not ngo.is_accepting_forms %}
-      <div class="py-6">
-        {% include "ngo-account/banners/form-emails-banner.html" %}
-      </div>
-    {% endif %}
-
-  {% endif %}
-
   <div
-      x-data="{ activeTab: '{{ active_tab }}' }"
-      class="max-w-none">
+    x-data="{ activeTab: '{{ active_tab }}' }"
+    class="max-w-none">
 
     <h1 class="text-2xl text-gray-900 font-semibold">
       {% trans "Organization Data" %}
@@ -59,13 +23,13 @@
 
     <div class="pt-2 mt-2">
       <nav
-          class="flex space-x-4"
-          aria-label="Tabs">
+        class="flex space-x-4"
+        aria-label="Tabs">
 
         {% url "my-organization:presentation" as target_url %}
         {% include "ngo-account/components/tab.html" with tab_title=tab_presentation target="presentation" %}
 
-        {% url "my-organization:forms" as target_url %}
+        {% url "my-organization:form" as target_url %}
         {% if ngo %}
           {% include "ngo-account/components/tab.html" with tab_title=tab_form target="form" %}
         {% else %}
@@ -76,5 +40,73 @@
     </div>
   </div>
 
+{% endblock %}
+
+{% block page_errors %}
+
+  {% if ngo %}
+
+    {% if not ngo.can_receive_redirections %}
+
+        {% if not ngo.is_active %}
+          {% comment %}
+            În acest moment,
+            donatorii nu pot accesa formularul tău,
+            iar organizația nu apare pe redirectioneaza.ro.
+            Pentru a reactiva profilul,
+            te rugăm să ne contactezi la contact@redirectioneaza.ro.
+          {% endcomment %}
+          {% blocktranslate trimmed asvar banner_message %}
+            <p>
+              At this moment,
+              donors can't access your form
+              and your organization is not visible on redirectioneaza.ro.
+              To reactivate your profile,
+              please contact us at
+              <a href="mailto:{{ contact_email }}" class="text-blue-600 underline">{{ contact_email }}</a>.
+            </p>
+          {% endblocktranslate %}
+
+          {% include "components/info-banner.html" with style="error" banner_message=banner_message %}
+        {% elif missing_fields %}
+          {% if missing_fields.type == "ngo" %}
+            {% comment %}
+              Organizația ta nu poate primi formulare în prezent,
+              deoarece nu au fost completate toate informațiile necesare.
+              Te rugăm să completezi datele organizației:
+            {% endcomment %}
+            {% blocktranslate trimmed asvar banner_message %}
+              <p>
+                Your organization can't currently receive forms
+                because not all necessary information has been completed.
+                Please complete the organization's data:
+              </p>
+            {% endblocktranslate %}
+          {% elif missing_fields.type == "cause" %}
+            {% comment %}
+              Organizația ta nu poate primi formulare în prezent,
+              deoarece nu au fost completate toate informațiile necesare.
+              Te rugăm să completezi datele formularului:
+            {% endcomment %}
+            {% blocktranslate trimmed asvar banner_message %}
+              <p>
+                Your organization can't currently receive forms
+                because not all necessary information has been completed.
+                Please complete the form data:
+              </p>
+            {% endblocktranslate %}
+          {% endif %}
+
+          {% include "components/info-banner.html" with style="error" banner_message=banner_message banner_list=missing_fields.fields banner_cta_message=missing_fields.cta_message banner_cta_url=missing_fields.cta_url %}
+        {% endif %}
+    {% endif %}
+
+    {% if not cause.allow_online_collection %}
+      {% include "ngo-account/banners/form-emails-banner.html" %}
+    {% elif not cause.notifications_email %}
+      {% include "ngo-account/banners/form-notifications-banner.html" %}
+    {% endif %}
+
+  {% endif %}
 
 {% endblock %}
