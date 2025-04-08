@@ -36,7 +36,7 @@ class RedirectionSuccessHandler(BaseVisibleTemplateView):
 
         cause_url = cause_slug.lower().strip()
         try:
-            cause: Optional[Cause] = Cause.nonprivate_active.get(slug=cause_url).select_related("ngo")
+            cause: Optional[Cause] = Cause.nonprivate_active.select_related("ngo").get(slug=cause_url)
             ngo: Ngo = cause.ngo
         except Cause.DoesNotExist:
             raise Http404("Cause not found")
@@ -182,7 +182,7 @@ class RedirectionHandler(TemplateView):
 
         cause_url = cause_slug.lower().strip()
         try:
-            cause: Optional[Cause] = Cause.nonprivate_active.get(slug=cause_url).select_related("ngo")
+            cause: Optional[Cause] = Cause.nonprivate_active.select_related("ngo").get(slug=cause_url)
             ngo: Ngo = cause.ngo
         except Cause.DoesNotExist:
             raise Http404("Cause not found")
@@ -332,7 +332,7 @@ class OwnFormDownloadLinkHandler(TemplateView):
         # Don't allow downloading donation forms older than this
         cutoff_date = timezone.now() - timedelta(days=365)
         try:
-            donor = Donor.available.get(pk=donor_id, date_created__gte=cutoff_date).select_related("ngo")
+            donor = Donor.available.select_related("ngo").get(pk=donor_id, date_created__gte=cutoff_date)
         except Donor.DoesNotExist:
             raise Http404
         else:
