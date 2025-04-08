@@ -1,11 +1,11 @@
 {% load i18n %}
 
 <form
-  id="ngo-form-data-form"
-  method="post"
-  enctype="multipart/form-data"
-  action=""
-  class="grid gap-5">
+    id="ngo-form-data-form"
+    method="post"
+    enctype="multipart/form-data"
+    action=""
+    class="grid gap-5">
 
   {% csrf_token %}
 
@@ -21,6 +21,7 @@
 
       {% url "my-organization:presentation" as banner_cta_url %}
       {% trans "See the Organization's Information" as banner_cta_message %}
+
       {% include "components/info-banner.html" with banner_message=banner_message banner_list=info_banner_items %}
 
 
@@ -31,15 +32,6 @@
         </legend>
 
         <div class="flex flex-col gap-8 py-4">
-
-          {% trans "Form URL" as input_title %}
-          {#        Acesta este link-ul prin care utilizatorii vor accesa formularul tău pe site-ul redirectioneaza.ro. Poate conține doar litere, cifre și cratime. Exemplu: /formular-cauza.#}
-          {% blocktrans trimmed asvar slug_helptext %}
-            This is the link through which users will access your form on the site.
-            It can only contain letters, numbers, and hyphens.
-            Example: cause-form.
-          {% endblocktrans %}
-          {% include "components/input/input.html" with input_id="slug" input_type="text" input_name="slug" is_required=True value=cause.slug field=django_form.slug max_length=150 placeholder="url-formular" help_text=slug_helptext %}
 
           {% trans "IBAN on form" as input_title %}
           {#Alege IBAN-ul pe care îl vei utiliza pentru colectarea și depunerea la ANAF. Modificarea IBAN-ului nu va actualiza formularele deja completate de contribuabili.  Află mai multe      #}
@@ -60,7 +52,16 @@
       </fieldset>
     </div>
 
-    <div class="flex flex-col gap-8">
+    <div
+        class="flex flex-col gap-8"
+        x-data="{ x_allow_online_collection: document.getElementById('allow_online_collection').checked, x_allow_online_notifications: document.getElementById('allow_online_notifications').checked }"
+        x-init="$watch('x_allow_online_collection', value => {
+            if (!value) {
+              $refs.x_allow_online_notifications.checked = false;
+              x_allow_online_notifications = false;
+            }
+          })"
+    >
       <fieldset>
 
         {% if not form_page_legend_title %}
@@ -89,35 +90,38 @@
             {% trans "Display image" as logo_input_title %}
           {% endif %}
 
-          {% include "components/input/image.html" with input_title=logo_input_title help_text=logo_help_text input_id="display_image" input_name="display_image" is_required=False is_disabled=disable_ngohub_fields image=cause.display_image %}
+          {% include "components/input/image.html" with input_title=logo_input_title help_text=logo_help_text input_id="display_image" input_name="display_image" is_required=False is_disabled=disable_ngo_hub_fields image=cause.display_image %}
 
         </div>
 
       </fieldset>
 
       <fieldset>
-
         {% if not form_settings_legend_title %}
           {% trans "Form settings" as form_settings_legend_title %}
         {% endif %}
-        {# Din această secțiune poți gestiona vizibilitatea formularului, semnarea online și notificările prin email. #}
+        {# Din această secțiune poți gestiona URL-ul formularului, vizibilitatea sa și semnarea online. #}
         {% blocktrans trimmed asvar form_settings_info_tooltip %}
-          From this section, you can manage the form's visibility,
-          online signing,
-          and email notifications.
+          From this section, you can manage
+          the form's URL,
+          its visibility
+          and online signing.
         {% endblocktrans %}
         {% include "components/form/legend.html" with legend_title=form_settings_legend_title info_tooltip=form_settings_info_tooltip %}
 
-        <div
-          class="flex flex-col gap-8 py-4"
-          x-data="{ x_allow_online_collection: document.getElementById('allow_online_collection').checked, x_allow_online_notifications: document.getElementById('allow_online_notifications').checked }"
-          x-init="$watch('x_allow_online_collection', value => {
-            if (!value) {
-              $refs.x_allow_online_notifications.checked = false;
-              x_allow_online_notifications = false;
-            }
-          })"
-        >
+
+        <div class="flex flex-col gap-8 py-4">
+
+          {% trans "Form URL" as input_title %}
+          {#        Acesta este link-ul prin care utilizatorii vor accesa formularul tău pe site-ul redirectioneaza.ro. Poate conține doar litere, cifre și cratime. Exemplu: /formular-cauza.#}
+          {% blocktrans trimmed asvar slug_helptext %}
+            This is the link through which users will access your form on the site.
+            It can only contain letters, numbers, and hyphens.
+            Example: cause-form.
+          {% endblocktrans %}
+          {% include "components/input/input.html" with input_id="slug" input_type="text" input_name="slug" is_required=True value=cause.slug field=django_form.slug max_length=150 placeholder="url-formular" help_text=slug_helptext %}
+
+
 
           {% if is_main_cause %}
             <input type="hidden" name="visibility" value="pub">
@@ -139,10 +143,25 @@
           {% endblocktrans %}
           {% include "components/input/checkbox.html" with input_title=allow_online_collection_input_title input_id="allow_online_collection" input_name="allow_online_collection" x_ref="x_allow_online_collection" x_model="x_allow_online_collection" value=cause.allow_online_collection field=django_form.allow_online_collection help_text=signing_helptext style="isolated" %}
 
+        </div>
+
+      </fieldset>
+
+      <fieldset x-cloak x-show="x_allow_online_collection">
+
+        {% if not form_settings_legend_title %}
+          {% trans "Form notifications" as form_settings_legend_title %}
+        {% endif %}
+        {# Din această secțiune poți gestiona notificările prin email. #}
+        {% blocktrans trimmed asvar form_settings_info_tooltip %}
+          From this section, you can manage the form's email notifications.
+        {% endblocktrans %}
+        {% include "components/form/legend.html" with legend_title=form_settings_legend_title info_tooltip=form_settings_info_tooltip %}
+
+        <div class="flex flex-col gap-8 py-4">
 
           <div
-            id="notifications_section"
-            x-init="$watch('x_allow_online_notifications', value => {
+              x-init="$watch('x_allow_online_notifications', value => {
               if (!value) {
                 document.getElementById('notifications_email').value = '';
                 document.getElementById('notifications_email').required = false;
@@ -150,9 +169,7 @@
                 document.getElementById('notifications_email').required = true;
               }
             })"
-            x-cloak
-            x-show="x_allow_online_collection"
-            class="flex flex-col gap-8">
+              class="flex flex-col gap-8">
 
             {% if not allow_online_notifications_input_title %}
               {% trans "Receive notifications for each signed form" as allow_online_notifications_input_title %}
@@ -164,12 +181,12 @@
             {% include "components/input/checkbox.html" with input_title=allow_online_notifications_input_title input_id="allow_online_notifications" input_name="allow_online_notifications" x_ref="x_allow_online_notifications" x_model="x_allow_online_notifications" value=cause.allow_online_notifications help_text=notifications_helptext style="isolated" %}
 
             <div
-              x-cloak
-              x-show="x_allow_online_notifications">
+                x-cloak
+                x-show="x_allow_online_notifications">
               {% if not notifications_email_input_title %}
                 {% trans "Notifications e-mail address" as notifications_email_input_title %}
               {% endif %}
-              {% include "components/input/input.html" with input_title=notifications_email_input_title input_id="notifications_email" input_type="email" input_name="notifications_email" is_disabled=disable_ngohub_fields value=cause.notifications_email field=django_form.notifications_email max_length=254 %}
+              {% include "components/input/input.html" with input_title=notifications_email_input_title input_id="notifications_email" input_type="email" input_name="notifications_email" value=cause.notifications_email field=django_form.notifications_email max_length=254 %}
             </div>
 
           </div>

@@ -28,55 +28,8 @@
       as well as all the other forms created by your organization.
     {% endblocktrans %}
 
+    {% include "ngo-account/cause/form.html" with hide_public_page_button=False hide_public_download_button=False disable_ngo_hub_fields=ngo.has_ngo_hub %}
 
-    {% include "ngo-account/cause/form.html" with hide_public_page_button=False hide_public_download_button=False %}
-
-    {% comment %}
-      <form
-        id="ngo-form-data-form"
-        method="post"
-        enctype="multipart/form-data"
-        action="{% url 'my-organization:forms' %}"
-        class="grid gap-5">
-
-        {% csrf_token %}
-
-        {% trans "Form Data" as title %}
-        {% include "ngo-account/components/form-title.html" %}
-
-        <fieldset>
-          <div class="flex flex-col gap-8 py-4">
-
-            <div class="px-6 py-4 border border-gray-200 rounded bg-gray-50">
-              <div class="flex gap-3">
-                {% trans "Allow users to sign the form online" as input_title %}
-                {% include "components/input/checkbox.html" with input_id="allow_online_collection" input_name="allow_online_collection" value=cause.allow_online_collection field=django_form.allow_online_collection %}
-              </div>
-
-              <p class="pt-2 text-xs text-gray-500">
-                {% trans "By selecting this option, I confirm that the NGO has the SPV account that's necessary to submit the forms" %}
-              </p>
-            </div>
-
-            {% trans "Organization URL" as input_title %}
-            {% include "components/input/input.html" with input_id="slug" input_type="text" input_name="slug" is_required=True value=cause.slug field=django_form.slug max_length=150 placeholder="numele-organizatiei" %}
-
-            <hr class="w-full border-gray-200">
-
-            {% trans "Form title" as input_title %}
-            {% include "components/input/input.html" with input_id="title" input_type="text" input_name="title" placeholder=input_title is_required=True is_disabled=True value=ngo.name %}
-
-            {% trans "Form description" as input_title %}
-            {% include "components/input/textarea.html" with input_id="description" input_type="textarea" input_name="description" is_required=True value=cause.description field=django_form.description %}
-
-            {% trans "IBAN on form" as input_title %}
-            {% include "components/input/input.html" with input_id="bank_account" input_type="text" input_name="bank_account" placeholder="RO00 1234 5678 1234 5678" is_required=True value=cause.bank_account field=django_form.bank_account max_length=48 %}
-
-          </div>
-        </fieldset>
-
-      </form>
-    {% endcomment %}
   </div>
 
 {% endblock %}

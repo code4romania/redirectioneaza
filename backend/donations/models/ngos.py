@@ -357,6 +357,10 @@ class Ngo(models.Model):
         if commit:
             self.save()
 
+    @property
+    def has_ngo_hub(self):
+        return bool(self.ngohub_org_id)
+
     @classmethod
     def mandatory_fields(cls):
 
