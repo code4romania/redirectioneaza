@@ -130,7 +130,7 @@ class NgoBaseTemplateView(NgoBaseView, BaseVisibleTemplateView):
                 "type": "cause",
                 "fields": missing_cause_fields,
                 "cta_message": _("Go to the form.") if source == "ngo" else "",
-                "cta_url": reverse_lazy("my-organization:forms") if source == "ngo" else "",
+                "cta_url": reverse_lazy("my-organization:form") if source == "ngo" else "",
             }
 
         return None
@@ -499,7 +499,7 @@ class NgoCauseCreateView(NgoCauseCommonView):
 
         if user.ngo and not user.ngo.can_create_causes:
             messages.error(request, _("You need to first create the form with the organization's details."))
-            return redirect(reverse("my-organization:forms"))
+            return redirect(reverse("my-organization:form"))
 
         return super().get(request, *args, **kwargs)
 

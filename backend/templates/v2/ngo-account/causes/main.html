@@ -42,7 +42,7 @@
           {% if ngo.can_create_causes %}
             href="{% url 'my-organization:cause-create' %}"
           {% else %}
-            href="{% url 'my-organization:forms' %}"
+            href="{% url 'my-organization:form' %}"
             x-data
             x-tooltip.raw="{% trans "You need to first create the organization's form. Go to the 'Organization Form' page for this." %}"
           {% endif %}

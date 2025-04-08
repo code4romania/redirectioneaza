@@ -29,7 +29,7 @@
         {% url "my-organization:presentation" as target_url %}
         {% include "ngo-account/components/tab.html" with tab_title=tab_presentation target="presentation" %}
 
-        {% url "my-organization:forms" as target_url %}
+        {% url "my-organization:form" as target_url %}
         {% if ngo %}
           {% include "ngo-account/components/tab.html" with tab_title=tab_form target="form" %}
         {% else %}
