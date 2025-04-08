@@ -800,6 +800,46 @@ class NgoArchivesView(NgoBaseListView):
         return archives
 
 
+class NgoBringYourOwnFormView(NgoBaseListView):
+    template_name = "ngo-account/byof/main.html"
+    title = _("Generate from external data")
+    context_object_name = "archive_external"
+    paginate_by = 8
+    sidebar_item_target = "org-byof"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        user: User = self.request.user
+        ngo: Ngo = user.ngo if user.ngo else None
+
+        size_limit = 2 * settings.MEBIBYTE
+
+        context.update(
+            {
+                "user": user,
+                "ngo": ngo,
+                "size_limit": size_limit,
+            }
+        )
+
+        return context
+
+    def get_queryset(self):
+        return []
+
+    def post(self, request: HttpRequest, *args, **kwargs):
+        files = request.FILES
+
+        file = files.get("byof_file")
+        if file:
+            messages.success(request, _(f"You have uploaded a file of {len(files.get("byof_file"))} bytes."))
+        else:
+            messages.error(request, _("Please upload a file."))
+
+        return redirect(reverse("my-organization:byof"))
+
+
 class RedirectionDownloadLinkView(BaseVisibleTemplateView):
     title = _("Download donor form")
 

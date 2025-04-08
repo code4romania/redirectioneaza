@@ -121,6 +121,12 @@ HEADER_ITEMS: Dict[str, Dict[str, str]] = {
         "url": reverse_lazy("my-organization:archives"),
         "icon": "M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3",
     },
+    "ngo_byof": {
+        "title": _("Generate from external data"),
+        "target": "org-byof",
+        "url": reverse_lazy("my-organization:byof"),
+        "icon": "M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 0 0-3.7-3.7 48.678 48.678 0 0 0-7.324 0 4.006 4.006 0 0 0-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 0 0 3.7 3.7 48.656 48.656 0 0 0 7.324 0 4.006 4.006 0 0 0 3.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3-3 3",
+    },
     "account_settings": {
         "title": _("Account Settings"),
         "target": "account-settings",
@@ -235,6 +241,7 @@ def build_auth_menu(request: HttpRequest) -> List[Dict[str, str]]:
                 HEADER_ITEMS["ngo_causes"],
                 HEADER_ITEMS["ngo_redirections"],
                 HEADER_ITEMS["ngo_archives"],
+                HEADER_ITEMS["ngo_byof"],
                 HEADER_ITEMS["separator"],
                 HEADER_ITEMS["account_settings"],
                 HEADER_ITEMS["separator"],

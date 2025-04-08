@@ -5,6 +5,7 @@ from django.views.generic import RedirectView
 from donations.views.ngo_account import (
     ArchiveDownloadLinkView,
     NgoArchivesView,
+    NgoBringYourOwnFormView,
     NgoCauseCreateView,
     NgoCauseEditView,
     NgoCausesListView,
@@ -27,6 +28,7 @@ urlpatterns = [
     path("formulare/", RedirectView.as_view(pattern_name="my-organization:form"), name="forms-redirect"),
     path("redirectionari/", NgoRedirectionsView.as_view(), name="redirections"),
     path("arhive/", NgoArchivesView.as_view(), name="archives"),
+    path("extern/", NgoBringYourOwnFormView.as_view(), name="byof"),
     path("setari-cont/", UserSettingsView.as_view(), name="settings-account"),
     path("arhiva/<job_id>/", ArchiveDownloadLinkView.as_view(), name="archive-download-link"),
     path("formular/<form_id>/", RedirectionDownloadLinkView.as_view(), name="redirection-download-link"),

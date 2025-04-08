@@ -1,0 +1,29 @@
+{% extends "ngo-account/base.html" %}
+
+{% load i18n static %}
+
+{% block page_heading %}
+
+  <div>
+
+    <h1 class="text-2xl font-semibold text-gray-900">
+      {% trans "Generate the XML for the ANAF smart PDF from external data" %}
+    </h1>
+
+    <p class="pt-2 mt-2 text-lg text-gray-500">
+      {% blocktrans trimmed %}
+        Here you can upload your own table of data in CSV format,
+        and we will generate the XML for the ANAF smart PDF.
+      {% endblocktrans %}
+    </p>
+
+  </div>
+
+{% endblock %}
+
+
+{% block content %}
+  {% include "ngo-account/byof/upload.html" %}
+
+  {% include "ngo-account/byof/listing.html" %}
+{% endblock %}
