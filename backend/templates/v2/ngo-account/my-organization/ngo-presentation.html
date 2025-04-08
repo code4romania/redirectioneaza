@@ -17,8 +17,7 @@
       id="ngo-presentation-form"
       method="post"
       enctype="multipart/form-data"
-      action="{% url 'my-organization:presentation' %}"
-      class="grid gap-5">
+      action="{% url 'my-organization:presentation' %}">
 
       {% csrf_token %}
 
@@ -31,10 +30,10 @@
           {% include "ngo-account/banners/form-ngohub.html" %}
         {% endif %}
 
-        <div class="flex flex-col gap-8 lg:flex-row-reverse lg:gap-16">
+        <div class="flex flex-col gap-8 lg:flex-row-reverse lg:gap-16 py-8">
 
 
-          <fieldset class="flex flex-col gap-8">
+          <fieldset class="flex flex-1 flex-col gap-8">
 
             {% trans "Official data" as form_page_legend_title %}
             {% blocktrans trimmed asvar legal_data_tooltip %}
@@ -61,7 +60,7 @@
           </fieldset>
 
 
-          <fieldset class="flex flex-col gap-8">
+          <fieldset class="flex flex-1 flex-col gap-8">
 
             {% trans "Your organization on redirectioneaza.ro" as your_org_title %}
             {% blocktrans trimmed asvar official_data_tooltip %}

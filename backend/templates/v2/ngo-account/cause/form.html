@@ -14,7 +14,7 @@
 
   <div class="flex flex-col gap-8 lg:flex-row-reverse lg:gap-16">
 
-    <div class="flex flex-col gap-8">
+    <div class="flex flex-1 flex-col gap-8">
 
       {% blocktrans trimmed asvar banner_message %}
         For filling in the form, we will use the following organization data:
@@ -56,7 +56,7 @@
     </div>
 
     <div
-        class="flex flex-col gap-8"
+        class="flex flex-1 flex-col gap-8"
         x-data="{ x_allow_online_collection: document.getElementById('allow_online_collection').checked, x_allow_online_notifications: document.getElementById('allow_online_notifications').checked }"
         x-init="$watch('x_allow_online_collection', value => {
             if (!value) {
@@ -138,8 +138,9 @@
             {% trans "Allow users to sign the form online" as allow_online_collection_input_title %}
           {% endif %}
           {% blocktrans trimmed asvar signing_helptext %}
-            Choose the IBAN you will use for collecting and submitting to ANAF.
-            Changing the IBAN will not update the forms already completed by taxpayers.
+            By selecting this option,
+            I confirm that I have ensured that my organization has an SPV account,
+            necessary for submitting the forms completed with online signature.
           {% endblocktrans %}
           {% include "components/input/checkbox.html" with input_title=allow_online_collection_input_title input_id="allow_online_collection" input_name="allow_online_collection" x_ref="x_allow_online_collection" x_model="x_allow_online_collection" value=cause.allow_online_collection field=django_form.allow_online_collection help_text=signing_helptext style="isolated" %}
 
@@ -149,13 +150,13 @@
 
       <fieldset x-cloak x-show="x_allow_online_collection">
 
-        {% if not form_settings_legend_title %}
-          {% trans "Form notifications" as form_settings_legend_title %}
+        {% if not form_notifications_legend_title %}
+          {% trans "Form notifications" as form_notifications_legend_title %}
         {% endif %}
         {% blocktrans trimmed asvar form_settings_info_tooltip %}
           From this section, you can manage the form's email notifications.
         {% endblocktrans %}
-        {% include "components/form/legend.html" with legend_title=form_settings_legend_title info_tooltip=form_settings_info_tooltip %}
+        {% include "components/form/legend.html" with legend_title=form_notifications_legend_title info_tooltip=form_settings_info_tooltip %}
 
         <div class="flex flex-col gap-8 py-4">
 
@@ -174,8 +175,8 @@
               {% trans "Receive notifications for each signed form" as allow_online_notifications_input_title %}
             {% endif %}
             {% blocktrans trimmed asvar notifications_helptext %}
-              Choose the IBAN you will use for collecting and submitting to ANAF.
-              Changing the IBAN will not update the forms already completed by taxpayers.
+              By selecting this option,
+              you activate email notifications to be informed each time someone fills out the form.
             {% endblocktrans %}
             {% include "components/input/checkbox.html" with input_title=allow_online_notifications_input_title input_id="allow_online_notifications" input_name="allow_online_notifications" x_ref="x_allow_online_notifications" x_model="x_allow_online_notifications" value=cause.allow_online_notifications help_text=notifications_helptext style="isolated" %}
 

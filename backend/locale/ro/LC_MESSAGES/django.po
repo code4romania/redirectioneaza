@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-08 13:56+0300\n"
+"POT-Creation-Date: 2025-04-08 18:43+0300\n"
 "PO-Revision-Date: 2025-03-27 14:49+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -337,7 +337,7 @@ msgid "Name"
 msgstr "Nume"
 
 #: donations/forms/ngo_account.py:15 donations/forms/ngo_account.py:17
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:57
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:56
 msgid "CUI/CIF"
 msgstr "CUI/CIF"
 
@@ -375,12 +375,12 @@ msgstr "Localitate"
 #: donations/forms/ngo_account.py:31 donations/forms/redirection.py:32
 #: donations/views/dashboard/ngo_dashboard.py:56
 #: donations/views/ngo_account_filters.py:27
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:117
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:116
 msgid "County"
 msgstr "Județ"
 
 #: donations/forms/ngo_account.py:36
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:127
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:126
 msgid "Active region"
 msgstr "Regiune activă"
 
@@ -2834,7 +2834,7 @@ msgstr ""
 "redirecționare."
 
 #: templates/v2/ngo-account/banners/form-emails-banner.html:19
-#: templates/v2/ngo-account/cause/form.html:137
+#: templates/v2/ngo-account/cause/form.html:138
 msgid "Allow users to sign the form online"
 msgstr ""
 "Permit contribuabililor să semneze online formularul de redirecționare "
@@ -2883,7 +2883,7 @@ msgid "Your organization is not receiving notifications for signed forms."
 msgstr "Organizația ta nu primește notificări pentru formularele semnate."
 
 #: templates/v2/ngo-account/banners/form-notifications-banner.html:6
-#: templates/v2/ngo-account/cause/form.html:173
+#: templates/v2/ngo-account/cause/form.html:175
 msgid "Receive notifications for each signed form"
 msgstr "Primește notificări pentru fiecare formular semnat"
 
@@ -2906,36 +2906,36 @@ msgid "There are some errors on the form."
 msgstr "Există erori în formular."
 
 #: templates/v2/ngo-account/cause/form.html:12
-#: templates/v2/ngo-account/cause/form.html:31
+#: templates/v2/ngo-account/cause/form.html:32
 msgid "Form data"
 msgstr "Date formular"
 
-#: templates/v2/ngo-account/cause/form.html:18
+#: templates/v2/ngo-account/cause/form.html:19
 msgid "For filling in the form, we will use the following organization data:"
 msgstr ""
 "Pentru completarea formularului, vom folosi următoarele date ale "
 "organizației:"
 
-#: templates/v2/ngo-account/cause/form.html:23
+#: templates/v2/ngo-account/cause/form.html:24
 msgid "See the Organization's Information"
 msgstr "Vezi informațiile organizației"
 
-#: templates/v2/ngo-account/cause/form.html:33
+#: templates/v2/ngo-account/cause/form.html:34
 msgid "This information will appear on the filled form."
 msgstr "Această informație va apărea pe formularul completat."
 
-#: templates/v2/ngo-account/cause/form.html:40
+#: templates/v2/ngo-account/cause/form.html:41
 msgid "IBAN on form"
 msgstr "Numărul IBAN pe formular"
 
-#: templates/v2/ngo-account/cause/form.html:41
+#: templates/v2/ngo-account/cause/form.html:42
 msgid ""
 "Changing the IBAN will not update the forms already completed by taxpayers."
 msgstr ""
 "Modificarea IBAN-ului nu va actualiza formularele deja completate de "
 "contribuabili."
 
-#: templates/v2/ngo-account/cause/form.html:45
+#: templates/v2/ngo-account/cause/form.html:46
 #, python-format
 msgid ""
 "Choose the IBAN you will use for collecting and submitting to ANAF. "
@@ -2944,35 +2944,35 @@ msgstr ""
 "Alege IBAN-ul pe care îl vei utiliza pentru colectarea și depunerea la ANAF."
 "%(iban_helptext)s"
 
-#: templates/v2/ngo-account/cause/form.html:70
+#: templates/v2/ngo-account/cause/form.html:71
 msgid "Form page"
 msgstr "Pagina formularului"
 
-#: templates/v2/ngo-account/cause/form.html:72
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:67
+#: templates/v2/ngo-account/cause/form.html:73
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:66
 msgid ""
 "The information in this section will be visible on the public page of the "
 "form."
 msgstr ""
 "Datele din această secțiune vor fi vizibile pe pagina publică a formularului."
 
-#: templates/v2/ngo-account/cause/form.html:81
+#: templates/v2/ngo-account/cause/form.html:82
 msgid "Form title"
 msgstr "Titlu formular"
 
-#: templates/v2/ngo-account/cause/form.html:86
+#: templates/v2/ngo-account/cause/form.html:87
 msgid "Form description"
 msgstr "Descriere formular"
 
-#: templates/v2/ngo-account/cause/form.html:91
+#: templates/v2/ngo-account/cause/form.html:92
 msgid "Display image"
 msgstr "Imagine de afișare"
 
-#: templates/v2/ngo-account/cause/form.html:102
+#: templates/v2/ngo-account/cause/form.html:103
 msgid "Form settings"
 msgstr "Setări formular"
 
-#: templates/v2/ngo-account/cause/form.html:104
+#: templates/v2/ngo-account/cause/form.html:105
 msgid ""
 "From this section, you can manage the form's URL, its visibility and online "
 "signing."
@@ -2980,12 +2980,12 @@ msgstr ""
 "Din această secțiune poți gestiona URL-ul formularului, vizibilitatea sa și "
 "semnarea online."
 
-#: templates/v2/ngo-account/cause/form.html:115
+#: templates/v2/ngo-account/cause/form.html:116
 #: templates/v2/ngo-account/causes/list-header.html:10
 msgid "Form URL"
 msgstr "URL Formular"
 
-#: templates/v2/ngo-account/cause/form.html:116
+#: templates/v2/ngo-account/cause/form.html:117
 msgid ""
 "This is the link through which users will access your form on the site. It "
 "can only contain letters, numbers, and hyphens. Example: cause-form."
@@ -2994,29 +2994,37 @@ msgstr ""
 "ul redirectioneaza.ro. Poate conține doar litere, cifre și cratime. Exemplu: "
 "formular-cauza."
 
-#: templates/v2/ngo-account/cause/form.html:130
+#: templates/v2/ngo-account/cause/form.html:131
 msgid "Form visibility"
 msgstr "Vizibilitate formular"
 
-#: templates/v2/ngo-account/cause/form.html:139
-#: templates/v2/ngo-account/cause/form.html:175
+#: templates/v2/ngo-account/cause/form.html:140
 msgid ""
-"Choose the IBAN you will use for collecting and submitting to ANAF. Changing "
-"the IBAN will not update the forms already completed by taxpayers."
+"By selecting this option, I confirm that I have ensured that my organization "
+"has an SPV account, necessary for submitting the forms completed with online "
+"signature."
 msgstr ""
-"Alege IBAN-ul pe care îl vei folosi pentru colectarea și depunerea la ANAF. "
-"Schimbarea IBAN-ului nu va actualiza formularele deja completate de "
-"contribuabili."
+"Prin selectarea acestei opțiuni, confirm că m-am asigurat că organizația mea "
+"are un cont SPV, necesar pentru a depune formularele completate cu semnătură "
+"online."
 
-#: templates/v2/ngo-account/cause/form.html:152
+#: templates/v2/ngo-account/cause/form.html:154
 msgid "Form notifications"
 msgstr "Notificări formular"
 
-#: templates/v2/ngo-account/cause/form.html:154
+#: templates/v2/ngo-account/cause/form.html:156
 msgid "From this section, you can manage the form's email notifications."
 msgstr "Din această secțiune poți gestiona notificările prin email."
 
-#: templates/v2/ngo-account/cause/form.html:185
+#: templates/v2/ngo-account/cause/form.html:177
+msgid ""
+"By selecting this option, you activate email notifications to be informed "
+"each time someone fills out the form."
+msgstr ""
+"Prin selectarea acestei opțiuni, activezi notificările prin email pentru a "
+"fi informat de fiecare dată când cineva completează formularul."
+
+#: templates/v2/ngo-account/cause/form.html:187
 msgid "Notifications e-mail address"
 msgstr "Adresa de email pentru notificări"
 
@@ -3161,7 +3169,7 @@ msgid "Fill out the organization's profile on redirectioneaza.ro"
 msgstr "Completează profilul organizației pe redirectioneaza.ro"
 
 #: templates/v2/ngo-account/my-organization/base.html:21
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:27
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:26
 msgid "Presentation Data"
 msgstr "Pagina organizației tale"
 
@@ -3241,11 +3249,11 @@ msgstr ""
 "Aceasta este sigla organizației tale. Va fi afișată pe pagina publică a "
 "formularului principal, dar și pe toate celelalte formulare create de "
 
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:39
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:38
 msgid "Official data"
 msgstr "Date oficiale"
 
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:40
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:39
 msgid ""
 "This data will appear on the filled-out form and, if you activate online "
 "signing, on the archive generated for ANAF."
@@ -3253,46 +3261,46 @@ msgstr ""
 "Aceste date vor apărea pe formularul completat și, dacă activezi semnătura "
 "online, pe arhiva generată pentru ANAF."
 
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:49
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:48
 msgid "Official name"
 msgstr "Nume oficial"
 
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:50
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:49
 msgid ""
 "This is the official name of your organization, as it appears in the "
 "registration documents."
 msgstr ""
 "Aceasta este denumirea oficială a organizației tale, așa cum apare în acte."
 
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:66
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:65
 msgid "Your organization on redirectioneaza.ro"
 msgstr "Organizația ta pe redirectioneaza.ro"
 
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:73
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:72
 msgid "Organization website"
 msgstr "Website-ul organizației"
 
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:79
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:78
 msgid "Organization contact e-mail"
 msgstr "Email de contact al organizației"
 
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:84
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:83
 msgid "Display e-mail in the profile"
 msgstr "Afișează email-ul pe pagina publică"
 
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:93
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:92
 msgid "Organization contact phone"
 msgstr "Telefon de contact al organizației"
 
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:98
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:97
 msgid "Display phone in the profile"
 msgstr "Afișează telefonul pe pagina publică"
 
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:107
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:106
 msgid "Organization address"
 msgstr "Adresa organizației"
 
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:112
+#: templates/v2/ngo-account/my-organization/ngo-presentation.html:111
 msgid "Locality/Sector"
 msgstr "Localitate/Sector"
 
@@ -3658,6 +3666,15 @@ msgstr "parolă veche"
 msgid "Group"
 msgstr "Grup"
 
+#~ msgid ""
+#~ "Choose the IBAN you will use for collecting and submitting to ANAF. "
+#~ "Changing the IBAN will not update the forms already completed by "
+#~ "taxpayers."
+#~ msgstr ""
+#~ "Alege IBAN-ul pe care îl vei folosi pentru colectarea și depunerea la "
+#~ "ANAF. Schimbarea IBAN-ului nu va actualiza formularele deja completate de "
+#~ "contribuabili."
+
 #~ msgid "Legal information"
 #~ msgstr "Informații privind partajarea datelor"
 
@@ -3671,14 +3688,6 @@ msgstr "Grup"
 #~ "formularul, să-l completeze manual și să-l trimită fie la adresa "
 #~ "organizației, fie la un oficiu ANAF. Permite semnarea online, bifând "
 #~ "opțiunea din pagina “Date formular”.</p>"
-
-#~ msgid ""
-#~ "By selecting this option, I confirm that the NGO has the SPV account "
-#~ "that's necessary to submit the forms"
-#~ msgstr ""
-#~ "Prin selectarea acestei opțiuni, confirm că m-am asigurat că organizația "
-#~ "mea are un cont SPV, necesar pentru a depune formularele completate cu "
-#~ "semnătură online."
 
 #~ msgid "Organization URL"
 #~ msgstr "URL-ul organizației"
