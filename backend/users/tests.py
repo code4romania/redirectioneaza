@@ -1,11 +1,11 @@
 # Create your tests here.
 import uuid
-from django.test import TestCase, override_settings
+from django.test import TestCase
 from django.urls import reverse
-from django.utils import timezone
 from django.contrib.auth.models import Group
+from django.utils.translation import gettext as _
 
-from users.models import User, CustomUserManager
+from users.models import User
 from users.groups_management import MAIN_ADMIN, NGO_ADMIN, NGO_MEMBER, RESTRICTED_ADMIN
 
 
@@ -32,7 +32,7 @@ class UserModelTests(TestCase):
 
     def test_create_superuser_invalid_flags(self):
         # is_staff must be True
-        with self.assertRaisesMessage(ValueError, "Superuser must have is_staff=True."):
+        with self.assertRaisesMessage(ValueError, _("Superuser must have is_staff=True.")):
             User.objects.create_superuser(email="x@example.com", password="pass", is_staff=False)
         # is_superuser must be True
         with self.assertRaisesMessage(ValueError, "Superuser must have is_superuser=True."):
@@ -79,12 +79,12 @@ class UserModelTests(TestCase):
 
     def test_create_admin_login_url(self):
         url_no_next = User.create_admin_login_url()
-        self.assertIn(reverse('admin:login'), url_no_next)
-        self.assertTrue(url_no_next.endswith('?next='))
+        self.assertIn(reverse("admin:login"), url_no_next)
+        self.assertTrue(url_no_next.endswith("?next="))
 
-        next_path = '/dashboard/'
+        next_path = "/dashboard/"
         url_with_next = User.create_admin_login_url(next_url=next_path)
-        self.assertTrue(url_with_next.endswith(f'?next={next_path}'))
+        self.assertTrue(url_with_next.endswith(f"?next={next_path}"))
 
     def test_group_properties(self):
         user = User.objects.create_user(email="grp@example.com", password="pw")
@@ -117,4 +117,3 @@ class UserModelTests(TestCase):
         self.assertTrue(user.is_ngo_member)
         self.assertFalse(user.is_ngo_admin)
         self.assertFalse(user.is_admin)
-
