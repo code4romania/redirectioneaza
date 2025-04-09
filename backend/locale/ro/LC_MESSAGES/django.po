@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-08 18:43+0300\n"
+"POT-Creation-Date: 2025-04-09 11:44+0300\n"
 "PO-Revision-Date: 2025-03-27 14:49+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -2087,8 +2087,8 @@ msgstr ""
 "organizației."
 
 #: templates/v2/components/cta-redirection.html:73
-#: templates/v2/form/success/signed.html:22
-#: templates/v2/form/success/unsigned.html:22
+#: templates/v2/form/success/signed.html:21
+#: templates/v2/form/success/unsigned.html:21
 msgid "Download the form"
 msgstr "Descarcă formularul"
 
@@ -2711,8 +2711,8 @@ msgstr ""
 "Formularul tău a fost trimis către organizație, iar aceștia se vor ocupa de "
 "depunerea lui la ANAF. Vei primi în scurt timp o copie a acestuia pe email."
 
-#: templates/v2/form/success/signed.html:26
-#: templates/v2/form/success/unsigned.html:97
+#: templates/v2/form/success/signed.html:25
+#: templates/v2/form/success/unsigned.html:96
 msgid ""
 "Together we can make a positive change in society, that's why we need as "
 "many people like you as possible. See below how you can contribute more."
@@ -2732,11 +2732,11 @@ msgstr ""
 "Am generat formularul cu datele tale. Mai departe, el trebuie semnat și "
 "trimis. Vezi mai jos, sau pe email, pașii pe care trebuie să îi urmezi."
 
-#: templates/v2/form/success/unsigned.html:31
+#: templates/v2/form/success/unsigned.html:30
 msgid "After you print and sign the form, you have the following options:"
 msgstr "După ce printezi și semnezi formularul, ai următoarele opțiuni:"
 
-#: templates/v2/form/success/unsigned.html:42
+#: templates/v2/form/success/unsigned.html:41
 msgid ""
 "You scan and send it by email to the NGO, and they will take care of "
 "submitting it. The NGO's email address is:"
@@ -2744,7 +2744,7 @@ msgstr ""
 "Îl scanezi și îl trimiți pe email către ONG și ei se vor ocupa de depunerea "
 "lui. Adresa de email a ONG-ului este:"
 
-#: templates/v2/form/success/unsigned.html:55
+#: templates/v2/form/success/unsigned.html:54
 msgid ""
 "You send it by post with a registered letter to the tax office (ANAF) you "
 "belong to."
@@ -2752,11 +2752,11 @@ msgstr ""
 "Îl trimiți prin poștă cu scrisoare recomandată la unitatea fiscală (ANAF) de "
 "care aparții."
 
-#: templates/v2/form/success/unsigned.html:60
+#: templates/v2/form/success/unsigned.html:59
 msgid "Search for the office you belong to in this list;"
 msgstr "Caută oficiul din care faci parte în această listă;"
 
-#: templates/v2/form/success/unsigned.html:73
+#: templates/v2/form/success/unsigned.html:72
 msgid ""
 "You send it by post or courier to the NGO's address, and they will take care "
 "of submitting it. Their address is:"
@@ -2764,11 +2764,11 @@ msgstr ""
 "Îl trimiți prin poștă sau curier la adresa ONG-ului, iar ei se vor ocupa de "
 "depunerea lui. Adresa lor este:"
 
-#: templates/v2/form/success/unsigned.html:78
+#: templates/v2/form/success/unsigned.html:77
 msgid "the county"
 msgstr "județul"
 
-#: templates/v2/form/success/unsigned.html:88
+#: templates/v2/form/success/unsigned.html:87
 msgid ""
 "Alternatively, you can choose to refill the form and sign it online at any "
 "time, in which case it will go directly to the organization in digital "
@@ -2787,11 +2787,21 @@ msgstr "#"
 msgid "Date generated"
 msgstr "Data generării"
 
-#: templates/v2/ngo-account/archives/list-header.html:16
+#: templates/v2/ngo-account/archives/list-header.html:17
 msgid "No. of Forms"
 msgstr "Număr formulare"
 
 #: templates/v2/ngo-account/archives/list-header.html:19
+msgid ""
+"The number of forms in the archive might be different from the number of "
+"forms processed. This is because we also try to remove duplicates since they "
+"break the PDF generation."
+msgstr ""
+"Numărul de formulare din arhivă poate fi diferit de numărul de formulare "
+"procesate. Acest lucru se întâmplă deoarece încercăm să eliminăm "
+"duplicatele, deoarece acestea afectează generarea PDF-ului."
+
+#: templates/v2/ngo-account/archives/list-header.html:33
 msgid "Download link"
 msgstr "Link de descărcare"
 

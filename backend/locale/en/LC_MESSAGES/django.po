@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-08 18:43+0300\n"
+"POT-Creation-Date: 2025-04-09 11:44+0300\n"
 "PO-Revision-Date: 2025-03-27 14:48+0000\n"
 "Last-Translator: Andrei Ioniță <andrei.ionita@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -2137,8 +2137,8 @@ msgstr ""
 "organization."
 
 #: templates/v2/components/cta-redirection.html:73
-#: templates/v2/form/success/signed.html:22
-#: templates/v2/form/success/unsigned.html:22
+#: templates/v2/form/success/signed.html:21
+#: templates/v2/form/success/unsigned.html:21
 msgid "Download the form"
 msgstr "Download the form"
 
@@ -2770,8 +2770,8 @@ msgstr ""
 "submitting it to the tax office. You will receive a copy of it by email "
 "shortly."
 
-#: templates/v2/form/success/signed.html:26
-#: templates/v2/form/success/unsigned.html:97
+#: templates/v2/form/success/signed.html:25
+#: templates/v2/form/success/unsigned.html:96
 msgid ""
 "Together we can make a positive change in society, that's why we need as "
 "many people like you as possible. See below how you can contribute more."
@@ -2791,11 +2791,11 @@ msgstr ""
 "We have generated the form with your data. Next, it needs to be signed and "
 "sent. See below, or in the email, the steps you need to follow."
 
-#: templates/v2/form/success/unsigned.html:31
+#: templates/v2/form/success/unsigned.html:30
 msgid "After you print and sign the form, you have the following options:"
 msgstr "After you print and sign the form, you have the following options:"
 
-#: templates/v2/form/success/unsigned.html:42
+#: templates/v2/form/success/unsigned.html:41
 msgid ""
 "You scan and send it by email to the NGO, and they will take care of "
 "submitting it. The NGO's email address is:"
@@ -2803,7 +2803,7 @@ msgstr ""
 "You scan and send it by email to the NGO, and they will take care of "
 "submitting it. The NGO's email address is:"
 
-#: templates/v2/form/success/unsigned.html:55
+#: templates/v2/form/success/unsigned.html:54
 msgid ""
 "You send it by post with a registered letter to the tax office (ANAF) you "
 "belong to."
@@ -2811,11 +2811,11 @@ msgstr ""
 "You send it by post with a registered letter to the tax office (ANAF) you "
 "belong to."
 
-#: templates/v2/form/success/unsigned.html:60
+#: templates/v2/form/success/unsigned.html:59
 msgid "Search for the office you belong to in this list;"
 msgstr "Search for the office you belong to in this list;"
 
-#: templates/v2/form/success/unsigned.html:73
+#: templates/v2/form/success/unsigned.html:72
 msgid ""
 "You send it by post or courier to the NGO's address, and they will take care "
 "of submitting it. Their address is:"
@@ -2823,11 +2823,11 @@ msgstr ""
 "You send it by post or courier to the NGO's address, and they will take care "
 "of submitting it. Their address is:"
 
-#: templates/v2/form/success/unsigned.html:78
+#: templates/v2/form/success/unsigned.html:77
 msgid "the county"
 msgstr "the county"
 
-#: templates/v2/form/success/unsigned.html:88
+#: templates/v2/form/success/unsigned.html:87
 msgid ""
 "Alternatively, you can choose to refill the form and sign it online at any "
 "time, in which case it will go directly to the organization in digital "
@@ -2846,11 +2846,18 @@ msgstr "#"
 msgid "Date generated"
 msgstr "Date generated"
 
-#: templates/v2/ngo-account/archives/list-header.html:16
+#: templates/v2/ngo-account/archives/list-header.html:17
 msgid "No. of Forms"
 msgstr ""
 
 #: templates/v2/ngo-account/archives/list-header.html:19
+msgid ""
+"The number of forms in the archive might be different from the number of "
+"forms processed. This is because we also try to remove duplicates since they "
+"break the PDF generation."
+msgstr ""
+
+#: templates/v2/ngo-account/archives/list-header.html:33
 msgid "Download link"
 msgstr "Download link"
 
