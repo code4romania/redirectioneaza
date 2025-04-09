@@ -13,12 +13,12 @@ black==25.1.0
     # via -r requirements-dev.in
 blessed==1.20.0
     # via -r requirements.txt
-boto3==1.37.20
+boto3==1.37.30
     # via
     #   -r requirements.txt
     #   django-ses
     #   pycognito
-botocore==1.37.20
+botocore==1.37.30
     # via
     #   -r requirements.txt
     #   boto3
@@ -46,7 +46,7 @@ click==8.1.8
     # via
     #   black
     #   pip-tools
-coverage==7.7.1
+coverage==7.8.0
     # via pytest-cov
 cryptography==44.0.2
     # via
@@ -62,7 +62,7 @@ diff-match-patch==20241021
     # via
     #   -r requirements.txt
     #   django-import-export
-django==5.1.7
+django==5.2
     # via
     #   -r requirements.txt
     #   django-allauth
@@ -76,7 +76,7 @@ django==5.1.7
     #   django-tinymce
     #   django-unfold
     #   django-vite
-django-allauth==65.5.0
+django-allauth==65.7.0
     # via -r requirements.txt
 django-environ==0.12.0
     # via -r requirements.txt
@@ -96,11 +96,11 @@ django-recaptcha==4.0.0
     # via -r requirements.txt
 django-ses==4.4.0
     # via -r requirements.txt
-django-storages==1.14.5
+django-storages==1.14.6
     # via -r requirements.txt
 django-tinymce==4.1.0
     # via -r requirements.txt
-django-unfold==0.53.0
+django-unfold==0.54.0
     # via -r requirements.txt
 django-vite==3.1.0
     # via -r requirements.txt
@@ -131,7 +131,7 @@ jmespath==1.0.1
     #   -r requirements.txt
     #   boto3
     #   botocore
-lxml==5.3.1
+lxml==5.3.2
     # via
     #   -r requirements.txt
     #   svglib
@@ -148,7 +148,7 @@ packaging==24.2
     #   pytest
 pathspec==0.12.1
     # via black
-phonenumbers==9.0.1
+phonenumbers==9.0.2
     # via -r requirements.txt
 pillow==11.1.0
     # via
@@ -190,7 +190,7 @@ pytest==8.3.5
     #   pytest-xdist
 pytest-cov==6.0.0
     # via -r requirements-dev.in
-pytest-django==4.10.0
+pytest-django==4.11.1
     # via -r requirements-dev.in
 pytest-xdist==3.6.1
     # via -r requirements-dev.in
@@ -214,13 +214,13 @@ requests==2.32.3
     # via
     #   -r requirements.txt
     #   pycognito
-ruff==0.11.2
+ruff==0.11.4
     # via -r requirements-dev.in
 s3transfer==0.11.4
     # via
     #   -r requirements.txt
     #   boto3
-sentry-sdk==2.24.1
+sentry-sdk==2.25.1
     # via -r requirements.txt
 six==1.17.0
     # via
