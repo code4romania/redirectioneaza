@@ -48,63 +48,65 @@
 
     {% if not ngo.can_receive_redirections %}
 
-        {% if not ngo.is_active %}
+      {% if not ngo.is_active %}
+        {% comment %}
+          În acest moment,
+          donatorii nu pot accesa formularul tău,
+          iar organizația nu apare pe redirectioneaza.ro.
+          Pentru a reactiva profilul,
+          te rugăm să ne contactezi la contact@redirectioneaza.ro.
+        {% endcomment %}
+        {% blocktranslate trimmed asvar banner_message %}
+          <p>
+            At this moment,
+            donors can't access your form
+            and your organization is not visible on redirectioneaza.ro.
+            To reactivate your profile,
+            please contact us at
+            <a href="mailto:{{ contact_email }}" class="text-blue-600 underline">{{ contact_email }}</a>.
+          </p>
+        {% endblocktranslate %}
+
+        {% include "components/info-banner.html" with style="error" banner_message=banner_message %}
+      {% elif missing_fields %}
+        {% if missing_fields.type == "ngo" %}
           {% comment %}
-            În acest moment,
-            donatorii nu pot accesa formularul tău,
-            iar organizația nu apare pe redirectioneaza.ro.
-            Pentru a reactiva profilul,
-            te rugăm să ne contactezi la contact@redirectioneaza.ro.
+            Organizația ta nu poate primi formulare în prezent,
+            deoarece nu au fost completate toate informațiile necesare.
+            Te rugăm să completezi datele organizației:
           {% endcomment %}
           {% blocktranslate trimmed asvar banner_message %}
             <p>
-              At this moment,
-              donors can't access your form
-              and your organization is not visible on redirectioneaza.ro.
-              To reactivate your profile,
-              please contact us at
-              <a href="mailto:{{ contact_email }}" class="text-blue-600 underline">{{ contact_email }}</a>.
+              Your organization can't currently receive forms
+              because not all necessary information has been completed.
+              Please complete the organization's data:
             </p>
           {% endblocktranslate %}
-
-          {% include "components/info-banner.html" with style="error" banner_message=banner_message %}
-        {% elif missing_fields %}
-          {% if missing_fields.type == "ngo" %}
-            {% comment %}
-              Organizația ta nu poate primi formulare în prezent,
-              deoarece nu au fost completate toate informațiile necesare.
-              Te rugăm să completezi datele organizației:
-            {% endcomment %}
-            {% blocktranslate trimmed asvar banner_message %}
-              <p>
-                Your organization can't currently receive forms
-                because not all necessary information has been completed.
-                Please complete the organization's data:
-              </p>
-            {% endblocktranslate %}
-          {% elif missing_fields.type == "cause" %}
-            {% comment %}
-              Organizația ta nu poate primi formulare în prezent,
-              deoarece nu au fost completate toate informațiile necesare.
-              Te rugăm să completezi datele formularului:
-            {% endcomment %}
-            {% blocktranslate trimmed asvar banner_message %}
-              <p>
-                Your organization can't currently receive forms
-                because not all necessary information has been completed.
-                Please complete the form data:
-              </p>
-            {% endblocktranslate %}
-          {% endif %}
-
-          {% include "components/info-banner.html" with style="error" banner_message=banner_message banner_list=missing_fields.fields banner_cta_message=missing_fields.cta_message banner_cta_url=missing_fields.cta_url %}
+        {% elif missing_fields.type == "cause" %}
+          {% comment %}
+            Organizația ta nu poate primi formulare în prezent,
+            deoarece nu au fost completate toate informațiile necesare.
+            Te rugăm să completezi datele formularului:
+          {% endcomment %}
+          {% blocktranslate trimmed asvar banner_message %}
+            <p>
+              Your organization can't currently receive forms
+              because not all necessary information has been completed.
+              Please complete the form data:
+            </p>
+          {% endblocktranslate %}
         {% endif %}
+
+        {% include "components/info-banner.html" with style="error" banner_message=banner_message banner_list=missing_fields.fields banner_cta_message=missing_fields.cta_message banner_cta_url=missing_fields.cta_url %}
+      {% endif %}
     {% endif %}
 
-    {% if not cause.allow_online_collection %}
-      {% include "ngo-account/banners/form-emails-banner.html" %}
-    {% elif not cause.notifications_email %}
-      {% include "ngo-account/banners/form-notifications-banner.html" %}
+    {% if cause %}
+      {% if not cause.allow_online_collection %}
+        {% include "ngo-account/banners/form-emails-banner.html" %}
+      {% elif not cause.notifications_email %}
+        {% include "ngo-account/banners/form-notifications-banner.html" %}
+      {% endif %}
     {% endif %}
 
   {% endif %}
