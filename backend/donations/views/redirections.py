@@ -15,10 +15,11 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 from ipware import get_client_ip
 from redirectioneaza.common.messaging import extend_email_context, send_email
+from users.models import User
 
 from ..forms.redirection import DonationForm
 from ..models.donors import Donor
-from ..models.ngos import Cause, Ngo
+from ..models.ngos import Cause, CauseVisibilityChoices, Ngo
 from ..pdf import create_full_pdf
 from .base import BaseVisibleTemplateView
 
@@ -82,7 +83,7 @@ class RedirectionHandler(TemplateView):
         main_cause_qs = Cause.objects.filter(is_main=True).only("id", "slug", "name", "description")
 
         cause: Cause = get_object_or_404(
-            Cause.nonprivate_active.select_related("ngo").prefetch_related(
+            Cause.active.select_related("ngo").prefetch_related(
                 Prefetch(
                     lookup="ngo__causes",
                     queryset=main_cause_qs,
@@ -91,6 +92,16 @@ class RedirectionHandler(TemplateView):
             ),
             slug=cause_slug,
         )
+
+        user: User = request.user
+        if cause.visibility == CauseVisibilityChoices.PRIVATE:
+            # if the cause is private, we need to check if the user is logged in
+            # and if the user is allowed to see the cause
+            if not user.is_authenticated:
+                raise Http404("Cause not found")
+
+            if not user.is_staff and cause.ngo != user.ngo:
+                raise Http404("Cause not found")
 
         # if we didn't find it or the ngo doesn't have an active page
         if (ngo := cause.ngo) is None:
@@ -125,7 +136,7 @@ class RedirectionHandler(TemplateView):
                 "ngo": ngo,
                 "absolute_path": absolute_path,
                 "donation_status": donation_status,
-                "is_admin": request.user.is_staff,
+                "is_admin": user.is_staff,
                 "limit": settings.DONATIONS_LIMIT,
                 "month_limit": settings.DONATIONS_LIMIT_MONTH_NAME,
             }
