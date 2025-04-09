@@ -19,6 +19,7 @@ from donations.common.validation.registration_number import (
     REGISTRATION_NUMBER_REGEX_WITH_VAT,
     ngo_id_number_validator,
 )
+from donations.models.common import CommonFilenameCacheModel
 from donations.models.donors import Donor
 
 ALL_NGOS_CACHE_KEY = "ALL_NGOS"
@@ -174,7 +175,7 @@ class NgoWithFormsThisYearManager(models.Manager):
         return super().get_queryset().filter(pk__in=donations_ngos)
 
 
-class Ngo(models.Model):
+class Ngo(CommonFilenameCacheModel):
     slug = models.SlugField(
         verbose_name=_("slug"),
         blank=False,
@@ -294,8 +295,6 @@ class Ngo(models.Model):
         storage=select_public_storage,
         upload_to=partial(year_ngo_directory_path, "ngo-forms"),
     )
-
-    filename_cache = models.JSONField(_("Filename cache"), editable=False, default=dict, blank=False, null=False)
 
     date_created = models.DateTimeField(verbose_name=_("date created"), db_index=True, auto_now_add=True)
     date_updated = models.DateTimeField(verbose_name=_("date updated"), db_index=True, auto_now=True)
@@ -463,7 +462,7 @@ class CauseVisibilityChoices(models.TextChoices):
         return [{**choice, "title": choice["title"].capitalize()} for choice in choices]
 
 
-class Cause(models.Model):
+class Cause(CommonFilenameCacheModel):
     ngo = models.ForeignKey(Ngo, on_delete=models.CASCADE, related_name="causes")
 
     is_main = models.BooleanField(verbose_name=_("is main cause"), db_index=True, default=False)
