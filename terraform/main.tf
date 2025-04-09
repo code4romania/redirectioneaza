@@ -164,6 +164,10 @@ module "ecs_redirectioneaza" {
       value = 26
     },
     {
+      name  = "ENABLE_MULTIPLE_FORMS"
+      value = tostring(true)
+    },
+    {
       name  = "GOOGLE_ANALYTICS_ID"
       value = var.google_analytics_id
     },
