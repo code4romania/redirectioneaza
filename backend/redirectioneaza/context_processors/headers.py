@@ -1,5 +1,6 @@
 from typing import Dict, List
 
+from django.conf import settings
 from django.http import HttpRequest
 from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
@@ -222,7 +223,7 @@ def build_auth_menu(request: HttpRequest) -> List[Dict[str, str]]:
             HEADER_ITEMS["sign_up"],
         ]
 
-    return [
+    auth_menu = [
         {
             "title": _("My Organization"),
             "style": "auth-highlight",
@@ -241,6 +242,11 @@ def build_auth_menu(request: HttpRequest) -> List[Dict[str, str]]:
             ],
         }
     ]
+
+    if not settings.ENABLE_MULTIPLE_FORMS:
+        auth_menu[0]["content"].remove(HEADER_ITEMS["ngo_causes"])
+
+    return auth_menu
 
 
 def main(request: HttpRequest) -> Dict[str, Dict[str, List[Dict[str, str]]]]:

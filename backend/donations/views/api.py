@@ -101,7 +101,10 @@ class GetCausePrefilledForm(TemplateView):
         if not cause.prefilled_form:
             logger.error(f"Prefilled form was not created for cause {cause_slug}.")
             messages.error(request, _("An error occurred while generating the prefilled form."))
-            return redirect(reverse("my-organization:causes"))
+            if settings.ENABLE_MULTIPLE_FORMS:
+                return redirect(reverse_lazy("my-organization:causes"))
+            else:
+                return redirect(reverse_lazy("my-organization:presentation"))
 
         return redirect(cause.prefilled_form.url)
 
