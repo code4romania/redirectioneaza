@@ -2734,7 +2734,7 @@ msgstr ""
 
 #: templates/v2/form/success/unsigned.html:30
 msgid "After you print and sign the form, you have the following options:"
-msgstr "După ce printezi și semnezi formularul, ai următoarele opțiuni:"
+msgstr "După ce tipărești și semnezi formularul, ai următoarele opțiuni:"
 
 #: templates/v2/form/success/unsigned.html:41
 msgid ""
@@ -3048,7 +3048,7 @@ msgstr "Semnare online"
 
 #: templates/v2/ngo-account/causes/list-header.html:16
 msgid "Visibility"
-msgstr "Visibilitate"
+msgstr "Vizibilitate"
 
 #: templates/v2/ngo-account/causes/list-header.html:19
 msgid "Edited at"
