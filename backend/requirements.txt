@@ -74,7 +74,7 @@ django-storages==1.14.6
     # via -r requirements.in
 django-tinymce==4.1.0
     # via -r requirements.in
-django-unfold==0.54.0
+django-unfold==0.53.0
     # via -r requirements.in
 django-vite==3.1.0
     # via -r requirements.in

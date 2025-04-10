@@ -1,7 +1,8 @@
 django~=5.1.0
 django-environ~=0.12
 django-ipware~=7.0.1
-django-unfold~=0.50
+# pinned because of a bug in >=0.54.0
+django-unfold==0.53.0
 django-allauth~=65.4
 django-vite~=3.1
 
