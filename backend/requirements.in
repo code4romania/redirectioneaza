@@ -1,4 +1,4 @@
-django~=5.1
+django~=5.1.0
 django-environ~=0.12
 django-ipware~=7.0.1
 django-unfold~=0.50

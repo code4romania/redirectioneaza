@@ -13,12 +13,12 @@ black==25.1.0
     # via -r requirements-dev.in
 blessed==1.20.0
     # via -r requirements.txt
-boto3==1.37.30
+boto3==1.37.31
     # via
     #   -r requirements.txt
     #   django-ses
     #   pycognito
-botocore==1.37.30
+botocore==1.37.31
     # via
     #   -r requirements.txt
     #   boto3
@@ -62,7 +62,7 @@ diff-match-patch==20241021
     # via
     #   -r requirements.txt
     #   django-import-export
-django==5.2
+django==5.1.8
     # via
     #   -r requirements.txt
     #   django-allauth
