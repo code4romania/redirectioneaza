@@ -35,13 +35,6 @@ msgstr ""
 msgid "NGO"
 msgstr "ՀԿ"
 
-#: donations/admin/common.py:14 donations/models/ngos.py:526
-#: donations/views/ngo_account_filters.py:106 partners/admin.py:49
-#: partners/models.py:175 templates/v2/ngo-account/archives/list-header.html:13
-#: templates/v2/ngo-account/causes/list-header.html:4
-msgid "Cause"
-msgstr ""
-
 #: donations/admin/common.py:28 donations/admin/donors.py:136
 #: donations/admin/jobs.py:31 donations/admin/ngos.py:240
 msgid "Date"
@@ -242,11 +235,6 @@ msgstr "Գաղտնաբառերը չեն համընկնում"
 #: templates/v2/ngo-account/redirections/list-header.html:10
 msgid "Name"
 msgstr "Անուն"
-
-#: donations/forms/ngo_account.py:15 donations/forms/ngo_account.py:17
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:56
-msgid "CUI/CIF"
-msgstr ""
 
 #: donations/forms/ngo_account.py:20
 #, fuzzy
@@ -991,11 +979,6 @@ msgstr "ամսաթիվը ստեղծվել է"
 #| msgid "Options"
 msgid "Redirections"
 msgstr "Ընտրանքներ"
-
-#: donations/views/ngo_account.py:759
-#: templates/v2/ngo-account/archives/main.html:10
-msgid "Archives history"
-msgstr ""
 
 #: donations/views/ngo_account.py:803
 #, fuzzy
@@ -1861,94 +1844,17 @@ msgstr "Մուտք գործել NGO Hub-ի միջոցով"
 msgid "Send the form"
 msgstr "Մուտք գործելու սխալ"
 
-#: templates/v2/form/success/signed.html:4
-msgid "Thank you! Part of your income tax will go to the cause you believe in"
-msgstr ""
-
-#: templates/v2/form/success/signed.html:10
-msgid ""
-"Your form has been sent to the organization, and they will take care of "
-"submitting it to the tax office. You will receive a copy of it by email "
-"shortly."
-msgstr ""
-
-#: templates/v2/form/success/signed.html:25
-#: templates/v2/form/success/unsigned.html:96
-msgid ""
-"Together we can make a positive change in society, that's why we need as "
-"many people like you as possible. See below how you can contribute more."
-msgstr ""
-
-#: templates/v2/form/success/unsigned.html:4
-msgid "You are one step closer to redirecting your income tax..."
-msgstr ""
-
-#: templates/v2/form/success/unsigned.html:10
-msgid ""
-"We have generated the form with your data. Next, it needs to be signed and "
-"sent. See below, or in the email, the steps you need to follow."
-msgstr ""
-
-#: templates/v2/form/success/unsigned.html:30
-msgid "After you print and sign the form, you have the following options:"
-msgstr ""
-
-#: templates/v2/form/success/unsigned.html:41
-msgid ""
-"You scan and send it by email to the NGO, and they will take care of "
-"submitting it. The NGO's email address is:"
-msgstr ""
-
-#: templates/v2/form/success/unsigned.html:54
-msgid ""
-"You send it by post with a registered letter to the tax office (ANAF) you "
-"belong to."
-msgstr ""
-
-#: templates/v2/form/success/unsigned.html:59
-msgid "Search for the office you belong to in this list;"
-msgstr ""
-
-#: templates/v2/form/success/unsigned.html:72
-msgid ""
-"You send it by post or courier to the NGO's address, and they will take care "
-"of submitting it. Their address is:"
-msgstr ""
-
 #: templates/v2/form/success/unsigned.html:77
 #, fuzzy
 #| msgid "county"
 msgid "the county"
 msgstr "մարզ"
 
-#: templates/v2/form/success/unsigned.html:87
-msgid ""
-"Alternatively, you can choose to refill the form and sign it online at any "
-"time, in which case it will go directly to the organization in digital "
-"format, and they will complete the redirection process."
-msgstr ""
-
-#: templates/v2/ngo-account/archives/list-header.html:4
-#: templates/v2/ngo-account/redirections/list-header.html:4
-msgid "#"
-msgstr ""
-
 #: templates/v2/ngo-account/archives/list-header.html:7
 #, fuzzy
 #| msgid "date created"
 msgid "Date generated"
 msgstr "ամսաթիվը ստեղծվել է"
-
-#: templates/v2/ngo-account/archives/list-header.html:17
-msgid "No. of Forms"
-msgstr ""
-
-#: templates/v2/ngo-account/archives/list-header.html:19
-msgid ""
-"The number of forms in the archive might be different from the number of "
-"forms processed. This is because we also try to remove duplicates since they "
-"break the PDF generation."
-msgstr ""
 
 #: templates/v2/ngo-account/archives/list-header.html:33
 #, fuzzy
@@ -1986,34 +1892,6 @@ msgstr "Մուտք գործելու սխալ"
 msgid "exports"
 msgstr "Ներմուծում"
 
-#: templates/v2/ngo-account/archives/main.html:14
-msgid ""
-"Here you can find the archives of forms that have been exported. If are "
-"collecting signed forms, the archive containing those forms will also "
-"contain the documents for the ANAF dynamic PDF."
-msgstr ""
-
-#: templates/v2/ngo-account/banners/form-emails-banner.html:7
-msgid ""
-"Your organization has not yet activated the online signing of this "
-"redirection form."
-msgstr ""
-
-#: templates/v2/ngo-account/banners/form-emails-banner.html:19
-#: templates/v2/ngo-account/cause/form.html:138
-msgid "Allow users to sign the form online"
-msgstr ""
-
-#: templates/v2/ngo-account/banners/form-emails-banner.html:20
-#, python-format
-msgid ""
-"<p> Currently, users can fill in the form, but they will need to download "
-"and print it, then fill it in manually, and send it either to the "
-"organization's address or to an ANAF office. If you have an SPV account, you "
-"can choose to enable online signing by checking the "
-"<strong>\"%(button_input_title)s\"</strong> option. </p>"
-msgstr ""
-
 #: templates/v2/ngo-account/banners/form-emails-banner.html:36
 #: templates/v2/ngo-account/banners/form-notifications-banner.html:18
 #, fuzzy
@@ -2027,28 +1905,6 @@ msgstr "Մուտք գործելու սխալ"
 msgid "Go to NGO Hub"
 msgstr "NGO Hub-ի ՀԿ-ները"
 
-#: templates/v2/ngo-account/banners/form-notifications-banner.html:4
-msgid "Your organization is not receiving notifications for signed forms."
-msgstr ""
-
-#: templates/v2/ngo-account/banners/form-notifications-banner.html:6
-#: templates/v2/ngo-account/cause/form.html:175
-msgid "Receive notifications for each signed form"
-msgstr ""
-
-#: templates/v2/ngo-account/banners/form-notifications-banner.html:7
-#, python-format
-msgid ""
-"<p> Users can sign the form, but your organization will not receive any "
-"notifications. If you want to receive notifications for each signed form, "
-"please enable the <strong>\"%(button_input_title)s\"</strong> option and "
-"fill in the email address where you want to receive the notifications. </p>"
-msgstr ""
-
-#: templates/v2/ngo-account/base.html:11
-msgid "There are some errors on the form."
-msgstr ""
-
 #: templates/v2/ngo-account/cause/form.html:12
 #: templates/v2/ngo-account/cause/form.html:32
 #, fuzzy
@@ -2056,48 +1912,17 @@ msgstr ""
 msgid "Form data"
 msgstr "հարցաթերթ"
 
-#: templates/v2/ngo-account/cause/form.html:19
-msgid "For filling in the form, we will use the following organization data:"
-msgstr ""
-
 #: templates/v2/ngo-account/cause/form.html:24
 #, fuzzy
 #| msgid "NGO Hub organization ID"
 msgid "See the Organization's Information"
 msgstr "NGO Hub կազմակերպության նույնականացման համար"
 
-#: templates/v2/ngo-account/cause/form.html:34
-msgid "This information will appear on the filled form."
-msgstr ""
-
-#: templates/v2/ngo-account/cause/form.html:41
-msgid "IBAN on form"
-msgstr ""
-
-#: templates/v2/ngo-account/cause/form.html:42
-msgid ""
-"Changing the IBAN will not update the forms already completed by taxpayers."
-msgstr ""
-
-#: templates/v2/ngo-account/cause/form.html:46
-#, python-format
-msgid ""
-"Choose the IBAN you will use for collecting and submitting to ANAF. "
-"%(iban_helptext)s"
-msgstr ""
-
 #: templates/v2/ngo-account/cause/form.html:71
 #, fuzzy
 #| msgid "address"
 msgid "Form page"
 msgstr "հասցե"
-
-#: templates/v2/ngo-account/cause/form.html:73
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:66
-msgid ""
-"The information in this section will be visible on the public page of the "
-"form."
-msgstr ""
 
 #: templates/v2/ngo-account/cause/form.html:82
 #, fuzzy
@@ -2123,12 +1948,6 @@ msgstr "ցուցադրման պատվեր"
 msgid "Form settings"
 msgstr "նկարագրություն"
 
-#: templates/v2/ngo-account/cause/form.html:105
-msgid ""
-"From this section, you can manage the form's URL, its visibility and online "
-"signing."
-msgstr ""
-
 #: templates/v2/ngo-account/cause/form.html:116
 #: templates/v2/ngo-account/causes/list-header.html:10
 #, fuzzy
@@ -2136,38 +1955,11 @@ msgstr ""
 msgid "Form URL"
 msgstr "հարցաթերթ"
 
-#: templates/v2/ngo-account/cause/form.html:117
-msgid ""
-"This is the link through which users will access your form on the site. It "
-"can only contain letters, numbers, and hyphens. Example: cause-form."
-msgstr ""
-
-#: templates/v2/ngo-account/cause/form.html:131
-msgid "Form visibility"
-msgstr ""
-
-#: templates/v2/ngo-account/cause/form.html:140
-msgid ""
-"By selecting this option, I confirm that I have ensured that my organization "
-"has an SPV account, necessary for submitting the forms completed with online "
-"signature."
-msgstr ""
-
 #: templates/v2/ngo-account/cause/form.html:154
 #, fuzzy
 #| msgid "NGO Hub organization ID"
 msgid "Form notifications"
 msgstr "NGO Hub կազմակերպության նույնականացման համար"
-
-#: templates/v2/ngo-account/cause/form.html:156
-msgid "From this section, you can manage the form's email notifications."
-msgstr ""
-
-#: templates/v2/ngo-account/cause/form.html:177
-msgid ""
-"By selecting this option, you activate email notifications to be informed "
-"each time someone fills out the form."
-msgstr ""
 
 #: templates/v2/ngo-account/cause/form.html:187
 #, fuzzy
@@ -2245,47 +2037,11 @@ msgstr "NGO Hub կազմակերպության նույնականացման հա
 msgid "Organization logo"
 msgstr "NGO Hub կազմակերպության նույնականացման համար"
 
-#: templates/v2/ngo-account/my-organization/ngo-form.html:14
-msgid ""
-"This is the name of your organization. It will be displayed on the public "
-"page of the main form as well as all the other forms created by your "
-"organization."
-msgstr ""
-
-#: templates/v2/ngo-account/my-organization/ngo-form.html:20
-msgid ""
-"Choose a text that best describes your organization. This will be displayed "
-"on the public page of the main form as well as all the other forms created "
-"by your organization."
-msgstr ""
-
-#: templates/v2/ngo-account/my-organization/ngo-form.html:26
-msgid ""
-"The logo of the organization will be displayed on the public page of the "
-"main form as well as all the other forms created by your organization."
-msgstr ""
-
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:38
-msgid "Official data"
-msgstr ""
-
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:39
-msgid ""
-"This data will appear on the filled-out form and, if you activate online "
-"signing, on the archive generated for ANAF."
-msgstr ""
-
 #: templates/v2/ngo-account/my-organization/ngo-presentation.html:48
 #, fuzzy
 #| msgid "filename"
 msgid "Official name"
 msgstr "ֆայլի անունը"
-
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:49
-msgid ""
-"This is the official name of your organization, as it appears in the "
-"registration documents."
-msgstr ""
 
 #: templates/v2/ngo-account/my-organization/ngo-presentation.html:65
 #, fuzzy
@@ -2328,38 +2084,6 @@ msgstr "ցուցադրման պատվեր"
 #| msgid "NGO Hub organization ID"
 msgid "Organization address"
 msgstr "NGO Hub կազմակերպության նույնականացման համար"
-
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:111
-msgid "Locality/Sector"
-msgstr ""
-
-#: templates/v2/ngo-account/redirections/generate-archive/button.html:7
-#, python-format
-msgid ""
-"Select the cause for which you want to generate the ANAF archive. You can "
-"select them one by one, but you can't generate an archive more than once "
-"every %(period_between_retries)s. Only the causes that allow online "
-"collection of signatures are shown."
-msgstr ""
-
-#: templates/v2/ngo-account/redirections/generate-archive/button.html:15
-#, python-format
-msgid ""
-"Generate the ANAF archive for your organization. You can generate the "
-"archive once every %(period_between_retries)s."
-msgstr ""
-
-#: templates/v2/ngo-account/redirections/generate-archive/button.html:22
-#, python-format
-msgid ""
-"Because the download operation of the redirections can take longer, "
-"depending on the number of donors, you can currently download one archive "
-"every %(period_between_retries)s."
-msgstr ""
-
-#: templates/v2/ngo-account/redirections/generate-archive/button.html:28
-msgid "You can’t generate the archive because you don’t have any redirections."
-msgstr ""
 
 #: templates/v2/ngo-account/redirections/generate-archive/multiple-button.html:19
 #: templates/v2/ngo-account/redirections/generate-archive/single-button.html:34
