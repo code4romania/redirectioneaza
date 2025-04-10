@@ -6,21 +6,21 @@ from django.contrib import admin
 from django.core.management import call_command
 from django.db.models import QuerySet
 from django.urls import reverse
-from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 from unfold.admin import ModelAdmin
 from unfold.decorators import action
 
-from donations.admin.common import CommonCauseFields
+from donations.admin.common import CommonCauseFields, span_external, span_internal
 from donations.models.jobs import Job, JobStatusChoices
 from donations.models.ngos import Cause, Ngo
+from redirectioneaza.common.app_url import build_uri
 
 logger = logging.getLogger(__name__)
 
 
 @admin.register(Cause)
 class CauseAdmin(ModelAdmin, CommonCauseFields):
-    list_display = ("slug", "name", "link_to_ngo")
+    list_display = ("public_url", "name", "link_to_ngo", "is_main", "allow_online_collection")
     list_display_links = ("name",)
     search_fields = ("name", "slug", "ngo__name")
 
@@ -63,9 +63,16 @@ class CauseAdmin(ModelAdmin, CommonCauseFields):
 
         self.message_user(request, message)
 
+    @admin.display(description=_("Public URL"))
+    def public_url(self, obj: Cause):
+        cause_slug = obj.slug
+        absolute_url = build_uri(reverse("twopercent", kwargs={"cause_slug": cause_slug}))
+
+        return span_external(href=absolute_url, content=cause_slug)
+
     @admin.display(description=_("NGO"))
     def link_to_ngo(self, obj: Cause):
         ngo: Ngo = obj.ngo
 
         link_url = reverse("admin:donations_ngo_change", args=(ngo.pk,))
-        return format_html(f'<a href="{link_url}">{ngo.name}</a>')
+        return span_internal(href=link_url, content=ngo.name)

@@ -17,7 +17,7 @@ from unfold.contrib.filters.admin import SingleNumericFilter
 from unfold.decorators import action
 from unfold.widgets import UnfoldAdminSelectWidget
 
-from donations.admin.common import CommonCauseFields
+from donations.admin.common import CommonCauseFields, span_external, span_internal
 from donations.models.ngos import Cause, Ngo
 from donations.workers.update_organization import update_organization
 from users.models import User
@@ -100,7 +100,7 @@ class NgoUserInline(StackedInline):
     @admin.display(description=_("User"))
     def link_to_user(self, obj: User):
         link_url = reverse("admin:users_user_change", args=(obj.pk,))
-        return format_html(f'<a href="{link_url}">{obj.email}</a>')
+        return span_internal(href=link_url, content=obj.email)
 
 
 class HasNgoHubFilter(admin.SimpleListFilter):
@@ -313,7 +313,7 @@ class NgoAdmin(ModelAdmin):
         link_text = obj.ngohub_org_id
         link_url = f"{settings.NGOHUB_APP_BASE}organizations/{obj.ngohub_org_id}/overview"
 
-        return format_html(f'<a href="{link_url}" target="_blank">{link_text}</a>')
+        return span_external(href=link_url, content=str(link_text))
 
     @admin.display(description=_("CIF"))
     def get_cif(self, obj: Ngo):
