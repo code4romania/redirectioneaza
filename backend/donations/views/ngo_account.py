@@ -625,12 +625,13 @@ class NgoRedirectionsView(NgoBaseListView, DonorSearchMixin):
         user: User = self.request.user
         ngo: Ngo = user.ngo if user.ngo else None
 
+        causes = self._get_ngo_causes(ngo=ngo) if ngo else None
         context.update(
             {
                 "user": user,
                 "ngo": ngo,
                 "title": self.title,
-                "causes": self._get_ngo_causes(ngo=ngo),
+                "causes": causes,
                 "period_between_retries": get_time_between_retries(),
                 "search_query": search_query,
                 "url_search_query": query_dict.urlencode(),

@@ -108,6 +108,9 @@ class CauseQueryFilter(NgoQueryFilter):
         self.queryset_key = "cause_id"
 
     def options_default(self) -> List[Dict[str, Union[int, str]]]:
+        if not self.ngo:
+            return []
+
         if self.ngo.causes.count() <= 1:
             return []
 
