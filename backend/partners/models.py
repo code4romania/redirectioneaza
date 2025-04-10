@@ -124,10 +124,10 @@ class Partner(models.Model):
             partner_cause.save()
 
     def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
         if self.display_ordering == DisplayOrderingChoices.CUSTOM:
             self.initialize_custom_display_ordering()
-
-        super().save(*args, **kwargs)
 
 
 class PartnerNgo(models.Model):
