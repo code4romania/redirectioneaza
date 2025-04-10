@@ -65,7 +65,7 @@ def _copy_file_to_object_with_filename_cache(
         return error_message
 
     extension: str = filename.split(".")[-1]
-    if len(extension) > 4:
+    if not extension or len(extension) > 4:
         extension: str = mimetypes.guess_extension(r.headers["content-type"])
 
         if extension == ".bin":
