@@ -64,11 +64,13 @@ def _copy_file_to_object_with_filename_cache(
         logger.warning(error_message)
         return error_message
 
-    extension: str = mimetypes.guess_extension(r.headers["content-type"])
+    extension: str = filename.split(".")[-1]
+    if len(extension) > 4:
+        extension: str = mimetypes.guess_extension(r.headers["content-type"])
 
-    if extension == ".bin":
-        extension = ""
-        logger.error(f"{attribute_name.upper()} file extension = {extension} for object {target_object}")
+        if extension == ".bin":
+            logger.error(f"Could not get extension for attribute {attribute_name.upper()} for object {target_object}")
+            extension = ""
 
     with tempfile.TemporaryFile() as fp:
         fp.write(r.content)
