@@ -2,7 +2,7 @@ from .environment import env
 
 # Feature flags
 ENABLE_FLAG_CONTACT = env.bool("ENABLE_FLAG_CONTACT", False)
-ENABLE_MULTIPLE_FORMS = env.bool("ENABLE_MULTIPLE_FORMS", False)
+ENABLE_MULTIPLE_FORMS = env.bool("ENABLE_MULTIPLE_FORMS", True)
 
 # Configurations for the NGO Hub integration
 UPDATE_ORGANIZATION_METHOD = env("UPDATE_ORGANIZATION_METHOD")
