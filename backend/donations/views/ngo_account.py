@@ -833,7 +833,9 @@ class NgoBringYourOwnFormView(NgoBaseListView):
 
         file = files.get("byof_file")
         if file:
-            messages.success(request, _(f"You have uploaded a file of {len(files.get("byof_file"))} bytes."))
+            messages.success(
+                request, _("You have uploaded a file of (size)d bytes.") % {"size": len(files.get("byof_file"))}
+            )
         else:
             messages.error(request, _("Please upload a file."))
 
