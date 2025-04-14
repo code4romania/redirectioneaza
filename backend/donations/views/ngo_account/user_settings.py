@@ -11,6 +11,7 @@ from users.models import User
 
 UserModel = get_user_model()
 
+
 class UserSettingsView(NgoBaseTemplateView):
     template_name = "ngo-account/settings-account/main.html"
     title = _("Account settings")
