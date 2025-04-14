@@ -77,7 +77,7 @@
             Please enter your IBAN number.
             This, along with the organization's information, is required to process your file.
           {% endblocktrans %}
-          {% include "components/input/input.html" with input_id="byof_iban" input_name="byof_iban" input_type="text" input_placeholder="IBAN" input_required=True x_model="x_iban" pattern="^RO[0-9]{2}[A-Z]{4}[A-z0-9]{16}$" %}
+          {% include "components/input/input.html" with input_id="bank_account" input_name="bank_account" input_type="text" input_placeholder="IBAN" input_required=True x_model="x_iban" pattern="^RO[0-9]{2}[A-Z]{4}[A-z0-9]{16}$" %}
 
           <div
             x-cloak
@@ -86,8 +86,8 @@
 
               <input
                 @change="handleFileUpload($event)"
-                id="byof_file"
-                name="byof_file"
+                id="upload_file"
+                name="upload_file"
                 type="file"
                 accept="text/csv"
                 hidden/>
@@ -117,9 +117,8 @@
             <span x-text="fileName"></span> (<span x-text="fileSize"></span> <span x-text="fileSizeUnit"></span>)
           </span>
 
-          {# limit the file size to 2 MB #}
           <span x-show="errors.size" class="text-red-500">
-            {% trans "File size must not exceed 2 MB" %}
+            {{ size_limit_warning }}
           </span>
 
           <span x-show="errors.file_type" class="text-red-500">
