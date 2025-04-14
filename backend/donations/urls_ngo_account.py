@@ -2,19 +2,13 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path
 from django.views.generic import RedirectView
-from donations.views.ngo_account import (
-    ArchiveDownloadLinkView,
-    NgoArchivesView,
-    NgoBringYourOwnFormView,
-    NgoCauseCreateView,
-    NgoCauseEditView,
-    NgoCausesListView,
-    NgoMainCauseView,
-    NgoPresentationView,
-    NgoRedirectionsView,
-    RedirectionDownloadLinkView,
-    UserSettingsView,
-)
+
+from donations.views.ngo_account.archives import ArchiveDownloadLinkView, NgoArchivesView
+from donations.views.ngo_account.byof import NgoBringYourOwnFormView
+from donations.views.ngo_account.causes import NgoCauseCreateView, NgoCauseEditView, NgoCausesListView
+from donations.views.ngo_account.my_organization import NgoMainCauseView, NgoPresentationView
+from donations.views.ngo_account.redirections import NgoRedirectionsView, RedirectionDownloadLinkView
+from donations.views.ngo_account.user_settings import UserSettingsView
 
 admin.site.site_header = f"Admin | {settings.VERSION_LABEL}"
 
