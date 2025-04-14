@@ -4,18 +4,20 @@
 #
 #    pip-compile --output-file=requirements.txt --strip-extras requirements.in
 #
+annotated-types==0.7.0
+    # via pydantic
 asgiref==3.8.1
     # via
     #   django
     #   django-allauth
 blessed==1.20.0
     # via -r requirements.in
-boto3==1.37.31
+boto3==1.37.33
     # via
     #   django-ses
     #   django-storages
     #   pycognito
-botocore==1.37.31
+botocore==1.37.33
     # via
     #   boto3
     #   s3transfer
@@ -74,10 +76,14 @@ django-storages==1.14.6
     # via -r requirements.in
 django-tinymce==4.1.0
     # via -r requirements.in
-django-unfold==0.54.0
+django-unfold==0.55.1
     # via -r requirements.in
 django-vite==3.1.0
     # via -r requirements.in
+dnspython==2.7.0
+    # via email-validator
+email-validator==2.2.0
+    # via pydantic
 envs==1.4
     # via pycognito
 gevent==24.11.1
@@ -87,7 +93,9 @@ greenlet==3.1.1
 gunicorn==23.0.0
     # via -r requirements.in
 idna==3.10
-    # via requests
+    # via
+    #   email-validator
+    #   requests
 jmespath==1.0.1
     # via
     #   boto3
@@ -98,9 +106,9 @@ ngohub==0.1.0
     # via -r requirements.in
 packaging==24.2
     # via gunicorn
-phonenumbers==9.0.2
+phonenumbers==9.0.3
     # via -r requirements.in
-pillow==11.1.0
+pillow==11.2.1
     # via reportlab
 psutil==6.1.1
     # via -r requirements.in
@@ -110,6 +118,10 @@ pycognito==2024.5.1
     # via -r requirements.in
 pycparser==2.22
     # via cffi
+pydantic==2.11.3
+    # via -r requirements.in
+pydantic-core==2.33.1
+    # via pydantic
 pyjwt==2.10.1
     # via pycognito
 pymysql==1.1.1
@@ -148,7 +160,14 @@ tinycss2==1.4.0
     # via
     #   cssselect2
     #   svglib
-urllib3==2.3.0
+typing-extensions==4.13.2
+    # via
+    #   pydantic
+    #   pydantic-core
+    #   typing-inspection
+typing-inspection==0.4.0
+    # via pydantic
+urllib3==2.4.0
     # via
     #   botocore
     #   requests

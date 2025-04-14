@@ -1,12 +1,15 @@
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest
 from django.shortcuts import redirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
+from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 
 from donations.forms.ngo_account import BringYourOwnDataForm
 from donations.models.ngos import Ngo
+from donations.views.download_donations.byof import generate_xml_from_external_data
 from donations.views.ngo_account.common import NgoBaseListView
 from users.models import User
 
@@ -48,11 +51,20 @@ class NgoBringYourOwnFormView(NgoBaseListView):
     def get_queryset(self):
         return []
 
+    @method_decorator(login_required(login_url=reverse_lazy("login")))
     def post(self, request: HttpRequest, *args, **kwargs):
         files = request.FILES
 
+        post = request.POST
+        user: User = request.user
+
+        ngo: Ngo = user.ngo if user.ngo else None
+        if not ngo:
+            messages.error(request, _("You need to add your NGO's information first."))
+            return redirect(reverse_lazy("my-organization:presentation"))
+
         form = BringYourOwnDataForm(
-            request.POST,
+            post,
             files=files,
             file_allowed_types=self.file_allowed_types,
             file_size_limit=self.file_size_limit,
@@ -61,6 +73,16 @@ class NgoBringYourOwnFormView(NgoBaseListView):
 
         if not form.is_valid():
             messages.error(request, _("There are some errors on the form."))
+            return redirect(reverse("my-organization:byof"))
+
+        result = generate_xml_from_external_data(
+            ngo=ngo,
+            iban=form.cleaned_data["bank_account"],
+            file=form.cleaned_data["upload_file"],
+        )
+
+        if "error" in result:
+            messages.error(request, result["error"])
             return redirect(reverse("my-organization:byof"))
 
         messages.success(request, _("The file was uploaded successfully."))
