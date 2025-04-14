@@ -6,7 +6,6 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 from donations.forms.ngo_account import BringYourOwnDataForm
-from donations.models.jobs import Job
 from donations.models.ngos import Ngo
 from donations.views.ngo_account.common import NgoBaseListView
 from users.models import User
@@ -19,6 +18,7 @@ class NgoBringYourOwnFormView(NgoBaseListView):
     paginate_by = 8
     sidebar_item_target = "org-byof"
 
+    file_allowed_types = ["text/csv"]  # , "application/vnd.ms-excel"]
     file_size_limit = 2 * settings.MEBIBYTE
     file_size_warning = _("File size must not exceed 2 MB")
 
@@ -32,10 +32,13 @@ class NgoBringYourOwnFormView(NgoBaseListView):
             {
                 "user": user,
                 "ngo": ngo,
+                "allowed_types": self.file_allowed_types,
                 "size_limit": self.file_size_limit,
                 "size_limit_warning": self.file_size_warning,
                 "django_form": BringYourOwnDataForm(
-                    file_size_limit=self.file_size_limit, file_size_warning=self.file_size_warning
+                    file_allowed_types=self.file_allowed_types,
+                    file_size_limit=self.file_size_limit,
+                    file_size_warning=self.file_size_warning,
                 ),
             }
         )
@@ -43,19 +46,19 @@ class NgoBringYourOwnFormView(NgoBaseListView):
         return context
 
     def get_queryset(self):
-        return Job.objects.none()
+        return []
 
     def post(self, request: HttpRequest, *args, **kwargs):
-        context = self.get_context_data()
-
         files = request.FILES
 
         form = BringYourOwnDataForm(
             request.POST,
             files=files,
+            file_allowed_types=self.file_allowed_types,
             file_size_limit=self.file_size_limit,
             file_size_warning=self.file_size_warning,
         )
+
         if not form.is_valid():
             messages.error(request, _("There are some errors on the form."))
             return redirect(reverse("my-organization:byof"))

@@ -171,6 +171,7 @@ class BringYourOwnDataForm(forms.Form):
     )
 
     def __init__(self, *args, **kwargs):
+        self.file_allowed_types = kwargs.pop("file_allowed_types")
         self.file_size_limit = kwargs.pop("file_size_limit")
         self.file_size_warning = kwargs.pop("file_size_warning")
 
@@ -178,9 +179,8 @@ class BringYourOwnDataForm(forms.Form):
 
     def clean_upload_file(self):
         upload_file = self.cleaned_data.get("upload_file")
-        allowed_types = ["text/csv"]  # , "application/vnd.ms-excel"]
 
-        if upload_file.content_type not in allowed_types:
+        if upload_file.content_type not in self.file_allowed_types:
             raise forms.ValidationError(_("The file type is not supported."))
 
         if upload_file.size > self.file_size_limit:
