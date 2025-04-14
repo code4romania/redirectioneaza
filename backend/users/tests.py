@@ -35,7 +35,7 @@ class UserModelTests(TestCase):
         with self.assertRaisesMessage(ValueError, _("Superuser must have is_staff=True.")):
             User.objects.create_superuser(email="x@example.com", password="pass", is_staff=False)
         # is_superuser must be True
-        with self.assertRaisesMessage(ValueError, "Superuser must have is_superuser=True."):
+        with self.assertRaisesMessage(ValueError, _("Superuser must have is_superuser=True.")):
             User.objects.create_superuser(email="y@example.com", password="pass", is_superuser=False)
 
     def test_refresh_and_verify_token(self):
