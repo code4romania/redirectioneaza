@@ -39,7 +39,7 @@ class DoneOwnFormsUploadManager(models.Manager):
 
 class OwnFormsUpload(models.Model):
     ngo = models.ForeignKey(Ngo, on_delete=models.CASCADE, related_name="own_forms_uploads")
-    bank_account = models.CharField(label=_("IBAN"), max_length=24, min_length=24, required=True)
+    bank_account = models.CharField(verbose_name=_("IBAN"), max_length=24, min_length=24, required=True)
     uploaded_data = models.FileField(
         verbose_name=_("uploaded data"), upload_to="own-forms/%Y/%m/%d/", blank=False, null=False
     )
