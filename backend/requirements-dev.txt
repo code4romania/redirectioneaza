@@ -13,12 +13,12 @@ black==25.1.0
     # via -r requirements-dev.in
 blessed==1.20.0
     # via -r requirements.txt
-boto3==1.37.31
+boto3==1.37.38
     # via
     #   -r requirements.txt
     #   django-ses
     #   pycognito
-botocore==1.37.31
+botocore==1.37.38
     # via
     #   -r requirements.txt
     #   boto3
@@ -56,7 +56,7 @@ cssselect2==0.8.0
     # via
     #   -r requirements.txt
     #   svglib
-debugpy==1.8.13
+debugpy==1.8.14
     # via -r requirements-dev.in
 diff-match-patch==20241021
     # via
@@ -114,7 +114,7 @@ faker==36.2.3
     # via -r requirements-dev.in
 gevent==24.11.1
     # via -r requirements.txt
-greenlet==3.1.1
+greenlet==3.2.0
     # via
     #   -r requirements.txt
     #   gevent
@@ -139,7 +139,7 @@ mypy-extensions==1.0.0
     # via black
 ngohub==0.1.0
     # via -r requirements.txt
-packaging==24.2
+packaging==25.0
     # via
     #   -r requirements.txt
     #   black
@@ -148,9 +148,9 @@ packaging==24.2
     #   pytest
 pathspec==0.12.1
     # via black
-phonenumbers==9.0.2
+phonenumbers==9.0.3
     # via -r requirements.txt
-pillow==11.1.0
+pillow==11.2.1
     # via
     #   -r requirements.txt
     #   reportlab
@@ -206,7 +206,7 @@ python-stdnum==1.20
     # via
     #   -r requirements.txt
     #   django-localflavor
-reportlab==4.3.1
+reportlab==4.4.0
     # via
     #   -r requirements.txt
     #   svglib
@@ -214,13 +214,13 @@ requests==2.32.3
     # via
     #   -r requirements.txt
     #   pycognito
-ruff==0.11.4
+ruff==0.11.6
     # via -r requirements-dev.in
-s3transfer==0.11.4
+s3transfer==0.11.5
     # via
     #   -r requirements.txt
     #   boto3
-sentry-sdk==2.25.1
+sentry-sdk==2.26.1
     # via -r requirements.txt
 six==1.17.0
     # via
@@ -244,7 +244,7 @@ tinycss2==1.4.0
     #   svglib
 tzdata==2025.2
     # via faker
-urllib3==2.3.0
+urllib3==2.4.0
     # via
     #   -r requirements.txt
     #   botocore
