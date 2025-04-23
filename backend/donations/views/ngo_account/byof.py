@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest
@@ -21,10 +20,6 @@ class NgoBringYourOwnFormView(NgoBaseListView):
     paginate_by = 8
     sidebar_item_target = "org-byof"
 
-    file_allowed_types = ["text/csv"]  # , "application/vnd.ms-excel"]
-    file_size_limit = 2 * settings.MEBIBYTE
-    file_size_warning = _("File size must not exceed 2 MB")
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
@@ -38,11 +33,7 @@ class NgoBringYourOwnFormView(NgoBaseListView):
                 "allowed_types": self.file_allowed_types,
                 "size_limit": self.file_size_limit,
                 "size_limit_warning": self.file_size_warning,
-                "django_form": BringYourOwnDataForm(
-                    file_allowed_types=self.file_allowed_types,
-                    file_size_limit=self.file_size_limit,
-                    file_size_warning=self.file_size_warning,
-                ),
+                "django_form": BringYourOwnDataForm(),
             }
         )
 
@@ -53,9 +44,6 @@ class NgoBringYourOwnFormView(NgoBaseListView):
 
     @method_decorator(login_required(login_url=reverse_lazy("login")))
     def post(self, request: HttpRequest, *args, **kwargs):
-        files = request.FILES
-
-        post = request.POST
         user: User = request.user
 
         ngo: Ngo = user.ngo if user.ngo else None
@@ -63,17 +51,15 @@ class NgoBringYourOwnFormView(NgoBaseListView):
             messages.error(request, _("You need to add your NGO's information first."))
             return redirect(reverse_lazy("my-organization:presentation"))
 
-        form = BringYourOwnDataForm(
-            post,
-            files=files,
-            file_allowed_types=self.file_allowed_types,
-            file_size_limit=self.file_size_limit,
-            file_size_warning=self.file_size_warning,
-        )
+        form = BringYourOwnDataForm(request.POST, request.FILES)
 
         if not form.is_valid():
             messages.error(request, _("There are some errors on the form."))
             return redirect(reverse("my-organization:byof"))
+
+        own_upload = form.save(commit=False)
+        own_upload.ngo = ngo
+        own_upload.save()
 
         result = generate_xml_from_external_data(
             ngo=ngo,

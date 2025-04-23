@@ -1,7 +1,27 @@
+from django.conf import settings
+from django.core.exceptions import ValidationError
+from django.core.validators import FileExtensionValidator
 from django.db import models
+from django.utils.deconstruct import deconstructible
 from django.utils.translation import gettext_lazy as _
 
 from donations.models.ngos import Ngo
+
+
+@deconstructible
+class MaxFileSizeValidator:
+    """
+    Validator which checks that file size is less or equal to the specified size limit
+    """
+
+    def __init__(self, max_size=1024):
+        self.max_size = max_size
+
+    def __call__(self, value):
+        if not value and not hasattr(value, "size"):
+            return
+        if value.size > self.max_size:
+            raise ValidationError(_("File size must not exceed {mb} MB").format(mb=self.max_size / settings.MEBIBYTE))
 
 
 class OwnFormsStatusChoices(models.TextChoices):
@@ -41,7 +61,14 @@ class OwnFormsUpload(models.Model):
     ngo = models.ForeignKey(Ngo, on_delete=models.CASCADE, related_name="own_forms_uploads")
     bank_account = models.CharField(verbose_name=_("IBAN"), max_length=24, blank=False, null=False)
     uploaded_data = models.FileField(
-        verbose_name=_("uploaded data"), upload_to="own-forms/%Y/%m/%d/", blank=False, null=False
+        verbose_name=_("uploaded data"),
+        upload_to="own-forms/%Y/%m/%d/",
+        blank=False,
+        null=False,
+        validators=(
+            FileExtensionValidator(allowed_extensions=("csv",)),
+            MaxFileSizeValidator(2 * settings.MEBIBYTE),
+        ),
     )
     result_data = models.FileField(
         verbose_name=_("result data"), upload_to="own-forms/%Y/%m/%d/", blank=True, null=True
