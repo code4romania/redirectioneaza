@@ -54,18 +54,14 @@ class NgoBringYourOwnFormView(NgoBaseListView):
         form = BringYourOwnDataForm(request.POST, request.FILES)
 
         if not form.is_valid():
-            messages.error(request, _("There are some errors on the form."))
+            messages.error(request, form.errors)
             return redirect(reverse("my-organization:byof"))
 
         own_upload = form.save(commit=False)
         own_upload.ngo = ngo
         own_upload.save()
 
-        result = generate_xml_from_external_data(
-            ngo=ngo,
-            iban=form.cleaned_data["bank_account"],
-            file=form.cleaned_data["upload_file"],
-        )
+        result = generate_xml_from_external_data(own_upload.pk)
 
         if "error" in result:
             messages.error(request, result["error"])

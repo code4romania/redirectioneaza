@@ -7,7 +7,7 @@ from xml.etree.ElementTree import Element, ElementTree
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.utils import timezone
 
-from donations.models.ngos import Ngo
+from donations.models.byof import OwnFormsUpload
 
 from pydantic import BaseModel, EmailStr, StringConstraints, ValidationError
 
@@ -54,29 +54,32 @@ class DonorModel(BaseModel):
     period: Optional[str] = "1"
 
 
-def generate_xml_from_external_data(ngo: Ngo, iban: str, file: InMemoryUploadedFile):
+def generate_xml_from_external_data(own_upload_id):
     """
     Generate an archive for the given NGO and file.
-    :param ngo: The NGO object that will be used for the archive
-    :param iban: The IBAN that will be used for the archive
-    :param file: The CSV file path containing the information of donors
+    :param own_upload_id: The ID of the uploaded data
     :return: The file of the generated XML
     """
 
-    ngo_name = ngo.name
-    ngo_cui = ngo.registration_number
-    ngo_address = ngo.address
-    ngo_locality = ngo.locality
-    ngo_county = ngo.county
+    try:
+        own_upload = OwnFormsUpload.objects.select_related("ngo").get(pk=own_upload_id)
+    except OwnFormsUpload.DoesNotExist:
+        return {"error": "Cannot find the uploaded data"}
+
+    ngo_name = own_upload.ngo.name
+    ngo_cui = own_upload.ngo.registration_number
+    ngo_address = own_upload.ngo.address
+    ngo_locality = own_upload.ngo.locality
+    ngo_county = own_upload.ngo.county
 
     try:
-        parsed_data = parse_file_data(file)
+        parsed_data = parse_file_data(own_upload.uploaded_data.file)
     except ValueError as e:
         return {"error": str(e)}
 
     xml_element_tree: ElementTree = build_xml_from_file_data(
         data=parsed_data,
-        iban=iban,
+        iban=own_upload.bank_account,
         ngo_name=ngo_name,
         ngo_cui=ngo_cui,
         ngo_address=ngo_address,

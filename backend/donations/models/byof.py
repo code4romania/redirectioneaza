@@ -25,7 +25,7 @@ class MaxFileSizeValidator:
 
 
 class OwnFormsStatusChoices(models.TextChoices):
-    NEW = "new", _("public")
+    NEW = "new", _("newly uploaded")
     VALIDATING = "vali", _("validating uploaded data")
     PENDING_PROCESSING = "pend", _("awaiting processing")
     PROCESSING = "proc", _("processing")
@@ -96,3 +96,6 @@ class OwnFormsUpload(models.Model):
     class Meta:
         verbose_name = _("bring your own forms upload")
         verbose_name_plural = _("bring your own forms uploads")
+
+    def __str__(self):
+        return self.bank_account
