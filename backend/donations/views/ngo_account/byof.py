@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest
@@ -30,9 +31,8 @@ class NgoBringYourOwnFormView(NgoBaseListView):
             {
                 "user": user,
                 "ngo": ngo,
-                "allowed_types": self.file_allowed_types,
-                "size_limit": self.file_size_limit,
-                "size_limit_warning": self.file_size_warning,
+                "size_limit": 2 * settings.MEBIBYTE,
+                "size_limit_warning": _("File size must not exceed {mb} MB").format(mb=2),
                 "django_form": BringYourOwnDataForm(),
             }
         )
