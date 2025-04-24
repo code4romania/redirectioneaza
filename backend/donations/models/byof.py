@@ -99,3 +99,15 @@ class OwnFormsUpload(models.Model):
 
     def __str__(self):
         return self.bank_account
+
+    @property
+    def is_successful(self):
+        return self.status == OwnFormsStatusChoices.SUCCESS
+
+    @property
+    def is_failed(self):
+        return self.status == OwnFormsStatusChoices.FAILED
+
+    @property
+    def is_in_progress(self):
+        return self.status != OwnFormsStatusChoices.FAILED and self.status != OwnFormsStatusChoices.SUCCESS

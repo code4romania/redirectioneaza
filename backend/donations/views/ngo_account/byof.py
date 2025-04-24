@@ -10,8 +10,8 @@ from django_q.tasks import async_task
 
 from donations.forms.ngo_account import BringYourOwnDataForm
 from donations.models.ngos import Ngo
-from donations.models.byof import OwnFormsStatusChoices, OwnFormsUpload
-from donations.views.download_donations.byof import prepare_external_data_processing
+from donations.models.byof import OwnFormsUpload
+from donations.views.download_donations.byof import handle_external_data_processing
 from donations.views.ngo_account.common import NgoBaseListView
 from users.models import User
 
@@ -46,7 +46,7 @@ class NgoBringYourOwnFormView(NgoBaseListView):
         return context
 
     def get_queryset(self):
-        return OwnFormsUpload.objects.filter(ngo=self.request.user.ngo).order_by("-date_created")
+        return OwnFormsUpload.objects.filter(ngo=self.request.user.ngo).select_related("ngo").order_by("-date_created")
 
     @method_decorator(login_required(login_url=reverse_lazy("login")))
     def post(self, request: HttpRequest, *args, **kwargs):
@@ -60,27 +60,15 @@ class NgoBringYourOwnFormView(NgoBaseListView):
         form = BringYourOwnDataForm(request.POST, request.FILES)
 
         if not form.is_valid():
-            messages.error(request, form.errors)
+            messages.error(request, " ".join(form.errors.values()))
             return redirect(reverse("my-organization:byof"))
 
         own_upload = form.save(commit=False)
         own_upload.ngo = ngo
         own_upload.save()
 
-        # TODO: async initial validation?
-        own_upload.status = OwnFormsStatusChoices.VALIDATING
-        own_upload.save()
+        async_task(handle_external_data_processing, own_upload.pk)
 
-        # TODO: the actual validation
-        own_upload.status = OwnFormsStatusChoices.PENDING_PROCESSING
-        own_upload.save()
-
-        # if "error" in result:
-        #     messages.error(request, result["error"])
-        #     return redirect(reverse("my-organization:byof"))
-
-        async_task(prepare_external_data_processing, own_upload.pk)
-
-        messages.success(request, _("The file was uploaded successfully."))
+        messages.success(request, _("The uploaded data file will be processed soon."))
 
         return redirect(reverse("my-organization:byof"))

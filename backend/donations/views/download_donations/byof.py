@@ -54,11 +54,17 @@ class DonorModel(BaseModel):
     period: Optional[str] = "1"
 
 
-def prepare_external_data_processing(own_upload_id):
+def handle_external_data_processing(own_upload_id):
     try:
         own_upload = OwnFormsUpload.objects.select_related("ngo").get(pk=own_upload_id)
     except OwnFormsUpload.DoesNotExist:
         return {"error": "Cannot find the uploaded data"}
+
+    own_upload.status = OwnFormsStatusChoices.VALIDATING
+    own_upload.save()
+
+    # TODO: the actual uploaded data validation
+    # TODO: Check for failure status
 
     own_upload.status = OwnFormsStatusChoices.PROCESSING
     own_upload.save()
@@ -66,6 +72,7 @@ def prepare_external_data_processing(own_upload_id):
     result = generate_xml_from_external_data(own_upload)
 
     # TODO: Check for failure status
+    # TODO: Save the actual result
     own_upload.status = OwnFormsStatusChoices.SUCCESS
     own_upload.save()
 
