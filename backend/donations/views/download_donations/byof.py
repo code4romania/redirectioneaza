@@ -80,13 +80,13 @@ def handle_external_data_processing(own_upload_id):
 
     result = generate_xml_from_external_data(own_upload)
 
-    if "error" in result:
+    if result.get("error"):
         own_upload.result_text = result["error"]
         own_upload.status = OwnFormsStatusChoices.FAILED
         own_upload.save()
         return
 
-    # TODO: Save the actual result file
+    own_upload.result_data.save("data.xml", ElementTree.tostring(result.get("data"), encoding="utf8"), save=False)
     own_upload.status = OwnFormsStatusChoices.SUCCESS
     own_upload.save()
 
@@ -107,7 +107,7 @@ def generate_xml_from_external_data(own_upload: OwnFormsUpload):
     try:
         parsed_data = parse_file_data(own_upload.uploaded_data.open())
     except ValueError as e:
-        return {"error": str(e)}
+        return {"error": str(e), "data": None}
 
     xml_element_tree: ElementTree = build_xml_from_file_data(
         data=parsed_data,
@@ -119,7 +119,7 @@ def generate_xml_from_external_data(own_upload: OwnFormsUpload):
         ngo_county=ngo_county,
     )
 
-    return xml_element_tree
+    return {"error": None, "data": xml_element_tree}
 
 
 def parse_file_data(file: InMemoryUploadedFile) -> List[DonorModel]:
