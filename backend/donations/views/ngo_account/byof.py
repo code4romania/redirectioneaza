@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.http import HttpRequest
+from django.http import Http404, HttpRequest
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
@@ -12,14 +12,13 @@ from donations.forms.ngo_account import BringYourOwnDataForm
 from donations.models.ngos import Ngo
 from donations.models.byof import OwnFormsUpload
 from donations.views.download_donations.byof import handle_external_data_processing
-from donations.views.ngo_account.common import NgoBaseListView
+from donations.views.ngo_account.common import FileDownloadProxy, NgoBaseListView
 from users.models import User
 
 
 class NgoBringYourOwnFormView(NgoBaseListView):
     template_name = "ngo-account/byof/main.html"
     title = _("Generate from external data")
-    context_object_name = "archive_external"
     paginate_by = 8
     tab_title = "external"
     sidebar_item_target = "org-byof"
@@ -76,3 +75,22 @@ class NgoBringYourOwnFormView(NgoBaseListView):
         messages.success(request, _("The uploaded data file will be processed soon."))
 
         return redirect(reverse("my-organization:byof"))
+
+
+class NgoBringYourOwnFormLinkView(FileDownloadProxy):
+    model = OwnFormsUpload
+
+    @method_decorator(login_required(login_url=reverse_lazy("login")))
+    def get(self, request: HttpRequest, job_id, *args, **kwargs):
+        user: User = request.user
+
+        if not self.is_user_valid(user):
+            raise Http404
+
+        download: OwnFormsUpload = self.get_downloadable_object(user=user, pk=job_id)
+
+        # Check that the job has a zip file
+        if not download.result_data:
+            raise Http404
+
+        return redirect(download.result_data.url)

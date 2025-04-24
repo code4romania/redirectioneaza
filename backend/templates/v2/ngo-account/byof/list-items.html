@@ -37,8 +37,8 @@
       <td class="px-1 py-4 whitespace-nowrap">
         {% if archive.is_successful %}
           {% if archive.result_data %}
-            <a href="{{ archive.result_data.url }}">
-              {{ archive.result_data.name }}
+            <a href="{% url 'my-organization:byof-download-link' job_id=archive.pk %}" download>
+              {% trans "Download" %}
             </a>
           {% else %}
             {% trans "No results file" %}
