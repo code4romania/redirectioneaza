@@ -19,6 +19,7 @@ class NgoBringYourOwnFormView(NgoBaseListView):
     title = _("Generate from external data")
     context_object_name = "archive_external"
     paginate_by = 8
+    tab_title = "external"
     sidebar_item_target = "org-byof"
 
     file_allowed_types = ["text/csv"]  # , "application/vnd.ms-excel"]
@@ -35,6 +36,8 @@ class NgoBringYourOwnFormView(NgoBaseListView):
             {
                 "user": user,
                 "ngo": ngo,
+                "title": self.title,
+                "active_tab": self.tab_title,
                 "allowed_types": self.file_allowed_types,
                 "size_limit": self.file_size_limit,
                 "size_limit_warning": self.file_size_warning,

@@ -1,0 +1,16 @@
+{% extends "ngo-account/base-listing.html" %}
+
+{% load i18n %}
+
+{% block table_header %}
+  {% include "ngo-account/redirections-downloads/list-header.html" %}
+{% endblock %}
+
+{% block table_body %}
+  {% include "ngo-account/redirections-downloads/list-items.html" %}
+{% endblock %}
+
+{% block pagination %}
+  {% trans "exports" as paginated_type %}
+  {% include "public/components/pagination.html" with page_obj=page_obj paginated_type=paginated_type %}
+{% endblock %}
