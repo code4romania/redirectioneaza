@@ -58,10 +58,21 @@ def handle_external_data_processing(own_upload_id):
     try:
         own_upload = OwnFormsUpload.objects.select_related("ngo").get(pk=own_upload_id)
     except OwnFormsUpload.DoesNotExist:
-        return {"error": "Cannot find the uploaded data"}
+        return {"error": _("Cannot find the uploaded data")}
 
     own_upload.status = OwnFormsStatusChoices.VALIDATING
     own_upload.save()
+
+    with own_upload.uploaded_data.open() as file:
+        read_file = file.readline().decode("utf-8")
+        reader = csv.DictReader(io.StringIO(read_file))
+
+        header_check = _check_csv_header(reader)
+        if check_error := header_check.get("error"):
+            own_upload.status = OwnFormsStatusChoices.FAILED
+            own_upload.result_text = check_error
+            own_upload.save()
+            return
 
     # TODO: the actual uploaded data validation
     # TODO: Check for failure status
@@ -69,14 +80,15 @@ def handle_external_data_processing(own_upload_id):
     own_upload.status = OwnFormsStatusChoices.PROCESSING
     own_upload.save()
 
-    result = generate_xml_from_external_data(own_upload)
+    # TODO: save the XML to file
+    generate_xml_from_external_data(own_upload)
 
     # TODO: Check for failure status
     # TODO: Save the actual result
     own_upload.status = OwnFormsStatusChoices.SUCCESS
     own_upload.save()
 
-    return result
+    
 
 
 def generate_xml_from_external_data(own_upload: OwnFormsUpload):

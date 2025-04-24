@@ -47,7 +47,7 @@
 
         {% if archive.is_failed %}
           <p>
-            {% trans "Error" %}
+            {{ archive.result_text }}
           </p>
         {% endif %}
 

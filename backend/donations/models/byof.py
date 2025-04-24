@@ -68,6 +68,7 @@ class OwnFormsUpload(models.Model):
     result_data = models.FileField(
         verbose_name=_("result data"), upload_to="own-forms/%Y/%m/%d/", blank=True, null=True
     )
+    result_text = models.TextField(verbose_name=_("result text"), blank=True, null=True, default="")
     status = models.CharField(
         verbose_name=_("status"),
         blank=False,
