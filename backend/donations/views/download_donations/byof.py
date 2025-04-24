@@ -7,7 +7,7 @@ from xml.etree.ElementTree import Element, ElementTree
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.utils import timezone
 
-from donations.models.byof import OwnFormsUpload
+from donations.models.byof import OwnFormsUpload, OwnFormsStatusChoices
 
 from pydantic import BaseModel, EmailStr, StringConstraints, ValidationError
 
@@ -54,17 +54,30 @@ class DonorModel(BaseModel):
     period: Optional[str] = "1"
 
 
-def generate_xml_from_external_data(own_upload_id):
+def prepare_external_data_processing(own_upload_id):
+    try:
+        own_upload = OwnFormsUpload.objects.select_related("ngo").get(pk=own_upload_id)
+    except OwnFormsUpload.DoesNotExist:
+        return {"error": "Cannot find the uploaded data"}
+
+    own_upload.status = OwnFormsStatusChoices.PROCESSING
+    own_upload.save()
+
+    result = generate_xml_from_external_data(own_upload)
+
+    # TODO: Check for failure status
+    own_upload.status = OwnFormsStatusChoices.SUCCESS
+    own_upload.save()
+
+    return result
+
+
+def generate_xml_from_external_data(own_upload: OwnFormsUpload):
     """
     Generate an archive for the given NGO and file.
     :param own_upload_id: The ID of the uploaded data
     :return: The file of the generated XML
     """
-
-    try:
-        own_upload = OwnFormsUpload.objects.select_related("ngo").get(pk=own_upload_id)
-    except OwnFormsUpload.DoesNotExist:
-        return {"error": "Cannot find the uploaded data"}
 
     ngo_name = own_upload.ngo.name
     ngo_cui = own_upload.ngo.registration_number
