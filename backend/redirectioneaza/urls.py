@@ -37,6 +37,7 @@ from donations.views.api import (
     SearchCausesApi,
     UpdateFromNgohub,
 )
+from donations.views.api_download import DownloadNgoRedirections
 from donations.views.errors import create_error_view
 from donations.views.redirections import (
     OwnFormDownloadLinkHandler,
@@ -123,6 +124,7 @@ urlpatterns = (
         path("api/ngohub-refresh/", UpdateFromNgohub.as_view(), name="api-ngohub-refresh"),
         path("api/ngo/form/<cause_slug>/", GetCausePrefilledForm.as_view(), name="api-cause-form"),
         path("api/ngo/forms/archive/", GenerateCauseArchive.as_view(), name="api-generate-cause-archive"),
+        path("api/ngo/forms/download/", DownloadNgoRedirections.as_view(), name="api-download-redirections"),
         path("api/ngo/forms/visibility/", ChangeCauseVisibility.as_view(), name="api-change-cause-visibility"),
         #
         path("api/search/", SearchCausesApi.as_view(), name="api-search-ngos"),

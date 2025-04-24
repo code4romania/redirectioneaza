@@ -1,0 +1,25 @@
+{% load i18n %}
+
+{% trans "Hello," %}
+
+{% blocktrans trimmed %}
+  We have received your request and prepared the CSV with the requested forms.
+  You can access the documents by clicking the button below.
+  Remember that the deadline for submitting the forms to ANAF is
+{% endblocktrans %}
+
+{{ donation_limit_day }} {{ donation_limit_month_name }} {{ donation_limit_year }}.
+
+{{ action_url }}
+
+
+{% blocktrans trimmed %}
+  The CSV was generated with the following filters:
+{% endblocktrans %}
+{% for filter_key, filter_value in filters.items %}
+  - {{ filter_key }}: {{ filter_value }}
+{% endfor %}
+
+{% blocktrans trimmed %}
+  Thank you for being part of this community!
+{% endblocktrans %}

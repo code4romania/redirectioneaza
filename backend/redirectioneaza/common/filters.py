@@ -28,6 +28,16 @@ class QueryFilter:
     def options_default(self) -> List[Dict[str, Union[int, str]]]:
         raise NotImplementedError("Options method must be implemented in subclass")
 
+    def title_for_option(self, option_value: Union[int, str]) -> str:
+        """
+        Returns the title for a given option value.
+        This method can be overridden in subclasses to provide custom titles.
+        """
+        try:
+            return str(next(item for item in self.options_default() if item["value"] == option_value)["title"])
+        except (NotImplementedError, StopIteration, KeyError):
+            return str(option_value)
+
     def to_dict(
         self, *, include_options: bool = False, objects: QuerySet = None
     ) -> Dict[str, Union[str, List[Dict[str, Union[int, str]]]]]:
@@ -43,7 +53,7 @@ class QueryFilter:
 
         return result
 
-    def transform(self, value):
+    def transform_to_qs_value(self, value):
         if transform := self.queryset_transformation:
             return transform(value)
 

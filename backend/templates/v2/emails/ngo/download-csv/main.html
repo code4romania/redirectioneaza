@@ -1,0 +1,47 @@
+{% extends "emails/base.html" %}
+
+{% load i18n %}
+
+{% block heading %}
+  {% trans "Hello," %}
+{% endblock %}
+
+{% block content %}
+
+  <p>
+    {% blocktrans trimmed %}
+      We have received your request and prepared the CSV with the requested forms.
+      You can access the documents by clicking the button below.
+      Remember that the deadline for submitting the forms to ANAF is
+    {% endblocktrans %}
+    <strong>{{ donation_limit_day }} {{ donation_limit_month_name }} {{ donation_limit_year }}</strong>.
+  </p>
+
+
+  {% trans "Download CSV" as action_title %}
+  {% include "emails/components/action.html" with title=action_title url=action_url %}
+
+  <div>
+    <p>
+      {% blocktrans trimmed %}
+        Date generated: {{ date_generated }}.
+      {% endblocktrans %}
+    </p>
+
+    <p>
+      {% blocktrans trimmed %}
+        The CSV was generated with the following filters:
+      {% endblocktrans %}
+    </p>
+    <ul>
+      {% for filter_key, filter_value in filters.items %}
+        <li><strong>{{ filter_key }}:</strong> {{ filter_value }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  {% blocktrans trimmed %}
+    Thank you for being part of this community!
+  {% endblocktrans %}
+
+{% endblock %}
