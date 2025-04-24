@@ -78,11 +78,15 @@ def handle_external_data_processing(own_upload_id):
         own_upload.status = OwnFormsStatusChoices.PROCESSING
         own_upload.save()
 
-    # TODO: save the XML to file
-    generate_xml_from_external_data(own_upload)
+    result = generate_xml_from_external_data(own_upload)
 
-    # TODO: Check for failure status
-    # TODO: Save the actual result
+    if "error" in result:
+        own_upload.result_text = result["error"]
+        own_upload.status = OwnFormsStatusChoices.FAILED
+        own_upload.save()
+        return
+
+    # TODO: Save the actual result file
     own_upload.status = OwnFormsStatusChoices.SUCCESS
     own_upload.save()
 
@@ -101,7 +105,7 @@ def generate_xml_from_external_data(own_upload: OwnFormsUpload):
     ngo_county = own_upload.ngo.county
 
     try:
-        parsed_data = parse_file_data(own_upload.uploaded_data.file)
+        parsed_data = parse_file_data(own_upload.uploaded_data.open())
     except ValueError as e:
         return {"error": str(e)}
 
