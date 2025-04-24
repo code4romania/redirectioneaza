@@ -43,23 +43,25 @@ def fill_redirections_csv(csv_writer: csv.writer, redirections_queryset: QuerySe
         "cause__bank_account",
     )
 
-    csv_writer.writerow(
-        [
-            _("Name"),
-            _("Email"),
-            _("Phone"),
-            _("Period (years)"),
-            _("IBAN"),
-            _("Has Signed"),
-            _("Locality"),
-            _("County"),
-            _("Redirection Date"),
-        ]
-    )
+    header_row = [
+        _("First Name"),
+        _("Last Name"),
+        _("Email"),
+        _("Phone"),
+        _("Period (years)"),
+        _("IBAN"),
+        _("Has Signed"),
+        _("Locality"),
+        _("County"),
+        _("Redirection Date"),
+    ]
+
+    csv_writer.writerow(header_row)
 
     redirection: Donor
     for redirection in redirections_queryset:
-        full_name = f"{redirection.f_name} {redirection.l_name}"
+        first_name = redirection.f_name
+        last_name = redirection.l_name
         email = redirection.email if not redirection.is_anonymous else _("anonymous")
         phone = redirection.phone if not redirection.is_anonymous else _("anonymous")
         period = "2" if redirection.two_years else "1"
@@ -69,19 +71,24 @@ def fill_redirections_csv(csv_writer: csv.writer, redirections_queryset: QuerySe
         county = redirection.county
         redirection_date = redirection.date_created.strftime("%Y-%m-%d %H:%M")
 
-        csv_writer.writerow(
-            [
-                full_name,
-                email,
-                phone,
-                period,
-                iban,
-                has_signed,
-                locality,
-                county,
-                redirection_date,
-            ]
-        )
+        csv_row = [
+            first_name,
+            last_name,
+            email,
+            phone,
+            period,
+            iban,
+            has_signed,
+            locality,
+            county,
+            redirection_date,
+        ]
+
+        if len(csv_row) != len(header_row):
+            logger.error(f"CSV row length mismatch: {len(csv_row)} != {len(header_row)}")
+            raise ValueError("CSV row length does not match header row length.")
+
+        csv_writer.writerow(csv_row)
 
 
 def generate_csv_from_download_job(download_job_id: int):
