@@ -8,7 +8,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("donations", "0035_ownformsupload"),
+        ("donations", "0036_ownformsupload"),
     ]
 
     operations = [

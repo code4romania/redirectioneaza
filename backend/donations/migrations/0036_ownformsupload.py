@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("donations", "0034_cause_filename_cache"),
+        ("donations", "0035_redirectionsdownloadjob"),
     ]
 
     operations = [
