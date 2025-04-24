@@ -21,3 +21,4 @@ services:
 
 volumes:
   redirect_psql:
+  node_modules:
