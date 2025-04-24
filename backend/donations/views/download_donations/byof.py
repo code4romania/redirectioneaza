@@ -74,11 +74,9 @@ def handle_external_data_processing(own_upload_id):
             own_upload.save()
             return
 
-    # TODO: the actual uploaded data validation
-    # TODO: Check for failure status
-
-    own_upload.status = OwnFormsStatusChoices.PROCESSING
-    own_upload.save()
+        own_upload.items_count = sum([1 for i in file.readlines() if i.strip()])  # already read the first line
+        own_upload.status = OwnFormsStatusChoices.PROCESSING
+        own_upload.save()
 
     # TODO: save the XML to file
     generate_xml_from_external_data(own_upload)
@@ -87,8 +85,6 @@ def handle_external_data_processing(own_upload_id):
     # TODO: Save the actual result
     own_upload.status = OwnFormsStatusChoices.SUCCESS
     own_upload.save()
-
-    
 
 
 def generate_xml_from_external_data(own_upload: OwnFormsUpload):
