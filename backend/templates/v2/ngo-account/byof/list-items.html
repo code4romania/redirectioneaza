@@ -32,7 +32,7 @@
         <a href="{{ archive.uploaded_data.url }}">{{ archive.uploaded_data.name }}</a>
       </td>
       <td class="px-1 py-4 whitespace-nowrap">
-        0
+        {{ archive.items_count }}
       </td>
       <td class="px-1 py-4 whitespace-nowrap">
         {% if archive.is_successful %}

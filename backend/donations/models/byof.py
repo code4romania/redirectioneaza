@@ -64,6 +64,7 @@ class OwnFormsUpload(models.Model):
             MaxFileSizeValidator(2 * settings.MEBIBYTE),
         ),
     )
+    items_count = models.PositiveBigIntegerField(verbose_name=_("form count"), blank=False, null=False, default=0)
     result_data = models.FileField(
         verbose_name=_("result data"), upload_to="own-forms/%Y/%m/%d/", blank=True, null=True
     )
