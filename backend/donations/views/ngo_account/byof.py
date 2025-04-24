@@ -60,7 +60,11 @@ class NgoBringYourOwnFormView(NgoBaseListView):
         form = BringYourOwnDataForm(request.POST, request.FILES)
 
         if not form.is_valid():
-            messages.error(request, " ".join(form.errors.values()))
+            error_values = list(form.errors.values())
+            all_errors = []
+            for error_list in error_values:
+                all_errors.extend(error_list)
+            messages.error(request, ", ".join(all_errors))
             return redirect(reverse("my-organization:byof"))
 
         own_upload = form.save(commit=False)
