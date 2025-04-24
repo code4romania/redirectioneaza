@@ -1,9 +1,10 @@
 import csv
 import io
 import logging
-from typing import Annotated, Dict, List, Optional
+from typing import Annotated, Dict, List, Optional, Union
 from xml.etree.ElementTree import Element, ElementTree
 
+from django.core.files.base import ContentFile
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.utils import timezone
 
@@ -54,7 +55,7 @@ class DonorModel(BaseModel):
     period: Optional[str] = "1"
 
 
-def handle_external_data_processing(own_upload_id):
+def handle_external_data_processing(own_upload_id) -> Optional[Dict]:
     try:
         own_upload = OwnFormsUpload.objects.select_related("ngo").get(pk=own_upload_id)
     except OwnFormsUpload.DoesNotExist:
@@ -72,7 +73,7 @@ def handle_external_data_processing(own_upload_id):
             own_upload.status = OwnFormsStatusChoices.FAILED
             own_upload.result_text = check_error
             own_upload.save()
-            return
+            return {"error": check_error}
 
         own_upload.items_count = sum([1 for i in file.readlines() if i.strip()])  # already read the first line
         own_upload.status = OwnFormsStatusChoices.PROCESSING
@@ -84,17 +85,32 @@ def handle_external_data_processing(own_upload_id):
         own_upload.result_text = result["error"]
         own_upload.status = OwnFormsStatusChoices.FAILED
         own_upload.save()
-        return
+        return {"error": result["error"]}
 
-    own_upload.result_data.save("data.xml", ElementTree.tostring(result.get("data"), encoding="utf8"), save=False)
+    etree:  ElementTree = result.get("data")
+
+    # Write to a BytesIO buffer
+    buffer = io.BytesIO()
+    etree.write(buffer, encoding="utf-8", xml_declaration=True)
+
+    # Get the content from the buffer
+    xml_content = buffer.getvalue()
+
+    # Wrap in a ContentFile for Django
+    xml_file = ContentFile(xml_content)
+
+    # Save to FileField
+    own_upload.result_data.save("data.xml", xml_file, save=False)
     own_upload.status = OwnFormsStatusChoices.SUCCESS
     own_upload.save()
 
+    return None
 
-def generate_xml_from_external_data(own_upload: OwnFormsUpload):
+
+def generate_xml_from_external_data(own_upload: OwnFormsUpload) -> Dict[str, Union[str, Optional[ElementTree]]]:
     """
     Generate an archive for the given NGO and file.
-    :param own_upload_id: The ID of the uploaded data
+    :param own_upload: The uploaded data
     :return: The file of the generated XML
     """
 
