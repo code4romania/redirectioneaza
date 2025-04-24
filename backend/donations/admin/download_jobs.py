@@ -5,11 +5,11 @@ from unfold.admin import ModelAdmin
 
 from donations.admin.common import span_internal
 from donations.models import Ngo
-from donations.models.jobs import Job
+from donations.models.downloads import RedirectionsDownloadJob
 
 
-@admin.register(Job)
-class JobAdmin(ModelAdmin):
+@admin.register(RedirectionsDownloadJob)
+class DownloadJobAdmin(ModelAdmin):
     list_display = ("id", "link_to_ngo", "status", "date_created")
     list_display_links = ("id", "status", "date_created")
     list_filter = ("date_created", "status")
@@ -20,13 +20,7 @@ class JobAdmin(ModelAdmin):
     fieldsets = (
         (
             _("NGO"),
-            {
-                "fields": (
-                    "ngo",
-                    "cause",
-                    "owner",
-                )
-            },
+            {"fields": ("ngo",)},
         ),
         (
             _("Status"),
@@ -36,8 +30,9 @@ class JobAdmin(ModelAdmin):
             _("Data"),
             {
                 "fields": (
-                    "number_of_donations",
-                    "zip",
+                    "queryset",
+                    "output_rows",
+                    "output_file",
                 )
             },
         ),
@@ -53,7 +48,7 @@ class JobAdmin(ModelAdmin):
     )
 
     @admin.display(description=_("NGO"))
-    def link_to_ngo(self, obj: Job):
+    def link_to_ngo(self, obj: RedirectionsDownloadJob):
         ngo: Ngo = obj.ngo
 
         link_url = reverse_lazy("admin:donations_ngo_change", args=(ngo.pk,))

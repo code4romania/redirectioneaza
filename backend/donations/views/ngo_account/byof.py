@@ -19,6 +19,7 @@ class NgoBringYourOwnFormView(NgoBaseListView):
     title = _("Generate from external data")
     context_object_name = "archive_external"
     paginate_by = 8
+    tab_title = "external"
     sidebar_item_target = "org-byof"
 
     def get_context_data(self, **kwargs):
@@ -31,6 +32,8 @@ class NgoBringYourOwnFormView(NgoBaseListView):
             {
                 "user": user,
                 "ngo": ngo,
+                "title": self.title,
+                "active_tab": self.tab_title,
                 "size_limit": 2 * settings.MEBIBYTE,
                 "size_limit_warning": _("File size must not exceed {mb} MB").format(mb=2),
                 "django_form": BringYourOwnDataForm(),

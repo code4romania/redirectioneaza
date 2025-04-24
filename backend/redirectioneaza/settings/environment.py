@@ -21,10 +21,12 @@ env = environ.Env(
     FORCE_PARTNER=(bool, False),
     # Forms Download
     FORMS_DOWNLOAD_METHOD=(str, "async"),
+    DONATIONS_CSV_DOWNLOAD_METHOD=(str, "async"),
     ENABLE_FORMS_DOWNLOAD=(bool, True),
     TIMEDELTA_FORMS_DOWNLOAD_MINUTES=(int, 6 * HOUR),
     TIMEDELTA_DONATIONS_LIMIT_DOWNLOAD_DAYS=(int, 31),
     DONATIONS_XML_LIMIT_PER_FILE=(int, 100),
+    DONATIONS_CSV_LIMIT_PER_FILE=(int, 1000),
     # proxy headers
     USE_PROXY_FORWARDED_HOST=(bool, False),
     PROXY_SSL_HEADER=(str, "HTTP_CLOUDFRONT_FORWARDED_PROTO"),
