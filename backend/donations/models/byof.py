@@ -27,7 +27,6 @@ class MaxFileSizeValidator:
 class OwnFormsStatusChoices(models.TextChoices):
     NEW = "new", _("newly uploaded")
     VALIDATING = "vali", _("validating uploaded data")
-    PENDING_PROCESSING = "pend", _("awaiting processing")
     PROCESSING = "proc", _("processing")
     FAILED = "fail", _("failed")
     SUCCESS = "succ", _("success")
@@ -36,11 +35,6 @@ class OwnFormsStatusChoices(models.TextChoices):
 class NewOwnFormsUploadManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().filter(status=OwnFormsStatusChoices.NEW)
-
-
-class PendingOwnFormsUploadManager(models.Manager):
-    def get_queryset(self):
-        return super().get_queryset().filter(status=OwnFormsStatusChoices.PENDING_PROCESSING)
 
 
 class DoneOwnFormsUploadManager(models.Manager):
@@ -90,7 +84,6 @@ class OwnFormsUpload(models.Model):
 
     objects = models.Manager()
     new_uploads = NewOwnFormsUploadManager()
-    pending_processing = PendingOwnFormsUploadManager()
     done = DoneOwnFormsUploadManager()
 
     class Meta:
