@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-25 12:15+0300\n"
+"POT-Creation-Date: 2025-04-25 12:23+0300\n"
 "PO-Revision-Date: 2025-03-27 14:49+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -3894,8 +3894,8 @@ msgstr "Redirecționează 3.5%% din impozitul tău către unul dintre ONG-urile"
 
 #: templates/v2/public/components/home/hero.html:16
 #, python-format
-msgid "supported by %(company_name)s"
-msgstr "susținute de %(company_name)s"
+msgid "supported by <span class=\"whitespace-nowrap\">%(company_name)s</span>"
+msgstr "susținute de <span class=\"whitespace-nowrap\">%(company_name)s</span>"
 
 #: templates/v2/public/components/home/hero.html:21
 msgid "You decide what happens"

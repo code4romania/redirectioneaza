@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-25 12:15+0300\n"
+"POT-Creation-Date: 2025-04-25 12:23+0300\n"
 "PO-Revision-Date: 2025-02-12 12:44+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Armenian <https://translate.commitglobal.org/projects/"
@@ -4120,7 +4120,7 @@ msgstr ""
 
 #: templates/v2/public/components/home/hero.html:16
 #, python-format
-msgid "supported by %(company_name)s"
+msgid "supported by <span class=\"whitespace-nowrap\">%(company_name)s</span>"
 msgstr ""
 
 #: templates/v2/public/components/home/hero.html:21

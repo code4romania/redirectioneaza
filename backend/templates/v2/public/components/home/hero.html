@@ -14,7 +14,7 @@
             {% else %}
               {% trans "Redirect 3.5% of your tax to one of the NGOs" as heading_main %}
               {% blocktrans trimmed asvar heading_secondary %}
-                supported by {{ company_name }}
+                supported by <span class="whitespace-nowrap">{{ company_name }}</span>
               {% endblocktrans %}
             {% endif %}
           {% else %}

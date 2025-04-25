@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-25 12:15+0300\n"
+"POT-Creation-Date: 2025-04-25 12:23+0300\n"
 "PO-Revision-Date: 2025-03-27 14:48+0000\n"
 "Last-Translator: Andrei Ioniță <andrei.ionita@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -4019,8 +4019,8 @@ msgstr "Redirect 3.5%% of your tax to one of the NGOs"
 
 #: templates/v2/public/components/home/hero.html:16
 #, python-format
-msgid "supported by %(company_name)s"
-msgstr "supported by %(company_name)s"
+msgid "supported by <span class=\"whitespace-nowrap\">%(company_name)s</span>"
+msgstr ""
 
 #: templates/v2/public/components/home/hero.html:21
 msgid "You decide what happens"
@@ -4185,6 +4185,10 @@ msgstr "old password"
 #: users/models.py:178
 msgid "Group"
 msgstr "Group"
+
+#, python-format
+#~ msgid "supported by %(company_name)s"
+#~ msgstr "supported by %(company_name)s"
 
 #, fuzzy
 #~| msgid "Data sharing information"
