@@ -48,9 +48,15 @@ SIDEBAR_NAVIGATION = [
                 "permission": lambda request: request.user.is_superuser,
             },
             {
-                "title": _("Donation exports"),
+                "title": _("Internal ANAF Archives"),
                 "icon": "file_copy",
                 "link": reverse_lazy("admin:donations_job_changelist"),
+                "permission": lambda request: request.user.is_superuser,
+            },
+            {
+                "title": _("External ANAF Archives"),
+                "icon": "download",
+                "link": reverse_lazy("admin:donations_ownformsupload_changelist"),
                 "permission": lambda request: request.user.is_superuser,
             },
             {

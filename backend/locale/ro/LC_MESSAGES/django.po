@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-25 12:23+0300\n"
+"POT-Creation-Date: 2025-04-25 14:05+0300\n"
 "PO-Revision-Date: 2025-03-27 14:49+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -1469,15 +1469,15 @@ msgstr "Despre redirectioneaza.ro"
 msgid "All causes"
 msgstr "Toate cauzele"
 
-#: donations/views/site.py:175 templates/v2/redirect/footer.html:196
+#: donations/views/site.py:178 templates/v2/redirect/footer.html:196
 msgid "Information notice"
 msgstr "Notă de informare"
 
-#: donations/views/site.py:186 templates/v2/redirect/footer.html:186
+#: donations/views/site.py:189 templates/v2/redirect/footer.html:186
 msgid "Privacy policy"
 msgstr "Politica de confidențialitate"
 
-#: donations/views/site.py:191 templates/v2/redirect/footer.html:191
+#: donations/views/site.py:194 templates/v2/redirect/footer.html:191
 msgid "Terms & conditions"
 msgstr "Termeni și condiții"
 
@@ -1497,7 +1497,7 @@ msgstr "Ordine"
 msgid "Section"
 msgstr "Secțiune"
 
-#: frequent_questions/models.py:15 redirectioneaza/settings/unfold.py:74
+#: frequent_questions/models.py:15 redirectioneaza/settings/unfold.py:80
 msgid "Sections"
 msgstr "Secțiuni"
 
@@ -1509,7 +1509,7 @@ msgstr "Întrebare"
 msgid "Answer"
 msgstr "Răspuns"
 
-#: frequent_questions/models.py:40 redirectioneaza/settings/unfold.py:80
+#: frequent_questions/models.py:40 redirectioneaza/settings/unfold.py:86
 msgid "Questions"
 msgstr "Întrebări"
 
@@ -1571,7 +1571,7 @@ msgstr "Invită un nou manager"
 
 #: partners/apps.py:8 partners/models.py:83
 #: redirectioneaza/context_processors/headers.py:75
-#: redirectioneaza/settings/unfold.py:63
+#: redirectioneaza/settings/unfold.py:69
 msgid "Partners"
 msgstr "Parteneri"
 
@@ -1697,7 +1697,7 @@ msgstr ""
 
 #: redirectioneaza/context_processors/headers.py:29
 #: redirectioneaza/context_processors/headers.py:39
-#: redirectioneaza/settings/unfold.py:71
+#: redirectioneaza/settings/unfold.py:77
 msgid "Frequently asked questions"
 msgstr "Întrebări frecvente"
 
@@ -1741,7 +1741,7 @@ msgid "FAQ Questions"
 msgstr "FAQ Întrebări"
 
 #: redirectioneaza/context_processors/headers.py:85
-#: redirectioneaza/settings/unfold.py:88 redirectioneaza/settings/unfold.py:91
+#: redirectioneaza/settings/unfold.py:94 redirectioneaza/settings/unfold.py:97
 #: users/apps.py:8
 msgid "Users"
 msgstr "Utilizatori"
@@ -1896,7 +1896,7 @@ msgid "Dec"
 msgstr "Dec"
 
 #: redirectioneaza/settings/django_q.py:23
-#: redirectioneaza/settings/unfold.py:105
+#: redirectioneaza/settings/unfold.py:111
 msgid "Background Tasks"
 msgstr "Task-uri în fundal"
 
@@ -1905,30 +1905,34 @@ msgid "Home page"
 msgstr "Pagina principală"
 
 #: redirectioneaza/settings/unfold.py:51
-msgid "Donation exports"
-msgstr "Exporturi de donații"
+msgid "Internal ANAF Archives"
+msgstr "Arhive ANAF interne"
 
 #: redirectioneaza/settings/unfold.py:57
+msgid "External ANAF Archives"
+msgstr "Arhive ANAF externe"
+
+#: redirectioneaza/settings/unfold.py:63
 msgid "Donation downloads"
 msgstr "Descărcări de donații"
 
-#: redirectioneaza/settings/unfold.py:97 users/models.py:179
+#: redirectioneaza/settings/unfold.py:103 users/models.py:179
 msgid "Groups"
 msgstr "Grupuri"
 
-#: redirectioneaza/settings/unfold.py:108
+#: redirectioneaza/settings/unfold.py:114
 msgid "Failed tasks"
 msgstr "Task-uri eșuate"
 
-#: redirectioneaza/settings/unfold.py:114
+#: redirectioneaza/settings/unfold.py:120
 msgid "Queued tasks"
 msgstr "Task-uri în așteptare"
 
-#: redirectioneaza/settings/unfold.py:120
+#: redirectioneaza/settings/unfold.py:126
 msgid "Scheduled tasks"
 msgstr "Task-uri programate"
 
-#: redirectioneaza/settings/unfold.py:126
+#: redirectioneaza/settings/unfold.py:132
 msgid "Successful tasks"
 msgstr "Task-uri reușite"
 
@@ -4059,6 +4063,9 @@ msgstr "parolă veche"
 #: users/models.py:178
 msgid "Group"
 msgstr "Grup"
+
+#~ msgid "Donation exports"
+#~ msgstr "Arhive ANAF interne"
 
 #~ msgid ""
 #~ "Choose the IBAN you will use for collecting and submitting to ANAF. "

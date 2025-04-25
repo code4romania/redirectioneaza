@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-25 12:23+0300\n"
+"POT-Creation-Date: 2025-04-25 14:05+0300\n"
 "PO-Revision-Date: 2025-02-12 12:44+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Armenian <https://translate.commitglobal.org/projects/"
@@ -1640,15 +1640,15 @@ msgstr "Բարի գալուստ redirectioneaza.ro"
 msgid "All causes"
 msgstr ""
 
-#: donations/views/site.py:175 templates/v2/redirect/footer.html:196
+#: donations/views/site.py:178 templates/v2/redirect/footer.html:196
 msgid "Information notice"
 msgstr ""
 
-#: donations/views/site.py:186 templates/v2/redirect/footer.html:186
+#: donations/views/site.py:189 templates/v2/redirect/footer.html:186
 msgid "Privacy policy"
 msgstr ""
 
-#: donations/views/site.py:191 templates/v2/redirect/footer.html:191
+#: donations/views/site.py:194 templates/v2/redirect/footer.html:191
 #, fuzzy
 #| msgid "description"
 msgid "Terms & conditions"
@@ -1674,7 +1674,7 @@ msgstr ""
 msgid "Section"
 msgstr "նկարագրություն"
 
-#: frequent_questions/models.py:15 redirectioneaza/settings/unfold.py:74
+#: frequent_questions/models.py:15 redirectioneaza/settings/unfold.py:80
 #, fuzzy
 #| msgid "Options"
 msgid "Sections"
@@ -1690,7 +1690,7 @@ msgstr "նկարագրություն"
 msgid "Answer"
 msgstr ""
 
-#: frequent_questions/models.py:40 redirectioneaza/settings/unfold.py:80
+#: frequent_questions/models.py:40 redirectioneaza/settings/unfold.py:86
 #, fuzzy
 #| msgid "Options"
 msgid "Questions"
@@ -1762,7 +1762,7 @@ msgstr ""
 
 #: partners/apps.py:8 partners/models.py:83
 #: redirectioneaza/context_processors/headers.py:75
-#: redirectioneaza/settings/unfold.py:63
+#: redirectioneaza/settings/unfold.py:69
 msgid "Partners"
 msgstr "Գործընկերներ"
 
@@ -1899,7 +1899,7 @@ msgstr ""
 
 #: redirectioneaza/context_processors/headers.py:29
 #: redirectioneaza/context_processors/headers.py:39
-#: redirectioneaza/settings/unfold.py:71
+#: redirectioneaza/settings/unfold.py:77
 #, fuzzy
 #| msgid "Frequently Asked Questions"
 msgid "Frequently asked questions"
@@ -1947,7 +1947,7 @@ msgid "FAQ Questions"
 msgstr "Ընտրանքներ"
 
 #: redirectioneaza/context_processors/headers.py:85
-#: redirectioneaza/settings/unfold.py:88 redirectioneaza/settings/unfold.py:91
+#: redirectioneaza/settings/unfold.py:94 redirectioneaza/settings/unfold.py:97
 #: users/apps.py:8
 #, fuzzy
 msgid "Users"
@@ -2119,7 +2119,7 @@ msgid "Dec"
 msgstr "Դեկտ"
 
 #: redirectioneaza/settings/django_q.py:23
-#: redirectioneaza/settings/unfold.py:105
+#: redirectioneaza/settings/unfold.py:111
 msgid "Background Tasks"
 msgstr ""
 
@@ -2130,32 +2130,40 @@ msgid "Home page"
 msgstr "հասցե"
 
 #: redirectioneaza/settings/unfold.py:51
-msgid "Donation exports"
-msgstr "Նվիրատվության արտահանումները"
+#, fuzzy
+#| msgid "Generate donations archive"
+msgid "Internal ANAF Archives"
+msgstr "Ստեղծել նվիրատվությունների արխիվ"
 
 #: redirectioneaza/settings/unfold.py:57
+#, fuzzy
+#| msgid "Generate donations archive"
+msgid "External ANAF Archives"
+msgstr "Ստեղծել նվիրատվությունների արխիվ"
+
+#: redirectioneaza/settings/unfold.py:63
 #, fuzzy
 #| msgid "Donations"
 msgid "Donation downloads"
 msgstr "Նվիրատվություններ"
 
-#: redirectioneaza/settings/unfold.py:97 users/models.py:179
+#: redirectioneaza/settings/unfold.py:103 users/models.py:179
 msgid "Groups"
 msgstr "Խմբեր"
 
-#: redirectioneaza/settings/unfold.py:108
+#: redirectioneaza/settings/unfold.py:114
 msgid "Failed tasks"
 msgstr "Չհաջողված առաջադրանքներ"
 
-#: redirectioneaza/settings/unfold.py:114
+#: redirectioneaza/settings/unfold.py:120
 msgid "Queued tasks"
 msgstr "Հերթագրված առաջադրանքներ"
 
-#: redirectioneaza/settings/unfold.py:120
+#: redirectioneaza/settings/unfold.py:126
 msgid "Scheduled tasks"
 msgstr "Պլանավորված առաջադրանքներ"
 
-#: redirectioneaza/settings/unfold.py:126
+#: redirectioneaza/settings/unfold.py:132
 msgid "Successful tasks"
 msgstr "Հաջողված առաջադրանքներ"
 
@@ -4288,3 +4296,6 @@ msgstr "հին գաղտնաբառ"
 #: users/models.py:178
 msgid "Group"
 msgstr "Խումբ"
+
+#~ msgid "Donation exports"
+#~ msgstr "Նվիրատվության արտահանումները"

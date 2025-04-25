@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-25 12:23+0300\n"
+"POT-Creation-Date: 2025-04-25 14:05+0300\n"
 "PO-Revision-Date: 2025-03-27 14:48+0000\n"
 "Last-Translator: Andrei Ioniță <andrei.ionita@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -1562,15 +1562,15 @@ msgstr "About redirectioneaza.ro"
 msgid "All causes"
 msgstr "All causes"
 
-#: donations/views/site.py:175 templates/v2/redirect/footer.html:196
+#: donations/views/site.py:178 templates/v2/redirect/footer.html:196
 msgid "Information notice"
 msgstr "Information notice"
 
-#: donations/views/site.py:186 templates/v2/redirect/footer.html:186
+#: donations/views/site.py:189 templates/v2/redirect/footer.html:186
 msgid "Privacy policy"
 msgstr "Privacy policy"
 
-#: donations/views/site.py:191 templates/v2/redirect/footer.html:191
+#: donations/views/site.py:194 templates/v2/redirect/footer.html:191
 msgid "Terms & conditions"
 msgstr "Terms & conditions"
 
@@ -1590,7 +1590,7 @@ msgstr "Order"
 msgid "Section"
 msgstr "Section"
 
-#: frequent_questions/models.py:15 redirectioneaza/settings/unfold.py:74
+#: frequent_questions/models.py:15 redirectioneaza/settings/unfold.py:80
 msgid "Sections"
 msgstr "Sections"
 
@@ -1602,7 +1602,7 @@ msgstr "Question"
 msgid "Answer"
 msgstr "Answer"
 
-#: frequent_questions/models.py:40 redirectioneaza/settings/unfold.py:80
+#: frequent_questions/models.py:40 redirectioneaza/settings/unfold.py:86
 msgid "Questions"
 msgstr "Questions"
 
@@ -1665,7 +1665,7 @@ msgstr "Invite new manager"
 
 #: partners/apps.py:8 partners/models.py:83
 #: redirectioneaza/context_processors/headers.py:75
-#: redirectioneaza/settings/unfold.py:63
+#: redirectioneaza/settings/unfold.py:69
 msgid "Partners"
 msgstr "Partners"
 
@@ -1789,7 +1789,7 @@ msgstr ""
 
 #: redirectioneaza/context_processors/headers.py:29
 #: redirectioneaza/context_processors/headers.py:39
-#: redirectioneaza/settings/unfold.py:71
+#: redirectioneaza/settings/unfold.py:77
 msgid "Frequently asked questions"
 msgstr "Frequently asked questions"
 
@@ -1832,7 +1832,7 @@ msgid "FAQ Questions"
 msgstr "FAQ Questions"
 
 #: redirectioneaza/context_processors/headers.py:85
-#: redirectioneaza/settings/unfold.py:88 redirectioneaza/settings/unfold.py:91
+#: redirectioneaza/settings/unfold.py:94 redirectioneaza/settings/unfold.py:97
 #: users/apps.py:8
 msgid "Users"
 msgstr "Users"
@@ -1989,7 +1989,7 @@ msgid "Dec"
 msgstr "Dec"
 
 #: redirectioneaza/settings/django_q.py:23
-#: redirectioneaza/settings/unfold.py:105
+#: redirectioneaza/settings/unfold.py:111
 msgid "Background Tasks"
 msgstr "Background Tasks"
 
@@ -1998,32 +1998,40 @@ msgid "Home page"
 msgstr "Home page"
 
 #: redirectioneaza/settings/unfold.py:51
-msgid "Donation exports"
-msgstr "Donation exports"
+#, fuzzy
+#| msgid "Generate ANAF Archive"
+msgid "Internal ANAF Archives"
+msgstr "Generate ANAF Archive"
 
 #: redirectioneaza/settings/unfold.py:57
+#, fuzzy
+#| msgid "Generate ANAF Archive"
+msgid "External ANAF Archives"
+msgstr "Generate ANAF Archive"
+
+#: redirectioneaza/settings/unfold.py:63
 #, fuzzy
 #| msgid "Donations"
 msgid "Donation downloads"
 msgstr "Donations"
 
-#: redirectioneaza/settings/unfold.py:97 users/models.py:179
+#: redirectioneaza/settings/unfold.py:103 users/models.py:179
 msgid "Groups"
 msgstr "Groups"
 
-#: redirectioneaza/settings/unfold.py:108
+#: redirectioneaza/settings/unfold.py:114
 msgid "Failed tasks"
 msgstr "Failed tasks"
 
-#: redirectioneaza/settings/unfold.py:114
+#: redirectioneaza/settings/unfold.py:120
 msgid "Queued tasks"
 msgstr "Queued tasks"
 
-#: redirectioneaza/settings/unfold.py:120
+#: redirectioneaza/settings/unfold.py:126
 msgid "Scheduled tasks"
 msgstr "Scheduled tasks"
 
-#: redirectioneaza/settings/unfold.py:126
+#: redirectioneaza/settings/unfold.py:132
 msgid "Successful tasks"
 msgstr "Successful tasks"
 
@@ -4185,6 +4193,9 @@ msgstr "old password"
 #: users/models.py:178
 msgid "Group"
 msgstr "Group"
+
+#~ msgid "Donation exports"
+#~ msgstr "Donation exports"
 
 #, python-format
 #~ msgid "supported by %(company_name)s"
