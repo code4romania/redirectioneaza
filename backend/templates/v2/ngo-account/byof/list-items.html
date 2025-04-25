@@ -23,34 +23,37 @@
         {{ archive.date_created|time:"TIME_FORMAT" }}
       </td>
       <td class="px-1 py-4 whitespace-nowrap">
-        {% if archive.status == "done" %}
-          {% trans "Done" %}
-        {% elif archive.status == "new" %}
-          {% trans "In progress" %}
-        {% elif archive.status == "error" %}
-          {% trans "Error" %}
-        {% else %}
-          {% trans "Unknown" %}
+        {{ archive.bank_account }}
+      </td>
+      <td class="px-1 py-4 whitespace-nowrap">
+        {{ archive.get_status_display }}
+      </td>
+      <td class="px-1 py-4 whitespace-nowrap">
+        <a href="{{ archive.uploaded_data.url }}">{{ archive.uploaded_data.name }}</a>
+      </td>
+      <td class="px-1 py-4 whitespace-nowrap">
+        {{ archive.items_count }}
+      </td>
+      <td class="px-1 py-4 whitespace-nowrap">
+        {% if archive.is_successful %}
+          {% if archive.result_data %}
+            <a href="{% url 'my-organization:byof-download-link' job_id=archive.pk %}" download>
+              {% trans "Download" %}
+            </a>
+          {% else %}
+            {% trans "No results file" %}
+          {% endif %}
         {% endif %}
-      </td>
-      <td class="px-1 py-4 whitespace-nowrap">
-        {{ archive.cause__name }}
-      </td>
-      <td class="px-1 py-4 whitespace-nowrap">
-        {% if archive.number_of_donations == -1 %}
-          —
-        {% else %}
-          {{ archive.number_of_donations }}
-        {% endif %}
-      </td>
-      <td class="px-1 py-4 whitespace-nowrap">
-        {% if archive.status == "done" %}
-          <a href="{% url 'my-organization:archive-download-link' job_id=archive.pk %}">
-            {% trans "Download" %}
-          </a>
-        {% else %}
+
+        {% if archive.is_failed %}
           <p>
-            —
+            {{ archive.result_text }}
+          </p>
+        {% endif %}
+
+        {% if archive.is_in_progress %}
+          <p>
+            &ndash;
           </p>
         {% endif %}
       </td>

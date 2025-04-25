@@ -6,6 +6,7 @@ from localflavor.ro.forms import ROCIFField
 
 from donations.common.validation.phone_number import validate_phone_number
 from donations.common.validation.validate_slug import NgoSlugValidator
+from donations.models.byof import OwnFormsUpload
 from donations.models.ngos import Cause, Ngo, ngo_slug_validator, CauseVisibilityChoices
 
 
@@ -158,32 +159,18 @@ class CauseForm(forms.ModelForm):
         return bank_account
 
 
-class BringYourOwnDataForm(forms.Form):
+class BringYourOwnDataForm(forms.ModelForm):
     if settings.ENABLE_FULL_VALIDATION_IBAN:
         bank_account = IBANFormField(label=_("IBAN"), include_countries=("RO",), required=True)
     else:
         bank_account = forms.CharField(label=_("IBAN"), max_length=24, min_length=24, required=True)
 
-    upload_file = forms.FileField(
+    uploaded_data = forms.FileField(
         label=_("BYOF file"),
         help_text=_("Upload the file with the data you want to transform into an ANAF XML."),
         required=True,
     )
 
-    def __init__(self, *args, **kwargs):
-        self.file_allowed_types = kwargs.pop("file_allowed_types")
-        self.file_size_limit = kwargs.pop("file_size_limit")
-        self.file_size_warning = kwargs.pop("file_size_warning")
-
-        super().__init__(*args, **kwargs)
-
-    def clean_upload_file(self):
-        upload_file = self.cleaned_data.get("upload_file")
-
-        if upload_file.content_type not in self.file_allowed_types:
-            raise forms.ValidationError(_("The file type is not supported."))
-
-        if upload_file.size > self.file_size_limit:
-            raise forms.ValidationError(self.file_size_warning)
-
-        return upload_file
+    class Meta:
+        model = OwnFormsUpload
+        fields = ["bank_account", "uploaded_data"]

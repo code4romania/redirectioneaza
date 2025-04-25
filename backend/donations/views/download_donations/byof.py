@@ -1,13 +1,14 @@
 import csv
 import io
 import logging
-from typing import Annotated, Dict, List, Optional
+from typing import Annotated, Dict, List, Optional, Union
 from xml.etree.ElementTree import Element, ElementTree
 
+from django.core.files.base import ContentFile
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.utils import timezone
 
-from donations.models.ngos import Ngo
+from donations.models.byof import OwnFormsUpload, OwnFormsStatusChoices
 
 from pydantic import BaseModel, EmailStr, StringConstraints, ValidationError
 
@@ -54,29 +55,79 @@ class DonorModel(BaseModel):
     period: Optional[str] = "1"
 
 
-def generate_xml_from_external_data(ngo: Ngo, iban: str, file: InMemoryUploadedFile):
+def handle_external_data_processing(own_upload_id) -> Optional[Dict]:
+    try:
+        own_upload = OwnFormsUpload.objects.select_related("ngo").get(pk=own_upload_id)
+    except OwnFormsUpload.DoesNotExist:
+        return {"error": _("Cannot find the uploaded data")}
+
+    own_upload.status = OwnFormsStatusChoices.VALIDATING
+    own_upload.save()
+
+    with own_upload.uploaded_data.open() as file:
+        read_file = file.readline().decode("utf-8")
+        reader = csv.DictReader(io.StringIO(read_file))
+
+        header_check = _check_csv_header(reader)
+        if check_error := header_check.get("error"):
+            own_upload.status = OwnFormsStatusChoices.FAILED
+            own_upload.result_text = check_error
+            own_upload.save()
+            return {"error": check_error}
+
+        own_upload.items_count = sum([1 for i in file.readlines() if i.strip()])  # already read the first line
+        own_upload.status = OwnFormsStatusChoices.PROCESSING
+        own_upload.save()
+
+    result = generate_xml_from_external_data(own_upload)
+
+    if result.get("error"):
+        own_upload.result_text = result["error"]
+        own_upload.status = OwnFormsStatusChoices.FAILED
+        own_upload.save()
+        return {"error": result["error"]}
+
+    etree:  ElementTree = result.get("data")
+
+    # Write to a BytesIO buffer
+    buffer = io.BytesIO()
+    etree.write(buffer, encoding="utf-8", xml_declaration=True)
+
+    # Get the content from the buffer
+    xml_content = buffer.getvalue()
+
+    # Wrap in a ContentFile for Django
+    xml_file = ContentFile(xml_content)
+
+    # Save to FileField
+    own_upload.result_data.save("data.xml", xml_file, save=False)
+    own_upload.status = OwnFormsStatusChoices.SUCCESS
+    own_upload.save()
+
+    return None
+
+
+def generate_xml_from_external_data(own_upload: OwnFormsUpload) -> Dict[str, Union[str, Optional[ElementTree]]]:
     """
     Generate an archive for the given NGO and file.
-    :param ngo: The NGO object that will be used for the archive
-    :param iban: The IBAN that will be used for the archive
-    :param file: The CSV file path containing the information of donors
+    :param own_upload: The uploaded data
     :return: The file of the generated XML
     """
 
-    ngo_name = ngo.name
-    ngo_cui = ngo.registration_number
-    ngo_address = ngo.address
-    ngo_locality = ngo.locality
-    ngo_county = ngo.county
+    ngo_name = own_upload.ngo.name
+    ngo_cui = own_upload.ngo.registration_number
+    ngo_address = own_upload.ngo.address
+    ngo_locality = own_upload.ngo.locality
+    ngo_county = own_upload.ngo.county
 
     try:
-        parsed_data = parse_file_data(file)
+        parsed_data = parse_file_data(own_upload.uploaded_data.open())
     except ValueError as e:
-        return {"error": str(e)}
+        return {"error": str(e), "data": None}
 
     xml_element_tree: ElementTree = build_xml_from_file_data(
         data=parsed_data,
-        iban=iban,
+        iban=own_upload.bank_account,
         ngo_name=ngo_name,
         ngo_cui=ngo_cui,
         ngo_address=ngo_address,
@@ -84,7 +135,7 @@ def generate_xml_from_external_data(ngo: Ngo, iban: str, file: InMemoryUploadedF
         ngo_county=ngo_county,
     )
 
-    return xml_element_tree
+    return {"error": None, "data": xml_element_tree}
 
 
 def parse_file_data(file: InMemoryUploadedFile) -> List[DonorModel]:

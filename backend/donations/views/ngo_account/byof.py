@@ -1,30 +1,28 @@
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.http import HttpRequest
+from django.http import Http404, HttpRequest
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
+from django_q.tasks import async_task
 
 from donations.forms.ngo_account import BringYourOwnDataForm
 from donations.models.ngos import Ngo
-from donations.views.download_donations.byof import generate_xml_from_external_data
-from donations.views.ngo_account.common import NgoBaseListView
+from donations.models.byof import OwnFormsUpload
+from donations.views.download_donations.byof import handle_external_data_processing
+from donations.views.ngo_account.common import FileDownloadProxy, NgoBaseListView
 from users.models import User
 
 
 class NgoBringYourOwnFormView(NgoBaseListView):
     template_name = "ngo-account/byof/main.html"
     title = _("Generate from external data")
-    context_object_name = "archive_external"
     paginate_by = 8
     tab_title = "external"
     sidebar_item_target = "org-byof"
-
-    file_allowed_types = ["text/csv"]  # , "application/vnd.ms-excel"]
-    file_size_limit = 2 * settings.MEBIBYTE
-    file_size_warning = _("File size must not exceed 2 MB")
+    context_object_name = "archive_jobs"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -38,27 +36,19 @@ class NgoBringYourOwnFormView(NgoBaseListView):
                 "ngo": ngo,
                 "title": self.title,
                 "active_tab": self.tab_title,
-                "allowed_types": self.file_allowed_types,
-                "size_limit": self.file_size_limit,
-                "size_limit_warning": self.file_size_warning,
-                "django_form": BringYourOwnDataForm(
-                    file_allowed_types=self.file_allowed_types,
-                    file_size_limit=self.file_size_limit,
-                    file_size_warning=self.file_size_warning,
-                ),
+                "size_limit": 2 * settings.MEBIBYTE,
+                "size_limit_warning": _("File size must not exceed {mb} MB").format(mb=2),
+                "django_form": BringYourOwnDataForm(),
             }
         )
 
         return context
 
     def get_queryset(self):
-        return []
+        return OwnFormsUpload.objects.filter(ngo=self.request.user.ngo).select_related("ngo").order_by("-date_created")
 
     @method_decorator(login_required(login_url=reverse_lazy("login")))
     def post(self, request: HttpRequest, *args, **kwargs):
-        files = request.FILES
-
-        post = request.POST
         user: User = request.user
 
         ngo: Ngo = user.ngo if user.ngo else None
@@ -66,28 +56,41 @@ class NgoBringYourOwnFormView(NgoBaseListView):
             messages.error(request, _("You need to add your NGO's information first."))
             return redirect(reverse_lazy("my-organization:presentation"))
 
-        form = BringYourOwnDataForm(
-            post,
-            files=files,
-            file_allowed_types=self.file_allowed_types,
-            file_size_limit=self.file_size_limit,
-            file_size_warning=self.file_size_warning,
-        )
+        form = BringYourOwnDataForm(request.POST, request.FILES)
 
         if not form.is_valid():
-            messages.error(request, _("There are some errors on the form."))
+            error_values = list(form.errors.values())
+            all_errors = []
+            for error_list in error_values:
+                all_errors.extend(error_list)
+            messages.error(request, ", ".join(all_errors))
             return redirect(reverse("my-organization:byof"))
 
-        result = generate_xml_from_external_data(
-            ngo=ngo,
-            iban=form.cleaned_data["bank_account"],
-            file=form.cleaned_data["upload_file"],
-        )
+        own_upload = form.save(commit=False)
+        own_upload.ngo = ngo
+        own_upload.save()
 
-        if "error" in result:
-            messages.error(request, result["error"])
-            return redirect(reverse("my-organization:byof"))
+        async_task(handle_external_data_processing, own_upload.pk)
 
-        messages.success(request, _("The file was uploaded successfully."))
+        messages.success(request, _("The uploaded data file will be processed soon."))
 
         return redirect(reverse("my-organization:byof"))
+
+
+class NgoBringYourOwnFormLinkView(FileDownloadProxy):
+    model = OwnFormsUpload
+
+    @method_decorator(login_required(login_url=reverse_lazy("login")))
+    def get(self, request: HttpRequest, job_id, *args, **kwargs):
+        user: User = request.user
+
+        if not self.is_user_valid(user):
+            raise Http404
+
+        download: OwnFormsUpload = self.get_downloadable_object(user=user, pk=job_id)
+
+        # Check that the job has a zip file
+        if not download.result_data:
+            raise Http404
+
+        return redirect(download.result_data.url)

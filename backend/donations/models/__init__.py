@@ -1,12 +1,14 @@
-from donations.models.donors import Donor
-from donations.models.downloads import RedirectionsDownloadJob
-from donations.models.jobs import Job
-from donations.models.ngos import Ngo, Cause
+from .byof import OwnFormsUpload
+from .donors import Donor
+from .downloads import RedirectionsDownloadJob
+from .jobs import Job
+from .ngos import Cause, Ngo
 
 __all__ = [
     Cause,
     Donor,
     Job,
     Ngo,
+    OwnFormsUpload,
     RedirectionsDownloadJob,
 ]

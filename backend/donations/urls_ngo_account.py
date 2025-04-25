@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.urls import path
 from django.views.generic import RedirectView
 
-from donations.views.ngo_account.byof import NgoBringYourOwnFormView
+from donations.views.ngo_account.byof import NgoBringYourOwnFormLinkView, NgoBringYourOwnFormView
 from donations.views.ngo_account.causes import NgoCauseCreateView, NgoCauseEditView, NgoCausesListView
 from donations.views.ngo_account.my_organization import NgoMainCauseView, NgoPresentationView
 from donations.views.ngo_account.redirections import (
@@ -53,6 +53,7 @@ if settings.ENABLE_MULTIPLE_FORMS:
 if settings.ENABLE_BYOF:
     urlpatterns += [
         path("extern/", NgoBringYourOwnFormView.as_view(), name="byof"),
+        path("extern/<job_id>/", NgoBringYourOwnFormLinkView.as_view(), name="byof-download-link"),
     ]
 
 if settings.ENABLE_CSV_DOWNLOAD:

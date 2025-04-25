@@ -18,7 +18,7 @@ from donations.models.ngos import Cause, NGO_CAUSES_QUERY_CACHE_KEY, Ngo
 from donations.views.base import BaseVisibleTemplateView
 from donations.views.common.misc import get_ngo_archive_download_status, get_time_between_retries
 from donations.views.common.search import DonorSearchMixin
-from donations.views.ngo_account.common import NgoBaseListView
+from donations.views.ngo_account.common import FileDownloadProxy, NgoBaseListView
 from donations.views.ngo_account_filters import (
     get_active_filters_values,
     get_queryset_filters,
@@ -309,24 +309,17 @@ class RedirectionDownloadLinkView(BaseVisibleTemplateView):
         return redirect(donor.pdf_file.url)
 
 
-class RedirectionsDownloadJobLinkView(BaseVisibleTemplateView):
-    title = _("Download redirection")
+class RedirectionsDownloadJobLinkView(FileDownloadProxy):
+    model = RedirectionsDownloadJob
 
     @method_decorator(login_required(login_url=reverse_lazy("login")))
     def get(self, request: HttpRequest, job_id, *args, **kwargs):
         user: User = request.user
 
-        if user.is_anonymous or not user.is_staff and not (user.ngo and user.ngo.is_active):
+        if not self.is_user_valid(user):
             raise Http404
 
-        queryset = {"pk": job_id}
-        if user.ngo:
-            queryset = {"pk": job_id, "ngo": user.ngo}
-
-        try:
-            download: RedirectionsDownloadJob = RedirectionsDownloadJob.objects.get(**queryset)
-        except RedirectionsDownloadJob.DoesNotExist:
-            raise Http404
+        download: RedirectionsDownloadJob = self.get_downloadable_object(user=user, pk=job_id)
 
         # Check that the job has a zip file
         if not download.output_file:
