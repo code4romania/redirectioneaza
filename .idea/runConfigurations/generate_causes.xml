@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="generate_orgs" type="Python.DjangoServer" factoryName="Django server" folderName="mock-data" singleton="false">
+  <configuration default="false" name="generate_causes" type="Python.DjangoServer" factoryName="Django server" folderName="mock-data" singleton="false">
     <module name="redirectioneaza" />
     <option name="ENV_FILES" value="$PROJECT_DIR$/.env.local" />
     <option name="INTERPRETER_OPTIONS" value="" />
@@ -21,7 +21,7 @@
     <option name="runTestServer" value="false" />
     <option name="runNoReload" value="false" />
     <option name="useCustomRunCommand" value="true" />
-    <option name="customRunCommand" value="generate_orgs" />
+    <option name="customRunCommand" value="generate_other_causes" />
     <method v="2" />
   </configuration>
 </component>

@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="generate_orgs valid" type="Python.DjangoServer" factoryName="Django server" folderName="mock-data">
+  <configuration default="false" name="generate_orgs valid" type="Python.DjangoServer" factoryName="Django server" folderName="mock-data" singleton="false">
     <module name="redirectioneaza" />
     <option name="ENV_FILES" value="$PROJECT_DIR$/.env.local" />
     <option name="INTERPRETER_OPTIONS" value="" />
