@@ -143,9 +143,12 @@ class NgoListHandler(NgoCauseMixedSearchMixin):
     paginate_by = 8
 
     def get_queryset(self):
-        queryset = self.search()
+        queryset: QuerySet[Cause] = self.search()
 
-        return queryset
+        if self._search_query():
+            return queryset
+
+        return queryset.order_by("pk")
 
     def get_context_data(self, **kwargs):
         search_query = self._search_query()
