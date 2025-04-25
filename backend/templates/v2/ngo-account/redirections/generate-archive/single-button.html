@@ -1,20 +1,20 @@
 {% load i18n redirection_helpers %}
 
-<div
-  class="inline-flex"
-  {% if cause.last_archive_job|job_was_recent %}
-  disabled
-  x-tooltip.raw="{{ forbidden_timeout_tooltip_text }}"
-  {% elif cause.redirections_count < 1 %}
-  disabled
-  x-tooltip.raw="{{ forbidden_no_data_tooltip_text }}"
-  {% else %}
-  x-tooltip.raw="{{ info_tooltip_text }}"
-  {% endif %}>
+<div class="inline-flex">
 
   <button
     type="submit"
     {% if cause.has_recent_archive_job %}disabled{% endif %}
+    x-data
+    {% if cause.last_archive_job|job_was_recent %}
+    disabled
+    x-tooltip.raw="{{ forbidden_timeout_tooltip_text }}"
+    {% elif redirections|length == 0 %}
+    disabled
+    x-tooltip.raw="{{ forbidden_no_data_tooltip_text }}"
+    {% else %}
+    x-tooltip.raw="{{ info_tooltip_text }}"
+    {% endif %}
     name="cause_slug"
     value="{{ cause.slug }}"
     class="inline-flex items-center gap-x-1.5 rounded-md border-gray-200 border px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600 disabled:border-zinc-950/20 disabled:bg-zinc-950/5 disabled:text-zinc-950/50 disabled:cursor-not-allowed">

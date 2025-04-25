@@ -1,0 +1,102 @@
+{% load i18n %}
+
+{% comment %}
+  {% if filters_active %}
+    The download will contain only the filtered data.
+  {% else %}
+    The download will contain all the data.
+  {% endif %}
+{% endcomment %}
+{% blocktrans trimmed asvar download_tooltip_text %}
+  Download the table with the redirections filled in.
+  You can use it to download the e-mail and phone number of those who agreed to being contacted.
+  The download is limited to {{ limit_rows }} rows.
+{% endblocktrans %}
+
+
+<form
+  x-data="{
+      loading: false,
+      downloadCsv() {
+        const form = $el;
+        const formData = new FormData(form);
+        fetch(form.action, {
+          method: 'POST',
+          headers: {
+            'X-CSRFToken': '{{ csrf_token }}'
+          },
+          body: formData
+        })
+        .then(async response => {
+          if (response.status === 202) {
+            const successText = await response.text();
+            alert(successText);
+            return;
+          } else if (!response.ok) {
+            const errorText = await response.text();
+            this.loading = false;
+            throw new Error(errorText);
+          }
+          return response.blob();
+        })
+        .then(blob => {
+          if (!blob) {
+            this.loading = false;
+            return;
+          }
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'redirections.csv';
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          window.URL.revokeObjectURL(url);
+          this.loading = false;
+        })
+        .catch(err => {alert(err); this.loading = false});
+      }
+    }"
+  x-ref="downloadForm"
+  x-tooltip.raw="{{ download_tooltip_text }}"
+  x-on:submit.prevent="loading=true;downloadCsv()"
+  action="{% url 'api-download-redirections' %}"
+  method="post"
+>
+
+  {% csrf_token %}
+
+  {% if search_query %}
+    <input type="hidden" name="q" value="{{ search_query }}">
+  {% endif %}
+  {% for filter_key, filter_value in filters_active.items %}
+    <input type="hidden" name="{{ filter_key }}" value="{{ filter_value }}">
+  {% endfor %}
+
+  <div>
+    <button
+      {% if redirections|length == 0 %}
+        disabled
+      {% else %}
+        x-bind:disabled="loading"
+      {% endif %}
+        type="submit"
+        class="inline-flex items-center gap-x-1.5 rounded-md border-gray-200 border px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600 disabled:border-zinc-950/20 disabled:bg-zinc-950/5 disabled:text-zinc-950/50 disabled:cursor-not-allowed">
+      <svg
+        class="size-5"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        aria-hidden="true"
+        data-slot="icon">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"/>
+      </svg>
+      {% trans "Download table" %}
+    </button>
+  </div>
+
+</form>

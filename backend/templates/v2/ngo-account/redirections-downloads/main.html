@@ -1,0 +1,19 @@
+{% extends "ngo-account/redirections/base.html" %}
+
+{% load i18n static %}
+
+{% block page_title %}
+  {% trans "CSV Downloads history" %}
+{% endblock %}
+
+{% block page_subtitle %}
+  {% blocktrans trimmed %}
+    Here you can find the CSVs with the downloaded redirections.
+  {% endblocktrans %}
+{% endblock %}
+
+{% block content %}
+  <div>
+    {% include "ngo-account/redirections-downloads/listing.html" %}
+  </div>
+{% endblock %}

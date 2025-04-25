@@ -11,7 +11,8 @@ from unfold.admin import ModelAdmin
 from unfold.decorators import action
 
 from donations.admin.common import CommonCauseFields, span_external, span_internal
-from donations.models.jobs import Job, JobStatusChoices
+from donations.models.jobs import Job
+from donations.models.common import JobStatusChoices
 from donations.models.ngos import Cause, Ngo
 from redirectioneaza.common.app_url import build_uri
 

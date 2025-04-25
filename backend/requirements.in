@@ -57,3 +57,5 @@ requests~=2.32.3
 
 # Sentry
 sentry-sdk[django]~=2.22
+
+pydantic[email]~=2.11
