@@ -1,0 +1,79 @@
+{% load i18n static %}
+
+<div
+  x-data="{ uploadModalOpen: false }"
+  class="grid pb-6 border-b border-gray-200 gap-x-6 gap-y-3 md:grid-cols-3 lg:grid-cols-4">
+
+  <h2 class="text-2xl text-gray-900 lg:col-span-2 text-bold">
+    {{ title }}
+  </h2>
+
+  <div class="grid items-center justify-end gap-2 sm:flex md:col-span-2">
+
+    <a
+      href="{% static 'files/sample.csv' %}"
+      type="button"
+      class="inline-flex items-center gap-x-1.5 rounded-md border-gray-200 border px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600 disabled:border-zinc-950/20 disabled:bg-zinc-950/5 disabled:text-zinc-950/50 disabled:cursor-not-allowed">
+      <svg
+        class="size-5"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        aria-hidden="true"
+        data-slot="icon">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"/>
+      </svg>
+      {% trans "Download sample" %}
+    </a>
+
+    <button
+      @click="uploadModalOpen = true"
+      type="button"
+      class="inline-flex items-center gap-x-1.5 rounded-md border-gray-200 border px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600 disabled:border-zinc-950/20 disabled:bg-zinc-950/5 disabled:text-zinc-950/50 disabled:cursor-not-allowed">
+      <svg
+        class="size-5"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        aria-hidden="true"
+        data-slot="icon">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5"/>
+      </svg>
+      {% trans "Upload file" %}
+    </button>
+
+    <div
+      x-cloak
+      x-show="uploadModalOpen"
+      x-transition:enter="ease-out duration-300"
+      x-transition:enter-start="opacity-0"
+      x-transition:enter-end="opacity-100"
+      x-transition:leave="ease-in duration-200"
+      x-transition:leave-start="opacity-100"
+      x-transition:leave-end="opacity-0"
+      class="relative z-10"
+      aria-labelledby="modal-title"
+      role="dialog"
+      aria-modal="true">
+
+      <div class="fixed inset-0 bg-gray-500/75 transition-opacity" aria-hidden="true"></div>
+
+      <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+
+        {% include "ngo-account/byof/modal.html" %}
+
+      </div>
+    </div>
+
+
+  </div>
+
+</div>

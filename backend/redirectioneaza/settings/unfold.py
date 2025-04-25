@@ -54,6 +54,12 @@ SIDEBAR_NAVIGATION = [
                 "permission": lambda request: request.user.is_superuser,
             },
             {
+                "title": _("Donation downloads"),
+                "icon": "download",
+                "link": reverse_lazy("admin:donations_redirectionsdownloadjob_changelist"),
+                "permission": lambda request: request.user.is_superuser,
+            },
+            {
                 "title": _("Partners"),
                 "icon": "handshake",
                 "link": reverse_lazy("admin:partners_partner_changelist"),
