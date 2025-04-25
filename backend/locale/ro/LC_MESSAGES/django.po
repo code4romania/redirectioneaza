@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-25 11:42+0300\n"
+"POT-Creation-Date: 2025-04-25 12:15+0300\n"
 "PO-Revision-Date: 2025-03-27 14:49+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -446,7 +446,8 @@ msgstr "Fișier extern"
 
 #: donations/forms/ngo_account.py:170
 msgid "Upload the file with the data you want to transform into an ANAF XML."
-msgstr "Încarcă fișierul cu datele pe care vrei să le transformi într-un XML ANAF."
+msgstr ""
+"Încarcă fișierul cu datele pe care vrei să le transformi într-un XML ANAF."
 
 #: donations/forms/redirection.py:12
 #: templates/v2/account/snippets/register-form.html:62
@@ -1061,7 +1062,9 @@ msgstr "N/A"
 #: donations/views/api_download.py:129
 msgid ""
 "An error occurred while generating the CSV file. Please try again later."
-msgstr "A apărut o eroare la generarea fișierului CSV. Te rugăm să încerci din nou mai târziu."
+msgstr ""
+"A apărut o eroare la generarea fișierului CSV. Te rugăm să încerci din nou "
+"mai târziu."
 
 #: donations/views/api_download.py:140
 msgid "Redirections CSV file"
@@ -1075,7 +1078,9 @@ msgstr "Nu există redirecționări disponibile pentru descărcare."
 msgid ""
 "An error occurred while attempting to download the forms. Adjusting the "
 "filters might help."
-msgstr "A apărut o eroare la încercarea de a descărca formularele. Ajustarea filtrelor ar putea ajuta."
+msgstr ""
+"A apărut o eroare la încercarea de a descărca formularele. Ajustarea "
+"filtrelor ar putea ajuta."
 
 #: donations/views/api_download.py:181
 msgid "The CSV file is being generated and will be sent to your email shortly."
@@ -3681,15 +3686,15 @@ msgid "External ANAF Data"
 msgstr "Date ANAF externe"
 
 #: templates/v2/ngo-account/redirections/download-filtered/button.html:10
-#, python-format
 msgid ""
 "Download the table with the redirections filled in. You can use it to "
-"download the e-mail and phone number of those who agreed to being contacted. "
+"download the e-mail and phone number of those who agreed to being contacted."
 msgstr ""
-"Descarcă tabelul cu redirecționările completate. Poți folosi acest tabel pentru "
-"descărcarea datelor de contact al celor care au fost de acord cu contactarea lor."
+"Descarcă tabelul cu redirecționările completate. Poți folosi acest tabel "
+"pentru descărcarea datelor de contact al celor care au fost de acord cu "
+"contactarea lor."
 
-#: templates/v2/ngo-account/redirections/download-filtered/button.html:98
+#: templates/v2/ngo-account/redirections/download-filtered/button.html:97
 msgid "Download table"
 msgstr "Descarcă tabelul"
 
