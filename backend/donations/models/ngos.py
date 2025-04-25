@@ -176,19 +176,18 @@ class NgoWithFormsThisYearManager(models.Manager):
 
 
 class Ngo(CommonFilenameCacheModel):
+    # XXX: [MULTI-FORM] DEPRECATED: moved to cause and should be deleted
     slug = models.SlugField(
         verbose_name=_("slug"),
-        blank=False,
+        blank=True,
         null=False,
         max_length=150,
-        db_index=True,
-        unique=True,
-        validators=[ngo_slug_validator],
+        default="",
     )
 
     name = models.CharField(verbose_name=_("Name"), blank=False, null=False, max_length=200, db_index=True)
-    # XXX: [MULTI-FORM] Move to Cause
-    description = models.TextField(verbose_name=_("description"))
+    # XXX: [MULTI-FORM] DEPRECATED: moved to cause and should be deleted
+    description = models.TextField(verbose_name=_("description"), blank=True, null=False, default="")
 
     # NGO Hub details
     ngohub_org_id = models.IntegerField(
@@ -201,8 +200,7 @@ class Ngo(CommonFilenameCacheModel):
     ngohub_last_update_started = models.DateTimeField(_("Last NGO Hub update"), null=True, blank=True, editable=False)
     ngohub_last_update_ended = models.DateTimeField(_("Last NGO Hub update"), null=True, blank=True, editable=False)
 
-    # originally: logo
-    # XXX: [MULTI-FORM] Should we move this to Cause ???
+    # XXX: [MULTI-FORM] DEPRECATED: moved to cause and should be deleted
     logo = models.ImageField(
         verbose_name=_("logo"),
         blank=True,
@@ -211,10 +209,9 @@ class Ngo(CommonFilenameCacheModel):
         upload_to=partial(ngo_directory_path, "logos"),
     )
 
-    # XXX: [MULTI-FORM] Move to Cause
-    bank_account = models.CharField(verbose_name=_("bank account"), max_length=100)
+    # XXX: [MULTI-FORM] DEPRECATED: moved to cause and should be deleted
+    bank_account = models.CharField(verbose_name=_("bank account"), max_length=100, blank=True, null=False, default="")
 
-    # originally: cif
     # TODO: the number's length should be between 2 and 10 (or 8)
     registration_number = models.CharField(
         verbose_name=_("registration number"),
