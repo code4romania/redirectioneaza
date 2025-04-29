@@ -55,7 +55,7 @@ class CountyQueryFilter(NgoQueryFilter):
         return [county for county in settings.COUNTIES_WITH_SECTORS_LIST if county in all_counties]
 
     def options_default(self) -> List[Dict[str, Union[int, str]]]:
-        return settings.COUNTIES_WITH_SECTORS_LIST
+        return [{"title": county, "value": county} for county in settings.COUNTIES_WITH_SECTORS_LIST]
 
 
 class LocalityQueryFilter(NgoQueryFilter):

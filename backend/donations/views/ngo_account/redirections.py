@@ -42,6 +42,12 @@ class NgoRedirectionsView(NgoBaseListView, DonorSearchMixin):
 
         query_dict = QueryDict(mutable=True)
         query_dict["q"] = search_query
+        query_dict["year"] = self.request.GET.get("year", "")
+        query_dict["county"] = self.request.GET.get("county", "")
+        query_dict["city"] = self.request.GET.get("city", "")
+        query_dict["period"] = self.request.GET.get("period", "")
+        query_dict["signed"] = self.request.GET.get("signed", "")
+        query_dict["anonymous"] = self.request.GET.get("anonymous", "")
 
         context = super().get_context_data(**kwargs)
 
