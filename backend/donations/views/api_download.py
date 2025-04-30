@@ -3,7 +3,6 @@ import io
 import logging
 from typing import Dict, List
 from urllib.parse import quote
-
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -22,6 +21,7 @@ from donations.models import Donor, Ngo, RedirectionsDownloadJob
 from donations.models.common import JobStatusChoices
 from donations.views.base import BaseTemplateView
 from donations.views.ngo_account_filters import get_active_filters, get_queryset_filters, get_redirections_filters
+from redirectioneaza.common.app_url import build_uri
 from redirectioneaza.common.messaging import extend_email_context, send_email
 
 
@@ -131,7 +131,9 @@ def generate_csv_from_download_job(download_job_id: int):
 
     mail_context = {
         "date_generated": timezone.now().strftime("%Y-%m-%d %H:%M"),
-        "action_url": reverse("my-organization:redirections-download-link", kwargs={"job_id": download_job.pk}),
+        "action_url": build_uri(
+            reverse("my-organization:redirections-download-link", kwargs={"job_id": download_job.pk})
+        ),
         "filters": {csv_filter["title"]: csv_filter["value"] for csv_filter in csv_filters},
     }
     mail_context.update(extend_email_context())
