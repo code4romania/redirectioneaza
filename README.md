@@ -63,8 +63,8 @@ would like the UI to look like if you’re suggesting new UI elements.
 - a PostgreSQL 16.4 database (can be run with Docker)
 
 1. Go to the root of the project
-2. Run `cp .env.example .env.local` to create the environment file
-3. Configure your database to run with the configuration in the `.env.local` file
+2. Run `cp .env.example .env` to create the environment file
+3. Configure your database to run with the configuration in the `.env` file
     or run the database using docker with `docker compose up -d db_psql_dev` or `make rund-db`
 4. Set up the Node.js environment
    1. Go to the `backend` directory
@@ -90,7 +90,7 @@ would like the UI to look like if you’re suggesting new UI elements.
 :information_source:
 **Configure whatever port works best for you.**
 For Django, change the `:8000` to whatever works best for you.
-For the frontend, set the `DJANGO_VITE_DEV_SERVER_PORT` variable in the `.env.local` file
+For the frontend, set the `DJANGO_VITE_DEV_SERVER_PORT` variable in the `.env` file
 
 :bangbang:
 **In case of problems with the instructions**, please open an issue.
