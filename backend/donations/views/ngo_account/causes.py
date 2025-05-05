@@ -124,6 +124,10 @@ class NgoCausesListView(NgoBaseListView):
 
     @method_decorator(login_required(login_url=reverse_lazy("login")))
     def get(self, request, *args, **kwargs):
+        if not request.user.ngo:
+            messages.error(request, _("You need to add your NGO's information first."))
+            return redirect(reverse("my-organization:presentation"))
+
         return super().get(request, *args, **kwargs)
 
     def get_queryset(self):
