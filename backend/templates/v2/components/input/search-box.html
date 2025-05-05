@@ -7,7 +7,18 @@
     {{ search_title }}
   </label>
 
-  <div x-data="{currentSearch: '{{ search_query }}',clearSearch: function() {this.currentSearch = '';document.getElementById('{{ search_box_id }}').focus();}}">
+  <div
+    x-data="{
+      currentSearch: '{{ search_query }}',
+      clearSearch: function() {
+        this.currentSearch = '';
+        const input = document.getElementById('{{ search_box_id }}');
+        input.value = this.currentSearch;
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+        input.focus();
+      }
+    }"
+  >
 
     <label class="relative grid grid-cols-1">
 
