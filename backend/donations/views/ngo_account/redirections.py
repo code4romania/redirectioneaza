@@ -1,13 +1,14 @@
 from typing import Any, Callable, Dict, List, Optional, Union
 
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.db.models import Count, F, OuterRef, QuerySet, Subquery
 from django.db.models.functions import JSONObject
 from django.http import Http404, HttpRequest, QueryDict
 from django.shortcuts import redirect
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 
@@ -113,6 +114,14 @@ class NgoRedirectionsView(NgoBaseListView, DonorSearchMixin):
             .filter(allow_online_collection=True)
             .order_by("-redirections_count", "name")
         )
+
+    @method_decorator(login_required(login_url=reverse_lazy("login")))
+    def get(self, request: HttpRequest, *args, **kwargs):
+        if not request.user or not request.user.ngo:
+            messages.error(request, _("You need to add your NGO's information first."))
+            return redirect(reverse("my-organization:presentation"))
+
+        return super().get(request, *args, **kwargs)
 
     def get_filters(self, ngo: Ngo) -> List[QueryFilter]:
         return get_redirections_filters(ngo=ngo)
