@@ -26,10 +26,10 @@ upd-psql:                                        ## run the project with psql in
 	docker compose -f docker-compose.yml up -d --build
 
 up-psql-db:                                      ## run only the database with psql
-	docker compose -f docker-compose.yml up db
+	docker compose -f docker-compose.yml up db_psql_dev
 
 upd-psql-db:                                     ## run only the database with psql in detached mode
-	docker compose -f docker-compose.yml up -d db
+	docker compose -f docker-compose.yml up -d db_psql_dev
 
 up-prod:                                         ## run the project with psql in production
 	docker compose -f docker-compose.prod.yml up --build
