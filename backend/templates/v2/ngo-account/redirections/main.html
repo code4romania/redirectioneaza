@@ -13,10 +13,6 @@
   {% endblocktrans %}
 {% endblock %}
 
-{% block additional_headers %}
-  <script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>
-{% endblock %}
-
 
 {% block content %}
 
@@ -44,15 +40,7 @@
     <hr class="w-full border-gray-200">
 
     {% with form_name="redirections_search_form" %}
-        <form
-          hx-get={{ request.path }}
-          hx-target="#redirections"
-          hx-select="#redirections"
-          hx-trigger="input delay:500ms from:#searchBox_redirections_search, submit"
-          method="GET"
-          id="{{ form_name }}"
-          name="{{ form_name }}"
-        >
+      <form action="" method="GET" id="{{ form_name }}" name="{{ form_name }}">
 
         <div class="flex flex-row justify-end gap-4">
 
@@ -60,7 +48,7 @@
             <button type="submit" hidden id="filter-submit">Submit</button>
             {% trans "Search for donors" as search_title %}
             <div class="py-4">
-              {% include "components/input/search-box.html" with input_id="redirections_search" box_style="rounded-md" %}
+              {% include "components/input/search-box.html" with input_id="redirections_search" box_style="rounded-md" target_id="#redirections"%}
             </div>
           </div>
 

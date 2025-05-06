@@ -7,18 +7,36 @@
     {{ search_title }}
   </label>
 
-  <div
-    x-data="{
-      currentSearch: '{{ search_query }}',
-      clearSearch: function() {
-        this.currentSearch = '';
+  <div x-data="{
+    currentSearch: '{{ search_query }}',
+    parser: new DOMParser(),
+    clearSearch() {
+      this.currentSearch = '';
+      const input = document.getElementById('{{ search_box_id }}');
+      input.value = this.currentSearch;
+      // fire an event to trigger the x-on directive on the search box below
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+      input.focus();
+    },
+    fetchResults() {
+      fetch(`?q=${this.currentSearch}`)
+      .then(res => res.text())
+      .then(html => {
+        // re-render only the DOM element with the '{{ target_id }}' identifier
+        const doc = this.parser.parseFromString(html, 'text/html');
+        const newContent = doc.querySelector('{{ target_id }}');
+
+        if (newContent) {
+          document.querySelector('{{ target_id }}').replaceWith(newContent);
+        }
+
+        // focus on the input box and move cursor to the end
         const input = document.getElementById('{{ search_box_id }}');
-        input.value = this.currentSearch;
-        input.dispatchEvent(new Event('input', { bubbles: true }));
         input.focus();
-      }
-    }"
-  >
+        input.setSelectionRange(input.value.length, input.value.length);
+      });
+    }
+  }">
 
     <label class="relative grid grid-cols-1">
 
@@ -26,6 +44,7 @@
 
       <input
         x-model="currentSearch"
+        x-on:input.debounce.300ms="fetchResults"
         id="{{ search_box_id }}"
         type="text"
         name="q"
