@@ -20,7 +20,7 @@
 
 {% block content %}
 
-  <div x-data="{ filtersDisplay: {% if filters_active %}true{% else %}false{% endif %} }">
+  <div id="redirections" x-data="{ filtersDisplay: {% if filters_active %}true{% else %}false{% endif %} }">
     <div class="grid mb-4 gap-x-6 gap-y-3 sm:grid-cols-2">
 
       <h1 class="text-base font-semibold text-gray-900">
@@ -46,8 +46,8 @@
     {% with form_name="redirections_search_form" %}
         <form
           hx-get={{ request.path }}
-          hx-target="#listings"
-          hx-select="#listings"
+          hx-target="#redirections"
+          hx-select="#redirections"
           hx-trigger="input delay:500ms from:#searchBox_redirections_search, submit"
           method="GET"
           id="{{ form_name }}"
