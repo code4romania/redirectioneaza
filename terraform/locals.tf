@@ -12,7 +12,8 @@ locals {
 
   ecs = {
     instance_types = {
-      "t3a.medium" = ""
+      "m5.large" = ""
+      "m5a.large" = ""
     }
   }
 
