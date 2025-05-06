@@ -5,7 +5,7 @@ module "ecs_cluster" {
   vpc_id                = aws_vpc.main.id
   ecs_subnets           = [aws_subnet.private.0.id]
   security_groups       = [aws_security_group.ecs.id]
-  default_instance_type = "t3a.small"
+  default_instance_type = "m5a.large"
   instance_types        = local.ecs.instance_types
 
   min_size                  = 2
