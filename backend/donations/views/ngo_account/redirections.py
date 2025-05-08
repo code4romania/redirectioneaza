@@ -108,6 +108,7 @@ class NgoRedirectionsView(NgoBaseListView, DonorSearchMixin):
                 "name",
                 "slug",
                 "is_main",
+                "allow_online_collection",
                 "redirections_count",
                 "last_archive_job",
             )

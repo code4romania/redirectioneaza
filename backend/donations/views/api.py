@@ -160,6 +160,7 @@ class GenerateCauseArchive(BaseTemplateView):
 
         status = self.generate_archive_for_cause_slug(cause_slug, request)
         if not status:
+            messages.error(request, _("No archives were generated"))
             return failure_response
 
         return redirect(success_redirect_url)
