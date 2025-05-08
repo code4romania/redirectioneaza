@@ -11,6 +11,9 @@
   {% if cause.last_archive_job|job_was_recent %}
   disabled
   x-tooltip.raw="{{ forbidden_timeout_tooltip_text }}"
+  {% elif not cause.allow_online_collection %}
+  disabled
+  x-tooltip.raw="{{ forbidden_no_online_collection_text }}"
   {% elif cause.redirections_count < 1 %}
   disabled
   x-tooltip.raw="{{ forbidden_no_data_tooltip_text }}"
