@@ -30,6 +30,11 @@
   {% endblocktrans %}
 
 
+  {% blocktrans trimmed asvar forbidden_no_online_collection_text %}
+    You can’t generate the archive because your organization doesn’t allow online collection of signatures.
+  {% endblocktrans %}
+
+
   {% if causes|length > 1 %}
 
     {% include "ngo-account/redirections/generate-archive/multiple-button.html" %}
