@@ -8,9 +8,8 @@
         <h1 class="block mt-1 text-4xl font-extrabold tracking-tight sm:text-5xl xl:text-6xl">
 
           {% if custom_subdomain %}
-            {% if has_custom_note %}
+            {% if heading_secondary %}
               {% trans "Redirect 3.5% of your income tax" as heading_main %}
-              {% trans "to a cause of your choice" as heading_secondary %}
             {% else %}
               {% trans "Redirect 3.5% of your tax to one of the NGOs" as heading_main %}
               {% blocktrans trimmed asvar heading_secondary %}
@@ -46,7 +45,7 @@
           <strong class="text-cyan-700">{{ limit.day }} {{ month_limit }}</strong>.
         </p>
 
-        {% if has_custom_note %}
+        {% if heading_secondary %}
           <p class="mt-3 text-base text-gray-500 sm:mt-5">
             {% blocktrans trimmed %}
               If your favorite NGO is not on this page,

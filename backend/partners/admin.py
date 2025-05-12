@@ -62,8 +62,7 @@ class PartnerAdmin(ModelAdmin):
     list_filter = (
         "is_active",
         "date_updated",
-        "has_custom_header",
-        "has_custom_note",
+        "custom_cta",
     )
     search_fields = (
         "subdomain",
@@ -91,8 +90,7 @@ class PartnerAdmin(ModelAdmin):
             {
                 "fields": (
                     "is_active",
-                    "has_custom_header",
-                    "has_custom_note",
+                    "custom_cta",
                     "display_ordering",
                 )
             },
