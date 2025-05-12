@@ -13,6 +13,7 @@
       type="text"
       name="signature"
       class="hidden"
+      autocomplete="off"
       {% if redirection_form.signature.value %}value="{{ redirection_form.signature.value }}"{% endif %}>
 
     <div
@@ -169,3 +170,7 @@
     </div>
   </div>
 </div>
+
+{% if redirection_form.signature.errors %}
+  <div class="pristine-error mt-2 text-sm text-red-600" style="" id="error-signature" role="alert">{{ redirection_form.signature.errors }}</div>
+{% endif %}
