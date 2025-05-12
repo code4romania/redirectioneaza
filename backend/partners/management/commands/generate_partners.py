@@ -60,6 +60,7 @@ class Command(BaseCommand):
                     subdomain=partner_subdomain,
                     name=partner_name,
                     display_ordering=random.choice([c[0] for c in DisplayOrderingChoices.choices]),
+                    custom_cta=random.choice(["", fake.text(max_nb_chars=50)]),
                     has_custom_header=random.choice([True, False]),
                     has_custom_note=random.choice([True, False]),
                 )

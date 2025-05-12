@@ -68,8 +68,7 @@ class HomePage(BaseVisibleTemplateView):
         context.update(
             {
                 "company_name": partner.name,
-                "has_custom_header": partner.has_custom_header,
-                "has_custom_note": partner.has_custom_note,
+                "heading_secondary": partner.custom_cta,
                 "causes": partner.ordered_causes(),
             }
         )

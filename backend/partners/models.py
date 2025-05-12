@@ -48,6 +48,15 @@ class Partner(models.Model):
         default=True,
     )
 
+    custom_cta = models.TextField(
+        verbose_name=_("custom call-to-action"),
+        help_text=_("Custom call-to-action for the partner, if empty, the default call-to-action will be used."),
+        blank=True,
+        null=False,
+        default="",
+        max_length=50,
+    )
+
     has_custom_header = models.BooleanField(verbose_name=_("has custom header"), default=False)
     has_custom_note = models.BooleanField(verbose_name=_("has custom note"), default=False)
     display_ordering = models.CharField(
@@ -56,7 +65,6 @@ class Partner(models.Model):
         choices=DisplayOrderingChoices.choices,
         default=DisplayOrderingChoices.RANDOM,
     )
-
     ngos = models.ManyToManyField(
         verbose_name=_("NGOs"),
         to=Ngo,
