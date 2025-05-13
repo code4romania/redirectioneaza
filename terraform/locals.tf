@@ -1,7 +1,7 @@
 locals {
   namespace  = "redirectioneaza-${var.env}"
   image_repo = "code4romania/redirectioneaza"
-  image_tag  = "3.4.4"
+  image_tag  = "3.4.5"
 
   availability_zone = data.aws_availability_zones.current.names[0]
 
@@ -12,7 +12,7 @@ locals {
 
   ecs = {
     instance_types = {
-      "m5.large" = ""
+      "m5.large"  = ""
       "m5a.large" = ""
     }
   }
