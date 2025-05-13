@@ -50,6 +50,7 @@ class DonationForm(forms.Form, ReCaptchaMixin):
         signature = self.cleaned_data["signature"]
         if signature and not signature.lower().startswith("data:image/svg+xml;base64,"):
             raise forms.ValidationError(_("Invalid signature format"))
+        return signature
 
     def clean_phone_number(self):
         raw_phone_number = self.cleaned_data["phone_number"]
