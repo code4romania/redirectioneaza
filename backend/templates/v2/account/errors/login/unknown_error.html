@@ -1,0 +1,10 @@
+{% extends 'account/errors/login/base_login.html' %}
+{% load i18n %}
+
+{% block title %}
+  {% trans 'Unknown role' %}
+{% endblock %}
+
+{% block message %}
+  {% trans "O eroare necunoscută a apărut în timpul autentificării. Te rugăm să reîncerci mai târziu. Problema a fost raportată echipei." %}
+{% endblock %}
