@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-12 14:06+0300\n"
+"POT-Creation-Date: 2025-05-13 17:15+0300\n"
 "PO-Revision-Date: 2025-03-27 14:48+0000\n"
 "Last-Translator: Andrei Ioniță <andrei.ionita@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -19,44 +19,48 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 5.10.4\n"
 
-#: donations/admin/causes.py:38
+#: donations/admin/causes.py:39
 msgid "Generate donations archive"
 msgstr "Generate donations archive"
 
-#: donations/admin/causes.py:61
+#: donations/admin/causes.py:62
 msgid "The donations archive has been generated for the following NGOs: "
 msgstr "The donations archive has been generated for the following NGOs: "
 
-#: donations/admin/causes.py:63
+#: donations/admin/causes.py:64
 msgid ""
 "The donations archive could not be generated for any of the selected NGOs."
 msgstr ""
 "The donations archive could not be generated for any of the selected NGOs."
 
-#: donations/admin/causes.py:67
+#: donations/admin/causes.py:68
 msgid "Public URL"
 msgstr ""
 
-#: donations/admin/causes.py:74 donations/admin/common.py:25
+#: donations/admin/causes.py:75 donations/admin/common.py:25
 #: donations/admin/donors.py:110 donations/admin/download_jobs.py:22
 #: donations/admin/download_jobs.py:50 donations/admin/jobs.py:22
-#: donations/admin/jobs.py:55 donations/admin/ngos.py:187
-#: donations/admin/ngos.py:290 donations/models/donors.py:71
+#: donations/admin/jobs.py:55 donations/admin/ngos.py:205
+#: donations/admin/ngos.py:308 donations/models/donors.py:71
 #: donations/models/downloads.py:10 donations/models/jobs.py:13
 #: donations/models/ngos.py:322 partners/models.py:149 users/models.py:71
 msgid "NGO"
 msgstr "NGO"
 
-#: donations/admin/common.py:30 donations/models/ngos.py:522
-#: donations/views/ngo_account_filters.py:148 partners/admin.py:49
-#: partners/models.py:183 templates/v2/ngo-account/archives/list-header.html:13
-#: templates/v2/ngo-account/causes/list-header.html:4
-msgid "Cause"
-msgstr "Cause"
+#: donations/admin/common.py:30
+msgid "Flags"
+msgstr ""
 
-#: donations/admin/common.py:44 donations/admin/donors.py:136
+#: donations/admin/common.py:42 donations/admin/download_jobs.py:30
+#: donations/admin/jobs.py:36
+#, fuzzy
+#| msgid "Form Data"
+msgid "Data"
+msgstr "Form Data"
+
+#: donations/admin/common.py:56 donations/admin/donors.py:136
 #: donations/admin/download_jobs.py:40 donations/admin/jobs.py:45
-#: donations/admin/ngos.py:240 templates/v2/ngo-account/byof/list-header.html:7
+#: donations/admin/ngos.py:258 templates/v2/ngo-account/byof/list-header.html:7
 msgid "Date"
 msgstr "Date"
 
@@ -138,12 +142,6 @@ msgstr[1] ""
 msgid "Status"
 msgstr "Status"
 
-#: donations/admin/download_jobs.py:30 donations/admin/jobs.py:36
-#, fuzzy
-#| msgid "Form Data"
-msgid "Data"
-msgstr "Form Data"
-
 #: donations/admin/ngos.py:38
 msgid "Existing User"
 msgstr "Existing User"
@@ -156,139 +154,152 @@ msgstr ""
 "Select the new owner of the NGO. You can only select active users that don't "
 "have an NGO."
 
-#: donations/admin/ngos.py:84
+#: donations/admin/ngos.py:65
+#, fuzzy
+#| msgid "User Link"
+msgid "Cause Link"
+msgstr "User Link"
+
+#: donations/admin/ngos.py:72 donations/models/ngos.py:522
+#: donations/views/ngo_account_filters.py:148 partners/admin.py:49
+#: partners/models.py:183 templates/v2/ngo-account/archives/list-header.html:13
+#: templates/v2/ngo-account/causes/list-header.html:4
+msgid "Cause"
+msgstr "Cause"
+
+#: donations/admin/ngos.py:102
 msgid "User Link"
 msgstr "User Link"
 
-#: donations/admin/ngos.py:88
+#: donations/admin/ngos.py:106
 msgid "User Details"
 msgstr "User Details"
 
-#: donations/admin/ngos.py:92
+#: donations/admin/ngos.py:110
 msgid "User Permissions"
 msgstr "User Permissions"
 
-#: donations/admin/ngos.py:100
+#: donations/admin/ngos.py:118
 msgid "User"
 msgstr "User"
 
-#: donations/admin/ngos.py:107
+#: donations/admin/ngos.py:125
 msgid "Has NGO Hub account"
 msgstr "Has NGO Hub account"
 
-#: donations/admin/ngos.py:111 donations/admin/ngos.py:129
+#: donations/admin/ngos.py:129 donations/admin/ngos.py:147
 #: templates/v2/ngo-account/causes/list-items.html:46
 #: templates/v2/ngo-account/redirections/list-items.html:48
 msgid "Yes"
 msgstr "Yes"
 
-#: donations/admin/ngos.py:111 donations/admin/ngos.py:129
+#: donations/admin/ngos.py:129 donations/admin/ngos.py:147
 #: templates/v2/ngo-account/causes/list-items.html:48
 #: templates/v2/ngo-account/redirections/list-items.html:50
 msgid "No"
 msgstr "No"
 
-#: donations/admin/ngos.py:125
+#: donations/admin/ngos.py:143
 msgid "Has owner"
 msgstr "Has owner"
 
-#: donations/admin/ngos.py:183 donations/admin/ngos.py:322 donations/apps.py:8
+#: donations/admin/ngos.py:201 donations/admin/ngos.py:340 donations/apps.py:8
 #: donations/views/dashboard/admin_dashboard.py:148
 #: redirectioneaza/context_processors/headers.py:70
 #: redirectioneaza/settings/unfold.py:30 redirectioneaza/settings/unfold.py:45
 msgid "Donations"
 msgstr "Donations"
 
-#: donations/admin/ngos.py:200
+#: donations/admin/ngos.py:218
 msgid "Activity"
 msgstr "Activity"
 
-#: donations/admin/ngos.py:211 donations/admin/ngos.py:301
+#: donations/admin/ngos.py:229 donations/admin/ngos.py:319
 #: donations/forms/ngo_account.py:20
 msgid "Logo"
 msgstr "Logo"
 
-#: donations/admin/ngos.py:215 redirectioneaza/context_processors/headers.py:45
+#: donations/admin/ngos.py:233 redirectioneaza/context_processors/headers.py:45
 msgid "Contact"
 msgstr "Contact"
 
-#: donations/admin/ngos.py:231
+#: donations/admin/ngos.py:249
 msgid "Details"
 msgstr "Details"
 
-#: donations/admin/ngos.py:308
+#: donations/admin/ngos.py:326
 msgid "NGO Hub link"
 msgstr "NGO Hub link"
 
-#: donations/admin/ngos.py:318
+#: donations/admin/ngos.py:336
 msgid "CIF"
 msgstr "CIF"
 
-#: donations/admin/ngos.py:324
+#: donations/admin/ngos.py:342
 msgid "Open the NGO donor list"
 msgstr "Open the NGO donor list"
 
-#: donations/admin/ngos.py:335
+#: donations/admin/ngos.py:353
 msgid "This user already has an NGO."
 msgstr "This user already has an NGO."
 
-#: donations/admin/ngos.py:341
+#: donations/admin/ngos.py:359
 msgid "This user is a staff member."
 msgstr "This user is a staff member."
 
-#: donations/admin/ngos.py:347
+#: donations/admin/ngos.py:365
 msgid "This user is an NGO Hub user."
 msgstr "This user is an NGO Hub user."
 
-#: donations/admin/ngos.py:359
+#: donations/admin/ngos.py:377
 msgid "Owner changed successfully."
 msgstr "Owner changed successfully."
 
-#: donations/admin/ngos.py:362
+#: donations/admin/ngos.py:380
 msgid "Change owner"
 msgstr "Change owner"
 
-#: donations/admin/ngos.py:379 partners/admin.py:180
+#: donations/admin/ngos.py:397 partners/admin.py:180
 msgid "The form is not valid."
 msgstr "The form is not valid."
 
-#: donations/admin/ngos.py:389
+#: donations/admin/ngos.py:407
 #, python-format
 msgid "Change owner of NGO '%(name)s'"
 msgstr "Change owner of NGO '%(name)s'"
 
-#: donations/admin/ngos.py:394
+#: donations/admin/ngos.py:412
 msgid "Clean up registration numbers"
 msgstr "Clean up registration numbers"
 
-#: donations/admin/ngos.py:406
+#: donations/admin/ngos.py:424
 msgid "Successfully cleaned registration numbers"
 msgstr "Successfully cleaned registration numbers"
 
-#: donations/admin/ngos.py:409
+#: donations/admin/ngos.py:427
 #, python-format
 msgid " for 1 NGO."
 msgid_plural " for %(ngos)d NGOs."
 msgstr[0] " for 1 NGO."
 msgstr[1] " for %(ngos)d NGOs."
 
-#: donations/admin/ngos.py:418
+#: donations/admin/ngos.py:436
 msgid "Update from NGO Hub synchronously"
 msgstr "Update from NGO Hub synchronously"
 
-#: donations/admin/ngos.py:423
+#: donations/admin/ngos.py:441
 msgid "NGOs updated from NGO Hub."
 msgstr "NGOs updated from NGO Hub."
 
-#: donations/admin/ngos.py:425
+#: donations/admin/ngos.py:443
 msgid "Update from NGO Hub asynchronously"
 msgstr "Update from NGO Hub asynchronously"
 
-#: donations/admin/ngos.py:430
+#: donations/admin/ngos.py:448
 msgid "NGOs are being updated from NGO Hub."
 msgstr "NGOs are being updated from NGO Hub."
 
-#: donations/admin/ngos.py:432
+#: donations/admin/ngos.py:450
 msgid "Remove prefilled forms"
 msgstr "Remove prefilled forms"
 
@@ -530,6 +541,12 @@ msgstr "Agree terms"
 #: donations/forms/redirection.py:40 templates/v2/form/modals/signature.html:7
 msgid "Signature"
 msgstr "Signature"
+
+#: donations/forms/redirection.py:52
+#, fuzzy
+#| msgid "Send signed form"
+msgid "Invalid signature format"
+msgstr "Send signed form"
 
 #: donations/models/byof.py:24 donations/views/ngo_account/byof.py:40
 #, python-brace-format
@@ -1055,23 +1072,29 @@ msgstr "Verification"
 msgid "An error occurred while generating the prefilled form."
 msgstr "An error occurred while creating the user: %(error)s"
 
-#: donations/views/api.py:179 donations/views/api_download.py:158
+#: donations/views/api.py:163
+#: templates/v2/ngo-account/archives/list-items.html:7
+#: templates/v2/ngo-account/byof/list-items.html:7
+msgid "No archives were generated"
+msgstr "No archives were generated"
+
+#: donations/views/api.py:180 donations/views/api_download.py:158
 #, fuzzy
 #| msgid "The organization's contact info"
 msgid "Your organization can not receive forms currently."
 msgstr "The organization's contact info"
 
-#: donations/views/api.py:185
+#: donations/views/api.py:186
 msgid "The cause you are trying to edit does not exist."
 msgstr ""
 
-#: donations/views/api.py:189
+#: donations/views/api.py:190
 #, fuzzy
 #| msgid "The ID number is not valid"
 msgid "The visibility value is not valid."
 msgstr "The ID number is not valid"
 
-#: donations/views/api.py:196
+#: donations/views/api.py:197
 #, python-format
 msgid "The visibility of '%(cause_name)s' has been updated successfully."
 msgstr ""
@@ -1556,23 +1579,23 @@ msgstr "redirected to NGOs through the platform"
 msgid "> €2 million"
 msgstr "> €2 million"
 
-#: donations/views/site.py:112
+#: donations/views/site.py:110
 msgid "About redirectioneaza.ro"
 msgstr "About redirectioneaza.ro"
 
-#: donations/views/site.py:131
+#: donations/views/site.py:129
 msgid "All causes"
 msgstr "All causes"
 
-#: donations/views/site.py:179 templates/v2/redirect/footer.html:196
+#: donations/views/site.py:177 templates/v2/redirect/footer.html:196
 msgid "Information notice"
 msgstr "Information notice"
 
-#: donations/views/site.py:190 templates/v2/redirect/footer.html:186
+#: donations/views/site.py:188 templates/v2/redirect/footer.html:186
 msgid "Privacy policy"
 msgstr "Privacy policy"
 
-#: donations/views/site.py:195 templates/v2/redirect/footer.html:191
+#: donations/views/site.py:193 templates/v2/redirect/footer.html:191
 msgid "Terms & conditions"
 msgstr "Terms & conditions"
 
@@ -2083,9 +2106,16 @@ msgstr ""
 "Multiple NGOs have been found during synchronization. Admins have been "
 "notified and will resolve the issue shortly."
 
+#: templates/v2/account/errors/login/unknown_error.html:5
 #: templates/v2/account/errors/login/unknown_role.html:5
 msgid "Unknown role"
 msgstr "Unknown role"
+
+#: templates/v2/account/errors/login/unknown_error.html:9
+msgid ""
+"An unknown error occurred during authentication. Please try again later. "
+"The problem has been reported to the team."
+msgstr ""
 
 #: templates/v2/account/errors/login/unknown_role.html:9
 msgid "Your current role isn't supported."
@@ -2952,23 +2982,23 @@ msgstr "Back"
 msgid "Continue"
 msgstr "Continue"
 
-#: templates/v2/form/modals/signature.html:57
+#: templates/v2/form/modals/signature.html:58
 msgid "Signature modal"
 msgstr "Signature modal"
 
-#: templates/v2/form/modals/signature.html:111
+#: templates/v2/form/modals/signature.html:112
 msgid "Add signature"
 msgstr "Add signature"
 
-#: templates/v2/form/modals/signature.html:115
+#: templates/v2/form/modals/signature.html:116
 msgid "Draw your signature in the canvas below."
 msgstr "Draw your signature in the canvas below."
 
-#: templates/v2/form/modals/signature.html:132
+#: templates/v2/form/modals/signature.html:133
 msgid "Reset"
 msgstr "Reset"
 
-#: templates/v2/form/modals/signature.html:142
+#: templates/v2/form/modals/signature.html:143
 msgid "Ok"
 msgstr "Ok"
 
@@ -3217,11 +3247,6 @@ msgstr ""
 #: templates/v2/ngo-account/redirections-downloads/list-header.html:19
 msgid "Download link"
 msgstr "Download link"
-
-#: templates/v2/ngo-account/archives/list-items.html:7
-#: templates/v2/ngo-account/byof/list-items.html:7
-msgid "No archives were generated"
-msgstr "No archives were generated"
 
 #: templates/v2/ngo-account/archives/list-items.html:29
 #: templates/v2/ngo-account/redirections-downloads/list-items.html:29
@@ -3883,12 +3908,18 @@ msgstr ""
 msgid "You can’t generate the archive because you don’t have any redirections."
 msgstr ""
 
+#: templates/v2/ngo-account/redirections/generate-archive/button.html:33
+msgid ""
+"You can’t generate the archive because your organization doesn’t allow "
+"online collection of signatures."
+msgstr ""
+
 #: templates/v2/ngo-account/redirections/generate-archive/multiple-button.html:21
-#: templates/v2/ngo-account/redirections/generate-archive/single-button.html:34
+#: templates/v2/ngo-account/redirections/generate-archive/single-button.html:37
 msgid "Generate ANAF Archive"
 msgstr "Generate ANAF Archive"
 
-#: templates/v2/ngo-account/redirections/generate-archive/multiple-dropdown.html:25
+#: templates/v2/ngo-account/redirections/generate-archive/multiple-dropdown.html:28
 #, python-format
 msgid "%(redirections_count)s form collected"
 msgid_plural "%(redirections_count)s forms collected"

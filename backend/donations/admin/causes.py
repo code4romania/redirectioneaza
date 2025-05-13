@@ -29,7 +29,8 @@ class CauseAdmin(ModelAdmin, CommonCauseFields):
 
     fieldsets = (
         CommonCauseFields.ngo_fieldset,
-        CommonCauseFields.editable_fieldset,
+        CommonCauseFields.flags_fieldset,
+        CommonCauseFields.data_fieldset,
         CommonCauseFields.date_fieldset,
     )
 
