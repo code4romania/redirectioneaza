@@ -156,3 +156,10 @@ mock-data:                                       ## generate fake data
 	docker exec redirect_dev cd ./backend && python3 -Wd ./manage.py generate_orgs 50 --valid
 	docker exec redirect_dev cd ./backend && python3 -Wd ./manage.py generate_partners 5
 	docker exec redirect_dev cd ./backend && python3 -Wd ./manage.py generate_donations 100
+
+
+## [Tests]
+tests:                            ## run the tests
+	docker exec redirect_dev sh -c " \
+		cd ./backend && python3 -Wd manage.py test \
+	"
