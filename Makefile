@@ -156,3 +156,17 @@ mock-data:                                       ## generate fake data
 	docker exec redirect_dev python3 -Wd ./backend/manage.py generate_orgs 50 --valid
 	docker exec redirect_dev python3 -Wd ./backend/manage.py generate_partners 5
 	docker exec redirect_dev python3 -Wd ./backend/manage.py generate_donations 100
+
+
+## [Tests]
+tests:                            ## run the tests
+	docker exec redirect_dev sh -c " \
+		cd ./backend && python3 -Wd manage.py test \
+	"
+
+# ## [Tests]
+# tests:                            ## run the tests
+# 	docker exec redirect_dev sh -c "cd ./backend && pytest -Wd $(apps)"
+
+# tests-cover:                      ## run the tests with coverage
+# 	docker exec redirect_dev sh -c "cd ./backend && pytest -Wd  --cov --cov-report=xml --cov-report=term-missing --cov-fail-under=60 $(apps)"
