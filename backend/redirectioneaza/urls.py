@@ -120,6 +120,11 @@ urlpatterns = (
             StaticPageView.as_view(template_name="account/errors/login/unknown_role.html"),
             name="error-unknown-user-role",
         ),
+        path(
+            "contul-meu/eroare/eroare-necunoscuta/",
+            StaticPageView.as_view(template_name="account/errors/login/unknown_error.html"),
+            name="error-unknown-error",
+        ),
         # APIs
         path("api/ngohub-refresh/", UpdateFromNgohub.as_view(), name="api-ngohub-refresh"),
         path("api/ngo/form/<cause_slug>/", GetCausePrefilledForm.as_view(), name="api-cause-form"),

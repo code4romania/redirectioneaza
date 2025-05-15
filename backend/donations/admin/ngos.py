@@ -53,7 +53,25 @@ class NgoCauseInline(StackedInline, CommonCauseFields):
     extra = 0
     tab = True
 
-    fieldsets = (CommonCauseFields.editable_fieldset,)
+    readonly_fields = (
+        "ngo",
+        "date_created",
+        "date_updated",
+        "link_to_cause",
+    )
+
+    fieldsets = (
+        (
+            _("Cause Link"),
+            {"fields": ("link_to_cause",)},
+        ),
+        CommonCauseFields.flags_fieldset,
+        CommonCauseFields.data_fieldset,
+    )
+
+    @admin.display(description=_("Cause"))
+    def link_to_cause(self, obj: Cause):
+        pass
 
     def has_add_permission(self, request, obj):
         return False

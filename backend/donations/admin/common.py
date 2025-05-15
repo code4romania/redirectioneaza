@@ -26,16 +26,28 @@ class CommonCauseFields:
         {"fields": ("ngo",)},
     )
 
-    editable_fieldset: Tuple[str, Dict[str, Tuple[str]]] = (
-        _("Cause"),
+    flags_fieldset: Tuple[str, Dict[str, Tuple[str]]] = (
+        _("Flags"),
         {
             "fields": (
+                "is_main",
                 "allow_online_collection",
+                "visibility",
+                "notifications_email",
+            )
+        },
+    )
+
+    data_fieldset: Tuple[str, Dict[str, Tuple[str]]] = (
+        _("Data"),
+        {
+            "fields": (
                 "name",
                 "slug",
                 "description",
-                "bank_account",
                 "display_image",
+                "bank_account",
+                "prefilled_form",
             )
         },
     )

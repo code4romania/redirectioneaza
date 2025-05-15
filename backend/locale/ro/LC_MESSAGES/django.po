@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-12 14:06+0300\n"
+"POT-Creation-Date: 2025-05-13 17:15+0300\n"
 "PO-Revision-Date: 2025-03-27 14:49+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -20,45 +20,47 @@ msgstr ""
 "20)) ? 1 : 2;\n"
 "X-Generator: Weblate 5.10.4\n"
 
-#: donations/admin/causes.py:38
+#: donations/admin/causes.py:39
 msgid "Generate donations archive"
 msgstr "Generează arhiva de donații"
 
-#: donations/admin/causes.py:61
+#: donations/admin/causes.py:62
 msgid "The donations archive has been generated for the following NGOs: "
 msgstr "Arhiva de donații a fost generată pentru următoarele ONG-uri: "
 
-#: donations/admin/causes.py:63
+#: donations/admin/causes.py:64
 msgid ""
 "The donations archive could not be generated for any of the selected NGOs."
 msgstr ""
 "Arhiva de donații nu a putut fi generată pentru niciunul dintre ONG-urile "
 "selectate."
 
-#: donations/admin/causes.py:67
+#: donations/admin/causes.py:68
 msgid "Public URL"
 msgstr "URL Public"
 
-#: donations/admin/causes.py:74 donations/admin/common.py:25
+#: donations/admin/causes.py:75 donations/admin/common.py:25
 #: donations/admin/donors.py:110 donations/admin/download_jobs.py:22
 #: donations/admin/download_jobs.py:50 donations/admin/jobs.py:22
-#: donations/admin/jobs.py:55 donations/admin/ngos.py:187
-#: donations/admin/ngos.py:290 donations/models/donors.py:71
+#: donations/admin/jobs.py:55 donations/admin/ngos.py:205
+#: donations/admin/ngos.py:308 donations/models/donors.py:71
 #: donations/models/downloads.py:10 donations/models/jobs.py:13
 #: donations/models/ngos.py:322 partners/models.py:149 users/models.py:71
 msgid "NGO"
 msgstr "ONG"
 
-#: donations/admin/common.py:30 donations/models/ngos.py:522
-#: donations/views/ngo_account_filters.py:148 partners/admin.py:49
-#: partners/models.py:183 templates/v2/ngo-account/archives/list-header.html:13
-#: templates/v2/ngo-account/causes/list-header.html:4
-msgid "Cause"
-msgstr "Cauză"
+#: donations/admin/common.py:30
+msgid "Flags"
+msgstr "Metadate"
 
-#: donations/admin/common.py:44 donations/admin/donors.py:136
+#: donations/admin/common.py:42 donations/admin/download_jobs.py:30
+#: donations/admin/jobs.py:36
+msgid "Data"
+msgstr "Date"
+
+#: donations/admin/common.py:56 donations/admin/donors.py:136
 #: donations/admin/download_jobs.py:40 donations/admin/jobs.py:45
-#: donations/admin/ngos.py:240 templates/v2/ngo-account/byof/list-header.html:7
+#: donations/admin/ngos.py:258 templates/v2/ngo-account/byof/list-header.html:7
 msgid "Date"
 msgstr "Data"
 
@@ -137,10 +139,6 @@ msgstr[2] "%(failure)d nu au fost șterse"
 msgid "Status"
 msgstr "Status"
 
-#: donations/admin/download_jobs.py:30 donations/admin/jobs.py:36
-msgid "Data"
-msgstr "Date"
-
 #: donations/admin/ngos.py:38
 msgid "Existing User"
 msgstr "Utilizator existent"
@@ -153,116 +151,127 @@ msgstr ""
 "Selectează noul administrator al ONG-ului. Poți selecta doar utilizatori "
 "activi care nu au un ONG."
 
-#: donations/admin/ngos.py:84
+#: donations/admin/ngos.py:65
+msgid "Cause Link"
+msgstr "Link cauză"
+
+#: donations/admin/ngos.py:72 donations/models/ngos.py:522
+#: donations/views/ngo_account_filters.py:148 partners/admin.py:49
+#: partners/models.py:183 templates/v2/ngo-account/archives/list-header.html:13
+#: templates/v2/ngo-account/causes/list-header.html:4
+msgid "Cause"
+msgstr "Cauză"
+
+#: donations/admin/ngos.py:102
 msgid "User Link"
 msgstr "Link utilizator"
 
-#: donations/admin/ngos.py:88
+#: donations/admin/ngos.py:106
 msgid "User Details"
 msgstr "Detalii utilizator"
 
-#: donations/admin/ngos.py:92
+#: donations/admin/ngos.py:110
 msgid "User Permissions"
 msgstr "Permisiuni utilizator"
 
-#: donations/admin/ngos.py:100
+#: donations/admin/ngos.py:118
 msgid "User"
 msgstr "Utilizator"
 
-#: donations/admin/ngos.py:107
+#: donations/admin/ngos.py:125
 msgid "Has NGO Hub account"
 msgstr "Are cont NGO Hub"
 
-#: donations/admin/ngos.py:111 donations/admin/ngos.py:129
+#: donations/admin/ngos.py:129 donations/admin/ngos.py:147
 #: templates/v2/ngo-account/causes/list-items.html:46
 #: templates/v2/ngo-account/redirections/list-items.html:48
 msgid "Yes"
 msgstr "Da"
 
-#: donations/admin/ngos.py:111 donations/admin/ngos.py:129
+#: donations/admin/ngos.py:129 donations/admin/ngos.py:147
 #: templates/v2/ngo-account/causes/list-items.html:48
 #: templates/v2/ngo-account/redirections/list-items.html:50
 msgid "No"
 msgstr "Nu"
 
-#: donations/admin/ngos.py:125
+#: donations/admin/ngos.py:143
 msgid "Has owner"
 msgstr "Are utilizator"
 
-#: donations/admin/ngos.py:183 donations/admin/ngos.py:322 donations/apps.py:8
+#: donations/admin/ngos.py:201 donations/admin/ngos.py:340 donations/apps.py:8
 #: donations/views/dashboard/admin_dashboard.py:148
 #: redirectioneaza/context_processors/headers.py:70
 #: redirectioneaza/settings/unfold.py:30 redirectioneaza/settings/unfold.py:45
 msgid "Donations"
 msgstr "Donații"
 
-#: donations/admin/ngos.py:200
+#: donations/admin/ngos.py:218
 msgid "Activity"
 msgstr "Activitate"
 
-#: donations/admin/ngos.py:211 donations/admin/ngos.py:301
+#: donations/admin/ngos.py:229 donations/admin/ngos.py:319
 #: donations/forms/ngo_account.py:20
 msgid "Logo"
 msgstr "Logo"
 
-#: donations/admin/ngos.py:215 redirectioneaza/context_processors/headers.py:45
+#: donations/admin/ngos.py:233 redirectioneaza/context_processors/headers.py:45
 msgid "Contact"
 msgstr "Contact"
 
-#: donations/admin/ngos.py:231
+#: donations/admin/ngos.py:249
 msgid "Details"
 msgstr "Detalii"
 
-#: donations/admin/ngos.py:308
+#: donations/admin/ngos.py:326
 msgid "NGO Hub link"
 msgstr "Link NGO Hub"
 
-#: donations/admin/ngos.py:318
+#: donations/admin/ngos.py:336
 msgid "CIF"
 msgstr "CUI/CIF"
 
-#: donations/admin/ngos.py:324
+#: donations/admin/ngos.py:342
 msgid "Open the NGO donor list"
 msgstr "Deschide lista de donatori pentru acest ONG"
 
-#: donations/admin/ngos.py:335
+#: donations/admin/ngos.py:353
 msgid "This user already has an NGO."
 msgstr "Acest utilizator are deja un ONG."
 
-#: donations/admin/ngos.py:341
+#: donations/admin/ngos.py:359
 msgid "This user is a staff member."
 msgstr "Acest utilizator este un membru al staff-ului."
 
-#: donations/admin/ngos.py:347
+#: donations/admin/ngos.py:365
 msgid "This user is an NGO Hub user."
 msgstr "Acest utilizator este un utilizator NGO Hub."
 
-#: donations/admin/ngos.py:359
+#: donations/admin/ngos.py:377
 msgid "Owner changed successfully."
 msgstr "Administratorul a fost schimbat cu succes."
 
-#: donations/admin/ngos.py:362
+#: donations/admin/ngos.py:380
 msgid "Change owner"
 msgstr "Schimbă administrator"
 
-#: donations/admin/ngos.py:379 partners/admin.py:180
+#: donations/admin/ngos.py:397 partners/admin.py:180
 msgid "The form is not valid."
 msgstr "Formularul nu este valid."
 
-#: donations/admin/ngos.py:389
+#: donations/admin/ngos.py:407
 #, python-format
 msgid "Change owner of NGO '%(name)s'"
 msgstr "Schimbă administratorul ONG-ului '%(name)s'"
 
-#: donations/admin/ngos.py:394
+#: donations/admin/ngos.py:412
 msgid "Clean up registration numbers"
 msgstr "Curăță numerele de înregistrare"
 
-#: donations/admin/ngos.py:406
+#: donations/admin/ngos.py:424
 msgid "Successfully cleaned registration numbers"
 msgstr "Au fost curățate cu succes numerele de înregistrare"
 
-#: donations/admin/ngos.py:409
+#: donations/admin/ngos.py:427
 #, python-format
 msgid " for 1 NGO."
 msgid_plural " for %(ngos)d NGOs."
@@ -270,23 +279,23 @@ msgstr[0] "pentru 1 ONG."
 msgstr[1] "pentru %(ngos)d ONG-uri."
 msgstr[2] "pentru %(ngos)d de ONG-uri."
 
-#: donations/admin/ngos.py:418
+#: donations/admin/ngos.py:436
 msgid "Update from NGO Hub synchronously"
 msgstr "Actualizează din NGO Hub sincron"
 
-#: donations/admin/ngos.py:423
+#: donations/admin/ngos.py:441
 msgid "NGOs updated from NGO Hub."
 msgstr "ONG-urile au fost actualizate din NGO Hub."
 
-#: donations/admin/ngos.py:425
+#: donations/admin/ngos.py:443
 msgid "Update from NGO Hub asynchronously"
 msgstr "Actualizează din NGO Hub asincron"
 
-#: donations/admin/ngos.py:430
+#: donations/admin/ngos.py:448
 msgid "NGOs are being updated from NGO Hub."
 msgstr "ONG-urile sunt actualizate din NGO Hub."
 
-#: donations/admin/ngos.py:432
+#: donations/admin/ngos.py:450
 msgid "Remove prefilled forms"
 msgstr "Elimină formularele completate"
 
@@ -523,6 +532,10 @@ msgstr "Acord termeni"
 #: donations/forms/redirection.py:40 templates/v2/form/modals/signature.html:7
 msgid "Signature"
 msgstr "Semnătura"
+
+#: donations/forms/redirection.py:52
+msgid "Invalid signature format"
+msgstr "Formatul semnăturii este invalid"
 
 #: donations/models/byof.py:24 donations/views/ngo_account/byof.py:40
 #, python-brace-format
@@ -1018,19 +1031,25 @@ msgstr "Verificare"
 msgid "An error occurred while generating the prefilled form."
 msgstr "A apărut o eroare la generarea formularului completat."
 
-#: donations/views/api.py:179 donations/views/api_download.py:158
+#: donations/views/api.py:163
+#: templates/v2/ngo-account/archives/list-items.html:7
+#: templates/v2/ngo-account/byof/list-items.html:7
+msgid "No archives were generated"
+msgstr "Nu s-au generat arhive"
+
+#: donations/views/api.py:180 donations/views/api_download.py:158
 msgid "Your organization can not receive forms currently."
 msgstr "Organizația ta nu poate primi formulare în acest moment."
 
-#: donations/views/api.py:185
+#: donations/views/api.py:186
 msgid "The cause you are trying to edit does not exist."
 msgstr "Cauza pe care încerci să o editezi nu există."
 
-#: donations/views/api.py:189
+#: donations/views/api.py:190
 msgid "The visibility value is not valid."
 msgstr "Valoarea de vizibilitate nu este validă."
 
-#: donations/views/api.py:196
+#: donations/views/api.py:197
 #, python-format
 msgid "The visibility of '%(cause_name)s' has been updated successfully."
 msgstr "Vizibilitatea cauzei '%(cause_name)s' a fost actualizată cu succes."
@@ -1463,23 +1482,23 @@ msgstr "redirecționați către ONG-uri prin redirectioneaza.ro"
 msgid "> €2 million"
 msgstr "> 2 milioane €"
 
-#: donations/views/site.py:112
+#: donations/views/site.py:110
 msgid "About redirectioneaza.ro"
 msgstr "Despre redirectioneaza.ro"
 
-#: donations/views/site.py:131
+#: donations/views/site.py:129
 msgid "All causes"
 msgstr "Toate cauzele"
 
-#: donations/views/site.py:179 templates/v2/redirect/footer.html:196
+#: donations/views/site.py:177 templates/v2/redirect/footer.html:196
 msgid "Information notice"
 msgstr "Notă de informare"
 
-#: donations/views/site.py:190 templates/v2/redirect/footer.html:186
+#: donations/views/site.py:188 templates/v2/redirect/footer.html:186
 msgid "Privacy policy"
 msgstr "Politica de confidențialitate"
 
-#: donations/views/site.py:195 templates/v2/redirect/footer.html:191
+#: donations/views/site.py:193 templates/v2/redirect/footer.html:191
 msgid "Terms & conditions"
 msgstr "Termeni și condiții"
 
@@ -1987,9 +2006,18 @@ msgstr ""
 "Au fost găsite mai multe ONG-uri în timpul sincronizării. Administratorii au "
 "fost notificați și vor rezolva problema în curând."
 
+#: templates/v2/account/errors/login/unknown_error.html:5
 #: templates/v2/account/errors/login/unknown_role.html:5
 msgid "Unknown role"
 msgstr "Rol necunoscut"
+
+#: templates/v2/account/errors/login/unknown_error.html:9
+msgid ""
+"An unknown error occurred during authentication. Please try again later. "
+"The problem has been reported to the team."
+msgstr ""
+"O eroare necunoscută a apărut în timpul autentificării. Te rugăm să "
+"reîncerci mai târziu. Problema a fost raportată echipei."
 
 #: templates/v2/account/errors/login/unknown_role.html:9
 msgid "Your current role isn't supported."
@@ -2835,23 +2863,23 @@ msgstr "Înapoi"
 msgid "Continue"
 msgstr "Continuă"
 
-#: templates/v2/form/modals/signature.html:57
+#: templates/v2/form/modals/signature.html:58
 msgid "Signature modal"
 msgstr "Modal de semnătură"
 
-#: templates/v2/form/modals/signature.html:111
+#: templates/v2/form/modals/signature.html:112
 msgid "Add signature"
 msgstr "Adaugă semnătura"
 
-#: templates/v2/form/modals/signature.html:115
+#: templates/v2/form/modals/signature.html:116
 msgid "Draw your signature in the canvas below."
 msgstr "Desenează semnătura în câmpul de mai jos."
 
-#: templates/v2/form/modals/signature.html:132
+#: templates/v2/form/modals/signature.html:133
 msgid "Reset"
 msgstr "Resetează"
 
-#: templates/v2/form/modals/signature.html:142
+#: templates/v2/form/modals/signature.html:143
 msgid "Ok"
 msgstr "Ok"
 
@@ -3104,11 +3132,6 @@ msgstr ""
 #: templates/v2/ngo-account/redirections-downloads/list-header.html:19
 msgid "Download link"
 msgstr "Link de descărcare"
-
-#: templates/v2/ngo-account/archives/list-items.html:7
-#: templates/v2/ngo-account/byof/list-items.html:7
-msgid "No archives were generated"
-msgstr "Nu s-au generat arhive"
 
 #: templates/v2/ngo-account/archives/list-items.html:29
 #: templates/v2/ngo-account/redirections-downloads/list-items.html:29
@@ -3753,12 +3776,18 @@ msgstr ""
 msgid "You can’t generate the archive because you don’t have any redirections."
 msgstr "Nu poți genera arhiva pentru că nu ai nicio redirecționare."
 
+#: templates/v2/ngo-account/redirections/generate-archive/button.html:33
+msgid ""
+"You can’t generate the archive because your organization doesn’t allow "
+"online collection of signatures."
+msgstr "Nu poți genera arhiva pentru că organizația ta nu permite semnarea online."
+
 #: templates/v2/ngo-account/redirections/generate-archive/multiple-button.html:21
-#: templates/v2/ngo-account/redirections/generate-archive/single-button.html:34
+#: templates/v2/ngo-account/redirections/generate-archive/single-button.html:37
 msgid "Generate ANAF Archive"
 msgstr "Generează arhiva ANAF"
 
-#: templates/v2/ngo-account/redirections/generate-archive/multiple-dropdown.html:25
+#: templates/v2/ngo-account/redirections/generate-archive/multiple-dropdown.html:28
 #, python-format
 msgid "%(redirections_count)s form collected"
 msgid_plural "%(redirections_count)s forms collected"

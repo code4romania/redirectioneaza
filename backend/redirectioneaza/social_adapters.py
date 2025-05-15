@@ -234,7 +234,15 @@ def _get_or_create_user_ngo(user: UserModel, ngohub_org_id: int, token: str) -> 
     except Ngo.DoesNotExist:
         hub: NGOHub = NGOHub(settings.NGOHUB_API_HOST)
 
-        ngohub_org_data: Organization = hub.get_organization_profile(ngo_token=token)
+        try:
+            ngohub_org_data: Organization = hub.get_organization_profile(ngo_token=token)
+        except HubHTTPException as e:
+            logger.error(
+                f"Received an error from NGO Hub while trying to get the organization data. Exception raised: {e}."
+            )
+
+            raise ImmediateHttpResponse(redirect(reverse("error-unknown-error")))
+
         ngo_registration_number: str = ngohub_org_data.general_data.cui
 
         registration_number_choices = [ngo_registration_number.upper()]
