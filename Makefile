@@ -160,4 +160,6 @@ mock-data:                                       ## generate fake data
 
 ## [Tests]
 tests:                            ## run the tests
-	docker exec redirect_dev cd ./backend && python3 -Wd manage.py test 
+	docker exec redirect_dev sh -c " \
+		cd ./backend && python3 -Wd manage.py test \
+	"
