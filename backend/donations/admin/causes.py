@@ -30,8 +30,9 @@ class CauseAdmin(ModelAdmin, CommonCauseFields):
     fieldsets = (
         CommonCauseFields.ngo_fieldset,
         CommonCauseFields.flags_fieldset,
+        CommonCauseFields.form_data_fieldset,
         CommonCauseFields.data_fieldset,
-        CommonCauseFields.date_fieldset,
+        CommonCauseFields.dates_fieldset,
     )
 
     readonly_fields = CommonCauseFields.readonly_fields

@@ -38,6 +38,16 @@ class CommonCauseFields:
         },
     )
 
+    form_data_fieldset: Tuple[str, Dict[str, Tuple[str]]] = (
+        _("Form Data"),
+        {
+            "fields": (
+                "bank_account",
+                "prefilled_form",
+            )
+        },
+    )
+
     data_fieldset: Tuple[str, Dict[str, Tuple[str]]] = (
         _("Data"),
         {
@@ -46,13 +56,11 @@ class CommonCauseFields:
                 "slug",
                 "description",
                 "display_image",
-                "bank_account",
-                "prefilled_form",
             )
         },
     )
 
-    date_fieldset: Tuple[str, Dict[str, Tuple[str]]] = (
+    dates_fieldset: Tuple[str, Dict[str, Tuple[str]]] = (
         _("Date"),
         {
             "fields": (

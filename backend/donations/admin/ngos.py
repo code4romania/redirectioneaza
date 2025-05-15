@@ -62,16 +62,18 @@ class NgoCauseInline(StackedInline, CommonCauseFields):
 
     fieldsets = (
         (
-            _("Cause Link"),
+            None,
             {"fields": ("link_to_cause",)},
         ),
         CommonCauseFields.flags_fieldset,
+        CommonCauseFields.form_data_fieldset,
         CommonCauseFields.data_fieldset,
     )
 
-    @admin.display(description=_("Cause"))
+    @admin.display(description=_("Cause link"))
     def link_to_cause(self, obj: Cause):
-        pass
+        link_url = reverse("admin:donations_cause_change", args=(obj.pk,))
+        return span_internal(href=link_url, content=obj.name)
 
     def has_add_permission(self, request, obj):
         return False
