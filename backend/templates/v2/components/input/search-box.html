@@ -19,7 +19,15 @@
       input.focus();
     },
     fetchResults() {
-      fetch(`?q=${this.currentSearch}`)
+      // persist other query parameters
+      const params = new URLSearchParams(window.location.search);
+      params.set('q', this.currentSearch);
+
+      // update the URL in the address bar without reloading the page, so the url can still be shared with all params included
+      const newUrl = `${window.location.pathname}?${params.toString()}`;
+      window.history.replaceState({}, '', newUrl); // or pushState if you want to add a new entry to history
+
+      fetch(`?${params.toString()}`)
       .then(res => res.text())
       .then(html => {
         // re-render only the DOM element with the '{{ target_id }}' identifier
