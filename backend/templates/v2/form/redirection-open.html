@@ -5,7 +5,7 @@
     {% trans "Redirect easily and quickly" %}
   </h2>
 
-  {% if cause.ngo.is_accepting_forms and cause.allow_online_collection %}
+  {% if cause.allow_online_collection %}
     {% blocktranslate trimmed asvar banner_message %}
       Since 2022, form 230 can be submitted online.
       Fill in the form with the data from your ID,
@@ -118,7 +118,7 @@
 
     </fieldset>
 
-    {% if cause.ngo.is_accepting_forms and cause.allow_online_collection %}
+    {% if cause.allow_online_collection %}
 
       <hr class="border-t border-gray-200">
 
@@ -215,7 +215,7 @@
         </div>
       </div>
 
-      {% if cause.ngo.is_accepting_forms and cause.allow_online_collection %}
+      {% if cause.allow_online_collection %}
 
         <button
           id="submit-with-signature"
