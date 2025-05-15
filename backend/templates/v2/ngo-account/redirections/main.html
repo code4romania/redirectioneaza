@@ -16,7 +16,7 @@
 
 {% block content %}
 
-  <div x-data="{ filtersDisplay: {% if filters_active %}true{% else %}false{% endif %} }">
+  <div id="redirections" x-data="{ filtersDisplay: {% if filters_active %}true{% else %}false{% endif %} }">
     <div class="grid mb-4 gap-x-6 gap-y-3 sm:grid-cols-2">
 
       <h1 class="text-base font-semibold text-gray-900">
@@ -48,7 +48,7 @@
             <button type="submit" hidden id="filter-submit">Submit</button>
             {% trans "Search for donors" as search_title %}
             <div class="py-4">
-              {% include "components/input/search-box.html" with input_id="redirections_search" box_style="rounded-md" %}
+              {% include "components/input/search-box.html" with input_id="redirections_search" box_style="rounded-md" target_id="#redirections"%}
             </div>
           </div>
 
