@@ -1,17 +1,12 @@
 import pytest
 
 from donations.models.donors import Donor
-from donations.models.ngos import Ngo, Cause
+from donations.models.ngos import Ngo
 
 
 @pytest.fixture
 def ngo() -> Ngo:
-    return Ngo.objects.create(name="Test Ngo", registration_number="12345678")
-
-
-@pytest.fixture
-def cause(ngo) -> Cause:
-    return Cause.objects.create(ngo=ngo, name="Test Cause", slug="test-cause", bank_account="RO123123")
+    return Ngo.objects.create(name="Test Ngo")
 
 
 @pytest.fixture
