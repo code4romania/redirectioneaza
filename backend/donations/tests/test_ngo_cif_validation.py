@@ -1,5 +1,5 @@
 from django.core.exceptions import ValidationError
-from django.test import TestCase
+from django.test import TestCase, override_settings
 
 from donations.models.ngos import ngo_id_number_validator
 
@@ -28,10 +28,12 @@ class NgoCIFValidationTests(TestCase):
             "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
         )
 
+    @override_settings(ENABLE_FULL_VALIDATION_CUI=True)
     def test_validation_works_with_good_cif(self):
         for cif in self.valid_cifs:
             self.assertEqual(ngo_id_number_validator(cif), None)
 
+    @override_settings(ENABLE_FULL_VALIDATION_CUI=True)
     def test_validation_fails_with_broken_cif(self):
         for cif in self.invalid_cifs:
             self.assertRaises(ValidationError, ngo_id_number_validator, cif)
