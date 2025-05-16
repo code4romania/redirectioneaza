@@ -163,3 +163,8 @@ tests:                            ## run the tests
 	docker exec redirect_dev sh -c " \
 		cd ./backend && python3 -Wd manage.py test \
 	"
+
+tests-coverage:                  ## run the tests with coverage
+	docker exec redirect_dev sh -c " \
+		cd ./backend && coverage run -m pytest && coverage report \
+	"
