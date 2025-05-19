@@ -5,7 +5,6 @@ from typing import Annotated, Dict, List, Optional, Union
 from xml.etree.ElementTree import Element, ElementTree
 
 from django.core.files.base import ContentFile
-from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.utils import timezone
 
 from donations.models.byof import OwnFormsUpload, OwnFormsStatusChoices
@@ -138,13 +137,35 @@ def generate_xml_from_external_data(own_upload: OwnFormsUpload) -> Dict[str, Uni
     return {"error": None, "data": xml_element_tree}
 
 
-def parse_file_data(file: InMemoryUploadedFile) -> List[DonorModel]:
+def decode_readfile(input_file):
+    # TODO: Try to optimize/simplify this
+    readfile = input_file.read()
+
+    try:
+        # Try to decode the file as utf-8
+        # Deepcopy the readfile to avoid modifying the original bytes
+        read_file = readfile.decode("utf-8")
+    except UnicodeDecodeError:
+        # If utf-8 fails, try cp1252 — common for Windows
+        try:
+            input_file.seek(0)
+            readfile = input_file.read()
+            read_file = readfile.decode("cp1252")
+        except UnicodeDecodeError:
+            raise ValueError(_("The file is not in a valid format."))
+
+    return read_file
+
+
+def parse_file_data(file) -> List[DonorModel]:
     """
     Transform the CSV file to raw data.
     :param file: The CSV file path
     :return: A list of dictionaries containing the information of donors
     """
-    read_file = file.read().decode("utf-8")
+
+    read_file = decode_readfile(file)
+
     reader = csv.DictReader(io.StringIO(read_file))
 
     header_check = _check_csv_header(reader)

@@ -6,13 +6,13 @@ from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
-from django_q.tasks import async_task
 
 from donations.forms.ngo_account import BringYourOwnDataForm
 from donations.models.ngos import Ngo
 from donations.models.byof import OwnFormsUpload
 from donations.views.download_donations.byof import handle_external_data_processing
 from donations.views.ngo_account.common import FileDownloadProxy, NgoBaseListView
+from redirectioneaza.common.async_wrapper import async_wrapper
 from users.models import User
 
 
@@ -70,7 +70,7 @@ class NgoBringYourOwnFormView(NgoBaseListView):
         own_upload.ngo = ngo
         own_upload.save()
 
-        async_task(handle_external_data_processing, own_upload.pk)
+        async_wrapper(handle_external_data_processing, own_upload.pk)
 
         messages.success(request, _("The uploaded data file will be processed soon."))
 
