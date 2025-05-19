@@ -20,6 +20,7 @@ env = environ.Env(
     RECAPTCHA_ENABLED=(bool, True),
     FORCE_PARTNER=(bool, False),
     # Forms Download
+    DEFAULT_RUN_METHOD=(str, "async"),
     FORMS_DOWNLOAD_METHOD=(str, "async"),
     DONATIONS_CSV_DOWNLOAD_METHOD=(str, "async"),
     ENABLE_FORMS_DOWNLOAD=(bool, True),

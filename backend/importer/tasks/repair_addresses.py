@@ -5,10 +5,10 @@ from typing import Dict
 
 from django.conf import settings
 from django.db.models import QuerySet
-from django_q.tasks import async_task
 
 from donations.models.donors import Donor
 from importer.tasks.utils import batch
+from redirectioneaza.common.async_wrapper import async_wrapper
 
 logger = logging.getLogger(__name__)
 
@@ -20,7 +20,7 @@ def repair_addresses_task(batch_size: int = 1000) -> None:
 
     for donor_ids in batch(target_donor_ids, batch_size):
         logger.info("Starting task for the following list of donors: %s", len(donor_ids))
-        async_task(repair_address_batch, donor_ids)
+        async_wrapper(repair_address_batch, donor_ids)
 
 
 def repair_address_batch(ids: list) -> None:
