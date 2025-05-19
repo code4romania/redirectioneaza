@@ -8,13 +8,13 @@ from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
-from django_q.tasks import async_task
 
 from donations.common.validation.registration_number import extract_vat_id
 from donations.forms.ngo_account import CauseForm, NgoPresentationForm
 from donations.models.ngos import Cause, Ngo
 from donations.views.ngo_account.causes import NgoCauseCommonView
-from donations.views.ngo_account.common import NgoBaseTemplateView, delete_prefilled_form
+from donations.views.ngo_account.common import NgoBaseTemplateView, delete_ngo_prefilled_forms
+from redirectioneaza.common.async_wrapper import async_wrapper
 from users.models import User
 
 
@@ -140,7 +140,7 @@ class NgoPresentationView(NgoBaseTemplateView):
             user.ngo = ngo
             user.save()
         elif must_refresh_prefilled_form:
-            async_task(delete_prefilled_form, ngo.id)
+            async_wrapper(delete_ngo_prefilled_forms, ngo.id)
 
         context["ngo"] = ngo
 

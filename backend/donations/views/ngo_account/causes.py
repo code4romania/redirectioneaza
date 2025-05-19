@@ -13,7 +13,8 @@ from django.utils.translation import gettext_lazy as _
 
 from donations.forms.ngo_account import CauseForm
 from donations.models.ngos import Cause, CauseVisibilityChoices, Ngo
-from donations.views.ngo_account.common import NgoBaseListView, NgoBaseTemplateView
+from donations.views.ngo_account.common import NgoBaseListView, NgoBaseTemplateView, delete_cause_prefilled_form
+from redirectioneaza.common.async_wrapper import async_wrapper
 from users.models import User
 
 logger = logging.getLogger(__name__)
@@ -69,6 +70,8 @@ class NgoCauseCommonView(NgoBaseTemplateView):
 
         ngo: Ngo = user.ngo
 
+        must_refresh_prefilled_form = False
+
         if not ngo:
             messages.error(request, _("Please fill in the organization details first."))
             response["error"] = redirect(reverse("my-organization:presentation"))
@@ -79,7 +82,12 @@ class NgoCauseCommonView(NgoBaseTemplateView):
             response["error"] = redirect(reverse("my-organization:presentation"))
             return response
 
-        existing_cause = context.get("cause")
+        existing_cause: Cause = context.get("cause")
+
+        existing_bank_account = None
+        if existing_cause and existing_cause.bank_account:
+            existing_bank_account = existing_cause.bank_account
+
         form = CauseForm(post, for_main_cause=self.is_main_cause, files=request.FILES, instance=existing_cause)
         context["django_form"] = form
 
@@ -88,9 +96,15 @@ class NgoCauseCommonView(NgoBaseTemplateView):
             response["error"] = render(request, self.template_name, context)
             return response
 
+        if existing_bank_account != form.cleaned_data["bank_account"]:
+            must_refresh_prefilled_form = True
+
         cause = form.save(commit=False)
         cause.ngo = ngo
         cause.save()
+
+        if must_refresh_prefilled_form:
+            async_wrapper(delete_cause_prefilled_form, cause.pk)
 
         context["cause"] = cause
         context["ngo"] = ngo

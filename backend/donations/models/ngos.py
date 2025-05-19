@@ -593,5 +593,4 @@ class Cause(CommonFilenameCacheModel):
 
     def delete_prefilled_form(self):
         if self.prefilled_form:
-            self.prefilled_form.delete(save=False)
-            self.save()
+            self.prefilled_form.delete()
