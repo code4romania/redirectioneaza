@@ -144,8 +144,30 @@ def validate_registration_number(ngo, registration_number) -> Optional[str]:
     return ""
 
 
-def delete_prefilled_form(ngo_id):
+def delete_ngo_prefilled_forms(ngo_id):
+    """
+    Delete prefilled forms associated with the given NGO ID.
+    :param ngo_id: The ID of the NGO whose prefilled forms are to be deleted.
+    :return: The result of the deletion operation.
+    """
+
     return Ngo.delete_prefilled_form(ngo_id)
+
+
+def delete_cause_prefilled_form(cause_id):
+    """
+    Deletes a prefilled form associated with a specific cause.
+
+    This function acts as a wrapper around the `Cause.delete_prefilled_form` method,
+    which performs the actual deletion of the prefilled form.
+
+    :param cause_id: The ID of the cause whose prefilled form is to be deleted.
+    :return: The result of the `Cause.delete_prefilled_form` method.
+    """
+    cause: Cause = Cause.objects.filter(pk=cause_id).first()
+    if not cause:
+        return None
+    return cause.delete_prefilled_form()
 
 
 class FileDownloadProxy(BaseVisibleTemplateView):
