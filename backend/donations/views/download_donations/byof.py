@@ -64,7 +64,7 @@ def handle_external_data_processing(own_upload_id) -> Optional[Dict]:
     own_upload.save()
 
     with own_upload.uploaded_data.open() as file:
-        read_file = file.readline().decode("utf-8")
+        read_file = decode_readfile(file, one_line=True)
         reader = csv.DictReader(io.StringIO(read_file))
 
         header_check = _check_csv_header(reader)
@@ -137,24 +137,40 @@ def generate_xml_from_external_data(own_upload: OwnFormsUpload) -> Dict[str, Uni
     return {"error": None, "data": xml_element_tree}
 
 
-def decode_readfile(input_file):
+def decode_readfile(input_file, *, one_line=False) -> str:
     # TODO: Try to optimize/simplify this
-    readfile = input_file.read()
+    readfile = input_file.readline() if one_line else input_file.read()
 
+    # Try to decode the file as utf-8 with BOM - common for Microsoft Office
+    # We have to do this before trying plain utf-8 because utf-8 with BOM is a subset of utf-8
     try:
-        # Try to decode the file as utf-8
         # Deepcopy the readfile to avoid modifying the original bytes
+        read_file = readfile.decode("utf-8-sig")
+    except UnicodeDecodeError:
+        input_file.seek(0)
+    else:
+        return read_file
+
+    # If utf-8 with BOM fails, try with plain utf-8
+    try:
+        # Try to decode the file as utf-8 with BOM
+        readfile = input_file.readline() if one_line else input_file.read()
         read_file = readfile.decode("utf-8")
     except UnicodeDecodeError:
-        # If utf-8 fails, try cp1252 — common for Windows
-        try:
-            input_file.seek(0)
-            readfile = input_file.read()
-            read_file = readfile.decode("cp1252")
-        except UnicodeDecodeError:
-            raise ValueError(_("The file is not in a valid format."))
+        input_file.seek(0)
+    else:
+        return read_file
 
-    return read_file
+    # If utf-8 fails, try cp1252 - common for Microsoft Windows
+    try:
+        readfile = input_file.readline() if one_line else input_file.read()
+        read_file = readfile.decode("cp1252")
+    except UnicodeDecodeError:
+        input_file.seek(0)
+    else:
+        return read_file
+
+    raise ValueError(_("The file is not in a valid format."))
 
 
 def parse_file_data(file) -> List[DonorModel]:
