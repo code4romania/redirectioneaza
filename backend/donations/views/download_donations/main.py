@@ -25,7 +25,7 @@ from donations.models.common import JobDownloadError, JobStatusChoices
 from donations.models.ngos import Cause
 from donations.views.download_donations.build_xml import add_xml_to_zip
 from redirectioneaza.common.app_url import build_uri
-from redirectioneaza.common.clean import duration_flag_to_int, normalize_text_alnum
+from redirectioneaza.common.clean import anaf_gdpr_flag_to_int, duration_flag_to_int, normalize_text_alnum
 from redirectioneaza.common.messaging import extend_email_context, send_email
 
 logger = logging.getLogger(__name__)
@@ -174,6 +174,7 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], cause: Cau
                             "filename": filename,
                             "date": donation_object.date_created,
                             "duration": duration_flag_to_int(donation_object.two_years),
+                            "anaf_gdpr": anaf_gdpr_flag_to_int(donation_object.anaf_gdpr),
                         }
                     )
 
@@ -201,6 +202,7 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], cause: Cau
                 _("filename"),
                 _("date"),
                 _("duration"),
+                _("anaf gdpr"),
             ]
         )
         for index, donation_csv in enumerate(donations_data):
@@ -226,6 +228,7 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], cause: Cau
                     donation_csv["filename"],
                     donation_csv["date"],
                     donation_csv["duration"],
+                    donation_csv["anaf_gdpr"],
                 ]
             )
 
