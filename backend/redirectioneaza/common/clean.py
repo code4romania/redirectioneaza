@@ -19,6 +19,14 @@ def duration_flag_to_int(donation_duration: bool) -> int:
     return 2 if donation_duration else 1
 
 
+def anaf_gdpr_flag_to_int(anaf_gdpr: bool) -> int:
+    """
+    Convert the ANAF GDPR boolean to an integer.
+    """
+
+    return 1 if anaf_gdpr else 0
+
+
 def clean_text_email(email: str) -> str:
     """
     Keep only a minimal subset of the valid email characters.
@@ -92,7 +100,7 @@ def clean_text_custom(text: str) -> str:
     return "".join([c for c in text if c in ANAF_CUSTOM_LIST])
 
 
-def normalize_text_alnum(text):
+def normalize_text_alnum(text) -> str:
     """
     Normalize text to lowercase, remove diacritics, and keep only alphanumeric characters.
     """
