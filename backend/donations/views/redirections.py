@@ -128,38 +128,7 @@ class RedirectionHandler(TemplateView):
         is_donation_period_active = not now.date() > settings.DONATIONS_LIMIT
         donation_status = "open" if is_donation_period_active else "closed"
 
-        ngo_website_description = ""
-        ngo_website = cause.ngo.website if cause.ngo.website else ""
-
-        if ngo_website:
-            # try and parse the url to see if it's valid
-            try:
-                url_dict = urlparse(ngo_website)
-
-                if not url_dict.scheme:
-                    url_dict = url_dict._replace(scheme="http")
-
-                # if we have a netloc, then the URL is valid
-                # use the netloc as the website name
-                if url_dict.netloc:
-                    ngo_website_description = url_dict.netloc
-                    ngo_website = url_dict.geturl()
-
-                # of we don't have the netloc, when parsing the url
-                # urlparse might send it to path
-                # move that to netloc and remove the path
-                elif url_dict.path:
-                    url_dict = url_dict._replace(netloc=url_dict.path)
-                    ngo_website_description = url_dict.path
-
-                    url_dict = url_dict._replace(path="")
-
-                    ngo_website = url_dict.geturl()
-                else:
-                    raise
-
-            except Exception:
-                ngo_website = None
+        ngo_website, ngo_website_description = self._get_cause_website(cause)
 
         context.update(
             {
@@ -187,6 +156,43 @@ class RedirectionHandler(TemplateView):
             )
 
         return context
+
+    def _get_cause_website(self, cause: Cause) -> tuple[str, str]:
+        """
+        Extracts the NGO website from the cause and returns a tuple with the full URL and a description.
+        """
+        ngo_website_description = ""
+        ngo_website = cause.ngo.website if cause.ngo.website else ""
+
+        try:
+            url_dict = urlparse(ngo_website)
+
+            if not url_dict.scheme:
+                url_dict = url_dict._replace(scheme="http")
+
+            # if we have a netloc, then the URL is valid
+            # use the netloc as the website name
+            if url_dict.netloc:
+                ngo_website_description = url_dict.netloc
+                ngo_website = url_dict.geturl()
+
+            # of we don't have the netloc, when parsing the url
+            # urlparse might send it to path
+            # move that to netloc and remove the path
+            elif url_dict.path:
+                url_dict = url_dict._replace(netloc=url_dict.path)
+                ngo_website_description = url_dict.path
+
+                url_dict = url_dict._replace(path="")
+
+                ngo_website = url_dict.geturl()
+            else:
+                raise
+
+        except Exception:
+            ngo_website = None
+
+        return ngo_website, ngo_website_description
 
     def post(self, request, cause_slug):
         post = self.request.POST
