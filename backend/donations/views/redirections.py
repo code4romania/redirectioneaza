@@ -128,23 +128,6 @@ class RedirectionHandler(TemplateView):
         is_donation_period_active = not now.date() > settings.DONATIONS_LIMIT
         donation_status = "open" if is_donation_period_active else "closed"
 
-        context.update(
-            {
-                "title": cause.name if cause else ngo.name,
-                "cause": cause,
-                "main_cause": main_cause,
-                "ngo": ngo,
-                "absolute_path": absolute_path,
-                "donation_status": donation_status,
-                "is_admin": user.is_staff,
-                "limit": settings.DONATIONS_LIMIT,
-                "day_limit": settings.DONATIONS_LIMIT.day,
-                "month_limit": settings.DONATIONS_LIMIT_MONTH_NAME,
-            }
-        )
-        if donation_status == "closed":
-            return context
-
         ngo_website_description = ""
         ngo_website = cause.ngo.website if cause.ngo.website else ""
 
@@ -180,12 +163,28 @@ class RedirectionHandler(TemplateView):
 
         context.update(
             {
-                "counties": settings.FORM_COUNTIES_WITH_SECTORS,
-                "captcha_public_key": settings.RECAPTCHA_PUBLIC_KEY,
+                "title": cause.name if cause else ngo.name,
+                "cause": cause,
+                "main_cause": main_cause,
+                "ngo": ngo,
+                "absolute_path": absolute_path,
+                "donation_status": donation_status,
+                "is_admin": user.is_staff,
+                "limit": settings.DONATIONS_LIMIT,
+                "day_limit": settings.DONATIONS_LIMIT.day,
+                "month_limit": settings.DONATIONS_LIMIT_MONTH_NAME,
                 "ngo_website_description": ngo_website_description,
                 "ngo_website": ngo_website,
             }
         )
+
+        if donation_status != "closed":
+            context.update(
+                {
+                    "counties": settings.FORM_COUNTIES_WITH_SECTORS,
+                    "captcha_public_key": settings.RECAPTCHA_PUBLIC_KEY,
+                }
+            )
 
         return context
 

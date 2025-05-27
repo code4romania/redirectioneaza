@@ -101,6 +101,6 @@
   </div>
 </div>
 
-{% if main_cause.slug != cause.slug %}
+{% if donation_status != "closed" and main_cause.slug != cause.slug %}
   {% include "form/header/other-form.html" %}
 {% endif %}
