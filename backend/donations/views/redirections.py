@@ -138,6 +138,7 @@ class RedirectionHandler(TemplateView):
                 "donation_status": donation_status,
                 "is_admin": user.is_staff,
                 "limit": settings.DONATIONS_LIMIT,
+                "day_limit": settings.DONATIONS_LIMIT.day,
                 "month_limit": settings.DONATIONS_LIMIT_MONTH_NAME,
             }
         )
