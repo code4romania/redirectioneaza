@@ -3016,11 +3016,11 @@ msgstr "Notice!"
 msgid ""
 "The donation form can only be filled out between <span class=\"text-"
 "amber-600\">January 1st</span> and <span class=\"text-"
-"amber-600\">%(limit.day)s %(month_limit)s</span> of the current year."
+"amber-600\">%(day_limit)s %(month_limit)s</span> of the current year."
 msgstr ""
 "The donation form can only be filled out between <span class=\"text-"
 "amber-600\">January 1st</span> and <span class=\"text-"
-"amber-600\">%(limit.day)s %(month_limit)s</span> of the current year."
+"amber-600\">%(day_limit)s %(month_limit)s</span> of the current year."
 
 #: templates/v2/form/redirection-header.html:67
 msgid "Description"
