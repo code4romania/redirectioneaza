@@ -2,6 +2,7 @@ import hashlib
 import os
 
 from .environment import env
+from warnings import filterwarnings
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -39,6 +40,11 @@ SESSION_COOKIE_SECURE = env.bool("SESSION_COOKIE_SECURE")
 CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS")
 CORS_ALLOW_ALL_ORIGINS = env.bool("CORS_ALLOW_ALL_ORIGINS")
 
+
+# XXX: Remove in Django >=6.0
+filterwarnings(
+    "ignore", "The FORMS_URLFIELD_ASSUME_HTTPS transitional setting is deprecated."
+)
 FORMS_URLFIELD_ASSUME_HTTPS = True
 
 # Application definition
