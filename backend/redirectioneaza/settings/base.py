@@ -42,9 +42,7 @@ CORS_ALLOW_ALL_ORIGINS = env.bool("CORS_ALLOW_ALL_ORIGINS")
 
 
 # XXX: Remove in Django >=6.0
-filterwarnings(
-    "ignore", "The FORMS_URLFIELD_ASSUME_HTTPS transitional setting is deprecated."
-)
+filterwarnings("ignore", "The FORMS_URLFIELD_ASSUME_HTTPS transitional setting is deprecated.")
 FORMS_URLFIELD_ASSUME_HTTPS = True
 
 # Application definition

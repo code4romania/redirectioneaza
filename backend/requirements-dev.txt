@@ -17,12 +17,12 @@ black==25.1.0
     # via -r requirements-dev.in
 blessed==1.21.0
     # via -r requirements.txt
-boto3==1.38.14
+boto3==1.38.28
     # via
     #   -r requirements.txt
     #   django-ses
     #   pycognito
-botocore==1.38.14
+botocore==1.38.28
     # via
     #   -r requirements.txt
     #   boto3
@@ -46,11 +46,11 @@ charset-normalizer==3.4.2
     # via
     #   -r requirements.txt
     #   requests
-click==8.2.0
+click==8.2.1
     # via
     #   black
     #   pip-tools
-coverage==7.8.0
+coverage==7.8.2
     # via pytest-cov
 cryptography==44.0.3
     # via
@@ -80,7 +80,7 @@ django==5.2.1
     #   django-tinymce
     #   django-unfold
     #   django-vite
-django-allauth==65.8.0
+django-allauth==65.9.0
     # via -r requirements.txt
 django-environ==0.12.0
     # via -r requirements.txt
@@ -120,7 +120,7 @@ envs==1.4
     #   pycognito
 execnet==2.1.1
     # via pytest-xdist
-faker==37.1.0
+faker==37.3.0
     # via -r requirements-dev.in
 gevent==25.4.2
     # via -r requirements.txt
@@ -159,7 +159,7 @@ packaging==25.0
     #   pytest
 pathspec==0.12.1
     # via black
-phonenumbers==9.0.5
+phonenumbers==9.0.6
     # via -r requirements.txt
 pillow==11.2.1
     # via
@@ -169,7 +169,7 @@ pip-tools==7.4.1
     # via -r requirements-dev.in
 platformdirs==4.3.8
     # via black
-pluggy==1.5.0
+pluggy==1.6.0
     # via pytest
 psutil==7.0.0
     # via -r requirements.txt
@@ -181,7 +181,7 @@ pycparser==2.22
     # via
     #   -r requirements.txt
     #   cffi
-pydantic==2.11.4
+pydantic==2.11.5
     # via -r requirements.txt
 pydantic-core==2.33.2
     # via
@@ -193,7 +193,7 @@ pyjwt==2.10.1
     #   pycognito
 pymysql==1.1.1
     # via -r requirements.txt
-pypdf==5.5.0
+pypdf==5.6.0
     # via -r requirements.txt
 pyproject-hooks==1.2.0
     # via
@@ -219,11 +219,11 @@ python-ipware==3.0.0
     # via
     #   -r requirements.txt
     #   django-ipware
-python-stdnum==2.0
+python-stdnum==2.1
     # via
     #   -r requirements.txt
     #   django-localflavor
-reportlab==4.4.0
+reportlab==4.4.1
     # via
     #   -r requirements.txt
     #   svglib
@@ -231,13 +231,13 @@ requests==2.32.3
     # via
     #   -r requirements.txt
     #   pycognito
-ruff==0.11.9
+ruff==0.11.12
     # via -r requirements-dev.in
-s3transfer==0.12.0
+s3transfer==0.13.0
     # via
     #   -r requirements.txt
     #   boto3
-sentry-sdk==2.28.0
+sentry-sdk==2.29.1
     # via -r requirements.txt
 six==1.17.0
     # via
@@ -258,13 +258,13 @@ tinycss2==1.4.0
     #   -r requirements.txt
     #   cssselect2
     #   svglib
-typing-extensions==4.13.2
+typing-extensions==4.14.0
     # via
     #   -r requirements.txt
     #   pydantic
     #   pydantic-core
     #   typing-inspection
-typing-inspection==0.4.0
+typing-inspection==0.4.1
     # via
     #   -r requirements.txt
     #   pydantic
