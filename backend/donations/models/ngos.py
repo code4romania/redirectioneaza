@@ -14,7 +14,6 @@ from django.db.models.query_utils import DeferredAttribute
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from donations.common.models_hashing import hash_id_secret
-from donations.common.validation.clean_slug import clean_slug
 from donations.common.validation.registration_number import (
     REGISTRATION_NUMBER_REGEX_WITH_VAT,
     ngo_id_number_validator,
@@ -176,18 +175,7 @@ class NgoWithFormsThisYearManager(models.Manager):
 
 
 class Ngo(CommonFilenameCacheModel):
-    # XXX: [MULTI-FORM] DEPRECATED: moved to cause and should be deleted
-    slug = models.SlugField(
-        verbose_name=_("slug"),
-        blank=True,
-        null=False,
-        max_length=150,
-        default="",
-    )
-
-    name = models.CharField(verbose_name=_("Name"), blank=False, null=False, max_length=200, db_index=True)
-    # XXX: [MULTI-FORM] DEPRECATED: moved to cause and should be deleted
-    description = models.TextField(verbose_name=_("description"), blank=True, null=False, default="")
+    name = models.CharField(verbose_name=_("Legal name"), blank=False, null=False, max_length=200, db_index=True)
 
     # NGO Hub details
     ngohub_org_id = models.IntegerField(
@@ -199,18 +187,6 @@ class Ngo(CommonFilenameCacheModel):
     )
     ngohub_last_update_started = models.DateTimeField(_("Last NGO Hub update"), null=True, blank=True, editable=False)
     ngohub_last_update_ended = models.DateTimeField(_("Last NGO Hub update"), null=True, blank=True, editable=False)
-
-    # XXX: [MULTI-FORM] DEPRECATED: moved to cause and should be deleted
-    logo = models.ImageField(
-        verbose_name=_("logo"),
-        blank=True,
-        null=False,
-        storage=select_public_storage,
-        upload_to=partial(ngo_directory_path, "logos"),
-    )
-
-    # XXX: [MULTI-FORM] DEPRECATED: moved to cause and should be deleted
-    bank_account = models.CharField(verbose_name=_("bank account"), max_length=100, blank=True, null=False, default="")
 
     # TODO: the number's length should be between 2 and 10 (or 8)
     registration_number = models.CharField(
@@ -284,15 +260,6 @@ class Ngo(CommonFilenameCacheModel):
     # originally: active — the user cannot modify this property, it is set by the admin/by the NGO Hub settings
     is_active = models.BooleanField(verbose_name=_("is active"), db_index=True, default=True)
 
-    # url to the form that contains only the ngo's details
-    prefilled_form = models.FileField(
-        verbose_name=_("form with prefilled ngo data"),
-        blank=True,
-        null=False,
-        storage=select_public_storage,
-        upload_to=partial(year_ngo_directory_path, "ngo-forms"),
-    )
-
     date_created = models.DateTimeField(verbose_name=_("date created"), db_index=True, auto_now_add=True)
     date_updated = models.DateTimeField(verbose_name=_("date updated"), db_index=True, auto_now=True)
 
@@ -303,9 +270,6 @@ class Ngo(CommonFilenameCacheModel):
 
     def save(self, *args, **kwargs):
         is_new = self.id is None
-        self.slug = self.slug.lower()
-        if not self.slug:
-            self.slug = clean_slug(self.name)
 
         if self.registration_number:
             uppercase_registration_number = self.registration_number
@@ -323,7 +287,7 @@ class Ngo(CommonFilenameCacheModel):
         verbose_name_plural = _("NGOs")
 
         constraints = [
-            models.UniqueConstraint(Lower("slug"), name="slug__unique"),
+            models.UniqueConstraint(Lower("registration_number"), name="registration_number__unique"),
         ]
 
     def __str__(self):
@@ -352,6 +316,48 @@ class Ngo(CommonFilenameCacheModel):
 
         if commit:
             self.save()
+
+    @property
+    def main_cause(self) -> Optional["Cause"]:
+        if not self.pk:
+            return None
+
+        return self.causes.filter(is_main=True).first()
+
+    @property
+    def slug(self):
+        if main_cause := self.main_cause:
+            return main_cause.slug
+
+        return None
+
+    @property
+    def description(self):
+        if main_cause := self.main_cause:
+            return main_cause.description
+
+        return None
+
+    @property
+    def logo(self):
+        if main_cause := self.main_cause:
+            return main_cause.display_image
+
+        return None
+
+    @property
+    def bank_account(self):
+        if main_cause := self.main_cause:
+            return main_cause.bank_account
+
+        return None
+
+    @property
+    def prefilled_form(self):
+        if main_cause := self.main_cause:
+            return main_cause.prefilled_form
+
+        return None
 
     @property
     def has_ngo_hub(self):
@@ -386,10 +392,6 @@ class Ngo(CommonFilenameCacheModel):
     @property
     def missing_mandatory_fields_names_capitalize(self):
         return [field.capitalize() for field in self.missing_mandatory_fields_names]
-
-    @property
-    def main_cause(self) -> "Cause":
-        return self.causes.filter(is_main=True).first()
 
     @property
     def can_create_causes(self):
