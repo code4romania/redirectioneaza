@@ -119,9 +119,6 @@ class NgoPresentationView(NgoBaseTemplateView):
             ngo.phone = form.cleaned_data["contact_phone"]
             ngo.email = form.cleaned_data["contact_email"]
 
-            if form.cleaned_data["logo"]:
-                ngo.logo = form.cleaned_data["logo"]
-
             ngo.website = form.cleaned_data["website"]
             ngo.address = form.cleaned_data["address"]
             ngo.county = form.cleaned_data["county"]

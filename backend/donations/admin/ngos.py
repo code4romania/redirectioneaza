@@ -140,6 +140,8 @@ class HasNgoHubFilter(admin.SimpleListFilter):
         if filter_value is not None:
             return queryset.filter(ngohub_org_id__isnull=not filter_value)
 
+        return queryset
+
 
 class HasOwnerFilter(admin.SimpleListFilter):
     title = _("Has owner")
@@ -158,13 +160,15 @@ class HasOwnerFilter(admin.SimpleListFilter):
         if filter_value is not None:
             return queryset.filter(users__isnull=filter_value)
 
+        return queryset
+
 
 @admin.register(Ngo)
 class NgoAdmin(ModelAdmin):
     list_filter_submit = True
 
-    list_display = ("id", "get_ngohub_link", "get_cif", "name", "slug", "is_accepting_forms", "is_active")
-    list_display_links = ("id", "get_cif", "name", "slug")
+    list_display = ("id", "get_ngohub_link", "get_cif", "name", "is_accepting_forms", "is_active")
+    list_display_links = ("id", "get_cif", "name", "is_accepting_forms")
     list_editable = ("is_active",)
 
     list_filter = (
@@ -182,7 +186,7 @@ class NgoAdmin(ModelAdmin):
     )
     list_per_page = 30
 
-    search_fields = ("name", "registration_number", "slug", "description")
+    search_fields = ("name", "registration_number")
 
     inlines = (NgoCauseInline, NgoPartnerInline, NgoUserInline)
 
@@ -210,9 +214,7 @@ class NgoAdmin(ModelAdmin):
                     "vat_id",
                     "registration_number",
                     "ngohub_org_id",
-                    "slug",
                     "name",
-                    "description",
                 )
             },
         ),
@@ -228,10 +230,6 @@ class NgoAdmin(ModelAdmin):
             },
         ),
         (
-            _("Logo"),
-            {"fields": ("logo",)},
-        ),
-        (
             _("Contact"),
             {
                 "fields": (
@@ -244,15 +242,6 @@ class NgoAdmin(ModelAdmin):
                     "phone",
                     "display_phone",
                     "website",
-                )
-            },
-        ),
-        (
-            _("Details"),
-            {
-                "fields": (
-                    "bank_account",
-                    "prefilled_form",
                 )
             },
         ),
@@ -311,15 +300,9 @@ class NgoAdmin(ModelAdmin):
                 {
                     "fields": (
                         "name",
-                        "slug",
                         "registration_number",
-                        "description",
                     )
                 },
-            ),
-            (
-                _("Logo"),
-                {"fields": ("logo",)},
             ),
         )
 

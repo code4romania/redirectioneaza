@@ -69,7 +69,7 @@ def _copy_file_to_object_with_filename_cache(
         extension: str = mimetypes.guess_extension(r.headers["content-type"])
 
         if extension == ".bin":
-            logger.error(f"Could not get extension for attribute {attribute_name.upper()} for object {target_object}")
+            logger.warning(f"Could not get extension for attribute {attribute_name.upper()} for object {target_object}")
             extension = ""
 
     with tempfile.TemporaryFile() as fp:
@@ -149,9 +149,6 @@ def _create_main_cause(ngo: Ngo, ngohub_general_data: OrganizationGeneral) -> Ca
 
     cause.slug = new_slug
 
-    if ngo.logo:
-        cause.display_image = ngo.logo
-
     cause.save()
 
     return cause
@@ -166,10 +163,6 @@ def _update_local_ngo_with_ngohub_data(ngo: Ngo, ngohub_ngo: Organization) -> Di
     ngohub_general_data: OrganizationGeneral = ngohub_ngo.general_data
 
     ngo.name = ngohub_general_data.name
-
-    # XXX: [MULTI-FORM] The NGO shouldn't have a description anymore, right?
-    if ngo.description is None:
-        ngo.description = ngohub_general_data.description or ""
 
     ngo.registration_number = ngohub_general_data.cui
 
