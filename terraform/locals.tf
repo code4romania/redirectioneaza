@@ -12,14 +12,13 @@ locals {
 
   ecs = {
     instance_types = {
-      "m5.large"  = ""
-      "m5a.large" = ""
+      "t3a.medium" = ""
     }
   }
 
   db = {
     name           = "redirectioneaza"
-    instance_class = var.env == "production" ? "db.t4g.medium" : "db.t4g.micro"
+    instance_class = "db.t4g.micro" # "db.t4g.medium"
   }
 
   networking = {
