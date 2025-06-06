@@ -1,4 +1,4 @@
-django~=5.2.0
+django~=5.2.2
 django-environ~=0.12
 django-ipware~=7.0.1
 # django-unfold: newer versions use Tailwind 4, while the frontend uses Tailwind 3
