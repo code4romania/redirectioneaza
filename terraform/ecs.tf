@@ -5,16 +5,16 @@ module "ecs_cluster" {
   vpc_id                = aws_vpc.main.id
   ecs_subnets           = [aws_subnet.private.0.id]
   security_groups       = [aws_security_group.ecs.id]
-  default_instance_type = "m5a.large"
+  default_instance_type = "t3a.medium"
   instance_types        = local.ecs.instance_types
 
-  min_size                  = 2
-  max_size                  = 8
+  min_size                  = 1
+  max_size                  = 4
   minimum_scaling_step_size = 1
   maximum_scaling_step_size = 1
 
   target_capacity                          = 100
-  capacity_rebalance                       = true
+  capacity_rebalance                       = false
   on_demand_base_capacity                  = 1 # could be set to 1 for stability. consider savings plan
   on_demand_percentage_above_base_capacity = 0
   ecs_cloudwatch_log_retention             = 30
