@@ -108,7 +108,7 @@ packaging==25.0
     # via gunicorn
 phonenumbers==9.0.6
     # via -r requirements.in
-pillow==11.2.1
+pillow==11.3.0
     # via reportlab
 psutil==7.0.0
     # via -r requirements.in
