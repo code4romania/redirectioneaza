@@ -27,7 +27,7 @@ class HomePage(BaseVisibleTemplateView):
     template_name = "public/home.html"
     title = "redirectioneaza.ro"
 
-    @cache_decorator(timeout=settings.TIMEOUT_CACHE_SHORT, cache_key_prefix=FRONTPAGE_STATS_KEY)
+    @cache_decorator(timeout=settings.TIMEOUT_CACHE_NORMAL, cache_key_prefix=FRONTPAGE_STATS_KEY)
     def _get_stats(self, now: datetime = None, queryset: QuerySet = None) -> List[Dict[str, Union[str, int]]]:
         if now is None:
             now = timezone.now()

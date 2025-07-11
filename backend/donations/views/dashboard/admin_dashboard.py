@@ -26,7 +26,7 @@ def callback(request, context) -> Dict:
     return context
 
 
-@cache_decorator(timeout=settings.TIMEOUT_CACHE_SHORT, cache_key=ADMIN_DASHBOARD_STATS_CACHE_KEY)
+@cache_decorator(timeout=settings.TIMEOUT_CACHE_NORMAL, cache_key=ADMIN_DASHBOARD_STATS_CACHE_KEY)
 def _get_admin_stats() -> Dict:
     today = now()
     years_range_ascending = get_current_year_range()
