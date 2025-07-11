@@ -109,13 +109,10 @@ class NgoActiveManager(models.Manager):
             .exclude(
                 Q(name__isnull=True)
                 | Q(name__exact="")
-                | Q(slug__isnull=True)
-                | Q(slug__exact="")
-                | Q(bank_account__isnull=True)
-                | Q(bank_account__exact="")
                 | Q(registration_number__isnull=True)
                 | Q(registration_number__exact=""),
             )
+            # TODO: also exclude NGOs which do not have at least one Cause with a bank account or slug
         )
 
 
