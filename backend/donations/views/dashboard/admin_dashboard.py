@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Dict, List, Union
 
 from django.conf import settings
@@ -44,7 +45,7 @@ def _get_admin_stats() -> Dict:
     }
 
 
-def _get_header_stats(today) -> List[List[Dict[str, Union[str, int]]]]:
+def _get_header_stats(today) -> List[List[Dict[str, Union[str, int | datetime]]]]:
     current_year = today.year
 
     current_year_range = get_encoded_current_year_range(current_year, today.tzinfo)
@@ -130,7 +131,7 @@ def _get_yearly_stats(years_range_ascending) -> List[Dict[str, Union[int, List[D
 
 # TODO: This cache seems useless because we already cache the entire dashboard stats
 @cache_decorator(timeout=settings.TIMEOUT_CACHE_NORMAL, cache_key_prefix=ADMIN_DASHBOARD_CACHE_KEY)
-def _get_stats_for_year(year: int) -> Dict[str, int]:
+def _get_stats_for_year(year: int) -> Dict[str, int | datetime]:
     donations: int = Donor.available.filter(date_created__year=year).count()
     ngos_registered: int = Ngo.objects.filter(date_created__year=year).count()
     ngos_with_forms: int = Donor.available.filter(date_created__year=year).values("ngo_id").distinct().count()
