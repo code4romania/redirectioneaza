@@ -48,14 +48,17 @@ class HomePage(BaseVisibleTemplateView):
             {
                 "title": _("organizations registered in the platform"),
                 "value": queryset.count(),
+                "timestamp": timezone.now(),
             },
             {
                 "title": pluralized_title + " " + str(start_of_year.year),
                 "value": forms_filled_count,
+                "timestamp": timezone.now(),
             },
             {
                 "title": _("redirected to NGOs through the platform"),
                 "value": _("> €2 million"),
+                "timestamp": timezone.now(),
             },
         ]
 
