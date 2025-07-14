@@ -27,8 +27,8 @@ class HomePage(BaseVisibleTemplateView):
     template_name = "public/home.html"
     title = "redirectioneaza.ro"
 
-    @cache_decorator(timeout=settings.TIMEOUT_CACHE_SHORT, cache_key_prefix=FRONTPAGE_STATS_KEY)
-    def _get_stats(self, now: datetime = None, queryset: QuerySet = None) -> List[Dict[str, Union[str, int]]]:
+    @cache_decorator(timeout=settings.TIMEOUT_CACHE_NORMAL, cache_key_prefix=FRONTPAGE_STATS_KEY)
+    def _get_stats(self, now: datetime = None, queryset: QuerySet = None) -> List[Dict[str, Union[str, int, datetime]]]:
         if now is None:
             now = timezone.now()
 
@@ -48,14 +48,17 @@ class HomePage(BaseVisibleTemplateView):
             {
                 "title": _("organizations registered in the platform"),
                 "value": queryset.count(),
+                "timestamp": timezone.now(),
             },
             {
                 "title": pluralized_title + " " + str(start_of_year.year),
                 "value": forms_filled_count,
+                "timestamp": timezone.now(),
             },
             {
                 "title": _("redirected to NGOs through the platform"),
                 "value": _("> €2 million"),
+                "timestamp": timezone.now(),
             },
         ]
 

@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Dict, List, Union
 
 from django.conf import settings
@@ -26,7 +27,7 @@ def callback(request, context) -> Dict:
     return context
 
 
-@cache_decorator(timeout=settings.TIMEOUT_CACHE_SHORT, cache_key=ADMIN_DASHBOARD_STATS_CACHE_KEY)
+@cache_decorator(timeout=settings.TIMEOUT_CACHE_NORMAL, cache_key=ADMIN_DASHBOARD_STATS_CACHE_KEY)
 def _get_admin_stats() -> Dict:
     today = now()
     years_range_ascending = get_current_year_range()
@@ -44,7 +45,7 @@ def _get_admin_stats() -> Dict:
     }
 
 
-def _get_header_stats(today) -> List[List[Dict[str, Union[str, int]]]]:
+def _get_header_stats(today) -> List[List[Dict[str, Union[str, int | datetime]]]]:
     current_year = today.year
 
     current_year_range = get_encoded_current_year_range(current_year, today.tzinfo)
@@ -58,12 +59,14 @@ def _get_header_stats(today) -> List[List[Dict[str, Union[str, int]]]]:
                 "footer": _create_stat_link(
                     url=f'{reverse("admin:donations_donor_changelist")}?{current_year_range}', text=_("View all")
                 ),
+                "timestamp": now(),
             },
             {
                 "title": _("Donations all-time"),
                 "icon": "edit_document",
                 "metric": Donor.available.count(),
                 "footer": _create_stat_link(url=reverse("admin:donations_donor_changelist"), text=_("View all")),
+                "timestamp": now(),
             },
             {
                 "title": _("NGOs registered"),
@@ -72,12 +75,14 @@ def _get_header_stats(today) -> List[List[Dict[str, Union[str, int]]]]:
                 "footer": _create_stat_link(
                     url=f'{reverse("admin:donations_ngo_changelist")}?is_active=1', text=_("View all")
                 ),
+                "timestamp": now(),
             },
             {
                 "title": _("Functioning NGOs"),
                 "icon": "foundation",
                 "metric": Ngo.with_forms_this_year.count(),
                 "footer": _create_stat_link(url=f'{reverse("admin:donations_ngo_changelist")}', text=_("View all")),
+                "timestamp": now(),
             },
             {
                 "title": _("NGOs from NGO Hub"),
@@ -86,6 +91,7 @@ def _get_header_stats(today) -> List[List[Dict[str, Union[str, int]]]]:
                 "footer": _create_stat_link(
                     url=f'{reverse("admin:donations_ngo_changelist")}?is_active=1&has_ngohub=1', text=_("View all")
                 ),
+                "timestamp": now(),
             },
         ]
     ]
@@ -123,8 +129,9 @@ def _get_yearly_stats(years_range_ascending) -> List[Dict[str, Union[int, List[D
     return sorted(final_statistics, key=lambda x: x["year"], reverse=True)
 
 
+# TODO: This cache seems useless because we already cache the entire dashboard stats
 @cache_decorator(timeout=settings.TIMEOUT_CACHE_NORMAL, cache_key_prefix=ADMIN_DASHBOARD_CACHE_KEY)
-def _get_stats_for_year(year: int) -> Dict[str, int]:
+def _get_stats_for_year(year: int) -> Dict[str, int | datetime]:
     donations: int = Donor.available.filter(date_created__year=year).count()
     ngos_registered: int = Ngo.objects.filter(date_created__year=year).count()
     ngos_with_forms: int = Donor.available.filter(date_created__year=year).values("ngo_id").distinct().count()
@@ -134,6 +141,7 @@ def _get_stats_for_year(year: int) -> Dict[str, int]:
         "donations": donations,
         "ngos_registered": ngos_registered,
         "ngos_with_forms": ngos_with_forms,
+        "timestamp": now(),
     }
 
     return statistic
@@ -153,6 +161,7 @@ def _format_yearly_stats(statistics) -> List[Dict[str, Union[int, List[Dict]]]]:
                         url=f'{reverse("admin:donations_donor_changelist")}?date_created__year={statistic["year"]}',
                         text=_("View all"),
                     ),
+                    "timestamp": statistic["timestamp"],
                 },
                 {
                     "title": _("NGOs registered"),
@@ -163,6 +172,7 @@ def _format_yearly_stats(statistics) -> List[Dict[str, Union[int, List[Dict]]]]:
                         url=f'{reverse("admin:donations_ngo_changelist")}?date_created__year={statistic["year"]}',
                         text=_("View all"),
                     ),
+                    "timestamp": statistic["timestamp"],
                 },
                 {
                     "title": _("NGOs with forms"),
@@ -173,6 +183,7 @@ def _format_yearly_stats(statistics) -> List[Dict[str, Union[int, List[Dict]]]]:
                         url=f'{reverse("admin:donations_ngo_changelist")}?has_forms=1&date_created__year={statistic["year"]}',
                         text=_("View all"),
                     ),
+                    "timestamp": statistic["timestamp"],
                 },
             ],
         }

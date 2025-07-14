@@ -1,5 +1,5 @@
-ARG NODE_VERSION=22.15.0
-ARG PYTHON_VERSION=3.12.10
+ARG NODE_VERSION=22.17.0
+ARG PYTHON_VERSION=3.12.11
 
 
 FROM node:${NODE_VERSION}-alpine AS frontend
@@ -61,7 +61,7 @@ RUN apt-get update && \
     cron nginx gcc xz-utils gettext
 
 # configure process manager
-ARG S6_OVERLAY_VERSION=3.2.0.2
+ARG S6_OVERLAY_VERSION=3.2.1.0
 ENV S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0
 
 ADD https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-noarch.tar.xz /tmp
