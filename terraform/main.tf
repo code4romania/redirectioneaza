@@ -136,6 +136,10 @@ module "ecs_redirectioneaza" {
       value = 3
     },
     {
+      name  = "GUNICORN_WORKERS_TIMEOUT"
+      value = 60
+    },
+    {
       name  = "DJANGO_Q_WORKERS_COUNT"
       value = 2
     },
