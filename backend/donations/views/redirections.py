@@ -6,7 +6,7 @@ from urllib.parse import urlparse
 from django.conf import settings
 from django.contrib import messages
 from django.core.files import File
-from django.db.models import Prefetch
+from django.db.models import Prefetch, QuerySet
 from django.http import Http404, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
@@ -80,36 +80,25 @@ class RedirectionHandler(TemplateView):
 
         request = self.request
 
-        main_cause_qs = Cause.objects.filter(is_main=True).only("id", "slug", "name", "description")
+        main_cause_qs: QuerySet[Cause] = Cause.objects.filter(is_main=True).only("id", "slug", "name", "description")
+
+        prefetch_qs = Cause.active.select_related("ngo").prefetch_related(
+            Prefetch(
+                lookup="ngo__causes",
+                queryset=main_cause_qs,
+                to_attr="main_cause_list",
+            )
+        )
 
         cause: Cause = get_object_or_404(
-            Cause.active.select_related("ngo").prefetch_related(
-                Prefetch(
-                    lookup="ngo__causes",
-                    queryset=main_cause_qs,
-                    to_attr="main_cause_list",
-                )
-            ),
+            prefetch_qs,
             slug=cause_slug,
         )
 
         user: User = request.user
-        if cause.visibility == CauseVisibilityChoices.PRIVATE:
-            # if the cause is private, we need to check if the user is logged in
-            # and if the user is allowed to see the cause
-            if not user.is_authenticated:
-                raise Http404("Cause not found")
+        self._check_cause_visibility(cause, user)
 
-            if not user.is_staff and cause.ngo != user.ngo:
-                raise Http404("Cause not found")
-
-        # if we didn't find it or the ngo doesn't have an active page
-        if (ngo := cause.ngo) is None:
-            logger.exception(f"NGO not found for cause {cause.pk}")
-            raise Http404
-
-        if not ngo.can_create_causes:
-            raise Http404
+        ngo = self._get_ngo_or_404(cause)
 
         # noinspection PyUnresolvedReferences
         main_cause = cause if cause.is_main else (ngo.main_cause_list[0] if ngo.main_cause_list else None)
@@ -156,6 +145,27 @@ class RedirectionHandler(TemplateView):
             )
 
         return context
+
+    def _get_ngo_or_404(self, cause: Cause) -> Ngo:
+        # if we didn't find it or the ngo doesn't have an active page
+        if (ngo := cause.ngo) is None:
+            logger.exception(f"NGO not found for cause {cause.pk}")
+            raise Http404
+
+        if not ngo.can_create_causes:
+            raise Http404
+
+        return ngo
+
+    def _check_cause_visibility(self, cause: Cause, user: User):
+        if cause.visibility == CauseVisibilityChoices.PRIVATE:
+            # if the cause is private, we need to check if the user is logged in
+            # and if the user is allowed to see the cause
+            if not user.is_authenticated:
+                raise Http404("Cause not found")
+
+            if not user.is_staff and cause.ngo != user.ngo:
+                raise Http404("Cause not found")
 
     def _get_cause_website(self, cause: Cause) -> tuple[str, str]:
         """
