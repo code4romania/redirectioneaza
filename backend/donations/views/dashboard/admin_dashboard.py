@@ -7,10 +7,16 @@ from django.utils.safestring import mark_safe
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 
-from donations.models.ngos import Ngo
-from redirectioneaza.common.cache import cache_decorator
+from .stats_helper_chart import donors_for_month
+from .stats_helper_metrics import (
+    all_active_ngos,
+    all_redirections,
+    current_year_redirections,
+    ngos_active_in_current_year,
+    ngos_with_ngo_hub,
+)
+from .stats_helpers_yearly import get_stats_for_year
 
-from ...models.donors import Donor
 from .helpers import (
     generate_donations_per_month_chart,
     get_current_year_range,
@@ -27,7 +33,6 @@ def callback(request, context) -> Dict:
     return context
 
 
-@cache_decorator(timeout=settings.TIMEOUT_CACHE_NORMAL, cache_key=ADMIN_DASHBOARD_STATS_CACHE_KEY)
 def _get_admin_stats() -> Dict:
     today = now()
     years_range_ascending = get_current_year_range()
@@ -55,43 +60,43 @@ def _get_header_stats(today) -> List[List[Dict[str, Union[str, int | datetime]]]
             {
                 "title": _("Donations this year"),
                 "icon": "edit_document",
-                "metric": Donor.available.filter(date_created__year=current_year).count(),
+                "metric": current_year_redirections["metric"],
                 "footer": _create_stat_link(
                     url=f'{reverse("admin:donations_donor_changelist")}?{current_year_range}', text=_("View all")
                 ),
-                "timestamp": now(),
+                "timestamp": current_year_redirections["timestamp"],
             },
             {
                 "title": _("Donations all-time"),
                 "icon": "edit_document",
-                "metric": Donor.available.count(),
+                "metric": all_redirections["metric"],
                 "footer": _create_stat_link(url=reverse("admin:donations_donor_changelist"), text=_("View all")),
-                "timestamp": now(),
+                "timestamp": all_redirections["timestamp"],
             },
             {
                 "title": _("NGOs registered"),
                 "icon": "foundation",
-                "metric": Ngo.active.count(),
+                "metric": all_active_ngos["metric"],
                 "footer": _create_stat_link(
                     url=f'{reverse("admin:donations_ngo_changelist")}?is_active=1', text=_("View all")
                 ),
-                "timestamp": now(),
+                "timestamp": all_active_ngos["timestamp"],
             },
             {
                 "title": _("Functioning NGOs"),
                 "icon": "foundation",
-                "metric": Ngo.with_forms_this_year.count(),
+                "metric": ngos_active_in_current_year["metric"],
                 "footer": _create_stat_link(url=f'{reverse("admin:donations_ngo_changelist")}', text=_("View all")),
-                "timestamp": now(),
+                "timestamp": ngos_active_in_current_year["timestamp"],
             },
             {
                 "title": _("NGOs from NGO Hub"),
                 "icon": "foundation",
-                "metric": Ngo.ngo_hub.count(),
+                "metric": ngos_with_ngo_hub["metric"],
                 "footer": _create_stat_link(
                     url=f'{reverse("admin:donations_ngo_changelist")}?is_active=1&has_ngohub=1', text=_("View all")
                 ),
-                "timestamp": now(),
+                "timestamp": ngos_with_ngo_hub["timestamp"],
             },
         ]
     ]
@@ -99,9 +104,10 @@ def _get_header_stats(today) -> List[List[Dict[str, Union[str, int | datetime]]]
 
 def _create_chart_statistics() -> Dict[str, str]:
     default_border_width: int = 3
+    current_year = now().year
 
     donations_per_month_queryset = [
-        Donor.available.filter(date_created__month=month) for month in range(1, settings.DONATIONS_LIMIT.month + 1)
+        donors_for_month(month, current_year)["metric"] for month in range(1, settings.DONATIONS_LIMIT.month + 1)
     ]
 
     forms_per_month_chart = generate_donations_per_month_chart(default_border_width, donations_per_month_queryset)
@@ -110,7 +116,7 @@ def _create_chart_statistics() -> Dict[str, str]:
 
 
 def _get_yearly_stats(years_range_ascending) -> List[Dict[str, Union[int, List[Dict]]]]:
-    statistics = [_get_stats_for_year(year) for year in years_range_ascending]
+    statistics = [get_stats_for_year(year) for year in years_range_ascending]
 
     for index, statistic in enumerate(statistics):
         if index == 0:
@@ -127,24 +133,6 @@ def _get_yearly_stats(years_range_ascending) -> List[Dict[str, Union[int, List[D
     final_statistics = _format_yearly_stats(statistics)
 
     return sorted(final_statistics, key=lambda x: x["year"], reverse=True)
-
-
-# TODO: This cache seems useless because we already cache the entire dashboard stats
-@cache_decorator(timeout=settings.TIMEOUT_CACHE_NORMAL, cache_key_prefix=ADMIN_DASHBOARD_CACHE_KEY)
-def _get_stats_for_year(year: int) -> Dict[str, int | datetime]:
-    donations: int = Donor.available.filter(date_created__year=year).count()
-    ngos_registered: int = Ngo.objects.filter(date_created__year=year).count()
-    ngos_with_forms: int = Donor.available.filter(date_created__year=year).values("ngo_id").distinct().count()
-
-    statistic = {
-        "year": year,
-        "donations": donations,
-        "ngos_registered": ngos_registered,
-        "ngos_with_forms": ngos_with_forms,
-        "timestamp": now(),
-    }
-
-    return statistic
 
 
 def _format_yearly_stats(statistics) -> List[Dict[str, Union[int, List[Dict]]]]:
