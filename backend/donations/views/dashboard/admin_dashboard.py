@@ -7,15 +7,15 @@ from django.utils.safestring import mark_safe
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 
-from .stats_helper_chart import donors_for_month
-from .stats_helper_metrics import (
+from donations.views.dashboard.stats_helpers.chart import donors_for_month
+from donations.views.dashboard.stats_helpers.metrics import (
     all_active_ngos,
     all_redirections,
     current_year_redirections,
     ngos_active_in_current_year,
     ngos_with_ngo_hub,
 )
-from .stats_helpers_yearly import get_stats_for_year
+from donations.views.dashboard.stats_helpers.yearly import get_stats_for_year
 
 from .helpers import (
     generate_donations_per_month_chart,

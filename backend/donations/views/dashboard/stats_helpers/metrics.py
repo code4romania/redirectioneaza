@@ -4,6 +4,7 @@ from django.utils.timezone import now
 from django_q.tasks import async_task
 
 from donations.models import Donor, Ngo
+from donations.views.dashboard.stats_helpers.utils import cache_set
 
 
 def _cache_key_for_metric(metric_name: str) -> str:
@@ -50,7 +51,7 @@ def current_year_redirections():
         "timestamp": now(),
     }
 
-    cache.set(_cache_key_for_metric("current_year_redirections"), result)
+    cache_set(_cache_key_for_metric("current_year_redirections"), result)
 
     return result
 
@@ -62,7 +63,7 @@ def all_redirections():
         "timestamp": now(),
     }
 
-    cache.set(_cache_key_for_metric("all_redirections"), result)
+    cache_set(_cache_key_for_metric("all_redirections"), result)
 
     return result
 
@@ -74,7 +75,7 @@ def all_active_ngos():
         "timestamp": now(),
     }
 
-    cache.set(_cache_key_for_metric("all_active_ngos"), result)
+    cache_set(_cache_key_for_metric("all_active_ngos"), result)
 
     return result
 
@@ -86,7 +87,7 @@ def ngos_active_in_current_year():
         "timestamp": now(),
     }
 
-    cache.set(_cache_key_for_metric("ngos_active_in_current_year"), result)
+    cache_set(_cache_key_for_metric("ngos_active_in_current_year"), result)
 
     return result
 
@@ -98,6 +99,6 @@ def ngos_with_ngo_hub():
         "timestamp": now(),
     }
 
-    cache.set(_cache_key_for_metric("ngos_with_ngo_hub"), result)
+    cache_set(_cache_key_for_metric("ngos_with_ngo_hub"), result)
 
     return result

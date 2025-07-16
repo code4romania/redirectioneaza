@@ -7,7 +7,7 @@ from django.utils.timezone import now
 from django_q.tasks import async_task
 
 from donations.models import Donor, Ngo
-
+from donations.views.dashboard.stats_helpers.utils import cache_set
 
 STATS_FOR_YEAR_CACHE_PREFIX = "STATS_FOR_YEAR_"
 
@@ -92,6 +92,6 @@ def _update_stats_for_year(year: int, cache_key: str, current_time: datetime) ->
         "timestamp": current_time,
     }
 
-    cache.set(cache_key, statistic, timeout=settings.TIMEOUT_CACHE_NORMAL)
+    cache_set(cache_key, statistic, timeout=settings.TIMEOUT_CACHE_NORMAL)
 
     return statistic

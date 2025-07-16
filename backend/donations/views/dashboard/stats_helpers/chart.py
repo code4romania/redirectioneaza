@@ -6,7 +6,7 @@ from django.utils.timezone import now
 from django_q.tasks import async_task
 
 from donations.models import Donor
-
+from donations.views.dashboard.stats_helpers.utils import cache_set
 
 STATS_FOR_MONTH_CACHE_PREFIX = "STATS_FOR_MONTH_"
 
@@ -52,8 +52,6 @@ def donors_for_month(month: int, year: int = None) -> Dict[str, int]:
         month,
         year,
         cache_key,
-        hook="_donors_for_month_callback",
-        task_name="donors_for_month_task",
     )
 
     return cached_stats or default_stat
@@ -85,6 +83,6 @@ def _update_stats_for_month(month: int, year: int, cache_key: str) -> Dict[str, 
         "month": month,
     }
 
-    cache.set(cache_key, stat)
+    cache_set(cache_key, stat)
 
     return stat
