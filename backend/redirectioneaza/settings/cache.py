@@ -12,7 +12,8 @@ if ENABLE_CACHE:
         "default": {
             "BACKEND": "django.core.cache.backends.db.DatabaseCache",
             "LOCATION": "redirect_cache_default",
-            "TIMEOUT": TIMEOUT_CACHE_NORMAL,  # default cache timeout in seconds
+            "TIMEOUT": TIMEOUT_CACHE_NORMAL,
+            "OPTIONS": {"MAX_ENTRIES": 1000},
         }
     }
 else:
