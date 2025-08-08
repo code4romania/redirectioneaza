@@ -22,13 +22,11 @@ services:
       - .env
     environment:
       - "PYTHONUNBUFFERED=1"
-    restart: on-failure
 
   db_base:
     container_name: redirect_db_dev
     env_file:
       - .env
-    restart: always
 
   db_base_mysql:
     extends:
