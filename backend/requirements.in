@@ -50,7 +50,7 @@ phonenumbers~=9.0
 
 # pdf creation
 reportlab~=4.4
-pypdf~=5.4
+pypdf~=6.0
 svglib~=1.5.1
 
 # requests

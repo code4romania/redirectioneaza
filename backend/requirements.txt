@@ -126,7 +126,7 @@ pyjwt==2.10.1
     # via pycognito
 pymysql==1.1.1
     # via -r requirements.in
-pypdf==5.7.0
+pypdf==6.0.0
     # via -r requirements.in
 python-dateutil==2.9.0.post0
     # via botocore
