@@ -1,6 +1,7 @@
-ARG NODE_VERSION=22.17.0
+ARG NODE_VERSION=24.5.0
+ARG S6_OVERLAY_VERSION=3.2.1.0
 
-FROM node:${NODE_VERSION}-bookworm-slim
+FROM node:${NODE_VERSION}-trixie-slim
 
 ENV PYTHONUNBUFFERED=1
 
@@ -8,11 +9,11 @@ ENV DEBUG=${DEBUG:-True}
 ENV ENVIRONMENT=${ENVIRONMENT:-development}
 ENV LOG_LEVEL=${LOG_LEVEL:-WARNING}
 
-ENV RUN_MIGRATIONS=True
-ENV RUN_COMPILE_MESSAGES=True
-ENV RUN_COLLECT_STATIC=False
-ENV RUN_CREATE_SUPER_USER=True
-ENV RUN_SEED_GROUPS=True
+ENV RUN_MIGRATIONS=${RUN_MIGRATIONS:-True}
+ENV RUN_COMPILE_MESSAGES=${RUN_COMPILE_MESSAGES:-True}
+ENV RUN_COLLECT_STATIC=${RUN_COLLECT_STATIC:-False}
+ENV RUN_CREATE_SUPER_USER=${RUN_CREATE_SUPER_USER:-True}
+ENV RUN_SEED_GROUPS=${RUN_SEED_GROUPS:-True}
 
 ENV IS_CONTAINERIZED=True
 
@@ -22,12 +23,16 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y --no-install-recommends \
+    curl ca-certificates \
     cron procps \
     nginx gcc xz-utils gettext python3 python3-pip python3-venv python3-dev git postgresql-client libpq-dev && \
     apt-get clean
 
 
-ARG S6_OVERLAY_VERSION=3.2.1.0
+# Make sure scripts in .local are usable:
+ENV PATH="/root/.local/bin:${PATH}"
+
+ARG S6_OVERLAY_VERSION
 ENV S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0
 
 ADD https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-noarch.tar.xz /tmp
@@ -39,18 +44,22 @@ RUN tar -C / -Jxpf /tmp/s6-overlay-noarch.tar.xz && \
 COPY docker/nginx/nginx.conf /etc/nginx/sites-available/default
 COPY docker/s6-rc.d /etc/s6-overlay/s6-rc.d
 
+# Download the latest UV installer
+ADD ./docker/third-party/uv/installer.sh /uv-installer.sh
+
+# Run the installer then remove it
+RUN sh /uv-installer.sh && rm /uv-installer.sh
 
 # Python virtualenv paths
 ENV VIRTUAL_ENV=/opt/venv
-RUN python3 -m venv $VIRTUAL_ENV
+RUN uv venv ${VIRTUAL_ENV}
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 WORKDIR /var/www/redirect/backend/
 
 # install the backend libraries:
-COPY ./backend/pyproject.toml ./backend/requirements-dev.txt /var/www/redirect/backend/
-RUN python3 -m pip install --upgrade pip setuptools && \
-    python3 -m pip install -r ./requirements-dev.txt
+COPY ./backend/pyproject.toml ./backend/uv.lock /var/www/redirect/backend/
+RUN uv sync --active --locked --compile-bytecode
 
 # install the frontend libraries:
 COPY ./backend/assets assets

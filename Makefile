@@ -7,13 +7,13 @@ help:                                            ## Display a help message detai
 ## [Managing the project]
 ### Stopping the containers and dropping the databases
 stop-psql:                                       ## stops the psql dev project
-	docker compose -f docker-compose.yml down -t 60
+	docker compose -f docker-compose.yml stop
 
 drop-psql:                                       ## drops the psql dev project
 	docker compose -f docker-compose.yml down -v -t 60
 
 stop-prod:                                       ## stops the prod project
-	docker compose -f docker-compose.prod.yml down -t 60
+	docker compose -f docker-compose.prod.yml stop
 
 drop-prod:                                       ## drops the prod project
 	docker compose -f docker-compose.prod.yml down -v -t 60

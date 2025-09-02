@@ -1,5 +1,6 @@
-ARG NODE_VERSION=22.17.0
-ARG PYTHON_VERSION=3.12.11
+ARG NODE_VERSION=24.5.0
+ARG PYTHON_VERSION=3.13.6
+ARG S6_OVERLAY_VERSION=3.2.1.0
 
 
 FROM node:${NODE_VERSION}-alpine AS frontend
@@ -10,33 +11,42 @@ COPY ./backend/assets assets
 COPY ./backend/templates templates
 COPY ./backend/package.json ./backend/package-lock.json ./backend/postcss.config.js ./backend/vite.config.js ./backend/tailwind.config.js ./
 
-RUN npm ci --no-audit --ignore-scripts
-RUN npm run build
+RUN npm ci --no-audit --ignore-scripts && \
+    npm run build
 
 
-FROM python:${PYTHON_VERSION}-bookworm AS backend
+FROM python:${PYTHON_VERSION}-trixie AS backend
 
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y --no-install-recommends \
+    curl ca-certificates \
     gettext && \
-    python3 -m pip install --upgrade pip setuptools cython
+    apt-get clean
+
+# Make sure scripts in .local are usable:
+ENV PATH="/root/.local/bin:${PATH}"
+
+# Download the latest UV installer
+ADD ./docker/third-party/uv/installer.sh /uv-installer.sh
+
+# Run the installer then remove it
+RUN sh /uv-installer.sh && rm /uv-installer.sh
 
 # Python virtualenv paths
 ENV VIRTUAL_ENV=/opt/venv
-RUN python3 -m venv ${VIRTUAL_ENV}
+RUN uv venv ${VIRTUAL_ENV}
 ENV PATH="${VIRTUAL_ENV}/bin:${PATH}"
 
 WORKDIR /build
-COPY ./backend/requirements.txt .
 
-RUN python3 -m pip install --upgrade pip setuptools && \
-    python3 -m pip install -r ./requirements.txt
+COPY ./backend/pyproject.toml ./backend/uv.lock ./
+RUN uv sync --active --locked --compile-bytecode
 
 
-FROM python:${PYTHON_VERSION}-slim-bookworm
+FROM python:${PYTHON_VERSION}-slim-trixie
 
 ENV PYTHONUNBUFFERED=1
 
@@ -44,11 +54,11 @@ ENV DEBUG=False
 ENV ENVIRONMENT=production
 ENV LOG_LEVEL=${LOG_LEVEL:-WARNING}
 
-ENV RUN_MIGRATIONS=True
-ENV RUN_COMPILE_MESSAGES=True
-ENV RUN_COLLECT_STATIC=True
-ENV RUN_CREATE_SUPER_USER=True
-ENV RUN_SEED_GROUPS=True
+ENV RUN_MIGRATIONS=${RUN_MIGRATIONS:-True}
+ENV RUN_COMPILE_MESSAGES=${RUN_COMPILE_MESSAGES:-True}
+ENV RUN_COLLECT_STATIC=${RUN_COLLECT_STATIC:-True}
+ENV RUN_CREATE_SUPER_USER=${RUN_CREATE_SUPER_USER:-True}
+ENV RUN_SEED_GROUPS=${RUN_SEED_GROUPS:-True}
 
 ENV IS_CONTAINERIZED=True
 
@@ -61,7 +71,7 @@ RUN apt-get update && \
     cron nginx gcc xz-utils gettext
 
 # configure process manager
-ARG S6_OVERLAY_VERSION=3.2.1.0
+ARG S6_OVERLAY_VERSION
 ENV S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0
 
 ADD https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-noarch.tar.xz /tmp
