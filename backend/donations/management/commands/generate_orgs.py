@@ -141,6 +141,7 @@ class Command(BaseCommand):
 
         self.stdout.write(self.style.SUCCESS(f"Generating {total_organizations} organization(s) to the database."))
 
+        consecutive_creation_errors: int = 0
         consecutive_identical_names: int = 0
         while len(organizations) < total_organizations:
             county = COUNTIES_CHOICES[random.randint(0, len(COUNTIES_CHOICES) - 1)][1]
@@ -192,8 +193,6 @@ class Command(BaseCommand):
 
             organization_details = {
                 "name": "Asoc." + org_name,
-                "slug": "asoc-" + kebab_case_name,
-                "bank_account": fake.iban(),
                 "registration_number": fake.vat_id(),
                 "address": address,
                 "county": county,
@@ -222,15 +221,24 @@ class Command(BaseCommand):
             if ignore_cause:
                 continue
 
-            ngo_cause = Cause.objects.create(
-                ngo=org,
-                is_main=True,
-                allow_online_collection=org.is_accepting_forms or random.choice(range(0, 6)) == 3,
-                slug=kebab_case_name,
-                name=org_name,
-                description=fake.paragraph(nb_sentences=3, variable_nb_sentences=True),
-                bank_account=fake.iban(),
-            )
-            ngo_cause.save()
+            try:
+                ngo_cause = Cause.objects.create(
+                    ngo=org,
+                    is_main=True,
+                    allow_online_collection=org.is_accepting_forms or random.choice(range(0, 6)) == 3,
+                    slug=kebab_case_name,
+                    name=org_name,
+                    description=fake.paragraph(nb_sentences=3, variable_nb_sentences=True),
+                    bank_account=fake.iban(),
+                )
+                ngo_cause.save()
+            except IntegrityError:
+                consecutive_creation_errors += 1
+                if consecutive_creation_errors > 5:
+                    self.stdout.write(
+                        self.style.ERROR("Too many consecutive creation errors. Aborting and writing to the database.")
+                    )
+                    break
+                continue
 
         self.stdout.write(self.style.SUCCESS(f"Successfully created {len(organizations)} organization(s)."))

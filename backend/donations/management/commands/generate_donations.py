@@ -7,6 +7,7 @@ from django.core.files import File
 from django.core.management import BaseCommand
 from faker import Faker
 
+from donations.models import Cause
 from donations.models.donors import Donor
 from donations.models.ngos import Ngo
 from donations.pdf import create_full_pdf
@@ -54,9 +55,12 @@ class Command(BaseCommand):
         generated_donations: List[Donor] = []
         while len(generated_donations) < total_donations:
             # pick a random NGO
-            ngo = ngos[random.randint(0, len(ngos) - 1)]
-            cause = ngo.causes.all()[random.randint(0, ngo.causes.count() - 1)]
-            cnp = fake.ssn()
+            ngo: Ngo = random.choice(ngos)
+            if not ngo.causes.exists():
+                continue
+
+            cause: Cause = random.choice(ngo.causes.all())
+            cnp: str = fake.ssn()
 
             address = {
                 "street_name": fake.street_name(),

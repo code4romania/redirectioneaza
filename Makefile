@@ -152,11 +152,32 @@ clean: clean-docker clean-extras clean-db        ## remove all build, test, cove
 
 ## [Project-specific operations]
 mock-data:                                       ## generate fake data
-	docker exec redirect_dev cd ./backend && python3 -Wd ./manage.py generate_orgs 20
-	docker exec redirect_dev cd ./backend && python3 -Wd ./manage.py generate_orgs 50 --valid
-	docker exec redirect_dev cd ./backend && python3 -Wd ./manage.py generate_partners 5
-	docker exec redirect_dev cd ./backend && python3 -Wd ./manage.py generate_donations 100
+	docker exec redirect_dev sh -c "\
+		cd ./backend \
+		&& python3 -Wd ./manage.py generate_orgs 20 \
+		&& python3 -Wd ./manage.py generate_orgs 50 --valid \
+		&& python3 -Wd ./manage.py generate_other_causes 20 \
+		&& python3 -Wd ./manage.py generate_other_causes 20 --visible \
+		&& python3 -Wd ./manage.py generate_partners 5 \
+		&& python3 -Wd ./manage.py generate_donations 100"
 
+mock-generate-orgs:
+	docker exec redirect_dev sh -c "cd ./backend && python3 -Wd ./manage.py generate_orgs 20"
+
+mock-generate-orgs-valid:
+	docker exec redirect_dev sh -c "cd ./backend && python3 -Wd ./manage.py generate_orgs 50 --valid"
+
+mock-generate-other-causes:
+	docker exec redirect_dev sh -c "cd ./backend && python3 -Wd ./manage.py generate_other_causes 20"
+
+mock-generate-other-causes-valid:
+	docker exec redirect_dev sh -c "cd ./backend && python3 -Wd ./manage.py generate_other_causes 20 --visible"
+
+mock-generate-partners:
+	docker exec redirect_dev sh -c "cd ./backend && python3 -Wd ./manage.py generate_partners 5"
+
+mock-generate-donations:
+	docker exec redirect_dev sh -c "cd ./backend && python3 -Wd ./manage.py generate_donations 100"
 
 ## [Tests]
 tests:                            ## run the tests
