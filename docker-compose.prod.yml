@@ -13,6 +13,7 @@ services:
     volumes:
       - ./backend/media:/var/www/redirect/backend/media
     environment:
+      - "DATABASE_HOST=redirect_psql"
       - "ENVIRONMENT=production"
     ports:
       - "${WEBAPP_PORT:-8080}:80"
