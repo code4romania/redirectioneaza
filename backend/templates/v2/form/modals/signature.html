@@ -36,7 +36,7 @@
           <button
             @click="signatureModalIsOpen = true"
             type="button"
-            class="inline-flex p-2 text-sm font-medium tracking-wide text-center transition rounded-md whitespace-nowrap hover:opacity-75 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black active:opacity-100 active:outline-offset-0">
+            class="inline-flex p-2 text-sm font-medium tracking-wide text-center transition rounded-md whitespace-nowrap hover:opacity-75 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black active:opacity-100 active:outline-offset-0">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
               <path
                 stroke-linecap="round"
@@ -95,7 +95,7 @@
                       <button
                         type="button"
                         @click="signatureModalIsOpen = false"
-                        class="absolute text-gray-400 top-3 right-3 hover:text-gray-600 focus:outline-none"
+                        class="absolute text-gray-400 top-3 right-3 hover:text-gray-600 focus:outline-hidden"
                         aria-label="Close">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -129,7 +129,7 @@
                           type="button"
                           data-action="reset"
                           @click="clearSignature()"
-                          class="w-full px-2 py-1 text-sm text-center text-gray-900 bg-white rounded-full shadow-sm outline outline-amber-300 sm:text-base sm:px-6 sm:py-2 hover:bg-amber-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
+                          class="w-full px-2 py-1 text-sm text-center text-gray-900 bg-white rounded-full shadow-xs outline-solid outline-amber-300 sm:text-base sm:px-6 sm:py-2 hover:bg-amber-100 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
                           {% trans "Reset" %}
                         </button>
                         <button
@@ -139,7 +139,7 @@
                           @click="saveSignature()"
                           x-on:click="signatureModalIsOpen=false"
                           aria-label="Close"
-                          class="w-full px-2 py-1 text-sm text-center text-gray-900 rounded-full shadow-sm outline outline-amber-300 bg-amber-300 sm:text-base sm:px-6 sm:py-2 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
+                          class="w-full px-2 py-1 text-sm text-center text-gray-900 rounded-full shadow-xs outline-solid outline-amber-300 bg-amber-300 sm:text-base sm:px-6 sm:py-2 hover:bg-amber-200 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
                           {% trans "Ok" %}
                         </button>
                       </div>
@@ -156,7 +156,7 @@
           <button
             @click="clearSignature"
             type="button"
-            class="inline-flex p-2 text-sm font-medium tracking-wide text-center text-red-600 transition rounded-md whitespace-nowrap hover:opacity-75 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black active:opacity-100 active:outline-offset-0">
+            class="inline-flex p-2 text-sm font-medium tracking-wide text-center text-red-600 transition rounded-md whitespace-nowrap hover:opacity-75 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black active:opacity-100 active:outline-offset-0">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
               <path
                 stroke-linecap="round"

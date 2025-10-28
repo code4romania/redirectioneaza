@@ -9,7 +9,7 @@
 <div x-data="imageUpload" class="flex items-center mt-2 gap-x-3">
   <label
     for="{{ input_id }}"
-    class="w-full border border-gray-300 rounded-md shadow-sm max-w-48 shrink-0">
+    class="w-full border border-gray-300 rounded-md shadow-xs max-w-48 shrink-0">
     <div class="aspect-w-3 aspect-h-2">
       <img
         x-ref="preview"
@@ -23,7 +23,7 @@
       </div>
   </label>
 
-  <div class="rounded-md px-2.5 py-1.5 text-sm font-semibold text-gray-900 ring-1 shadow-xs ring-gray-300 ring-inset relative group focus-within:outline-none focus-within:ring-1 {% if is_disabled %} opacity-50 bg-zinc-950/5 text-zinc-950/50 {% else %} bg-white group-hover:bg-gray-50 {% endif %}">
+  <div class="rounded-md px-2.5 py-1.5 text-sm font-semibold text-gray-900 ring-1 shadow-2xs ring-gray-300 ring-inset relative group focus-within:outline-hidden focus-within:ring-1 {% if is_disabled %} opacity-50 bg-zinc-950/5 text-zinc-950/50 {% else %} bg-white group-hover:bg-gray-50 {% endif %}">
     <input
       id="{{ input_id }}"
       name="{{ input_name }}"
@@ -31,7 +31,7 @@
       accept="image/*"
       {% if is_disabled %}disabled{% endif %}
       @change="generatePreview"
-      class="absolute inset-0 z-50 w-full h-full p-0 m-0 outline-none opacity-0 cursor-pointer disabled:cursor-not-allowed">
+      class="absolute inset-0 z-50 w-full h-full p-0 m-0 outline-hidden opacity-0 cursor-pointer disabled:cursor-not-allowed">
     <span>
       {% if is_disabled %}
         {% trans "Upload a logo in NGO Hub" %}

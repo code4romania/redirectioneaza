@@ -12,7 +12,7 @@
       x-ref="select"
       x-model="selectedOption"
       {% if on_change %}@change="{{ on_change }}"{% endif %}
-      class="block w-full rounded-md bg-white py-1.5 pl-3 pr-12 text-base outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-600 sm:text-sm/6"
+      class="block w-full rounded-md bg-white py-1.5 pl-3 pr-12 text-base outline-solid outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-solid focus:outline-2 focus:-outline-offset-2 focus:outline-amber-600 sm:text-sm/6"
       {% if on_change %}:class="selectedOption !== '' ? 'ring-1 ring-amber-700 text-gray-900' : 'text-gray-500'"{% endif %}
     >
       {% if include_default_option %}
