@@ -5,8 +5,8 @@ description = "A tool to help NGOs with managing the redirection of people's tax
 
 requires-python = ">=3.13"
 dependencies = [
-  "blessed~=1.21.0",
-  "cryptography~=45.0.7",
+  "blessed~=1.22.0",
+  "cryptography~=46.0.3",
   "django~=5.2.0",
   "django-allauth~=65.7",
   "django-environ~=0.12",
@@ -22,20 +22,20 @@ dependencies = [
   # pinned because of a bug in >=0.54.0
   "django-unfold==0.53.0",
   "django-vite~=3.1",
-  "gevent~=25.8.2",
+  "gevent~=25.9.1",
   "gunicorn~=23.0.0",
   "ngohub~=0.1.0",
   "phonenumbers~=9.0",
-  "psutil~=7.0.0",
-  "psycopg2-binary~=2.9.9",
+  "psutil~=7.1.2",
+  "psycopg2-binary~=2.9.11",
   "pycognito~=2024.5.1",
   "pydantic[email]~=2.11",
   "pymysql~=1.1",
-  "pypdf~=6.0.0",
+  "pypdf~=6.1.3",
   "reportlab~=4.4",
   "requests~=2.32.3",
   "sentry-sdk[django]~=2.27",
-  "svglib~=1.5.1",
+  "svglib~=1.6.0",
   "whitenoise~=6.9",
 ]
 
@@ -44,12 +44,12 @@ dependencies = [
 test = [
   "faker~=37.1",
   "pytest~=8.4.1",
-  "pytest-cov~=6.2.1",
+  "pytest-cov~=7.0.0",
   "pytest-django~=4.11.1",
   "pytest-xdist~=3.8.0",
 ]
 ruff = [
-  "ruff~=0.12.11"
+  "ruff~=0.14.2"
 ]
 dev = [
   "debugpy~=1.8.14",

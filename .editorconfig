@@ -3,12 +3,13 @@ root = true
 [*]
 charset = utf-8
 end_of_line = lf
-indent_size = 2
 indent_style = space
-insert_final_newline = true
-max_line_length = 120
+indent_size = 2
 tab_width = 2
+max_line_length = 120
+insert_final_newline = true
 trim_trailing_whitespace = true
+
 
 [*.html]
 max_line_length = 240
@@ -18,6 +19,6 @@ tab_width = 4
 indent_style = tab
 max_line_length = 240
 
-[*.py]
+[{*.py,*.md}]
 indent_size = 4
 tab_width = 4

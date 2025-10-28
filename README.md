@@ -12,7 +12,6 @@
 
 [See the project live][link-production]
 
-
 [Contributing](#contributing) | [Built with](#built-with) | [Feedback](#feedback) | [License](#license) | [About Code for Romania](#about-code-for-romania)
 
 ## Contributing
@@ -33,7 +32,7 @@ would like the UI to look like if you’re suggesting new UI elements.
 
 ### Programming languages
 
-- Backend: [Python3.12](https://www.python.org/)
+- Backend: [Python3.13(https://www.python.org/)
 
 ### Platforms
 
@@ -41,14 +40,14 @@ would like the UI to look like if you’re suggesting new UI elements.
 
 ### Frontend framework
 
-- HTML + TailwindCSS + AlpineJS
+- HTML Django Templates + TailwindCSS + AlpineJS
 
 ### Package managers
 
-- [pip-tools](https://pip-tools.rtfd.io/)
+- [uv](https://docs.astral.sh/uv/getting-started/installation/)
 - [npm](https://www.npmjs.com/)
 
-### Database technology & provider
+### Database technology and provider
 
 - [PostgreSQL](https://www.postgresql.org/)
 
@@ -58,33 +57,34 @@ would like the UI to look like if you’re suggesting new UI elements.
 
 #### Prerequisites
 
-- Python 3.12
+- Python 3.13
+- [UV](https://docs.astral.sh/uv/getting-started/installation/)
 - [NVM](https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating)
 - a PostgreSQL 16.4 database (can be run with Docker)
 
 1. Go to the root of the project
 2. Run `cp .env.example .env.local` to create the environment file
-3. Configure your database to run with the configuration in the `.env.local` file
-    or run the database using docker with `docker compose up -d db_psql_dev` or `make rund-db`
+3. Configure your database to run with the configuration in the `.env.local` file or run the database using docker with
+   `docker compose up -d db_psql_dev` or `make rund-db`
 4. Set up the Node.js environment
-   1. Go to the `backend` directory
-   2. Run `nvm use || nvm install` to install the Node.js version specified in the `.nvmrc` file
-   3. Run `npm install` to install the Node.js dependencies
+    1. Go to the `backend` directory
+    2. Run `nvm use || nvm install` to install the Node.js version specified in the `.nvmrc` file
+    3. Run `npm install` to install the Node.js dependencies
 5. Set up the Python environment
-   1. Create a virtual environment and activate it with `python3 -m venv venv && source venv/bin/activate`
-   2. Go to the `backend` directory
-   3. Run `pip install -r requirements-dev.txt` to install the Python dependencies
+    1. Go to the `backend` directory
+    2. Create a virtual environment with `uv venv --python 3.13`
+    3. Run `uv sync --active` to install the Python dependencies
 
 #### Running the project
 
 1. Run the Django project in one terminal
-   1. Go to the `backend` directory
-   2. Run `source venv/bin/activate` to activate the Python virtual environment
-   3. Run `django-admin runserver localhost:8000` to start the Django development server
+    1. Go to the `backend` directory
+    2. Run `source .venv/bin/activate` to activate the Python virtual environment
+    3. Run `django-admin runserver localhost:8000` to start the Django development server
 2. Run the frontend in another terminal
-   1. Go to the `backend` directory
-   2. Run `nvm use` to use the Node.js version specified in the `.nvmrc` file
-   3. Run `npm run dev` to start the frontend development server
+    1. Go to the `backend` directory
+    2. Run `nvm use` to use the Node.js version specified in the `.nvmrc` file
+    3. Run `npm run dev` to start the frontend development server
 3. Open http://localhost:8000 in your browser
 
 :information_source:
@@ -95,7 +95,6 @@ For the frontend, set the `DJANGO_VITE_DEV_SERVER_PORT` variable in the `.env.lo
 :bangbang:
 **In case of problems with the instructions**, please open an issue.
 If you managed to find a solution, please open a PR with the changes.
-
 
 ### Deployment With Docker
 
@@ -132,16 +131,23 @@ to support us, [you can do it here][link-donate].
 [//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job.)
 
 [ico-contributors]: https://img.shields.io/github/contributors/code4romania/redirectioneaza.svg?style=for-the-badge
+
 [ico-last-commit]: https://img.shields.io/github/last-commit/code4romania/redirectioneaza.svg?style=for-the-badge
+
 [ico-license]: https://img.shields.io/badge/license-MPL%202.0-brightgreen.svg?style=for-the-badge
 
 [link-contributors]: https://github.com/code4romania/redirectioneaza/graphs/contributors
+
 [link-last-commit]: https://github.com/code4romania/redirectioneaza/commits/main
+
 [link-license]: https://opensource.org/licenses/MPL-2.0
+
 [link-contributing]: https://github.com/code4romania/.github/blob/main/CONTRIBUTING.md
 
 [link-production]: https://redirectioneaza.ro
+
 [link-staging]: https://redirectioneaza.staging.heroesof.tech/
 
 [link-code4]: https://www.code4.ro/en/
+
 [link-donate]: https://code4.ro/en/donate/
