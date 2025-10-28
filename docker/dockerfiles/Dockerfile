@@ -9,7 +9,7 @@ WORKDIR /build
 
 COPY ./backend/assets assets
 COPY ./backend/templates templates
-COPY ./backend/package.json ./backend/package-lock.json ./backend/postcss.config.js ./backend/vite.config.js ./backend/tailwind.config.js ./
+COPY ./backend/package.json ./backend/package-lock.json ./backend/postcss.config.js ./backend/vite.config.js ./
 
 RUN npm ci --no-audit --ignore-scripts && \
     npm run build
