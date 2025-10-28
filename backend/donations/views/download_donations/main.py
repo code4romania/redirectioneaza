@@ -19,9 +19,9 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from donations.common.validation.phone_number import clean_phone_number
+from donations.models.common import JobDownloadError, JobStatusChoices
 from donations.models.donors import Donor
 from donations.models.jobs import Job
-from donations.models.common import JobDownloadError, JobStatusChoices
 from donations.models.ngos import Cause
 from donations.views.download_donations.build_xml import add_xml_to_zip
 from redirectioneaza.common.app_url import build_uri

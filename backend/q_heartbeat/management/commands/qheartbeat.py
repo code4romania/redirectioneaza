@@ -1,10 +1,9 @@
 import logging
 
 import psutil
-from django_q.models import Schedule, Success
 from django.core.management.base import BaseCommand
 from django.utils import timezone
-
+from django_q.models import Schedule, Success
 
 logger = logging.getLogger(__name__)
 

@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse
 
-from donations.models.ngos import Ngo, Cause, CauseVisibilityChoices, Donor
+from donations.models.ngos import Cause, CauseVisibilityChoices, Donor, Ngo
 from redirectioneaza.common.testing import ApexClient
 
 

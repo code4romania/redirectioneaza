@@ -13,8 +13,9 @@ from django.utils.translation import gettext_lazy as _
 
 from redirectioneaza.common.messaging import extend_email_context, send_email
 from users.models import User
-from .base import BaseVisibleTemplateView
+
 from ..forms.account import ForgotPasswordForm, LoginForm, RegisterForm, ResetPasswordForm
+from .base import BaseVisibleTemplateView
 
 logger = logging.getLogger(__name__)
 
@@ -191,7 +192,6 @@ class SetPasswordView(BaseVisibleTemplateView):
         user = request.user
 
         if not user or user.is_anonymous:
-
             if not form.cleaned_data.get("token"):
                 logger.warning("Invalid user")
                 return redirect(reverse("login"))

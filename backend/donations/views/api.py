@@ -17,8 +17,8 @@ from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 
-from ..models.jobs import Job
 from ..models.common import JobStatusChoices
+from ..models.jobs import Job
 from ..models.ngos import NGO_CAUSES_QUERY_CACHE_KEY, Cause, CauseVisibilityChoices, Ngo
 from ..pdf import create_cause_pdf
 from ..workers.update_organization import update_organization

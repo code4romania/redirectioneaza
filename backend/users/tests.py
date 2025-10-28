@@ -1,12 +1,13 @@
 # Create your tests here.
 import uuid
+
+from django.contrib.auth.models import Group
 from django.test import TestCase
 from django.urls import reverse
-from django.contrib.auth.models import Group
 from django.utils.translation import gettext as _
 
-from users.models import User
 from users.groups_management import MAIN_ADMIN, NGO_ADMIN, NGO_MEMBER, RESTRICTED_ADMIN
+from users.models import User
 
 
 class UserModelTests(TestCase):

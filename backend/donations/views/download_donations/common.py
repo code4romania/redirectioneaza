@@ -3,7 +3,6 @@ from xml.etree.ElementTree import Element
 
 from donations.common.validation.phone_number import clean_phone_number
 from donations.models.donors import Donor
-
 from donations.models.ngos import Cause
 from redirectioneaza.common.clean import (
     clean_text_alnum,
@@ -14,7 +13,6 @@ from redirectioneaza.common.clean import (
     duration_flag_to_int,
     unicode_to_ascii,
 )
-
 
 XMLNS_DETAILS = {"xmlns:xfa": "http://www.xfa.org/schema/xfa-data/1.0/", "xfa:dataNode": "dataGroup"}
 ANAF_FORM_VERSION = "B230_A1.0.9"

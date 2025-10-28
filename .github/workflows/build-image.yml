@@ -1,15 +1,15 @@
 on:
   push:
     branches:
-      - 'main'
-      - 'refactor/frontend'
-      - 'feature/multi-forms/main'
+      - "main"
+      - "refactor/frontend"
+      - "feature/multi-forms/main"
     tags:
-      - 'v*'
+      - "v*"
     paths:
-      - 'backend/**'
-      - 'docker/**'
-      - '.github/workflows/build-image.yml'
+      - "backend/**"
+      - "docker/**"
+      - ".github/workflows/build-image.yml"
 
 name: Build Docker image
 

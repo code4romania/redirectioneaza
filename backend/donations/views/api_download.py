@@ -3,10 +3,10 @@ import io
 import logging
 from typing import Dict, List
 from urllib.parse import quote
+
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-
 from django.core.files.base import ContentFile
 from django.db.models import QuerySet
 from django.http import HttpResponse, HttpResponseBadRequest
@@ -23,7 +23,6 @@ from donations.views.base import BaseTemplateView
 from donations.views.ngo_account_filters import get_active_filters, get_queryset_filters, get_redirections_filters
 from redirectioneaza.common.app_url import build_uri
 from redirectioneaza.common.messaging import extend_email_context, send_email
-
 
 logger = logging.getLogger(__name__)
 

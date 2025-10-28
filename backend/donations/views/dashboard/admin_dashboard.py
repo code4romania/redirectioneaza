@@ -57,7 +57,7 @@ def _get_header_stats(today) -> List[List[Dict[str, Union[str, int | datetime]]]
                 "icon": "edit_document",
                 "metric": Donor.available.filter(date_created__year=current_year).count(),
                 "footer": _create_stat_link(
-                    url=f'{reverse("admin:donations_donor_changelist")}?{current_year_range}', text=_("View all")
+                    url=f"{reverse('admin:donations_donor_changelist')}?{current_year_range}", text=_("View all")
                 ),
                 "timestamp": now(),
             },
@@ -73,7 +73,7 @@ def _get_header_stats(today) -> List[List[Dict[str, Union[str, int | datetime]]]
                 "icon": "foundation",
                 "metric": Ngo.active.count(),
                 "footer": _create_stat_link(
-                    url=f'{reverse("admin:donations_ngo_changelist")}?is_active=1', text=_("View all")
+                    url=f"{reverse('admin:donations_ngo_changelist')}?is_active=1", text=_("View all")
                 ),
                 "timestamp": now(),
             },
@@ -81,7 +81,7 @@ def _get_header_stats(today) -> List[List[Dict[str, Union[str, int | datetime]]]
                 "title": _("Functioning NGOs"),
                 "icon": "foundation",
                 "metric": Ngo.with_forms_this_year.count(),
-                "footer": _create_stat_link(url=f'{reverse("admin:donations_ngo_changelist")}', text=_("View all")),
+                "footer": _create_stat_link(url=f"{reverse('admin:donations_ngo_changelist')}", text=_("View all")),
                 "timestamp": now(),
             },
             {
@@ -89,7 +89,7 @@ def _get_header_stats(today) -> List[List[Dict[str, Union[str, int | datetime]]]
                 "icon": "foundation",
                 "metric": Ngo.ngo_hub.count(),
                 "footer": _create_stat_link(
-                    url=f'{reverse("admin:donations_ngo_changelist")}?is_active=1&has_ngohub=1', text=_("View all")
+                    url=f"{reverse('admin:donations_ngo_changelist')}?is_active=1&has_ngohub=1", text=_("View all")
                 ),
                 "timestamp": now(),
             },
@@ -158,7 +158,7 @@ def _format_yearly_stats(statistics) -> List[Dict[str, Union[int, List[Dict]]]]:
                     "metric": statistic["donations"],
                     "label": statistic.get("donations_difference"),
                     "footer": _create_stat_link(
-                        url=f'{reverse("admin:donations_donor_changelist")}?date_created__year={statistic["year"]}',
+                        url=f"{reverse('admin:donations_donor_changelist')}?date_created__year={statistic['year']}",
                         text=_("View all"),
                     ),
                     "timestamp": statistic["timestamp"],
@@ -169,7 +169,7 @@ def _format_yearly_stats(statistics) -> List[Dict[str, Union[int, List[Dict]]]]:
                     "metric": statistic["ngos_registered"],
                     "label": statistic.get("ngos_registered_difference"),
                     "footer": _create_stat_link(
-                        url=f'{reverse("admin:donations_ngo_changelist")}?date_created__year={statistic["year"]}',
+                        url=f"{reverse('admin:donations_ngo_changelist')}?date_created__year={statistic['year']}",
                         text=_("View all"),
                     ),
                     "timestamp": statistic["timestamp"],
@@ -180,7 +180,7 @@ def _format_yearly_stats(statistics) -> List[Dict[str, Union[int, List[Dict]]]]:
                     "metric": statistic["ngos_with_forms"],
                     "label": statistic.get("ngos_with_forms_difference"),
                     "footer": _create_stat_link(
-                        url=f'{reverse("admin:donations_ngo_changelist")}?has_forms=1&date_created__year={statistic["year"]}',
+                        url=f"{reverse('admin:donations_ngo_changelist')}?has_forms=1&date_created__year={statistic['year']}",
                         text=_("View all"),
                     ),
                     "timestamp": statistic["timestamp"],
