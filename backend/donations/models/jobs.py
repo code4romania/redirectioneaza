@@ -38,7 +38,6 @@ class Job(AsyncJob):
         return f"{self.cause} {self.status}"
 
     class Meta:
-
         verbose_name = _("job")
         verbose_name_plural = _("jobs")
 

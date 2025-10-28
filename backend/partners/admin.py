@@ -14,6 +14,7 @@ from unfold.widgets import UnfoldAdminEmailInputWidget, UnfoldAdminTextInputWidg
 
 from redirectioneaza.common.messaging import extend_email_context, send_email
 from users.groups_management import PARTNER_MANAGER
+
 from .models import Partner
 
 UserModel = get_user_model()

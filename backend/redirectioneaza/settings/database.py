@@ -1,5 +1,6 @@
-from .environment import env
 import sys
+
+from .environment import env
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases

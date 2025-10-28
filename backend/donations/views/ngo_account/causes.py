@@ -21,7 +21,6 @@ logger = logging.getLogger(__name__)
 
 
 class NgoCauseCommonView(NgoBaseTemplateView):
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.is_main_cause = False
@@ -211,7 +210,7 @@ class NgoCauseEditView(NgoCauseCommonView):
         context["cause"] = self.get_cause(cause_id=kwargs["cause_id"], ngo=context["ngo"])
         context["django_form"] = CauseForm(instance=context["cause"], for_main_cause=self.is_main_cause)
 
-        context["page_title"] = f"{page_title}: \"{context['cause'].name}\""
+        context["page_title"] = f'{page_title}: "{context["cause"].name}"'
         context["breadcrumbs"] = [
             {
                 "url": reverse_lazy("my-organization:causes"),

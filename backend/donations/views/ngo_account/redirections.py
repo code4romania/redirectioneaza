@@ -15,7 +15,7 @@ from django.utils.translation import gettext_lazy as _
 from donations.models import RedirectionsDownloadJob
 from donations.models.donors import Donor
 from donations.models.jobs import Job
-from donations.models.ngos import Cause, NGO_CAUSES_QUERY_CACHE_KEY, Ngo
+from donations.models.ngos import NGO_CAUSES_QUERY_CACHE_KEY, Cause, Ngo
 from donations.views.base import BaseVisibleTemplateView
 from donations.views.common.misc import get_ngo_archive_download_status, get_time_between_retries
 from donations.views.common.search import DonorSearchMixin

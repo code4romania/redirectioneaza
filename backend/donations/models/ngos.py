@@ -13,6 +13,7 @@ from django.db.models.functions import Lower
 from django.db.models.query_utils import DeferredAttribute
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+
 from donations.common.models_hashing import hash_id_secret
 from donations.common.validation.registration_number import (
     REGISTRATION_NUMBER_REGEX_WITH_VAT,
@@ -362,7 +363,6 @@ class Ngo(CommonFilenameCacheModel):
 
     @classmethod
     def mandatory_fields(cls):
-
         # noinspection PyTypeChecker
         field_names: List[DeferredAttribute] = [
             Ngo.name,
@@ -534,7 +534,6 @@ class Cause(CommonFilenameCacheModel):
 
     @classmethod
     def mandatory_fields(cls):
-
         # noinspection PyTypeChecker
         field_names: List[DeferredAttribute] = [
             Cause.name,

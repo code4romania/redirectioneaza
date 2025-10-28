@@ -8,8 +8,8 @@ from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 
 from donations.forms.ngo_account import BringYourOwnDataForm
-from donations.models.ngos import Ngo
 from donations.models.byof import OwnFormsUpload
+from donations.models.ngos import Ngo
 from donations.views.download_donations.byof import handle_external_data_processing
 from donations.views.ngo_account.common import FileDownloadProxy, NgoBaseListView
 from redirectioneaza.common.async_wrapper import async_wrapper

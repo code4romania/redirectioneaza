@@ -3,6 +3,7 @@ from typing import Any, Dict, List
 from django import template
 from django.urls import reverse, reverse_lazy
 from django.utils.translation import gettext_lazy as _
+
 from donations.models.ngos import Cause, CauseVisibilityChoices
 
 register = template.Library()

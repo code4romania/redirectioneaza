@@ -6,21 +6,19 @@ from xml.etree.ElementTree import Element, ElementTree
 
 from django.core.files.base import ContentFile
 from django.utils import timezone
-
-from donations.models.byof import OwnFormsUpload, OwnFormsStatusChoices
-
+from django.utils.translation import gettext_lazy as _
 from pydantic import BaseModel, EmailStr, StringConstraints, ValidationError
 
+from donations.models.byof import OwnFormsStatusChoices, OwnFormsUpload
 from donations.views.download_donations.common import (
     XMLNS_DETAILS,
     build_borderou_data_from_raw,
     build_btn_doc,
+    build_donor_raw,
     build_id_doc_from_raw,
     build_imp,
     new_xml_element,
-    build_donor_raw,
 )
-from django.utils.translation import gettext_lazy as _
 
 logger = logging.getLogger(__name__)
 

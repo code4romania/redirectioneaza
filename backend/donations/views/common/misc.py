@@ -5,8 +5,9 @@ from django.conf import settings
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import ngettext_lazy
-from donations.models.jobs import Job
+
 from donations.models.common import JobStatusChoices
+from donations.models.jobs import Job
 from donations.models.ngos import Cause, Ngo
 
 

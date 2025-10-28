@@ -1,13 +1,12 @@
 import logging
 
-from django_q.models import Schedule
-from django_q.tasks import schedule
 from django.core.management import BaseCommand
 from django.db.models import QuerySet
 from django.utils import timezone
+from django_q.models import Schedule
+from django_q.tasks import schedule
 
 from q_heartbeat.management.commands.qheartbeat import SCHEDULE_NAME
-
 
 logger = logging.getLogger(__name__)
 

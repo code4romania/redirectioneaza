@@ -7,7 +7,7 @@ from localflavor.ro.forms import ROCIFField
 from donations.common.validation.phone_number import validate_phone_number
 from donations.common.validation.validate_slug import NgoSlugValidator
 from donations.models.byof import OwnFormsUpload
-from donations.models.ngos import Cause, Ngo, ngo_slug_validator, CauseVisibilityChoices
+from donations.models.ngos import Cause, CauseVisibilityChoices, Ngo, ngo_slug_validator
 
 
 class NgoPresentationForm(forms.Form):

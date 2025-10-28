@@ -7,8 +7,8 @@ TODO: Integrate this with Django as a management command and use Django's FileFi
 from collections import namedtuple
 from functools import partial
 from io import BytesIO
-from pypdf import PdfReader
 
+from pypdf import PdfReader
 
 Zone = namedtuple("Zone", ["start_y", "start_x", "end_x"])
 

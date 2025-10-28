@@ -3,8 +3,9 @@ from typing import List
 
 from django.core.management import BaseCommand
 from django.db import IntegrityError
-from donations.models.ngos import Cause, CauseVisibilityChoices, Ngo
 from faker import Faker
+
+from donations.models.ngos import Cause, CauseVisibilityChoices, Ngo
 
 fake = Faker("ro_RO")
 

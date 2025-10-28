@@ -2,6 +2,7 @@ from typing import Dict
 
 from django import template
 from django.utils import dateparse
+
 from donations.views.common.misc import archive_job_was_recent
 
 register = template.Library()
