@@ -64,7 +64,7 @@ RUN uv sync --active --locked --compile-bytecode
 # install the frontend libraries:
 COPY ./backend/assets assets
 COPY ./backend/templates templates
-COPY ./backend/package.json ./backend/postcss.config.js ./backend/vite.config.js ./backend/tailwind.config.js ./
+COPY ./backend/package.json ./backend/postcss.config.js ./backend/vite.config.js ./
 
 RUN npm i
 

@@ -18,9 +18,7 @@ dependencies = [
   "django-ses~=4.4",
   "django-storages[s3]~=1.14.6",
   "django-tinymce~=4.1.0",
-  # django-unfold: newer versions use Tailwind 4, while the frontend uses Tailwind 3
-  # pinned because of a bug in >=0.54.0
-  "django-unfold==0.53.0",
+  "django-unfold~=0.69.0",
   "django-vite~=3.1",
   "gevent~=25.9.1",
   "gunicorn~=23.0.0",
@@ -35,7 +33,8 @@ dependencies = [
   "reportlab~=4.4",
   "requests~=2.32.3",
   "sentry-sdk[django]~=2.27",
-  "svglib~=1.6.0",
+  # lock at specific version due to incompatible dependencies (pycairo)
+  "svglib==1.5.1",
   "whitenoise~=6.9",
 ]
 
