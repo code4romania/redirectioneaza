@@ -51,7 +51,7 @@
             type="button"
             @click="confirmationModalIsOpen = false"
             aria-label="Close"
-            class="w-full text-center outline outline-gray-400 bg-white sm:text-base text-sm sm:px-6 sm:py-2 px-2 py-1 shadow-sm rounded-full text-gray-900 hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-300">
+            class="w-full text-center outline-solid outline-gray-400 bg-white sm:text-base text-sm sm:px-6 sm:py-2 px-2 py-1 shadow-xs rounded-full text-gray-900 hover:bg-gray-100 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-300">
             {% trans "Back" %}
           </button>
 
@@ -60,7 +60,7 @@
             type="submit"
             data-action="send"
             x-on:click="confirmationModalIsOpen = false"
-            class="w-full text-center outline outline-red-600 bg-red-600 sm:text-base text-sm sm:px-6 sm:py-2 px-2 py-1 shadow-sm rounded-full text-white hover:bg-red-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-300">
+            class="w-full text-center outline-solid outline-red-600 bg-red-600 sm:text-base text-sm sm:px-6 sm:py-2 px-2 py-1 shadow-xs rounded-full text-white hover:bg-red-200 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-300">
             {% trans "Continue" %}
           </button>
 

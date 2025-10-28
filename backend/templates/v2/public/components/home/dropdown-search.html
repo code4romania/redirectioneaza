@@ -7,7 +7,7 @@
   <ul
     id="cause-results"
     role="listbox"
-    class="absolute w-full pt-10 overflow-auto text-sm bg-white border border-gray-300 shadow-lg rounded-2xl max-h-60 ring-1 ring-black/5 focus:outline-none sm:text-sm"
+    class="absolute w-full pt-10 overflow-auto text-sm bg-white border border-gray-300 shadow-lg rounded-2xl max-h-60 ring-1 ring-black/5 focus:outline-hidden sm:text-sm"
     x-show="isOpen"
     x-cloak
   >
@@ -21,7 +21,7 @@
         tabindex="-1">
 
         <a
-          class="block px-3 py-2 text-gray-900 truncate hover:bg-amber-300 hover:outline-none"
+          class="block px-3 py-2 text-gray-900 truncate hover:bg-amber-300 hover:outline-hidden"
           :href="result.url"
         >
           <span x-text="result.name"></span>
@@ -37,7 +37,7 @@
 
     <input
       type="text"
-      class="border-none col-start-1 row-start-1 block w-full rounded-full bg-white py-1.5 pl-10 pr-3 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-300 sm:pl-9 sm:text-sm/6 focus:outline-none"
+      class="border-none col-start-1 row-start-1 block w-full rounded-full bg-white py-1.5 pl-10 pr-3 text-base text-gray-900 outline-solid outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-solid focus:outline-2 focus:-outline-offset-2 focus:outline-amber-300 sm:pl-9 sm:text-sm/6 focus:outline-hidden"
       role="combobox"
       aria-controls="ngo-results"
       placeholder="{{ search_title }}"

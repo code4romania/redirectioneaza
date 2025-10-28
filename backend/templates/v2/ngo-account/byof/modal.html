@@ -93,7 +93,7 @@
                 hidden/>
 
               <span
-                class="flex w-28 h-9 px-2 flex-col rounded-full shadow text-xs font-semibold leading-4 items-center justify-center cursor-pointer focus:outline-none hover:bg-amber-200 hover:text-gray-700 disabled:bg-gray-200 disabled:text-gray-500"
+                class="flex w-28 h-9 px-2 flex-col rounded-full shadow-sm text-xs font-semibold leading-4 items-center justify-center cursor-pointer focus:outline-hidden hover:bg-amber-200 hover:text-gray-700 disabled:bg-gray-200 disabled:text-gray-500"
                 :class="file && !errors.size && !errors.file_type ? 'bg-gray-200 text-gray-500' : 'bg-amber-400 text-gray-900'">
                 {% trans "Choose File" %}
               </span>
@@ -104,7 +104,7 @@
               x-cloak
               x-show="file && !errors.size && !errors.file_type"
               type="submit"
-              class="flex w-28 h-9 px-2 flex-col bg-amber-700 rounded-full shadow text-white text-xs font-semibold leading-4 items-center justify-center cursor-pointer focus:outline-none">
+              class="flex w-28 h-9 px-2 flex-col bg-amber-700 rounded-full shadow-sm text-white text-xs font-semibold leading-4 items-center justify-center cursor-pointer focus:outline-hidden">
               {% trans "Upload file" %}
             </button>
           </div>
