@@ -1,4 +1,4 @@
-export default function (options, currentValue) {
+export default function(options, currentValue) {
   return {
     options: [],
     query: null,
@@ -11,7 +11,6 @@ export default function (options, currentValue) {
       const filter = (query) => {
         query = this.normalizeString(query);
 
-
         if (!query) {
           this.filteredOptions = this.options;
         } else {
@@ -22,7 +21,7 @@ export default function (options, currentValue) {
       };
 
       filter();
-      this.$watch('query', filter);
+      this.$watch("query", filter);
 
       if (currentValue) {
         const selectedOption = this.options.find(option => option.value === currentValue);
@@ -33,7 +32,7 @@ export default function (options, currentValue) {
       this.selectedOption = option?.value ? option.value : null;
 
       this.$refs.input.value = option?.value ? option.value : null;
-      this.$refs.display.value = option?.title ? option.title : '';
+      this.$refs.display.value = option?.title ? option.title : "";
 
       this.close();
     },
@@ -43,7 +42,7 @@ export default function (options, currentValue) {
       }
       this.setSelectedOption(option);
 
-      this.$refs.input.closest('form').submit();
+      this.$refs.input.closest("form").submit();
     },
     close() {
       this.isOpen = false;
@@ -57,16 +56,16 @@ export default function (options, currentValue) {
         return {
           title,
           value,
-          normalizedTitle: this.normalizeString(title)
+          normalizedTitle: this.normalizeString(title),
         };
       });
     },
     normalizeString(string) {
       if (!string) {
-        return '';
+        return "";
       }
 
-      return string.normalize('NFKD').replace(/[^\w\s.-_\/]/g, '').toLowerCase();
+      return string.normalize("NFKD").replace(/[^\w\s.\-_\/]/g, "").toLowerCase();
     },
-  }
+  };
 }
