@@ -1,191 +1,102 @@
-from typing import Any, Dict
+from datetime import date
+from decimal import Decimal
 
 from django.utils.timezone import now
 
-from donations.models import Donor, Ngo
-from donations.views.dashboard.stats_helpers.utils import cache_set
-
-# Cache key prefix for metrics
-METRIC_CACHE_PREFIX = "METRIC_"
+from donations.models.stat_configs import StatsChoices
+from redirectioneaza.settings import DONATIONS_LIMIT, START_YEAR
+from stats.api import get_single_total_stat, get_stats_total_between_dates
 
 
-def _cache_key_for_metric(metric_name: str) -> str:
-    """
-    Generates a cache key for the given metric name.
-    """
-    return f"{METRIC_CACHE_PREFIX}{metric_name.upper()}"
+def _get_end_date() -> date:
+    today: date = now().date()
+
+    if today <= DONATIONS_LIMIT:
+        year = today.year
+        month = today.month
+        day = today.day
+    else:
+        year = DONATIONS_LIMIT.year
+        month = DONATIONS_LIMIT.month
+        day = DONATIONS_LIMIT.day
+
+    return date(year=year, month=month, day=day)
 
 
-# TODO: smart cache this
-def current_year_redirections() -> Dict[str, Any]:
+def current_year_redirections() -> int:
     """
     Returns the number of redirections (donations) for the current year.
 
     Returns:
-        Dict[str, Any]: A dictionary containing the metric and timestamp.
+        int: The number of redirections for the current year.
     """
-    return _update_current_year_redirections()
+    stats_key: str = str(StatsChoices.REDIRECTIONS_PER_DAY.value)
+
+    end_date: date = _get_end_date()
+    stats: Decimal = get_stats_total_between_dates(
+        key_name=stats_key,
+        from_date=date(year=end_date.year, month=1, day=1),
+        to_date=end_date,
+    )
+
+    return int(stats)
 
 
-def _update_current_year_redirections(_cache_key: str = None, _timeout: int = None) -> Dict[str, Any]:
-    """
-    Updates the number of redirections for the current year and caches the result.
-
-    Parameters:
-        _cache_key (str, optional): The cache key to use when storing the result.
-            This is passed by the cache.
-        _timeout (int, optional): The cache timeout in seconds.
-            This is passed by the cache.
-
-    Returns:
-        Dict[str, Any]: A dictionary containing the metric and timestamp.
-    """
-    result = {
-        "metric": Donor.available.filter(date_created__year=now().year).count(),
-        "timestamp": now(),
-    }
-
-    if _cache_key and _timeout is not None:
-        cache_set(_cache_key, result, timeout=_timeout)
-
-    return result
-
-
-# TODO: smart cache this
-def all_redirections() -> Dict[str, Any]:
+def all_redirections() -> int:
     """
     Returns the total number of redirections (donations) across all years.
 
     Returns:
         Dict[str, Any]: A dictionary containing the metric and timestamp.
     """
-    return _update_all_redirections()
+    stats_key: str = str(StatsChoices.REDIRECTIONS_PER_DAY.value)
+
+    end_date: date = _get_end_date()
+    start_date = date(year=START_YEAR, month=1, day=1)  # Assuming donations started from year 2000
+
+    stats: Decimal = get_stats_total_between_dates(
+        key_name=stats_key,
+        from_date=start_date,
+        to_date=end_date,
+    )
+
+    return int(stats)
 
 
-def _update_all_redirections(_cache_key: str = None, _timeout: int = None) -> Dict[str, Any]:
+def all_registered_ngos() -> int:
     """
-    Updates the total number of redirections and caches the result.
-
-    Parameters:
-        _cache_key (str, optional): The cache key to use when storing the result.
-            This is passed by the cache.
-        _timeout (int, optional): The cache timeout in seconds.
-            This is passed by the cache.
+    Returns the total number of registered and valid NGOs.
 
     Returns:
-        Dict[str, Any]: A dictionary containing the metric and timestamp.
+        int: The number of registered NGOs.
     """
-    result = {
-        "metric": Donor.available.count(),
-        "timestamp": now(),
-    }
+    stats_key = str(StatsChoices.NGOS_REGISTERED.value)
 
-    if _cache_key and _timeout is not None:
-        cache_set(_cache_key, result, timeout=_timeout)
-
-    return result
+    stats: Decimal = get_single_total_stat(key_name=stats_key)
+    return int(stats)
 
 
-# TODO: smart cache this
-def all_active_ngos() -> Dict[str, Any]:
-    """
-    Returns the total number of active NGOs.
-
-    Returns:
-        Dict[str, Any]: A dictionary containing the metric and timestamp.
-    """
-    return _update_all_active_ngos()
-
-
-def _update_all_active_ngos(_cache_key: str = None, _timeout: int = None) -> Dict[str, Any]:
-    """
-    Updates the total number of active NGOs and caches the result.
-
-    Parameters:
-        _cache_key (str, optional): The cache key to use when storing the result.
-            This is passed by the cache.
-        _timeout (int, optional): The cache timeout in seconds.
-            This is passed by the cache.
-
-    Returns:
-        Dict[str, Any]: A dictionary containing the metric and timestamp.
-    """
-    result = {
-        "metric": Ngo.active.count(),
-        "timestamp": now(),
-    }
-
-    if _cache_key and _timeout is not None:
-        cache_set(_cache_key, result, timeout=_timeout)
-
-    return result
-
-
-# TODO: smart cache this
-def ngos_active_in_current_year() -> Dict[str, Any]:
+def ngos_active_in_current_year() -> int:
     """
     Returns the number of NGOs that are active in the current year.
 
     Returns:
-        Dict[str, Any]: A dictionary containing the metric and timestamp.
+        int: The number of active NGOs.
     """
-    return _update_ngos_active_in_current_year()
+    stats_key = str(StatsChoices.NGOS_ACTIVE.value)
+
+    stats: Decimal = get_single_total_stat(key_name=stats_key)
+    return int(stats)
 
 
-def _update_ngos_active_in_current_year(_cache_key: str = None, _timeout: int = None) -> Dict[str, Any]:
-    """
-    Updates the number of NGOs active in the current year and caches the result.
-
-    Parameters:
-        _cache_key (str, optional): The cache key to use when storing the result.
-            This is passed by the cache.
-        _timeout (int, optional): The cache timeout in seconds.
-            This is passed by the cache.
-
-    Returns:
-        Dict[str, Any]: A dictionary containing the metric and timestamp.
-    """
-    result = {
-        "metric": Ngo.with_forms_this_year.count(),
-        "timestamp": now(),
-    }
-
-    if _cache_key and _timeout is not None:
-        cache_set(_cache_key, result, timeout=_timeout)
-
-    return result
-
-
-# TODO: smart cache this
-def ngos_with_ngo_hub() -> Dict[str, Any]:
+def ngos_with_ngo_hub() -> int:
     """
     Returns the number of NGOs that are part of the NGO Hub.
 
     Returns:
-        Dict[str, Any]: A dictionary containing the metric and timestamp.
+        int: The number of NGOs with NGO Hub.
     """
-    return _update_ngos_with_ngo_hub()
+    stats_key = str(StatsChoices.NGOS_WITH_NGOHUB.value)
 
-
-def _update_ngos_with_ngo_hub(_cache_key: str = None, _timeout: int = None) -> Dict[str, Any]:
-    """
-    Updates the number of NGOs with NGO Hub and caches the result.
-
-    Parameters:
-        _cache_key (str, optional): The cache key to use when storing the result.
-            This is passed by the cache.
-        _timeout (int, optional): The cache timeout in seconds.
-            This is passed by the cache.
-
-    Returns:
-        Dict[str, Any]: A dictionary containing the metric and timestamp.
-    """
-    result = {
-        "metric": Ngo.ngo_hub.count(),
-        "timestamp": now(),
-    }
-
-    if _cache_key and _timeout is not None:
-        cache_set(_cache_key, result, timeout=_timeout)
-
-    return result
+    stats: Decimal = get_single_total_stat(key_name=stats_key)
+    return int(stats)

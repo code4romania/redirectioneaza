@@ -9,13 +9,14 @@ from django.utils.translation import gettext_lazy as _
 
 from donations.views.dashboard.stats_helpers.chart import donors_for_month
 from donations.views.dashboard.stats_helpers.metrics import (
-    all_active_ngos,
     all_redirections,
+    all_registered_ngos,
     current_year_redirections,
     ngos_active_in_current_year,
     ngos_with_ngo_hub,
 )
 from donations.views.dashboard.stats_helpers.yearly import get_stats_for_year
+from redirectioneaza.common.cache import cache_decorator
 
 from .helpers import (
     generate_donations_per_month_chart,
@@ -25,6 +26,7 @@ from .helpers import (
 
 ADMIN_DASHBOARD_CACHE_KEY = "ADMIN_DASHBOARD"
 ADMIN_DASHBOARD_STATS_CACHE_KEY = "ADMIN_DASHBOARD_STATS"
+ADMIN_DASHBOARD_HEADER_CACHE_KEY = "ADMIN_DASHBOARD_HEADER"
 
 
 def callback(_, context) -> Dict:
@@ -49,6 +51,7 @@ def _get_admin_stats() -> Dict:
     }
 
 
+@cache_decorator(timeout=settings.TIMEOUT_CACHE_SHORT, cache_key=ADMIN_DASHBOARD_HEADER_CACHE_KEY)
 def _get_header_stats(today: datetime) -> List[List[Dict[str, Union[str, int | datetime]]]]:
     current_year: int = today.year
     tz_info: tzinfo = today.tzinfo
@@ -60,43 +63,47 @@ def _get_header_stats(today: datetime) -> List[List[Dict[str, Union[str, int | d
             {
                 "title": _("Donations this year"),
                 "icon": "edit_document",
-                "metric": current_year_redirections()["metric"],
+                "metric": current_year_redirections(),
                 "footer": _create_stat_link(
-                    url=f"{reverse('admin:donations_donor_changelist')}?{current_year_range}", text=_("View all")
+                    url=f"{reverse('admin:donations_donor_changelist')}?{current_year_range}",
+                    text=_("View all"),
                 ),
-                "timestamp": current_year_redirections()["timestamp"],
             },
             {
                 "title": _("Donations all-time"),
                 "icon": "edit_document",
-                "metric": all_redirections()["metric"],
-                "footer": _create_stat_link(url=reverse("admin:donations_donor_changelist"), text=_("View all")),
-                "timestamp": all_redirections()["timestamp"],
+                "metric": all_redirections(),
+                "footer": _create_stat_link(
+                    url=reverse("admin:donations_donor_changelist"),
+                    text=_("View all"),
+                ),
             },
             {
                 "title": _("NGOs registered"),
                 "icon": "foundation",
-                "metric": all_active_ngos()["metric"],
+                "metric": all_registered_ngos(),
                 "footer": _create_stat_link(
-                    url=f"{reverse('admin:donations_ngo_changelist')}?is_active=1", text=_("View all")
+                    url=f"{reverse('admin:donations_ngo_changelist')}?is_active=1",
+                    text=_("View all"),
                 ),
-                "timestamp": all_active_ngos()["timestamp"],
             },
             {
                 "title": _("Functioning NGOs"),
                 "icon": "foundation",
-                "metric": ngos_active_in_current_year()["metric"],
-                "footer": _create_stat_link(url=f"{reverse('admin:donations_ngo_changelist')}", text=_("View all")),
-                "timestamp": ngos_active_in_current_year()["timestamp"],
+                "metric": ngos_active_in_current_year(),
+                "footer": _create_stat_link(
+                    url=f"{reverse('admin:donations_ngo_changelist')}",
+                    text=_("View all"),
+                ),
             },
             {
                 "title": _("NGOs from NGO Hub"),
                 "icon": "foundation",
-                "metric": ngos_with_ngo_hub()["metric"],
+                "metric": ngos_with_ngo_hub(),
                 "footer": _create_stat_link(
-                    url=f"{reverse('admin:donations_ngo_changelist')}?is_active=1&has_ngohub=1", text=_("View all")
+                    url=f"{reverse('admin:donations_ngo_changelist')}?is_active=1&has_ngohub=1",
+                    text=_("View all"),
                 ),
-                "timestamp": ngos_with_ngo_hub()["timestamp"],
             },
         ]
     ]
