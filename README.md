@@ -32,7 +32,9 @@ would like the UI to look like if you’re suggesting new UI elements.
 
 ### Programming languages
 
-- Backend: [Python3.13(https://www.python.org/)
+- Backend: [Python 3.13](https://www.python.org/) with [Django 5.2](https://www.djangoproject.com/)
+- Frontend: [JavaScript ES6+](https://developer.mozilla.org/en-US/docs/Web/JavaScript) with
+  [Vite 7](https://vitejs.dev/) + [AlpineJS 3](https://alpinejs.dev/) + [TailwindCSS 4](https://tailwindcss.com/)
 
 ### Platforms
 
@@ -57,10 +59,9 @@ would like the UI to look like if you’re suggesting new UI elements.
 
 #### Prerequisites
 
-- Python 3.13
 - [UV](https://docs.astral.sh/uv/getting-started/installation/)
 - [NVM](https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating)
-- a PostgreSQL 16.4 database (can be run with Docker)
+- a PostgreSQL 16.10 database (can be run with Docker)
 
 1. Go to the root of the project
 2. Run `cp .env.example .env.local` to create the environment file

@@ -28,24 +28,10 @@ services:
     env_file:
       - .env
 
-  db_base_mysql:
-    extends:
-      service: db_base
-    image: mysql:8.3
-    volumes:
-      - redirect_mysql:/var/lib/mysql
-    environment:
-      MYSQL_DATABASE: "${DATABASE_NAME}"
-      MYSQL_USER: "${DATABASE_USER}"
-      MYSQL_PASSWORD: "${DATABASE_PASSWORD}"
-      MYSQL_ROOT_PASSWORD: "${DATABASE_PASSWORD}"
-    ports:
-      - "${DATABASE_PORT:-3306}:3306"
-
   db_base_psql:
     extends:
       service: db_base
-    image: postgres:16.4
+    image: postgres:16.10
     volumes:
       - redirect_psql:/var/lib/postgresql/data
     environment:

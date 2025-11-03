@@ -4,41 +4,38 @@ on:
   push:
     branches:
       - "*"
-      - 'main'
+      - "main"
     paths:
-      - 'backend/assets/**'
-      - 'backend/static_extras/**'
-      - 'backend/templates/**'
-      - 'backend/package*.json'
-      - 'backend/.nvmrc'
-      - 'backend/postcss.config.js'
-      - 'backend/vite.config.js'
-      - 'Dockerfile*'
-      - 'docker-compose*.yml'
-      - '.github/workflows/frontend_check.yml'
+      - "backend/assets/**"
+      - "backend/static_extras/**"
+      - "backend/templates/**"
+      - "backend/package*.json"
+      - "backend/.nvmrc"
+      - "backend/postcss.config.js"
+      - "backend/vite.config.js"
+      - "Dockerfile*"
+      - "docker-compose*.yml"
+      - ".github/workflows/frontend_check.yml"
   pull_request:
     branches:
-      - 'main'
+      - "main"
     paths:
-      - 'backend/assets/**'
-      - 'backend/static_extras/**'
-      - 'backend/templates/**'
-      - 'backend/package*.json'
-      - 'backend/.nvmrc'
-      - 'backend/postcss.config.js'
-      - 'backend/vite.config.js'
-      - 'Dockerfile*'
-      - 'docker-compose*.yml'
-      - '.github/workflows/frontend_check.yml'
+      - "backend/assets/**"
+      - "backend/static_extras/**"
+      - "backend/templates/**"
+      - "backend/package*.json"
+      - "backend/.nvmrc"
+      - "backend/postcss.config.js"
+      - "backend/vite.config.js"
+      - "Dockerfile*"
+      - "docker-compose*.yml"
+      - ".github/workflows/frontend_check.yml"
 
 jobs:
 
   npm_prod:
     name: Run `npm run build` in production mode for Node.js ${{ matrix.node }}
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node: [ "22.21.0", "24" ]
 
     steps:
       - name: Check out Git repository
@@ -47,9 +44,9 @@ jobs:
       - name: Set-up Node.js environment
         uses: actions/setup-node@v6
         with:
-          node-version: ${{ matrix.node }}
-          cache: 'npm'
-          cache-dependency-path: backend/package-lock.json
+          cache: "npm"
+          cache-dependency-path: "backend/package-lock.json"
+          node-version-file: "backend/.nvmrc"
 
       - name: Install dependencies
         working-directory: ./backend

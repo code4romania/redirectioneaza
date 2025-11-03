@@ -1,4 +1,4 @@
-ARG NODE_VERSION=24.5.0
+ARG NODE_VERSION=24.11.0
 ARG S6_OVERLAY_VERSION=3.2.1.0
 
 FROM node:${NODE_VERSION}-trixie-slim
@@ -25,7 +25,7 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     curl ca-certificates \
     cron procps \
-    nginx gcc xz-utils gettext python3 python3-pip python3-venv python3-dev git postgresql-client libpq-dev && \
+    nginx gcc xz-utils gettext git postgresql-client libpq-dev && \
     apt-get clean
 
 
@@ -55,10 +55,12 @@ ENV VIRTUAL_ENV=/opt/venv
 RUN uv venv ${VIRTUAL_ENV}
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
-WORKDIR /var/www/redirect/backend/
+ENV SOURCE_DIR="/var/www/redirect"
+
+WORKDIR "${SOURCE_DIR}/backend"
 
 # install the backend libraries:
-COPY ./backend/pyproject.toml ./backend/uv.lock /var/www/redirect/backend/
+COPY ./backend/pyproject.toml ./backend/uv.lock ${SOURCE_DIR}/backend/
 RUN uv sync --active --locked --compile-bytecode
 
 # install the frontend libraries:
@@ -69,7 +71,7 @@ COPY ./backend/package.json ./backend/postcss.config.js ./backend/vite.config.js
 RUN npm i
 
 # copy the backend source code:
-COPY ./backend/ /var/www/redirect/backend/
+COPY ./backend/ "${SOURCE_DIR}/backend/"
 
 
 # Make sure scripts in .local are usable:
@@ -77,13 +79,13 @@ ENV PATH=/root/.local/bin:$PATH
 
 ARG VERSION
 ARG REVISION
-ENV VERSION=${VERSION}
-ENV REVISION=${REVISION}
+ENV VERSION="${VERSION}"
+ENV REVISION="${REVISION}"
 
-RUN touch /var/www/redirect/.version && \
-    echo "$VERSION+$(echo ${REVISION} | cut -c 1-7)" > /var/www/redirect/.version
+RUN touch "${SOURCE_DIR}/.version" && \
+    echo "$VERSION+$(echo ${REVISION} | cut -c 1-7)" > "${SOURCE_DIR}/.version"
 
-WORKDIR /var/www/redirect/
+WORKDIR "${SOURCE_DIR}/"
 
 ENTRYPOINT ["/init"]
 

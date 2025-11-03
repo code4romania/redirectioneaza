@@ -1,5 +1,5 @@
-ARG NODE_VERSION=24.5.0
-ARG PYTHON_VERSION=3.13.6
+ARG NODE_VERSION=24.11.0
+ARG PYTHON_VERSION=3.13.9
 ARG S6_OVERLAY_VERSION=3.2.1.0
 
 
@@ -85,27 +85,29 @@ COPY ./docker/s6-rc.d /etc/s6-overlay/s6-rc.d
 
 
 # Python virtualenv paths
-ENV VIRTUAL_ENV=/opt/venv
+ENV VIRTUAL_ENV="/opt/venv"
 ENV PATH="${VIRTUAL_ENV}/bin:${PATH}"
 
-# copy the backend and frontend source code:
-COPY --from=backend "${VIRTUAL_ENV}" "${VIRTUAL_ENV}"
-COPY ./backend/ /var/www/redirect/backend/
+ENV SOURCE_DIR="/var/www/redirect"
 
-COPY --from=frontend /build/dist/ /var/www/redirect/backend/dist/
+# Copy the backend and frontend source code:
+COPY --from=backend "${VIRTUAL_ENV}" "${VIRTUAL_ENV}"
+COPY ./backend/ "${SOURCE_DIR}/backend/"
+
+COPY --from=frontend /build/dist/ "${SOURCE_DIR}/backend/dist/"
 
 
 ARG VERSION
 ARG REVISION
-ENV VERSION=${VERSION}
-ENV REVISION=${REVISION}
+ENV VERSION="${VERSION}"
+ENV REVISION="${REVISION}"
 
-RUN touch /var/www/redirect/.version && \
-    echo "$VERSION+$(echo ${REVISION} | cut -c 1-7)" > /var/www/redirect/.version
+RUN touch "${SOURCE_DIR}/.version" && \
+    echo "$VERSION+$(echo ${REVISION} | cut -c 1-7)" > "${SOURCE_DIR}/.version"
 
 ENTRYPOINT ["/init"]
 
 
-WORKDIR /var/www/redirect/
+WORKDIR "${SOURCE_DIR}/"
 
 EXPOSE 80
