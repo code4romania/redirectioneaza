@@ -1,6 +1,7 @@
 import logging
 
 from django.contrib import admin, messages
+from django.core.management import call_command
 from django.core.validators import EMPTY_VALUES
 from django.db.models import QuerySet
 from django.http import HttpRequest
@@ -140,6 +141,7 @@ class DonorAdmin(ModelAdmin):
     )
 
     actions = ("remove_donations",)
+    actions_list = ("run_redirections_stats_generator", "run_redirections_stats_generator_force")
 
     def has_change_permission(self, request, obj=None):
         return False
@@ -179,3 +181,11 @@ class DonorAdmin(ModelAdmin):
         ) % {"failure": task_results[REMOVE_DONATIONS_FAILURE_FLAG]}
 
         self.message_user(request, ", ".join([part_1, part_2, part_3 + "."]))
+
+    @action(description=_("Schedule redirections stats"), url_path="schedule-redirections-stats-generator")
+    def run_redirections_stats_generator(self, request, queryset: QuerySet[Donor]):
+        call_command("generate_redirections_stats")
+
+    @action(description=_("Schedule redirections stats [FORCE]"), url_path="schedule-redirections-stats-generator-f")
+    def run_redirections_stats_generator_force(self, request, queryset: QuerySet[Donor]):
+        call_command("generate_redirections_stats", "--force")

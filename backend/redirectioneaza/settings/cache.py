@@ -2,7 +2,7 @@ from .constants import HOUR, MINUTE
 from .environment import env
 
 # Cache settings
-TIMEOUT_CACHE_SHORT = 1 * MINUTE
+TIMEOUT_CACHE_SHORT = 5 * MINUTE
 TIMEOUT_CACHE_NORMAL = 15 * MINUTE
 TIMEOUT_CACHE_LONG = 2 * HOUR
 
