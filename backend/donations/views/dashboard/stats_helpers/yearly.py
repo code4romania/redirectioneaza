@@ -1,10 +1,11 @@
-from datetime import datetime
+from datetime import date, datetime
 from typing import Any, Dict
 
 from django.utils.timezone import now
 
 from donations.models import Donor, Ngo
-from donations.views.dashboard.stats_helpers.utils import cache_set
+from donations.models.stat_configs import StatsChoices
+from stats.api import get_stats_total_between_dates
 
 STATS_FOR_YEAR_CACHE_PREFIX = "STATS_FOR_YEAR_"
 
@@ -35,21 +36,25 @@ def get_stats_for_year(year: int) -> Dict[str, Any]:
     return _update_stats_for_year(year)
 
 
-def _update_stats_for_year(year: int, _cache_key: str = None, _timeout: int = None) -> Dict[str, Any]:
+def _update_stats_for_year(year: int) -> Dict[str, Any]:
     """
     Updates the statistics for a given year and caches the result.
 
     Parameters:
         year (int): The year for which to compute statistics.
-        _cache_key (str, optional): The cache key to use when storing the result.
-        _timeout (int, optional): The cache timeout in seconds.
 
     Returns:
         Dict[str, Any]: A dictionary containing statistics for the specified year.
     """
     current_time: datetime = now()
 
-    donations: int = Donor.available.filter(date_created__year=year).count()
+    donations: int = int(
+        get_stats_total_between_dates(
+            key_name=StatsChoices.REDIRECTIONS_PER_DAY,
+            from_date=date(year=year, month=1, day=1),
+            to_date=date(year=year, month=12, day=31),
+        )
+    )
     ngos_registered: int = Ngo.objects.filter(date_created__year=year).count()
     ngos_with_forms: int = Donor.available.filter(date_created__year=year).values("ngo_id").distinct().count()
 
@@ -60,8 +65,5 @@ def _update_stats_for_year(year: int, _cache_key: str = None, _timeout: int = No
         "ngos_with_forms": ngos_with_forms,
         "timestamp": current_time,
     }
-
-    if _cache_key and _timeout is not None:
-        cache_set(_cache_key, statistic, timeout=_timeout)
 
     return statistic

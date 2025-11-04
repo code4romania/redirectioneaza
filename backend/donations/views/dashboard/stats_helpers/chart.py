@@ -1,16 +1,17 @@
-from datetime import datetime
-from typing import Any, Dict, Union
+import calendar
+from datetime import date
+from decimal import Decimal
 
 from django.utils.timezone import now
 
-from donations.models import Donor
-from donations.views.dashboard.stats_helpers.utils import cache_set
+from donations.models.stat_configs import StatsChoices
+from stats.api import get_stats_total_between_dates
 
 STATS_FOR_MONTH_CACHE_PREFIX = "STATS_FOR_MONTH_"
 
 
 # TODO: Implement caching properly
-def donors_for_month(month: int, year: int = None) -> Dict[str, Any]:
+def donors_for_month(month: int, year: int = None) -> Decimal:
     """
     Determines the number of donors for a specified month and year.
 
@@ -25,7 +26,7 @@ def donors_for_month(month: int, year: int = None) -> Dict[str, Any]:
         year (int, optional): The year for which donor statistics are required or current year.
 
     Returns:
-        Dict[str, Any]: A dictionary containing the number of donors for the specified month and year.
+        Decimal: The number of donors for the specified month and year.
     """
     if year is None:
         year = now().year
@@ -33,31 +34,21 @@ def donors_for_month(month: int, year: int = None) -> Dict[str, Any]:
     return _update_stats_for_month(month, year)
 
 
-def _update_stats_for_month(
-    month: int, year: int, _cache_key: str = None, _timeout: int = None
-) -> Dict[str, Union[int, datetime]]:
+def _update_stats_for_month(month: int, year: int) -> Decimal:
     """
     Updates the number of donors for a specific month and year, and caches the result.
 
     Parameters:
         month (int): The month for which to compute donor statistics.
         year (int): The year for which to compute donor statistics.
-        _cache_key (str, optional): The cache key to use when storing the result.
-        _timeout (int, optional): The cache timeout in seconds.
 
     Returns:
-        Dict[str, Any]: A dictionary containing the number of donors for the specified month and year.
+        Decimal: The number of donors for the specified month and year.
     """
-    donors_count: int = Donor.objects.filter(date_created__year=year, date_created__month=month).count()
+    donors_in_month: Decimal = get_stats_total_between_dates(
+        key_name=StatsChoices.REDIRECTIONS_PER_DAY,
+        from_date=date(year=year, month=month, day=1),
+        to_date=date(year=year, month=month, day=calendar.monthrange(year, month)[1]),
+    )
 
-    stat = {
-        "metric": donors_count,
-        "year": year,
-        "month": month,
-        "timestamp": now(),
-    }
-
-    if _cache_key and _timeout is not None:
-        cache_set(_cache_key, stat, timeout=_timeout)
-
-    return stat
+    return donors_in_month

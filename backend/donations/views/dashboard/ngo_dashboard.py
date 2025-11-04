@@ -8,7 +8,7 @@ from redirectioneaza import settings
 from redirectioneaza.common.cache import cache_decorator
 
 from ...models.donors import Donor
-from .helpers import generate_donations_per_month_chart
+from .helpers import generate_donations_per_month_chart, get_current_year_range
 
 UserModel = get_user_model()
 
@@ -37,17 +37,20 @@ def callback(request, context) -> Dict:
     return context
 
 
-def _create_chart_statistics(organization: Ngo) -> Dict[str, str]:
+@cache_decorator(timeout=settings.TIMEOUT_CACHE_NORMAL, cache_key_custom="NGO_DONATIONS_PER_MONTH_CHART_{ngo.pk}")
+def _create_chart_statistics(ngo: Ngo) -> Dict[str, str]:
     default_border_width: int = 3
+    year_range_ascending = get_current_year_range()
 
-    donations_per_month_queryset = [
-        Donor.available.filter(date_created__month=month, ngo=organization)
-        for month in range(1, settings.DONATIONS_LIMIT.month + 1)
-    ]
+    donations_per_year: Dict[int, List[int]] = {}
+    for year in year_range_ascending:
+        donations_per_month: List[int] = [
+            Donor.available.filter(date_created__year=year, date_created__month=month, ngo=ngo).count()
+            for month in range(1, settings.DONATIONS_LIMIT.month + 1)
+        ]
+        donations_per_year[year] = donations_per_month
 
-    forms_per_month_chart = generate_donations_per_month_chart(default_border_width, donations_per_month_queryset)
-
-    return forms_per_month_chart
+    return generate_donations_per_month_chart(default_border_width, donations_per_year)
 
 
 def _get_donations_per_county(user_ngo):

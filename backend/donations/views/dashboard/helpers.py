@@ -60,7 +60,9 @@ def _get_chart_dataset_parameters() -> List[Dict[str, Union[int, str]]]:
     ]
 
 
-def generate_donations_per_month_chart(default_border_width: int, donations_per_month: List[int]) -> Dict[str, str]:
+def generate_donations_per_month_chart(
+    default_border_width: int, donations_per_month: Dict[int, List[int]]
+) -> Dict[str, str]:
     dataset_parameters = _get_chart_dataset_parameters()
     forms_per_month_chart = {
         "title": _("Donations per month"),
@@ -70,7 +72,7 @@ def generate_donations_per_month_chart(default_border_width: int, donations_per_
                 "datasets": [
                     {
                         "label": str(data["year"]),
-                        "data": donations_per_month,
+                        "data": donations_per_month[data["year"]],
                         "borderColor": data["border_color"],
                         "backgroundColor": data["background_color"],
                         "borderWidth": data.get("border_width", default_border_width),

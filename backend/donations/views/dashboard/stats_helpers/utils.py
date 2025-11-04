@@ -1,14 +1,59 @@
-from django.core.cache import cache
+from typing import Dict, List, Union
+
+from django.urls import reverse
+from django.utils.html import format_html
+from django.utils.translation import gettext_lazy as _
 
 
-def cache_set(key: str, value: dict, timeout: int = None) -> None:
-    """
-    Sets a value in the cache with a specified key.
+def format_yearly_stats(statistics) -> List[Dict[str, Union[int, List[Dict]]]]:
+    return [
+        {
+            "year": statistic["year"],
+            "stats": [
+                {
+                    "title": _("Donations"),
+                    "icon": "edit_document",
+                    "metric": statistic["donations"],
+                    "label": statistic.get("donations_difference"),
+                    "footer": format_stat_link(
+                        url=f"{reverse('admin:donations_donor_changelist')}?date_created__year={statistic['year']}",
+                        text=_("View all"),
+                    ),
+                    "timestamp": statistic["timestamp"],
+                },
+                {
+                    "title": _("NGOs registered"),
+                    "icon": "foundation",
+                    "metric": statistic["ngos_registered"],
+                    "label": statistic.get("ngos_registered_difference"),
+                    "footer": format_stat_link(
+                        url=f"{reverse('admin:donations_ngo_changelist')}?date_created__year={statistic['year']}",
+                        text=_("View all"),
+                    ),
+                    "timestamp": statistic["timestamp"],
+                },
+                {
+                    "title": _("NGOs with forms"),
+                    "icon": "foundation",
+                    "metric": statistic["ngos_with_forms"],
+                    "label": statistic.get("ngos_with_forms_difference"),
+                    "footer": format_stat_link(
+                        url=f"{reverse('admin:donations_ngo_changelist')}?has_forms=1&date_created__year={statistic['year']}",
+                        text=_("View all"),
+                    ),
+                    "timestamp": statistic["timestamp"],
+                },
+            ],
+        }
+        for statistic in statistics
+    ]
 
-    Parameters:
-        key (str): The cache key.
-        value (dict): The value to cache.
-        timeout (int, optional): The cache timeout in seconds. If None, the cache will not expire.
-            Defaults to None.
-    """
-    cache.set(key, value, timeout=timeout)
+
+def format_stat_link(url: str, text) -> str:
+    # IDEs may wrongly display a deprecation warning; in this case, the usage is deprecated without *args or **kwargs.
+    # noinspection PyDeprecation
+    return format_html(
+        '<a href="{url}" class="text-orange-700 font-semibold">{text}</a>',
+        url=url,
+        text=text,
+    )
