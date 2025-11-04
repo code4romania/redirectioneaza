@@ -26,7 +26,7 @@ def _calculate_expiration(
     delta: Dict[str, int],
     for_date: Optional[date] = None,
 ) -> Optional[datetime]:
-    if for_date < now().date():
+    if not for_date or for_date < now().date():
         return None
 
     return now() + timedelta(**delta)
