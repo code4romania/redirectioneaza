@@ -1,16 +1,15 @@
 from datetime import date, datetime
+from decimal import Decimal
 from typing import Any, Dict
 
 from django.utils.timezone import now
 
-from donations.models import Donor, Ngo
 from donations.models.stat_configs import StatsChoices
-from stats.api import get_stats_total_between_dates
+from stats.api import get_stat_for_year, get_stats_total_between_dates
 
 STATS_FOR_YEAR_CACHE_PREFIX = "STATS_FOR_YEAR_"
 
 
-# TODO: Implement caching properly
 def get_stats_for_year(year: int) -> Dict[str, Any]:
     """
     Fetches and returns statistics for a given year.
@@ -48,21 +47,25 @@ def _update_stats_for_year(year: int) -> Dict[str, Any]:
     """
     current_time: datetime = now()
 
-    donations: int = int(
-        get_stats_total_between_dates(
-            key_name=StatsChoices.REDIRECTIONS_PER_DAY,
-            from_date=date(year=year, month=1, day=1),
-            to_date=date(year=year, month=12, day=31),
-        )
+    donations: Decimal = get_stats_total_between_dates(
+        key_name=StatsChoices.REDIRECTIONS_PER_DAY,
+        from_date=date(year=year, month=1, day=1),
+        to_date=date(year=year, month=12, day=31),
     )
-    ngos_registered: int = Ngo.objects.filter(date_created__year=year).count()
-    ngos_with_forms: int = Donor.available.filter(date_created__year=year).values("ngo_id").distinct().count()
+    ngos_registered: Decimal = get_stat_for_year(
+        key_name=StatsChoices.NGOS_REGISTERED_PER_YEAR,
+        year=year,
+    )
+    ngos_with_forms: Decimal = get_stat_for_year(
+        key_name=StatsChoices.NGOS_ACTIVE_PER_YEAR,
+        year=year,
+    )
 
     statistic = {
         "year": year,
-        "donations": donations,
-        "ngos_registered": ngos_registered,
-        "ngos_with_forms": ngos_with_forms,
+        "donations": int(donations),
+        "ngos_registered": int(ngos_registered),
+        "ngos_with_forms": int(ngos_with_forms),
         "timestamp": current_time,
     }
 

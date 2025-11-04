@@ -77,6 +77,10 @@ python3 manage.py schedule_stats_generator_ngos "ngos_registered"
 python3 manage.py schedule_stats_generator_ngos "ngos_active"
 python3 manage.py schedule_stats_generator_ngos "ngos_with_ngohub"
 
+python3 manage.py schedule_stats_generator_ngos_yearly "ngos_registered_per_year"
+python3 manage.py schedule_stats_generator_ngos_yearly "ngos_active_per_year"
+python3 manage.py schedule_stats_generator_ngos_yearly "ngos_with_ngohub_per_year"
+
 # Start the session clean-up schedule
 echo "Starting the session clean-up schedule that runs once a day"
 python3 manage.py schedule_session_cleanup

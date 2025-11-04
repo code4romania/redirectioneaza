@@ -6,15 +6,21 @@ from django.core.management import BaseCommand
 from django.utils.timezone import now
 from django_q.tasks import async_task
 
-from donations.models import Donor
 from donations.models.stat_configs import StatsChoices, create_stat
+from donations.views.dashboard.helpers import get_current_year_range
 from stats.models import Stat
 
 logger = logging.getLogger(__name__)
 
 
 class Command(BaseCommand):
-    help = "Run a task that generates redirection statistics for all donors."
+    help = "Run a task that generates redirection statistics for all ngos."
+
+    choices = [
+        StatsChoices.NGOS_REGISTERED_PER_YEAR,
+        StatsChoices.NGOS_ACTIVE_PER_YEAR,
+        StatsChoices.NGOS_WITH_NGOHUB_PER_YEAR,
+    ]
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -23,34 +29,39 @@ class Command(BaseCommand):
             help="Force regeneration of stats even if they already exist for certain dates.",
             default=False,
         )
+        parser.add_argument(
+            "statistic",
+            type=str,
+            help="What type of statistic to generate",
+            choices=self.choices,
+        )
 
     def handle(self, *args, **kwargs):
         """
-        Generate redirection statistics for donors.
+        Generate redirection statistics for ngos.
         `force` argument forces regeneration of stats even if they already exist.
         If the `force` argument is not provided, the command will only generate stats for dates
         that do not already have stats recorded and expired stats will be cleaned up first.
         """
+        statistic: str = kwargs["statistic"]
         force: bool = kwargs.get("force", False)
 
-        target_set: Set[date] = {
-            dt.date() for dt in (Donor.available.all().values_list("date_created", flat=True).distinct())
-        }
+        target_years: Set[int] = set(get_current_year_range())
 
         if not force:
             # Get existing stats dates that are not expired
-            existing_stats_dates: Set[date] = set(
-                Stat.objects.filter(name=StatsChoices.REDIRECTIONS_PER_DAY)
+            existing_stats_dates: Set[int] = set(
+                Stat.objects.filter(name=statistic)
                 .exclude(expires_at__lte=now())
-                .values_list("date", flat=True)
+                .values_list("date__year", flat=True)
                 .distinct()
             )
 
-            target_set: Set[date] = target_set - existing_stats_dates
+            target_years: Set[int] = target_years - existing_stats_dates
 
-        for single_date in target_set:
+        for target_year in target_years:
             async_task(
                 create_stat,
-                stat_choice=StatsChoices.REDIRECTIONS_PER_DAY,
-                for_date=single_date,
+                stat_choice=statistic,
+                for_date=date(year=target_year, month=1, day=1),
             )
