@@ -12,7 +12,13 @@
 
 [See the project live][link-production]
 
-[Contributing](#contributing) | [Built with](#built-with) | [Feedback](#feedback) | [License](#license) | [About Code for Romania](#about-code-for-romania)
+[Contributing](#contributing)
+| [Built With](#built-with)
+| [Development](#development)
+| [Creating a new release](#creating-a-new-release)
+| [Feedback](#feedback)
+| [License](#license)
+| [About Code for Romania](#about-code-for-romania)
 
 ## Contributing
 
@@ -103,6 +109,32 @@ If you managed to find a solution, please open a PR with the changes.
 2. Run `cp .env.example .env` to create the environment file
 3. Run `make run` to start the containers with an PostgreSQL database
 4. Open http://localhost:8080 in your browser
+
+## Creating a new release
+
+The production deployment is done through a CI/CD pipeline using GitHub Actions.
+When a new release is created, the pipeline will build the Docker images and push them to the Docker Hub registry.
+Then, the infrastructure is updated using Terraform to pull the new images and deploy them to the AWS infrastructure.
+
+### Instructions
+
+1. Create a new tag on GitHub with a new version number and push it.
+    ```
+    git tag -a vX.Y.Z -m "vX.Y.Z"
+    git push origin vX.Y.Z
+    ```
+2. Create a new release on GitHub using the new tag.
+   Either through the GitHub UI or using the GitHub CLI:
+    ```
+    gh release create "vX.Y.Z" --title "vX.Y.Z" --latest --verify-tag --generate-notes
+    ```
+3. The GitHub Actions pipeline will automatically start and build the Docker image.
+4. Once the pipeline is finished, change the `image_tag` variable in the `./terraform/locals.tf` file to the new version
+   number.
+5. Create a new pull request with the changes and, if the Terraform plan looks good, merge it to the `main` branch.
+6. The GitHub Actions pipeline will automatically start and deploy the new version to production.
+7. Check the production site to see if everything is working as expected.
+8. Celebrate!
 
 ## Feedback
 
