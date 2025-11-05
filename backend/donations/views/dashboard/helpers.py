@@ -7,6 +7,7 @@ from django.conf import settings
 from django.utils.timezone import localtime
 from django.utils.translation import gettext_lazy as _
 
+from editions.calendar import edition_deadline
 from redirectioneaza.common.cache import cache_decorator
 
 ENCODED_CURRENT_YEAR_RANGE_CACHE_KEY = "ENCODED_CURRENT_YEAR_RANGE"
@@ -68,7 +69,7 @@ def generate_donations_per_month_chart(
         "title": _("Donations per month"),
         "data": json.dumps(
             {
-                "labels": [str(month["label"]) for month in settings.MONTHS[: settings.DONATIONS_LIMIT.month]],
+                "labels": [str(month["label"]) for month in settings.MONTHS[: edition_deadline().month]],
                 "datasets": [
                     {
                         "label": str(data["year"]),

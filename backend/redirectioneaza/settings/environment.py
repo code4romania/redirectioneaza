@@ -25,7 +25,7 @@ env = environ.Env(
     DONATIONS_CSV_DOWNLOAD_METHOD=(str, "async"),
     ENABLE_FORMS_DOWNLOAD=(bool, True),
     TIMEDELTA_FORMS_DOWNLOAD_MINUTES=(int, 6 * HOUR),
-    TIMEDELTA_DONATIONS_LIMIT_DOWNLOAD_DAYS=(int, 31),
+    TIMEDELTA_REDIRECTIONS_LIMIT_DOWNLOAD_DAYS=(int, 31),
     DONATIONS_XML_LIMIT_PER_FILE=(int, 100),
     DONATIONS_CSV_LIMIT_PER_FILE=(int, 1000),
     # proxy headers
@@ -41,10 +41,10 @@ env = environ.Env(
     APEX_DOMAIN=(str, "redirectioneaza.ro"),
     BASE_WEBSITE=(str, "https://redirectioneaza.ro"),
     SITE_TITLE=(str, "redirectioneaza.ro"),
-    DONATIONS_LIMIT_DAY=(int, 25),
-    DONATIONS_LIMIT_MONTH=(int, 5),
-    DONATIONS_LIMIT_YEAR=(int, 2016),
-    DONATIONS_LIMIT_TO_CURRENT_YEAR=(bool, True),
+    REDIRECTIONS_LIMIT_DAY=(int, 25),
+    REDIRECTIONS_LIMIT_MONTH=(int, 5),
+    REDIRECTIONS_LIMIT_YEAR=(int, 2016),
+    REDIRECTIONS_LIMIT_TO_CURRENT_YEAR=(bool, True),
     # i18n
     LANGUAGE_CODE=(str, "ro"),
     # security settings

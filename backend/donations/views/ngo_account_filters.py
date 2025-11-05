@@ -6,6 +6,7 @@ from django.utils.translation import gettext_lazy as _
 
 from donations.models.donors import Donor
 from donations.models.ngos import Ngo
+from editions.calendar import edition_deadline
 from redirectioneaza.common.filters import QueryFilter
 
 
@@ -31,7 +32,7 @@ class FormYearQueryFilter(NgoQueryFilter):
         self.queryset_key = "date_created__year"
 
     def options_default(self) -> List[Dict[str, Union[int, str]]]:
-        last_year = settings.DONATIONS_LIMIT_YEAR
+        last_year = edition_deadline().year
         ngo_date_created = self.ngo.date_created
         year_range = range(ngo_date_created.year, last_year + 1)
 

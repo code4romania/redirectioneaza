@@ -1,24 +1,25 @@
 from datetime import date
 from decimal import Decimal
 
+from django.conf import settings
 from django.utils.timezone import now
 
 from donations.models.stat_configs import StatsChoices
-from redirectioneaza.settings import DONATIONS_LIMIT, START_YEAR
+from editions.calendar import edition_deadline
 from stats.api import get_single_total_stat, get_stats_total_between_dates
 
 
 def _get_end_date() -> date:
     today: date = now().date()
 
-    if today <= DONATIONS_LIMIT:
+    if today <= edition_deadline():
         year = today.year
         month = today.month
         day = today.day
     else:
-        year = DONATIONS_LIMIT.year
-        month = DONATIONS_LIMIT.month
-        day = DONATIONS_LIMIT.day
+        year = edition_deadline().year
+        month = edition_deadline().month
+        day = edition_deadline().day
 
     return date(year=year, month=month, day=day)
 
@@ -52,7 +53,7 @@ def all_redirections() -> int:
     stats_key: str = str(StatsChoices.REDIRECTIONS_PER_DAY.value)
 
     end_date: date = _get_end_date()
-    start_date = date(year=START_YEAR, month=1, day=1)  # Assuming donations started from year 2000
+    start_date = date(year=settings.START_YEAR, month=1, day=1)  # Assuming donations started from year 2000
 
     stats: Decimal = get_stats_total_between_dates(
         key_name=stats_key,

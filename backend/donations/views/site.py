@@ -12,6 +12,7 @@ from django.utils.translation import gettext_lazy as _
 from django.utils.translation import ngettext_lazy
 from django.views.generic import TemplateView
 
+from editions.calendar import edition_deadline
 from partners.models import Partner
 from redirectioneaza.common.cache import cache_decorator
 
@@ -90,8 +91,8 @@ class HomePage(BaseVisibleTemplateView):
         context.update(
             {
                 "title": "redirectioneaza.ro",
-                "limit": settings.DONATIONS_LIMIT,
-                "month_limit": settings.DONATIONS_LIMIT_MONTH_NAME,
+                "limit": edition_deadline(),
+                "month_limit": settings.REDIRECTIONS_LIMIT_MONTH_NAME,
                 "current_year": now.year,
             }
         )
@@ -130,8 +131,8 @@ class CausesListHandler(CauseSearchMixin):
         context.update(
             {
                 "title": _("All causes"),
-                "limit": settings.DONATIONS_LIMIT,
-                "month_limit": settings.DONATIONS_LIMIT_MONTH_NAME,
+                "limit": edition_deadline(),
+                "month_limit": settings.REDIRECTIONS_LIMIT_MONTH_NAME,
             }
         )
         return context
@@ -162,8 +163,8 @@ class NgoListHandler(NgoCauseMixedSearchMixin):
         context.update(
             {
                 "title": "Toate ONG-urile",
-                "limit": settings.DONATIONS_LIMIT,
-                "month_limit": settings.DONATIONS_LIMIT_MONTH_NAME,
+                "limit": edition_deadline(),
+                "month_limit": settings.REDIRECTIONS_LIMIT_MONTH_NAME,
                 "search_query": search_query,
                 "url_search_query": query_dict.urlencode(),
             }

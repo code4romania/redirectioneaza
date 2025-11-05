@@ -9,6 +9,7 @@ from django.templatetags.static import static
 from django.utils.translation import gettext_lazy as _
 from django_q.tasks import async_task
 
+from editions.calendar import edition_deadline
 from redirectioneaza.common.app_url import build_uri
 
 logger = logging.getLogger(__name__)
@@ -16,9 +17,9 @@ logger = logging.getLogger(__name__)
 
 def extend_email_context(request: HttpRequest = None) -> Dict:
     return {
-        "donation_limit_day": settings.DONATIONS_LIMIT.day,
-        "donation_limit_month_name": settings.DONATIONS_LIMIT_MONTH_NAME,
-        "donation_limit_year": settings.DONATIONS_LIMIT.year,
+        "donation_limit_day": edition_deadline().day,
+        "donation_limit_month_name": settings.REDIRECTIONS_LIMIT_MONTH_NAME,
+        "donation_limit_year": edition_deadline().year,
         "contact_email": settings.CONTACT_EMAIL_ADDRESS,
         "logo_code4romania": build_uri(static("images/code4romania.png"), request),
         "logo_instagram": build_uri(static("images/social-icons/instagram.png"), request),
