@@ -164,6 +164,10 @@ module "ecs_redirectioneaza" {
       value = 20
     },
     {
+      name  = "DONATIONS_LIMIT_DAY"
+      value = 26
+    },
+    {
       name  = "REDIRECTIONS_LIMIT_DAY"
       value = 26
     },
