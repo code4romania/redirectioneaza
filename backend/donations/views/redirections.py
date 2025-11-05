@@ -15,6 +15,7 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 from ipware import get_client_ip
 
+from editions.calendar import edition_deadline
 from redirectioneaza.common.messaging import extend_email_context, send_email
 from users.models import User
 
@@ -58,7 +59,7 @@ class RedirectionSuccessHandler(BaseVisibleTemplateView):
             {
                 "absolute_path": absolute_path,
                 "donor": donor,
-                "limit": settings.DONATIONS_LIMIT,
+                "limit": edition_deadline(),
             }
         )
 
@@ -115,7 +116,7 @@ class RedirectionHandler(TemplateView):
             # also we can use request.session.clear(), but it might delete the logged-in user's session
 
         now = timezone.now()
-        is_donation_period_active = not now.date() > settings.DONATIONS_LIMIT
+        is_donation_period_active = not now.date() > edition_deadline()
         donation_status = "open" if is_donation_period_active else "closed"
 
         ngo_website, ngo_website_description = self._get_cause_website(cause)
@@ -129,9 +130,9 @@ class RedirectionHandler(TemplateView):
                 "absolute_path": absolute_path,
                 "donation_status": donation_status,
                 "is_admin": user.is_staff,
-                "limit": settings.DONATIONS_LIMIT,
-                "day_limit": settings.DONATIONS_LIMIT.day,
-                "month_limit": settings.DONATIONS_LIMIT_MONTH_NAME,
+                "limit": edition_deadline(),
+                "day_limit": edition_deadline().day,
+                "month_limit": settings.REDIRECTIONS_LIMIT_MONTH_NAME,
                 "ngo_website_description": ngo_website_description,
                 "ngo_website": ngo_website,
             }

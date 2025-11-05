@@ -14,6 +14,7 @@ from donations.views.dashboard.stats_helpers.metrics import (
     ngos_with_ngo_hub,
 )
 from donations.views.dashboard.stats_helpers.yearly import get_stats_for_year
+from editions.calendar import edition_deadline
 from redirectioneaza.common.cache import cache_decorator
 
 from .helpers import (
@@ -118,7 +119,7 @@ def _create_chart_statistics() -> Dict[str, str]:
     donations_per_year: Dict[int, List[int]] = {}
     for year in year_range_ascending:
         donations_per_year[year] = [
-            int(donors_for_month(month=month, year=year)) for month in range(1, settings.DONATIONS_LIMIT.month + 1)
+            int(donors_for_month(month=month, year=year)) for month in range(1, edition_deadline().month + 1)
         ]
 
     return generate_donations_per_month_chart(default_border_width, donations_per_year)

@@ -1,9 +1,7 @@
 from base64 import urlsafe_b64encode
 from copy import deepcopy
-from datetime import datetime
 
 from cryptography.fernet import Fernet
-from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from localflavor.ro.ro_counties import COUNTIES_CHOICES
 
@@ -14,20 +12,12 @@ from .environment import env
 # Global parameters
 TITLE = env.str("SITE_TITLE")
 
-if env.bool("DONATIONS_LIMIT_TO_CURRENT_YEAR"):
-    DONATIONS_LIMIT_YEAR = timezone.now().year
-else:
-    DONATIONS_LIMIT_YEAR = env.int("DONATIONS_LIMIT_YEAR")
-DONATIONS_LIMIT_MONTH = env.int("DONATIONS_LIMIT_MONTH")
-DONATIONS_LIMIT_DAY = env.int("DONATIONS_LIMIT_DAY")
+# Redirections deadline
+REDIRECTIONS_LIMIT_TO_CURRENT_YEAR = env.bool("REDIRECTIONS_LIMIT_TO_CURRENT_YEAR")
 
-DONATIONS_LIMIT = datetime(
-    year=DONATIONS_LIMIT_YEAR,
-    month=DONATIONS_LIMIT_MONTH,
-    day=DONATIONS_LIMIT_DAY,
-).date()
-
-TIMEDELTA_DONATIONS_LIMIT_DOWNLOAD_DAYS = env.int("TIMEDELTA_DONATIONS_LIMIT_DOWNLOAD_DAYS")
+REDIRECTIONS_DEADLINE_YEAR = env.int("REDIRECTIONS_LIMIT_YEAR")
+REDIRECTIONS_DEADLINE_MONTH = env.int("REDIRECTIONS_LIMIT_MONTH")
+REDIRECTIONS_DEADLINE_DAY = env.int("REDIRECTIONS_LIMIT_DAY")
 
 DONATIONS_XML_LIMIT_PER_FILE = env.int("DONATIONS_XML_LIMIT_PER_FILE")
 DEFAULT_RUN_METHOD = env.str("DEFAULT_RUN_METHOD")
@@ -86,7 +76,7 @@ MONTHS = [
         "label": _("Dec"),
     },
 ]
-DONATIONS_LIMIT_MONTH_NAME = MONTHS[DONATIONS_LIMIT.month - 1]["month"]
+REDIRECTIONS_LIMIT_MONTH_NAME = MONTHS[REDIRECTIONS_DEADLINE_MONTH - 1]["month"]
 
 START_YEAR = 2016
 

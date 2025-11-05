@@ -9,6 +9,7 @@ from django.utils.translation import ngettext_lazy
 from donations.models.common import JobStatusChoices
 from donations.models.jobs import Job
 from donations.models.ngos import Cause, Ngo
+from editions.calendar import edition_deadline
 
 
 def get_was_last_job_recent(ngo: Optional[Ngo]) -> bool:
@@ -88,8 +89,8 @@ def get_ngo_archive_download_status(ngo: Optional[Ngo]) -> Dict:
 
 
 def has_archive_generation_deadline_passed() -> bool:
-    if timezone.now().date() > settings.DONATIONS_LIMIT + datetime.timedelta(
-        days=settings.TIMEDELTA_DONATIONS_LIMIT_DOWNLOAD_DAYS
+    if timezone.now().date() > edition_deadline() + datetime.timedelta(
+        days=settings.TIMEDELTA_REDIRECTIONS_LIMIT_DOWNLOAD_DAYS
     ):
         return True
 

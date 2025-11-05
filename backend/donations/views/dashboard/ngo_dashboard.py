@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 
 from donations.models.ngos import Ngo
+from editions.calendar import edition_deadline
 from redirectioneaza import settings
 from redirectioneaza.common.cache import cache_decorator
 
@@ -46,7 +47,7 @@ def _create_chart_statistics(ngo: Ngo) -> Dict[str, str]:
     for year in year_range_ascending:
         donations_per_month: List[int] = [
             Donor.available.filter(date_created__year=year, date_created__month=month, ngo=ngo).count()
-            for month in range(1, settings.DONATIONS_LIMIT.month + 1)
+            for month in range(1, edition_deadline().month + 1)
         ]
         donations_per_year[year] = donations_per_month
 

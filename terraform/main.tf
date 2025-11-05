@@ -28,10 +28,10 @@ module "ecs_redirectioneaza" {
   log_group_name                 = module.ecs_cluster.log_group_name
   service_discovery_namespace_id = module.ecs_cluster.service_discovery_namespace_id
 
-  container_port = 80
-  network_mode   = "awsvpc"
+  container_port          = 80
+  network_mode            = "awsvpc"
   network_security_groups = [aws_security_group.ecs.id]
-  network_subnets = [aws_subnet.private.0.id]
+  network_subnets         = [aws_subnet.private.0.id]
 
   task_role_arn          = aws_iam_role.ecs_task_role.arn
   enable_execute_command = var.enable_execute_command
@@ -52,7 +52,7 @@ module "ecs_redirectioneaza" {
 
   environment = [
     {
-      name = "DEBUG"
+      name  = "DEBUG"
       value = tostring(false)
     },
     {
@@ -60,15 +60,15 @@ module "ecs_redirectioneaza" {
       value = "WARNING"
     },
     {
-      name = "ENABLE_DJANGO_ADMIN"
+      name  = "ENABLE_DJANGO_ADMIN"
       value = tostring(true)
     },
     {
-      name = "ENABLE_CACHE"
+      name  = "ENABLE_CACHE"
       value = tostring(false)
     },
     {
-      name = "USE_S3"
+      name  = "USE_S3"
       value = tostring(true)
     },
     {
@@ -164,19 +164,19 @@ module "ecs_redirectioneaza" {
       value = 20
     },
     {
-      name  = "DONATIONS_LIMIT_DAY"
+      name  = "REDIRECTIONS_LIMIT_DAY"
       value = 26
     },
     {
-      name = "ENABLE_MULTIPLE_FORMS"
+      name  = "ENABLE_MULTIPLE_FORMS"
       value = tostring(true)
     },
     {
-      name = "ENABLE_BYOF"
+      name  = "ENABLE_BYOF"
       value = tostring(true)
     },
     {
-      name = "ENABLE_CSV_DOWNLOAD"
+      name  = "ENABLE_CSV_DOWNLOAD"
       value = tostring(true)
     },
     {
