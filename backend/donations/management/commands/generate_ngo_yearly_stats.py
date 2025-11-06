@@ -7,7 +7,7 @@ from django.utils.timezone import now
 from django_q.tasks import async_task
 
 from donations.models.stat_configs import StatsChoices, create_stat
-from donations.views.dashboard.helpers import get_current_year_range
+from editions.calendar import get_current_year_range
 from stats.models import Stat
 
 logger = logging.getLogger(__name__)

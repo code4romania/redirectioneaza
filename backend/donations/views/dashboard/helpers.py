@@ -7,12 +7,11 @@ from django.conf import settings
 from django.utils.timezone import localtime
 from django.utils.translation import gettext_lazy as _
 
-from editions.calendar import edition_deadline
+from editions.calendar import edition_deadline, get_current_year_range
 from redirectioneaza.common.cache import cache_decorator
 
 ENCODED_CURRENT_YEAR_RANGE_CACHE_KEY = "ENCODED_CURRENT_YEAR_RANGE"
 DATASET_PARAMETERS_CACHE_KEY = "DATASET_PARAMETERS"
-YEAR_RANGE_CACHE_KEY = "YEAR_RANGE"
 
 
 @cache_decorator(timeout=settings.TIMEOUT_CACHE_LONG, cache_key_prefix=ENCODED_CURRENT_YEAR_RANGE_CACHE_KEY)
@@ -28,11 +27,6 @@ def get_encoded_current_year_range(current_year: int, tz_info: tzinfo) -> str:
     )
 
     return year_range
-
-
-@cache_decorator(timeout=settings.TIMEOUT_CACHE_LONG, cache_key_prefix=YEAR_RANGE_CACHE_KEY)
-def get_current_year_range() -> List[int]:
-    return list(range(settings.START_YEAR, datetime.now().date().year + 1))
 
 
 @cache_decorator(timeout=settings.TIMEOUT_CACHE_LONG, cache_key_prefix=DATASET_PARAMETERS_CACHE_KEY)

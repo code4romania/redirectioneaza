@@ -14,12 +14,11 @@ from donations.views.dashboard.stats_helpers.metrics import (
     ngos_with_ngo_hub,
 )
 from donations.views.dashboard.stats_helpers.yearly import get_stats_for_year
-from editions.calendar import edition_deadline
+from editions.calendar import edition_deadline, get_current_year_range
 from redirectioneaza.common.cache import cache_decorator
 
 from .helpers import (
     generate_donations_per_month_chart,
-    get_current_year_range,
     get_encoded_current_year_range,
 )
 from .stats_helpers.chart import donors_for_month
