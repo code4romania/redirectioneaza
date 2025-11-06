@@ -6,7 +6,7 @@ from django.db.models.functions import Lower
 from django.utils.translation import gettext_lazy as _
 
 from donations.models.ngos import Cause, Ngo
-from redirectioneaza.common.validators import url_validator
+from utils.validators import url_validator
 
 
 class DisplayOrderingChoices(models.TextChoices):

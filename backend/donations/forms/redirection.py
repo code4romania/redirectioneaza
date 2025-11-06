@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from django_recaptcha.widgets import ReCaptchaV2Checkbox
 from localflavor.ro.forms import ROCNPField
 
-from donations.common.validation.phone_number import validate_phone_number
+from utils.text.phone_number import validate_phone_number
 from donations.forms.common import ReCaptchaMixin
 
 

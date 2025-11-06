@@ -4,7 +4,7 @@ from typing import Dict, List, Optional
 from django.core.exceptions import ValidationError
 from django.core.management import BaseCommand
 
-from donations.common.validation.registration_number import (
+from utils.text.registration_number import (
     REGISTRATION_NUMBER_REGEX,
     clean_registration_number,
     extract_vat_id,

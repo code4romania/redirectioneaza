@@ -2,6 +2,31 @@ import re
 import string
 import unicodedata
 
+from django.utils.text import slugify
+
+
+def strip_accents(source: str) -> str:
+    """
+    Source - https://stackoverflow.com/questions/517923/what-is-the-best-way-to-remove-accents-normalize-in-a-python-unicode-string
+    Posted by oefe
+    Retrieved 2025-11-06, License - CC BY-SA 3.0
+    """
+    return "".join(c for c in unicodedata.normalize("NFD", source) if unicodedata.category(c) != "Mn")
+
+
+def remove_unwanted_characters(s: str) -> str:
+    """Remove all characters from a string except for letters, numbers, and dashes."""
+
+    return "".join(c for c in s if c.isalnum() or c == "-")
+
+
+def clean_slug(slug: str) -> str:
+    """Slugify the string but also remove underscores and other unwanted characters."""
+    slug = slugify(slug)
+    slug = remove_unwanted_characters(slug)
+
+    return slug
+
 
 def unicode_to_ascii(text: str) -> str:
     """

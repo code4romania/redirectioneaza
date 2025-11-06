@@ -1,10 +1,10 @@
 from datetime import datetime
 from xml.etree.ElementTree import Element
 
-from donations.common.validation.phone_number import clean_phone_number
+from utils.text.phone_number import clean_phone_number
 from donations.models.donors import Donor
 from donations.models.ngos import Cause
-from redirectioneaza.common.clean import (
+from utils.text.cleanup import (
     clean_text_alnum,
     clean_text_alphabet,
     clean_text_custom,

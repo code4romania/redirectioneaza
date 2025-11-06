@@ -18,14 +18,14 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from donations.common.validation.phone_number import clean_phone_number
+from utils.text.phone_number import clean_phone_number
 from donations.models.common import JobDownloadError, JobStatusChoices
 from donations.models.donors import Donor
 from donations.models.jobs import Job
 from donations.models.ngos import Cause
 from donations.views.download_donations.build_xml import add_xml_to_zip
 from redirectioneaza.common.app_url import build_uri
-from redirectioneaza.common.clean import anaf_gdpr_flag_to_int, duration_flag_to_int, normalize_text_alnum
+from utils.text.cleanup import anaf_gdpr_flag_to_int, duration_flag_to_int, normalize_text_alnum
 from redirectioneaza.common.messaging import extend_email_context, send_email
 
 logger = logging.getLogger(__name__)

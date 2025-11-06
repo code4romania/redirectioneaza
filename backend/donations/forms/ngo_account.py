@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from localflavor.generic.forms import IBANFormField
 from localflavor.ro.forms import ROCIFField
 
-from donations.common.validation.phone_number import validate_phone_number
+from utils.text.phone_number import validate_phone_number
 from donations.common.validation.validate_slug import NgoSlugValidator
 from donations.models.byof import OwnFormsUpload
 from donations.models.ngos import Cause, CauseVisibilityChoices, Ngo, ngo_slug_validator

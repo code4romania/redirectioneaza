@@ -9,7 +9,7 @@ from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 
-from donations.common.validation.registration_number import extract_vat_id
+from utils.text.registration_number import extract_vat_id
 from donations.forms.ngo_account import CauseForm, NgoPresentationForm
 from donations.models.ngos import Cause, Ngo
 from donations.views.ngo_account.causes import NgoCauseCommonView

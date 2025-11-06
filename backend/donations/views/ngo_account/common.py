@@ -12,7 +12,7 @@ from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import ListView
 
-from donations.common.validation.registration_number import ngo_id_number_validator
+from utils.text.registration_number import ngo_id_number_validator
 from donations.models.ngos import Cause, Ngo
 from donations.views.base import BaseContextPropertiesMixin, BaseVisibleTemplateView
 from users.models import User

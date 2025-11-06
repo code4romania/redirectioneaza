@@ -8,6 +8,7 @@ from faker import Faker
 from localflavor.ro.ro_counties import COUNTIES_CHOICES
 
 from donations.models.ngos import Cause, Ngo
+from utils.text.cleanup import clean_slug, strip_accents
 
 fake = Faker("ro_RO")
 
@@ -165,23 +166,21 @@ class Command(BaseCommand):
             consecutive_identical_names = 0
             generated_organization_names.append(org_name)
 
-            clean_name = org_name.lower().replace('"', "").replace(".", "").replace(",", "").replace("/", "")
-            kebab_case_name = (
-                "-".join(clean_name.split(" "))
-                .replace("ă", "a")
-                .replace("â", "a")
-                .replace("ș", "s")
-                .replace("ț", "t")
-                .replace("î", "i")
-            )
-            owner_email = fake.email()
+            kebab_case_name: str = clean_slug(strip_accents(org_name.lower()))
+
+            first_name: str = fake.first_name()
+            last_name: str = fake.last_name()
+
+            email_domain: str = fake.domain_name()
+            owner_email: str = f"{strip_accents(first_name.lower())}.{strip_accents(last_name.lower())}@{email_domain}"
 
             try:
+                # noinspection PyArgumentList
                 owner = user_model.objects.create_user(
                     email=owner_email,
                     password=owner_email.split("@")[0],
-                    first_name=fake.first_name(),
-                    last_name=fake.last_name(),
+                    first_name=first_name,
+                    last_name=last_name,
                     is_verified=random.choice([True, False]),
                 )
                 owner.save()
