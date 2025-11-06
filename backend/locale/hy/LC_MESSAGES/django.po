@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-15 15:13+0300\n"
+"POT-Creation-Date: 2025-11-06 09:54+0200\n"
 "PO-Revision-Date: 2025-02-12 12:44+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Armenian <https://translate.commitglobal.org/projects/"
@@ -32,12 +32,12 @@ msgid "Public URL"
 msgstr ""
 
 #: donations/admin/causes.py:76 donations/admin/common.py:25
-#: donations/admin/donors.py:110 donations/admin/download_jobs.py:22
+#: donations/admin/donors.py:112 donations/admin/download_jobs.py:22
 #: donations/admin/download_jobs.py:50 donations/admin/jobs.py:22
-#: donations/admin/jobs.py:55 donations/admin/ngos.py:207
-#: donations/admin/ngos.py:310 donations/models/donors.py:71
+#: donations/admin/jobs.py:55 donations/admin/ngos.py:212
+#: donations/admin/ngos.py:300 donations/models/donors.py:71
 #: donations/models/downloads.py:10 donations/models/jobs.py:13
-#: donations/models/ngos.py:322 partners/models.py:149 users/models.py:71
+#: donations/models/ngos.py:284 partners/models.py:149 users/models.py:71
 msgid "NGO"
 msgstr "ՀԿ"
 
@@ -59,79 +59,89 @@ msgstr "հարցաթերթ"
 msgid "Data"
 msgstr "հարցաթերթ"
 
-#: donations/admin/common.py:64 donations/admin/donors.py:136
+#: donations/admin/common.py:64 donations/admin/donors.py:138
 #: donations/admin/download_jobs.py:40 donations/admin/jobs.py:45
-#: donations/admin/ngos.py:260 templates/v2/ngo-account/byof/list-header.html:7
+#: donations/admin/ngos.py:250 templates/v2/ngo-account/byof/list-header.html:7
 msgid "Date"
 msgstr "Ամսաթիվ"
 
-#: donations/admin/donors.py:38
+#: donations/admin/donors.py:40
 #, fuzzy
 #| msgid "Donation exports"
 msgid "Donation removal"
 msgstr "Նվիրատվության արտահանումները"
 
-#: donations/admin/donors.py:61
+#: donations/admin/donors.py:63
 #, python-format
 msgid "Invalid value for the %(title)s filter."
 msgstr ""
 
-#: donations/admin/donors.py:70 templates/v2/emails/admin/new-ngo/main.html:30
+#: donations/admin/donors.py:72 templates/v2/emails/admin/new-ngo/main.html:30
 #: templates/v2/emails/admin/new-ngo/main.txt:7
 msgid "NGO ID"
 msgstr ""
 
-#: donations/admin/donors.py:75
+#: donations/admin/donors.py:77
 msgid "Cause ID"
 msgstr ""
 
-#: donations/admin/donors.py:106
+#: donations/admin/donors.py:108
 msgid "Availability"
 msgstr ""
 
-#: donations/admin/donors.py:114
+#: donations/admin/donors.py:116
 msgid "Identity"
 msgstr "Ինքնություն"
 
-#: donations/admin/donors.py:128
+#: donations/admin/donors.py:130
 msgid "Info"
 msgstr "Տեղեկություն"
 
-#: donations/admin/donors.py:132
+#: donations/admin/donors.py:134
 msgid "File"
 msgstr "Ֆայլ"
 
-#: donations/admin/donors.py:149
+#: donations/admin/donors.py:152
 msgid "Form"
 msgstr "հարցաթերթ"
 
-#: donations/admin/donors.py:153
+#: donations/admin/donors.py:156
 msgid "Remove donations and notify donors"
 msgstr ""
 
-#: donations/admin/donors.py:163
+#: donations/admin/donors.py:166
 #, python-format
 msgid "Out of %(queryset_size)d donor"
 msgid_plural "Out of %(queryset_size)d donors"
 msgstr[0] ""
 msgstr[1] ""
 
-#: donations/admin/donors.py:169
+#: donations/admin/donors.py:172
 #, python-format
 msgid "%(success)d was deleted"
 msgid_plural "%(success)d were deleted"
 msgstr[0] ""
 msgstr[1] ""
 
-#: donations/admin/donors.py:175
+#: donations/admin/donors.py:178
 #, python-format
 msgid "%(failure)d was not deleted"
 msgid_plural "%(failure)d were not deleted"
 msgstr[0] ""
 msgstr[1] ""
 
+#: donations/admin/donors.py:185
+#, fuzzy
+#| msgid "Successful tasks"
+msgid "Schedule redirections stats"
+msgstr "Հաջողված առաջադրանքներ"
+
+#: donations/admin/donors.py:189
+msgid "Schedule redirections stats [FORCE]"
+msgstr ""
+
 #: donations/admin/download_jobs.py:26 donations/admin/jobs.py:32
-#: donations/views/ngo_account_filters.py:108
+#: donations/views/ngo_account_filters.py:109
 #: templates/v2/ngo-account/archives/list-header.html:10
 #: templates/v2/ngo-account/byof/list-header.html:13
 #: templates/v2/ngo-account/redirections-downloads/list-header.html:10
@@ -139,163 +149,154 @@ msgstr[1] ""
 msgid "Status"
 msgstr "Կարգավիճակ"
 
-#: donations/admin/ngos.py:38
+#: donations/admin/ngos.py:39
 msgid "Existing User"
 msgstr ""
 
-#: donations/admin/ngos.py:39
+#: donations/admin/ngos.py:40
 msgid ""
 "Select the new owner of the NGO. You can only select active users that don't "
 "have an NGO."
 msgstr ""
 
-#: donations/admin/ngos.py:73
+#: donations/admin/ngos.py:74
 #, fuzzy
 #| msgid "User Link"
 msgid "Cause link"
 msgstr "Օգտատիրոջ հղում"
 
-#: donations/admin/ngos.py:104
+#: donations/admin/ngos.py:105
 msgid "User Link"
 msgstr "Օգտատիրոջ հղում"
 
-#: donations/admin/ngos.py:108
+#: donations/admin/ngos.py:109
 msgid "User Details"
 msgstr "Օգտատիրոջ տվյալներ"
 
-#: donations/admin/ngos.py:112
+#: donations/admin/ngos.py:113
 msgid "User Permissions"
 msgstr "Օգտատիրոջ թույլտվություն"
 
-#: donations/admin/ngos.py:120
+#: donations/admin/ngos.py:121
 msgid "User"
 msgstr "Օգտատեր"
 
-#: donations/admin/ngos.py:127
+#: donations/admin/ngos.py:128
 msgid "Has NGO Hub account"
 msgstr "Ունի NGO Hub օգտահաշիվ"
 
-#: donations/admin/ngos.py:131 donations/admin/ngos.py:149
+#: donations/admin/ngos.py:132 donations/admin/ngos.py:152
 #: templates/v2/ngo-account/causes/list-items.html:46
 #: templates/v2/ngo-account/redirections/list-items.html:48
 msgid "Yes"
 msgstr "այո"
 
-#: donations/admin/ngos.py:131 donations/admin/ngos.py:149
+#: donations/admin/ngos.py:132 donations/admin/ngos.py:152
 #: templates/v2/ngo-account/causes/list-items.html:48
 #: templates/v2/ngo-account/redirections/list-items.html:50
 msgid "No"
 msgstr "ոչ"
 
-#: donations/admin/ngos.py:145
+#: donations/admin/ngos.py:148
 msgid "Has owner"
 msgstr "Ունի օգտատեր"
 
-#: donations/admin/ngos.py:203 donations/admin/ngos.py:342 donations/apps.py:8
-#: donations/views/dashboard/admin_dashboard.py:148
+#: donations/admin/ngos.py:208 donations/admin/ngos.py:326 donations/apps.py:8
+#: donations/views/dashboard/stats_helpers/utils.py:14
 #: redirectioneaza/context_processors/headers.py:70
 #: redirectioneaza/settings/unfold.py:30 redirectioneaza/settings/unfold.py:45
 msgid "Donations"
 msgstr "Նվիրատվություններ"
 
-#: donations/admin/ngos.py:220
+#: donations/admin/ngos.py:223
 msgid "Activity"
 msgstr "Գործունեություն"
 
-#: donations/admin/ngos.py:231 donations/admin/ngos.py:321
-#: donations/forms/ngo_account.py:20
-msgid "Logo"
-msgstr "Լոգո"
-
-#: donations/admin/ngos.py:235 redirectioneaza/context_processors/headers.py:45
+#: donations/admin/ngos.py:234 redirectioneaza/context_processors/headers.py:45
 msgid "Contact"
 msgstr "Կապ"
 
-#: donations/admin/ngos.py:251
-msgid "Details"
-msgstr "Մանրամասներ"
-
-#: donations/admin/ngos.py:328
+#: donations/admin/ngos.py:312
 msgid "NGO Hub link"
 msgstr ""
 
-#: donations/admin/ngos.py:338
+#: donations/admin/ngos.py:322
 msgid "CIF"
 msgstr ""
 
-#: donations/admin/ngos.py:344
+#: donations/admin/ngos.py:328
 msgid "Open the NGO donor list"
 msgstr "Բացել ՀԿ-ների դոնորների ցանկը"
 
-#: donations/admin/ngos.py:355
+#: donations/admin/ngos.py:339
 msgid "This user already has an NGO."
 msgstr ""
 
-#: donations/admin/ngos.py:361
+#: donations/admin/ngos.py:345
 msgid "This user is a staff member."
 msgstr ""
 
-#: donations/admin/ngos.py:367
+#: donations/admin/ngos.py:351
 msgid "This user is an NGO Hub user."
 msgstr ""
 
-#: donations/admin/ngos.py:379
+#: donations/admin/ngos.py:363
 #, fuzzy
 #| msgid "The import has been processed."
 msgid "Owner changed successfully."
 msgstr "Ներմուծումը կատարվել է։"
 
-#: donations/admin/ngos.py:382
+#: donations/admin/ngos.py:366
 #, fuzzy
 #| msgid "old password"
 msgid "Change owner"
 msgstr "հին գաղտնաբառ"
 
-#: donations/admin/ngos.py:399 partners/admin.py:180
+#: donations/admin/ngos.py:383 partners/admin.py:181
 #, fuzzy
 #| msgid "The ID number format is not valid"
 msgid "The form is not valid."
 msgstr "Նույնականացման համարի ձևաչափը վավեր չէ"
 
-#: donations/admin/ngos.py:409
+#: donations/admin/ngos.py:393
 #, python-format
 msgid "Change owner of NGO '%(name)s'"
 msgstr ""
 
-#: donations/admin/ngos.py:414
+#: donations/admin/ngos.py:398
 msgid "Clean up registration numbers"
 msgstr "Մաքրել գրանցման համարները"
 
-#: donations/admin/ngos.py:426
+#: donations/admin/ngos.py:410
 #, fuzzy
 #| msgid "Clean up registration numbers"
 msgid "Successfully cleaned registration numbers"
 msgstr "Մաքրել գրանցման համարները"
 
-#: donations/admin/ngos.py:429
+#: donations/admin/ngos.py:413
 #, python-format
 msgid " for 1 NGO."
 msgid_plural " for %(ngos)d NGOs."
 msgstr[0] ""
 msgstr[1] ""
 
-#: donations/admin/ngos.py:438
+#: donations/admin/ngos.py:422
 msgid "Update from NGO Hub synchronously"
 msgstr "Թարմացում NGO Hub-ին համաժամանակյա"
 
-#: donations/admin/ngos.py:443
+#: donations/admin/ngos.py:427
 msgid "NGOs updated from NGO Hub."
 msgstr "ՀԿ-ները թարմացվել են NGO Hub-ից:"
 
-#: donations/admin/ngos.py:445
+#: donations/admin/ngos.py:429
 msgid "Update from NGO Hub asynchronously"
 msgstr "Թարմացում NGO Hub-ին ոչ համաժամանակյա"
 
-#: donations/admin/ngos.py:450
+#: donations/admin/ngos.py:434
 msgid "NGOs are being updated from NGO Hub."
 msgstr "ՀԿ-ները թարմացվում են NGO Hub-ից:"
 
-#: donations/admin/ngos.py:452
+#: donations/admin/ngos.py:436
 #, fuzzy
 #| msgid "Sign In Error"
 msgid "Remove prefilled forms"
@@ -359,7 +360,7 @@ msgstr "Ազգանունը պարտադիր է"
 msgid "Passwords do not match"
 msgstr "Գաղտնաբառերը չեն համընկնում"
 
-#: donations/forms/ngo_account.py:14 donations/models/ngos.py:188
+#: donations/forms/ngo_account.py:14
 #: templates/v2/emails/donor/redirection-sans-signature/main.txt:26
 #: templates/v2/ngo-account/redirections/list-header.html:10
 msgid "Name"
@@ -369,6 +370,10 @@ msgstr "Անուն"
 #: templates/v2/ngo-account/my-organization/ngo-presentation.html:56
 msgid "CUI/CIF"
 msgstr ""
+
+#: donations/forms/ngo_account.py:20
+msgid "Logo"
+msgstr "Լոգո"
 
 #: donations/forms/ngo_account.py:21
 #, fuzzy
@@ -408,15 +413,15 @@ msgid "Address"
 msgstr "հասցե"
 
 #: donations/forms/ngo_account.py:30 donations/forms/redirection.py:33
-#: donations/views/api_download.py:54 donations/views/ngo_account_filters.py:69
+#: donations/views/api_download.py:53 donations/views/ngo_account_filters.py:70
 #: templates/v2/form/redirection-open.html:115
 msgid "Locality"
 msgstr ""
 
 #: donations/forms/ngo_account.py:32 donations/forms/redirection.py:32
-#: donations/views/api_download.py:55
-#: donations/views/dashboard/ngo_dashboard.py:56
-#: donations/views/ngo_account_filters.py:49
+#: donations/views/api_download.py:54
+#: donations/views/dashboard/ngo_dashboard.py:60
+#: donations/views/ngo_account_filters.py:50
 #: templates/v2/ngo-account/my-organization/ngo-presentation.html:116
 msgid "County"
 msgstr "Շրջան"
@@ -450,7 +455,7 @@ msgstr ""
 
 #: donations/forms/ngo_account.py:105 donations/forms/ngo_account.py:107
 #: donations/forms/ngo_account.py:164 donations/forms/ngo_account.py:166
-#: donations/models/byof.py:56 donations/views/api_download.py:52
+#: donations/models/byof.py:56 donations/views/api_download.py:51
 #: templates/v2/ngo-account/byof/list-header.html:10
 #: templates/v2/ngo-account/byof/modal.html:75
 #: templates/v2/ngo-account/causes/list-header.html:7
@@ -509,7 +514,7 @@ msgstr "անուն"
 msgid "Initial"
 msgstr "սկզբնական"
 
-#: donations/forms/redirection.py:22 donations/views/api_download.py:49
+#: donations/forms/redirection.py:22 donations/views/api_download.py:48
 #: templates/v2/account/snippets/register-form.html:67
 #: templates/v2/emails/donor/redirection-sans-signature/main.txt:28
 #: templates/v2/form/redirection-open.html:60
@@ -518,7 +523,7 @@ msgstr "սկզբնական"
 msgid "Email"
 msgstr "էլ. փոստ"
 
-#: donations/forms/redirection.py:23 donations/views/api_download.py:50
+#: donations/forms/redirection.py:23 donations/views/api_download.py:49
 #, fuzzy
 #| msgid "phone"
 msgid "Phone"
@@ -550,7 +555,7 @@ msgstr "Հարկ"
 msgid "Apartment"
 msgstr "Բնակարան"
 
-#: donations/forms/redirection.py:35 donations/views/ngo_account_filters.py:96
+#: donations/forms/redirection.py:35 donations/views/ngo_account_filters.py:97
 #, fuzzy
 #| msgid "two years"
 msgid "Two years"
@@ -634,13 +639,13 @@ msgid "status"
 msgstr "կարգավիճակ"
 
 #: donations/models/byof.py:82 donations/models/common.py:31
-#: donations/models/donors.py:160 donations/models/ngos.py:296
-#: donations/models/ngos.py:511 partners/models.py:83 users/models.py:95
+#: donations/models/donors.py:160 donations/models/ngos.py:261
+#: donations/models/ngos.py:510 partners/models.py:83 users/models.py:95
 msgid "date created"
 msgstr "ամսաթիվը ստեղծվել է"
 
-#: donations/models/byof.py:83 donations/models/ngos.py:297
-#: donations/models/ngos.py:512 partners/models.py:84 users/models.py:96
+#: donations/models/byof.py:83 donations/models/ngos.py:262
+#: donations/models/ngos.py:511 partners/models.py:84 users/models.py:96
 msgid "date updated"
 msgstr "ամսաթիվը թարմացվել է"
 
@@ -696,11 +701,11 @@ msgstr ""
 msgid "cause"
 msgstr ""
 
-#: donations/models/donors.py:75 donations/views/download_donations/main.py:185
+#: donations/models/donors.py:75 donations/views/download_donations/main.py:186
 msgid "last name"
 msgstr "ազգանուն"
 
-#: donations/models/donors.py:78 donations/views/download_donations/main.py:186
+#: donations/models/donors.py:78 donations/views/download_donations/main.py:187
 msgid "first name"
 msgstr "անուն"
 
@@ -708,34 +713,34 @@ msgstr "անուն"
 msgid "initials"
 msgstr "սկզբնատառերը"
 
-#: donations/models/donors.py:82 donations/views/download_donations/main.py:188
+#: donations/models/donors.py:82 donations/views/download_donations/main.py:189
 msgid "CNP"
 msgstr "Վկայագրված բուժքույր"
 
-#: donations/models/donors.py:85 donations/views/download_donations/main.py:193
+#: donations/models/donors.py:85 donations/views/download_donations/main.py:194
 msgid "city"
 msgstr "քաղաք"
 
-#: donations/models/donors.py:93 donations/models/ngos.py:249
-#: donations/views/download_donations/main.py:192
+#: donations/models/donors.py:93 donations/models/ngos.py:223
+#: donations/views/download_donations/main.py:193
 msgid "county"
 msgstr "մարզ"
 
-#: donations/models/donors.py:100 donations/models/ngos.py:239
+#: donations/models/donors.py:100 donations/models/ngos.py:213
 msgid "address"
 msgstr "հասցե"
 
-#: donations/models/donors.py:104 donations/models/ngos.py:266
+#: donations/models/donors.py:104 donations/models/ngos.py:240
 msgid "telephone"
 msgstr "հեռախոս"
 
-#: donations/models/donors.py:112 donations/models/ngos.py:265
-#: donations/views/download_donations/main.py:191
+#: donations/models/donors.py:112 donations/models/ngos.py:239
+#: donations/views/download_donations/main.py:192
 msgid "email"
 msgstr "էլ. փոստ"
 
-#: donations/models/donors.py:120 donations/views/api_download.py:65
-#: donations/views/api_download.py:66
+#: donations/models/donors.py:120 donations/views/api_download.py:64
+#: donations/views/api_download.py:65
 msgid "anonymous"
 msgstr "անանուն"
 
@@ -764,7 +769,7 @@ msgid "Geo IP"
 msgstr "Geo IP"
 
 #: donations/models/donors.py:149
-#: donations/views/download_donations/main.py:201
+#: donations/views/download_donations/main.py:202
 msgid "filename"
 msgstr "ֆայլի անունը"
 
@@ -824,11 +829,11 @@ msgstr "Նվիրատվություններ"
 msgid "ZIP"
 msgstr "ZIP"
 
-#: donations/models/jobs.py:42
+#: donations/models/jobs.py:41
 msgid "job"
 msgstr "աշխատանք"
 
-#: donations/models/jobs.py:43
+#: donations/models/jobs.py:42
 msgid "jobs"
 msgstr "աշխատանքներ"
 
@@ -839,143 +844,145 @@ msgid ""
 "%(sample)s"
 msgstr ""
 
-#: donations/models/ngos.py:181 donations/models/ngos.py:487
-msgid "slug"
-msgstr "slug"
+#: donations/models/ngos.py:176
+#, fuzzy
+#| msgid "last name"
+msgid "Legal name"
+msgstr "ազգանուն"
 
-#: donations/models/ngos.py:190 donations/models/ngos.py:497
-msgid "description"
-msgstr "նկարագրություն"
-
-#: donations/models/ngos.py:194
+#: donations/models/ngos.py:180
 msgid "NGO Hub organization ID"
 msgstr "NGO Hub կազմակերպության նույնականացման համար"
 
-#: donations/models/ngos.py:200 donations/models/ngos.py:201
+#: donations/models/ngos.py:186 donations/models/ngos.py:187
 msgid "Last NGO Hub update"
 msgstr "NGO Hub-ի վերջին թարմացումը"
 
-#: donations/models/ngos.py:205 donations/models/ngos.py:479
-msgid "logo"
-msgstr "լոգո"
-
-#: donations/models/ngos.py:213 donations/models/ngos.py:499
-msgid "bank account"
-msgstr "բանկային հաշիվ"
-
-#: donations/models/ngos.py:217
+#: donations/models/ngos.py:191
 msgid "registration number"
 msgstr "գրանցման համարը"
 
-#: donations/models/ngos.py:226
+#: donations/models/ngos.py:200
 msgid "VAT ID"
 msgstr "ԱԱՀ նույնականացման համար"
 
-#: donations/models/ngos.py:234
+#: donations/models/ngos.py:208
 msgid "registration validation failed"
 msgstr "գրանցման վավերացումը ձախողվեց"
 
-#: donations/models/ngos.py:241
+#: donations/models/ngos.py:215
 msgid "locality"
 msgstr ""
 
-#: donations/models/ngos.py:257
+#: donations/models/ngos.py:231
 msgid "active region"
 msgstr "ակտիվ տարածաշրջան"
 
-#: donations/models/ngos.py:268
+#: donations/models/ngos.py:242
 #, fuzzy
 #| msgid "display ordering"
 msgid "display email"
 msgstr "ցուցադրման պատվեր"
 
-#: donations/models/ngos.py:269
+#: donations/models/ngos.py:243
 #, fuzzy
 #| msgid "display ordering"
 msgid "display phone"
 msgstr "ցուցադրման պատվեր"
 
-#: donations/models/ngos.py:271
+#: donations/models/ngos.py:245
 msgid "website"
 msgstr "վեբկայք"
 
-#: donations/models/ngos.py:274 users/models.py:87
+#: donations/models/ngos.py:248 users/models.py:87
 msgid "is verified"
 msgstr "վավերացված է"
 
-#: donations/models/ngos.py:278
+#: donations/models/ngos.py:252
 msgid "has special status"
 msgstr "ունի հատուկ կարգավիճակ"
 
-#: donations/models/ngos.py:282
+#: donations/models/ngos.py:256
 msgid "is accepting forms"
 msgstr "ընդունում է ձևաթղթեր"
 
-#: donations/models/ngos.py:285 partners/models.py:46
+#: donations/models/ngos.py:259 partners/models.py:46
 msgid "is active"
 msgstr "ակտիվ է"
 
-#: donations/models/ngos.py:289
-msgid "form with prefilled ngo data"
-msgstr "ձևաթուղթ՝ նախապես լրացված ՀԿ-ի տվյալներով"
-
-#: donations/models/ngos.py:323 partners/models.py:69
+#: donations/models/ngos.py:285 partners/models.py:69
 #: redirectioneaza/context_processors/headers.py:65
 #: redirectioneaza/settings/unfold.py:33
 msgid "NGOs"
 msgstr "ՀԿ-ներ"
 
-#: donations/models/ngos.py:441
+#: donations/models/ngos.py:440
 msgid "public"
 msgstr ""
 
-#: donations/models/ngos.py:442
+#: donations/models/ngos.py:441
 #, fuzzy
 #| msgid "old password"
 msgid "unlisted"
 msgstr "հին գաղտնաբառ"
 
-#: donations/models/ngos.py:443
+#: donations/models/ngos.py:442
 msgid "private"
 msgstr ""
 
-#: donations/models/ngos.py:465
+#: donations/models/ngos.py:464
 msgid "is main cause"
 msgstr ""
 
-#: donations/models/ngos.py:466
+#: donations/models/ngos.py:465
 msgid "allow online collection"
 msgstr ""
 
-#: donations/models/ngos.py:469
+#: donations/models/ngos.py:468
 msgid "form visibility"
 msgstr ""
 
-#: donations/models/ngos.py:496 partners/models.py:31
+#: donations/models/ngos.py:478
+msgid "logo"
+msgstr "լոգո"
+
+#: donations/models/ngos.py:486
+msgid "slug"
+msgstr "slug"
+
+#: donations/models/ngos.py:495 partners/models.py:31 stats/models.py:7
 msgid "name"
 msgstr "անուն"
 
-#: donations/models/ngos.py:501
+#: donations/models/ngos.py:496
+msgid "description"
+msgstr "նկարագրություն"
+
+#: donations/models/ngos.py:498
+msgid "bank account"
+msgstr "բանկային հաշիվ"
+
+#: donations/models/ngos.py:500
 #, fuzzy
 #| msgid "Contact"
 msgid "notifications email"
 msgstr "Կապ"
 
-#: donations/models/ngos.py:504
+#: donations/models/ngos.py:503
 #, fuzzy
 #| msgid "form with prefilled ngo data"
 msgid "form with prefilled cause"
 msgstr "ձևաթուղթ՝ նախապես լրացված ՀԿ-ի տվյալներով"
 
-#: donations/models/ngos.py:522 donations/views/ngo_account_filters.py:148
-#: partners/admin.py:49 partners/models.py:183
+#: donations/models/ngos.py:521 donations/views/ngo_account_filters.py:149
+#: partners/admin.py:50 partners/models.py:183
 #: templates/v2/ngo-account/archives/list-header.html:13
 #: templates/v2/ngo-account/causes/list-header.html:4
 msgid "Cause"
 msgstr ""
 
-#: donations/models/ngos.py:523 donations/views/ngo_account/causes.py:156
-#: donations/views/ngo_account/causes.py:204 partners/admin.py:50
+#: donations/models/ngos.py:522 donations/views/ngo_account/causes.py:169
+#: donations/views/ngo_account/causes.py:217 partners/admin.py:51
 #: partners/models.py:76 redirectioneaza/settings/unfold.py:39
 #: templates/v2/ngo-account/causes/main.html:11
 #, fuzzy
@@ -983,40 +990,40 @@ msgstr ""
 msgid "Causes"
 msgstr "Գործընկերներ"
 
-#: donations/templatetags/cause_action_menu.py:21
-#: donations/views/ngo_account/causes.py:195
+#: donations/templatetags/cause_action_menu.py:22
+#: donations/views/ngo_account/causes.py:208
 msgid "Edit cause"
 msgstr ""
 
-#: donations/templatetags/cause_action_menu.py:26
+#: donations/templatetags/cause_action_menu.py:27
 #, fuzzy
 #| msgid "Sign In Error"
 msgid "Download prefilled form"
 msgstr "Մուտք գործելու սխալ"
 
-#: donations/templatetags/cause_action_menu.py:31
+#: donations/templatetags/cause_action_menu.py:32
 #, fuzzy
 #| msgid "old password"
 msgid "Change to public"
 msgstr "հին գաղտնաբառ"
 
-#: donations/templatetags/cause_action_menu.py:46
+#: donations/templatetags/cause_action_menu.py:47
 #, fuzzy
 #| msgid "old password"
 msgid "Change to unlisted"
 msgstr "հին գաղտնաբառ"
 
-#: donations/templatetags/cause_action_menu.py:61
+#: donations/templatetags/cause_action_menu.py:62
 #, fuzzy
 #| msgid "old password"
 msgid "Change to private"
 msgstr "հին գաղտնաբառ"
 
-#: donations/templatetags/cause_action_menu.py:88
+#: donations/templatetags/cause_action_menu.py:89
 msgid "Cause doesn't exist"
 msgstr ""
 
-#: donations/templatetags/cause_action_menu.py:89
+#: donations/templatetags/cause_action_menu.py:90
 #: donations/templatetags/redirection_action_menu.py:33
 #, fuzzy
 #| msgid "description"
@@ -1043,57 +1050,57 @@ msgstr ""
 msgid "Sector %s"
 msgstr "Ընտրանքներ"
 
-#: donations/views/account_management.py:30
+#: donations/views/account_management.py:31
 #: templates/v2/emails/account/reset-password/main.html:19
 #, fuzzy
 msgid "Reset password"
 msgstr "Վերակայել գաղտնաբառը"
 
-#: donations/views/account_management.py:52
+#: donations/views/account_management.py:53
 #, fuzzy
 msgid "Reset redirectioneaza.ro password"
 msgstr "Վերականգնել redirectioneaza.ro գաղտնաբառը"
 
-#: donations/views/account_management.py:69
+#: donations/views/account_management.py:70
 #, fuzzy
 #| msgid "Welcome to redirectioneaza.ro"
 msgid "Your redirectioneaza.ro account"
 msgstr "էլփոստ"
 
-#: donations/views/account_management.py:101
+#: donations/views/account_management.py:102
 msgid ""
 "If the email address is valid, you will receive an email with instructions."
 msgstr "Եթե էլփոստի հասցեն վավեր է, դուք կստանաք նամակ` հրահանգներով:"
 
-#: donations/views/account_management.py:109
+#: donations/views/account_management.py:110
 #: templates/v2/socialaccount/login.html:6
 msgid "Sign In"
 msgstr "Գրանցվել"
 
-#: donations/views/account_management.py:131
+#: donations/views/account_management.py:132
 #: templates/v2/emails/account/ngohub-notification/main.html:22
 #, fuzzy
 #| msgid "Login through NGO Hub"
 msgid "Continue with NGO Hub"
 msgstr "Մուտք գործել NGO Hub-ի միջոցով"
 
-#: donations/views/account_management.py:132
+#: donations/views/account_management.py:133
 #, fuzzy
 #| msgid "Has NGO Hub account"
 msgid "I have an NGO Hub account"
 msgstr "Ունի NGO Hub օգտահաշիվ"
 
-#: donations/views/account_management.py:156
+#: donations/views/account_management.py:157
 msgid "It seems that this email and password combination is incorrect."
 msgstr "Կարծես թե այս էլփոստի և գաղտնաբառի համակցությունը սխալ է:"
 
-#: donations/views/account_management.py:172
+#: donations/views/account_management.py:173
 #, fuzzy
 #| msgid "Sign In"
 msgid "Sign Out"
 msgstr "Գրանցվել"
 
-#: donations/views/account_management.py:181
+#: donations/views/account_management.py:182
 #, fuzzy
 #| msgid "Reset password"
 msgid "Set New Password"
@@ -1152,7 +1159,7 @@ msgstr ""
 msgid "No archives were generated"
 msgstr "ամսաթիվը ստեղծվել է"
 
-#: donations/views/api.py:180 donations/views/api_download.py:158
+#: donations/views/api.py:180 donations/views/api_download.py:157
 #, fuzzy
 #| msgid "NGO Hub organization ID"
 msgid "Your organization can not receive forms currently."
@@ -1173,81 +1180,81 @@ msgstr "ID համարը վավեր չէ"
 msgid "The visibility of '%(cause_name)s' has been updated successfully."
 msgstr ""
 
-#: donations/views/api_download.py:47 partners/admin.py:24
+#: donations/views/api_download.py:46 partners/admin.py:25
 #, fuzzy
 #| msgid "first name"
 msgid "First Name"
 msgstr "անուն"
 
-#: donations/views/api_download.py:48 partners/admin.py:30
+#: donations/views/api_download.py:47 partners/admin.py:31
 #, fuzzy
 #| msgid "last name"
 msgid "Last Name"
 msgstr "ազգանուն"
 
-#: donations/views/api_download.py:51
+#: donations/views/api_download.py:50
 #, fuzzy
 #| msgid "two years"
 msgid "Period (years)"
 msgstr "երկու տարի"
 
-#: donations/views/api_download.py:53
+#: donations/views/api_download.py:52
 #, fuzzy
 #| msgid "has signed"
 msgid "Has Signed"
 msgstr "ստորագրել է"
 
-#: donations/views/api_download.py:56
+#: donations/views/api_download.py:55
 #, fuzzy
 #| msgid "Options"
 msgid "Redirection Date"
 msgstr "Ընտրանքներ"
 
-#: donations/views/api_download.py:68
+#: donations/views/api_download.py:67
 msgid "N/A"
 msgstr ""
 
-#: donations/views/api_download.py:129
+#: donations/views/api_download.py:128
 msgid ""
 "An error occurred while generating the CSV file. Please try again later."
 msgstr ""
 
-#: donations/views/api_download.py:142
+#: donations/views/api_download.py:141
 #, fuzzy
 #| msgid "Options"
 msgid "Redirections CSV file"
 msgstr "Ընտրանքներ"
 
-#: donations/views/api_download.py:167
+#: donations/views/api_download.py:166
 msgid "There are no redirections available for download."
 msgstr ""
 
-#: donations/views/api_download.py:177
+#: donations/views/api_download.py:176
 msgid ""
 "An error occurred while attempting to download the forms. Adjusting the "
 "filters might help."
 msgstr ""
 
-#: donations/views/api_download.py:183
+#: donations/views/api_download.py:182
 msgid "The CSV file is being generated and will be sent to your email shortly."
 msgstr ""
 
-#: donations/views/api_download.py:201
+#: donations/views/api_download.py:200
 msgid "An error occurred while generating the CSV file."
 msgstr ""
 
-#: donations/views/api_download.py:203
+#: donations/views/api_download.py:202
 msgid "An unknown error occurred while generating the CSV file."
 msgstr ""
 
-#: donations/views/common/misc.py:61
+#: donations/views/common/misc.py:63
 #, python-format
 msgid "%(time)d hour"
 msgid_plural "%(time)d hours"
 msgstr[0] ""
 msgstr[1] ""
 
-#: donations/views/common/misc.py:67
+#: donations/views/common/misc.py:69
 #, python-format
 msgid "%(time)d minute"
 msgid_plural "%(time)d minutes"
@@ -1260,102 +1267,108 @@ msgstr[1] ""
 msgid "The search query must be at least 3 characters long"
 msgstr "IBAN համարը պետք է ունենա 24 նիշ"
 
-#: donations/views/dashboard/admin_dashboard.py:55
+#: donations/views/dashboard/admin_dashboard.py:65
 msgid "Donations this year"
 msgstr "Նվիրատվություններն այս տարի"
 
-#: donations/views/dashboard/admin_dashboard.py:59
-#: donations/views/dashboard/admin_dashboard.py:66
-#: donations/views/dashboard/admin_dashboard.py:73
-#: donations/views/dashboard/admin_dashboard.py:80
-#: donations/views/dashboard/admin_dashboard.py:87
-#: donations/views/dashboard/admin_dashboard.py:154
-#: donations/views/dashboard/admin_dashboard.py:164
-#: donations/views/dashboard/admin_dashboard.py:174
+#: donations/views/dashboard/admin_dashboard.py:70
+#: donations/views/dashboard/admin_dashboard.py:79
+#: donations/views/dashboard/admin_dashboard.py:88
+#: donations/views/dashboard/admin_dashboard.py:97
+#: donations/views/dashboard/admin_dashboard.py:106
+#: donations/views/dashboard/stats_helpers/utils.py:20
+#: donations/views/dashboard/stats_helpers/utils.py:31
+#: donations/views/dashboard/stats_helpers/utils.py:42
 msgid "View all"
 msgstr "Տեսնել բոլորը"
 
-#: donations/views/dashboard/admin_dashboard.py:63
+#: donations/views/dashboard/admin_dashboard.py:74
 msgid "Donations all-time"
 msgstr "Բոլոր ժամանակների նվիրատվությունները"
 
-#: donations/views/dashboard/admin_dashboard.py:69
-#: donations/views/dashboard/admin_dashboard.py:158
+#: donations/views/dashboard/admin_dashboard.py:83
+#: donations/views/dashboard/stats_helpers/utils.py:25
 msgid "NGOs registered"
 msgstr "Գրանցված ՀԿ-ները"
 
-#: donations/views/dashboard/admin_dashboard.py:77
+#: donations/views/dashboard/admin_dashboard.py:92
 msgid "Functioning NGOs"
 msgstr ""
 
-#: donations/views/dashboard/admin_dashboard.py:83
+#: donations/views/dashboard/admin_dashboard.py:101
 msgid "NGOs from NGO Hub"
 msgstr "NGO Hub-ի ՀԿ-ները"
 
-#: donations/views/dashboard/admin_dashboard.py:168
-msgid "NGOs with forms"
-msgstr "ՀԿ-ներ՝ ձևաթղթերով"
-
-#: donations/views/dashboard/helpers.py:68
+#: donations/views/dashboard/helpers.py:63
 msgid "Donations per month"
 msgstr "Ամսական նվիրատվություններ"
 
-#: donations/views/dashboard/ngo_dashboard.py:57
+#: donations/views/dashboard/ngo_dashboard.py:61
 msgid "Number of donations"
 msgstr "Նվիրատվությունների քանակը"
 
-#: donations/views/dashboard/ngo_dashboard.py:76
+#: donations/views/dashboard/ngo_dashboard.py:80
 msgid "Current year donations per county"
 msgstr "Ընթացիկ տարվա նվիրատվությունները յուրաքանչյուր շրջանի համար"
 
-#: donations/views/dashboard/ngo_dashboard.py:96
+#: donations/views/dashboard/ngo_dashboard.py:100
 #, python-format
 msgid "Donations in %d"
 msgstr "Նվիրատվություններ %d-ում"
 
-#: donations/views/download_donations/byof.py:62
+#: donations/views/dashboard/stats_helpers/utils.py:36
+msgid "NGOs with forms"
+msgstr "ՀԿ-ներ՝ ձևաթղթերով"
+
+#: donations/views/download_donations/byof.py:59
 msgid "Cannot find the uploaded data"
 msgstr ""
 
-#: donations/views/download_donations/byof.py:174
+#: donations/views/download_donations/byof.py:171
+#, fuzzy
+#| msgid "The ID number format is not valid"
+msgid "The file is not in a valid format."
+msgstr "Նույնականացման համարի ձևաչափը վավեր չէ"
+
+#: donations/views/download_donations/byof.py:209
 #, python-format
 msgid "Invalid data in line %(line_num)d %(line)s. Error: %(error)s"
 msgstr ""
 
-#: donations/views/download_donations/byof.py:183
+#: donations/views/download_donations/byof.py:218
 #, python-format
 msgid "Errors found in the file: %(errors)s"
 msgstr ""
 
-#: donations/views/download_donations/byof.py:197
+#: donations/views/download_donations/byof.py:232
 #, python-format
 msgid ""
 "Error at line #%(line_num)d %(line_start)s. Please check fields %(fields)s "
 "for the following errors: '%(error)s'"
 msgstr ""
 
-#: donations/views/download_donations/byof.py:212
+#: donations/views/download_donations/byof.py:247
 #, fuzzy
 #| msgid "The IBAN number must have 24 characters"
 msgid "The field should have 13 characters"
 msgstr "IBAN համարը պետք է ունենա 24 նիշ"
 
-#: donations/views/download_donations/byof.py:214
+#: donations/views/download_donations/byof.py:249
 msgid "The field should be a valid email address"
 msgstr ""
 
-#: donations/views/download_donations/byof.py:217
+#: donations/views/download_donations/byof.py:252
 #, fuzzy
 #| msgid "The ID number format is not valid"
 msgid "The field is invalid"
 msgstr "Նույնականացման համարի ձևաչափը վավեր չէ"
 
-#: donations/views/download_donations/byof.py:229
+#: donations/views/download_donations/byof.py:264
 #, python-format
 msgid "Missing mandatory items in header: %(missing)s"
 msgstr ""
 
-#: donations/views/download_donations/byof.py:232
+#: donations/views/download_donations/byof.py:267
 #, python-format
 msgid "Invalid items in header: %(invalid)s"
 msgstr ""
@@ -1364,57 +1377,61 @@ msgstr ""
 msgid "Documents ready for download"
 msgstr "Ներբեռնման համար պատրաստ փաստաթղթերը"
 
-#: donations/views/download_donations/main.py:184
+#: donations/views/download_donations/main.py:185
 msgid "no."
 msgstr "ոչ:"
 
-#: donations/views/download_donations/main.py:187
+#: donations/views/download_donations/main.py:188
 msgid "initial"
 msgstr "սկզբնական"
 
-#: donations/views/download_donations/main.py:189
+#: donations/views/download_donations/main.py:190
 msgid "duplicate"
 msgstr "կրկնօրինակել"
 
-#: donations/views/download_donations/main.py:190
+#: donations/views/download_donations/main.py:191
 msgid "phone"
 msgstr "հեռախոս"
 
-#: donations/views/download_donations/main.py:194
+#: donations/views/download_donations/main.py:195
 msgid "full address"
 msgstr "ամբողջական հասցե"
 
-#: donations/views/download_donations/main.py:195
+#: donations/views/download_donations/main.py:196
 msgid "street name"
 msgstr "փողոցի անվանումը"
 
-#: donations/views/download_donations/main.py:196
+#: donations/views/download_donations/main.py:197
 msgid "street number"
 msgstr "փողոցի համարը"
 
-#: donations/views/download_donations/main.py:197
+#: donations/views/download_donations/main.py:198
 msgid "building"
 msgstr "շենք"
 
-#: donations/views/download_donations/main.py:198
+#: donations/views/download_donations/main.py:199
 msgid "entrance"
 msgstr "մուտք"
 
-#: donations/views/download_donations/main.py:199
+#: donations/views/download_donations/main.py:200
 msgid "floor"
 msgstr "հարկ"
 
-#: donations/views/download_donations/main.py:200
+#: donations/views/download_donations/main.py:201
 msgid "apartment"
 msgstr "բնակարան"
 
-#: donations/views/download_donations/main.py:202
+#: donations/views/download_donations/main.py:203 stats/models.py:9
 msgid "date"
 msgstr "ամսաթիվ"
 
-#: donations/views/download_donations/main.py:203
+#: donations/views/download_donations/main.py:204
 msgid "duration"
 msgstr "տևողություն"
+
+#: donations/views/download_donations/main.py:205
+msgid "anaf gdpr"
+msgstr ""
 
 #: donations/views/ngo_account/byof.py:21
 #: redirectioneaza/context_processors/headers.py:131
@@ -1422,7 +1439,7 @@ msgid "Generate from external data"
 msgstr ""
 
 #: donations/views/ngo_account/byof.py:56
-#: donations/views/ngo_account/causes.py:128
+#: donations/views/ngo_account/causes.py:141
 #: donations/views/ngo_account/redirections.py:121
 msgid "You need to add your NGO's information first."
 msgstr ""
@@ -1449,51 +1466,51 @@ msgstr "NGO Hub կազմակերպության նույնականացման հա
 msgid "The form was altered."
 msgstr "Նույնականացման համարի ձևաչափը վավեր չէ"
 
-#: donations/views/ngo_account/causes.py:73
+#: donations/views/ngo_account/causes.py:75
 #, fuzzy
 #| msgid "NGO Hub organization ID"
 msgid "Please fill in the organization details first."
 msgstr "NGO Hub կազմակերպության նույնականացման համար"
 
-#: donations/views/ngo_account/causes.py:78
-#: donations/views/ngo_account/causes.py:170
+#: donations/views/ngo_account/causes.py:80
+#: donations/views/ngo_account/causes.py:183
 #, fuzzy
 #| msgid "NGO Hub organization ID"
 msgid "You need to first create the form with the organization's details."
 msgstr "NGO Hub կազմակերպության նույնականացման համար"
 
-#: donations/views/ngo_account/causes.py:87 donations/views/redirections.py:209
+#: donations/views/ngo_account/causes.py:94 donations/views/redirections.py:227
 msgid "There are some errors on the redirection form."
 msgstr ""
 
-#: donations/views/ngo_account/causes.py:99
+#: donations/views/ngo_account/causes.py:112
 #, fuzzy
 #| msgid "The import has been processed."
 msgid "The cause has been created."
 msgstr "Ներմուծումը կատարվել է։"
 
-#: donations/views/ngo_account/causes.py:102
+#: donations/views/ngo_account/causes.py:115
 #, fuzzy
 #| msgid "The ID number format is not valid"
 msgid "The form has been saved."
 msgstr "Նույնականացման համարի ձևաչափը վավեր չէ"
 
-#: donations/views/ngo_account/causes.py:113
+#: donations/views/ngo_account/causes.py:126
 #: redirectioneaza/context_processors/headers.py:107
 #, fuzzy
 #| msgid "NGO Hub organization ID"
 msgid "Organization Causes"
 msgstr "NGO Hub կազմակերպության նույնականացման համար"
 
-#: donations/views/ngo_account/causes.py:144
-#: donations/views/ngo_account/causes.py:189
-#: donations/views/ngo_account/my_organization.py:152
+#: donations/views/ngo_account/causes.py:157
+#: donations/views/ngo_account/causes.py:202
+#: donations/views/ngo_account/my_organization.py:149
 #, fuzzy
 #| msgid "NGO Hub organization ID"
 msgid "Organization form"
 msgstr "NGO Hub կազմակերպության նույնականացման համար"
 
-#: donations/views/ngo_account/causes.py:150
+#: donations/views/ngo_account/causes.py:163
 msgid "Add new cause form"
 msgstr ""
 
@@ -1528,7 +1545,7 @@ msgstr "IBAN համարը պետք է պարունակի միայն տառեր �
 msgid "The IBAN number must start with 'RO'"
 msgstr "IBAN համարը պետք է սկսվի «RO»-ով"
 
-#: donations/views/ngo_account/common.py:157
+#: donations/views/ngo_account/common.py:179
 #, fuzzy
 #| msgid "Sign In Error"
 msgid "Download generated file"
@@ -1585,104 +1602,104 @@ msgstr "NGO Hub կազմակերպության նույնականացման հա
 msgid "Account settings"
 msgstr "ամսաթիվը ստեղծվել է"
 
-#: donations/views/ngo_account_filters.py:29
+#: donations/views/ngo_account_filters.py:30
 #, fuzzy
 #| msgid "two years"
 msgid "Years"
 msgstr "երկու տարի"
 
-#: donations/views/ngo_account_filters.py:88
+#: donations/views/ngo_account_filters.py:89
 msgid "Period"
 msgstr ""
 
-#: donations/views/ngo_account_filters.py:95
+#: donations/views/ngo_account_filters.py:96
 #, fuzzy
 #| msgid "two years"
 msgid "One year"
 msgstr "երկու տարի"
 
-#: donations/views/ngo_account_filters.py:115
+#: donations/views/ngo_account_filters.py:116
 #: templates/v2/ngo-account/redirections/list-items.html:56
 #, fuzzy
 #| msgid "Sign In"
 msgid "Signed"
 msgstr "Գրանցվել"
 
-#: donations/views/ngo_account_filters.py:116
+#: donations/views/ngo_account_filters.py:117
 #, fuzzy
 #| msgid "has signed"
 msgid "Not signed"
 msgstr "ստորագրել է"
 
-#: donations/views/ngo_account_filters.py:128
+#: donations/views/ngo_account_filters.py:129
 #, fuzzy
 #| msgid "anonymous"
 msgid "Is Anonymous"
 msgstr "անանուն"
 
-#: donations/views/ngo_account_filters.py:135
+#: donations/views/ngo_account_filters.py:136
 #, fuzzy
 #| msgid "anonymous"
 msgid "Anonymous"
 msgstr "անանուն"
 
-#: donations/views/ngo_account_filters.py:136
+#: donations/views/ngo_account_filters.py:137
 #, fuzzy
 #| msgid "anonymous"
 msgid "Not anonymous"
 msgstr "անանուն"
 
-#: donations/views/redirections.py:31
+#: donations/views/redirections.py:33
 #, fuzzy
 #| msgid "Successful tasks"
 msgid "Successful redirection"
 msgstr "Հաջողված առաջադրանքներ"
 
-#: donations/views/redirections.py:284
+#: donations/views/redirections.py:302
 msgid "Un nou formular de redirecționare"
 msgstr ""
 
-#: donations/views/redirections.py:291 donations/views/redirections.py:311
+#: donations/views/redirections.py:309 donations/views/redirections.py:329
 msgid "Formularul tău de redirecționare"
 msgstr ""
 
-#: donations/views/site.py:42
+#: donations/views/site.py:43
 msgid "form filled in"
 msgid_plural "forms filled in"
 msgstr[0] ""
 msgstr[1] "լրացված ձևերը"
 
-#: donations/views/site.py:49
+#: donations/views/site.py:50
 msgid "organizations registered in the platform"
 msgstr ""
 
-#: donations/views/site.py:57
+#: donations/views/site.py:60
 msgid "redirected to NGOs through the platform"
 msgstr ""
 
-#: donations/views/site.py:58
+#: donations/views/site.py:61
 msgid "> €2 million"
 msgstr ""
 
-#: donations/views/site.py:110
+#: donations/views/site.py:114
 #, fuzzy
 #| msgid "Welcome to redirectioneaza.ro"
 msgid "About redirectioneaza.ro"
 msgstr "Բարի գալուստ redirectioneaza.ro"
 
-#: donations/views/site.py:129
+#: donations/views/site.py:133
 msgid "All causes"
 msgstr ""
 
-#: donations/views/site.py:177 templates/v2/redirect/footer.html:196
+#: donations/views/site.py:181 templates/v2/redirect/footer.html:196
 msgid "Information notice"
 msgstr ""
 
-#: donations/views/site.py:188 templates/v2/redirect/footer.html:186
+#: donations/views/site.py:192 templates/v2/redirect/footer.html:186
 msgid "Privacy policy"
 msgstr ""
 
-#: donations/views/site.py:193 templates/v2/redirect/footer.html:191
+#: donations/views/site.py:197 templates/v2/redirect/footer.html:191
 #, fuzzy
 #| msgid "description"
 msgid "Terms & conditions"
@@ -1742,55 +1759,55 @@ msgstr "Հաճախակի Տրվող Հարցեր"
 msgid "Importer"
 msgstr "Կարևոր ամսաթվեր"
 
-#: partners/admin.py:25
+#: partners/admin.py:26
 msgid "The first name of the user who will be the administering the Partner."
 msgstr ""
 
-#: partners/admin.py:31
+#: partners/admin.py:32
 msgid "The last name of the user who will be the administering the Partner."
 msgstr ""
 
-#: partners/admin.py:37
+#: partners/admin.py:38
 #, fuzzy
 #| msgid "User Details"
 msgid "User Email"
 msgstr "Օգտատիրոջ տվյալներ"
 
-#: partners/admin.py:38
+#: partners/admin.py:39
 msgid ""
 "The email address of the user who will be the administering the Partner."
 msgstr ""
 
-#: partners/admin.py:80 partners/models.py:90 users/models.py:79
+#: partners/admin.py:81 partners/models.py:90 users/models.py:79
 msgid "Partner"
 msgstr "Գործընկեր"
 
-#: partners/admin.py:89
+#: partners/admin.py:90
 msgid "Options"
 msgstr "Տարբերակներ"
 
-#: partners/admin.py:99
+#: partners/admin.py:100
 msgid "Metadata"
 msgstr "Մետատվյալներ"
 
-#: partners/admin.py:129
+#: partners/admin.py:130
 #, python-format
 msgid "An error occurred while creating the user: %(error)s"
 msgstr ""
 
-#: partners/admin.py:154
+#: partners/admin.py:155
 #, fuzzy
 #| msgid "Welcome to redirectioneaza.ro"
 msgid "Join redirectioneaza.ro"
 msgstr "Բարի գալուստ redirectioneaza.ro"
 
-#: partners/admin.py:163
+#: partners/admin.py:164
 #, fuzzy
 #| msgid "The import has been processed."
 msgid "The user has been successfully invited."
 msgstr "Ներմուծումը կատարվել է։"
 
-#: partners/admin.py:166 partners/admin.py:190
+#: partners/admin.py:167 partners/admin.py:191
 msgid "Invite new manager"
 msgstr ""
 
@@ -1893,7 +1910,7 @@ msgstr "Գործընկերներ"
 msgid "Has NGO"
 msgstr ""
 
-#: redirectioneaza/common/messaging.py:49
+#: redirectioneaza/common/messaging.py:50
 msgid "Invalid email send method. Must be 'async' or 'sync'."
 msgstr "Էլ. փոստի ուղարկման սխալ եղանակ: Պետք է լինի «async» կամ «sync»:"
 
@@ -2069,100 +2086,100 @@ msgstr ""
 msgid "My Organization"
 msgstr "NGO Hub կազմակերպության նույնականացման համար"
 
-#: redirectioneaza/settings/app_configs.py:40
+#: redirectioneaza/settings/app_configs.py:31
 msgid "January"
 msgstr "Հունվար"
 
-#: redirectioneaza/settings/app_configs.py:41
+#: redirectioneaza/settings/app_configs.py:32
 msgid "Jan"
 msgstr "Հունվ"
 
-#: redirectioneaza/settings/app_configs.py:44
+#: redirectioneaza/settings/app_configs.py:35
 msgid "February"
 msgstr "Փետրվար"
 
-#: redirectioneaza/settings/app_configs.py:45
+#: redirectioneaza/settings/app_configs.py:36
 msgid "Feb"
 msgstr "Փետրվ"
 
-#: redirectioneaza/settings/app_configs.py:48
+#: redirectioneaza/settings/app_configs.py:39
 msgid "March"
 msgstr "Մարտ"
 
-#: redirectioneaza/settings/app_configs.py:49
+#: redirectioneaza/settings/app_configs.py:40
 msgid "Mar"
 msgstr "Մարտ"
 
-#: redirectioneaza/settings/app_configs.py:52
+#: redirectioneaza/settings/app_configs.py:43
 msgid "April"
 msgstr "Ապրիլ"
 
-#: redirectioneaza/settings/app_configs.py:53
+#: redirectioneaza/settings/app_configs.py:44
 msgid "Apr"
 msgstr "Ապր"
 
-#: redirectioneaza/settings/app_configs.py:56
-#: redirectioneaza/settings/app_configs.py:57
+#: redirectioneaza/settings/app_configs.py:47
+#: redirectioneaza/settings/app_configs.py:48
 msgid "May"
 msgstr "Մայիս"
 
-#: redirectioneaza/settings/app_configs.py:60
+#: redirectioneaza/settings/app_configs.py:51
 msgid "June"
 msgstr "Հունիս"
 
-#: redirectioneaza/settings/app_configs.py:61
+#: redirectioneaza/settings/app_configs.py:52
 msgid "Jun"
 msgstr "Հունիս"
 
-#: redirectioneaza/settings/app_configs.py:64
+#: redirectioneaza/settings/app_configs.py:55
 msgid "July"
 msgstr "Հուլիս"
 
-#: redirectioneaza/settings/app_configs.py:65
+#: redirectioneaza/settings/app_configs.py:56
 msgid "Jul"
 msgstr "Հուլ"
 
-#: redirectioneaza/settings/app_configs.py:68
+#: redirectioneaza/settings/app_configs.py:59
 msgid "August"
 msgstr "Օգոստոս"
 
-#: redirectioneaza/settings/app_configs.py:69
+#: redirectioneaza/settings/app_configs.py:60
 msgid "Aug"
 msgstr "Օգ"
 
-#: redirectioneaza/settings/app_configs.py:72
+#: redirectioneaza/settings/app_configs.py:63
 msgid "September"
 msgstr "Սեպտեմբեր"
 
-#: redirectioneaza/settings/app_configs.py:73
+#: redirectioneaza/settings/app_configs.py:64
 msgid "Sep"
 msgstr "Սեպտ"
 
-#: redirectioneaza/settings/app_configs.py:76
+#: redirectioneaza/settings/app_configs.py:67
 msgid "October"
 msgstr "Հոկտեմբեր"
 
-#: redirectioneaza/settings/app_configs.py:77
+#: redirectioneaza/settings/app_configs.py:68
 msgid "Oct"
 msgstr "Հոկտ"
 
-#: redirectioneaza/settings/app_configs.py:80
+#: redirectioneaza/settings/app_configs.py:71
 msgid "November"
 msgstr "Նոյեմբեր"
 
-#: redirectioneaza/settings/app_configs.py:81
+#: redirectioneaza/settings/app_configs.py:72
 msgid "Nov"
 msgstr "Նոյ"
 
-#: redirectioneaza/settings/app_configs.py:84
+#: redirectioneaza/settings/app_configs.py:75
 msgid "December"
 msgstr "Դեկտեմբեր"
 
-#: redirectioneaza/settings/app_configs.py:85
+#: redirectioneaza/settings/app_configs.py:76
 msgid "Dec"
 msgstr "Դեկտ"
 
-#: redirectioneaza/settings/django_q.py:23
+#: redirectioneaza/settings/django_q.py:24
 #: redirectioneaza/settings/unfold.py:111
 msgid "Background Tasks"
 msgstr ""
@@ -2210,6 +2227,32 @@ msgstr "Պլանավորված առաջադրանքներ"
 #: redirectioneaza/settings/unfold.py:132
 msgid "Successful tasks"
 msgstr "Հաջողված առաջադրանքներ"
+
+#: stats/models.py:11
+msgid "value"
+msgstr ""
+
+#: stats/models.py:13
+#, fuzzy
+#| msgid "date updated"
+msgid "updated at"
+msgstr "ամսաթիվը թարմացվել է"
+
+#: stats/models.py:14
+msgid "expires at"
+msgstr ""
+
+#: stats/models.py:20
+#, fuzzy
+#| msgid "status"
+msgid "statistic"
+msgstr "կարգավիճակ"
+
+#: stats/models.py:21
+#, fuzzy
+#| msgid "status"
+msgid "statistics"
+msgstr "կարգավիճակ"
 
 #: templates/v2/account/components/password-input.html:4
 #: templates/v2/account/snippets/login-form.html:64
@@ -2674,7 +2717,7 @@ msgstr ""
 msgid "Upload an image"
 msgstr "Վերբեռնված է"
 
-#: templates/v2/components/input/search-box.html:39
+#: templates/v2/components/input/search-box.html:77
 msgid "Clear search"
 msgstr ""
 
@@ -4297,11 +4340,11 @@ msgstr "Թույլտվություններ"
 msgid "Important dates"
 msgstr "Կարևոր ամսաթվեր"
 
-#: users/models.py:38 users/tests.py:35
+#: users/models.py:38 users/tests.py:36
 msgid "Superuser must have is_staff=True."
 msgstr "Գերօգտատերը պետք է ունենա is_staff=True:"
 
-#: users/models.py:40 users/tests.py:38
+#: users/models.py:40 users/tests.py:39
 msgid "Superuser must have is_superuser=True."
 msgstr "Գերօգտագործողը պետք է ունենա is_superuser= True:"
 
@@ -4336,6 +4379,12 @@ msgstr "հին գաղտնաբառ"
 #: users/models.py:178
 msgid "Group"
 msgstr "Խումբ"
+
+#~ msgid "Details"
+#~ msgstr "Մանրամասներ"
+
+#~ msgid "form with prefilled ngo data"
+#~ msgstr "ձևաթուղթ՝ նախապես լրացված ՀԿ-ի տվյալներով"
 
 #~ msgid "Donation exports"
 #~ msgstr "Նվիրատվության արտահանումները"
