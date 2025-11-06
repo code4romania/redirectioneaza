@@ -48,7 +48,7 @@
               {{ iban_helptext }}
             {% endblocktrans %}
           {% endif %}
-          {% include "components/input/input.html" with input_id="bank_account" input_type="text" input_name="bank_account" placeholder="RO00 1234 5678 1234 5678" is_required=True value=cause.bank_account field=django_form.bank_account max_length=48 help_text=iban_helptext %}
+          {% include "components/input/input.html" with input_id="bank_account" input_type="text" input_name="bank_account" placeholder="RO00 1234 5678 1234 5678" is_required=True value=cause.bank_account field=django_form.bank_account max_length=48 help_text=iban_helptext data_pristine_ignore_spaces="true" %}
 
         </div>
 

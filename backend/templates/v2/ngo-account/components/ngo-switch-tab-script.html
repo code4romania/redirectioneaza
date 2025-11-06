@@ -1,18 +1,25 @@
 <script>
   function hasChangedFields(fieldsArray) {
-    return fieldsArray.some(function (field) {
+    return fieldsArray.some(function(field) {
       let inputValue = undefined;
-      let originalValue = field.getAttribute('input-original-value');
+      let originalValue = field.getAttribute("input-original-value");
+      let ignoreSpaces = field.getAttribute("data-pristine-ignore-spaces");
 
-      if (field.type === 'checkbox') {
+      if (field.type === "checkbox") {
         inputValue = field.checked;
-        originalValue = originalValue?.toLowerCase() === 'true';
+        originalValue = originalValue?.toLowerCase() === "true";
       } else {
         inputValue = field.value;
+        if (ignoreSpaces === "true") {
+          inputValue = inputValue.replace(/\s/g, "");
+          if (originalValue !== null && originalValue !== undefined) {
+            originalValue = originalValue.trim();
+          }
+        }
       }
 
       // it is an empty field received from backend or new form
-      if ((originalValue === undefined || originalValue === null) && inputValue === '') {
+      if ((originalValue === undefined || originalValue === null) && inputValue === "") {
         return false;
       }
 
@@ -20,7 +27,7 @@
     });
   }
 
-  let ngoForm = function () {
+  let ngoForm = function() {
     return {
       form: undefined,
       pristine: undefined,
@@ -31,10 +38,10 @@
         this.pristine = new Pristine(this.form, {
           errorTextClass: "mt-2 text-sm text-red-600",
           errorClass: "has-error",
-          successClass: "has-success"
+          successClass: "has-success",
         });
 
-        this.form.addEventListener('submit', (e) => {
+        this.form.addEventListener("submit", (e) => {
           e.preventDefault();
 
           this.isFormSubmitting = true;
@@ -46,19 +53,19 @@
         });
 
         // Event listener for the 'beforeunload' event
-        window.addEventListener('beforeunload', (event) => {
+        window.addEventListener("beforeunload", (event) => {
           // Check if the form is being submitted
           if (this.isFormSubmitting) {
             return; // Allow navigation without showing the confirmation dialog
           }
 
           if (hasChangedFields(this.pristine.fields.map(field => field.input))) {
-            if (!confirm('Are you sure you want to leave?')) {
+            if (!confirm("Are you sure you want to leave?")) {
               event.preventDefault();
             }
           }
         });
-      }
+      },
     };
   };
 
