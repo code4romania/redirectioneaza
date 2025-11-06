@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-06 09:54+0200\n"
+"POT-Creation-Date: 2025-11-06 09:59+0200\n"
 "PO-Revision-Date: 2025-03-27 14:48+0000\n"
 "Last-Translator: Andrei Ioniță <andrei.ionita@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -40,8 +40,8 @@ msgstr ""
 #: donations/admin/causes.py:76 donations/admin/common.py:25
 #: donations/admin/donors.py:112 donations/admin/download_jobs.py:22
 #: donations/admin/download_jobs.py:50 donations/admin/jobs.py:22
-#: donations/admin/jobs.py:55 donations/admin/ngos.py:212
-#: donations/admin/ngos.py:300 donations/models/donors.py:71
+#: donations/admin/jobs.py:55 donations/admin/ngos.py:209
+#: donations/admin/ngos.py:297 donations/models/donors.py:71
 #: donations/models/downloads.py:10 donations/models/jobs.py:13
 #: donations/models/ngos.py:284 partners/models.py:149 users/models.py:71
 msgid "NGO"
@@ -65,7 +65,7 @@ msgstr "Form Data"
 
 #: donations/admin/common.py:64 donations/admin/donors.py:138
 #: donations/admin/download_jobs.py:40 donations/admin/jobs.py:45
-#: donations/admin/ngos.py:250 templates/v2/ngo-account/byof/list-header.html:7
+#: donations/admin/ngos.py:247 templates/v2/ngo-account/byof/list-header.html:7
 msgid "Date"
 msgstr "Date"
 
@@ -157,11 +157,11 @@ msgstr ""
 msgid "Status"
 msgstr "Status"
 
-#: donations/admin/ngos.py:39
+#: donations/admin/ngos.py:37
 msgid "Existing User"
 msgstr "Existing User"
 
-#: donations/admin/ngos.py:40
+#: donations/admin/ngos.py:38
 msgid ""
 "Select the new owner of the NGO. You can only select active users that don't "
 "have an NGO."
@@ -169,136 +169,121 @@ msgstr ""
 "Select the new owner of the NGO. You can only select active users that don't "
 "have an NGO."
 
-#: donations/admin/ngos.py:74
+#: donations/admin/ngos.py:72
 #, fuzzy
 #| msgid "User Link"
 msgid "Cause link"
 msgstr "User Link"
 
-#: donations/admin/ngos.py:105
+#: donations/admin/ngos.py:103
 msgid "User Link"
 msgstr "User Link"
 
-#: donations/admin/ngos.py:109
+#: donations/admin/ngos.py:107
 msgid "User Details"
 msgstr "User Details"
 
-#: donations/admin/ngos.py:113
+#: donations/admin/ngos.py:111
 msgid "User Permissions"
 msgstr "User Permissions"
 
-#: donations/admin/ngos.py:121
+#: donations/admin/ngos.py:119
 msgid "User"
 msgstr "User"
 
-#: donations/admin/ngos.py:128
+#: donations/admin/ngos.py:126
 msgid "Has NGO Hub account"
 msgstr "Has NGO Hub account"
 
-#: donations/admin/ngos.py:132 donations/admin/ngos.py:152
+#: donations/admin/ngos.py:130 donations/admin/ngos.py:150
 #: templates/v2/ngo-account/causes/list-items.html:46
 #: templates/v2/ngo-account/redirections/list-items.html:48
 msgid "Yes"
 msgstr "Yes"
 
-#: donations/admin/ngos.py:132 donations/admin/ngos.py:152
+#: donations/admin/ngos.py:130 donations/admin/ngos.py:150
 #: templates/v2/ngo-account/causes/list-items.html:48
 #: templates/v2/ngo-account/redirections/list-items.html:50
 msgid "No"
 msgstr "No"
 
-#: donations/admin/ngos.py:148
+#: donations/admin/ngos.py:146
 msgid "Has owner"
 msgstr "Has owner"
 
-#: donations/admin/ngos.py:208 donations/admin/ngos.py:326 donations/apps.py:8
+#: donations/admin/ngos.py:205 donations/admin/ngos.py:323 donations/apps.py:8
 #: donations/views/dashboard/stats_helpers/utils.py:14
 #: redirectioneaza/context_processors/headers.py:70
 #: redirectioneaza/settings/unfold.py:30 redirectioneaza/settings/unfold.py:45
 msgid "Donations"
 msgstr "Donations"
 
-#: donations/admin/ngos.py:223
+#: donations/admin/ngos.py:220
 msgid "Activity"
 msgstr "Activity"
 
-#: donations/admin/ngos.py:234 redirectioneaza/context_processors/headers.py:45
+#: donations/admin/ngos.py:231 redirectioneaza/context_processors/headers.py:45
 msgid "Contact"
 msgstr "Contact"
 
-#: donations/admin/ngos.py:312
+#: donations/admin/ngos.py:309
 msgid "NGO Hub link"
 msgstr "NGO Hub link"
 
-#: donations/admin/ngos.py:322
+#: donations/admin/ngos.py:319
 msgid "CIF"
 msgstr "CIF"
 
-#: donations/admin/ngos.py:328
+#: donations/admin/ngos.py:325
 msgid "Open the NGO donor list"
 msgstr "Open the NGO donor list"
 
-#: donations/admin/ngos.py:339
+#: donations/admin/ngos.py:336
 msgid "This user already has an NGO."
 msgstr "This user already has an NGO."
 
-#: donations/admin/ngos.py:345
+#: donations/admin/ngos.py:342
 msgid "This user is a staff member."
 msgstr "This user is a staff member."
 
-#: donations/admin/ngos.py:351
+#: donations/admin/ngos.py:348
 msgid "This user is an NGO Hub user."
 msgstr "This user is an NGO Hub user."
 
-#: donations/admin/ngos.py:363
+#: donations/admin/ngos.py:360
 msgid "Owner changed successfully."
 msgstr "Owner changed successfully."
 
-#: donations/admin/ngos.py:366
+#: donations/admin/ngos.py:363
 msgid "Change owner"
 msgstr "Change owner"
 
-#: donations/admin/ngos.py:383 partners/admin.py:181
+#: donations/admin/ngos.py:380 partners/admin.py:181
 msgid "The form is not valid."
 msgstr "The form is not valid."
 
-#: donations/admin/ngos.py:393
+#: donations/admin/ngos.py:390
 #, python-format
 msgid "Change owner of NGO '%(name)s'"
 msgstr "Change owner of NGO '%(name)s'"
 
-#: donations/admin/ngos.py:398
-msgid "Clean up registration numbers"
-msgstr "Clean up registration numbers"
-
-#: donations/admin/ngos.py:410
-msgid "Successfully cleaned registration numbers"
-msgstr "Successfully cleaned registration numbers"
-
-#: donations/admin/ngos.py:413
-#, python-format
-msgid " for 1 NGO."
-msgid_plural " for %(ngos)d NGOs."
-msgstr[0] " for 1 NGO."
-msgstr[1] " for %(ngos)d NGOs."
-
-#: donations/admin/ngos.py:422
+#: donations/admin/ngos.py:395
 msgid "Update from NGO Hub synchronously"
 msgstr "Update from NGO Hub synchronously"
 
-#: donations/admin/ngos.py:427
+#: donations/admin/ngos.py:400
 msgid "NGOs updated from NGO Hub."
 msgstr "NGOs updated from NGO Hub."
 
-#: donations/admin/ngos.py:429
+#: donations/admin/ngos.py:402
 msgid "Update from NGO Hub asynchronously"
 msgstr "Update from NGO Hub asynchronously"
 
-#: donations/admin/ngos.py:434
+#: donations/admin/ngos.py:407
 msgid "NGOs are being updated from NGO Hub."
 msgstr "NGOs are being updated from NGO Hub."
 
-#: donations/admin/ngos.py:436
+#: donations/admin/ngos.py:409
 msgid "Remove prefilled forms"
 msgstr "Remove prefilled forms"
 
@@ -4276,6 +4261,18 @@ msgstr "old password"
 #: users/models.py:178
 msgid "Group"
 msgstr "Group"
+
+#~ msgid "Clean up registration numbers"
+#~ msgstr "Clean up registration numbers"
+
+#~ msgid "Successfully cleaned registration numbers"
+#~ msgstr "Successfully cleaned registration numbers"
+
+#, python-format
+#~ msgid " for 1 NGO."
+#~ msgid_plural " for %(ngos)d NGOs."
+#~ msgstr[0] " for 1 NGO."
+#~ msgstr[1] " for %(ngos)d NGOs."
 
 #~ msgid "Details"
 #~ msgstr "Details"

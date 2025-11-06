@@ -4,7 +4,6 @@ from django import forms
 from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth import get_user_model
-from django.core.management import call_command
 from django.db import transaction
 from django.db.models import QuerySet
 from django.http import HttpRequest
@@ -12,7 +11,6 @@ from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
-from django.utils.translation import ngettext_lazy
 from unfold.admin import ModelAdmin, StackedInline, TabularInline
 from unfold.contrib.filters.admin import SingleNumericFilter
 from unfold.decorators import action
@@ -196,12 +194,11 @@ class NgoAdmin(ModelAdmin):
     actions_detail = ("change_owner",)
 
     actions = (
-        "clean_registration_numbers",
         "update_from_ngohub_sync",
         "update_from_ngohub_async",
     )
 
-    actions_list = ("clean_registration_numbers", "remove_prefilled_forms")
+    actions_list = ("remove_prefilled_forms",)
 
     fieldsets = (
         (
@@ -394,30 +391,6 @@ class NgoAdmin(ModelAdmin):
                 **self.admin_site.each_context(request),
             },
         )
-
-    @action(description=_("Clean up registration numbers"))
-    def clean_registration_numbers(self, request, queryset: QuerySet[Ngo] = None, object_id=None):
-        target_ngos = None
-        if queryset:
-            target_ngos = queryset.values_list("pk", flat=True)
-            result = call_command("registration_numbers_cleanup", "--ngos", *target_ngos)
-        else:
-            result = call_command("registration_numbers_cleanup")
-
-        if result:
-            self.message_user(request, result, level="ERROR")
-        else:
-            success_message = _("Successfully cleaned registration numbers")
-            if target_ngos:
-                success_message += ngettext_lazy(
-                    " for 1 NGO.",
-                    " for %(ngos)d NGOs.",
-                    target_ngos.count(),
-                ) % {"ngos": target_ngos.count()}
-
-            self.message_user(request, success_message, level="SUCCESS")
-
-        return redirect(reverse_lazy("admin:donations_ngo_changelist"))
 
     @action(description=_("Update from NGO Hub synchronously"))
     def update_from_ngohub_sync(self, request, queryset: QuerySet[Ngo]):

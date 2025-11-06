@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-06 09:54+0200\n"
+"POT-Creation-Date: 2025-11-06 09:59+0200\n"
 "PO-Revision-Date: 2025-02-12 12:44+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Armenian <https://translate.commitglobal.org/projects/"
@@ -34,8 +34,8 @@ msgstr ""
 #: donations/admin/causes.py:76 donations/admin/common.py:25
 #: donations/admin/donors.py:112 donations/admin/download_jobs.py:22
 #: donations/admin/download_jobs.py:50 donations/admin/jobs.py:22
-#: donations/admin/jobs.py:55 donations/admin/ngos.py:212
-#: donations/admin/ngos.py:300 donations/models/donors.py:71
+#: donations/admin/jobs.py:55 donations/admin/ngos.py:209
+#: donations/admin/ngos.py:297 donations/models/donors.py:71
 #: donations/models/downloads.py:10 donations/models/jobs.py:13
 #: donations/models/ngos.py:284 partners/models.py:149 users/models.py:71
 msgid "NGO"
@@ -61,7 +61,7 @@ msgstr "հարցաթերթ"
 
 #: donations/admin/common.py:64 donations/admin/donors.py:138
 #: donations/admin/download_jobs.py:40 donations/admin/jobs.py:45
-#: donations/admin/ngos.py:250 templates/v2/ngo-account/byof/list-header.html:7
+#: donations/admin/ngos.py:247 templates/v2/ngo-account/byof/list-header.html:7
 msgid "Date"
 msgstr "Ամսաթիվ"
 
@@ -149,154 +149,137 @@ msgstr ""
 msgid "Status"
 msgstr "Կարգավիճակ"
 
-#: donations/admin/ngos.py:39
+#: donations/admin/ngos.py:37
 msgid "Existing User"
 msgstr ""
 
-#: donations/admin/ngos.py:40
+#: donations/admin/ngos.py:38
 msgid ""
 "Select the new owner of the NGO. You can only select active users that don't "
 "have an NGO."
 msgstr ""
 
-#: donations/admin/ngos.py:74
+#: donations/admin/ngos.py:72
 #, fuzzy
 #| msgid "User Link"
 msgid "Cause link"
 msgstr "Օգտատիրոջ հղում"
 
-#: donations/admin/ngos.py:105
+#: donations/admin/ngos.py:103
 msgid "User Link"
 msgstr "Օգտատիրոջ հղում"
 
-#: donations/admin/ngos.py:109
+#: donations/admin/ngos.py:107
 msgid "User Details"
 msgstr "Օգտատիրոջ տվյալներ"
 
-#: donations/admin/ngos.py:113
+#: donations/admin/ngos.py:111
 msgid "User Permissions"
 msgstr "Օգտատիրոջ թույլտվություն"
 
-#: donations/admin/ngos.py:121
+#: donations/admin/ngos.py:119
 msgid "User"
 msgstr "Օգտատեր"
 
-#: donations/admin/ngos.py:128
+#: donations/admin/ngos.py:126
 msgid "Has NGO Hub account"
 msgstr "Ունի NGO Hub օգտահաշիվ"
 
-#: donations/admin/ngos.py:132 donations/admin/ngos.py:152
+#: donations/admin/ngos.py:130 donations/admin/ngos.py:150
 #: templates/v2/ngo-account/causes/list-items.html:46
 #: templates/v2/ngo-account/redirections/list-items.html:48
 msgid "Yes"
 msgstr "այո"
 
-#: donations/admin/ngos.py:132 donations/admin/ngos.py:152
+#: donations/admin/ngos.py:130 donations/admin/ngos.py:150
 #: templates/v2/ngo-account/causes/list-items.html:48
 #: templates/v2/ngo-account/redirections/list-items.html:50
 msgid "No"
 msgstr "ոչ"
 
-#: donations/admin/ngos.py:148
+#: donations/admin/ngos.py:146
 msgid "Has owner"
 msgstr "Ունի օգտատեր"
 
-#: donations/admin/ngos.py:208 donations/admin/ngos.py:326 donations/apps.py:8
+#: donations/admin/ngos.py:205 donations/admin/ngos.py:323 donations/apps.py:8
 #: donations/views/dashboard/stats_helpers/utils.py:14
 #: redirectioneaza/context_processors/headers.py:70
 #: redirectioneaza/settings/unfold.py:30 redirectioneaza/settings/unfold.py:45
 msgid "Donations"
 msgstr "Նվիրատվություններ"
 
-#: donations/admin/ngos.py:223
+#: donations/admin/ngos.py:220
 msgid "Activity"
 msgstr "Գործունեություն"
 
-#: donations/admin/ngos.py:234 redirectioneaza/context_processors/headers.py:45
+#: donations/admin/ngos.py:231 redirectioneaza/context_processors/headers.py:45
 msgid "Contact"
 msgstr "Կապ"
 
-#: donations/admin/ngos.py:312
+#: donations/admin/ngos.py:309
 msgid "NGO Hub link"
 msgstr ""
 
-#: donations/admin/ngos.py:322
+#: donations/admin/ngos.py:319
 msgid "CIF"
 msgstr ""
 
-#: donations/admin/ngos.py:328
+#: donations/admin/ngos.py:325
 msgid "Open the NGO donor list"
 msgstr "Բացել ՀԿ-ների դոնորների ցանկը"
 
-#: donations/admin/ngos.py:339
+#: donations/admin/ngos.py:336
 msgid "This user already has an NGO."
 msgstr ""
 
-#: donations/admin/ngos.py:345
+#: donations/admin/ngos.py:342
 msgid "This user is a staff member."
 msgstr ""
 
-#: donations/admin/ngos.py:351
+#: donations/admin/ngos.py:348
 msgid "This user is an NGO Hub user."
 msgstr ""
 
-#: donations/admin/ngos.py:363
+#: donations/admin/ngos.py:360
 #, fuzzy
 #| msgid "The import has been processed."
 msgid "Owner changed successfully."
 msgstr "Ներմուծումը կատարվել է։"
 
-#: donations/admin/ngos.py:366
+#: donations/admin/ngos.py:363
 #, fuzzy
 #| msgid "old password"
 msgid "Change owner"
 msgstr "հին գաղտնաբառ"
 
-#: donations/admin/ngos.py:383 partners/admin.py:181
+#: donations/admin/ngos.py:380 partners/admin.py:181
 #, fuzzy
 #| msgid "The ID number format is not valid"
 msgid "The form is not valid."
 msgstr "Նույնականացման համարի ձևաչափը վավեր չէ"
 
-#: donations/admin/ngos.py:393
+#: donations/admin/ngos.py:390
 #, python-format
 msgid "Change owner of NGO '%(name)s'"
 msgstr ""
 
-#: donations/admin/ngos.py:398
-msgid "Clean up registration numbers"
-msgstr "Մաքրել գրանցման համարները"
-
-#: donations/admin/ngos.py:410
-#, fuzzy
-#| msgid "Clean up registration numbers"
-msgid "Successfully cleaned registration numbers"
-msgstr "Մաքրել գրանցման համարները"
-
-#: donations/admin/ngos.py:413
-#, python-format
-msgid " for 1 NGO."
-msgid_plural " for %(ngos)d NGOs."
-msgstr[0] ""
-msgstr[1] ""
-
-#: donations/admin/ngos.py:422
+#: donations/admin/ngos.py:395
 msgid "Update from NGO Hub synchronously"
 msgstr "Թարմացում NGO Hub-ին համաժամանակյա"
 
-#: donations/admin/ngos.py:427
+#: donations/admin/ngos.py:400
 msgid "NGOs updated from NGO Hub."
 msgstr "ՀԿ-ները թարմացվել են NGO Hub-ից:"
 
-#: donations/admin/ngos.py:429
+#: donations/admin/ngos.py:402
 msgid "Update from NGO Hub asynchronously"
 msgstr "Թարմացում NGO Hub-ին ոչ համաժամանակյա"
 
-#: donations/admin/ngos.py:434
+#: donations/admin/ngos.py:407
 msgid "NGOs are being updated from NGO Hub."
 msgstr "ՀԿ-ները թարմացվում են NGO Hub-ից:"
 
-#: donations/admin/ngos.py:436
+#: donations/admin/ngos.py:409
 #, fuzzy
 #| msgid "Sign In Error"
 msgid "Remove prefilled forms"
@@ -4379,6 +4362,14 @@ msgstr "հին գաղտնաբառ"
 #: users/models.py:178
 msgid "Group"
 msgstr "Խումբ"
+
+#~ msgid "Clean up registration numbers"
+#~ msgstr "Մաքրել գրանցման համարները"
+
+#, fuzzy
+#~| msgid "Clean up registration numbers"
+#~ msgid "Successfully cleaned registration numbers"
+#~ msgstr "Մաքրել գրանցման համարները"
 
 #~ msgid "Details"
 #~ msgstr "Մանրամասներ"
