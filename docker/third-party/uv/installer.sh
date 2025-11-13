@@ -23,7 +23,7 @@ has_local 2>/dev/null || alias local=typeset
 set -u
 
 APP_NAME="uv"
-APP_VERSION="0.8.10"
+APP_VERSION="0.9.9"
 # Look for GitHub Enterprise-style base URL first
 if [ -n "${UV_INSTALLER_GHE_BASE_URL:-}" ]; then
     INSTALLER_BASE_URL="$UV_INSTALLER_GHE_BASE_URL"
@@ -35,7 +35,7 @@ if [ -n "${UV_DOWNLOAD_URL:-}" ]; then
 elif [ -n "${INSTALLER_DOWNLOAD_URL:-}" ]; then
     ARTIFACT_DOWNLOAD_URL="$INSTALLER_DOWNLOAD_URL"
 else
-    ARTIFACT_DOWNLOAD_URL="${INSTALLER_BASE_URL}/astral-sh/uv/releases/download/0.8.10"
+    ARTIFACT_DOWNLOAD_URL="${INSTALLER_BASE_URL}/astral-sh/uv/releases/download/0.9.9"
 fi
 if [ -n "${UV_PRINT_VERBOSE:-}" ]; then
     PRINT_VERBOSE="$UV_PRINT_VERBOSE"
@@ -65,7 +65,7 @@ fi
 AUTH_TOKEN="${UV_GITHUB_TOKEN:-}"
 
 read -r RECEIPT <<EORECEIPT
-{"binaries":["CARGO_DIST_BINS"],"binary_aliases":{},"cdylibs":["CARGO_DIST_DYLIBS"],"cstaticlibs":["CARGO_DIST_STATICLIBS"],"install_layout":"unspecified","install_prefix":"AXO_INSTALL_PREFIX","modify_path":true,"provider":{"source":"cargo-dist","version":"0.28.7"},"source":{"app_name":"uv","name":"uv","owner":"astral-sh","release_type":"github"},"version":"0.8.10"}
+{"binaries":["CARGO_DIST_BINS"],"binary_aliases":{},"cdylibs":["CARGO_DIST_DYLIBS"],"cstaticlibs":["CARGO_DIST_STATICLIBS"],"install_layout":"unspecified","install_prefix":"AXO_INSTALL_PREFIX","modify_path":true,"provider":{"source":"cargo-dist","version":"0.30.2"},"source":{"app_name":"uv","name":"uv","owner":"astral-sh","release_type":"github"},"version":"0.9.9"}
 EORECEIPT
 
 # Some Linux distributions don't set HOME
@@ -100,10 +100,10 @@ usage() {
     cat <<EOF
 uv-installer.sh
 
-The installer for uv 0.8.10
+The installer for uv 0.9.9
 
 This script detects what platform you're on and fetches an appropriate archive from
-https://github.com/astral-sh/uv/releases/download/0.8.10
+https://github.com/astral-sh/uv/releases/download/0.9.9
 then unpacks the binaries and installs them to the first of the following locations
 
     \$XDG_BIN_HOME
@@ -203,7 +203,7 @@ download_binary_and_run_installer() {
     local _checksum_value
 
     # destructure selected archive info into locals
-    case "$_artifact_name" in
+    case "$_artifact_name" in 
         "uv-aarch64-apple-darwin.tar.gz")
             _arch="aarch64-apple-darwin"
             _zip_ext=".tar.gz"
@@ -529,7 +529,7 @@ replace_home() {
 json_binary_aliases() {
     local _arch="$1"
 
-    case "$_arch" in
+    case "$_arch" in 
     "aarch64-apple-darwin")
         echo '{}'
         ;;
@@ -612,7 +612,7 @@ aliases_for_binary() {
     local _bin="$1"
     local _arch="$2"
 
-    case "$_arch" in
+    case "$_arch" in 
     "aarch64-apple-darwin")
         case "$_bin" in
         *)
@@ -793,7 +793,7 @@ select_archive_for_arch() {
 
     # try each archive, checking runtime conditions like libc versions
     # accepting the first one that matches, as it's the best match
-    case "$_true_arch" in
+    case "$_true_arch" in 
         "aarch64-apple-darwin")
             _archive="uv-aarch64-apple-darwin.tar.gz"
             if [ -n "$_archive" ]; then
