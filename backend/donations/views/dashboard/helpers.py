@@ -1,6 +1,5 @@
 import json
 from datetime import datetime, tzinfo
-from typing import Dict, List, Union
 from urllib.parse import urlencode
 
 from django.conf import settings
@@ -30,7 +29,7 @@ def get_encoded_current_year_range(current_year: int, tz_info: tzinfo) -> str:
 
 
 @cache_decorator(timeout=settings.TIMEOUT_CACHE_LONG, cache_key_prefix=DATASET_PARAMETERS_CACHE_KEY)
-def _get_chart_dataset_parameters() -> List[Dict[str, Union[int, str]]]:
+def _get_chart_dataset_parameters() -> list[dict[str, int | str]]:
     years_range_ascending = get_current_year_range()
 
     return [
@@ -56,8 +55,8 @@ def _get_chart_dataset_parameters() -> List[Dict[str, Union[int, str]]]:
 
 
 def generate_donations_per_month_chart(
-    default_border_width: int, donations_per_month: Dict[int, List[int]]
-) -> Dict[str, str]:
+    default_border_width: int, donations_per_month: dict[int, list[int]]
+) -> dict[str, str]:
     dataset_parameters = _get_chart_dataset_parameters()
     forms_per_month_chart = {
         "title": _("Donations per month"),

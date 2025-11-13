@@ -1,16 +1,15 @@
 import re
-from typing import Dict, List, Optional
 
 from django.core.exceptions import ValidationError
 from django.core.management import BaseCommand
 
+from donations.models.ngos import Ngo
 from utils.text.registration_number import (
     REGISTRATION_NUMBER_REGEX,
     clean_registration_number,
     extract_vat_id,
     ngo_id_number_validator,
 )
-from donations.models.ngos import Ngo
 
 
 class Command(BaseCommand):
@@ -25,7 +24,7 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        errors: List[str] = []
+        errors: list[str] = []
 
         if options["ngos"]:
             target_ngo_ids = options["ngos"]
@@ -51,7 +50,7 @@ class Command(BaseCommand):
                 self.style.ERROR(f"Errors occurred while cleaning registration numbers for NGOs: ({','.join(errors)})")
             )
 
-    def clean_ngo(self, ngo_id: int) -> Dict[str, str]:
+    def clean_ngo(self, ngo_id: int) -> dict[str, str]:
         ngo = Ngo.objects.get(pk=ngo_id)
 
         try:
@@ -65,7 +64,7 @@ class Command(BaseCommand):
                 "message": f"Error while cleaning NGO {ngo.pk}: {e}",
             }
 
-    def clean_ngo_registration_number(self, ngo: Ngo) -> Dict[str, str]:
+    def clean_ngo_registration_number(self, ngo: Ngo) -> dict[str, str]:
         initial_registration_number = ngo.registration_number
         cleaned_registration_number = clean_registration_number(initial_registration_number)
 
@@ -120,7 +119,7 @@ class Command(BaseCommand):
         }
 
     @staticmethod
-    def _clean_up_registration_number(reg_num: str) -> Optional[str]:
+    def _clean_up_registration_number(reg_num: str) -> str | None:
         if re.match(REGISTRATION_NUMBER_REGEX, reg_num):
             return reg_num
 

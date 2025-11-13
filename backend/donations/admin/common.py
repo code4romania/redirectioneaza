@@ -1,5 +1,3 @@
-from typing import Dict, Tuple
-
 from django.http import HttpRequest
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
@@ -21,12 +19,12 @@ def span_internal(href: str, content: str) -> str:
 
 
 class CommonCauseFields:
-    ngo_fieldset: Tuple[str, Dict[str, Tuple[str]]] = (
+    ngo_fieldset: tuple[str, dict[str, tuple[str]]] = (
         _("NGO"),
         {"fields": ("ngo",)},
     )
 
-    flags_fieldset: Tuple[str, Dict[str, Tuple[str]]] = (
+    flags_fieldset: tuple[str, dict[str, tuple[str]]] = (
         _("Flags"),
         {
             "fields": (
@@ -38,7 +36,7 @@ class CommonCauseFields:
         },
     )
 
-    form_data_fieldset: Tuple[str, Dict[str, Tuple[str]]] = (
+    form_data_fieldset: tuple[str, dict[str, tuple[str]]] = (
         _("Form Data"),
         {
             "fields": (
@@ -48,7 +46,7 @@ class CommonCauseFields:
         },
     )
 
-    data_fieldset: Tuple[str, Dict[str, Tuple[str]]] = (
+    data_fieldset: tuple[str, dict[str, tuple[str]]] = (
         _("Data"),
         {
             "fields": (
@@ -60,7 +58,7 @@ class CommonCauseFields:
         },
     )
 
-    dates_fieldset: Tuple[str, Dict[str, Tuple[str]]] = (
+    dates_fieldset: tuple[str, dict[str, tuple[str]]] = (
         _("Date"),
         {
             "fields": (

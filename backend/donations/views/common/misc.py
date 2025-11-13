@@ -1,5 +1,4 @@
 import datetime
-from typing import Dict, Optional
 
 from django.conf import settings
 from django.urls import reverse
@@ -12,7 +11,7 @@ from donations.models.ngos import Cause, Ngo
 from editions.calendar import edition_deadline
 
 
-def get_was_last_job_recent(ngo: Optional[Ngo]) -> bool:
+def get_was_last_job_recent(ngo: Ngo | None) -> bool:
     if not ngo:
         return True
 
@@ -74,7 +73,7 @@ def get_time_between_retries() -> str:
     return period_between_retries
 
 
-def get_ngo_archive_download_status(ngo: Optional[Ngo]) -> Dict:
+def get_ngo_archive_download_status(ngo: Ngo | None) -> dict:
     last_job_was_recent = get_was_last_job_recent(ngo)
     context = {
         "last_job_was_recent": last_job_was_recent,
@@ -97,7 +96,7 @@ def has_archive_generation_deadline_passed() -> bool:
     return False
 
 
-def get_cause_response_item(cause: Cause) -> Dict:
+def get_cause_response_item(cause: Cause) -> dict:
     return {
         "name": cause.name,
         "url": reverse("twopercent", kwargs={"cause_slug": cause.slug}),

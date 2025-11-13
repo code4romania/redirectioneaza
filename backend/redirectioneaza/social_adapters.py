@@ -1,6 +1,5 @@
 import logging
 import re
-from typing import Optional
 
 from allauth.core.exceptions import ImmediateHttpResponse
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
@@ -197,7 +196,7 @@ def _set_user_name(user: UserModel, user_profile) -> None:
 
 def _get_user_profile(ngohub, user: UserModel, user_token) -> UserProfile:
     try:
-        user_profile: Optional[UserProfile] = ngohub.get_profile(user_token)
+        user_profile: UserProfile | None = ngohub.get_profile(user_token)
     except HubHTTPException:
         logger.error(f"User {user.email} could not be found in NGO Hub. Please check the configuration.")
 

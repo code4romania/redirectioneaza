@@ -1,7 +1,7 @@
 import csv
 import io
 import logging
-from typing import Annotated, Dict, List, Optional, Union
+from typing import Annotated
 from xml.etree.ElementTree import Element, ElementTree
 
 from django.core.files.base import ContentFile
@@ -40,19 +40,19 @@ class DonorModel(BaseModel):
     first_name: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=True)]
     # noinspection PyTypeHints
     last_name: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=True)]
-    initial: Optional[str] = Annotated[
+    initial: str | None = Annotated[
         str, StringConstraints(strip_whitespace=True, to_upper=True, min_length=1, max_length=1, pattern=r"^[a-zA-Z]$")
     ]
 
-    address: Optional[str] = ""
-    phone: Optional[str] = ""
+    address: str | None = ""
+    phone: str | None = ""
     email: EmailEmptyAllowedStr = ""
 
-    anaf_gdpr: Optional[str] = "0"
-    period: Optional[str] = "1"
+    anaf_gdpr: str | None = "0"
+    period: str | None = "1"
 
 
-def handle_external_data_processing(own_upload_id) -> Optional[Dict]:
+def handle_external_data_processing(own_upload_id) -> dict | None:
     try:
         own_upload = OwnFormsUpload.objects.select_related("ngo").get(pk=own_upload_id)
     except OwnFormsUpload.DoesNotExist:
@@ -104,7 +104,7 @@ def handle_external_data_processing(own_upload_id) -> Optional[Dict]:
     return None
 
 
-def generate_xml_from_external_data(own_upload: OwnFormsUpload) -> Dict[str, Union[str, Optional[ElementTree]]]:
+def generate_xml_from_external_data(own_upload: OwnFormsUpload) -> dict[str, str | ElementTree | None]:
     """
     Generate an archive for the given NGO and file.
     :param own_upload: The uploaded data
@@ -171,7 +171,7 @@ def decode_readfile(input_file, *, one_line=False) -> str:
     raise ValueError(_("The file is not in a valid format."))
 
 
-def parse_file_data(file) -> List[DonorModel]:
+def parse_file_data(file) -> list[DonorModel]:
     """
     Transform the CSV file to raw data.
     :param file: The CSV file path
@@ -187,7 +187,7 @@ def parse_file_data(file) -> List[DonorModel]:
         raise ValueError(check_error)
 
     errors = []
-    parsed_data: List[DonorModel] = []
+    parsed_data: list[DonorModel] = []
     for line in reader:
         try:
             donor = DonorModel(
@@ -221,7 +221,7 @@ def parse_file_data(file) -> List[DonorModel]:
 
 
 def _parse_pydantic_errors(pydantic_errors):
-    parsed_errors: List[str] = []
+    parsed_errors: list[str] = []
     for pydantic_error in pydantic_errors:
         line_errors = pydantic_error["errors"]
 
@@ -252,7 +252,7 @@ def _associate_error_message_to_translated_message(error_message: str) -> str:
         return _("The field is invalid")
 
 
-def _check_csv_header(reader: csv.DictReader) -> Dict[str, str]:
+def _check_csv_header(reader: csv.DictReader) -> dict[str, str]:
     mandatory_header_items = {"cnp", "prenume", "nume"}
     valid_header_items = mandatory_header_items.union(
         {"initiala", "adresa", "telefon", "email", "anaf_gdpr", "perioada"}
@@ -270,7 +270,7 @@ def _check_csv_header(reader: csv.DictReader) -> Dict[str, str]:
 
 
 def build_xml_from_file_data(
-    data: List[DonorModel],
+    data: list[DonorModel],
     iban: str,
     ngo_name: str,
     ngo_cui: str,

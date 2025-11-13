@@ -1,4 +1,5 @@
-from typing import Any, Callable, Dict, List, Optional, Union
+from collections.abc import Callable
+from typing import Any
 
 from django.conf import settings
 from django.contrib import messages
@@ -93,7 +94,7 @@ class NgoRedirectionsView(NgoBaseListView, DonorSearchMixin):
         if ngo.causes.count() == 0:
             return Cause.objects.none()
 
-        ngo_archive_jobs: QuerySet[Job, Dict[str, str]] = (
+        ngo_archive_jobs: QuerySet[Job, dict[str, str]] = (
             Job.objects.filter(ngo=ngo, cause=OuterRef("pk"))
             .order_by("-date_created")
             .values(obj=JSONObject(date_created=F("date_created"), status=F("status")))
@@ -123,19 +124,19 @@ class NgoRedirectionsView(NgoBaseListView, DonorSearchMixin):
 
         return super().get(request, *args, **kwargs)
 
-    def get_filters(self, ngo: Ngo) -> List[QueryFilter]:
+    def get_filters(self, ngo: Ngo) -> list[QueryFilter]:
         return get_redirections_filters(ngo=ngo)
 
-    def get_filters_dict(self, ngo: Ngo) -> List[Dict[str, Union[str, Callable, Optional[List[Dict]]]]]:
+    def get_filters_dict(self, ngo: Ngo) -> list[dict[str, str | Callable | list[dict] | None]]:
         objects = self.object_list
         return [
             query_filter.to_dict(include_options=True, objects=objects) for query_filter in (self.get_filters(ngo=ngo))
         ]
 
-    def get_frontend_filters(self, filters: List[QueryFilter], request_params: Dict) -> Dict[str, Any]:
+    def get_frontend_filters(self, filters: list[QueryFilter], request_params: dict) -> dict[str, Any]:
         return get_active_filters_values(filters=filters, request_params=request_params)
 
-    def get_queryset_filters(self, filters: List[QueryFilter], request_params: QueryDict) -> Dict[str, Any]:
+    def get_queryset_filters(self, filters: list[QueryFilter], request_params: QueryDict) -> dict[str, Any]:
         return get_queryset_filters(filters=filters, request_params=request_params)
 
     def get_queryset(self):

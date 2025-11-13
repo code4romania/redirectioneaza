@@ -1,11 +1,9 @@
-from typing import Dict, List, Union
-
 from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 
 
-def format_yearly_stats(statistics) -> List[Dict[str, Union[int, List[Dict]]]]:
+def format_yearly_stats(statistics) -> list[dict[str, int | list[dict]]]:
     return [
         {
             "year": statistic["year"],

@@ -1,5 +1,3 @@
-from typing import Dict, List, Optional
-
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
@@ -12,10 +10,10 @@ from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import ListView
 
-from utils.text.registration_number import ngo_id_number_validator
 from donations.models.ngos import Cause, Ngo
 from donations.views.base import BaseContextPropertiesMixin, BaseVisibleTemplateView
 from users.models import User
+from utils.text.registration_number import ngo_id_number_validator
 
 
 class NgoBaseView(BaseContextPropertiesMixin):
@@ -48,9 +46,9 @@ class NgoBaseTemplateView(NgoBaseView, BaseVisibleTemplateView):
         self,
         *,
         source: str,
-        ngo: Optional[Ngo],
-        cause: Optional[Cause],
-    ) -> Optional[Dict[str, str]]:
+        ngo: Ngo | None,
+        cause: Cause | None,
+    ) -> dict[str, str] | None:
         """
         Returns a dictionary with the missing fields for the organization or the cause.
         If there are no missing fields, it returns None.
@@ -73,7 +71,7 @@ class NgoBaseTemplateView(NgoBaseView, BaseVisibleTemplateView):
 
         return None
 
-    def get_cause_missing_fields(self, cause: Optional[Cause]) -> Optional[List[str]]:
+    def get_cause_missing_fields(self, cause: Cause | None) -> list[str] | None:
         if not cause:
             missing_fields = Cause.mandatory_fields_names_capitalized()
         else:
@@ -81,7 +79,7 @@ class NgoBaseTemplateView(NgoBaseView, BaseVisibleTemplateView):
 
         return missing_fields
 
-    def get_missing_ngo_fields(self, ngo: Optional[Ngo]) -> Optional[List[str]]:
+    def get_missing_ngo_fields(self, ngo: Ngo | None) -> list[str] | None:
         if not ngo:
             missing_fields = Ngo.mandatory_fields_names_capitalized()
         else:
@@ -112,7 +110,7 @@ class NgoBaseListView(NgoBaseView, ListView):
         return super().get(request, *args, **kwargs)
 
 
-def validate_iban(bank_account) -> Optional[str]:
+def validate_iban(bank_account) -> str | None:
     if not bank_account:
         return None
 
@@ -128,7 +126,7 @@ def validate_iban(bank_account) -> Optional[str]:
     return None
 
 
-def validate_registration_number(ngo, registration_number) -> Optional[str]:
+def validate_registration_number(ngo, registration_number) -> str | None:
     try:
         ngo_id_number_validator(registration_number)
     except ValidationError:
@@ -177,7 +175,7 @@ class FileDownloadProxy(BaseVisibleTemplateView):
     """
 
     title = _("Download generated file")
-    model: ModelBase = None
+    model: ModelBase | None = None
 
     def is_user_valid(self, user: User) -> bool:
         """

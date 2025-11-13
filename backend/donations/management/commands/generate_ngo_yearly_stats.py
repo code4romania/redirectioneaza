@@ -1,6 +1,5 @@
 import logging
 from datetime import date
-from typing import Set
 
 from django.core.management import BaseCommand
 from django.utils.timezone import now
@@ -46,18 +45,18 @@ class Command(BaseCommand):
         statistic: str = kwargs["statistic"]
         force: bool = kwargs.get("force", False)
 
-        target_years: Set[int] = set(get_current_year_range())
+        target_years: set[int] = set(get_current_year_range())
 
         if not force:
             # Get existing stats dates that are not expired
-            existing_stats_dates: Set[int] = set(
+            existing_stats_dates: set[int] = set(
                 Stat.objects.filter(name=statistic)
                 .exclude(expires_at__lte=now())
                 .values_list("date__year", flat=True)
                 .distinct()
             )
 
-            target_years: Set[int] = target_years - existing_stats_dates
+            target_years: set[int] = target_years - existing_stats_dates
 
         for target_year in target_years:
             async_task(

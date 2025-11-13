@@ -1,7 +1,6 @@
 import json
 from datetime import datetime
 from functools import partial
-from typing import Dict
 
 from django.conf import settings
 from django.db import models
@@ -217,8 +216,8 @@ class Donor(models.Model):
     def _set_address(self, address: dict):
         self.encrypted_address = self.encrypt_address(address)
 
-    def get_address(self, *, include_full: bool = False) -> Dict:
-        address: Dict = self.decrypt_address(self.encrypted_address)
+    def get_address(self, *, include_full: bool = False) -> dict:
+        address: dict = self.decrypt_address(self.encrypted_address)
         if not include_full:
             return address
 
@@ -234,7 +233,7 @@ class Donor(models.Model):
         return self.address_to_string(address)
 
     @staticmethod
-    def address_to_string(address: Dict) -> str:
+    def address_to_string(address: dict) -> str:
         street_name = address.get("str", "")
         street_number = address.get("nr", "")
         street_bl = address.get("bl", "")
@@ -292,11 +291,11 @@ class Donor(models.Model):
         return settings.FERNET_OBJECT.decrypt(cnp.encode()).decode()
 
     @staticmethod
-    def encrypt_address(address: Dict) -> str:
+    def encrypt_address(address: dict) -> str:
         return settings.FERNET_OBJECT.encrypt(json.dumps(address).encode()).decode()
 
     @staticmethod
-    def decrypt_address(address: str) -> Dict:
+    def decrypt_address(address: str) -> dict:
         if not address:
             return {}
 

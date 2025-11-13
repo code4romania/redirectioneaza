@@ -1,5 +1,4 @@
 import random
-from typing import List
 
 from django.core.management import BaseCommand
 from django.db import IntegrityError
@@ -246,8 +245,8 @@ class Command(BaseCommand):
         target_org_id = options.get("org", None)
         create_visible = options.get("visible", None)
 
-        causes: List[Cause] = []
-        generated_cause_names: List[str] = []
+        causes: list[Cause] = []
+        generated_cause_names: list[str] = []
 
         self.stdout.write(self.style.SUCCESS(f"Generating {total_causes} cause(s) to the database."))
 

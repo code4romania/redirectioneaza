@@ -3,7 +3,6 @@ import mimetypes
 import random
 import string
 import tempfile
-from typing import Dict, List, Optional, Union
 
 import requests
 from django.conf import settings
@@ -107,7 +106,7 @@ def _get_ngo_hub_data(ngohub_org_id: int, token: str = "") -> Organization:
     return hub.get_organization(organization_id=ngohub_org_id, admin_token=token)
 
 
-def _update_main_cause_of_ngo(ngo: Ngo, ngohub_general_data: OrganizationGeneral) -> Union[List[str], Cause]:
+def _update_main_cause_of_ngo(ngo: Ngo, ngohub_general_data: OrganizationGeneral) -> list[str] | Cause:
     try:
         cause: Cause = ngo.causes.get(is_main=True)
     except Cause.DoesNotExist:
@@ -117,10 +116,10 @@ def _update_main_cause_of_ngo(ngo: Ngo, ngohub_general_data: OrganizationGeneral
     return _update_main_cause(cause, ngohub_general_data)
 
 
-def _update_main_cause(cause: Cause, ngohub_general_data: OrganizationGeneral) -> Union[List[str], Cause]:
+def _update_main_cause(cause: Cause, ngohub_general_data: OrganizationGeneral) -> list[str] | Cause:
     errors = []
 
-    logo_url_error: Optional[str] = _copy_file_to_object_with_filename_cache(
+    logo_url_error: str | None = _copy_file_to_object_with_filename_cache(
         cause,
         ngohub_general_data.logo,
         "display_image",
@@ -155,8 +154,8 @@ def _create_main_cause(ngo: Ngo, ngohub_general_data: OrganizationGeneral) -> Ca
     return cause
 
 
-def _update_local_ngo_with_ngohub_data(ngo: Ngo, ngohub_ngo: Organization) -> Dict[str, Union[int, List[str]]]:
-    errors: List[str] = []
+def _update_local_ngo_with_ngohub_data(ngo: Ngo, ngohub_ngo: Organization) -> dict[str, int | list[str]]:
+    errors: list[str] = []
 
     if not ngo.filename_cache:
         ngo.filename_cache = {}
@@ -174,10 +173,10 @@ def _update_local_ngo_with_ngohub_data(ngo: Ngo, ngohub_ngo: Organization) -> Di
 
     active_region: str = ngohub_ngo.activity_data.area
     if ngohub_ngo.activity_data.area == "Regional":
-        regions: List[str] = [region.name for region in ngohub_ngo.activity_data.regions]
+        regions: list[str] = [region.name for region in ngohub_ngo.activity_data.regions]
         active_region = f"{ngohub_ngo.activity_data.area} ({','.join(regions)})"
     elif ngohub_ngo.activity_data.area == "Local":
-        counties: List[str] = [city.county.name for city in ngohub_ngo.activity_data.cities]
+        counties: list[str] = [city.county.name for city in ngohub_ngo.activity_data.cities]
         active_region = f"{ngohub_ngo.activity_data.area} ({','.join(counties)})"
     ngo.active_region = active_region
 
@@ -201,7 +200,7 @@ def _update_local_ngo_with_ngohub_data(ngo: Ngo, ngohub_ngo: Organization) -> Di
     ngo.ngohub_last_update_ended = timezone.now()
     ngo.save()
 
-    task_result: Dict = {
+    task_result: dict = {
         "ngo_id": ngo.id,
         "errors": errors,
     }
@@ -209,7 +208,7 @@ def _update_local_ngo_with_ngohub_data(ngo: Ngo, ngohub_ngo: Organization) -> Di
     return task_result
 
 
-def _update_organization_task(organization_id: int, token: str = "") -> Dict[str, Union[int, List[str]]]:
+def _update_organization_task(organization_id: int, token: str = "") -> dict[str, int | list[str]]:
     """
     Update the organization with the given ID.
     """
@@ -228,7 +227,7 @@ def _update_organization_task(organization_id: int, token: str = "") -> Dict[str
     return task_result
 
 
-def update_organization(organization_id: int, update_method: str = None, token: str = ""):
+def update_organization(organization_id: int, update_method: str | None = None, token: str = ""):
     """
     Update the organization with the given ID asynchronously.
     """

@@ -3,7 +3,6 @@ import os
 import tempfile
 from datetime import datetime
 from io import BytesIO
-from typing import Dict, Optional
 
 from reportlab.graphics import renderPDF
 from reportlab.lib.pagesizes import A4
@@ -39,7 +38,7 @@ def _format_bank_account(bank_account: str):
     return account
 
 
-def _add_ngo_data(start_y, c: Canvas, cause: Optional[Cause], ngo: Ngo):
+def _add_ngo_data(start_y, c: Canvas, cause: Cause | None, ngo: Ngo):
     start_ngo_y = start_y - 289
 
     # the x mark to support an NGO
@@ -97,7 +96,7 @@ def _add_donor_data(start_y, c: Canvas, donor: Donor):
     third_row_y = donor_block_y - 45
 
     # the street
-    donor_address: Dict = donor.get_address()
+    donor_address: dict = donor.get_address()
 
     street = donor_address["str"]
     if len(street) > 40:
@@ -242,7 +241,7 @@ def _add_year_to_pdf(c, start_x, start_y):
         start_x += 18
 
 
-def create_cause_pdf(cause: Optional[Cause], ngo: Ngo):
+def create_cause_pdf(cause: Cause | None, ngo: Ngo):
     start_x = 305
     start_y = 726
 
@@ -264,7 +263,7 @@ def create_cause_pdf(cause: Optional[Cause], ngo: Ngo):
     return packet
 
 
-def create_full_pdf(donor: Donor, signature: str = None):
+def create_full_pdf(donor: Donor, signature: str | None = None):
     """method used to create the PDF
 
     donor: Donor object with the person's data

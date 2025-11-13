@@ -1,5 +1,4 @@
 import logging
-from typing import Dict, List, Optional
 
 from django.conf import settings
 from django.contrib import messages
@@ -56,7 +55,7 @@ class SearchCausesApi(TemplateView, NgoCauseMixedSearchMixin):
     def get(self, request, *args, **kwargs):
         causes = self.search()
 
-        response: List[Dict] = []
+        response: list[dict] = []
         for cause in causes:
             if not cause.slug:
                 continue
@@ -111,7 +110,7 @@ class GetCausePrefilledForm(TemplateView):
 
 
 class GenerateCauseArchive(BaseTemplateView):
-    def generate_archive_for_cause_slug(self, cause_slug: Optional[str], request) -> Optional[Job]:
+    def generate_archive_for_cause_slug(self, cause_slug: str | None, request) -> Job | None:
         if not cause_slug:
             return None
 

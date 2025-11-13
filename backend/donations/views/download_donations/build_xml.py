@@ -1,6 +1,6 @@
 import os
 from datetime import datetime
-from typing import Any, Dict
+from typing import Any
 from xml.etree.ElementTree import Element, ElementTree
 from zipfile import ZipFile
 
@@ -24,7 +24,7 @@ from donations.views.download_donations.common import (
 CNP_FIELD = ROCNPField()
 
 
-def _redirection_has_duplicate_cnp(redirection: Donor, cnp_idx: Dict[str, Dict[str, Any]]) -> bool:
+def _redirection_has_duplicate_cnp(redirection: Donor, cnp_idx: dict[str, dict[str, Any]]) -> bool:
     cnp = redirection.get_cnp()
 
     try:
@@ -46,7 +46,7 @@ def add_xml_to_zip(
     donations_batch: QuerySet[Donor],
     batch_count: int,
     xml_name: str,
-    cnp_idx: Dict[str, Dict[str, Any]],
+    cnp_idx: dict[str, dict[str, Any]],
     zip_timestamp: datetime,
     zip_archive: ZipFile,
     zip_64_flag: bool,
@@ -67,7 +67,7 @@ def build_xml(
     xml_index: int,
     cause: Cause,
     redirections: QuerySet[Donor],
-    cnp_idx: Dict[str, Dict[str, Any]],
+    cnp_idx: dict[str, dict[str, Any]],
     timestamp: datetime,
 ) -> ElementTree:
     xml = Element("form1")

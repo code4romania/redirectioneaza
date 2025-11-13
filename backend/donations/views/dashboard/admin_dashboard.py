@@ -1,5 +1,4 @@
 from datetime import datetime, tzinfo
-from typing import Dict, List, Union
 
 from django.conf import settings
 from django.urls import reverse
@@ -29,19 +28,19 @@ ADMIN_DASHBOARD_CHART_CACHE_KEY = "ADMIN_DASHBOARD_CHART"
 ADMIN_DASHBOARD_YEARLY_CACHE_KEY = "ADMIN_DASHBOARD_YEARLY"
 
 
-def callback(_, context) -> Dict:
+def callback(_, context) -> dict:
     context.update(_get_admin_stats())
     return context
 
 
-def _get_admin_stats() -> Dict:
+def _get_admin_stats() -> dict:
     years_range_ascending = get_current_year_range()
 
-    header_stats: List[List[Dict[str, Union[str, int]]]] = _get_header_stats()
+    header_stats: list[list[dict[str, str | int]]] = _get_header_stats()
 
-    yearly_stats: List[Dict] = _get_yearly_stats(years_range_ascending)
+    yearly_stats: list[dict] = _get_yearly_stats(years_range_ascending)
 
-    forms_per_month_chart: Dict[str, str] = _create_chart_statistics()
+    forms_per_month_chart: dict[str, str] = _create_chart_statistics()
 
     return {
         "header_stats": header_stats,
@@ -51,7 +50,7 @@ def _get_admin_stats() -> Dict:
 
 
 @cache_decorator(timeout=settings.TIMEOUT_CACHE_SHORT, cache_key=ADMIN_DASHBOARD_HEADER_CACHE_KEY)
-def _get_header_stats() -> List[List[Dict[str, Union[str, int | datetime]]]]:
+def _get_header_stats() -> list[list[dict[str, str | int | datetime]]]:
     today: datetime = now()
 
     current_year: int = today.year
@@ -111,11 +110,11 @@ def _get_header_stats() -> List[List[Dict[str, Union[str, int | datetime]]]]:
 
 
 @cache_decorator(timeout=settings.TIMEOUT_CACHE_SHORT, cache_key=ADMIN_DASHBOARD_CHART_CACHE_KEY)
-def _create_chart_statistics() -> Dict[str, str]:
+def _create_chart_statistics() -> dict[str, str]:
     default_border_width: int = 3
     year_range_ascending = get_current_year_range()
 
-    donations_per_year: Dict[int, List[int]] = {}
+    donations_per_year: dict[int, list[int]] = {}
     for year in year_range_ascending:
         donations_per_year[year] = [
             int(donors_for_month(month=month, year=year)) for month in range(1, edition_deadline().month + 1)
@@ -125,7 +124,7 @@ def _create_chart_statistics() -> Dict[str, str]:
 
 
 @cache_decorator(timeout=settings.TIMEOUT_CACHE_SHORT, cache_key=ADMIN_DASHBOARD_YEARLY_CACHE_KEY)
-def _get_yearly_stats(years_range_ascending) -> List[Dict[str, Union[int, List[Dict]]]]:
+def _get_yearly_stats(years_range_ascending) -> list[dict[str, int | list[dict]]]:
     statistics = [get_stats_for_year(year) for year in years_range_ascending]
 
     for index, statistic in enumerate(statistics):

@@ -1,5 +1,3 @@
-from typing import List
-
 from django.core.management import BaseCommand
 from django.db.models import QuerySet
 
@@ -10,7 +8,7 @@ class Command(BaseCommand):
     help = "Clean up the county and active_region for all NGOs. Move from S1-6 to București"
 
     def handle(self, *args, **options):
-        sector_range: List[int] = list(range(1, 7))
+        sector_range: list[int] = list(range(1, 7))
         affected_ngos_region: QuerySet[Ngo] = Ngo.objects.filter(active_region__in=sector_range)
         for ngo in affected_ngos_region:
             ngo.active_region = "București"

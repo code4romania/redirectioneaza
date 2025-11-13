@@ -48,7 +48,7 @@ def all_redirections() -> int:
     Returns the total number of redirections (donations) across all years.
 
     Returns:
-        Dict[str, Any]: A dictionary containing the metric and timestamp.
+        dict[str, Any]: A dictionary containing the metric and timestamp.
     """
     stats_key: str = str(StatsChoices.REDIRECTIONS_PER_DAY.value)
 

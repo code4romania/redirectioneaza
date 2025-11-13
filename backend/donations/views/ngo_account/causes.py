@@ -1,5 +1,5 @@
 import logging
-from typing import Any, List
+from typing import Any
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -35,7 +35,7 @@ class NgoCauseCommonView(NgoBaseTemplateView):
 
         return context
 
-    def get_ngo_cause_banner_list_items(self, ngo: Ngo) -> List[str]:
+    def get_ngo_cause_banner_list_items(self, ngo: Ngo) -> list[str]:
         banner_list_items = [
             _("Organization name: ") + ngo.name,
             _("Organization CIF: ") + ngo.registration_number,

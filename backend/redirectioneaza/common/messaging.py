@@ -1,5 +1,4 @@
 import logging
-from typing import Dict, List
 
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
@@ -15,7 +14,7 @@ from redirectioneaza.common.app_url import build_uri
 logger = logging.getLogger(__name__)
 
 
-def extend_email_context(request: HttpRequest = None) -> Dict:
+def extend_email_context(request: HttpRequest | None = None) -> dict:
     return {
         "donation_limit_day": edition_deadline().day,
         "donation_limit_month_name": settings.REDIRECTIONS_LIMIT_MONTH_NAME,
@@ -29,7 +28,7 @@ def extend_email_context(request: HttpRequest = None) -> Dict:
     }
 
 
-def send_email(subject: str, to_emails: List[str], text_template: str, html_template: str, context: Dict):
+def send_email(subject: str, to_emails: list[str], text_template: str, html_template: str, context: dict):
     if settings.EMAIL_SEND_METHOD == "async":
         async_send_email(
             subject,
@@ -52,10 +51,10 @@ def send_email(subject: str, to_emails: List[str], text_template: str, html_temp
 
 def async_send_email(
     subject: str,
-    to_emails: List[str],
+    to_emails: list[str],
     text_template: str,
     html_template: str,
-    html_context: Dict,
+    html_context: dict,
 ):
     logger.info(f"Asynchronously sending {len(to_emails)} emails with subject: {subject}.")
 
@@ -70,11 +69,11 @@ def async_send_email(
 
 
 def send_emails(
-    user_emails: List[str],
+    user_emails: list[str],
     subject: str,
     text_template: str,
     html_template: str,
-    html_context: Dict,
+    html_context: dict,
 ):
     logger.info(f"Sending emails to {len(user_emails)} users.")
 

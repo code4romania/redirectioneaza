@@ -1,5 +1,4 @@
 import logging
-from typing import Dict, List, Set, Union
 
 from django.contrib.auth.models import Group, Permission
 from django.core.management.base import BaseCommand
@@ -9,16 +8,16 @@ from users.groups_management import USER_GROUPS
 
 class Command(BaseCommand):
     logger = logging.getLogger(__name__)
-    _permissions_cache: Dict[str, int] = {}
+    _permissions_cache: dict[str, int] = {}
 
     def handle(self, *args, **kwargs):
-        group_names: Set[str] = set(USER_GROUPS.keys())
+        group_names: set[str] = set(USER_GROUPS.keys())
         self.logger.info(f"Creating {len(group_names)} groups: {', '.join(group_names)}.")
 
         for group_name, group_data in USER_GROUPS.items():
             self._create_group(group_name, group_data)
 
-    def _create_group(self, group_name: str, group_data: Dict) -> None:
+    def _create_group(self, group_name: str, group_data: dict) -> None:
         users_group: Group
         created: bool
         users_group, created = Group.objects.get_or_create(name=group_name)
@@ -28,7 +27,7 @@ class Command(BaseCommand):
         else:
             self.logger.info(f"Group '{group_name}' already exists.")
 
-        group_permissions: Union[str, List[str]] = group_data.get("permissions")
+        group_permissions: str | list[str] = group_data.get("permissions")
         if group_permissions == "*":
             permission_ids = Permission.objects.values_list("id", flat=True)
         else:
@@ -41,8 +40,8 @@ class Command(BaseCommand):
         self.logger.info(success_message)
         self.stdout.write(self.style.SUCCESS(success_message))
 
-    def _permission_names_to_ids(self, group_permissions: List[str]) -> List[int]:
-        permission_ids: List[int] = []
+    def _permission_names_to_ids(self, group_permissions: list[str]) -> list[int]:
+        permission_ids: list[int] = []
 
         for permission_name in group_permissions:
             if permission_name not in self._permissions_cache:

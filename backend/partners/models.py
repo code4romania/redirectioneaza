@@ -1,5 +1,3 @@
-from typing import Dict
-
 from django.db import models
 from django.db.models import QuerySet
 from django.db.models.functions import Lower
@@ -97,7 +95,7 @@ class Partner(models.Model):
         return f"{self.name}"
 
     def ordered_causes(self) -> QuerySet[Cause]:
-        display_ordering_mapping: Dict[str, str] = {
+        display_ordering_mapping: dict[str, str] = {
             str(DisplayOrderingChoices.ALPHABETICAL): "name",
             str(DisplayOrderingChoices.ALPHABETICAL_REVERSE): "-name",
             str(DisplayOrderingChoices.OLDEST): "date_created",
@@ -111,7 +109,7 @@ class Partner(models.Model):
         return self.causes.order_by(order).all()
 
     def ordered_ngos(self) -> QuerySet[Ngo]:
-        display_ordering_mapping: Dict[str, str] = {
+        display_ordering_mapping: dict[str, str] = {
             str(DisplayOrderingChoices.ALPHABETICAL): "name",
             str(DisplayOrderingChoices.ALPHABETICAL_REVERSE): "-name",
             str(DisplayOrderingChoices.OLDEST): "date_created",

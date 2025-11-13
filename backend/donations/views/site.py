@@ -2,7 +2,6 @@ import json
 import logging
 import random
 from datetime import datetime
-from typing import Dict, List, Union
 
 from django.conf import settings
 from django.db.models import QuerySet
@@ -29,7 +28,9 @@ class HomePage(BaseVisibleTemplateView):
     title = "redirectioneaza.ro"
 
     @cache_decorator(timeout=settings.TIMEOUT_CACHE_NORMAL, cache_key_prefix=FRONTPAGE_STATS_KEY)
-    def _get_stats(self, now: datetime = None, queryset: QuerySet = None) -> List[Dict[str, Union[str, int, datetime]]]:
+    def _get_stats(
+        self, now: datetime | None = None, queryset: QuerySet | None = None
+    ) -> list[dict[str, str | int | datetime]]:
         if now is None:
             now = timezone.now()
 
@@ -68,7 +69,7 @@ class HomePage(BaseVisibleTemplateView):
         all_cause_ids = list(Cause.public_active.values_list("pk", flat=True))
         return queryset.filter(id__in=random.sample(all_cause_ids, num_items))
 
-    def _partner_response(self, context: Dict, partner: Partner):
+    def _partner_response(self, context: dict, partner: Partner):
         context.update(
             {
                 "company_name": partner.name,

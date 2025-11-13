@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Optional, Union
+from typing import Any
 
 from django.conf import settings
 from django.db.models import QuerySet
@@ -11,7 +11,7 @@ from redirectioneaza.common.filters import QueryFilter
 
 
 class NgoQueryFilter(QueryFilter):
-    ngo: Ngo = None
+    ngo: Ngo | None = None
 
     def __init__(self, ngo):
         super().__init__()
@@ -31,7 +31,7 @@ class FormYearQueryFilter(NgoQueryFilter):
 
         self.queryset_key = "date_created__year"
 
-    def options_default(self) -> List[Dict[str, Union[int, str]]]:
+    def options_default(self) -> list[dict[str, int | str]]:
         last_year = edition_deadline().year
         ngo_date_created = self.ngo.date_created
         year_range = range(ngo_date_created.year, last_year + 1)
@@ -51,11 +51,11 @@ class CountyQueryFilter(NgoQueryFilter):
 
         self.queryset_key = "county"
 
-    def options_with_objects(self, objects: Optional[QuerySet[Donor]] = None) -> List[Dict[str, Union[int, str]]]:
+    def options_with_objects(self, objects: QuerySet[Donor] | None = None) -> list[dict[str, int | str]]:
         all_counties = objects.values_list("county", flat=True).distinct()
         return [county for county in settings.COUNTIES_WITH_SECTORS_LIST if county in all_counties]
 
-    def options_default(self) -> List[Dict[str, Union[int, str]]]:
+    def options_default(self) -> list[dict[str, int | str]]:
         return [{"title": county, "value": county} for county in settings.COUNTIES_WITH_SECTORS_LIST]
 
 
@@ -71,10 +71,10 @@ class LocalityQueryFilter(NgoQueryFilter):
 
         self.queryset_key = "city"
 
-    def options_with_objects(self, objects: Optional[QuerySet] = None) -> List[Dict[str, Union[int, str]]]:
+    def options_with_objects(self, objects: QuerySet | None = None) -> list[dict[str, int | str]]:
         return sorted(set(objects.values_list("city", flat=True).distinct()))
 
-    def options_default(self) -> List[Dict[str, Union[int, str]]]:
+    def options_default(self) -> list[dict[str, int | str]]:
         return []
 
 
@@ -91,7 +91,7 @@ class FormPeriodQueryFilter(NgoQueryFilter):
         self.queryset_key = "two_years"
         self.queryset_transformation = lambda fe_value: fe_value == "2"
 
-    def options_default(self) -> List[Dict[str, Union[int, str]]]:
+    def options_default(self) -> list[dict[str, int | str]]:
         return [
             {"title": _("One year"), "value": "1"},
             {"title": _("Two years"), "value": "2"},
@@ -111,7 +111,7 @@ class FormStatusQueryFilter(NgoQueryFilter):
         self.queryset_key = "has_signed"
         self.queryset_transformation = lambda fe_value: fe_value == "signed"
 
-    def options_default(self) -> List[Dict[str, Union[int, str]]]:
+    def options_default(self) -> list[dict[str, int | str]]:
         return [
             {"title": _("Signed"), "value": "signed"},
             {"title": _("Not signed"), "value": "unsigned"},
@@ -131,7 +131,7 @@ class FormAnonymousQueryFilter(NgoQueryFilter):
         self.queryset_key = "is_anonymous"
         self.queryset_transformation = lambda fe_value: fe_value == "da"
 
-    def options_default(self) -> List[Dict[str, Union[int, str]]]:
+    def options_default(self) -> list[dict[str, int | str]]:
         return [
             {"title": _("Anonymous"), "value": "da"},
             {"title": _("Not anonymous"), "value": "nu"},
@@ -150,7 +150,7 @@ class CauseQueryFilter(NgoQueryFilter):
 
         self.queryset_key = "cause_id"
 
-    def options_default(self) -> List[Dict[str, Union[int, str]]]:
+    def options_default(self) -> list[dict[str, int | str]]:
         if not self.ngo:
             return []
 
@@ -164,7 +164,7 @@ class CauseQueryFilter(NgoQueryFilter):
         return options
 
 
-def get_redirections_filters(ngo: Ngo) -> List[QueryFilter]:
+def get_redirections_filters(ngo: Ngo) -> list[QueryFilter]:
     return [
         FormYearQueryFilter(ngo=ngo),
         CountyQueryFilter(ngo=ngo),
@@ -176,7 +176,7 @@ def get_redirections_filters(ngo: Ngo) -> List[QueryFilter]:
     ]
 
 
-def get_active_filters(filters: List[QueryFilter], request_params: Dict) -> List[Dict[str, Union[QueryFilter, Any]]]:
+def get_active_filters(filters: list[QueryFilter], request_params: dict) -> list[dict[str, QueryFilter | Any]]:
     active_filters = []
 
     for search_filter in filters:
@@ -193,7 +193,7 @@ def get_active_filters(filters: List[QueryFilter], request_params: Dict) -> List
     return active_filters
 
 
-def get_active_filters_values(filters: List[QueryFilter], request_params: Dict) -> Dict[str, Any]:
+def get_active_filters_values(filters: list[QueryFilter], request_params: dict) -> dict[str, Any]:
     active_filters_values = {}
     active_filters = get_active_filters(filters, request_params)
     for active_filter in active_filters:
@@ -204,7 +204,7 @@ def get_active_filters_values(filters: List[QueryFilter], request_params: Dict) 
     return active_filters_values
 
 
-def get_queryset_filters(filters: List[QueryFilter], request_params: Dict) -> Dict[str, Any]:
+def get_queryset_filters(filters: list[QueryFilter], request_params: dict) -> dict[str, Any]:
     queryset_filters = {}
 
     for search_filter in filters:

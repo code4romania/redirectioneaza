@@ -1,5 +1,5 @@
 import random
-from typing import List
+from typing import list
 
 from django.core.management import BaseCommand
 from django.db import IntegrityError
@@ -70,7 +70,7 @@ class Command(BaseCommand):
                 errors_count += 1
                 continue
 
-            partner_causes: List[Cause] = random.sample(causes, num_causes)
+            partner_causes: list[Cause] = random.sample(causes, num_causes)
             partner.causes.add(*partner_causes, through_defaults={"display_order": 1})
 
             generated_partners_count += 1

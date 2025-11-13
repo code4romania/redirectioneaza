@@ -1,5 +1,4 @@
 from secrets import compare_digest
-from typing import Dict
 
 from django import forms
 from django.conf import settings
@@ -9,7 +8,7 @@ from django_recaptcha.widgets import ReCaptchaV2Invisible
 
 
 class ReCaptchaMixin:
-    fields: Dict
+    fields: dict
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -23,7 +22,7 @@ class ReCaptchaMixin:
 
 
 class TwoPasswordMixin:
-    cleaned_data: Dict
+    cleaned_data: dict
     password: str
     password_confirm: str
 
