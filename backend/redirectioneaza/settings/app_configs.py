@@ -6,6 +6,7 @@ from django.utils.translation import gettext_lazy as _
 from localflavor.ro.ro_counties import COUNTIES_CHOICES
 
 from utils.text.cleanup import normalize_text_alnum
+
 from .base import DEBUG
 from .environment import env
 

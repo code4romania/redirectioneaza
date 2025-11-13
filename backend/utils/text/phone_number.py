@@ -1,12 +1,10 @@
-from typing import Dict
-
 import phonenumbers
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 from phonenumbers.phonenumber import PhoneNumber
 
 
-def validate_phone_number(raw_phone_number) -> Dict[str, str]:
+def validate_phone_number(raw_phone_number) -> dict[str, str]:
     if raw_phone_number.startswith("+"):
         try:
             phone_number: PhoneNumber = phonenumbers.parse(raw_phone_number)

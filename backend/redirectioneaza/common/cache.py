@@ -5,9 +5,9 @@ from django.core.cache import cache
 def cache_decorator(
     *,
     timeout: int,
-    cache_key: str = None,
-    cache_key_prefix: str = None,
-    cache_key_custom: str = None,
+    cache_key: str | None = None,
+    cache_key_prefix: str | None = None,
+    cache_key_custom: str | None = None,
 ):
     def decorator(func):
         def wrapper(*args, **kwargs):

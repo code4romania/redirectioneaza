@@ -1,4 +1,4 @@
-from typing import Any, List, Optional
+from typing import Any
 
 from django.conf import settings
 from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector, TrigramSimilarity
@@ -20,7 +20,7 @@ class ConfigureSearch:
         return SearchQuery(query)
 
     @staticmethod
-    def vector(search_fields: List[str], language_code: str) -> SearchVector:
+    def vector(search_fields: list[str], language_code: str) -> SearchVector:
         if language_code == "ro":
             return SearchVector(*search_fields, weight="A", config="romanian_unaccent")
 
@@ -47,7 +47,7 @@ class CommonSearchMixin(ListView):
 
         return ""
 
-    def search(self, queryset: Optional[QuerySet[Any]] = None) -> QuerySet:
+    def search(self, queryset: QuerySet[Any] | None = None) -> QuerySet:
         query = self._search_query()
 
         if not queryset:

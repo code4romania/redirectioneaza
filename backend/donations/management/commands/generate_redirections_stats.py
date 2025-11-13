@@ -1,6 +1,5 @@
 import logging
 from datetime import date
-from typing import Set
 
 from django.core.management import BaseCommand
 from django.utils.timezone import now
@@ -33,20 +32,20 @@ class Command(BaseCommand):
         """
         force: bool = kwargs.get("force", False)
 
-        target_set: Set[date] = {
+        target_set: set[date] = {
             dt.date() for dt in (Donor.available.all().values_list("date_created", flat=True).distinct())
         }
 
         if not force:
             # Get existing stats dates that are not expired
-            existing_stats_dates: Set[date] = set(
+            existing_stats_dates: set[date] = set(
                 Stat.objects.filter(name=StatsChoices.REDIRECTIONS_PER_DAY)
                 .exclude(expires_at__lte=now())
                 .values_list("date", flat=True)
                 .distinct()
             )
 
-            target_set: Set[date] = target_set - existing_stats_dates
+            target_set: set[date] = target_set - existing_stats_dates
 
         for single_date in target_set:
             async_task(

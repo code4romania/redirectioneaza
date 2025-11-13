@@ -1,5 +1,4 @@
 import re
-from typing import Dict, List, Optional, Tuple
 
 from django.conf import settings
 from django.core.exceptions import ValidationError
@@ -11,7 +10,7 @@ REGISTRATION_NUMBER_REGEX_SANS_VAT = r"^\d{2,10}$"
 REGISTRATION_NUMBER_REGEX_WITH_VAT = r"^[A-Z]{2}\d{2,10}$"
 
 
-def extract_vat_id(registration_number: str) -> Dict[str, str]:
+def extract_vat_id(registration_number: str) -> dict[str, str]:
     """
     Extract the VAT ID and the registration number from a valid registration number.
     :param registration_number:
@@ -38,7 +37,7 @@ def extract_vat_id(registration_number: str) -> Dict[str, str]:
     return result
 
 
-def clean_registration_number(registration_number: str) -> Optional[str]:
+def clean_registration_number(registration_number: str) -> str | None:
     """
     Clean up a registration number by uppercasing the string, then removing any whitespace or forbidden characters.
     :param registration_number: The registration number to clean.
@@ -88,12 +87,12 @@ def ngo_id_number_validator(value):
 
     control_key: str = "753217532"
 
-    reversed_key: List[int] = [int(digit) for digit in control_key[::-1]]
-    reversed_cif: List[int] = [int(digit) for digit in reg_num[::-1]]
+    reversed_key: list[int] = [int(digit) for digit in control_key[::-1]]
+    reversed_cif: list[int] = [int(digit) for digit in reg_num[::-1]]
 
     cif_control_digit: int = reversed_cif.pop(0)
 
-    cif_key_pairs: Tuple[int, ...] = tuple(
+    cif_key_pairs: tuple[int, ...] = tuple(
         cif_digit * key_digit for cif_digit, key_digit in zip(reversed_cif, reversed_key)
     )
     control_result: int = sum(cif_key_pairs) * 10 % 11

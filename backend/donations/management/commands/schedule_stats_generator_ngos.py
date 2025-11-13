@@ -1,6 +1,5 @@
 import logging
 from datetime import timedelta
-from typing import Dict
 
 from django.utils import timezone
 from django_q.models import Schedule
@@ -37,7 +36,7 @@ class Command(SchedulerCommand):
     def handle(self, *args, **kwargs):
         statistic: str = kwargs["statistic"]
 
-        stat_mapping: Dict[str, str] = {
+        stat_mapping: dict[str, str] = {
             StatsChoices.NGOS_REGISTERED: f"{self.schedule_prefix}_REGISTERED",
             StatsChoices.NGOS_ACTIVE: f"{self.schedule_prefix}_ACTIVE",
             StatsChoices.NGOS_WITH_NGOHUB: f"{self.schedule_prefix}_WITH_NGOHUB",

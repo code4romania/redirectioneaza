@@ -1,7 +1,7 @@
 import logging
 import re
 from functools import partial
-from typing import Any, List, Optional
+from typing import Any
 
 from django.conf import settings
 from django.core.cache import cache
@@ -15,12 +15,12 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from donations.common.models_hashing import hash_id_secret
+from donations.models.common import CommonFilenameCacheModel
+from donations.models.donors import Donor
 from utils.text.registration_number import (
     REGISTRATION_NUMBER_REGEX_WITH_VAT,
     ngo_id_number_validator,
 )
-from donations.models.common import CommonFilenameCacheModel
-from donations.models.donors import Donor
 
 ALL_NGOS_CACHE_KEY = "ALL_NGOS"
 ALL_NGO_IDS_CACHE_KEY = "ALL_NGO_IDS"
@@ -316,7 +316,7 @@ class Ngo(CommonFilenameCacheModel):
             self.save()
 
     @property
-    def main_cause(self) -> Optional["Cause"]:
+    def main_cause(self) -> "Cause | None":
         if not self.pk:
             return None
 
@@ -364,7 +364,7 @@ class Ngo(CommonFilenameCacheModel):
     @classmethod
     def mandatory_fields(cls):
         # noinspection PyTypeChecker
-        field_names: List[DeferredAttribute] = [
+        field_names: list[DeferredAttribute] = [
             Ngo.name,
             Ngo.registration_number,
         ]
@@ -411,7 +411,7 @@ class Ngo(CommonFilenameCacheModel):
         if not self.can_create_causes:
             return False
 
-        main_cause: Optional[Cause] = self.main_cause
+        main_cause: Cause | None = self.main_cause
         if not main_cause:
             return False
 
@@ -535,7 +535,7 @@ class Cause(CommonFilenameCacheModel):
     @classmethod
     def mandatory_fields(cls):
         # noinspection PyTypeChecker
-        field_names: List[DeferredAttribute] = [
+        field_names: list[DeferredAttribute] = [
             Cause.name,
             Cause.slug,
             Cause.description,
@@ -572,7 +572,7 @@ class Cause(CommonFilenameCacheModel):
         return [field.capitalize() for field in self.missing_mandatory_fields_names]
 
     @property
-    def mandatory_fields_values(self) -> List[Any]:
+    def mandatory_fields_values(self) -> list[Any]:
         return [getattr(self, field.name) for field in Cause.mandatory_fields()]
 
     @property

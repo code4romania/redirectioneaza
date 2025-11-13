@@ -1,6 +1,5 @@
 import random
 import string
-from typing import List
 
 from django.conf import settings
 from django.core.files import File
@@ -52,7 +51,7 @@ class Command(BaseCommand):
             self.stdout.write(self.style.ERROR("No active organizations found"))
             return
 
-        generated_donations: List[Donor] = []
+        generated_donations: list[Donor] = []
         while len(generated_donations) < total_donations:
             # pick a random NGO
             ngo: Ngo = random.choice(ngos)

@@ -1,6 +1,5 @@
 import logging
 from datetime import datetime
-from typing import Dict, Tuple, Union
 
 from django.core.management import BaseCommand
 from django.db.models import QuerySet
@@ -14,10 +13,10 @@ class SchedulerCommand(BaseCommand):
     function_name: str = "django.core.management.call_command"
 
     command_name: str
-    function_args: Tuple
+    function_args: tuple
 
     schedule_name: str
-    schedule_details: Dict[str, Union[int, datetime]]
+    schedule_details: dict[str, int | datetime]
 
     def handle(self, *args, **kwargs):
         logger.info("Scheduling the task")

@@ -1,19 +1,19 @@
-from typing import Callable, Dict, List, Optional, Union
+from collections.abc import Callable
 
 from django.db.models import QuerySet
 
 
 class QueryFilter:
-    id: str = None
-    key: str = None
-    type: str = None
+    id: str | None = None
+    key: str | None = None
+    type: str | None = None
 
-    title: str = None
+    title: str | None = None
 
-    queryset_key: str = None
-    queryset_transformation: Optional[Callable] = None
+    queryset_key: str | None = None
+    queryset_transformation: Callable | None = None
 
-    def options(self, objects: Optional[QuerySet] = None) -> List[Dict[str, Union[int, str]]]:
+    def options(self, objects: QuerySet | None = None) -> list[dict[str, int | str]]:
         if objects is None:
             return self.options_default()
 
@@ -22,13 +22,13 @@ class QueryFilter:
         except NotImplementedError:
             return self.options_default()
 
-    def options_with_objects(self, objects: QuerySet) -> List[Dict[str, Union[int, str]]]:
+    def options_with_objects(self, objects: QuerySet) -> list[dict[str, int | str]]:
         raise NotImplementedError("Options method must be implemented in subclass")
 
-    def options_default(self) -> List[Dict[str, Union[int, str]]]:
+    def options_default(self) -> list[dict[str, int | str]]:
         raise NotImplementedError("Options method must be implemented in subclass")
 
-    def title_for_option(self, option_value: Union[int, str]) -> str:
+    def title_for_option(self, option_value: int | str) -> str:
         """
         Returns the title for a given option value.
         This method can be overridden in subclasses to provide custom titles.
@@ -39,8 +39,8 @@ class QueryFilter:
             return str(option_value)
 
     def to_dict(
-        self, *, include_options: bool = False, objects: QuerySet = None
-    ) -> Dict[str, Union[str, List[Dict[str, Union[int, str]]]]]:
+        self, *, include_options: bool = False, objects: QuerySet | None = None
+    ) -> dict[str, str | list[dict[str, int | str]]]:
         result = {
             "id": self.id,
             "key": self.key,

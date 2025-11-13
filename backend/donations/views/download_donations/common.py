@@ -1,7 +1,6 @@
 from datetime import datetime
 from xml.etree.ElementTree import Element
 
-from utils.text.phone_number import clean_phone_number
 from donations.models.donors import Donor
 from donations.models.ngos import Cause
 from utils.text.cleanup import (
@@ -13,6 +12,7 @@ from utils.text.cleanup import (
     duration_flag_to_int,
     unicode_to_ascii,
 )
+from utils.text.phone_number import clean_phone_number
 
 XMLNS_DETAILS = {"xmlns:xfa": "http://www.xfa.org/schema/xfa-data/1.0/", "xfa:dataNode": "dataGroup"}
 ANAF_FORM_VERSION = "B230_A1.0.9"
@@ -27,7 +27,7 @@ CLEAN_TEXT_CHOICES = {
 }
 
 
-def new_xml_element(tag: str, text: str = None, clean: str = "") -> Element:
+def new_xml_element(tag: str, text: str | None = None, clean: str = "") -> Element:
     element = Element(tag)
 
     if text:
@@ -108,8 +108,8 @@ def build_borderou_data_from_raw(
     ngo_name: str,
     ngo_registration_number: str,
     ngo_address: str,
-    ngo_locality: str = None,
-    ngo_county: str = None,
+    ngo_locality: str | None = None,
+    ngo_county: str | None = None,
 ) -> Element:
     element = Element("nrDataB")
 
@@ -155,12 +155,12 @@ def build_donor_raw(
     ngo_name: str,
     bank_account,
     donor_cnp: str,
-    donor_last_name: str = None,
-    donor_first_name: str = None,
-    donor_initial: str = None,
-    donor_address: str = None,
-    donor_phone: str = None,
-    donor_email: str = None,
+    donor_last_name: str | None = None,
+    donor_first_name: str | None = None,
+    donor_initial: str | None = None,
+    donor_address: str | None = None,
+    donor_phone: str | None = None,
+    donor_email: str | None = None,
     donor_anaf_gdpr: str = "0",
     donor_period: str = "1",
 ) -> Element:

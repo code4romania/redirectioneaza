@@ -1,7 +1,6 @@
 import csv
 import io
 import logging
-from typing import Dict, List
 from urllib.parse import quote
 
 from django.conf import settings
@@ -99,7 +98,7 @@ def generate_csv_from_download_job(download_job_id: int):
         return {"error": error_message}
 
     try:
-        csv_filters: List[Dict] = download_job.queryset
+        csv_filters: list[dict] = download_job.queryset
         qs_filters = {csv_filter["qs_key"]: csv_filter["qs_value"] for csv_filter in csv_filters}
 
         filters_suffix = "_".join([f"{quote(str(key))}:{quote(str(value))}" for key, value in qs_filters.items()])
