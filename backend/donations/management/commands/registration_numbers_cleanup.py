@@ -20,7 +20,7 @@ class Command(BaseCommand):
             "--ngos",
             type=int,
             nargs="+",
-            help="list of NGO IDs to clean registration numbers for.",
+            help="List of NGO IDs to clean registration numbers for.",
         )
 
     def handle(self, *args, **options):
