@@ -31,15 +31,15 @@ wheels = [
 
 [[package]]
 name = "blessed"
-version = "1.22.0"
+version = "1.25.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "jinxed", marker = "sys_platform == 'win32'" },
     { name = "wcwidth" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/7c/51/a72df7730aa34a94bc43cebecb7b63ffa42f019868637dbeb45e0620d26e/blessed-1.22.0.tar.gz", hash = "sha256:1818efb7c10015478286f21a412fcdd31a3d8b94a18f6d926e733827da7a844b", size = 6660050, upload-time = "2025-09-15T19:15:26.551Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/33/cd/eed8b82f1fabcb817d84b24d0780b86600b5c3df7ec4f890bcbb2371b0ad/blessed-1.25.0.tar.gz", hash = "sha256:606aebfea69f85915c7ca6a96eb028e0031d30feccc5688e13fd5cec8277b28d", size = 6746381, upload-time = "2025-11-18T18:43:52.71Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/11/b7/a19b55c4cd0b5ca5009ca11d3634994758a1a446976b8e7afa25e719613c/blessed-1.22.0-py2.py3-none-any.whl", hash = "sha256:a1fed52d708a1aa26dfb8d3eaecf6f4714bff590e728baeefcb44f2c16c8de82", size = 85078, upload-time = "2025-09-15T19:15:24.787Z" },
+    { url = "https://files.pythonhosted.org/packages/7c/2c/e9b6dd824fb6e76dbd39a308fc6f497320afd455373aac8518ca3eba7948/blessed-1.25.0-py3-none-any.whl", hash = "sha256:e52b9f778b9e10c30b3f17f6b5f5d2208d1e9b53b270f1d94fc61a243fc4708f", size = 95646, upload-time = "2025-11-18T18:43:50.924Z" },
 ]
 
 [[package]]
@@ -1088,7 +1088,7 @@ test = [
 
 [package.metadata]
 requires-dist = [
-    { name = "blessed", specifier = "~=1.22.0" },
+    { name = "blessed", specifier = "~=1.25.0" },
     { name = "cryptography", specifier = "~=46.0.3" },
     { name = "django", specifier = "~=5.2.0" },
     { name = "django-allauth", specifier = "~=65.13.0" },
