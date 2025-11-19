@@ -48,7 +48,7 @@ class DonationForm(forms.Form, ReCaptchaMixin):
 
     def clean_signature(self):
         signature = self.cleaned_data["signature"]
-        if signature and not signature.lower().startswith("data:image/svg+xml;base64,"):
+        if signature and not signature.lower().startswith("data:image/png;base64,"):
             raise forms.ValidationError(_("Invalid signature format"))
         return signature
 

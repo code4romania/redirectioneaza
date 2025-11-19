@@ -33,8 +33,6 @@ dependencies = [
   "reportlab~=4.4.0",
   "requests~=2.32.0",
   "sentry-sdk[django]~=2.45.0",
-  # lock at specific version due to incompatible dependencies (pycairo)
-  "svglib==1.5.1",
   "whitenoise~=6.11.0",
 ]
 
