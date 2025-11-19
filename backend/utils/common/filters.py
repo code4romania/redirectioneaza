@@ -11,9 +11,20 @@ class QueryFilter:
     title: str | None = None
 
     queryset_key: str | None = None
-    queryset_transformation: Callable | None = None
+    transform_queryset: Callable | None = None
 
     def options(self, objects: QuerySet | None = None) -> list[dict[str, int | str]]:
+        """
+        Returns the available options for this filter.
+        If objects are provided, it attempts to generate options based on those objects.
+        If not implemented in a subclass, it falls back to default options.
+
+        Args:
+            objects (QuerySet | None): The queryset of objects to base options on.
+
+        Returns:
+            list[dict[str, int | str]]: A list of option dictionaries with 'value' and 'title' keys.
+        """
         if objects is None:
             return self.options_default()
 
@@ -39,9 +50,12 @@ class QueryFilter:
             return str(option_value)
 
     def to_dict(
-        self, *, include_options: bool = False, objects: QuerySet | None = None
+        self,
+        *,
+        include_options: bool = False,
+        objects: QuerySet | None = None,
     ) -> dict[str, str | list[dict[str, int | str]]]:
-        result = {
+        result: dict[str, str | list[dict[str, int | str]]] = {
             "id": self.id,
             "key": self.key,
             "title": self.title,
@@ -54,7 +68,7 @@ class QueryFilter:
         return result
 
     def transform_to_qs_value(self, value):
-        if transform := self.queryset_transformation:
-            return transform(value)
+        if self.transform_queryset is not None:
+            return self.transform_queryset(value)
 
         return value

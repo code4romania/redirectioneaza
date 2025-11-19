@@ -14,3 +14,5 @@ class HasNgoFilter(admin.SimpleListFilter):
             return queryset.exclude(ngo=None)
         if self.value() == "no":
             return queryset.filter(ngo=None)
+
+        return queryset

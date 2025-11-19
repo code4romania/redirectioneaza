@@ -27,8 +27,8 @@ from donations.views.ngo_account_filters import (
     get_redirections_filters,
 )
 from redirectioneaza.common.cache import cache_decorator
-from redirectioneaza.common.filters import QueryFilter
 from users.models import User
+from utils.common.filters import QueryFilter
 
 
 class NgoRedirectionsView(NgoBaseListView, DonorSearchMixin):

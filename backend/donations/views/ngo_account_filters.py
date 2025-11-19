@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 from donations.models.donors import Donor
 from donations.models.ngos import Ngo
 from editions.calendar import edition_deadline
-from redirectioneaza.common.filters import QueryFilter
+from utils.common.filters import QueryFilter
 
 
 class NgoQueryFilter(QueryFilter):
@@ -89,7 +89,7 @@ class FormPeriodQueryFilter(NgoQueryFilter):
         self.title = _("Period")
 
         self.queryset_key = "two_years"
-        self.queryset_transformation = lambda fe_value: fe_value == "2"
+        self.transform_queryset = lambda fe_value: fe_value == "2"
 
     def options_default(self) -> list[dict[str, int | str]]:
         return [
@@ -109,7 +109,7 @@ class FormStatusQueryFilter(NgoQueryFilter):
         self.title = _("Status")
 
         self.queryset_key = "has_signed"
-        self.queryset_transformation = lambda fe_value: fe_value == "signed"
+        self.transform_queryset = lambda fe_value: fe_value == "signed"
 
     def options_default(self) -> list[dict[str, int | str]]:
         return [
@@ -129,7 +129,7 @@ class FormAnonymousQueryFilter(NgoQueryFilter):
         self.title = _("Is Anonymous")
 
         self.queryset_key = "is_anonymous"
-        self.queryset_transformation = lambda fe_value: fe_value == "da"
+        self.transform_queryset = lambda fe_value: fe_value == "da"
 
     def options_default(self) -> list[dict[str, int | str]]:
         return [

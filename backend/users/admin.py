@@ -5,7 +5,7 @@ from django.contrib.auth.models import Group as BaseGroup
 from django.utils.translation import gettext_lazy as _
 from unfold.admin import ModelAdmin
 
-from redirectioneaza.common.admin import HasNgoFilter
+from utils.common.admin import HasNgoFilter
 
 from .models import GroupProxy, User
 

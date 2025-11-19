@@ -14,9 +14,9 @@ from unfold.contrib.filters.admin import TextFilter
 from unfold.decorators import action
 
 from donations.models.donors import Donor
-from redirectioneaza.common.admin import HasNgoFilter
 from redirectioneaza.common.app_url import build_uri
 from redirectioneaza.common.messaging import extend_email_context, send_email
+from utils.common.admin import HasNgoFilter
 
 logger = logging.getLogger(__name__)
 
