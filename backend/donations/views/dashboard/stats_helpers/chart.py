@@ -11,7 +11,7 @@ STATS_FOR_MONTH_CACHE_PREFIX = "STATS_FOR_MONTH_"
 
 
 # TODO: Implement caching properly
-def donors_for_month(month: int, year: int = None) -> Decimal:
+def donors_for_month(month: int, year: int | None = None) -> Decimal:
     """
     Determines the number of donors for a specified month and year.
 

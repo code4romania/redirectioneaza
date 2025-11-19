@@ -1,6 +1,5 @@
 import logging
 from datetime import datetime, timedelta
-from typing import Optional
 from urllib.parse import urlparse
 
 from django.conf import settings
@@ -39,7 +38,7 @@ class RedirectionSuccessHandler(BaseVisibleTemplateView):
 
         cause_url = cause_slug.lower().strip()
         try:
-            cause: Optional[Cause] = Cause.nonprivate_active.select_related("ngo").get(slug=cause_url)
+            cause: Cause | None = Cause.nonprivate_active.select_related("ngo").get(slug=cause_url)
             ngo: Ngo = cause.ngo
         except Cause.DoesNotExist:
             raise Http404("Cause not found")
@@ -211,7 +210,7 @@ class RedirectionHandler(TemplateView):
 
         cause_url = cause_slug.lower().strip()
         try:
-            cause: Optional[Cause] = Cause.nonprivate_active.select_related("ngo").get(slug=cause_url)
+            cause: Cause | None = Cause.nonprivate_active.select_related("ngo").get(slug=cause_url)
             ngo: Ngo = cause.ngo
         except Cause.DoesNotExist:
             raise Http404("Cause not found")

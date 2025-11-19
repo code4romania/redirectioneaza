@@ -1,5 +1,4 @@
 import logging
-from typing import List
 
 from django.db.models import Count, Q, QuerySet
 from django_q.tasks import async_task
@@ -27,9 +26,9 @@ def import_donor_forms_task(batch_size: int = 50, run_async: bool = False, dry_r
     logger.info("Found %d NGOs with donors", ngos_by_number_of_donors.count())
 
     index: int = 0
-    processed_form_ids: List[int] = []
+    processed_form_ids: list[int] = []
     for index, ngo in enumerate(ngos_by_number_of_donors):
-        donor_forms_for_ngo: List[int] = Donor.available.filter(
+        donor_forms_for_ngo: list[int] = Donor.available.filter(
             ngo=ngo, pdf_file="", date_created__gte="2023-12-31"
         ).values_list("pk", flat=True)[: batch_size + 1]
 
@@ -46,7 +45,7 @@ def import_donor_forms_task(batch_size: int = 50, run_async: bool = False, dry_r
     return
 
 
-def execute_import(index, processed_form_ids: List[int], run_async: bool, dry_run):
+def execute_import(index, processed_form_ids: list[int], run_async: bool, dry_run):
     logger.info("Scheduling a new task for %d donors from %d NGOs", len(processed_form_ids), index + 1)
 
     if run_async:
@@ -55,7 +54,7 @@ def execute_import(index, processed_form_ids: List[int], run_async: bool, dry_ru
         import_donor_forms(processed_form_ids, dry_run)
 
 
-def import_donor_forms(ids: List[int], dry_run: bool):
+def import_donor_forms(ids: list[int], dry_run: bool):
     """
     Download and re-upload the donation form files one by one
     XXX: Will be removed

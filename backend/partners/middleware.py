@@ -1,5 +1,4 @@
 import logging
-from typing import Optional
 
 from django.conf import settings
 from django.http import Http404
@@ -47,7 +46,7 @@ class PartnerDomainMiddleware:
 
         return subdomain
 
-    def _get_partner_from_subdomain(self, subdomain) -> Optional[Partner]:
+    def _get_partner_from_subdomain(self, subdomain) -> Partner | None:
         if settings.FORCE_PARTNER:
             return Partner.active.first()
 

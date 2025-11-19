@@ -1,5 +1,5 @@
 import random
-from typing import Any, Dict, List
+from typing import Any
 
 from django.contrib.auth import get_user_model
 from django.core.management import BaseCommand
@@ -136,8 +136,8 @@ class Command(BaseCommand):
         create_valid = options.get("valid", None)
         create_user_only = options.get("user_only", None)
 
-        organizations: List[Dict[str, Any]] = []
-        generated_organization_names: List[str] = []
+        organizations: list[dict[str, Any]] = []
+        generated_organization_names: list[str] = []
 
         user_model = get_user_model()
 

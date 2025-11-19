@@ -1,6 +1,6 @@
 from datetime import date, datetime
 from decimal import Decimal
-from typing import Any, Dict
+from typing import Any
 
 from django.utils.timezone import now
 
@@ -10,7 +10,7 @@ from stats.api import get_stat_for_year, get_stats_total_between_dates
 STATS_FOR_YEAR_CACHE_PREFIX = "STATS_FOR_YEAR_"
 
 
-def get_stats_for_year(year: int) -> Dict[str, Any]:
+def get_stats_for_year(year: int) -> dict[str, Any]:
     """
     Fetches and returns statistics for a given year.
 
@@ -24,7 +24,7 @@ def get_stats_for_year(year: int) -> Dict[str, Any]:
     year (int): The year for which to retrieve statistics.
 
     Returns:
-    Dict[str, Any]: A dictionary containing statistics for the specified year.
+    dict[str, Any]: A dictionary containing statistics for the specified year.
     The dictionary includes:
         - "year" (int): The year of the statistics.
         - "donations" (int): The number of donations.
@@ -35,7 +35,7 @@ def get_stats_for_year(year: int) -> Dict[str, Any]:
     return _update_stats_for_year(year)
 
 
-def _update_stats_for_year(year: int) -> Dict[str, Any]:
+def _update_stats_for_year(year: int) -> dict[str, Any]:
     """
     Updates the statistics for a given year and caches the result.
 
@@ -43,7 +43,7 @@ def _update_stats_for_year(year: int) -> Dict[str, Any]:
         year (int): The year for which to compute statistics.
 
     Returns:
-        Dict[str, Any]: A dictionary containing statistics for the specified year.
+        dict[str, Any]: A dictionary containing statistics for the specified year.
     """
     current_time: datetime = now()
 

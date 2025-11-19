@@ -1,4 +1,4 @@
-from typing import Any, Dict, List
+from typing import Any
 
 from django import template
 from django.urls import reverse
@@ -8,7 +8,7 @@ register = template.Library()
 
 
 @register.filter
-def redirection_dropdown(redirection: Dict) -> List[Dict[str, Any]]:
+def redirection_dropdown(redirection: dict) -> list[dict[str, Any]]:
     link = ""
     if is_active := redirection["has_signed"]:
         link = reverse("my-organization:redirection-download-link", args=[redirection["id"]])
@@ -23,12 +23,12 @@ def redirection_dropdown(redirection: Dict) -> List[Dict[str, Any]]:
 
 
 @register.filter
-def button_disabled(redirection: Dict) -> bool:
+def button_disabled(redirection: dict) -> bool:
     return not redirection["has_signed"]
 
 
 @register.filter
-def button_title(redirection: Dict) -> str:
+def button_title(redirection: dict) -> str:
     if redirection["has_signed"]:
         return _("Form options")
     return _("Downloads are disabled for unsigned redirections")

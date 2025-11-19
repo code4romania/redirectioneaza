@@ -1,5 +1,4 @@
 import logging
-from typing import List
 
 from django.conf import settings
 from django.contrib import admin
@@ -39,7 +38,7 @@ class CauseAdmin(ModelAdmin, CommonCauseFields):
 
     @action(description=_("Generate donations archive"))
     def generate_donations_archive(self, request, queryset: QuerySet[Cause]):
-        ngo_names: List[str] = []
+        ngo_names: list[str] = []
 
         for cause in queryset:
             ngo = cause.ngo

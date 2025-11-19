@@ -1,5 +1,4 @@
 from datetime import date
-from typing import List
 
 from django.conf import settings
 from django.utils import timezone
@@ -20,7 +19,7 @@ def edition_deadline() -> date:
     return date(year=year, month=month, day=day)
 
 
-def get_current_year_range() -> List[int]:
+def get_current_year_range() -> list[int]:
     """
     Returns a list of years from the start year to the current year.
     """

@@ -1,6 +1,5 @@
 from datetime import date, datetime, timedelta
 from decimal import Decimal
-from typing import Dict, Optional
 
 from django.db import models
 from django.utils.timezone import now
@@ -23,9 +22,9 @@ class StatsChoices(models.TextChoices):
 
 def _calculate_expiration(
     *,
-    delta: Dict[str, int],
-    for_date: Optional[date] = None,
-) -> Optional[datetime]:
+    delta: dict[str, int],
+    for_date: date | None = None,
+) -> datetime | None:
     if not for_date or for_date < now().date():
         return None
 
@@ -36,8 +35,8 @@ def _save_stat(
     *,
     name: StatsChoices,
     metric: Decimal,
-    expiration: Optional[datetime],
-    for_date: Optional[date] = None,
+    expiration: datetime | None,
+    for_date: date | None = None,
 ) -> None:
     Stat.objects.update_or_create(
         name=name,
@@ -51,28 +50,28 @@ def _save_stat(
 
 def _create_stat_redirections_per_day(for_date: date):
     metric: Decimal = Decimal(Donor.available.filter(date_created__date=for_date).count())
-    expiration: Optional[datetime] = _calculate_expiration(delta={"minutes": 5}, for_date=for_date)
+    expiration: datetime | None = _calculate_expiration(delta={"minutes": 5}, for_date=for_date)
 
     _save_stat(name=StatsChoices.REDIRECTIONS_PER_DAY, metric=metric, expiration=expiration, for_date=for_date)
 
 
 def _create_stat_ngos_registered():
     metric: Decimal = Decimal(Ngo.objects.count())
-    expiration: datetime = _calculate_expiration(delta={"minutes": 5})
+    expiration: datetime | None = _calculate_expiration(delta={"minutes": 5})
 
     _save_stat(name=StatsChoices.NGOS_REGISTERED, metric=metric, expiration=expiration)
 
 
 def _create_stat_ngos_registered_yearly(*, for_date: date):
     metric: Decimal = Decimal(Ngo.objects.filter(date_created__year=for_date.year).count())
-    expiration: datetime = _calculate_expiration(delta={"minutes": 15}, for_date=for_date)
+    expiration: datetime | None = _calculate_expiration(delta={"minutes": 15}, for_date=for_date)
 
     _save_stat(name=StatsChoices.NGOS_REGISTERED_PER_YEAR, metric=metric, expiration=expiration, for_date=for_date)
 
 
 def _create_stat_ngos_active():
     metric: Decimal = Decimal(Ngo.with_forms_this_year.count())
-    expiration: datetime = _calculate_expiration(delta={"minutes": 5})
+    expiration: datetime | None = _calculate_expiration(delta={"minutes": 5})
 
     _save_stat(name=StatsChoices.NGOS_ACTIVE, metric=metric, expiration=expiration)
 
@@ -81,26 +80,26 @@ def _create_stat_ngos_active_yearly(*, for_date: date):
     metric: Decimal = Decimal(
         len((Donor.available.filter(date_created__year=for_date.year).values("ngo_id").distinct()))
     )
-    expiration: datetime = _calculate_expiration(delta={"minutes": 15}, for_date=for_date)
+    expiration: datetime | None = _calculate_expiration(delta={"minutes": 15}, for_date=for_date)
 
     _save_stat(name=StatsChoices.NGOS_ACTIVE_PER_YEAR, metric=metric, expiration=expiration, for_date=for_date)
 
 
 def _create_stat_ngos_with_ngohub():
     metric: Decimal = Decimal(Ngo.ngo_hub.count())
-    expiration: datetime = _calculate_expiration(delta={"minutes": 5})
+    expiration: datetime | None = _calculate_expiration(delta={"minutes": 5})
 
     _save_stat(name=StatsChoices.NGOS_WITH_NGOHUB, metric=metric, expiration=expiration)
 
 
 def _create_stat_ngos_with_ngohub_yearly(*, for_date: date):
     metric: Decimal = Decimal(Ngo.ngo_hub.filter(date_created__year=for_date.year).count())
-    expiration: datetime = _calculate_expiration(delta={"minutes": 15}, for_date=for_date)
+    expiration: datetime | None = _calculate_expiration(delta={"minutes": 15}, for_date=for_date)
 
     _save_stat(name=StatsChoices.NGOS_WITH_NGOHUB_PER_YEAR, metric=metric, expiration=expiration, for_date=for_date)
 
 
-def create_stat(*, stat_choice: StatsChoices, for_date: date = None) -> None:
+def create_stat(*, stat_choice: StatsChoices, for_date: date | None = None) -> None:
     if stat_choice in (
         StatsChoices.REDIRECTIONS_PER_DAY,
         StatsChoices.NGOS_REGISTERED_PER_YEAR,

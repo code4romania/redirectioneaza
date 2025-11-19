@@ -1,11 +1,9 @@
-from typing import Dict, List
-
 from django.conf import settings
 from django.http import HttpRequest
 from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 
-HEADER_ITEMS: Dict[str, Dict[str, str]] = {
+HEADER_ITEMS: dict[str, dict[str, str]] = {
     "about": {
         "title": _("About"),
         "url": reverse_lazy("about"),
@@ -159,7 +157,7 @@ HEADER_ITEMS: Dict[str, Dict[str, str]] = {
 }
 
 
-def build_main_menu(request: HttpRequest) -> List[Dict[str, str]]:
+def build_main_menu(request: HttpRequest) -> list[dict[str, str]]:
     if request.partner:
         return [
             HEADER_ITEMS["about"],
@@ -204,7 +202,7 @@ def build_main_menu(request: HttpRequest) -> List[Dict[str, str]]:
     ]
 
 
-def build_auth_menu(request: HttpRequest) -> List[Dict[str, str]]:
+def build_auth_menu(request: HttpRequest) -> list[dict[str, str]]:
     user = request.user
 
     if not user.is_anonymous and user.is_admin:
@@ -271,7 +269,7 @@ def build_auth_menu(request: HttpRequest) -> List[Dict[str, str]]:
     return auth_menu
 
 
-def main(request: HttpRequest) -> Dict[str, Dict[str, List[Dict[str, str]]]]:
+def main(request: HttpRequest) -> dict[str, dict[str, list[dict[str, str]]]]:
     """
     Context processor for the header content.
     :param request: HttpRequest

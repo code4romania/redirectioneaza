@@ -1,6 +1,6 @@
 import os
 from copy import deepcopy
-from typing import Any, Dict
+from typing import Any
 
 from .constants import BASE_DIR
 from .environment import env
@@ -106,7 +106,7 @@ django_vite_assets_path = os.path.abspath("dist")  # noqa
 django_vite_sources_dir = os.path.abspath("assets")  # noqa
 
 django_vite_dev_mode = env.bool("DJANGO_VITE_DEV_MODE")
-django_vite_settings: Dict[str, Any] = {
+django_vite_settings: dict[str, Any] = {
     "dev_mode": django_vite_dev_mode,
     "manifest_path": os.path.join(django_vite_assets_path, "manifest.json"),
 }
@@ -127,6 +127,6 @@ if django_vite_dev_mode:
 else:
     STATICFILES_DIRS.append(django_vite_assets_path)
 
-DJANGO_VITE: Dict[str, Dict] = {
+DJANGO_VITE: dict[str, dict] = {
     "default": django_vite_settings,
 }

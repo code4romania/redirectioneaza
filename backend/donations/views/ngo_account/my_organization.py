@@ -1,5 +1,3 @@
-from typing import List
-
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -9,13 +7,13 @@ from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 
-from utils.text.registration_number import extract_vat_id
 from donations.forms.ngo_account import CauseForm, NgoPresentationForm
 from donations.models.ngos import Cause, Ngo
 from donations.views.ngo_account.causes import NgoCauseCommonView
 from donations.views.ngo_account.common import NgoBaseTemplateView, delete_ngo_prefilled_forms
 from redirectioneaza.common.async_wrapper import async_wrapper
 from users.models import User
+from utils.text.registration_number import extract_vat_id
 
 
 class NgoPresentationView(NgoBaseTemplateView):
@@ -78,7 +76,7 @@ class NgoPresentationView(NgoBaseTemplateView):
 
         context = self.get_context_data()
 
-        errors: List[str] = []
+        errors: list[str] = []
 
         ngo: Ngo = user.ngo
 

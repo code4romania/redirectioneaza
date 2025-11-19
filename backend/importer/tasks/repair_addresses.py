@@ -1,7 +1,6 @@
 import ast
 import logging
 from json import JSONDecodeError
-from typing import Dict
 
 from django.conf import settings
 from django.db.models import QuerySet
@@ -46,7 +45,7 @@ def repair_address(donor: Donor) -> None:
     decoded_address: str = settings.FERNET_OBJECT.decrypt(encrypted_address.encode()).decode()
 
     try:
-        decoded_address: Dict = dict(ast.literal_eval(decoded_address))
+        decoded_address: dict = dict(ast.literal_eval(decoded_address))
     except ValueError:
         logger.error("Received a ValueError trying to convert address to dict for donor %s", donor.pk)
         return
