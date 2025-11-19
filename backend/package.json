@@ -6,19 +6,19 @@
     "build": "vite build"
   },
   "devDependencies": {
-    "@alpinejs/collapse": "^3.15.1",
-    "@alpinejs/focus": "^3.15.1",
-    "@fontsource/inter": "^5.1.0",
+    "@alpinejs/collapse": "^3.15.2",
+    "@alpinejs/focus": "^3.15.2",
+    "@fontsource/inter": "^5.2.8",
     "@ryangjchandler/alpine-tooltip": "^2.0.1",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/container-queries": "^0.1.1",
-    "@tailwindcss/forms": "^0.5.9",
-    "@tailwindcss/postcss": "^4.1.16",
-    "@tailwindcss/typography": "^0.5.15",
-    "alpinejs": "^3.15.1",
+    "@tailwindcss/forms": "^0.5.10",
+    "@tailwindcss/postcss": "^4.1.17",
+    "@tailwindcss/typography": "^0.5.19",
+    "alpinejs": "^3.15.2",
     "postcss": "^8.4.49",
-    "signature_pad": "^5.0.4",
-    "tailwindcss": "^4.1.16",
-    "vite": "^7.1.12"
+    "signature_pad": "^5.1.2",
+    "tailwindcss": "^4.1.17",
+    "vite": "^7.2.2"
   }
 }
