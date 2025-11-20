@@ -96,7 +96,6 @@ INSTALLED_APPS = [
     "stats",
     "donations",
     "frequent_questions",
-    "importer",
     "partners",
     "q_heartbeat",
     "users",
