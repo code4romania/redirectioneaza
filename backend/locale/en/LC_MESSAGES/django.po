@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-06 09:59+0200\n"
+"POT-Creation-Date: 2025-11-20 10:48+0200\n"
 "PO-Revision-Date: 2025-03-27 14:48+0000\n"
 "Last-Translator: Andrei Ioniță <andrei.ionita@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -19,51 +19,51 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 5.10.4\n"
 
-#: donations/admin/causes.py:40
+#: donations/admin/causes.py:39
 msgid "Generate donations archive"
 msgstr "Generate donations archive"
 
-#: donations/admin/causes.py:63
+#: donations/admin/causes.py:62
 msgid "The donations archive has been generated for the following NGOs: "
 msgstr "The donations archive has been generated for the following NGOs: "
 
-#: donations/admin/causes.py:65
+#: donations/admin/causes.py:64
 msgid ""
 "The donations archive could not be generated for any of the selected NGOs."
 msgstr ""
 "The donations archive could not be generated for any of the selected NGOs."
 
-#: donations/admin/causes.py:69
+#: donations/admin/causes.py:68
 msgid "Public URL"
 msgstr ""
 
-#: donations/admin/causes.py:76 donations/admin/common.py:25
+#: donations/admin/causes.py:75 donations/admin/common.py:23
 #: donations/admin/donors.py:112 donations/admin/download_jobs.py:22
 #: donations/admin/download_jobs.py:50 donations/admin/jobs.py:22
 #: donations/admin/jobs.py:55 donations/admin/ngos.py:209
-#: donations/admin/ngos.py:297 donations/models/donors.py:71
+#: donations/admin/ngos.py:297 donations/models/donors.py:70
 #: donations/models/downloads.py:10 donations/models/jobs.py:13
-#: donations/models/ngos.py:284 partners/models.py:149 users/models.py:71
+#: donations/models/ngos.py:284 partners/models.py:147 users/models.py:71
 msgid "NGO"
 msgstr "NGO"
 
-#: donations/admin/common.py:30
+#: donations/admin/common.py:28
 msgid "Flags"
 msgstr ""
 
-#: donations/admin/common.py:42
+#: donations/admin/common.py:40
 #: templates/v2/ngo-account/my-organization/base.html:22
 msgid "Form Data"
 msgstr "Form Data"
 
-#: donations/admin/common.py:52 donations/admin/download_jobs.py:30
+#: donations/admin/common.py:50 donations/admin/download_jobs.py:30
 #: donations/admin/jobs.py:36
 #, fuzzy
 #| msgid "Form Data"
 msgid "Data"
 msgstr "Form Data"
 
-#: donations/admin/common.py:64 donations/admin/donors.py:138
+#: donations/admin/common.py:62 donations/admin/donors.py:138
 #: donations/admin/download_jobs.py:40 donations/admin/jobs.py:45
 #: donations/admin/ngos.py:247 templates/v2/ngo-account/byof/list-header.html:7
 msgid "Date"
@@ -212,8 +212,8 @@ msgid "Has owner"
 msgstr "Has owner"
 
 #: donations/admin/ngos.py:205 donations/admin/ngos.py:323 donations/apps.py:8
-#: donations/views/dashboard/stats_helpers/utils.py:14
-#: redirectioneaza/context_processors/headers.py:70
+#: donations/views/dashboard/stats_helpers/utils.py:12
+#: redirectioneaza/context_processors/headers.py:68
 #: redirectioneaza/settings/unfold.py:30 redirectioneaza/settings/unfold.py:45
 msgid "Donations"
 msgstr "Donations"
@@ -222,7 +222,7 @@ msgstr "Donations"
 msgid "Activity"
 msgstr "Activity"
 
-#: donations/admin/ngos.py:231 redirectioneaza/context_processors/headers.py:45
+#: donations/admin/ngos.py:231 redirectioneaza/context_processors/headers.py:43
 msgid "Contact"
 msgstr "Contact"
 
@@ -287,45 +287,12 @@ msgstr "NGOs are being updated from NGO Hub."
 msgid "Remove prefilled forms"
 msgstr "Remove prefilled forms"
 
-#: donations/common/validation/phone_number.py:17
-msgid "Invalid country code"
-msgstr "Invalid country code"
-
-#: donations/common/validation/phone_number.py:22
-msgid "Unknown phone number format"
-msgstr "Unknown phone number format"
-
-#: donations/common/validation/phone_number.py:30
-#: donations/common/validation/phone_number.py:36
-msgid "Invalid phone number"
-msgstr "Invalid phone number"
-
-#: donations/common/validation/registration_number.py:72
-msgid "The ID number cannot be all zeros"
-msgstr "The ID number cannot be all zeros"
-
-#: donations/common/validation/registration_number.py:75
-msgid "The ID number format is not valid"
-msgstr "The ID number format is not valid"
-
-#: donations/common/validation/registration_number.py:81
-msgid "The ID number must contain only digits"
-msgstr "The ID number must contain only digits"
-
-#: donations/common/validation/registration_number.py:84
-msgid "The ID number must be between 2 and 10 digits long"
-msgstr "The ID number must be between 2 and 10 digits long"
-
-#: donations/common/validation/registration_number.py:106
-msgid "The ID number is not valid"
-msgstr "The ID number is not valid"
-
 #: donations/forms/account.py:20 donations/forms/account.py:58
 #: donations/forms/account.py:71
 msgid "Email is required"
 msgstr "Email is required"
 
-#: donations/forms/account.py:26 donations/forms/common.py:33
+#: donations/forms/account.py:26 donations/forms/common.py:32
 msgid "Password is required"
 msgstr "Password is required"
 
@@ -337,7 +304,7 @@ msgstr "First name is required"
 msgid "Last name is required"
 msgstr "Last name is required"
 
-#: donations/forms/common.py:41
+#: donations/forms/common.py:40
 msgid "Passwords do not match"
 msgstr "Passwords do not match"
 
@@ -382,14 +349,14 @@ msgid "Address"
 msgstr "Address"
 
 #: donations/forms/ngo_account.py:30 donations/forms/redirection.py:33
-#: donations/views/api_download.py:53 donations/views/ngo_account_filters.py:70
+#: donations/views/api_download.py:52 donations/views/ngo_account_filters.py:70
 #: templates/v2/form/redirection-open.html:115
 msgid "Locality"
 msgstr "Locality"
 
 #: donations/forms/ngo_account.py:32 donations/forms/redirection.py:32
-#: donations/views/api_download.py:54
-#: donations/views/dashboard/ngo_dashboard.py:60
+#: donations/views/api_download.py:53
+#: donations/views/dashboard/ngo_dashboard.py:58
 #: donations/views/ngo_account_filters.py:50
 #: templates/v2/ngo-account/my-organization/ngo-presentation.html:116
 msgid "County"
@@ -418,7 +385,7 @@ msgstr "Slug"
 
 #: donations/forms/ngo_account.py:105 donations/forms/ngo_account.py:107
 #: donations/forms/ngo_account.py:164 donations/forms/ngo_account.py:166
-#: donations/models/byof.py:56 donations/views/api_download.py:51
+#: donations/models/byof.py:56 donations/views/api_download.py:50
 #: templates/v2/ngo-account/byof/list-header.html:10
 #: templates/v2/ngo-account/byof/modal.html:75
 #: templates/v2/ngo-account/causes/list-header.html:7
@@ -473,14 +440,14 @@ msgstr "First name"
 msgid "Initial"
 msgstr "Initial"
 
-#: donations/forms/redirection.py:22 donations/views/api_download.py:48
+#: donations/forms/redirection.py:22 donations/views/api_download.py:47
 #: templates/v2/account/snippets/register-form.html:67
 #: templates/v2/emails/donor/redirection-sans-signature/main.txt:28
 #: templates/v2/form/redirection-open.html:60
 msgid "Email"
 msgstr "Email"
 
-#: donations/forms/redirection.py:23 donations/views/api_download.py:49
+#: donations/forms/redirection.py:23 donations/views/api_download.py:48
 msgid "Phone"
 msgstr "Phone"
 
@@ -514,7 +481,7 @@ msgstr "Apartment"
 msgid "Two years"
 msgstr "Two years"
 
-#: donations/forms/redirection.py:36 donations/models/donors.py:126
+#: donations/forms/redirection.py:36 donations/models/donors.py:125
 msgid "ANAF GDPR"
 msgstr "ANAF GDPR"
 
@@ -588,13 +555,13 @@ msgid "status"
 msgstr "status"
 
 #: donations/models/byof.py:82 donations/models/common.py:31
-#: donations/models/donors.py:160 donations/models/ngos.py:261
-#: donations/models/ngos.py:510 partners/models.py:83 users/models.py:95
+#: donations/models/donors.py:159 donations/models/ngos.py:261
+#: donations/models/ngos.py:510 partners/models.py:81 users/models.py:95
 msgid "date created"
 msgstr "date created"
 
 #: donations/models/byof.py:83 donations/models/ngos.py:262
-#: donations/models/ngos.py:511 partners/models.py:84 users/models.py:96
+#: donations/models/ngos.py:511 partners/models.py:82 users/models.py:96
 msgid "date updated"
 msgstr "date updated"
 
@@ -630,111 +597,111 @@ msgstr "date finished"
 msgid "Filename cache"
 msgstr "Filename cache"
 
-#: donations/models/donors.py:60
+#: donations/models/donors.py:59
 msgid "wage"
 msgstr "wage"
 
-#: donations/models/donors.py:61
+#: donations/models/donors.py:60
 msgid "pension"
 msgstr "pension"
 
-#: donations/models/donors.py:65
+#: donations/models/donors.py:64
 msgid "is available"
 msgstr ""
 
-#: donations/models/donors.py:66
+#: donations/models/donors.py:65
 msgid "If the donation is available on the platform (not removed)"
 msgstr ""
 
-#: donations/models/donors.py:72 donations/models/jobs.py:20
+#: donations/models/donors.py:71 donations/models/jobs.py:20
 msgid "cause"
 msgstr "cause"
 
-#: donations/models/donors.py:75 donations/views/download_donations/main.py:186
+#: donations/models/donors.py:74 donations/views/download_donations/main.py:186
 msgid "last name"
 msgstr "last name"
 
-#: donations/models/donors.py:78 donations/views/download_donations/main.py:187
+#: donations/models/donors.py:77 donations/views/download_donations/main.py:187
 msgid "first name"
 msgstr "first name"
 
-#: donations/models/donors.py:80
+#: donations/models/donors.py:79
 msgid "initials"
 msgstr "initials"
 
-#: donations/models/donors.py:82 donations/views/download_donations/main.py:189
+#: donations/models/donors.py:81 donations/views/download_donations/main.py:189
 msgid "CNP"
 msgstr "CNP"
 
-#: donations/models/donors.py:85 donations/views/download_donations/main.py:194
+#: donations/models/donors.py:84 donations/views/download_donations/main.py:194
 msgid "city"
 msgstr "city"
 
-#: donations/models/donors.py:93 donations/models/ngos.py:223
+#: donations/models/donors.py:92 donations/models/ngos.py:223
 #: donations/views/download_donations/main.py:193
 msgid "county"
 msgstr "county"
 
-#: donations/models/donors.py:100 donations/models/ngos.py:213
+#: donations/models/donors.py:99 donations/models/ngos.py:213
 msgid "address"
 msgstr "address"
 
-#: donations/models/donors.py:104 donations/models/ngos.py:240
+#: donations/models/donors.py:103 donations/models/ngos.py:240
 msgid "telephone"
 msgstr "telephone"
 
-#: donations/models/donors.py:112 donations/models/ngos.py:239
+#: donations/models/donors.py:111 donations/models/ngos.py:239
 #: donations/views/download_donations/main.py:192
 msgid "email"
 msgstr "email"
 
-#: donations/models/donors.py:120 donations/views/api_download.py:64
-#: donations/views/api_download.py:65
+#: donations/models/donors.py:119 donations/views/api_download.py:63
+#: donations/views/api_download.py:64
 msgid "anonymous"
 msgstr "anonymous"
 
-#: donations/models/donors.py:123
+#: donations/models/donors.py:122
 msgid "If the user would like the ngo to see the donation"
 msgstr "If the user would like the ngo to see the donation"
 
-#: donations/models/donors.py:128
+#: donations/models/donors.py:127
 msgid "If the user agrees for ANAF to share their data with the NGO"
 msgstr "If the user agrees for ANAF to share their data with the NGO"
 
-#: donations/models/donors.py:133
+#: donations/models/donors.py:132
 msgid "income type"
 msgstr "income type"
 
-#: donations/models/donors.py:142
+#: donations/models/donors.py:141
 msgid "two years"
 msgstr "two years"
 
-#: donations/models/donors.py:144
+#: donations/models/donors.py:143
 msgid "If the user wants to donate for 2 years"
 msgstr "If the user wants to donate for 2 years"
 
-#: donations/models/donors.py:147
+#: donations/models/donors.py:146
 msgid "Geo IP"
 msgstr "Geo IP"
 
-#: donations/models/donors.py:149
+#: donations/models/donors.py:148
 #: donations/views/download_donations/main.py:202
 msgid "filename"
 msgstr "filename"
 
-#: donations/models/donors.py:150
+#: donations/models/donors.py:149
 msgid "has signed"
 msgstr "has signed"
 
-#: donations/models/donors.py:153
+#: donations/models/donors.py:152
 msgid "PDF file"
 msgstr "PDF file"
 
-#: donations/models/donors.py:172
+#: donations/models/donors.py:171
 msgid "donor"
 msgstr "donor"
 
-#: donations/models/donors.py:173
+#: donations/models/donors.py:172
 msgid "donors"
 msgstr "donors"
 
@@ -853,12 +820,12 @@ msgstr "has special status"
 msgid "is accepting forms"
 msgstr "is accepting forms"
 
-#: donations/models/ngos.py:259 partners/models.py:46
+#: donations/models/ngos.py:259 partners/models.py:44
 msgid "is active"
 msgstr "is active"
 
-#: donations/models/ngos.py:285 partners/models.py:69
-#: redirectioneaza/context_processors/headers.py:65
+#: donations/models/ngos.py:285 partners/models.py:67
+#: redirectioneaza/context_processors/headers.py:63
 #: redirectioneaza/settings/unfold.py:33
 msgid "NGOs"
 msgstr "NGOs"
@@ -895,7 +862,7 @@ msgstr "logo"
 msgid "slug"
 msgstr "slug"
 
-#: donations/models/ngos.py:495 partners/models.py:31 stats/models.py:7
+#: donations/models/ngos.py:495 partners/models.py:29 stats/models.py:7
 msgid "name"
 msgstr "name"
 
@@ -918,7 +885,7 @@ msgid "form with prefilled cause"
 msgstr "form with prefilled ngo data"
 
 #: donations/models/ngos.py:521 donations/views/ngo_account_filters.py:149
-#: partners/admin.py:50 partners/models.py:183
+#: partners/admin.py:50 partners/models.py:181
 #: templates/v2/ngo-account/archives/list-header.html:13
 #: templates/v2/ngo-account/causes/list-header.html:4
 msgid "Cause"
@@ -926,7 +893,7 @@ msgstr "Cause"
 
 #: donations/models/ngos.py:522 donations/views/ngo_account/causes.py:169
 #: donations/views/ngo_account/causes.py:217 partners/admin.py:51
-#: partners/models.py:76 redirectioneaza/settings/unfold.py:39
+#: partners/models.py:74 redirectioneaza/settings/unfold.py:39
 #: templates/v2/ngo-account/causes/main.html:11
 msgid "Causes"
 msgstr "Causes"
@@ -1063,87 +1030,87 @@ msgstr "Account verified"
 msgid "Verification"
 msgstr "Verification"
 
-#: donations/views/api.py:104
+#: donations/views/api.py:103
 #, fuzzy
 #| msgid "An error occurred while creating the user: %(error)s"
 msgid "An error occurred while generating the prefilled form."
 msgstr "An error occurred while creating the user: %(error)s"
 
-#: donations/views/api.py:163
+#: donations/views/api.py:162
 #: templates/v2/ngo-account/archives/list-items.html:7
 #: templates/v2/ngo-account/byof/list-items.html:7
 msgid "No archives were generated"
 msgstr "No archives were generated"
 
-#: donations/views/api.py:180 donations/views/api_download.py:157
+#: donations/views/api.py:179 donations/views/api_download.py:156
 #, fuzzy
 #| msgid "The organization's contact info"
 msgid "Your organization can not receive forms currently."
 msgstr "The organization's contact info"
 
-#: donations/views/api.py:186
+#: donations/views/api.py:185
 msgid "The cause you are trying to edit does not exist."
 msgstr ""
 
-#: donations/views/api.py:190
+#: donations/views/api.py:189
 #, fuzzy
 #| msgid "The ID number is not valid"
 msgid "The visibility value is not valid."
 msgstr "The ID number is not valid"
 
-#: donations/views/api.py:197
+#: donations/views/api.py:196
 #, python-format
 msgid "The visibility of '%(cause_name)s' has been updated successfully."
 msgstr ""
 
-#: donations/views/api_download.py:46 partners/admin.py:25
+#: donations/views/api_download.py:45 partners/admin.py:25
 msgid "First Name"
 msgstr "First Name"
 
-#: donations/views/api_download.py:47 partners/admin.py:31
+#: donations/views/api_download.py:46 partners/admin.py:31
 msgid "Last Name"
 msgstr "Last Name"
 
-#: donations/views/api_download.py:50
+#: donations/views/api_download.py:49
 #, fuzzy
 #| msgid "Two years"
 msgid "Period (years)"
 msgstr "Two years"
 
-#: donations/views/api_download.py:52
+#: donations/views/api_download.py:51
 #, fuzzy
 #| msgid "has signed"
 msgid "Has Signed"
 msgstr "has signed"
 
-#: donations/views/api_download.py:55
+#: donations/views/api_download.py:54
 #, fuzzy
 #| msgid "Redirections"
 msgid "Redirection Date"
 msgstr "Redirections"
 
-#: donations/views/api_download.py:67
+#: donations/views/api_download.py:66
 msgid "N/A"
 msgstr ""
 
-#: donations/views/api_download.py:128
+#: donations/views/api_download.py:127
 #, fuzzy
 #| msgid "An error occurred while creating the user: %(error)s"
 msgid ""
 "An error occurred while generating the CSV file. Please try again later."
 msgstr "An error occurred while creating the user: %(error)s"
 
-#: donations/views/api_download.py:141
+#: donations/views/api_download.py:140
 #, fuzzy
 #| msgid "Redirections"
 msgid "Redirections CSV file"
 msgstr "Redirections"
 
-#: donations/views/api_download.py:166
+#: donations/views/api_download.py:165
 msgid "There are no redirections available for download."
 msgstr ""
 
-#: donations/views/api_download.py:176
+#: donations/views/api_download.py:175
 #, fuzzy
 #| msgid "An error occurred while creating the user: %(error)s"
 msgid ""
@@ -1151,30 +1118,30 @@ msgid ""
 "filters might help."
 msgstr "An error occurred while creating the user: %(error)s"
 
-#: donations/views/api_download.py:182
+#: donations/views/api_download.py:181
 msgid "The CSV file is being generated and will be sent to your email shortly."
 msgstr ""
 
-#: donations/views/api_download.py:200
+#: donations/views/api_download.py:199
 #, fuzzy
 #| msgid "An error occurred while creating the user: %(error)s"
 msgid "An error occurred while generating the CSV file."
 msgstr "An error occurred while creating the user: %(error)s"
 
-#: donations/views/api_download.py:202
+#: donations/views/api_download.py:201
 #, fuzzy
 #| msgid "An error occurred while creating the user: %(error)s"
 msgid "An unknown error occurred while generating the CSV file."
 msgstr "An error occurred while creating the user: %(error)s"
 
-#: donations/views/common/misc.py:63
+#: donations/views/common/misc.py:62
 #, python-format
 msgid "%(time)d hour"
 msgid_plural "%(time)d hours"
 msgstr[0] "%(time)d hour"
 msgstr[1] "%(time)d hours"
 
-#: donations/views/common/misc.py:69
+#: donations/views/common/misc.py:68
 #, python-format
 msgid "%(time)d minute"
 msgid_plural "%(time)d minutes"
@@ -1187,56 +1154,56 @@ msgstr[1] "%(time)d minutes"
 msgid "The search query must be at least 3 characters long"
 msgstr "The IBAN number must have 24 characters"
 
-#: donations/views/dashboard/admin_dashboard.py:65
+#: donations/views/dashboard/admin_dashboard.py:64
 msgid "Donations this year"
 msgstr "Donations this year"
 
-#: donations/views/dashboard/admin_dashboard.py:70
-#: donations/views/dashboard/admin_dashboard.py:79
-#: donations/views/dashboard/admin_dashboard.py:88
-#: donations/views/dashboard/admin_dashboard.py:97
-#: donations/views/dashboard/admin_dashboard.py:106
-#: donations/views/dashboard/stats_helpers/utils.py:20
-#: donations/views/dashboard/stats_helpers/utils.py:31
-#: donations/views/dashboard/stats_helpers/utils.py:42
+#: donations/views/dashboard/admin_dashboard.py:69
+#: donations/views/dashboard/admin_dashboard.py:78
+#: donations/views/dashboard/admin_dashboard.py:87
+#: donations/views/dashboard/admin_dashboard.py:96
+#: donations/views/dashboard/admin_dashboard.py:105
+#: donations/views/dashboard/stats_helpers/utils.py:18
+#: donations/views/dashboard/stats_helpers/utils.py:29
+#: donations/views/dashboard/stats_helpers/utils.py:40
 msgid "View all"
 msgstr "View all"
 
-#: donations/views/dashboard/admin_dashboard.py:74
+#: donations/views/dashboard/admin_dashboard.py:73
 msgid "Donations all-time"
 msgstr "Donations all-time"
 
-#: donations/views/dashboard/admin_dashboard.py:83
-#: donations/views/dashboard/stats_helpers/utils.py:25
+#: donations/views/dashboard/admin_dashboard.py:82
+#: donations/views/dashboard/stats_helpers/utils.py:23
 msgid "NGOs registered"
 msgstr "NGOs registered"
 
-#: donations/views/dashboard/admin_dashboard.py:92
+#: donations/views/dashboard/admin_dashboard.py:91
 msgid "Functioning NGOs"
 msgstr ""
 
-#: donations/views/dashboard/admin_dashboard.py:101
+#: donations/views/dashboard/admin_dashboard.py:100
 msgid "NGOs from NGO Hub"
 msgstr "NGOs from NGO Hub"
 
-#: donations/views/dashboard/helpers.py:63
+#: donations/views/dashboard/helpers.py:62
 msgid "Donations per month"
 msgstr "Donations per month"
 
-#: donations/views/dashboard/ngo_dashboard.py:61
+#: donations/views/dashboard/ngo_dashboard.py:59
 msgid "Number of donations"
 msgstr "Number of donations"
 
-#: donations/views/dashboard/ngo_dashboard.py:80
+#: donations/views/dashboard/ngo_dashboard.py:78
 msgid "Current year donations per county"
 msgstr "Current year donations per county"
 
-#: donations/views/dashboard/ngo_dashboard.py:100
+#: donations/views/dashboard/ngo_dashboard.py:98
 #, python-format
 msgid "Donations in %d"
 msgstr "Donations in %d"
 
-#: donations/views/dashboard/stats_helpers/utils.py:36
+#: donations/views/dashboard/stats_helpers/utils.py:34
 msgid "NGOs with forms"
 msgstr "NGOs with forms"
 
@@ -1355,13 +1322,13 @@ msgid "anaf gdpr"
 msgstr ""
 
 #: donations/views/ngo_account/byof.py:21
-#: redirectioneaza/context_processors/headers.py:131
+#: redirectioneaza/context_processors/headers.py:129
 msgid "Generate from external data"
 msgstr ""
 
 #: donations/views/ngo_account/byof.py:56
 #: donations/views/ngo_account/causes.py:141
-#: donations/views/ngo_account/redirections.py:121
+#: donations/views/ngo_account/redirections.py:122
 msgid "You need to add your NGO's information first."
 msgstr ""
 
@@ -1396,7 +1363,7 @@ msgstr ""
 msgid "You need to first create the form with the organization's details."
 msgstr ""
 
-#: donations/views/ngo_account/causes.py:94 donations/views/redirections.py:227
+#: donations/views/ngo_account/causes.py:94 donations/views/redirections.py:226
 msgid "There are some errors on the redirection form."
 msgstr "There are some errors on the redirection form."
 
@@ -1413,7 +1380,7 @@ msgid "The form has been saved."
 msgstr "The form is not valid."
 
 #: donations/views/ngo_account/causes.py:126
-#: redirectioneaza/context_processors/headers.py:107
+#: redirectioneaza/context_processors/headers.py:105
 #, fuzzy
 #| msgid "Organization address"
 msgid "Organization Causes"
@@ -1421,7 +1388,7 @@ msgstr "Organization address"
 
 #: donations/views/ngo_account/causes.py:157
 #: donations/views/ngo_account/causes.py:202
-#: donations/views/ngo_account/my_organization.py:149
+#: donations/views/ngo_account/my_organization.py:147
 #, fuzzy
 #| msgid "Organization forms"
 msgid "Organization form"
@@ -1431,76 +1398,76 @@ msgstr "Organization forms"
 msgid "Add new cause form"
 msgstr ""
 
-#: donations/views/ngo_account/common.py:22
-#: donations/views/ngo_account/my_organization.py:23
+#: donations/views/ngo_account/common.py:20
+#: donations/views/ngo_account/my_organization.py:21
 msgid "Organization details"
 msgstr "Organization details"
 
-#: donations/views/ngo_account/common.py:63
+#: donations/views/ngo_account/common.py:61
 #, fuzzy
 #| msgid "Organization details"
 msgid "Go to the organization details."
 msgstr "Organization details"
 
-#: donations/views/ngo_account/common.py:70
+#: donations/views/ngo_account/common.py:68
 #, fuzzy
 #| msgid "Go to the form page"
 msgid "Go to the form."
 msgstr "Go to the form page"
 
-#: donations/views/ngo_account/common.py:120
+#: donations/views/ngo_account/common.py:118
 msgid "The IBAN number must have 24 characters"
 msgstr "The IBAN number must have 24 characters"
 
-#: donations/views/ngo_account/common.py:123
+#: donations/views/ngo_account/common.py:121
 msgid "The IBAN number must contain only letters and digits"
 msgstr "The IBAN number must contain only letters and digits"
 
-#: donations/views/ngo_account/common.py:126
+#: donations/views/ngo_account/common.py:124
 msgid "The IBAN number must start with 'RO'"
 msgstr "The IBAN number must start with 'RO'"
 
-#: donations/views/ngo_account/common.py:179
+#: donations/views/ngo_account/common.py:177
 #, fuzzy
 #| msgid "Download the form"
 msgid "Download generated file"
 msgstr "Download the form"
 
-#: donations/views/ngo_account/my_organization.py:100
+#: donations/views/ngo_account/my_organization.py:98
 msgid "There are some errors on the presentation form."
 msgstr "There are some errors on the presentation form."
 
-#: donations/views/ngo_account/redirections.py:35
-#: redirectioneaza/context_processors/headers.py:113
+#: donations/views/ngo_account/redirections.py:36
+#: redirectioneaza/context_processors/headers.py:111
 #: templates/v2/ngo-account/redirections/base.html:13
 #: templates/v2/ngo-account/redirections/base.html:31
 #: templates/v2/ngo-account/redirections/main.html:7
 msgid "Redirections"
 msgstr "Redirections"
 
-#: donations/views/ngo_account/redirections.py:175
+#: donations/views/ngo_account/redirections.py:176
 #: templates/v2/ngo-account/archives/main.html:6
 msgid "Archives history"
 msgstr "Archives history"
 
-#: donations/views/ngo_account/redirections.py:222
+#: donations/views/ngo_account/redirections.py:223
 #, fuzzy
 #| msgid "Redirections"
 msgid "Redirections downloads"
 msgstr "Redirections"
 
-#: donations/views/ngo_account/redirections.py:267
+#: donations/views/ngo_account/redirections.py:268
 #: templates/v2/emails/ngo/download-archive/main.html:21
 msgid "Download archive"
 msgstr "Download archive"
 
-#: donations/views/ngo_account/redirections.py:303
+#: donations/views/ngo_account/redirections.py:304
 #, fuzzy
 #| msgid "Download form"
 msgid "Download donor form"
 msgstr "Download form"
 
-#: donations/views/ngo_account/redirections.py:314
+#: donations/views/ngo_account/redirections.py:315
 #, fuzzy
 #| msgid "The organization's contact info"
 msgid "Your organization is not active"
@@ -1556,53 +1523,53 @@ msgstr "anonymous"
 msgid "Not anonymous"
 msgstr "anonymous"
 
-#: donations/views/redirections.py:33
+#: donations/views/redirections.py:32
 msgid "Successful redirection"
 msgstr "Successful redirection"
 
-#: donations/views/redirections.py:302
+#: donations/views/redirections.py:301
 msgid "Un nou formular de redirecționare"
 msgstr "A new redirection form"
 
-#: donations/views/redirections.py:309 donations/views/redirections.py:329
+#: donations/views/redirections.py:308 donations/views/redirections.py:328
 msgid "Formularul tău de redirecționare"
 msgstr "Your redirection form"
 
-#: donations/views/site.py:43
+#: donations/views/site.py:44
 msgid "form filled in"
 msgid_plural "forms filled in"
 msgstr[0] "form filled in"
 msgstr[1] "forms filled in"
 
-#: donations/views/site.py:50
+#: donations/views/site.py:51
 msgid "organizations registered in the platform"
 msgstr "organizations registered in the platform"
 
-#: donations/views/site.py:60
+#: donations/views/site.py:61
 msgid "redirected to NGOs through the platform"
 msgstr "redirected to NGOs through the platform"
 
-#: donations/views/site.py:61
+#: donations/views/site.py:62
 msgid "> €2 million"
 msgstr "> €2 million"
 
-#: donations/views/site.py:114
+#: donations/views/site.py:115
 msgid "About redirectioneaza.ro"
 msgstr "About redirectioneaza.ro"
 
-#: donations/views/site.py:133
+#: donations/views/site.py:134
 msgid "All causes"
 msgstr "All causes"
 
-#: donations/views/site.py:181 templates/v2/redirect/footer.html:196
+#: donations/views/site.py:182 templates/v2/redirect/footer.html:196
 msgid "Information notice"
 msgstr "Information notice"
 
-#: donations/views/site.py:192 templates/v2/redirect/footer.html:186
+#: donations/views/site.py:193 templates/v2/redirect/footer.html:186
 msgid "Privacy policy"
 msgstr "Privacy policy"
 
-#: donations/views/site.py:197 templates/v2/redirect/footer.html:191
+#: donations/views/site.py:198 templates/v2/redirect/footer.html:191
 msgid "Terms & conditions"
 msgstr "Terms & conditions"
 
@@ -1644,10 +1611,6 @@ msgstr "Questions"
 msgid "Frequently Asked Questions"
 msgstr "Frequently Asked Questions"
 
-#: importer/apps.py:8
-msgid "Importer"
-msgstr "Importer"
-
 #: partners/admin.py:26
 msgid "The first name of the user who will be the administering the Partner."
 msgstr "The first name of the user who will be the administering the Partner."
@@ -1666,7 +1629,7 @@ msgid ""
 msgstr ""
 "The email address of the user who will be the administering the Partner."
 
-#: partners/admin.py:81 partners/models.py:90 users/models.py:79
+#: partners/admin.py:81 partners/models.py:88 users/models.py:79
 msgid "Partner"
 msgstr "Partner"
 
@@ -1695,121 +1658,101 @@ msgstr "The user has been successfully invited."
 msgid "Invite new manager"
 msgstr "Invite new manager"
 
-#: partners/apps.py:8 partners/models.py:91
-#: redirectioneaza/context_processors/headers.py:75
+#: partners/apps.py:8 partners/models.py:89
+#: redirectioneaza/context_processors/headers.py:73
 #: redirectioneaza/settings/unfold.py:69
 msgid "Partners"
 msgstr "Partners"
 
-#: partners/models.py:13
+#: partners/models.py:11
 msgid "Custom"
 msgstr "Custom"
 
-#: partners/models.py:15
+#: partners/models.py:13
 msgid "Alphabetical"
 msgstr "Alphabetical"
 
-#: partners/models.py:16
+#: partners/models.py:14
 msgid "Alphabetical (reverse)"
 msgstr "Alphabetical (reverse)"
 
-#: partners/models.py:18
+#: partners/models.py:16
 msgid "Newest"
 msgstr "Newest"
 
-#: partners/models.py:19
+#: partners/models.py:17
 msgid "Oldest"
 msgstr "Oldest"
 
-#: partners/models.py:21
+#: partners/models.py:19
 msgid "Random"
 msgstr "Random"
 
-#: partners/models.py:38
+#: partners/models.py:36
 msgid "subdomain"
 msgstr "subdomain"
 
-#: partners/models.py:52
+#: partners/models.py:50
 msgid "custom call-to-action"
 msgstr ""
 
-#: partners/models.py:53
+#: partners/models.py:51
 msgid ""
 "Custom call-to-action for the partner, if empty, the default call-to-action "
 "will be used."
 msgstr ""
 
-#: partners/models.py:60
+#: partners/models.py:58
 msgid "has custom header"
 msgstr "has custom header"
 
-#: partners/models.py:61
+#: partners/models.py:59
 msgid "has custom note"
 msgstr "has custom note"
 
-#: partners/models.py:63
+#: partners/models.py:61
 msgid "display ordering"
 msgstr "display ordering"
 
-#: partners/models.py:143 partners/models.py:177
+#: partners/models.py:141 partners/models.py:175
 msgid "partner"
 msgstr "partner"
 
-#: partners/models.py:155 partners/models.py:189
+#: partners/models.py:153 partners/models.py:187
 msgid "display order"
 msgstr "display order"
 
-#: partners/models.py:158
+#: partners/models.py:156
 msgid "Partner NGO"
 msgstr "Partner NGO"
 
-#: partners/models.py:159
+#: partners/models.py:157
 msgid "Partner NGOs"
 msgstr "Partner NGOs"
 
-#: partners/models.py:192
+#: partners/models.py:190
 msgid "Partner Cause"
 msgstr "Partner Cause"
 
-#: partners/models.py:193
+#: partners/models.py:191
 msgid "Partner Causes"
 msgstr "Partner Causes"
 
-#: redirectioneaza/common/admin.py:6
-msgid "Has NGO"
-msgstr ""
-
-#: redirectioneaza/common/messaging.py:50
+#: redirectioneaza/common/messaging.py:49
 msgid "Invalid email send method. Must be 'async' or 'sync'."
 msgstr "Invalid email send method. Must be 'async' or 'sync'."
 
-#: redirectioneaza/common/validators.py:7
-msgid "This subdomain is reserved."
-msgstr "This subdomain is reserved."
-
-#: redirectioneaza/common/validators.py:10
-msgid "Subdomain must contain only lowercase characters."
-msgstr "Subdomain must contain only lowercase characters."
-
-#: redirectioneaza/common/validators.py:13
-msgid "Subdomain must contain only alphanumeric characters and '-' (hyphens)."
-msgstr "Subdomain must contain only alphanumeric characters and '-' (hyphens)."
-
-#: redirectioneaza/common/validators.py:16
-msgid "Subdomain must have between 3 and 100 characters."
-msgstr "Subdomain must have between 3 and 100 characters."
-
-#: redirectioneaza/context_processors/headers.py:10
+#: redirectioneaza/context_processors/headers.py:8
 #: templates/v2/redirect/footer.html:108
 msgid "About"
 msgstr "About"
 
-#: redirectioneaza/context_processors/headers.py:14
+#: redirectioneaza/context_processors/headers.py:12
 #: templates/v2/redirect/footer.html:139
 msgid "Discover organizations"
 msgstr "Discover organizations"
 
-#: redirectioneaza/context_processors/headers.py:18
+#: redirectioneaza/context_processors/headers.py:16
 msgid ""
 "Still undecided about the cause you want to support? Discover the "
 "organizations you can redirect to through the platform."
@@ -1817,11 +1760,11 @@ msgstr ""
 "Still undecided about the cause you want to support? Discover the "
 "organizations you can redirect to through the platform."
 
-#: redirectioneaza/context_processors/headers.py:23
+#: redirectioneaza/context_processors/headers.py:21
 msgid "How it works"
 msgstr "How it works"
 
-#: redirectioneaza/context_processors/headers.py:26
+#: redirectioneaza/context_processors/headers.py:24
 msgid ""
 "What is the 230 form? Who can redirect? How can you contribute? What are the "
 "rules?"
@@ -1829,13 +1772,13 @@ msgstr ""
 "What is the 230 form? Who can redirect? How can you contribute? What are the "
 "rules?"
 
-#: redirectioneaza/context_processors/headers.py:29
-#: redirectioneaza/context_processors/headers.py:39
+#: redirectioneaza/context_processors/headers.py:27
+#: redirectioneaza/context_processors/headers.py:37
 #: redirectioneaza/settings/unfold.py:77
 msgid "Frequently asked questions"
 msgstr "Frequently asked questions"
 
-#: redirectioneaza/context_processors/headers.py:33
+#: redirectioneaza/context_processors/headers.py:31
 msgid ""
 "How can you create an account for your organization? Issues using the "
 "platform? Find the answers to your questions."
@@ -1843,21 +1786,21 @@ msgstr ""
 "How can you create an account for your organization? Issues using the "
 "platform? Find the answers to your questions."
 
-#: redirectioneaza/context_processors/headers.py:42
+#: redirectioneaza/context_processors/headers.py:40
 msgid ""
 "What happens with your data? What else? Find the answers to your questions."
 msgstr ""
 "What happens with your data? What else? Find the answers to your questions."
 
-#: redirectioneaza/context_processors/headers.py:48
+#: redirectioneaza/context_processors/headers.py:46
 msgid "The contact form for donors."
 msgstr "The contact form for donors."
 
-#: redirectioneaza/context_processors/headers.py:51
+#: redirectioneaza/context_processors/headers.py:49
 msgid "User guide"
 msgstr "User guide"
 
-#: redirectioneaza/context_processors/headers.py:55
+#: redirectioneaza/context_processors/headers.py:53
 msgid ""
 "Find out how you can use redirectioneaza.ro to collect the 230 forms for "
 "your organization and discover the features."
@@ -1865,168 +1808,168 @@ msgstr ""
 "Find out how you can use redirectioneaza.ro to collect the 230 forms for "
 "your organization and discover the features."
 
-#: redirectioneaza/context_processors/headers.py:60
+#: redirectioneaza/context_processors/headers.py:58
 msgid "Admin Dashboard"
 msgstr "Admin Dashboard"
 
-#: redirectioneaza/context_processors/headers.py:80
+#: redirectioneaza/context_processors/headers.py:78
 msgid "FAQ Questions"
 msgstr "FAQ Questions"
 
-#: redirectioneaza/context_processors/headers.py:85
+#: redirectioneaza/context_processors/headers.py:83
 #: redirectioneaza/settings/unfold.py:94 redirectioneaza/settings/unfold.py:97
 #: users/apps.py:8
 msgid "Users"
 msgstr "Users"
 
-#: redirectioneaza/context_processors/headers.py:90
+#: redirectioneaza/context_processors/headers.py:88
 #: redirectioneaza/settings/unfold.py:13 redirectioneaza/settings/unfold.py:16
 msgid "Dashboard"
 msgstr "Dashboard"
 
-#: redirectioneaza/context_processors/headers.py:95
+#: redirectioneaza/context_processors/headers.py:93
 #: templates/v2/ngo-account/my-organization/base.html:12
 msgid "Organization Data"
 msgstr "Organization Data"
 
-#: redirectioneaza/context_processors/headers.py:101
+#: redirectioneaza/context_processors/headers.py:99
 msgid "Organization Form"
 msgstr "Organization Form"
 
-#: redirectioneaza/context_processors/headers.py:119
+#: redirectioneaza/context_processors/headers.py:117
 #, fuzzy
 #| msgid "Redirections"
 msgid "Redirections Downloads"
 msgstr "Redirections"
 
-#: redirectioneaza/context_processors/headers.py:125
+#: redirectioneaza/context_processors/headers.py:123
 msgid "Archive History"
 msgstr "Archive History"
 
-#: redirectioneaza/context_processors/headers.py:137
+#: redirectioneaza/context_processors/headers.py:135
 msgid "Account Settings"
 msgstr "Account Settings"
 
-#: redirectioneaza/context_processors/headers.py:143
+#: redirectioneaza/context_processors/headers.py:141
 msgid "Log in"
 msgstr "Log in"
 
-#: redirectioneaza/context_processors/headers.py:148
-#: redirectioneaza/context_processors/headers.py:200
+#: redirectioneaza/context_processors/headers.py:146
+#: redirectioneaza/context_processors/headers.py:198
 msgid "Register Organization"
 msgstr "Register Organization"
 
-#: redirectioneaza/context_processors/headers.py:153
+#: redirectioneaza/context_processors/headers.py:151
 msgid "Log out"
 msgstr "Log out"
 
-#: redirectioneaza/context_processors/headers.py:172
+#: redirectioneaza/context_processors/headers.py:170
 msgid "For donors"
 msgstr "For donors"
 
-#: redirectioneaza/context_processors/headers.py:187
+#: redirectioneaza/context_processors/headers.py:185
 #: templates/v2/redirect/footer.html:162
 msgid "For organizations"
 msgstr "For organizations"
 
-#: redirectioneaza/context_processors/headers.py:213
+#: redirectioneaza/context_processors/headers.py:211
 msgid "Admin"
 msgstr "Admin"
 
-#: redirectioneaza/context_processors/headers.py:240
+#: redirectioneaza/context_processors/headers.py:238
 msgid "My Organization"
 msgstr "My Organization"
 
-#: redirectioneaza/settings/app_configs.py:31
+#: redirectioneaza/settings/app_configs.py:32
 msgid "January"
 msgstr "January"
 
-#: redirectioneaza/settings/app_configs.py:32
+#: redirectioneaza/settings/app_configs.py:33
 msgid "Jan"
 msgstr "Jan"
 
-#: redirectioneaza/settings/app_configs.py:35
+#: redirectioneaza/settings/app_configs.py:36
 msgid "February"
 msgstr "February"
 
-#: redirectioneaza/settings/app_configs.py:36
+#: redirectioneaza/settings/app_configs.py:37
 msgid "Feb"
 msgstr "Feb"
 
-#: redirectioneaza/settings/app_configs.py:39
+#: redirectioneaza/settings/app_configs.py:40
 msgid "March"
 msgstr "March"
 
-#: redirectioneaza/settings/app_configs.py:40
+#: redirectioneaza/settings/app_configs.py:41
 msgid "Mar"
 msgstr "Mar"
 
-#: redirectioneaza/settings/app_configs.py:43
+#: redirectioneaza/settings/app_configs.py:44
 msgid "April"
 msgstr "April"
 
-#: redirectioneaza/settings/app_configs.py:44
+#: redirectioneaza/settings/app_configs.py:45
 msgid "Apr"
 msgstr "Apr"
 
-#: redirectioneaza/settings/app_configs.py:47
 #: redirectioneaza/settings/app_configs.py:48
+#: redirectioneaza/settings/app_configs.py:49
 msgid "May"
 msgstr "May"
 
-#: redirectioneaza/settings/app_configs.py:51
+#: redirectioneaza/settings/app_configs.py:52
 msgid "June"
 msgstr "June"
 
-#: redirectioneaza/settings/app_configs.py:52
+#: redirectioneaza/settings/app_configs.py:53
 msgid "Jun"
 msgstr "Jun"
 
-#: redirectioneaza/settings/app_configs.py:55
+#: redirectioneaza/settings/app_configs.py:56
 msgid "July"
 msgstr "July"
 
-#: redirectioneaza/settings/app_configs.py:56
+#: redirectioneaza/settings/app_configs.py:57
 msgid "Jul"
 msgstr "Jul"
 
-#: redirectioneaza/settings/app_configs.py:59
+#: redirectioneaza/settings/app_configs.py:60
 msgid "August"
 msgstr "August"
 
-#: redirectioneaza/settings/app_configs.py:60
+#: redirectioneaza/settings/app_configs.py:61
 msgid "Aug"
 msgstr "Aug"
 
-#: redirectioneaza/settings/app_configs.py:63
+#: redirectioneaza/settings/app_configs.py:64
 msgid "September"
 msgstr "September"
 
-#: redirectioneaza/settings/app_configs.py:64
+#: redirectioneaza/settings/app_configs.py:65
 msgid "Sep"
 msgstr "Sep"
 
-#: redirectioneaza/settings/app_configs.py:67
+#: redirectioneaza/settings/app_configs.py:68
 msgid "October"
 msgstr "October"
 
-#: redirectioneaza/settings/app_configs.py:68
+#: redirectioneaza/settings/app_configs.py:69
 msgid "Oct"
 msgstr "Oct"
 
-#: redirectioneaza/settings/app_configs.py:71
+#: redirectioneaza/settings/app_configs.py:72
 msgid "November"
 msgstr "November"
 
-#: redirectioneaza/settings/app_configs.py:72
+#: redirectioneaza/settings/app_configs.py:73
 msgid "Nov"
 msgstr "Nov"
 
-#: redirectioneaza/settings/app_configs.py:75
+#: redirectioneaza/settings/app_configs.py:76
 msgid "December"
 msgstr "December"
 
-#: redirectioneaza/settings/app_configs.py:76
+#: redirectioneaza/settings/app_configs.py:77
 msgid "Dec"
 msgstr "Dec"
 
@@ -4261,6 +4204,61 @@ msgstr "old password"
 #: users/models.py:178
 msgid "Group"
 msgstr "Group"
+
+#: utils/common/admin.py:6
+msgid "Has NGO"
+msgstr ""
+
+#: utils/text/phone_number.py:15
+msgid "Invalid country code"
+msgstr "Invalid country code"
+
+#: utils/text/phone_number.py:20
+msgid "Unknown phone number format"
+msgstr "Unknown phone number format"
+
+#: utils/text/phone_number.py:28 utils/text/phone_number.py:34
+msgid "Invalid phone number"
+msgstr "Invalid phone number"
+
+#: utils/text/registration_number.py:71
+msgid "The ID number cannot be all zeros"
+msgstr "The ID number cannot be all zeros"
+
+#: utils/text/registration_number.py:74
+msgid "The ID number format is not valid"
+msgstr "The ID number format is not valid"
+
+#: utils/text/registration_number.py:80
+msgid "The ID number must contain only digits"
+msgstr "The ID number must contain only digits"
+
+#: utils/text/registration_number.py:83
+msgid "The ID number must be between 2 and 10 digits long"
+msgstr "The ID number must be between 2 and 10 digits long"
+
+#: utils/text/registration_number.py:105
+msgid "The ID number is not valid"
+msgstr "The ID number is not valid"
+
+#: utils/validators.py:7
+msgid "This subdomain is reserved."
+msgstr "This subdomain is reserved."
+
+#: utils/validators.py:10
+msgid "Subdomain must contain only lowercase characters."
+msgstr "Subdomain must contain only lowercase characters."
+
+#: utils/validators.py:13
+msgid "Subdomain must contain only alphanumeric characters and '-' (hyphens)."
+msgstr "Subdomain must contain only alphanumeric characters and '-' (hyphens)."
+
+#: utils/validators.py:16
+msgid "Subdomain must have between 3 and 100 characters."
+msgstr "Subdomain must have between 3 and 100 characters."
+
+#~ msgid "Importer"
+#~ msgstr "Importer"
 
 #~ msgid "Clean up registration numbers"
 #~ msgstr "Clean up registration numbers"
