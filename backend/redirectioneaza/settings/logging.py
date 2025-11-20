@@ -49,3 +49,8 @@ LOGGING = {
         },
     },
 }
+
+# Auditlog configuration
+
+AUDITLOG_EXPIRY_DAYS = env.int("AUDITLOG_EXPIRY_DAYS")
+AUDITLOG_INCLUDE_ALL_MODELS = False

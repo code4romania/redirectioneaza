@@ -1,3 +1,4 @@
+from auditlog.registry import auditlog
 from django.db import models
 from django.db.models import QuerySet
 from django.db.models.functions import Lower
@@ -202,3 +203,8 @@ class PartnerCause(models.Model):
             self.display_order = number_of_partner_causes + 1
 
         super().save(*args, **kwargs)
+
+
+auditlog.register(Partner)
+auditlog.register(PartnerNgo)
+auditlog.register(PartnerCause)
