@@ -1,3 +1,4 @@
+from auditlog.registry import auditlog
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from tinymce.models import HTMLField
@@ -80,3 +81,7 @@ class Question(models.Model):
             )
 
         return questions
+
+
+auditlog.register(Section)
+auditlog.register(Question)

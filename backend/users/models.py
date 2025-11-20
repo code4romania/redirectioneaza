@@ -1,6 +1,7 @@
 import hmac
 import uuid
 
+from auditlog.registry import auditlog
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import AbstractUser, Group, UserManager
 from django.db import models
@@ -177,3 +178,15 @@ class GroupProxy(Group):
 
         verbose_name = _("Group")
         verbose_name_plural = _("Groups")
+
+
+auditlog.register(
+    User,
+    exclude_fields=[
+        "password",
+        "last_login",
+        "old_password",
+        "validation_token",
+        "token_timestamp",
+    ],
+)

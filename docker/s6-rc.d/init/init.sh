@@ -84,3 +84,7 @@ python3 manage.py schedule_stats_generator_ngos_yearly "ngos_with_ngohub_per_yea
 # Start the session clean-up schedule
 echo "Starting the session clean-up schedule that runs once a day"
 python3 manage.py schedule_session_cleanup
+
+# Start the expired auditlog clean-up schedule
+echo "Starting the expired auditlog clean-up scheduler"
+python3 manage.py schedule_auditlog_cleanup

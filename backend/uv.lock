@@ -345,6 +345,19 @@ wheels = [
 ]
 
 [[package]]
+name = "django-auditlog"
+version = "3.3.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django" },
+    { name = "python-dateutil" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/37/d8/ddd1c653ffb7ed1984596420982e32a0b163a0be316721a801a54dcbf016/django_auditlog-3.3.0.tar.gz", hash = "sha256:01331a0e7bb1a8ff7573311b486c88f3d0c431c388f5a1e4a9b6b26911dd79b8", size = 85941, upload-time = "2025-10-02T17:16:27.591Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/f3/bc/6e1b503d1755ab09cff6480cb088def073f1303165ab59b1a09247a2e756/django_auditlog-3.3.0-py3-none-any.whl", hash = "sha256:ab0f0f556a7107ac01c8fa87137bdfbb2b6f0debf70f7753169d9a40673d2636", size = 39676, upload-time = "2025-10-02T17:15:42.922Z" },
+]
+
+[[package]]
 name = "django-environ"
 version = "0.12.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1038,6 +1051,7 @@ dependencies = [
     { name = "cryptography" },
     { name = "django" },
     { name = "django-allauth" },
+    { name = "django-auditlog" },
     { name = "django-environ" },
     { name = "django-import-export" },
     { name = "django-ipware" },
@@ -1092,6 +1106,7 @@ requires-dist = [
     { name = "cryptography", specifier = "~=46.0.0" },
     { name = "django", specifier = "~=5.2.0" },
     { name = "django-allauth", specifier = "~=65.13.0" },
+    { name = "django-auditlog", specifier = "~=3.3.0" },
     { name = "django-environ", specifier = "~=0.12.0" },
     { name = "django-import-export", specifier = "~=4.3.0" },
     { name = "django-ipware", specifier = "~=7.0.0" },
