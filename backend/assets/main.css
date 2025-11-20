@@ -37,3 +37,8 @@
     border-color: var(--color-gray-200, currentcolor);
   }
 }
+
+.faq-container ul {
+  list-style: disc outside;
+  padding-left: 1rem;
+}

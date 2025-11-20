@@ -1,6 +1,6 @@
 <div
   x-data="{ expanded: false }"
-  class="border-b border-gray-200 py-8">
+  class="border-b border-gray-200 py-8 faq-container">
 
   <dt>
     <!-- Expand/collapse question button -->
@@ -16,15 +16,15 @@
 
       <span class="flex items-center ml-6 h-7">
         <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
-          <path x-show="!expanded" stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6" />
-          <path x-show="expanded" stroke-linecap="round" stroke-linejoin="round" d="M18 12H6" />
+          <path x-show="!expanded" stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6"/>
+          <path x-show="expanded" stroke-linecap="round" stroke-linejoin="round" d="M18 12H6"/>
         </svg>
       </span>
     </button>
   </dt>
 
   <dd class="pr-12 mt-2" x-show="expanded">
-    <div class="text-gray-600 text-base/7 list-disc">
+    <div class="text-gray-600 text-base/7">
       {{ answer|safe }}
     </div>
   </dd>
