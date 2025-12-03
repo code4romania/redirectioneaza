@@ -7,6 +7,7 @@ import tempfile
 import requests
 from django.conf import settings
 from django.core.files import File
+from django.db import DatabaseError
 from django.utils import timezone
 from django.utils.text import slugify
 from django_q.tasks import async_task
@@ -247,7 +248,14 @@ def create_organization_for_user(user, ngohub_org_data: Organization) -> Ngo:
     ngo = Ngo(registration_number=ngohub_org_data.general_data.cui, ngohub_org_id=ngohub_org_data.id)
     ngo.save()
 
-    _update_local_ngo_with_ngohub_data(ngo, ngohub_org_data)
+    try:
+        _update_local_ngo_with_ngohub_data(ngo, ngohub_org_data)
+    except DatabaseError as e:
+        logger.exception(
+            f"Database error while creating NGO for user {user.id} with NGO Hub ID {ngohub_org_data.id}:\n{e}"
+        )
+        ngo.delete()
+        raise e
 
     user.ngo = ngo
     user.save()
