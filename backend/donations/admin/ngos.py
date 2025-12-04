@@ -180,7 +180,6 @@ class NgoAdmin(ModelAdmin):
         "partners",
         HasOwnerFilter,
         "county",
-        "active_region",
         "registration_number_valid",
     )
     list_per_page = 30

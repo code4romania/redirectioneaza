@@ -227,14 +227,8 @@ class Ngo(CommonFilenameCacheModel):
         max_length=100,
         db_index=True,
     )
-    active_region = models.CharField(
-        verbose_name=_("active region"),
-        blank=True,
-        null=False,
-        default="",
-        max_length=100,
-        db_index=True,
-    )
+
+    active_region = models.TextField(verbose_name=_("active region"), blank=True, null=False, default="")
 
     email = models.EmailField(verbose_name=_("email"), blank=True, null=False, default="", db_index=True)
     phone = models.CharField(verbose_name=_("telephone"), blank=True, null=False, default="", max_length=30)
