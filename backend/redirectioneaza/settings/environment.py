@@ -1,6 +1,8 @@
 import environ
 
-from .constants import ENV_FILE_PATH, HOUR
+from utils.constants.time import HOUR
+
+from .path_constants import ENV_FILE_PATH
 
 env = environ.Env(
     # set casting, default value

@@ -4,6 +4,8 @@ from django.utils.translation import gettext_lazy as _
 from localflavor.generic.forms import IBANFormField
 from localflavor.ro.forms import ROCIFField
 
+import redirectioneaza.settings.locations
+import utils.constants.memory
 from donations.common.validation.validate_slug import NgoSlugValidator
 from donations.models.byof import OwnFormsUpload
 from donations.models.ngos import Cause, CauseVisibilityChoices, Ngo, ngo_slug_validator
@@ -30,12 +32,12 @@ class NgoPresentationForm(forms.Form):
     locality = forms.CharField(label=_("Locality"), max_length=100, required=False)
     county = forms.ChoiceField(
         label=_("County"),
-        choices=settings.FORM_COUNTIES_CHOICES,
+        choices=redirectioneaza.settings.locations.FORM_COUNTIES_CHOICES,
         required=True,
     )
     active_region = forms.ChoiceField(
         label=_("Active region"),
-        choices=settings.FORM_COUNTIES_NATIONAL_CHOICES,
+        choices=redirectioneaza.settings.locations.FORM_COUNTIES_NATIONAL_CHOICES,
         required=True,
     )
 
@@ -79,7 +81,7 @@ class NgoPresentationForm(forms.Form):
         if logo.content_type not in allowed_types:
             raise forms.ValidationError(_("The logo type is not supported."))
 
-        if logo.size > 2 * settings.MEBIBYTE:
+        if logo.size > 2 * utils.constants.memory.MEBIBYTE:
             raise forms.ValidationError(_("The logo size is too large."))
 
         return logo

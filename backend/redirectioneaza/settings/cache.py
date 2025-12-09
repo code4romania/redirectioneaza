@@ -1,4 +1,5 @@
-from .constants import HOUR, MINUTE
+from utils.constants.time import HOUR, MINUTE
+
 from .environment import env
 
 # Cache settings

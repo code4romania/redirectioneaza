@@ -1,11 +1,11 @@
 import random
 import string
 
-from django.conf import settings
 from django.core.files import File
 from django.core.management import BaseCommand
 from faker import Faker
 
+import redirectioneaza.settings.locations
 from donations.models import Cause
 from donations.models.donors import Donor
 from donations.models.ngos import Ngo
@@ -80,7 +80,7 @@ class Command(BaseCommand):
                 email=fake.email(),
                 phone=fake.phone_number(),
                 city=fake.city(),
-                county=random.choice(settings.COUNTIES_WITH_SECTORS_LIST + list(range(1, 7))),
+                county=random.choice(redirectioneaza.settings.locations.COUNTIES_WITH_SECTORS_LIST + list(range(1, 7))),
                 income_type="wage",
                 is_anonymous=random.choice([True, False]),
                 has_signed=random.choice([True, False]),

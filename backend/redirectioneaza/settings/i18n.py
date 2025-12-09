@@ -2,8 +2,8 @@
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 import os
 
-from .constants import BASE_DIR
 from .environment import env
+from .path_constants import BASE_DIR
 
 LANGUAGE_CODE = env.str("LANGUAGE_CODE")
 

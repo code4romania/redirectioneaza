@@ -7,6 +7,7 @@ from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 
+import redirectioneaza.settings.locations
 from donations.forms.ngo_account import CauseForm, NgoPresentationForm
 from donations.models.ngos import Cause, Ngo
 from donations.views.ngo_account.causes import NgoCauseCommonView
@@ -45,8 +46,8 @@ class NgoPresentationView(NgoBaseTemplateView):
 
         context.update(
             {
-                "active_regions": settings.FORM_COUNTIES_NATIONAL,
-                "counties": settings.LIST_OF_COUNTIES,
+                "active_regions": redirectioneaza.settings.locations.FORM_COUNTIES_NATIONAL,
+                "counties": redirectioneaza.settings.locations.LIST_OF_COUNTIES,
                 "has_ngohub": has_ngohub,
                 "ngohub_url": ngohub_url,
                 "active_tab": self.tab_title,

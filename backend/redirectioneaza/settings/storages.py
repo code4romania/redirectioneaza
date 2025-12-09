@@ -2,8 +2,8 @@ import os
 from copy import deepcopy
 from typing import Any
 
-from .constants import BASE_DIR
 from .environment import env
+from .path_constants import BASE_DIR
 
 # Media & Static files storage
 # https://docs.djangoproject.com/en/4.2/howto/static-files/

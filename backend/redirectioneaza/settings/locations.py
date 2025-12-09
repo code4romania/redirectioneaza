@@ -1,0 +1,39 @@
+from copy import deepcopy
+
+from localflavor.ro.ro_counties import COUNTIES_CHOICES
+
+from utils.text.cleanup import normalize_text_alnum
+
+LIST_OF_COUNTIES = [county[1] for county in COUNTIES_CHOICES]
+
+FORM_COUNTIES = deepcopy(LIST_OF_COUNTIES)
+FORM_COUNTIES_CHOICES = [(county, county) for county in FORM_COUNTIES]
+
+FORM_COUNTIES_NATIONAL = deepcopy(LIST_OF_COUNTIES)
+FORM_COUNTIES_NATIONAL_CHOICES = [(county, county) for county in FORM_COUNTIES_NATIONAL]
+FORM_COUNTIES_NATIONAL.insert(0, "Național")
+
+BUCHAREST_SECTORS = ["Sector 1", "Sector 2", "Sector 3", "Sector 4", "Sector 5", "Sector 6"]
+SECTORS_ITEM = {
+    "title": "București",
+    "values": BUCHAREST_SECTORS,
+}
+
+FORM_COUNTIES_WITHOUT_BUCHAREST = deepcopy(LIST_OF_COUNTIES)
+if "București" in FORM_COUNTIES_WITHOUT_BUCHAREST:
+    FORM_COUNTIES_WITHOUT_BUCHAREST.remove("București")
+
+COUNTIES_WITH_SECTORS_LIST = BUCHAREST_SECTORS + FORM_COUNTIES_WITHOUT_BUCHAREST
+
+FORM_COUNTIES_WITH_SECTORS_LIST = COUNTIES_WITH_SECTORS_LIST
+FORM_COUNTIES_WITH_SECTORS_CHOICES = [(county, county) for county in COUNTIES_WITH_SECTORS_LIST]
+FORM_COUNTIES_WITH_SECTORS = [SECTORS_ITEM] + FORM_COUNTIES_WITHOUT_BUCHAREST
+
+COUNTIES_CHOICES_REVERSED = {name: code for code, name in COUNTIES_CHOICES}
+COUNTIES_CHOICES_WITH_SECTORS = (
+    tuple([(sector[0] + sector[-1], sector) for sector in BUCHAREST_SECTORS]) + COUNTIES_CHOICES
+)
+COUNTIES_CHOICES_WITH_SECTORS_REVERSED = {name: code for code, name in COUNTIES_CHOICES_WITH_SECTORS}
+COUNTIES_CHOICES_WITH_SECTORS_REVERSED_CLEAN = {
+    normalize_text_alnum(name): code for code, name in COUNTIES_CHOICES_WITH_SECTORS
+}

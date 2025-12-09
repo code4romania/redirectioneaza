@@ -1,6 +1,6 @@
 import os
 
-from .constants import BASE_DIR
+from .path_constants import BASE_DIR
 
 TEMPLATES = [
     {

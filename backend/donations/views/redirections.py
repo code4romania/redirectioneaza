@@ -14,6 +14,7 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 from ipware import get_client_ip
 
+import redirectioneaza.settings.locations
 from editions.calendar import edition_deadline
 from redirectioneaza.common.messaging import extend_email_context, send_email
 from users.models import User
@@ -140,7 +141,7 @@ class RedirectionHandler(TemplateView):
         if donation_status != "closed":
             context.update(
                 {
-                    "counties": settings.FORM_COUNTIES_WITH_SECTORS,
+                    "counties": redirectioneaza.settings.locations.FORM_COUNTIES_WITH_SECTORS,
                     "captcha_public_key": settings.RECAPTCHA_PUBLIC_KEY,
                 }
             )

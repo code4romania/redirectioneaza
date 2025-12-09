@@ -1,9 +1,9 @@
 from typing import Any
 
-from django.conf import settings
 from django.db.models import QuerySet
 from django.utils.translation import gettext_lazy as _
 
+import redirectioneaza.settings.locations
 from donations.models.donors import Donor
 from donations.models.ngos import Ngo
 from editions.calendar import edition_deadline
@@ -53,10 +53,15 @@ class CountyQueryFilter(NgoQueryFilter):
 
     def options_with_objects(self, objects: QuerySet[Donor] | None = None) -> list[dict[str, int | str]]:
         all_counties = objects.values_list("county", flat=True).distinct()
-        return [county for county in settings.COUNTIES_WITH_SECTORS_LIST if county in all_counties]
+        return [
+            county for county in redirectioneaza.settings.locations.COUNTIES_WITH_SECTORS_LIST if county in all_counties
+        ]
 
     def options_default(self) -> list[dict[str, int | str]]:
-        return [{"title": county, "value": county} for county in settings.COUNTIES_WITH_SECTORS_LIST]
+        return [
+            {"title": county, "value": county}
+            for county in redirectioneaza.settings.locations.COUNTIES_WITH_SECTORS_LIST
+        ]
 
 
 class LocalityQueryFilter(NgoQueryFilter):

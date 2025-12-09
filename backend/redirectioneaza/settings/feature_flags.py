@@ -1,3 +1,4 @@
+from .base import DEBUG
 from .environment import env
 
 # Feature flags
@@ -18,3 +19,7 @@ ENABLE_FULL_VALIDATION_CNP = env.bool("ENABLE_FULL_VALIDATION_CNP")
 # Form download settings
 ENABLE_FORMS_DOWNLOAD = env.bool("ENABLE_FORMS_DOWNLOAD", True)
 TIMEDELTA_FORMS_DOWNLOAD_MINUTES = env.int("TIMEDELTA_FORMS_DOWNLOAD_MINUTES")
+
+FORCE_PARTNER = False
+if DEBUG:
+    FORCE_PARTNER = env.bool("FORCE_PARTNER", False)

@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpRequest
@@ -7,6 +6,7 @@ from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 
+import utils.constants.memory
 from donations.forms.ngo_account import BringYourOwnDataForm
 from donations.models.byof import OwnFormsUpload
 from donations.models.ngos import Ngo
@@ -36,7 +36,7 @@ class NgoBringYourOwnFormView(NgoBaseListView):
                 "ngo": ngo,
                 "title": self.title,
                 "active_tab": self.tab_title,
-                "size_limit": 2 * settings.MEBIBYTE,
+                "size_limit": 2 * utils.constants.memory.MEBIBYTE,
                 "size_limit_warning": _("File size must not exceed {mb} MB").format(mb=2),
                 "django_form": BringYourOwnDataForm(),
             }

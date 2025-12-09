@@ -1,10 +1,10 @@
-from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.utils.deconstruct import deconstructible
 from django.utils.translation import gettext_lazy as _
 
+import utils.constants.memory
 from donations.models.ngos import Ngo
 
 
@@ -21,7 +21,9 @@ class MaxFileSizeValidator:
         if not value and not hasattr(value, "size"):
             return
         if value.size > self.max_size:
-            raise ValidationError(_("File size must not exceed {mb} MB").format(mb=self.max_size / settings.MEBIBYTE))
+            raise ValidationError(
+                _("File size must not exceed {mb} MB").format(mb=self.max_size / utils.constants.memory.MEBIBYTE)
+            )
 
 
 class OwnFormsStatusChoices(models.TextChoices):
@@ -61,7 +63,7 @@ class OwnFormsUpload(models.Model):
         null=False,
         validators=(
             FileExtensionValidator(allowed_extensions=("csv",)),
-            MaxFileSizeValidator(2 * settings.MEBIBYTE),
+            MaxFileSizeValidator(2 * utils.constants.memory.MEBIBYTE),
         ),
     )
     items_count = models.PositiveBigIntegerField(verbose_name=_("form count"), blank=False, null=False, default=0)

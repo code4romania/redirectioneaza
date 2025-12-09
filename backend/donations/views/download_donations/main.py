@@ -18,6 +18,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
+import redirectioneaza.settings.locations
 from donations.models.common import JobDownloadError, JobStatusChoices
 from donations.models.donors import Donor
 from donations.models.jobs import Job
@@ -324,7 +325,7 @@ def _generate_donations_by_county(cnp_idx, cause: Cause, ngo_donations, zip_64_f
     for current_county, current_county_count in number_of_donations_by_county:
         # if there are more than donations_limit donations for a county, split them into multiple files
         clean_county_name = normalize_text_alnum(current_county)
-        county_code = settings.COUNTIES_CHOICES_WITH_SECTORS_REVERSED_CLEAN.get(
+        county_code = redirectioneaza.settings.locations.COUNTIES_CHOICES_WITH_SECTORS_REVERSED_CLEAN.get(
             clean_county_name, f"sector{clean_county_name}"
         )
         county_code = county_code.lower().replace(" ", "_")
