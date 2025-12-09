@@ -94,6 +94,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount",
     "allauth.socialaccount.providers.amazon_cognito",
     # custom apps:
+    "utils",
     "stats",
     "donations",
     "frequent_questions",
