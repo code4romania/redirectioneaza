@@ -96,7 +96,7 @@ class DonorAdmin(ModelAdmin):
     )
 
     date_hierarchy = "date_created"
-    search_fields = ("email", "ngo__name", "ngo__slug")
+    search_fields = ("email", "ngo__name")
 
     exclude = ("encrypted_cnp", "encrypted_address")
 
