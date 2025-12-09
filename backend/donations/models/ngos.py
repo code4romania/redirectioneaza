@@ -3,6 +3,7 @@ import re
 from functools import partial
 from typing import Any
 
+from auditlog.registry import auditlog
 from django.conf import settings
 from django.core.cache import cache
 from django.core.exceptions import ValidationError
@@ -586,3 +587,7 @@ class Cause(CommonFilenameCacheModel):
     def delete_prefilled_form(self):
         if self.prefilled_form:
             self.prefilled_form.delete()
+
+
+auditlog.register(Ngo)
+auditlog.register(Cause)

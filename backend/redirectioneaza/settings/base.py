@@ -81,6 +81,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.staticfiles",
     # third party apps:
+    "auditlog",
     "django_q",
     "django_recaptcha",
     "django_vite",
@@ -116,6 +117,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "partners.middleware.PartnerDomainMiddleware",
     "allauth.account.middleware.AccountMiddleware",
+    "auditlog.middleware.AuditlogMiddleware",
 ]
 
 AUTHENTICATION_BACKENDS = [

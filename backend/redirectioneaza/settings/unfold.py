@@ -108,6 +108,17 @@ SIDEBAR_NAVIGATION = [
         ],
     },
     {
+        "title": _("Audit Logs"),
+        "items": [
+            {
+                "title": _("Audit Logs"),
+                "icon": "history",
+                "link": reverse_lazy("admin:auditlog_logentry_changelist"),
+                "permission": lambda request: request.user.is_superuser,
+            },
+        ],
+    },
+    {
         "title": _("Background Tasks"),
         "items": [
             {
