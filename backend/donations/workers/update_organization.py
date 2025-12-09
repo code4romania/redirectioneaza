@@ -6,6 +6,7 @@ import tempfile
 
 import requests
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.core.files import File
 from django.db import DatabaseError
 from django.utils import timezone
@@ -187,7 +188,24 @@ def _update_local_ngo_with_ngohub_data(ngo: Ngo, ngohub_ngo: Organization) -> di
 
     ngo.is_social_service_viable = ngohub_ngo.activity_data.is_social_service_viable
     ngo.is_verified = True
-    ngo.save()
+
+    try:
+        ngo.full_clean()
+        ngo.save()
+    except DatabaseError as e:
+        logger.exception(f"Database error while saving NGO {ngo.id}:\n{e}")
+        errors.append(f"Database error while saving NGO {ngo.id}:\n{e}")
+        return {
+            "ngo_id": ngo.id,
+            "errors": errors,
+        }
+    except ValidationError as e:
+        logger.exception(f"Validation error while updating NGO {ngo.id}:\n{e}")
+        errors.append(f"Validation error while updating NGO {ngo.id}:\n{e}")
+        return {
+            "ngo_id": ngo.id,
+            "errors": errors,
+        }
 
     if not ngo.causes.exists():
         main_cause = _create_main_cause(ngo, ngohub_general_data)
