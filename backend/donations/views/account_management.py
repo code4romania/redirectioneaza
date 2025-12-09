@@ -187,6 +187,7 @@ class SetPasswordView(BaseVisibleTemplateView):
         form = ResetPasswordForm(request.POST)
         if not form.is_valid():
             context["errors"] = form.errors
+            form.add_error(None, _("It seems that this email and password combination is incorrect."))
             return render(request, self.template_name, context)
 
         user = request.user
