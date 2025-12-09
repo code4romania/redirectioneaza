@@ -184,7 +184,11 @@ def _update_local_ngo_with_ngohub_data(ngo: Ngo, ngohub_ngo: Organization) -> di
 
     ngo.phone = ngohub_general_data.phone
     ngo.email = ngohub_general_data.email
+
     ngo.website = ngohub_general_data.website or ""
+    # noinspection HttpUrlsUsage
+    if ngo.website and not ngo.website.startswith(("http://", "https://")):
+        ngo.website = f"https://{ngo.website}"
 
     ngo.is_social_service_viable = ngohub_ngo.activity_data.is_social_service_viable
     ngo.is_verified = True
@@ -263,7 +267,11 @@ def create_organization_for_user(user, ngohub_org_data: Organization) -> Ngo:
     Create a blank organization for the given user.
     The data regarding the organization will be added from NGO Hub.
     """
-    ngo = Ngo(registration_number=ngohub_org_data.general_data.cui, ngohub_org_id=ngohub_org_data.id)
+    ngo = Ngo(
+        registration_number=ngohub_org_data.general_data.cui,
+        ngohub_org_id=ngohub_org_data.id,
+        registration_number_valid=True,
+    )
     ngo.save()
 
     try:
