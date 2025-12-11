@@ -158,7 +158,7 @@ HEADER_ITEMS: dict[str, dict[str, str]] = {
 
 
 def build_main_menu(request: HttpRequest) -> list[dict[str, str]]:
-    if request.partner:
+    if hasattr(request, "partner") and request.partner:
         return [
             HEADER_ITEMS["about"],
             HEADER_ITEMS["faq_user"],
@@ -224,7 +224,7 @@ def build_auth_menu(request: HttpRequest) -> list[dict[str, str]]:
             }
         ]
 
-    if request.partner:
+    if hasattr(request, "partner") and request.partner:
         return []
 
     if user.is_anonymous:

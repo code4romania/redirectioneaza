@@ -64,6 +64,8 @@ class PartnerDomainMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
+        request.partner = None
+
         if request.path == "/health/":
             logger.debug("Healthcheck: Skipping PartnerDomainMiddleware")
             return self.get_response(request)
