@@ -1,3 +1,4 @@
+import copy
 import random
 
 from django.contrib.auth import get_user_model
@@ -19,6 +20,7 @@ class NgoPrefilledFormsUpdate(TestCase):
             address="Test Address",
             county="Arad",
             active_region="Arad",
+            has_online_tax_account=True,
         )
         self.user = get_user_model().objects.create_user(
             username="test_user",
@@ -70,6 +72,17 @@ class NgoPrefilledFormsUpdate(TestCase):
             "4659866692",
             "19",
         ]
+
+        self.default_update_payload = {
+            "cif": self.ngo.registration_number,
+            "name": self.ngo.name,
+            "email": self.ngo.email,
+            "address": self.ngo.address,
+            "county": self.ngo.county,
+            "contact_email": self.ngo.email,
+            "active_region": self.ngo.active_region,
+            "has_spv_option": "yes",
+        }
 
     def test_can_access_prefilled_form(self):
         prefilled_form_url = reverse("api-cause-form", kwargs={"cause_slug": self.cause_1.slug})
@@ -148,15 +161,8 @@ class NgoPrefilledFormsUpdate(TestCase):
         self.assertNotEqual(new_registration_number, self.ngo.registration_number)
 
         ngo_update_url = reverse("my-organization:presentation")
-        update_cif_payload = {
-            "cif": new_registration_number,
-            "name": self.ngo.name,
-            "email": self.ngo.email,
-            "address": self.ngo.address,
-            "county": self.ngo.county,
-            "contact_email": self.ngo.email,
-            "active_region": self.ngo.active_region,
-        }
+        update_cif_payload = copy.deepcopy(self.default_update_payload)
+        update_cif_payload["cif"] = new_registration_number
         self.client.post(ngo_update_url, update_cif_payload)
 
         # Check that the NGO registration_number has been updated
@@ -184,15 +190,8 @@ class NgoPrefilledFormsUpdate(TestCase):
         new_ngo_name = "New name for the NGO"
         self.assertNotEqual(new_ngo_name, self.ngo.name)
 
-        update_name_payload = {
-            "name": new_ngo_name,
-            "cif": self.ngo.registration_number,
-            "email": self.ngo.email,
-            "address": self.ngo.address,
-            "county": self.ngo.county,
-            "contact_email": self.ngo.email,
-            "active_region": self.ngo.active_region,
-        }
+        update_name_payload = copy.deepcopy(update_cif_payload)
+        update_name_payload["name"] = new_ngo_name
         self.client.post(ngo_update_url, update_name_payload)
 
         # Check that the NGO name has been updated
