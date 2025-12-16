@@ -274,7 +274,7 @@ class Ngo(CommonFilenameCacheModel):
                 self.vat_id = uppercase_registration_number[:2]
                 self.registration_number = uppercase_registration_number[2:]
 
-        if not self.has_online_tax_account:
+        if not is_new and not self.has_online_tax_account:
             self.causes.update(allow_online_collection=False, notifications_email="")
 
         super().save(*args, **kwargs)
