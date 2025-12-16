@@ -101,7 +101,7 @@
       {% endif %}
     {% endif %}
 
-    {% if cause %}
+    {% if cause and ngo_has_tax_account %}
       {% if not cause.allow_online_collection %}
         {% include "ngo-account/banners/form-emails-banner.html" %}
       {% elif not cause.notifications_email %}

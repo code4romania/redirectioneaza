@@ -41,6 +41,12 @@ class NgoPresentationForm(forms.Form):
         required=True,
     )
 
+    has_spv_option = forms.ChoiceField(
+        label=_("Do you have an SPV account?"),
+        choices=[("yes", _("Yes")), ("no", _("No"))],
+        required=True,
+    )
+
     def __init__(self, *args, **kwargs):
         is_fully_editable = kwargs.pop("is_fully_editable", True)
         self.ngo = kwargs.pop("ngo")

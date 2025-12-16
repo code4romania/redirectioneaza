@@ -248,6 +248,7 @@ class Ngo(CommonFilenameCacheModel):
 
     # originally: accepts_forms
     # if the ngo accepts to receive donation forms through email
+    has_online_tax_account = models.BooleanField(verbose_name=_("has online tax account"), db_index=True, default=False)
     is_accepting_forms = models.BooleanField(verbose_name=_("is accepting forms"), db_index=True, default=True)
 
     # originally: active — the user cannot modify this property, it is set by the admin/by the NGO Hub settings
@@ -261,6 +262,9 @@ class Ngo(CommonFilenameCacheModel):
     ngo_hub = NgoHubManager()
     with_forms_this_year = NgoWithFormsThisYearManager()
 
+    def __str__(self):
+        return f"{self.name}"
+
     def save(self, *args, **kwargs):
         is_new = self.id is None
 
@@ -269,6 +273,9 @@ class Ngo(CommonFilenameCacheModel):
             if re.match(REGISTRATION_NUMBER_REGEX_WITH_VAT, uppercase_registration_number):
                 self.vat_id = uppercase_registration_number[:2]
                 self.registration_number = uppercase_registration_number[2:]
+
+        if not self.has_online_tax_account:
+            self.causes.update(allow_online_collection=False, notifications_email="")
 
         super().save(*args, **kwargs)
 
@@ -282,9 +289,6 @@ class Ngo(CommonFilenameCacheModel):
         constraints = [
             models.UniqueConstraint(Lower("registration_number"), name="registration_number__unique"),
         ]
-
-    def __str__(self):
-        return f"{self.name}"
 
     def get_full_form_url(self):
         if self.slug:
@@ -414,6 +418,10 @@ class Ngo(CommonFilenameCacheModel):
             return False
 
         return True
+
+    @property
+    def has_spv_option(self) -> str:
+        return "yes" if self.has_online_tax_account else "no"
 
     @property
     def full_registration_number(self):

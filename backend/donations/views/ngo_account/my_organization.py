@@ -51,6 +51,7 @@ class NgoPresentationView(NgoBaseTemplateView):
                 "has_ngohub": has_ngohub,
                 "ngohub_url": ngohub_url,
                 "active_tab": self.tab_title,
+                "spv_choices": [{"title": _("Yes"), "value": "yes"}, {"title": _("No"), "value": "no"}],
             }
         )
 
@@ -94,7 +95,12 @@ class NgoPresentationView(NgoBaseTemplateView):
 
         is_fully_editable = ngo.ngohub_org_id is None
 
-        form = NgoPresentationForm(post, files=request.FILES, is_fully_editable=is_fully_editable, ngo=ngo)
+        form = NgoPresentationForm(
+            post,
+            files=request.FILES,
+            is_fully_editable=is_fully_editable,
+            ngo=ngo,
+        )
         if not form.is_valid():
             messages.error(request, _("There are some errors on the presentation form."))
             context.update({"ngo_presentation": form})
@@ -126,6 +132,8 @@ class NgoPresentationView(NgoBaseTemplateView):
 
         ngo.display_email = form.cleaned_data["display_email"]
         ngo.display_phone = form.cleaned_data["display_phone"]
+
+        ngo.has_online_tax_account = form.cleaned_data["has_spv_option"] == "yes"
 
         if errors:
             return render(request, self.template_name, context)
@@ -169,7 +177,6 @@ class NgoMainCauseView(NgoCauseCommonView):
             context["missing_fields"] = missing_fields
 
         context["active_tab"] = self.tab_title
-
         return context
 
     def get_main_cause(self, ngo: Ngo) -> Cause:
