@@ -301,15 +301,15 @@ class Command(BaseCommand):
                     ]
                 )
 
-            is_accepting_forms_choice = (
-                ngo.is_accepting_forms if not ngo.is_accepting_forms else random.choice(range(0, 6)) == 3
+            allow_online_collection = (
+                ngo.has_online_tax_account if not ngo.has_online_tax_account else random.choice(range(0, 6)) == 3
             )
             causes.append(
                 Cause(
                     ngo=ngo,
                     is_main=False,
                     visibility=visibility,
-                    allow_online_collection=is_accepting_forms_choice,
+                    allow_online_collection=allow_online_collection,
                     slug=kebab_case_name,
                     name=cause_name,
                     description=fake.paragraph(nb_sentences=random.randint(1, 3), variable_nb_sentences=True),

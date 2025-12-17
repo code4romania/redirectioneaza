@@ -164,7 +164,7 @@ class NgoHubManager(models.Manager):
 
 class NgoWithFormsManager(models.Manager):
     def get_queryset(self):
-        return super().get_queryset().filter(is_active=True, is_accepting_forms=True)
+        return super().get_queryset().filter(is_active=True, has_online_tax_account=True)
 
 
 class NgoWithFormsThisYearManager(models.Manager):
@@ -246,9 +246,7 @@ class Ngo(CommonFilenameCacheModel):
     # if the ngo has a special status (e.g. social ngo) they are entitled to 3.5% donation, not 2%
     is_social_service_viable = models.BooleanField(verbose_name=_("has special status"), db_index=True, default=False)
 
-    # originally: accepts_forms
-    # if the ngo accepts to receive donation forms through email
-    is_accepting_forms = models.BooleanField(verbose_name=_("is accepting forms"), db_index=True, default=True)
+    has_online_tax_account = models.BooleanField(verbose_name=_("has online tax account"), db_index=True, default=False)
 
     # originally: active — the user cannot modify this property, it is set by the admin/by the NGO Hub settings
     is_active = models.BooleanField(verbose_name=_("is active"), db_index=True, default=True)
@@ -261,20 +259,6 @@ class Ngo(CommonFilenameCacheModel):
     ngo_hub = NgoHubManager()
     with_forms_this_year = NgoWithFormsThisYearManager()
 
-    def save(self, *args, **kwargs):
-        is_new = self.id is None
-
-        if self.registration_number:
-            uppercase_registration_number = self.registration_number
-            if re.match(REGISTRATION_NUMBER_REGEX_WITH_VAT, uppercase_registration_number):
-                self.vat_id = uppercase_registration_number[:2]
-                self.registration_number = uppercase_registration_number[2:]
-
-        super().save(*args, **kwargs)
-
-        if is_new and settings.ENABLE_CACHE:
-            cache.delete(ALL_NGOS_CACHE_KEY)
-
     class Meta:
         verbose_name = _("NGO")
         verbose_name_plural = _("NGOs")
@@ -285,6 +269,25 @@ class Ngo(CommonFilenameCacheModel):
 
     def __str__(self):
         return f"{self.name}"
+
+    def save(self, *args, **kwargs):
+        is_new = self.id is None
+
+        if self.registration_number:
+            uppercase_registration_number = self.registration_number
+            if re.match(REGISTRATION_NUMBER_REGEX_WITH_VAT, uppercase_registration_number):
+                self.vat_id = uppercase_registration_number[:2]
+                self.registration_number = uppercase_registration_number[2:]
+
+        if not is_new and not self.has_online_tax_account:
+            old_self: Ngo = Ngo.objects.get(pk=self.pk)
+            if old_self.has_online_tax_account != self.has_online_tax_account:
+                self.causes.update(allow_online_collection=False, notifications_email="")
+
+        super().save(*args, **kwargs)
+
+        if is_new and settings.ENABLE_CACHE:
+            cache.delete(ALL_NGOS_CACHE_KEY)
 
     def get_full_form_url(self):
         if self.slug:
@@ -414,6 +417,10 @@ class Ngo(CommonFilenameCacheModel):
             return False
 
         return True
+
+    @property
+    def has_spv_option(self) -> str:
+        return "yes" if self.has_online_tax_account else "no"
 
     @property
     def full_registration_number(self):

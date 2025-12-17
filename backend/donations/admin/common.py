@@ -71,7 +71,7 @@ class CommonCauseFields:
     readonly_fields = ("ngo", "date_created", "date_updated")
 
     def get_readonly_fields(self, _: HttpRequest, obj=None):
-        if obj and not obj.is_accepting_forms:
+        if obj and not obj.has_online_tax_account:
             return self.readonly_fields + ("allow_online_collection",)
 
         return self.readonly_fields

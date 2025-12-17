@@ -9,11 +9,13 @@
     <select
       id="{{ input_id }}"
       name="{{ input_name }}"
-      x-ref="select"
-      x-model="selectedOption"
+      {% if current_value %}input-original-value="{{ current_value }}"{% endif %}
+      {% if x_ref %} x-ref="{{ x_ref }}" {% else %} x-ref="select" {% endif %}
+      {% if x_model %} x-model="{{ x_model }}" {% else %} x-model="selectedOption" {% endif %}
       {% if on_change %}@change="{{ on_change }}"{% endif %}
-      class="block w-full rounded-md bg-white py-1.5 pl-3 pr-12 text-base outline-solid outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-solid focus:outline-2 focus:-outline-offset-2 focus:outline-amber-600 sm:text-sm/6"
+      class="flex h-9 w-full rounded-md border border-gray-300 bg-transparent px-3 py-1 text-base shadow-xs transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm aria-[invalid]:border-red-500 aria-[invalid]:hover:border-red-500"
       {% if on_change %}:class="selectedOption !== '' ? 'ring-1 ring-amber-700 text-gray-900' : 'text-gray-500'"{% endif %}
+      {% if is_required %}required{% endif %}
     >
       {% if include_default_option %}
         <option value="" :selected="selectedOption === ''">

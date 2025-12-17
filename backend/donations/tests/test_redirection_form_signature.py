@@ -11,7 +11,7 @@ SIGNATURE_TEST_STRING = """data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAdAAAAC
 class RedirectionFormSignatureTests(TestCase):
     def setUp(self):
         self.client = ApexClient()
-        self.ngo = Ngo.objects.create(name="Test NGO", registration_number="6859662")
+        self.ngo = Ngo.objects.create(name="Test NGO", registration_number="6859662", has_online_tax_account=True)
         self.visible_cause = Cause.objects.create(
             ngo=self.ngo,
             name="Test Cause",

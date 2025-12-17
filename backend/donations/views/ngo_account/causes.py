@@ -32,6 +32,7 @@ class NgoCauseCommonView(NgoBaseTemplateView):
 
         context["info_banner_items"] = self.get_ngo_cause_banner_list_items(ngo)
         context["visibility_choices"] = CauseVisibilityChoices.as_str_pretty()
+        context["ngo_has_tax_account"] = ngo.has_online_tax_account
 
         return context
 
