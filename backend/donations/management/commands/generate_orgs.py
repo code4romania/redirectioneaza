@@ -882,7 +882,7 @@ class Command(BaseCommand):
                 ngo_cause = Cause.objects.create(
                     ngo=org,
                     is_main=True,
-                    allow_online_collection=org.is_accepting_forms or random.choice(range(0, 6)) == 3,
+                    allow_online_collection=org.has_online_tax_account and random.choice(range(0, 6)) == 3,
                     slug=kebab_case_name,
                     name=org_name,
                     description=fake.paragraph(nb_sentences=3, variable_nb_sentences=True),
@@ -891,11 +891,14 @@ class Command(BaseCommand):
                 ngo_cause.save()
             except IntegrityError:
                 consecutive_creation_errors += 1
-                if consecutive_creation_errors > 500:
+                if consecutive_creation_errors > 10:
                     self.stdout.write(
                         self.style.ERROR("Too many consecutive creation errors. Aborting and writing to the database.")
                     )
                     break
                 continue
+
+            if len(organizations) % 100 == 0:
+                self.stdout.write(self.style.SUCCESS(f"Created {len(organizations)} organization(s) so far..."))
 
         self.stdout.write(self.style.SUCCESS(f"Successfully created {len(organizations)} organization(s)."))
