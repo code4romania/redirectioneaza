@@ -166,8 +166,8 @@ class HasOwnerFilter(admin.SimpleListFilter):
 class NgoAdmin(ModelAdmin):
     list_filter_submit = True
 
-    list_display = ("id", "get_ngohub_link", "get_cif", "name", "is_accepting_forms", "is_active")
-    list_display_links = ("id", "get_cif", "name", "is_accepting_forms")
+    list_display = ("id", "get_ngohub_link", "get_cif", "name", "has_online_tax_account", "is_active")
+    list_display_links = ("id", "get_cif", "name", "has_online_tax_account")
     list_editable = ("is_active",)
 
     list_filter = (
@@ -176,7 +176,7 @@ class NgoAdmin(ModelAdmin):
         ("ngohub_org_id", SingleNumericFilter),
         "is_verified",
         "is_active",
-        "is_accepting_forms",
+        "has_online_tax_account",
         "partners",
         HasOwnerFilter,
         "county",
@@ -221,7 +221,7 @@ class NgoAdmin(ModelAdmin):
                 "fields": (
                     "is_verified",
                     "is_active",
-                    "is_accepting_forms",
+                    "has_online_tax_account",
                     "is_social_service_viable",
                 )
             },

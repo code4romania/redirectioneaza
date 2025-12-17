@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("donations", "0038_alter_ngo_active_region"),
     ]
@@ -14,5 +13,9 @@ class Migration(migrations.Migration):
             model_name="ngo",
             name="has_online_tax_account",
             field=models.BooleanField(db_index=True, default=False, verbose_name="has online tax account"),
+        ),
+        migrations.RemoveField(
+            model_name="ngo",
+            name="is_accepting_forms",
         ),
     ]

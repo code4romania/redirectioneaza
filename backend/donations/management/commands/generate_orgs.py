@@ -858,7 +858,7 @@ class Command(BaseCommand):
                 "email": random.choice([owner_email, fake.email()]),
                 "website": fake.url(),
                 "is_active": create_valid or random.choice([True, False]),
-                "is_accepting_forms": create_valid or random.choice([True, False]),
+                "has_online_tax_account": create_valid or random.choice([True, False]),
                 "ngohub_org_id": random.choice([random.randint(1, 9999), None]),
             }
             try:
