@@ -262,6 +262,14 @@ class Ngo(CommonFilenameCacheModel):
     ngo_hub = NgoHubManager()
     with_forms_this_year = NgoWithFormsThisYearManager()
 
+    class Meta:
+        verbose_name = _("NGO")
+        verbose_name_plural = _("NGOs")
+
+        constraints = [
+            models.UniqueConstraint(Lower("registration_number"), name="registration_number__unique"),
+        ]
+
     def __str__(self):
         return f"{self.name}"
 
@@ -275,20 +283,14 @@ class Ngo(CommonFilenameCacheModel):
                 self.registration_number = uppercase_registration_number[2:]
 
         if not is_new and not self.has_online_tax_account:
-            self.causes.update(allow_online_collection=False, notifications_email="")
+            old_self: Ngo = Ngo.objects.get(pk=self.pk)
+            if old_self.has_online_tax_account != self.has_online_tax_account:
+                self.causes.update(allow_online_collection=False, notifications_email="")
 
         super().save(*args, **kwargs)
 
         if is_new and settings.ENABLE_CACHE:
             cache.delete(ALL_NGOS_CACHE_KEY)
-
-    class Meta:
-        verbose_name = _("NGO")
-        verbose_name_plural = _("NGOs")
-
-        constraints = [
-            models.UniqueConstraint(Lower("registration_number"), name="registration_number__unique"),
-        ]
 
     def get_full_form_url(self):
         if self.slug:
