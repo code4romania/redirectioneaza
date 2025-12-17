@@ -9,17 +9,17 @@ dependencies = [
   "cryptography~=46.0.0",
   "django~=5.2.0",
   "django-allauth~=65.13.0",
-  "django-auditlog~=3.3.0",
+  "django-auditlog~=3.4.0",
   "django-environ~=0.12.0",
   "django-import-export~=4.3.0",
   "django-ipware~=7.0.0",
   "django-localflavor~=5.0.0",
-  "django-q2~=1.8.0",
+  "django-q2~=1.9.0",
   "django-recaptcha~=4.1.0",
-  "django-ses~=4.4.0",
+  "django-ses~=4.5.0",
   "django-storages[s3]~=1.14.0",
   "django-tinymce~=5.0.0",
-  "django-unfold~=0.72.0",
+  "django-unfold~=0.74.0",
   "django-vite~=3.1.0",
   "gevent~=25.9.0",
   "gunicorn~=23.0.0",
@@ -33,7 +33,7 @@ dependencies = [
   "pypdf~=6.4.0",
   "reportlab~=4.4.0",
   "requests~=2.32.0",
-  "sentry-sdk[django]~=2.46.0",
+  "sentry-sdk[django]~=2.48.0",
   "whitenoise~=6.11.0",
 ]
 
@@ -43,14 +43,14 @@ test = [
   "faker~=38.2.0",
   "pytest~=9.0.0",
   "pytest-cov~=7.0.0",
-  "pytest-django~=4.11.1",
+  "pytest-django~=4.11.0",
   "pytest-xdist~=3.8.0",
 ]
 ruff = [
-  "ruff~=0.14.2"
+  "ruff~=0.14.0"
 ]
 dev = [
-  "debugpy~=1.8.14",
+  "debugpy~=1.8.0",
   { include-group = "ruff" },
   { include-group = "test" },
 ]
