@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-16 13:52+0200\n"
+"POT-Creation-Date: 2025-12-18 13:36+0200\n"
 "PO-Revision-Date: 2025-02-12 12:44+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Armenian <https://translate.commitglobal.org/projects/"
@@ -37,7 +37,7 @@ msgstr ""
 #: donations/admin/jobs.py:55 donations/admin/ngos.py:208
 #: donations/admin/ngos.py:296 donations/models/donors.py:70
 #: donations/models/downloads.py:10 donations/models/jobs.py:13
-#: donations/models/ngos.py:286 partners/models.py:148 users/models.py:72
+#: donations/models/ngos.py:263 partners/models.py:148 users/models.py:72
 msgid "NGO"
 msgstr "ՀԿ"
 
@@ -596,13 +596,13 @@ msgid "status"
 msgstr "կարգավիճակ"
 
 #: donations/models/byof.py:84 donations/models/common.py:31
-#: donations/models/donors.py:159 donations/models/ngos.py:257
-#: donations/models/ngos.py:513 partners/models.py:82 users/models.py:96
+#: donations/models/donors.py:159 donations/models/ngos.py:254
+#: donations/models/ngos.py:512 partners/models.py:82 users/models.py:96
 msgid "date created"
 msgstr "ամսաթիվը ստեղծվել է"
 
-#: donations/models/byof.py:85 donations/models/ngos.py:258
-#: donations/models/ngos.py:514 partners/models.py:83 users/models.py:97
+#: donations/models/byof.py:85 donations/models/ngos.py:255
+#: donations/models/ngos.py:513 partners/models.py:83 users/models.py:97
 msgid "date updated"
 msgstr "ամսաթիվը թարմացվել է"
 
@@ -859,92 +859,88 @@ msgstr "վավերացված է"
 msgid "has special status"
 msgstr "ունի հատուկ կարգավիճակ"
 
-#: donations/models/ngos.py:251
+#: donations/models/ngos.py:249
 #, fuzzy
 #| msgid "Go to account"
 msgid "has online tax account"
 msgstr "Գնալ դեպի օգտահաշիվ"
 
-#: donations/models/ngos.py:252
-msgid "is accepting forms"
-msgstr "ընդունում է ձևաթղթեր"
-
-#: donations/models/ngos.py:255 partners/models.py:45
+#: donations/models/ngos.py:252 partners/models.py:45
 msgid "is active"
 msgstr "ակտիվ է"
 
-#: donations/models/ngos.py:287 partners/models.py:68
+#: donations/models/ngos.py:264 partners/models.py:68
 #: redirectioneaza/context_processors/headers.py:63
 #: redirectioneaza/settings/unfold.py:33
 msgid "NGOs"
 msgstr "ՀԿ-ներ"
 
-#: donations/models/ngos.py:443
+#: donations/models/ngos.py:442
 msgid "public"
 msgstr ""
 
-#: donations/models/ngos.py:444
+#: donations/models/ngos.py:443
 #, fuzzy
 #| msgid "old password"
 msgid "unlisted"
 msgstr "հին գաղտնաբառ"
 
-#: donations/models/ngos.py:445
+#: donations/models/ngos.py:444
 msgid "private"
 msgstr ""
 
-#: donations/models/ngos.py:467
+#: donations/models/ngos.py:466
 msgid "is main cause"
 msgstr ""
 
-#: donations/models/ngos.py:468
+#: donations/models/ngos.py:467
 msgid "allow online collection"
 msgstr ""
 
-#: donations/models/ngos.py:471
+#: donations/models/ngos.py:470
 msgid "form visibility"
 msgstr ""
 
-#: donations/models/ngos.py:481
+#: donations/models/ngos.py:480
 msgid "logo"
 msgstr "լոգո"
 
-#: donations/models/ngos.py:489
+#: donations/models/ngos.py:488
 msgid "slug"
 msgstr "slug"
 
-#: donations/models/ngos.py:498 partners/models.py:30 stats/models.py:7
+#: donations/models/ngos.py:497 partners/models.py:30 stats/models.py:7
 msgid "name"
 msgstr "անուն"
 
-#: donations/models/ngos.py:499
+#: donations/models/ngos.py:498
 msgid "description"
 msgstr "նկարագրություն"
 
-#: donations/models/ngos.py:501
+#: donations/models/ngos.py:500
 msgid "bank account"
 msgstr "բանկային հաշիվ"
 
-#: donations/models/ngos.py:503
+#: donations/models/ngos.py:502
 #, fuzzy
 #| msgid "Contact"
 msgid "notifications email"
 msgstr "Կապ"
 
-#: donations/models/ngos.py:506
+#: donations/models/ngos.py:505
 #, fuzzy
 #| msgid "form with prefilled ngo data"
 msgid "form with prefilled cause"
 msgstr "ձևաթուղթ՝ նախապես լրացված ՀԿ-ի տվյալներով"
 
-#: donations/models/ngos.py:524 donations/views/ngo_account_filters.py:154
+#: donations/models/ngos.py:523 donations/views/ngo_account_filters.py:154
 #: partners/admin.py:50 partners/models.py:182
 #: templates/v2/ngo-account/archives/list-header.html:13
 #: templates/v2/ngo-account/causes/list-header.html:4
 msgid "Cause"
 msgstr ""
 
-#: donations/models/ngos.py:525 donations/views/ngo_account/causes.py:170
+#: donations/models/ngos.py:524 donations/views/ngo_account/causes.py:170
 #: donations/views/ngo_account/causes.py:218 partners/admin.py:51
 #: partners/models.py:75 redirectioneaza/settings/unfold.py:39
 #: templates/v2/ngo-account/causes/main.html:11
@@ -3670,7 +3666,13 @@ msgstr "Վերբեռնված է"
 msgid "Presentation Data"
 msgstr "NGO Hub կազմակերպության նույնականացման համար"
 
-#: templates/v2/ngo-account/my-organization/base.html:60
+#: templates/v2/ngo-account/my-organization/base.html:36
+#, fuzzy
+#| msgid "NGO Hub organization ID"
+msgid "Please complete the organization data before configuring the form."
+msgstr "NGO Hub կազմակերպության նույնականացման համար"
+
+#: templates/v2/ngo-account/my-organization/base.html:63
 #, python-format
 msgid ""
 "<p> At this moment, donors can't access your form and your organization is "
@@ -3679,14 +3681,14 @@ msgid ""
 "underline\">%(contact_email)s</a>. </p>"
 msgstr ""
 
-#: templates/v2/ngo-account/my-organization/base.html:80
+#: templates/v2/ngo-account/my-organization/base.html:83
 msgid ""
 "<p> Your organization can't currently receive forms because not all "
 "necessary information has been completed. Please complete the organization's "
 "data: </p>"
 msgstr ""
 
-#: templates/v2/ngo-account/my-organization/base.html:94
+#: templates/v2/ngo-account/my-organization/base.html:97
 msgid ""
 "<p> Your organization can't currently receive forms because not all "
 "necessary information has been completed. Please complete the form data: </p>"
@@ -4384,6 +4386,9 @@ msgstr "Ենթադոմեյնը պետք է պարունակի միայն տառ�
 #: utils/validators.py:16
 msgid "Subdomain must have between 3 and 100 characters."
 msgstr "Ենթադոմեյնը պետք է պարունակի 3-ից 100 նիշ:"
+
+#~ msgid "is accepting forms"
+#~ msgstr "ընդունում է ձևաթղթեր"
 
 #, fuzzy
 #~| msgid "Important dates"

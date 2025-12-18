@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-16 13:52+0200\n"
+"POT-Creation-Date: 2025-12-18 13:36+0200\n"
 "PO-Revision-Date: 2025-03-27 14:48+0000\n"
 "Last-Translator: Andrei Ioniță <andrei.ionita@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -43,7 +43,7 @@ msgstr ""
 #: donations/admin/jobs.py:55 donations/admin/ngos.py:208
 #: donations/admin/ngos.py:296 donations/models/donors.py:70
 #: donations/models/downloads.py:10 donations/models/jobs.py:13
-#: donations/models/ngos.py:286 partners/models.py:148 users/models.py:72
+#: donations/models/ngos.py:263 partners/models.py:148 users/models.py:72
 msgid "NGO"
 msgstr "NGO"
 
@@ -566,13 +566,13 @@ msgid "status"
 msgstr "status"
 
 #: donations/models/byof.py:84 donations/models/common.py:31
-#: donations/models/donors.py:159 donations/models/ngos.py:257
-#: donations/models/ngos.py:513 partners/models.py:82 users/models.py:96
+#: donations/models/donors.py:159 donations/models/ngos.py:254
+#: donations/models/ngos.py:512 partners/models.py:82 users/models.py:96
 msgid "date created"
 msgstr "date created"
 
-#: donations/models/byof.py:85 donations/models/ngos.py:258
-#: donations/models/ngos.py:514 partners/models.py:83 users/models.py:97
+#: donations/models/byof.py:85 donations/models/ngos.py:255
+#: donations/models/ngos.py:513 partners/models.py:83 users/models.py:97
 msgid "date updated"
 msgstr "date updated"
 
@@ -827,88 +827,84 @@ msgstr "is verified"
 msgid "has special status"
 msgstr "has special status"
 
-#: donations/models/ngos.py:251
+#: donations/models/ngos.py:249
 #, fuzzy
 #| msgid "Go to account"
 msgid "has online tax account"
 msgstr "Go to account"
 
-#: donations/models/ngos.py:252
-msgid "is accepting forms"
-msgstr "is accepting forms"
-
-#: donations/models/ngos.py:255 partners/models.py:45
+#: donations/models/ngos.py:252 partners/models.py:45
 msgid "is active"
 msgstr "is active"
 
-#: donations/models/ngos.py:287 partners/models.py:68
+#: donations/models/ngos.py:264 partners/models.py:68
 #: redirectioneaza/context_processors/headers.py:63
 #: redirectioneaza/settings/unfold.py:33
 msgid "NGOs"
 msgstr "NGOs"
 
-#: donations/models/ngos.py:443
+#: donations/models/ngos.py:442
 msgid "public"
 msgstr ""
 
-#: donations/models/ngos.py:444
+#: donations/models/ngos.py:443
 msgid "unlisted"
 msgstr ""
 
-#: donations/models/ngos.py:445
+#: donations/models/ngos.py:444
 msgid "private"
 msgstr ""
 
-#: donations/models/ngos.py:467
+#: donations/models/ngos.py:466
 msgid "is main cause"
 msgstr ""
 
-#: donations/models/ngos.py:468
+#: donations/models/ngos.py:467
 msgid "allow online collection"
 msgstr "allow online collection"
 
-#: donations/models/ngos.py:471
+#: donations/models/ngos.py:470
 msgid "form visibility"
 msgstr ""
 
-#: donations/models/ngos.py:481
+#: donations/models/ngos.py:480
 msgid "logo"
 msgstr "logo"
 
-#: donations/models/ngos.py:489
+#: donations/models/ngos.py:488
 msgid "slug"
 msgstr "slug"
 
-#: donations/models/ngos.py:498 partners/models.py:30 stats/models.py:7
+#: donations/models/ngos.py:497 partners/models.py:30 stats/models.py:7
 msgid "name"
 msgstr "name"
 
-#: donations/models/ngos.py:499
+#: donations/models/ngos.py:498
 msgid "description"
 msgstr "description"
 
-#: donations/models/ngos.py:501
+#: donations/models/ngos.py:500
 msgid "bank account"
 msgstr "bank account"
 
-#: donations/models/ngos.py:503
+#: donations/models/ngos.py:502
 #, fuzzy
 #| msgid "Donation exports"
 msgid "notifications email"
 msgstr "Donation exports"
 
-#: donations/models/ngos.py:506
+#: donations/models/ngos.py:505
 msgid "form with prefilled cause"
 msgstr "form with prefilled ngo data"
 
-#: donations/models/ngos.py:524 donations/views/ngo_account_filters.py:154
+#: donations/models/ngos.py:523 donations/views/ngo_account_filters.py:154
 #: partners/admin.py:50 partners/models.py:182
 #: templates/v2/ngo-account/archives/list-header.html:13
 #: templates/v2/ngo-account/causes/list-header.html:4
 msgid "Cause"
 msgstr "Cause"
 
-#: donations/models/ngos.py:525 donations/views/ngo_account/causes.py:170
+#: donations/models/ngos.py:524 donations/views/ngo_account/causes.py:170
 #: donations/views/ngo_account/causes.py:218 partners/admin.py:51
 #: partners/models.py:75 redirectioneaza/settings/unfold.py:39
 #: templates/v2/ngo-account/causes/main.html:11
@@ -3588,7 +3584,11 @@ msgstr "Fill out the organization's profile on redirectioneaza.ro"
 msgid "Presentation Data"
 msgstr "Presentation Data"
 
-#: templates/v2/ngo-account/my-organization/base.html:60
+#: templates/v2/ngo-account/my-organization/base.html:36
+msgid "Please complete the organization data before configuring the form."
+msgstr ""
+
+#: templates/v2/ngo-account/my-organization/base.html:63
 #, fuzzy, python-format
 #| msgid ""
 #| "<p> Your organization can't currently receive forms because it is not "
@@ -3606,7 +3606,7 @@ msgstr ""
 "href=\"mailto:%(contact_email)s\" class=\"text-blue-600 "
 "underline\">%(contact_email)s</a>. </p>"
 
-#: templates/v2/ngo-account/my-organization/base.html:80
+#: templates/v2/ngo-account/my-organization/base.html:83
 #, fuzzy
 #| msgid ""
 #| "<p> Your organization can't currently receive forms because not all the "
@@ -3621,7 +3621,7 @@ msgstr ""
 "required information has been filled in. Please make sure the following "
 "fields are filled in: </p>"
 
-#: templates/v2/ngo-account/my-organization/base.html:94
+#: templates/v2/ngo-account/my-organization/base.html:97
 #, fuzzy
 #| msgid ""
 #| "<p> Your organization can't currently receive forms because not all the "
@@ -4285,6 +4285,9 @@ msgstr "Subdomain must contain only alphanumeric characters and '-' (hyphens)."
 #: utils/validators.py:16
 msgid "Subdomain must have between 3 and 100 characters."
 msgstr "Subdomain must have between 3 and 100 characters."
+
+#~ msgid "is accepting forms"
+#~ msgstr "is accepting forms"
 
 #~ msgid "Importer"
 #~ msgstr "Importer"

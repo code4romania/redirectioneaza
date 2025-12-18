@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-16 13:52+0200\n"
+"POT-Creation-Date: 2025-12-18 13:36+0200\n"
 "PO-Revision-Date: 2025-03-27 14:49+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -45,7 +45,7 @@ msgstr "URL Public"
 #: donations/admin/jobs.py:55 donations/admin/ngos.py:208
 #: donations/admin/ngos.py:296 donations/models/donors.py:70
 #: donations/models/downloads.py:10 donations/models/jobs.py:13
-#: donations/models/ngos.py:286 partners/models.py:148 users/models.py:72
+#: donations/models/ngos.py:263 partners/models.py:148 users/models.py:72
 msgid "NGO"
 msgstr "ONG"
 
@@ -544,13 +544,13 @@ msgid "status"
 msgstr "stare"
 
 #: donations/models/byof.py:84 donations/models/common.py:31
-#: donations/models/donors.py:159 donations/models/ngos.py:257
-#: donations/models/ngos.py:513 partners/models.py:82 users/models.py:96
+#: donations/models/donors.py:159 donations/models/ngos.py:254
+#: donations/models/ngos.py:512 partners/models.py:82 users/models.py:96
 msgid "date created"
 msgstr "data creării"
 
-#: donations/models/byof.py:85 donations/models/ngos.py:258
-#: donations/models/ngos.py:514 partners/models.py:83 users/models.py:97
+#: donations/models/byof.py:85 donations/models/ngos.py:255
+#: donations/models/ngos.py:513 partners/models.py:83 users/models.py:97
 msgid "date updated"
 msgstr "data actualizării"
 
@@ -796,84 +796,80 @@ msgstr "este verificat"
 msgid "has special status"
 msgstr "are statut special"
 
-#: donations/models/ngos.py:251
+#: donations/models/ngos.py:249
 msgid "has online tax account"
 msgstr "are cont fiscal online"
 
-#: donations/models/ngos.py:252
-msgid "is accepting forms"
-msgstr "acceptă formulare"
-
-#: donations/models/ngos.py:255 partners/models.py:45
+#: donations/models/ngos.py:252 partners/models.py:45
 msgid "is active"
 msgstr "este activ"
 
-#: donations/models/ngos.py:287 partners/models.py:68
+#: donations/models/ngos.py:264 partners/models.py:68
 #: redirectioneaza/context_processors/headers.py:63
 #: redirectioneaza/settings/unfold.py:33
 msgid "NGOs"
 msgstr "ONG-uri"
 
-#: donations/models/ngos.py:443
+#: donations/models/ngos.py:442
 msgid "public"
 msgstr "public"
 
-#: donations/models/ngos.py:444
+#: donations/models/ngos.py:443
 msgid "unlisted"
 msgstr "nelistat"
 
-#: donations/models/ngos.py:445
+#: donations/models/ngos.py:444
 msgid "private"
 msgstr "privat"
 
-#: donations/models/ngos.py:467
+#: donations/models/ngos.py:466
 msgid "is main cause"
 msgstr "este cauză principală"
 
-#: donations/models/ngos.py:468
+#: donations/models/ngos.py:467
 msgid "allow online collection"
 msgstr "permite colectarea online"
 
-#: donations/models/ngos.py:471
+#: donations/models/ngos.py:470
 msgid "form visibility"
 msgstr "vizibilitate formular"
 
-#: donations/models/ngos.py:481
+#: donations/models/ngos.py:480
 msgid "logo"
 msgstr "logo"
 
-#: donations/models/ngos.py:489
+#: donations/models/ngos.py:488
 msgid "slug"
 msgstr "URL"
 
-#: donations/models/ngos.py:498 partners/models.py:30 stats/models.py:7
+#: donations/models/ngos.py:497 partners/models.py:30 stats/models.py:7
 msgid "name"
 msgstr "nume"
 
-#: donations/models/ngos.py:499
+#: donations/models/ngos.py:498
 msgid "description"
 msgstr "descriere"
 
-#: donations/models/ngos.py:501
+#: donations/models/ngos.py:500
 msgid "bank account"
 msgstr "cont bancar"
 
-#: donations/models/ngos.py:503
+#: donations/models/ngos.py:502
 msgid "notifications email"
 msgstr "email notificări"
 
-#: donations/models/ngos.py:506
+#: donations/models/ngos.py:505
 msgid "form with prefilled cause"
 msgstr "formular cu datele ONG-ului completate"
 
-#: donations/models/ngos.py:524 donations/views/ngo_account_filters.py:154
+#: donations/models/ngos.py:523 donations/views/ngo_account_filters.py:154
 #: partners/admin.py:50 partners/models.py:182
 #: templates/v2/ngo-account/archives/list-header.html:13
 #: templates/v2/ngo-account/causes/list-header.html:4
 msgid "Cause"
 msgstr "Cauză"
 
-#: donations/models/ngos.py:525 donations/views/ngo_account/causes.py:170
+#: donations/models/ngos.py:524 donations/views/ngo_account/causes.py:170
 #: donations/views/ngo_account/causes.py:218 partners/admin.py:51
 #: partners/models.py:75 redirectioneaza/settings/unfold.py:39
 #: templates/v2/ngo-account/causes/main.html:11
@@ -3454,7 +3450,11 @@ msgstr "Completează profilul organizației pe redirectioneaza.ro"
 msgid "Presentation Data"
 msgstr "Pagina organizației tale"
 
-#: templates/v2/ngo-account/my-organization/base.html:60
+#: templates/v2/ngo-account/my-organization/base.html:36
+msgid "Please complete the organization data before configuring the form."
+msgstr "Te rugăm să completezi mai întâi detaliile organizației."
+
+#: templates/v2/ngo-account/my-organization/base.html:63
 #, python-format
 msgid ""
 "<p> At this moment, donors can't access your form and your organization is "
@@ -3467,7 +3467,7 @@ msgstr ""
 "rugăm să ne contactezi la <a href=\"mailto:%(contact_email)s\" class=\"text-"
 "blue-600 underline\">%(contact_email)s</a>.</p>"
 
-#: templates/v2/ngo-account/my-organization/base.html:80
+#: templates/v2/ngo-account/my-organization/base.html:83
 msgid ""
 "<p> Your organization can't currently receive forms because not all "
 "necessary information has been completed. Please complete the organization's "
@@ -3477,7 +3477,7 @@ msgstr ""
 "informațiile necesare au fost completate. Te rugăm să te asiguri că "
 "următoarele câmpuri sunt completate:</p>"
 
-#: templates/v2/ngo-account/my-organization/base.html:94
+#: templates/v2/ngo-account/my-organization/base.html:97
 msgid ""
 "<p> Your organization can't currently receive forms because not all "
 "necessary information has been completed. Please complete the form data: </p>"
@@ -4142,6 +4142,9 @@ msgstr ""
 #: utils/validators.py:16
 msgid "Subdomain must have between 3 and 100 characters."
 msgstr "Subdomeniul trebuie să aibă între 3 și 100 de caractere."
+
+#~ msgid "is accepting forms"
+#~ msgstr "acceptă formulare"
 
 #~ msgid "Importer"
 #~ msgstr "Importator"

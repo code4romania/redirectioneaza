@@ -1,17 +1,26 @@
 {% if is_disabled %}
-  <p class="rounded-md px-3 py-2 text-base font-semibold text-gray-600  no-underline">
+  <p
+    {% if disabled_tooltip_text %}
+      x-data
+      x-tooltip.raw="{{ disabled_tooltip_text }}"
+    {% endif %}
+      class="rounded-md px-3 py-2 text-base font-semibold text-gray-600  no-underline">
     {{ tab_title }}
   </p>
 {% else %}
   <a
-    class="rounded-md px-3 py-2 text-base font-semibold text-gray-800 hover:text-amber-400 no-underline"
-    :class="activeTab === '{{ target }}' ? {
+    {% if enabled_tooltip_text %}
+      x-data
+      x-tooltip.raw="{{ enabled_tooltip_text }}"
+    {% endif %}
+      class="rounded-md px-3 py-2 text-base font-semibold text-gray-800 hover:text-amber-400 no-underline"
+      :class="activeTab === '{{ target }}' ? {
     'bg-amber-200': true,
     'font-bold': true
   } : {
     'hover:border-gray-300': true
   }"
-    href="{{ target_url }}">
+      href="{{ target_url }}">
     {{ tab_title }}
   </a>
 {% endif %}

@@ -33,7 +33,10 @@
         {% if ngo %}
           {% include "ngo-account/components/tab.html" with tab_title=tab_form target="form" %}
         {% else %}
-          {% include "ngo-account/components/tab.html" with tab_title=tab_form target="form" is_disabled=True %}
+          {% blocktrans trimmed asvar form_tab_disabled_tooltip_text %}
+            Please complete the organization data before configuring the form.
+          {% endblocktrans %}
+          {% include "ngo-account/components/tab.html" with tab_title=tab_form target="form" is_disabled=True disabled_tooltip_text=form_tab_disabled_tooltip_text %}
         {% endif %}
 
       </nav>
