@@ -2,6 +2,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
+from django.http import Http404
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
@@ -164,7 +165,6 @@ class NgoMainCauseView(NgoCauseCommonView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(is_main_cause=True, **kwargs)
 
-        context["cause"] = self.get_main_cause(context.get("ngo"))
         context["is_main_cause"] = self.is_main_cause
 
         context["django_form"] = CauseForm(instance=context["cause"], for_main_cause=self.is_main_cause)
@@ -179,7 +179,10 @@ class NgoMainCauseView(NgoCauseCommonView):
         context["active_tab"] = self.tab_title
         return context
 
-    def get_main_cause(self, ngo: Ngo) -> Cause:
+    def get_cause(self, *, ngo: Ngo, cause_id: int | None) -> Cause | None:
+        if not ngo:
+            raise Http404
+
         return Cause.objects.filter(ngo=ngo, is_main=True).first()
 
     @method_decorator(login_required(login_url=reverse_lazy("login")))

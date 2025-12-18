@@ -8,6 +8,8 @@
 
   <div class="grid items-center justify-end gap-2 sm:flex md:col-span-2">
     {% if not hide_public_page_button and ngo.can_create_causes and cause %}
+      {% include "components/copy-to-clipboard/icon_and_text.html" with clipboard_input=absolute_cause_url div_classes="px-3 py-2 text-sm font-semibold text-gray-700 no-underline border-2 rounded-md border-gray-300 bg-white hover:bg-gray-200 hover:cursor-pointer" %}
+
       <a
         href="{% url 'twopercent' cause_slug=cause.slug %}"
         target="_blank"
@@ -24,7 +26,7 @@
             <path
               stroke-linecap="round"
               stroke-linejoin="round"
-              d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+              d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/>
           </svg>
 
           <span>
@@ -57,7 +59,7 @@
             <path
               stroke-linecap="round"
               stroke-linejoin="round"
-              d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+              d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"/>
           </svg>
 
           <span>
