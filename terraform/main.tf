@@ -165,7 +165,7 @@ module "ecs_redirectioneaza" {
     },
     {
       name  = "REDIRECTIONS_LIMIT_DAY"
-      value = 26
+      value = 25
     },
     {
       name  = "ENABLE_MULTIPLE_FORMS"
