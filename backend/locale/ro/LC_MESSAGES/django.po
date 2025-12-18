@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-18 13:36+0200\n"
+"POT-Creation-Date: 2025-12-18 13:43+0200\n"
 "PO-Revision-Date: 2025-03-27 14:49+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -190,7 +190,7 @@ msgstr "Are cont NGO Hub"
 
 #: donations/admin/ngos.py:130 donations/admin/ngos.py:150
 #: donations/forms/ngo_account.py:46
-#: donations/views/ngo_account/my_organization.py:54
+#: donations/views/ngo_account/my_organization.py:55
 #: templates/v2/ngo-account/causes/list-items.html:46
 #: templates/v2/ngo-account/redirections/list-items.html:48
 msgid "Yes"
@@ -198,7 +198,7 @@ msgstr "Da"
 
 #: donations/admin/ngos.py:130 donations/admin/ngos.py:150
 #: donations/forms/ngo_account.py:46
-#: donations/views/ngo_account/my_organization.py:54
+#: donations/views/ngo_account/my_organization.py:55
 #: templates/v2/ngo-account/causes/list-items.html:48
 #: templates/v2/ngo-account/redirections/list-items.html:50
 msgid "No"
@@ -869,15 +869,15 @@ msgstr "formular cu datele ONG-ului completate"
 msgid "Cause"
 msgstr "Cauză"
 
-#: donations/models/ngos.py:524 donations/views/ngo_account/causes.py:170
-#: donations/views/ngo_account/causes.py:218 partners/admin.py:51
+#: donations/models/ngos.py:524 donations/views/ngo_account/causes.py:181
+#: donations/views/ngo_account/causes.py:232 partners/admin.py:51
 #: partners/models.py:75 redirectioneaza/settings/unfold.py:39
 #: templates/v2/ngo-account/causes/main.html:11
 msgid "Causes"
 msgstr "Cauze"
 
 #: donations/templatetags/cause_action_menu.py:22
-#: donations/views/ngo_account/causes.py:209
+#: donations/views/ngo_account/causes.py:223
 msgid "Edit cause"
 msgstr "Editează cauză"
 
@@ -910,7 +910,7 @@ msgstr "Opțiuni formular"
 #: templates/v2/emails/donor/redirection-sans-signature/main.html:18
 #: templates/v2/emails/donor/redirection-with-signature/main.html:20
 #: templates/v2/emails/ngo/new-form-received/main.html:19
-#: templates/v2/ngo-account/components/form-title.html:64
+#: templates/v2/ngo-account/components/form-title.html:66
 msgid "Download form"
 msgstr "Descarcă formular"
 
@@ -1270,7 +1270,7 @@ msgid "Generate from external data"
 msgstr "Generare din date externe"
 
 #: donations/views/ngo_account/byof.py:56
-#: donations/views/ngo_account/causes.py:142
+#: donations/views/ngo_account/causes.py:153
 #: donations/views/ngo_account/redirections.py:122
 msgid "You need to add your NGO's information first."
 msgstr "Trebuie să adaugi informațiile ONG-ului tău mai întâi."
@@ -1279,56 +1279,57 @@ msgstr "Trebuie să adaugi informațiile ONG-ului tău mai întâi."
 msgid "The uploaded data file will be processed soon."
 msgstr "Fișierul de date încărcat va fi procesat în curând."
 
-#: donations/views/ngo_account/causes.py:41
+#: donations/views/ngo_account/causes.py:52
 msgid "Organization name: "
 msgstr "Numele organizației: "
 
-#: donations/views/ngo_account/causes.py:42
+#: donations/views/ngo_account/causes.py:53
 msgid "Organization CIF: "
 msgstr "CUI/CIF organizație: "
 
-#: donations/views/ngo_account/causes.py:50
+#: donations/views/ngo_account/causes.py:61
 msgid "The form was altered."
 msgstr "Formularul a fost alterat."
 
-#: donations/views/ngo_account/causes.py:76
+#: donations/views/ngo_account/causes.py:87
 msgid "Please fill in the organization details first."
 msgstr "Te rugăm să completezi detaliile organizației mai întâi."
 
-#: donations/views/ngo_account/causes.py:81
-#: donations/views/ngo_account/causes.py:184
+#: donations/views/ngo_account/causes.py:92
+#: donations/views/ngo_account/causes.py:198
 msgid "You need to first create the form with the organization's details."
 msgstr "Întâi trebuie să creezi formularul cu detaliile organizației."
 
-#: donations/views/ngo_account/causes.py:95 donations/views/redirections.py:227
+#: donations/views/ngo_account/causes.py:106
+#: donations/views/redirections.py:227
 msgid "There are some errors on the redirection form."
 msgstr "Există erori în formularul de redirecționare."
 
-#: donations/views/ngo_account/causes.py:113
+#: donations/views/ngo_account/causes.py:124
 msgid "The cause has been created."
 msgstr "Cauza a fost creată."
 
-#: donations/views/ngo_account/causes.py:116
+#: donations/views/ngo_account/causes.py:127
 msgid "The form has been saved."
 msgstr "Formularul a fost salvat."
 
-#: donations/views/ngo_account/causes.py:127
+#: donations/views/ngo_account/causes.py:138
 #: redirectioneaza/context_processors/headers.py:105
 msgid "Organization Causes"
 msgstr "Cauzele organizației"
 
-#: donations/views/ngo_account/causes.py:158
-#: donations/views/ngo_account/causes.py:203
-#: donations/views/ngo_account/my_organization.py:156
+#: donations/views/ngo_account/causes.py:169
+#: donations/views/ngo_account/causes.py:217
+#: donations/views/ngo_account/my_organization.py:157
 msgid "Organization form"
 msgstr "Formulare organizație"
 
-#: donations/views/ngo_account/causes.py:164
+#: donations/views/ngo_account/causes.py:175
 msgid "Add new cause form"
 msgstr "Adaugă formular cauză nouă"
 
 #: donations/views/ngo_account/common.py:20
-#: donations/views/ngo_account/my_organization.py:22
+#: donations/views/ngo_account/my_organization.py:23
 msgid "Organization details"
 msgstr "Detalii organizație"
 
@@ -1356,7 +1357,7 @@ msgstr "IBAN-ul trebuie să înceapă cu 'RO'"
 msgid "Download generated file"
 msgstr "Descarcă un fișier generat"
 
-#: donations/views/ngo_account/my_organization.py:105
+#: donations/views/ngo_account/my_organization.py:106
 msgid "There are some errors on the presentation form."
 msgstr "Există erori în formularul de prezentare."
 
@@ -3297,8 +3298,9 @@ msgid ""
 "By selecting this option, you activate email notifications to be informed "
 "each time someone fills out the form."
 msgstr ""
-"Prin selectarea acestei opțiuni, activezi notificările prin email pentru a "
-"fi informat de fiecare dată când cineva completează formularul."
+"Alege dacă vrei să primești notificări pe e-mail pentru fiecare formular "
+"semnat. Fără această bifă vei putea vedea formularele noi doar dacă te "
+"conectezi în contul organizației."
 
 #: templates/v2/ngo-account/cause/form.html:193
 msgid "Notifications e-mail address"
@@ -3421,11 +3423,11 @@ msgstr "Filtre"
 msgid "Clear filters and search"
 msgstr "Șterge filtrele și căutarea"
 
-#: templates/v2/ngo-account/components/form-title.html:31
+#: templates/v2/ngo-account/components/form-title.html:33
 msgid "View public page"
 msgstr "Vezi pagina publică"
 
-#: templates/v2/ngo-account/components/form-title.html:39
+#: templates/v2/ngo-account/components/form-title.html:41
 msgid ""
 "Download the form filled with the organization's data, print it, and collect "
 "contributions offline."
@@ -3433,11 +3435,11 @@ msgstr ""
 "Descarcă formularul completat cu datele organizației, tipărește-l și "
 "colectează contribuții offline."
 
-#: templates/v2/ngo-account/components/form-title.html:73
+#: templates/v2/ngo-account/components/form-title.html:75
 msgid "Get from NGO Hub"
 msgstr "Preia din NGO Hub"
 
-#: templates/v2/ngo-account/components/form-title.html:105
+#: templates/v2/ngo-account/components/form-title.html:107
 msgid "Save changes"
 msgstr "Salvează modificările"
 

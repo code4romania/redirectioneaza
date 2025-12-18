@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-18 13:36+0200\n"
+"POT-Creation-Date: 2025-12-18 13:43+0200\n"
 "PO-Revision-Date: 2025-02-12 12:44+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Armenian <https://translate.commitglobal.org/projects/"
@@ -187,7 +187,7 @@ msgstr "Ունի NGO Hub օգտահաշիվ"
 
 #: donations/admin/ngos.py:130 donations/admin/ngos.py:150
 #: donations/forms/ngo_account.py:46
-#: donations/views/ngo_account/my_organization.py:54
+#: donations/views/ngo_account/my_organization.py:55
 #: templates/v2/ngo-account/causes/list-items.html:46
 #: templates/v2/ngo-account/redirections/list-items.html:48
 msgid "Yes"
@@ -195,7 +195,7 @@ msgstr "այո"
 
 #: donations/admin/ngos.py:130 donations/admin/ngos.py:150
 #: donations/forms/ngo_account.py:46
-#: donations/views/ngo_account/my_organization.py:54
+#: donations/views/ngo_account/my_organization.py:55
 #: templates/v2/ngo-account/causes/list-items.html:48
 #: templates/v2/ngo-account/redirections/list-items.html:50
 msgid "No"
@@ -940,8 +940,8 @@ msgstr "ձևաթուղթ՝ նախապես լրացված ՀԿ-ի տվյալնե�
 msgid "Cause"
 msgstr ""
 
-#: donations/models/ngos.py:524 donations/views/ngo_account/causes.py:170
-#: donations/views/ngo_account/causes.py:218 partners/admin.py:51
+#: donations/models/ngos.py:524 donations/views/ngo_account/causes.py:181
+#: donations/views/ngo_account/causes.py:232 partners/admin.py:51
 #: partners/models.py:75 redirectioneaza/settings/unfold.py:39
 #: templates/v2/ngo-account/causes/main.html:11
 #, fuzzy
@@ -950,7 +950,7 @@ msgid "Causes"
 msgstr "Գործընկերներ"
 
 #: donations/templatetags/cause_action_menu.py:22
-#: donations/views/ngo_account/causes.py:209
+#: donations/views/ngo_account/causes.py:223
 msgid "Edit cause"
 msgstr ""
 
@@ -993,7 +993,7 @@ msgstr "նկարագրություն"
 #: templates/v2/emails/donor/redirection-sans-signature/main.html:18
 #: templates/v2/emails/donor/redirection-with-signature/main.html:20
 #: templates/v2/emails/ngo/new-form-received/main.html:19
-#: templates/v2/ngo-account/components/form-title.html:64
+#: templates/v2/ngo-account/components/form-title.html:66
 #, fuzzy
 #| msgid "Sign In Error"
 msgid "Download form"
@@ -1399,7 +1399,7 @@ msgid "Generate from external data"
 msgstr ""
 
 #: donations/views/ngo_account/byof.py:56
-#: donations/views/ngo_account/causes.py:142
+#: donations/views/ngo_account/causes.py:153
 #: donations/views/ngo_account/redirections.py:122
 msgid "You need to add your NGO's information first."
 msgstr ""
@@ -1408,74 +1408,75 @@ msgstr ""
 msgid "The uploaded data file will be processed soon."
 msgstr ""
 
-#: donations/views/ngo_account/causes.py:41
+#: donations/views/ngo_account/causes.py:52
 #, fuzzy
 #| msgid "NGO Hub organization ID"
 msgid "Organization name: "
 msgstr "NGO Hub կազմակերպության նույնականացման համար"
 
-#: donations/views/ngo_account/causes.py:42
+#: donations/views/ngo_account/causes.py:53
 #, fuzzy
 #| msgid "NGO Hub organization ID"
 msgid "Organization CIF: "
 msgstr "NGO Hub կազմակերպության նույնականացման համար"
 
-#: donations/views/ngo_account/causes.py:50
+#: donations/views/ngo_account/causes.py:61
 #, fuzzy
 #| msgid "The ID number format is not valid"
 msgid "The form was altered."
 msgstr "Նույնականացման համարի ձևաչափը վավեր չէ"
 
-#: donations/views/ngo_account/causes.py:76
+#: donations/views/ngo_account/causes.py:87
 #, fuzzy
 #| msgid "NGO Hub organization ID"
 msgid "Please fill in the organization details first."
 msgstr "NGO Hub կազմակերպության նույնականացման համար"
 
-#: donations/views/ngo_account/causes.py:81
-#: donations/views/ngo_account/causes.py:184
+#: donations/views/ngo_account/causes.py:92
+#: donations/views/ngo_account/causes.py:198
 #, fuzzy
 #| msgid "NGO Hub organization ID"
 msgid "You need to first create the form with the organization's details."
 msgstr "NGO Hub կազմակերպության նույնականացման համար"
 
-#: donations/views/ngo_account/causes.py:95 donations/views/redirections.py:227
+#: donations/views/ngo_account/causes.py:106
+#: donations/views/redirections.py:227
 msgid "There are some errors on the redirection form."
 msgstr ""
 
-#: donations/views/ngo_account/causes.py:113
+#: donations/views/ngo_account/causes.py:124
 #, fuzzy
 #| msgid "The import has been processed."
 msgid "The cause has been created."
 msgstr "Ներմուծումը կատարվել է։"
 
-#: donations/views/ngo_account/causes.py:116
+#: donations/views/ngo_account/causes.py:127
 #, fuzzy
 #| msgid "The ID number format is not valid"
 msgid "The form has been saved."
 msgstr "Նույնականացման համարի ձևաչափը վավեր չէ"
 
-#: donations/views/ngo_account/causes.py:127
+#: donations/views/ngo_account/causes.py:138
 #: redirectioneaza/context_processors/headers.py:105
 #, fuzzy
 #| msgid "NGO Hub organization ID"
 msgid "Organization Causes"
 msgstr "NGO Hub կազմակերպության նույնականացման համար"
 
-#: donations/views/ngo_account/causes.py:158
-#: donations/views/ngo_account/causes.py:203
-#: donations/views/ngo_account/my_organization.py:156
+#: donations/views/ngo_account/causes.py:169
+#: donations/views/ngo_account/causes.py:217
+#: donations/views/ngo_account/my_organization.py:157
 #, fuzzy
 #| msgid "NGO Hub organization ID"
 msgid "Organization form"
 msgstr "NGO Hub կազմակերպության նույնականացման համար"
 
-#: donations/views/ngo_account/causes.py:164
+#: donations/views/ngo_account/causes.py:175
 msgid "Add new cause form"
 msgstr ""
 
 #: donations/views/ngo_account/common.py:20
-#: donations/views/ngo_account/my_organization.py:22
+#: donations/views/ngo_account/my_organization.py:23
 #, fuzzy
 #| msgid "NGO Hub organization ID"
 msgid "Organization details"
@@ -1511,7 +1512,7 @@ msgstr "IBAN համարը պետք է սկսվի «RO»-ով"
 msgid "Download generated file"
 msgstr "Մուտք գործելու սխալ"
 
-#: donations/views/ngo_account/my_organization.py:105
+#: donations/views/ngo_account/my_organization.py:106
 msgid "There are some errors on the presentation form."
 msgstr ""
 
@@ -3633,23 +3634,23 @@ msgstr ""
 msgid "Clear filters and search"
 msgstr ""
 
-#: templates/v2/ngo-account/components/form-title.html:31
+#: templates/v2/ngo-account/components/form-title.html:33
 msgid "View public page"
 msgstr ""
 
-#: templates/v2/ngo-account/components/form-title.html:39
+#: templates/v2/ngo-account/components/form-title.html:41
 msgid ""
 "Download the form filled with the organization's data, print it, and collect "
 "contributions offline."
 msgstr ""
 
-#: templates/v2/ngo-account/components/form-title.html:73
+#: templates/v2/ngo-account/components/form-title.html:75
 #, fuzzy
 #| msgid "NGOs from NGO Hub"
 msgid "Get from NGO Hub"
 msgstr "NGO Hub-ի ՀԿ-ները"
 
-#: templates/v2/ngo-account/components/form-title.html:105
+#: templates/v2/ngo-account/components/form-title.html:107
 msgid "Save changes"
 msgstr ""
 

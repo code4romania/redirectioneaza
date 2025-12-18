@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-18 13:36+0200\n"
+"POT-Creation-Date: 2025-12-18 13:43+0200\n"
 "PO-Revision-Date: 2025-03-27 14:48+0000\n"
 "Last-Translator: Andrei Ioniță <andrei.ionita@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -197,7 +197,7 @@ msgstr "Has NGO Hub account"
 
 #: donations/admin/ngos.py:130 donations/admin/ngos.py:150
 #: donations/forms/ngo_account.py:46
-#: donations/views/ngo_account/my_organization.py:54
+#: donations/views/ngo_account/my_organization.py:55
 #: templates/v2/ngo-account/causes/list-items.html:46
 #: templates/v2/ngo-account/redirections/list-items.html:48
 msgid "Yes"
@@ -205,7 +205,7 @@ msgstr "Yes"
 
 #: donations/admin/ngos.py:130 donations/admin/ngos.py:150
 #: donations/forms/ngo_account.py:46
-#: donations/views/ngo_account/my_organization.py:54
+#: donations/views/ngo_account/my_organization.py:55
 #: templates/v2/ngo-account/causes/list-items.html:48
 #: templates/v2/ngo-account/redirections/list-items.html:50
 msgid "No"
@@ -904,15 +904,15 @@ msgstr "form with prefilled ngo data"
 msgid "Cause"
 msgstr "Cause"
 
-#: donations/models/ngos.py:524 donations/views/ngo_account/causes.py:170
-#: donations/views/ngo_account/causes.py:218 partners/admin.py:51
+#: donations/models/ngos.py:524 donations/views/ngo_account/causes.py:181
+#: donations/views/ngo_account/causes.py:232 partners/admin.py:51
 #: partners/models.py:75 redirectioneaza/settings/unfold.py:39
 #: templates/v2/ngo-account/causes/main.html:11
 msgid "Causes"
 msgstr "Causes"
 
 #: donations/templatetags/cause_action_menu.py:22
-#: donations/views/ngo_account/causes.py:209
+#: donations/views/ngo_account/causes.py:223
 #, fuzzy
 #| msgid "cause"
 msgid "Edit cause"
@@ -957,7 +957,7 @@ msgstr "Form description"
 #: templates/v2/emails/donor/redirection-sans-signature/main.html:18
 #: templates/v2/emails/donor/redirection-with-signature/main.html:20
 #: templates/v2/emails/ngo/new-form-received/main.html:19
-#: templates/v2/ngo-account/components/form-title.html:64
+#: templates/v2/ngo-account/components/form-title.html:66
 msgid "Download form"
 msgstr "Download form"
 
@@ -1341,7 +1341,7 @@ msgid "Generate from external data"
 msgstr ""
 
 #: donations/views/ngo_account/byof.py:56
-#: donations/views/ngo_account/causes.py:142
+#: donations/views/ngo_account/causes.py:153
 #: donations/views/ngo_account/redirections.py:122
 msgid "You need to add your NGO's information first."
 msgstr ""
@@ -1350,70 +1350,71 @@ msgstr ""
 msgid "The uploaded data file will be processed soon."
 msgstr ""
 
-#: donations/views/ngo_account/causes.py:41
+#: donations/views/ngo_account/causes.py:52
 #, fuzzy
 #| msgid "Organization Data"
 msgid "Organization name: "
 msgstr "Organization Data"
 
-#: donations/views/ngo_account/causes.py:42
+#: donations/views/ngo_account/causes.py:53
 #, fuzzy
 #| msgid "Organization Form"
 msgid "Organization CIF: "
 msgstr "Organization Form"
 
-#: donations/views/ngo_account/causes.py:50
+#: donations/views/ngo_account/causes.py:61
 #, fuzzy
 #| msgid "The form is not valid."
 msgid "The form was altered."
 msgstr "The form is not valid."
 
-#: donations/views/ngo_account/causes.py:76
+#: donations/views/ngo_account/causes.py:87
 msgid "Please fill in the organization details first."
 msgstr ""
 
-#: donations/views/ngo_account/causes.py:81
-#: donations/views/ngo_account/causes.py:184
+#: donations/views/ngo_account/causes.py:92
+#: donations/views/ngo_account/causes.py:198
 msgid "You need to first create the form with the organization's details."
 msgstr ""
 
-#: donations/views/ngo_account/causes.py:95 donations/views/redirections.py:227
+#: donations/views/ngo_account/causes.py:106
+#: donations/views/redirections.py:227
 msgid "There are some errors on the redirection form."
 msgstr "There are some errors on the redirection form."
 
-#: donations/views/ngo_account/causes.py:113
+#: donations/views/ngo_account/causes.py:124
 #, fuzzy
 #| msgid "The user has been successfully invited."
 msgid "The cause has been created."
 msgstr "The user has been successfully invited."
 
-#: donations/views/ngo_account/causes.py:116
+#: donations/views/ngo_account/causes.py:127
 #, fuzzy
 #| msgid "The form is not valid."
 msgid "The form has been saved."
 msgstr "The form is not valid."
 
-#: donations/views/ngo_account/causes.py:127
+#: donations/views/ngo_account/causes.py:138
 #: redirectioneaza/context_processors/headers.py:105
 #, fuzzy
 #| msgid "Organization address"
 msgid "Organization Causes"
 msgstr "Organization address"
 
-#: donations/views/ngo_account/causes.py:158
-#: donations/views/ngo_account/causes.py:203
-#: donations/views/ngo_account/my_organization.py:156
+#: donations/views/ngo_account/causes.py:169
+#: donations/views/ngo_account/causes.py:217
+#: donations/views/ngo_account/my_organization.py:157
 #, fuzzy
 #| msgid "Organization forms"
 msgid "Organization form"
 msgstr "Organization forms"
 
-#: donations/views/ngo_account/causes.py:164
+#: donations/views/ngo_account/causes.py:175
 msgid "Add new cause form"
 msgstr ""
 
 #: donations/views/ngo_account/common.py:20
-#: donations/views/ngo_account/my_organization.py:22
+#: donations/views/ngo_account/my_organization.py:23
 msgid "Organization details"
 msgstr "Organization details"
 
@@ -1447,7 +1448,7 @@ msgstr "The IBAN number must start with 'RO'"
 msgid "Download generated file"
 msgstr "Download the form"
 
-#: donations/views/ngo_account/my_organization.py:105
+#: donations/views/ngo_account/my_organization.py:106
 msgid "There are some errors on the presentation form."
 msgstr "There are some errors on the presentation form."
 
@@ -3557,21 +3558,21 @@ msgstr ""
 msgid "Clear filters and search"
 msgstr ""
 
-#: templates/v2/ngo-account/components/form-title.html:31
+#: templates/v2/ngo-account/components/form-title.html:33
 msgid "View public page"
 msgstr "View public page"
 
-#: templates/v2/ngo-account/components/form-title.html:39
+#: templates/v2/ngo-account/components/form-title.html:41
 msgid ""
 "Download the form filled with the organization's data, print it, and collect "
 "contributions offline."
 msgstr ""
 
-#: templates/v2/ngo-account/components/form-title.html:73
+#: templates/v2/ngo-account/components/form-title.html:75
 msgid "Get from NGO Hub"
 msgstr "Get from NGO Hub"
 
-#: templates/v2/ngo-account/components/form-title.html:105
+#: templates/v2/ngo-account/components/form-title.html:107
 msgid "Save changes"
 msgstr "Save changes"
 
