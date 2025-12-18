@@ -30,11 +30,22 @@ class NgoCauseCommonView(NgoBaseTemplateView):
 
         ngo: Ngo = context["ngo"]
 
+        cause: Cause | None = self.get_cause(ngo=ngo, cause_id=kwargs.get("cause_id"))
+        context["cause"] = cause
+        if cause:
+            context["absolute_cause_url"] = self.get_absolute_cause_url(cause_slug=cause.slug)
+
         context["info_banner_items"] = self.get_ngo_cause_banner_list_items(ngo)
         context["visibility_choices"] = CauseVisibilityChoices.as_str_pretty()
         context["ngo_has_tax_account"] = ngo.has_online_tax_account
 
         return context
+
+    def get_absolute_cause_url(self, cause_slug: str) -> str:
+        return self.request.build_absolute_uri(reverse("twopercent", kwargs={"cause_slug": cause_slug}))
+
+    def get_cause(self, *, ngo: Ngo, cause_id: int | None) -> Cause | None:
+        raise NotImplementedError
 
     def get_ngo_cause_banner_list_items(self, ngo: Ngo) -> list[str]:
         banner_list_items = [
@@ -176,6 +187,9 @@ class NgoCauseCreateView(NgoCauseCommonView):
 
         return context
 
+    def get_cause(self, *, ngo: Ngo, cause_id: int | None) -> Cause | None:
+        return None
+
     @method_decorator(login_required(login_url=reverse_lazy("login")))
     def get(self, request, *args, **kwargs):
         user: User = request.user
@@ -208,7 +222,7 @@ class NgoCauseEditView(NgoCauseCommonView):
 
         page_title = _("Edit cause")
 
-        context["cause"] = self.get_cause(cause_id=kwargs["cause_id"], ngo=context["ngo"])
+        context["cause"] = self.get_cause(ngo=context["ngo"], cause_id=kwargs["cause_id"])
         context["django_form"] = CauseForm(instance=context["cause"], for_main_cause=self.is_main_cause)
 
         context["page_title"] = f'{page_title}: "{context["cause"].name}"'
@@ -224,11 +238,8 @@ class NgoCauseEditView(NgoCauseCommonView):
 
         return context
 
-    def get_cause(self, cause_id: int, ngo: Ngo) -> Cause:
-        if not ngo:
-            raise Http404
-
-        if not cause_id:
+    def get_cause(self, *, ngo: Ngo, cause_id: int | None) -> Cause | None:
+        if not (ngo and cause_id):
             raise Http404
 
         cause = Cause.objects.filter(pk=cause_id, ngo=ngo).first()
