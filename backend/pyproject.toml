@@ -40,7 +40,7 @@ dependencies = [
 
 [dependency-groups]
 test = [
-  "faker~=38.2.0",
+  "faker~=40.1.0",
   "pytest~=9.0.0",
   "pytest-cov~=7.0.0",
   "pytest-django~=4.11.0",
