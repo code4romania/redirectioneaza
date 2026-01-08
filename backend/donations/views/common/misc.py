@@ -75,14 +75,14 @@ def get_time_between_retries() -> str:
 
 def get_ngo_archive_download_status(ngo: Ngo | None) -> dict:
     last_job_was_recent = get_was_last_job_recent(ngo)
-    context = {
+    context: dict[str, str | bool] = {
         "last_job_was_recent": last_job_was_recent,
     }
 
     if not last_job_was_recent:
         return context
 
-    context["period_between_retries"] = get_time_between_retries()
+    context["period_between_retries"]: str = get_time_between_retries()
 
     return context
 
