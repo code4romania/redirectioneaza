@@ -110,7 +110,7 @@
         {% blocktrans trimmed asvar form_settings_info_tooltip %}
           From this section, you can manage
           the form's URL,
-          its visibility
+          its visibility,
           and online signing.
         {% endblocktrans %}
         {% include "components/form/legend.html" with legend_title=form_settings_legend_title info_tooltip=form_settings_info_tooltip %}
@@ -127,15 +127,16 @@
           {% include "components/input/input.html" with input_id="slug" input_type="text" input_name="slug" is_required=True value=cause.slug field=django_form.slug max_length=150 placeholder="url-formular" help_text=slug_helptext %}
 
 
-          {% if is_main_cause %}
-            <input type="hidden" name="visibility" value="pub">
-            <input type="hidden" name="is_main" value=True>
-          {% else %}
-            {% if not form_visibility_input_title %}
-              {% trans "Form visibility" as form_visibility_input_title %}
-            {% endif %}
-            {% include "components/input/select.html" with input_title=form_visibility_input_title input_id="visibility" input_name="visibility" current_value=cause.visibility field=django_form.visibility options=visibility_choices is_required=True %}
+          {% if not form_visibility_input_title %}
+            {% trans "Form visibility" as form_visibility_input_title %}
           {% endif %}
+          {% blocktrans trimmed asvar visibility_helptext %}
+            Choose who can see and access your form.
+            Select "Public" to make it accessible to everyone,
+            "Unlisted" to not appear in search results but still accessible via a direct link,
+            or "Private" to restrict access only to you and your organization.
+          {% endblocktrans %}
+          {% include "components/input/select.html" with input_title=form_visibility_input_title help_text=visibility_helptext input_id="visibility" input_name="visibility" current_value=cause.visibility field=django_form.visibility options=visibility_choices is_required=True include_default_option=True %}
 
         </div>
 
