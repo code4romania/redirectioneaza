@@ -8,7 +8,7 @@ import redirectioneaza.settings.locations
 import utils.constants.memory
 from donations.common.validation.validate_slug import NgoSlugValidator
 from donations.models.byof import OwnFormsUpload
-from donations.models.ngos import Cause, CauseVisibilityChoices, Ngo, ngo_slug_validator
+from donations.models.ngos import Cause, Ngo, ngo_slug_validator
 from utils.text.phone_number import validate_phone_number
 
 
@@ -132,7 +132,6 @@ class CauseForm(forms.ModelForm):
 
         if self.for_main_cause:
             cause.is_main = True
-            cause.visibility = CauseVisibilityChoices.PUBLIC
 
         if commit:
             cause.save()
