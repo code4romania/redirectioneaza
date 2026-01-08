@@ -1,5 +1,3 @@
-from secrets import compare_digest
-
 from django import forms
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
@@ -36,7 +34,9 @@ class TwoPasswordMixin:
         password = self.cleaned_data.get("password")
         password_confirm = self.cleaned_data.get("password_confirm")
 
-        if not compare_digest(password, password_confirm):
+        # The comparison is safe since we're in the registration step
+        # noinspection TimingAttack
+        if password != password_confirm:
             raise forms.ValidationError(_("Passwords do not match"))
 
         return password_confirm
