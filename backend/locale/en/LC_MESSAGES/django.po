@@ -3408,7 +3408,7 @@ msgid ""
 "Choose who can see and access your form. Select \"Public\" to make it "
 "accessible to everyone, \"Unlisted\" to not appear in search results but "
 "still accessible via a direct link, or \"Private\" to restrict access only "
-"to you and your organization."
+"to you."
 msgstr ""
 
 #: templates/v2/ngo-account/cause/form.html:150

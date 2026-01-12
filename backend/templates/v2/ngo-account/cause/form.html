@@ -134,7 +134,7 @@
             Choose who can see and access your form.
             Select "Public" to make it accessible to everyone,
             "Unlisted" to not appear in search results but still accessible via a direct link,
-            or "Private" to restrict access only to you and your organization.
+            or "Private" to restrict access only to you.
           {% endblocktrans %}
           {% include "components/input/select.html" with input_title=form_visibility_input_title help_text=visibility_helptext input_id="visibility" input_name="visibility" current_value=cause.visibility field=django_form.visibility options=visibility_choices is_required=True include_default_option=True %}
 
