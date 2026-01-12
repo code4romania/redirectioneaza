@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-18 13:43+0200\n"
+"POT-Creation-Date: 2026-01-08 13:23+0200\n"
 "PO-Revision-Date: 2025-03-27 14:48+0000\n"
 "Last-Translator: Andrei Ioniță <andrei.ionita@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -296,7 +296,7 @@ msgstr "Remove prefilled forms"
 msgid "Email is required"
 msgstr "Email is required"
 
-#: donations/forms/account.py:26 donations/forms/common.py:32
+#: donations/forms/account.py:26 donations/forms/common.py:30
 msgid "Password is required"
 msgstr "Password is required"
 
@@ -3192,7 +3192,7 @@ msgid ""
 msgstr ""
 
 #: templates/v2/ngo-account/banners/form-emails-banner.html:19
-#: templates/v2/ngo-account/cause/form.html:147
+#: templates/v2/ngo-account/cause/form.html:148
 msgid "Allow users to sign the form online"
 msgstr "Allow users to sign the form online"
 
@@ -3234,7 +3234,7 @@ msgid "Your organization is not receiving notifications for signed forms."
 msgstr ""
 
 #: templates/v2/ngo-account/banners/form-notifications-banner.html:6
-#: templates/v2/ngo-account/cause/form.html:181
+#: templates/v2/ngo-account/cause/form.html:182
 msgid "Receive notifications for each signed form"
 msgstr ""
 
@@ -3382,7 +3382,7 @@ msgstr "Form description"
 
 #: templates/v2/ngo-account/cause/form.html:110
 msgid ""
-"From this section, you can manage the form's URL, its visibility and online "
+"From this section, you can manage the form's URL, its visibility, and online "
 "signing."
 msgstr ""
 
@@ -3399,11 +3399,19 @@ msgid ""
 "can only contain letters, numbers, and hyphens. Example: cause-form."
 msgstr ""
 
-#: templates/v2/ngo-account/cause/form.html:135
+#: templates/v2/ngo-account/cause/form.html:131
 msgid "Form visibility"
 msgstr ""
 
-#: templates/v2/ngo-account/cause/form.html:149
+#: templates/v2/ngo-account/cause/form.html:133
+msgid ""
+"Choose who can see and access your form. Select \"Public\" to make it "
+"accessible to everyone, \"Unlisted\" to not appear in search results but "
+"still accessible via a direct link, or \"Private\" to restrict access only "
+"to you."
+msgstr ""
+
+#: templates/v2/ngo-account/cause/form.html:150
 #, fuzzy
 #| msgid ""
 #| "By selecting this option, I confirm that the NGO has the SPV account "
@@ -3416,23 +3424,23 @@ msgstr ""
 "By selecting this option, I confirm that the NGO has the SPV account that's "
 "necessary to submit the forms"
 
-#: templates/v2/ngo-account/cause/form.html:160
+#: templates/v2/ngo-account/cause/form.html:161
 #, fuzzy
 #| msgid "Form description"
 msgid "Form notifications"
 msgstr "Form description"
 
-#: templates/v2/ngo-account/cause/form.html:162
+#: templates/v2/ngo-account/cause/form.html:163
 msgid "From this section, you can manage the form's email notifications."
 msgstr ""
 
-#: templates/v2/ngo-account/cause/form.html:183
+#: templates/v2/ngo-account/cause/form.html:184
 msgid ""
 "By selecting this option, you activate email notifications to be informed "
 "each time someone fills out the form."
 msgstr ""
 
-#: templates/v2/ngo-account/cause/form.html:193
+#: templates/v2/ngo-account/cause/form.html:194
 #, fuzzy
 #| msgid "email address"
 msgid "Notifications e-mail address"

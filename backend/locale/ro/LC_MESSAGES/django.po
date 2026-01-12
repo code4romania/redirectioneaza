@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-18 13:43+0200\n"
+"POT-Creation-Date: 2026-01-08 13:23+0200\n"
 "PO-Revision-Date: 2025-03-27 14:49+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -289,7 +289,7 @@ msgstr "Elimină formularele pre-completate"
 msgid "Email is required"
 msgstr "Adresa de email este obligatorie"
 
-#: donations/forms/account.py:26 donations/forms/common.py:32
+#: donations/forms/account.py:26 donations/forms/common.py:30
 msgid "Password is required"
 msgstr "Parola este obligatorie"
 
@@ -3058,7 +3058,7 @@ msgstr ""
 "redirecționare."
 
 #: templates/v2/ngo-account/banners/form-emails-banner.html:19
-#: templates/v2/ngo-account/cause/form.html:147
+#: templates/v2/ngo-account/cause/form.html:148
 msgid "Allow users to sign the form online"
 msgstr ""
 "Permit contribuabililor să semneze online formularul de redirecționare "
@@ -3107,7 +3107,7 @@ msgid "Your organization is not receiving notifications for signed forms."
 msgstr "Organizația ta nu primește notificări pentru formularele semnate."
 
 #: templates/v2/ngo-account/banners/form-notifications-banner.html:6
-#: templates/v2/ngo-account/cause/form.html:181
+#: templates/v2/ngo-account/cause/form.html:182
 msgid "Receive notifications for each signed form"
 msgstr "Primește notificări pentru fiecare formular semnat"
 
@@ -3251,7 +3251,7 @@ msgstr "Setări formular"
 
 #: templates/v2/ngo-account/cause/form.html:110
 msgid ""
-"From this section, you can manage the form's URL, its visibility and online "
+"From this section, you can manage the form's URL, its visibility, and online "
 "signing."
 msgstr ""
 "Din această secțiune poți gestiona URL-ul formularului, vizibilitatea sa și "
@@ -3271,11 +3271,23 @@ msgstr ""
 "ul redirectioneaza.ro. Poate conține doar litere, cifre și cratime. Exemplu: "
 "formular-cauza."
 
-#: templates/v2/ngo-account/cause/form.html:135
+#: templates/v2/ngo-account/cause/form.html:131
 msgid "Form visibility"
 msgstr "Vizibilitate formular"
 
-#: templates/v2/ngo-account/cause/form.html:149
+#: templates/v2/ngo-account/cause/form.html:133
+msgid ""
+"Choose who can see and access your form. Select \"Public\" to make it "
+"accessible to everyone, \"Unlisted\" to not appear in search results but "
+"still accessible via a direct link, or \"Private\" to restrict access only "
+"to you."
+msgstr ""
+"Alege cine poate vedea și accesa formularul tău. Selectează „Public” pentru a "
+"îl face accesibil tuturor, „Nelistat” pentru a nu apărea în rezultatele de "
+"căutare, dar totuși accesibil printr-un link direct, sau „Privat” pentru a "
+"restricționa accesul doar pentru tine."
+
+#: templates/v2/ngo-account/cause/form.html:150
 msgid ""
 "By selecting this option, I confirm that I have ensured that my organization "
 "has an SPV account, necessary for submitting the forms completed with online "
@@ -3285,15 +3297,15 @@ msgstr ""
 "are un cont SPV, necesar pentru a depune formularele completate cu semnătură "
 "online."
 
-#: templates/v2/ngo-account/cause/form.html:160
+#: templates/v2/ngo-account/cause/form.html:161
 msgid "Form notifications"
 msgstr "Notificări formular"
 
-#: templates/v2/ngo-account/cause/form.html:162
+#: templates/v2/ngo-account/cause/form.html:163
 msgid "From this section, you can manage the form's email notifications."
 msgstr "Din această secțiune poți gestiona notificările prin email."
 
-#: templates/v2/ngo-account/cause/form.html:183
+#: templates/v2/ngo-account/cause/form.html:184
 msgid ""
 "By selecting this option, you activate email notifications to be informed "
 "each time someone fills out the form."
@@ -3302,7 +3314,7 @@ msgstr ""
 "semnat. Fără această bifă vei putea vedea formularele noi doar dacă te "
 "conectezi în contul organizației."
 
-#: templates/v2/ngo-account/cause/form.html:193
+#: templates/v2/ngo-account/cause/form.html:194
 msgid "Notifications e-mail address"
 msgstr "Adresa de email pentru notificări"
 
