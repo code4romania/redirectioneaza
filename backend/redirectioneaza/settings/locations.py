@@ -10,8 +10,8 @@ FORM_COUNTIES = deepcopy(LIST_OF_COUNTIES)
 FORM_COUNTIES_CHOICES = [(county, county) for county in FORM_COUNTIES]
 
 FORM_COUNTIES_NATIONAL = deepcopy(LIST_OF_COUNTIES)
-FORM_COUNTIES_NATIONAL_CHOICES = [(county, county) for county in FORM_COUNTIES_NATIONAL]
 FORM_COUNTIES_NATIONAL.insert(0, "Național")
+FORM_COUNTIES_NATIONAL_CHOICES = [(county, county) for county in FORM_COUNTIES_NATIONAL]
 
 BUCHAREST_SECTORS = ["Sector 1", "Sector 2", "Sector 3", "Sector 4", "Sector 5", "Sector 6"]
 SECTORS_ITEM = {
