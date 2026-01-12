@@ -184,7 +184,7 @@ class NgoAdmin(ModelAdmin):
     )
     list_per_page = 30
 
-    search_fields = ("name", "registration_number")
+    search_fields = ("name", "registration_number", "email", "phone")
 
     inlines = (NgoCauseInline, NgoPartnerInline, NgoUserInline)
 
