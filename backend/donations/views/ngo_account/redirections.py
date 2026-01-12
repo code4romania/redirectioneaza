@@ -338,7 +338,7 @@ class RedirectionsDownloadJobLinkView(FileDownloadProxy):
         download: RedirectionsDownloadJob = self.get_downloadable_object(user=user, pk=job_id)
 
         # Check that the job has a zip file
-        if not download.output_file:
+        if not download or not download.output_file:
             raise Http404
 
         return redirect(download.output_file.url)
