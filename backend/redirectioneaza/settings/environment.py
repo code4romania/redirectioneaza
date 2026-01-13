@@ -21,10 +21,12 @@ env = environ.Env(
     IS_CONTAINERIZED=(bool, False),
     RECAPTCHA_ENABLED=(bool, True),
     FORCE_PARTNER=(bool, False),
-    # Forms Download
+    # Running methods
     DEFAULT_RUN_METHOD=(str, "async"),
-    FORMS_DOWNLOAD_METHOD=(str, "async"),
-    DONATIONS_CSV_DOWNLOAD_METHOD=(str, "async"),
+    FORMS_DOWNLOAD_METHOD=(str, ""),
+    DONATIONS_CSV_DOWNLOAD_METHOD=(str, ""),
+    USER_ANONIMIZATION_METHOD=(str, ""),
+    # Forms Download
     ENABLE_FORMS_DOWNLOAD=(bool, True),
     TIMEDELTA_FORMS_DOWNLOAD_MINUTES=(int, 6 * HOUR),
     TIMEDELTA_REDIRECTIONS_LIMIT_DOWNLOAD_DAYS=(int, 31),
