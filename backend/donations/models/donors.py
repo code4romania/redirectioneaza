@@ -2,13 +2,13 @@ import json
 from datetime import datetime
 from functools import partial
 
-from django.conf import settings
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from donations.common.models_hashing import hash_id_secret
+from utils.common.crypto_helper import decrypt_data, encrypt_data
 
 
 def year_ngo_donor_directory_path(subdir: str, instance: "Donor", filename: str) -> str:
@@ -174,10 +174,30 @@ class Donor(models.Model):
     def __str__(self):
         return f"{self.cause} {self.date_created} {self.email}"
 
-    def remove(self):
+    def remove(self, commit: bool = True):
         self.is_available = False
 
-        self.save()
+        if commit:
+            self.save()
+
+    def anonymize(self, commit: bool = True):
+        self.l_name = ""
+        self.f_name = ""
+        self.initial = ""
+        self.set_cnp("")
+
+        self._set_address({})
+
+        self.phone = ""
+        self.email = ""
+
+        self.geoip = {}
+
+        self.pdf_file.delete(save=commit)
+        self.filename = ""
+
+        if commit:
+            self.save()
 
     def set_cnp(self, cnp: str):
         self.encrypted_cnp = self.encrypt_cnp(cnp)
@@ -281,22 +301,22 @@ class Donor(models.Model):
 
     @staticmethod
     def encrypt_cnp(cnp: str) -> str:
-        return settings.FERNET_OBJECT.encrypt(cnp.encode()).decode()
+        return encrypt_data(cnp.encode())
 
     @staticmethod
     def decrypt_cnp(cnp: str) -> str:
         if not cnp:
             return cnp
 
-        return settings.FERNET_OBJECT.decrypt(cnp.encode()).decode()
+        return decrypt_data(cnp.encode())
 
     @staticmethod
     def encrypt_address(address: dict) -> str:
-        return settings.FERNET_OBJECT.encrypt(json.dumps(address).encode()).decode()
+        return encrypt_data(json.dumps(address).encode())
 
     @staticmethod
     def decrypt_address(address: str) -> dict:
         if not address:
             return {}
 
-        return json.loads(settings.FERNET_OBJECT.decrypt(address.encode()).decode())
+        return json.loads(decrypt_data(address.encode()))
