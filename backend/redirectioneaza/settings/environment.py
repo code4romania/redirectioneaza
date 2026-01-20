@@ -136,6 +136,7 @@ env = environ.Env(
     ENABLE_FULL_VALIDATION_CNP=(bool, True),
     # Feature flags
     ENABLE_MULTIPLE_FORMS=(bool, False),
+    ENABLE_BULK_ANONIMIZATION=(bool, False),
     #
     AUDITLOG_EXPIRY_DAYS=(int, 1 * 365),  # 1 year
 )

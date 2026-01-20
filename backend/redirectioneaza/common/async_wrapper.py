@@ -7,14 +7,28 @@ from django_q.tasks import async_task
 
 def async_wrapper(
     func: Callable,
+    flag: str = None,
     *args: Any,
     **kwargs: Any,
 ) -> Callable:
     """
     A wrapper function to execute a function either synchronously or asynchronously
+    func: Callable
+        The function to be executed
+    flag: str, optional
+        A string to determine the execution method. If None, uses the default from settings.DEFAULT_RUN_METHOD
+    *args: Any
+        Positional arguments to pass to the function
+    **kwargs: Any
+        Keyword arguments to pass to the function
+
+    Returns:
+        The result of the function execution
     """
 
-    if settings.DEFAULT_RUN_METHOD == "async":
+    run_method: str = flag if flag else settings.DEFAULT_RUN_METHOD
+
+    if run_method == "async":
         return async_task(func, *args, **kwargs)
 
     return func(*args, **kwargs)

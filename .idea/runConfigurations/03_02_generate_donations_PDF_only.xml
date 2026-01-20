@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="generate_donations PDF only" type="Python.DjangoServer" factoryName="Django server" folderName="mock-data" singleton="false">
+  <configuration default="false" name="03.02 generate_donations PDF only" type="Python.DjangoServer" factoryName="Django server" folderName="mock-data" singleton="false">
     <module name="redirectioneaza" />
     <option name="ENV_FILES" value="$PROJECT_DIR$/.env.local" />
     <option name="INTERPRETER_OPTIONS" value="" />

@@ -44,12 +44,12 @@ class DonorSignedManager(DonorAvailableManager):
         return super().get_queryset().filter(has_signed=True)
 
 
-class DonorCurrentYearSignedManager(DonorSignedManager):
+class DonorCurrentYearManager(DonorAvailableManager):
     def get_queryset(self):
         return super().get_queryset().filter(date_created__year=timezone.now().year)
 
 
-class DonorCurrentYearManager(DonorAvailableManager):
+class DonorCurrentYearSignedManager(DonorSignedManager):
     def get_queryset(self):
         return super().get_queryset().filter(date_created__year=timezone.now().year)
 
@@ -161,8 +161,22 @@ class Donor(models.Model):
         auto_now_add=True,
     )
 
+    # personal data removal information
+    personal_data_removal_started_at = models.DateTimeField(
+        verbose_name=_("date personal data removal started"),
+        blank=True,
+        null=True,
+    )
+    personal_data_removed_at = models.DateTimeField(
+        verbose_name=_("date personal data removed"),
+        blank=True,
+        null=True,
+    )
+
     objects = models.Manager()
+
     available = DonorAvailableManager()
+
     signed = DonorSignedManager()
     current_year = DonorCurrentYearManager()
     current_year_signed = DonorCurrentYearSignedManager()
@@ -174,13 +188,18 @@ class Donor(models.Model):
     def __str__(self):
         return f"{self.cause} {self.date_created} {self.email}"
 
-    def remove(self, commit: bool = True):
+    def disable(self, commit: bool = True):
         self.is_available = False
 
         if commit:
             self.save()
 
-    def anonymize(self, commit: bool = True):
+    def remove_personal_data(self, commit: bool = True):
+        if not self.personal_data_removal_started_at:
+            self.personal_data_removal_started_at = timezone.now()
+
+        self.personal_data_removed_at = timezone.now()
+
         self.l_name = ""
         self.f_name = ""
         self.initial = ""

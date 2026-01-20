@@ -1,5 +1,5 @@
 import logging
-from datetime import timedelta
+from datetime import datetime, timedelta
 
 from django import forms
 from django.conf import settings
@@ -15,7 +15,8 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import ngettext_lazy
 from unfold.admin import ModelAdmin
-from unfold.contrib.filters.admin import TextFilter
+from unfold.contrib.filters.admin import RangeDateFilter, TextFilter
+from unfold.dataclasses import UnfoldAction
 from unfold.decorators import action
 
 from donations.models.donors import Donor
@@ -23,7 +24,7 @@ from redirectioneaza.common.app_url import build_uri
 from redirectioneaza.common.async_wrapper import async_wrapper
 from redirectioneaza.common.messaging import extend_email_context, send_email
 from utils.common.admin import HasNgoFilter
-from utils.constants.time import YEAR
+from utils.constants.time import YEAR_IN_DAYS
 
 logger = logging.getLogger(__name__)
 
@@ -97,8 +98,8 @@ def _print_task_result(process: str, task_results: dict[str, int], queryset_size
 def soft_delete_donor(donor_pk: int):
     logger.info(f"Deleting donor {donor_pk}")
     try:
-        donor = Donor.available.get(pk=donor_pk)
-        donor.remove()
+        donor: Donor = Donor.available.get(pk=donor_pk)
+        donor.disable()
 
         mail_context = {
             "cause_name": donor.cause.name,
@@ -119,20 +120,54 @@ def soft_delete_donor(donor_pk: int):
         return TASK_FAILURE_FLAG
 
 
-def anonymize_donor(donor: Donor):
+def remove_personal_data(donor: Donor) -> str:
     logger.info(f"Anonymizing donor {donor.pk}")
 
     try:
-        if settings.USER_ANONIMIZATION_METHOD == "async":
-            async_wrapper(donor.anonymize)
-            return TASK_SCHEDULED_FLAG
+        donor.personal_data_removal_started_at = timezone.now()
+        donor.save()
 
-        donor.anonymize()
+        result = async_wrapper(donor.remove_personal_data, settings.USER_ANONIMIZATION_METHOD)
+
+        return TASK_SUCCESS_FLAG if result is None else TASK_SCHEDULED_FLAG
     except Exception as e:
         logger.error(f"Failed to anonymize donor {donor.pk}: {e}")
         return TASK_FAILURE_FLAG
 
-    return TASK_SUCCESS_FLAG
+
+def anonymize_old_donations():
+    def remove_personal_data_in_bulk(selected_donors: QuerySet[Donor]):
+        # run the remove_personal_data async for each donor in the selected_donors queryset
+        for donor in selected_donors.iterator(chunk_size=500):
+            remove_personal_data(donor)
+
+    now: datetime = timezone.now()
+    one_year_ago_date: datetime = now - timedelta(days=1 * YEAR_IN_DAYS)
+    two_years_ago_date: datetime = now - timedelta(days=2 * YEAR_IN_DAYS)
+
+    base_donor_qs: QuerySet[Donor] = Donor.objects.filter(personal_data_removal_started_at__isnull=True)
+
+    # XXX: NO
+    remove_personal_data_in_bulk(Donor.objects.all())
+    remove_personal_data_in_bulk(base_donor_qs.filter(date_created__date__lte=two_years_ago_date))
+    remove_personal_data_in_bulk(base_donor_qs.filter(two_years=False, date_created__lte=one_year_ago_date))
+
+
+class HasPersonalDataFilter(admin.SimpleListFilter):
+    title = _("Has personal data")
+    parameter_name = "has_personal_data"
+    horizontal = True
+
+    def lookups(self, request, model_admin):
+        return ("yes", "Yes"), ("no", "No")
+
+    def queryset(self, request, queryset):
+        if self.value() == "yes":
+            return queryset.exclude(personal_data_removed__isnull=False)
+        if self.value() == "no":
+            return queryset.filter(personal_data_removed__isnull=False)
+
+        return queryset
 
 
 class CommonNumericFilter(TextFilter):
@@ -165,18 +200,27 @@ class CauseIdNumericListFilter(CommonNumericFilter):
 
 @admin.register(Donor)
 class DonorAdmin(ModelAdmin):
-    list_display = ("id", "email", "l_name", "f_name", "ngo", "is_available", "has_signed", "date_created")
+    list_display = (
+        "id",
+        "email",
+        "l_name",
+        "f_name",
+        "ngo",
+        "is_available",
+        "has_signed",
+        "date_created",
+    )
     list_display_links = ("id", "email", "l_name", "f_name")
 
     list_filter_submit = True
     list_filter = (
-        "date_created",
+        ("date_created", RangeDateFilter),
         HasNgoFilter,
+        HasPersonalDataFilter,
         "is_anonymous",
         "is_available",
         "has_signed",
         "two_years",
-        "income_type",
         NgoIdNumericListFilter,
         CauseIdNumericListFilter,
     )
@@ -226,13 +270,13 @@ class DonorAdmin(ModelAdmin):
         ),
     )
 
-    actions = ("remove_donations", "anonymize_donations")
+    actions = ("remove_bulk_donations", "anonymize_bulk_donations")
     actions_list = (
         "run_redirections_stats_generator",
         "run_redirections_stats_generator_force",
-        "anonymize_old_donations",
+        "run_anonymize_old_donations",
     )
-    actions_detail = ("anonymize_donation",)
+    actions_detail = ("anonymize_single_donation",)
 
     def has_change_permission(self, request, obj=None):
         return False
@@ -240,15 +284,23 @@ class DonorAdmin(ModelAdmin):
     def has_delete_permission(self, request, obj=...):
         return False
 
+    def get_actions_list(self, request: HttpRequest) -> list[UnfoldAction]:
+        if not settings.ENABLE_BULK_ANONIMIZATION:
+            self.actions_list = tuple(
+                action_item for action_item in self.actions_list if action_item != "run_anonymize_old_donations"
+            )
+
+        return super().get_actions_list(request)
+
     @admin.display(description=_("Form"))
     def get_form_url(self, obj: Donor):
         return obj.form_url
 
     @action(description=_("Remove donations and notify donors"), url_path="remove-donations")
-    def remove_donations(self, request, queryset: QuerySet[Donor]):
+    def remove_bulk_donations(self, request, queryset: QuerySet[Donor]):
         task_results = {TASK_SUCCESS_FLAG: 0, TASK_FAILURE_FLAG: 0}
 
-        queryset_size = queryset.count()
+        queryset_size: int = queryset.count()
         for donor in queryset:
             task_result = soft_delete_donor(donor.pk)
             task_results[task_result] += 1
@@ -261,13 +313,13 @@ class DonorAdmin(ModelAdmin):
 
         self.message_user(request, message)
 
-    @action(description=_("Anonymize public data of donations"), url_path="anonymize-donations")
-    def anonymize_donations(self, request, queryset: QuerySet[Donor]):
+    @action(description=_("Anonymize personal data of donations"), url_path="anonymize-donations")
+    def anonymize_bulk_donations(self, request, queryset: QuerySet[Donor]):
         task_results = {TASK_SUCCESS_FLAG: 0, TASK_FAILURE_FLAG: 0, TASK_SCHEDULED_FLAG: 0}
 
-        queryset_size = queryset.count()
+        queryset_size: int = queryset.count()
         for donor in queryset:
-            task_result = anonymize_donor(donor)
+            task_result: str = remove_personal_data(donor)
             task_results[task_result] += 1
 
         message: str = _print_task_result(
@@ -278,26 +330,26 @@ class DonorAdmin(ModelAdmin):
 
         self.message_user(request, message)
 
-    def _anonymize_donation(self, donor: Donor) -> dict[str, str]:
-        task_result = anonymize_donor(donor)
+    @action(description=_("Anonymize personal data of the donation"), url_path="anonymize-donation")
+    def anonymize_single_donation(self, request: HttpRequest, object_id: int):
+        def run_anonymize_donation_task(selected_donor: Donor) -> dict[str, str]:
+            task_result: str = remove_personal_data(selected_donor)
 
-        if task_result == TASK_SUCCESS_FLAG:
-            message = _("The donor was successfully anonymized.")
-        elif task_result == TASK_SCHEDULED_FLAG:
-            message = _("The donor anonymization was scheduled for processing.")
-        else:
-            message = _("Failed to anonymize the donor. Check the logs for more details.")
+            if task_result == TASK_SUCCESS_FLAG:
+                message = _("The donor was successfully anonymized.")
+            elif task_result == TASK_SCHEDULED_FLAG:
+                message = _("The donor anonymization was scheduled for processing.")
+            else:
+                message = _("Failed to anonymize the donor. Check the logs for more details.")
 
-        return {"status": task_result, "message": message}
+            return {"status": task_result, "message": message}
 
-    @action(description=_("Anonymize public data of the donation"), url_path="anonymize-donation")
-    def anonymize_donation(self, request: HttpRequest, object_id: int):
         donor = Donor.objects.get(pk=object_id)
 
         if request.method == "POST":
             form = AnonymizeDonorForm(request.POST)
             if form.is_valid():
-                result: dict = self._anonymize_donation(donor)
+                result: dict = run_anonymize_donation_task(donor)
 
                 self.message_user(request, result["message"], level=DEFAULT_LEVELS.get(result["status"], messages.INFO))
 
@@ -338,39 +390,10 @@ class DonorAdmin(ModelAdmin):
 
         self.message_user(request, _("Succesfully scheduled"))
 
-    def _anonymize_old_donations(self):
-        try:
-            now = timezone.now()
-            one_year_ago_date = now - timedelta(days=YEAR)
-            two_years_ago_date = now - timedelta(days=2 * YEAR)
-
-            base_donor_qs = Donor.objects.exclude(
-                l_name="",
-                f_name="",
-            )
-
-            one_year_donations_qs: QuerySet[Donor] = base_donor_qs.filter(
-                two_years=False,
-                date_created__lte=one_year_ago_date,
-            )
-            two_year_donations_qs: QuerySet[Donor] = base_donor_qs.filter(
-                date_created__lte=two_years_ago_date,
-            )
-
-            for donor in two_year_donations_qs:
-                anonymize_donor(donor)
-            for donor in one_year_donations_qs:
-                anonymize_donor(donor)
-
-        except CommandError:
-            logger.error("Error calling the anonymize_old_donations command")
-            raise
-
     @action(description=_("Anonymize old donations"), url_path="anonymize-old-donations")
-    def anonymize_old_donations(self, request):
-        try:
-            self._anonymize_old_donations()
-        except CommandError:
-            self.message_user(request, _("Error calling the command"))
+    def run_anonymize_old_donations(self, request):
+        async_wrapper(anonymize_old_donations, flag=settings.USER_ANONIMIZATION_METHOD)
 
         self.message_user(request, _("Succesfully scheduled"))
+
+        return redirect(reverse("admin:donations_donor_changelist"))
