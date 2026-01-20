@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-20 13:12+0200\n"
+"POT-Creation-Date: 2026-01-20 13:23+0200\n"
 "PO-Revision-Date: 2025-03-27 14:48+0000\n"
 "Last-Translator: Andrei Ioniță <andrei.ionita@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -218,7 +218,7 @@ msgstr "Has owner"
 #: donations/admin/ngos.py:204 donations/admin/ngos.py:322 donations/apps.py:8
 #: donations/views/dashboard/stats_helpers/utils.py:12
 #: redirectioneaza/context_processors/headers.py:68
-#: redirectioneaza/settings/unfold.py:30 redirectioneaza/settings/unfold.py:45
+#: redirectioneaza/settings/unfold.py:76 redirectioneaza/settings/unfold.py:91
 msgid "Donations"
 msgstr "Donations"
 
@@ -839,7 +839,7 @@ msgstr "is active"
 
 #: donations/models/ngos.py:264 partners/models.py:68
 #: redirectioneaza/context_processors/headers.py:63
-#: redirectioneaza/settings/unfold.py:33
+#: redirectioneaza/settings/unfold.py:79
 msgid "NGOs"
 msgstr "NGOs"
 
@@ -906,7 +906,7 @@ msgstr "Cause"
 
 #: donations/models/ngos.py:524 donations/views/ngo_account/causes.py:181
 #: donations/views/ngo_account/causes.py:232 partners/admin.py:51
-#: partners/models.py:75 redirectioneaza/settings/unfold.py:39
+#: partners/models.py:75 redirectioneaza/settings/unfold.py:85
 #: templates/v2/ngo-account/causes/main.html:11
 msgid "Causes"
 msgstr "Causes"
@@ -1606,7 +1606,7 @@ msgstr "Order"
 msgid "Section"
 msgstr "Section"
 
-#: frequent_questions/models.py:16 redirectioneaza/settings/unfold.py:80
+#: frequent_questions/models.py:16 redirectioneaza/settings/unfold.py:126
 msgid "Sections"
 msgstr "Sections"
 
@@ -1618,7 +1618,7 @@ msgstr "Question"
 msgid "Answer"
 msgstr "Answer"
 
-#: frequent_questions/models.py:41 redirectioneaza/settings/unfold.py:86
+#: frequent_questions/models.py:41 redirectioneaza/settings/unfold.py:132
 msgid "Questions"
 msgstr "Questions"
 
@@ -1677,7 +1677,7 @@ msgstr "Invite new manager"
 
 #: partners/apps.py:8 partners/models.py:90
 #: redirectioneaza/context_processors/headers.py:73
-#: redirectioneaza/settings/unfold.py:69
+#: redirectioneaza/settings/unfold.py:115
 msgid "Partners"
 msgstr "Partners"
 
@@ -1791,7 +1791,7 @@ msgstr ""
 
 #: redirectioneaza/context_processors/headers.py:27
 #: redirectioneaza/context_processors/headers.py:37
-#: redirectioneaza/settings/unfold.py:77
+#: redirectioneaza/settings/unfold.py:123
 msgid "Frequently asked questions"
 msgstr "Frequently asked questions"
 
@@ -1834,13 +1834,13 @@ msgid "FAQ Questions"
 msgstr "FAQ Questions"
 
 #: redirectioneaza/context_processors/headers.py:83
-#: redirectioneaza/settings/unfold.py:94 redirectioneaza/settings/unfold.py:97
-#: users/apps.py:8
+#: redirectioneaza/settings/unfold.py:140
+#: redirectioneaza/settings/unfold.py:143 users/apps.py:8
 msgid "Users"
 msgstr "Users"
 
 #: redirectioneaza/context_processors/headers.py:88
-#: redirectioneaza/settings/unfold.py:13 redirectioneaza/settings/unfold.py:16
+#: redirectioneaza/settings/unfold.py:59 redirectioneaza/settings/unfold.py:62
 msgid "Dashboard"
 msgstr "Dashboard"
 
@@ -1898,56 +1898,62 @@ msgid "My Organization"
 msgstr "My Organization"
 
 #: redirectioneaza/settings/django_q.py:24
-#: redirectioneaza/settings/unfold.py:122
 msgid "Background Tasks"
 msgstr "Background Tasks"
 
-#: redirectioneaza/settings/unfold.py:22
+#: redirectioneaza/settings/unfold.py:13
+msgid "Audit Logs"
+msgstr ""
+
+#: redirectioneaza/settings/unfold.py:19
+msgid "TASKS — Failed"
+msgstr ""
+
+#: redirectioneaza/settings/unfold.py:25
+msgid "TASKS — Queued"
+msgstr ""
+
+#: redirectioneaza/settings/unfold.py:31
+msgid "TASKS — Scheduled"
+msgstr ""
+
+#: redirectioneaza/settings/unfold.py:37
+msgid "TASKS — Successful"
+msgstr ""
+
+#: redirectioneaza/settings/unfold.py:48
+msgid "Django SES Stats"
+msgstr ""
+
+#: redirectioneaza/settings/unfold.py:68
 msgid "Home page"
 msgstr "Home page"
 
-#: redirectioneaza/settings/unfold.py:51
+#: redirectioneaza/settings/unfold.py:97
 #, fuzzy
 #| msgid "Generate ANAF Archive"
 msgid "Internal ANAF Archives"
 msgstr "Generate ANAF Archive"
 
-#: redirectioneaza/settings/unfold.py:57
+#: redirectioneaza/settings/unfold.py:103
 #, fuzzy
 #| msgid "Generate ANAF Archive"
 msgid "External ANAF Archives"
 msgstr "Generate ANAF Archive"
 
-#: redirectioneaza/settings/unfold.py:63
+#: redirectioneaza/settings/unfold.py:109
 #, fuzzy
 #| msgid "Donations"
 msgid "Donation downloads"
 msgstr "Donations"
 
-#: redirectioneaza/settings/unfold.py:103 users/models.py:180
+#: redirectioneaza/settings/unfold.py:149 users/models.py:180
 msgid "Groups"
 msgstr "Groups"
 
-#: redirectioneaza/settings/unfold.py:111
-#: redirectioneaza/settings/unfold.py:114
-msgid "Audit Logs"
+#: redirectioneaza/settings/unfold.py:157
+msgid "Advanced"
 msgstr ""
-
-#: redirectioneaza/settings/unfold.py:125
-msgid "Failed tasks"
-msgstr "Failed tasks"
-
-#: redirectioneaza/settings/unfold.py:131
-msgid "Queued tasks"
-msgstr "Queued tasks"
-
-#: redirectioneaza/settings/unfold.py:137
-msgid "Scheduled tasks"
-msgstr "Scheduled tasks"
-
-#: redirectioneaza/settings/unfold.py:143
-msgid "Successful tasks"
-msgstr "Successful tasks"
 
 #: stats/models.py:11
 msgid "value"
@@ -4296,6 +4302,18 @@ msgstr "Subdomain must contain only alphanumeric characters and '-' (hyphens)."
 #: utils/validators.py:16
 msgid "Subdomain must have between 3 and 100 characters."
 msgstr "Subdomain must have between 3 and 100 characters."
+
+#~ msgid "Failed tasks"
+#~ msgstr "Failed tasks"
+
+#~ msgid "Queued tasks"
+#~ msgstr "Queued tasks"
+
+#~ msgid "Scheduled tasks"
+#~ msgstr "Scheduled tasks"
+
+#~ msgid "Successful tasks"
+#~ msgstr "Successful tasks"
 
 #~ msgid "is accepting forms"
 #~ msgstr "is accepting forms"

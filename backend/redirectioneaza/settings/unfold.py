@@ -4,8 +4,54 @@ from django.utils.translation import gettext_lazy as _
 
 from .app_configs import TITLE
 from .base import VERSION_LABEL
+from .environment import env
 
 # Unfold Admin settings
+
+advanced_sidebar_options = [
+    {
+        "title": _("Audit Logs"),
+        "icon": "history",
+        "link": reverse_lazy("admin:auditlog_logentry_changelist"),
+        "permission": lambda request: request.user.is_superuser,
+    },
+    {
+        "title": _("TASKS — Failed"),
+        "icon": "assignment_late",
+        "link": reverse_lazy("admin:django_q_failure_changelist"),
+        "permission": lambda request: request.user.is_superuser,
+    },
+    {
+        "title": _("TASKS — Queued"),
+        "icon": "assignment_add",
+        "link": reverse_lazy("admin:django_q_ormq_changelist"),
+        "permission": lambda request: request.user.is_superuser,
+    },
+    {
+        "title": _("TASKS — Scheduled"),
+        "icon": "assignment",
+        "link": reverse_lazy("admin:django_q_schedule_changelist"),
+        "permission": lambda request: request.user.is_superuser,
+    },
+    {
+        "title": _("TASKS — Successful"),
+        "icon": "assignment_turned_in",
+        "link": reverse_lazy("admin:django_q_success_changelist"),
+        "permission": lambda request: request.user.is_superuser,
+    },
+]
+
+if env.str("EMAIL_BACKEND") == "django_ses.SESBackend":
+    advanced_sidebar_options.insert(
+        0,
+        {
+            "title": _("Django SES Stats"),
+            "icon": "email",
+            "link": reverse_lazy("admin:django_ses_sesstat_changelist"),
+            "permission": lambda request: request.user.is_superuser,
+        },
+    )
+
 
 SIDEBAR_NAVIGATION = [
     # Supported icon set: https://fonts.google.com/icons
@@ -108,44 +154,9 @@ SIDEBAR_NAVIGATION = [
         ],
     },
     {
-        "title": _("Audit Logs"),
-        "items": [
-            {
-                "title": _("Audit Logs"),
-                "icon": "history",
-                "link": reverse_lazy("admin:auditlog_logentry_changelist"),
-                "permission": lambda request: request.user.is_superuser,
-            },
-        ],
-    },
-    {
-        "title": _("Background Tasks"),
-        "items": [
-            {
-                "title": _("Failed tasks"),
-                "icon": "assignment_late",
-                "link": reverse_lazy("admin:django_q_failure_changelist"),
-                "permission": lambda request: request.user.is_superuser,
-            },
-            {
-                "title": _("Queued tasks"),
-                "icon": "assignment_add",
-                "link": reverse_lazy("admin:django_q_ormq_changelist"),
-                "permission": lambda request: request.user.is_superuser,
-            },
-            {
-                "title": _("Scheduled tasks"),
-                "icon": "assignment",
-                "link": reverse_lazy("admin:django_q_schedule_changelist"),
-                "permission": lambda request: request.user.is_superuser,
-            },
-            {
-                "title": _("Successful tasks"),
-                "icon": "assignment_turned_in",
-                "link": reverse_lazy("admin:django_q_success_changelist"),
-                "permission": lambda request: request.user.is_superuser,
-            },
-        ],
+        "title": _("Advanced"),
+        "collapsible": True,
+        "items": advanced_sidebar_options,
     },
 ]
 

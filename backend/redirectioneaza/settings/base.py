@@ -103,6 +103,9 @@ INSTALLED_APPS = [
     "users",
 ]
 
+if env.str("EMAIL_BACKEND") == "django_ses.SESBackend":
+    INSTALLED_APPS.append("django_ses")
+
 if not env.bool("USE_S3"):
     INSTALLED_APPS.append("whitenoise.runserver_nostatic")
 
