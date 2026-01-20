@@ -1454,7 +1454,7 @@ msgstr "organizații înregistrate în platformă"
 
 #: donations/views/site.py:61
 msgid "redirected to NGOs through the platform"
-msgstr "redirecționați către ONG-uri prin redirectioneaza.ro"
+msgstr "redirecționate către ONG-uri din 2017 prin redirectioneaza.ro"
 
 #: donations/views/site.py:62
 msgid "> €9 million"
