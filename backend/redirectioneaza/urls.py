@@ -139,7 +139,6 @@ urlpatterns = (
         path("admin/avansat/login/", RedirectView.as_view(pattern_name="login", permanent=True)),
         path("admin/avansat/", RedirectView.as_view(pattern_name="admin:index", permanent=True)),
         path("admin/django/", RedirectView.as_view(pattern_name="admin:index", permanent=True)),
-        # ADMIN HANDLERS
         path("admin/organizatii/", RedirectView.as_view(pattern_name="admin:index", permanent=True)),
         path("admin/", admin.site.urls),
         # must always be the last set of urls
@@ -164,6 +163,13 @@ urlpatterns = (
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 )
+
+if settings.EMAIL_BACKEND == "django_ses.SESBackend":
+    urlpatterns.extend(
+        [
+            path("admin/django-ses/", include("django_ses.urls")),
+        ]
+    )
 
 if settings.DEBUG:
     urlpatterns.extend(

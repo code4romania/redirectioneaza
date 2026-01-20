@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-20 13:12+0200\n"
+"POT-Creation-Date: 2026-01-20 13:23+0200\n"
 "PO-Revision-Date: 2025-02-12 12:44+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Armenian <https://translate.commitglobal.org/projects/"
@@ -208,7 +208,7 @@ msgstr "Ունի օգտատեր"
 #: donations/admin/ngos.py:204 donations/admin/ngos.py:322 donations/apps.py:8
 #: donations/views/dashboard/stats_helpers/utils.py:12
 #: redirectioneaza/context_processors/headers.py:68
-#: redirectioneaza/settings/unfold.py:30 redirectioneaza/settings/unfold.py:45
+#: redirectioneaza/settings/unfold.py:76 redirectioneaza/settings/unfold.py:91
 msgid "Donations"
 msgstr "Նվիրատվություններ"
 
@@ -871,7 +871,7 @@ msgstr "ակտիվ է"
 
 #: donations/models/ngos.py:264 partners/models.py:68
 #: redirectioneaza/context_processors/headers.py:63
-#: redirectioneaza/settings/unfold.py:33
+#: redirectioneaza/settings/unfold.py:79
 msgid "NGOs"
 msgstr "ՀԿ-ներ"
 
@@ -942,7 +942,7 @@ msgstr ""
 
 #: donations/models/ngos.py:524 donations/views/ngo_account/causes.py:181
 #: donations/views/ngo_account/causes.py:232 partners/admin.py:51
-#: partners/models.py:75 redirectioneaza/settings/unfold.py:39
+#: partners/models.py:75 redirectioneaza/settings/unfold.py:85
 #: templates/v2/ngo-account/causes/main.html:11
 #, fuzzy
 #| msgid "Partners"
@@ -1686,7 +1686,7 @@ msgstr ""
 msgid "Section"
 msgstr "նկարագրություն"
 
-#: frequent_questions/models.py:16 redirectioneaza/settings/unfold.py:80
+#: frequent_questions/models.py:16 redirectioneaza/settings/unfold.py:126
 #, fuzzy
 #| msgid "Options"
 msgid "Sections"
@@ -1702,7 +1702,7 @@ msgstr "նկարագրություն"
 msgid "Answer"
 msgstr ""
 
-#: frequent_questions/models.py:41 redirectioneaza/settings/unfold.py:86
+#: frequent_questions/models.py:41 redirectioneaza/settings/unfold.py:132
 #, fuzzy
 #| msgid "Options"
 msgid "Questions"
@@ -1768,7 +1768,7 @@ msgstr ""
 
 #: partners/apps.py:8 partners/models.py:90
 #: redirectioneaza/context_processors/headers.py:73
-#: redirectioneaza/settings/unfold.py:69
+#: redirectioneaza/settings/unfold.py:115
 msgid "Partners"
 msgstr "Գործընկերներ"
 
@@ -1895,7 +1895,7 @@ msgstr ""
 
 #: redirectioneaza/context_processors/headers.py:27
 #: redirectioneaza/context_processors/headers.py:37
-#: redirectioneaza/settings/unfold.py:77
+#: redirectioneaza/settings/unfold.py:123
 #, fuzzy
 #| msgid "Frequently Asked Questions"
 msgid "Frequently asked questions"
@@ -1943,14 +1943,14 @@ msgid "FAQ Questions"
 msgstr "Ընտրանքներ"
 
 #: redirectioneaza/context_processors/headers.py:83
-#: redirectioneaza/settings/unfold.py:94 redirectioneaza/settings/unfold.py:97
-#: users/apps.py:8
+#: redirectioneaza/settings/unfold.py:140
+#: redirectioneaza/settings/unfold.py:143 users/apps.py:8
 #, fuzzy
 msgid "Users"
 msgstr "Օգտագործողներ"
 
 #: redirectioneaza/context_processors/headers.py:88
-#: redirectioneaza/settings/unfold.py:13 redirectioneaza/settings/unfold.py:16
+#: redirectioneaza/settings/unfold.py:59 redirectioneaza/settings/unfold.py:62
 msgid "Dashboard"
 msgstr "Վահանակ"
 
@@ -2022,58 +2022,64 @@ msgid "My Organization"
 msgstr "NGO Hub կազմակերպության նույնականացման համար"
 
 #: redirectioneaza/settings/django_q.py:24
-#: redirectioneaza/settings/unfold.py:122
 msgid "Background Tasks"
 msgstr ""
 
-#: redirectioneaza/settings/unfold.py:22
+#: redirectioneaza/settings/unfold.py:13
+msgid "Audit Logs"
+msgstr ""
+
+#: redirectioneaza/settings/unfold.py:19
+msgid "TASKS — Failed"
+msgstr ""
+
+#: redirectioneaza/settings/unfold.py:25
+msgid "TASKS — Queued"
+msgstr ""
+
+#: redirectioneaza/settings/unfold.py:31
+msgid "TASKS — Scheduled"
+msgstr ""
+
+#: redirectioneaza/settings/unfold.py:37
+msgid "TASKS — Successful"
+msgstr ""
+
+#: redirectioneaza/settings/unfold.py:48
+msgid "Django SES Stats"
+msgstr ""
+
+#: redirectioneaza/settings/unfold.py:68
 #, fuzzy
 #| msgid "address"
 msgid "Home page"
 msgstr "հասցե"
 
-#: redirectioneaza/settings/unfold.py:51
+#: redirectioneaza/settings/unfold.py:97
 #, fuzzy
 #| msgid "Generate donations archive"
 msgid "Internal ANAF Archives"
 msgstr "Ստեղծել նվիրատվությունների արխիվ"
 
-#: redirectioneaza/settings/unfold.py:57
+#: redirectioneaza/settings/unfold.py:103
 #, fuzzy
 #| msgid "Generate donations archive"
 msgid "External ANAF Archives"
 msgstr "Ստեղծել նվիրատվությունների արխիվ"
 
-#: redirectioneaza/settings/unfold.py:63
+#: redirectioneaza/settings/unfold.py:109
 #, fuzzy
 #| msgid "Donations"
 msgid "Donation downloads"
 msgstr "Նվիրատվություններ"
 
-#: redirectioneaza/settings/unfold.py:103 users/models.py:180
+#: redirectioneaza/settings/unfold.py:149 users/models.py:180
 msgid "Groups"
 msgstr "Խմբեր"
 
-#: redirectioneaza/settings/unfold.py:111
-#: redirectioneaza/settings/unfold.py:114
-msgid "Audit Logs"
+#: redirectioneaza/settings/unfold.py:157
+msgid "Advanced"
 msgstr ""
-
-#: redirectioneaza/settings/unfold.py:125
-msgid "Failed tasks"
-msgstr "Չհաջողված առաջադրանքներ"
-
-#: redirectioneaza/settings/unfold.py:131
-msgid "Queued tasks"
-msgstr "Հերթագրված առաջադրանքներ"
-
-#: redirectioneaza/settings/unfold.py:137
-msgid "Scheduled tasks"
-msgstr "Պլանավորված առաջադրանքներ"
-
-#: redirectioneaza/settings/unfold.py:143
-msgid "Successful tasks"
-msgstr "Հաջողված առաջադրանքներ"
 
 #: stats/models.py:11
 msgid "value"
@@ -4395,6 +4401,18 @@ msgstr "Ենթադոմեյնը պետք է պարունակի միայն տառ�
 #: utils/validators.py:16
 msgid "Subdomain must have between 3 and 100 characters."
 msgstr "Ենթադոմեյնը պետք է պարունակի 3-ից 100 նիշ:"
+
+#~ msgid "Failed tasks"
+#~ msgstr "Չհաջողված առաջադրանքներ"
+
+#~ msgid "Queued tasks"
+#~ msgstr "Հերթագրված առաջադրանքներ"
+
+#~ msgid "Scheduled tasks"
+#~ msgstr "Պլանավորված առաջադրանքներ"
+
+#~ msgid "Successful tasks"
+#~ msgstr "Հաջողված առաջադրանքներ"
 
 #~ msgid "is accepting forms"
 #~ msgstr "ընդունում է ձևաթղթեր"
