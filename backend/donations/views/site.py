@@ -59,7 +59,7 @@ class HomePage(BaseVisibleTemplateView):
             },
             {
                 "title": _("redirected to NGOs through the platform"),
-                "value": _("> €2 million"),
+                "value": _("> €9 million"),
                 "timestamp": timezone.now(),
             },
         ]

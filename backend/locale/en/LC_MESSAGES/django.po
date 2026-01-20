@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-08 13:23+0200\n"
+"POT-Creation-Date: 2026-01-20 13:12+0200\n"
 "PO-Revision-Date: 2025-03-27 14:48+0000\n"
 "Last-Translator: Andrei Ioniță <andrei.ionita@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -395,7 +395,7 @@ msgid "Slug"
 msgstr "Slug"
 
 #: donations/forms/ngo_account.py:113 donations/forms/ngo_account.py:115
-#: donations/forms/ngo_account.py:172 donations/forms/ngo_account.py:174
+#: donations/forms/ngo_account.py:171 donations/forms/ngo_account.py:173
 #: donations/models/byof.py:58 donations/views/api_download.py:50
 #: templates/v2/ngo-account/byof/list-header.html:10
 #: templates/v2/ngo-account/byof/modal.html:75
@@ -403,33 +403,33 @@ msgstr "Slug"
 msgid "IBAN"
 msgstr "IBAN"
 
-#: donations/forms/ngo_account.py:148
+#: donations/forms/ngo_account.py:147
 #, fuzzy
 #| msgid "An NGO with this slug already exists."
 msgid "A cause with this URL already exists."
 msgstr "An NGO with this slug already exists."
 
-#: donations/forms/ngo_account.py:151
+#: donations/forms/ngo_account.py:150
 msgid "This slug is already used by another form."
 msgstr "This URL is already used by another NGO."
 
-#: donations/forms/ngo_account.py:154
+#: donations/forms/ngo_account.py:153
 msgid "This slug is not allowed."
 msgstr "This slug is not allowed."
 
-#: donations/forms/ngo_account.py:165
+#: donations/forms/ngo_account.py:164
 #, fuzzy
 #| msgid "An NGO with this slug already exists."
 msgid "A cause with this IBAN already exists."
 msgstr "An NGO with this slug already exists."
 
-#: donations/forms/ngo_account.py:177
+#: donations/forms/ngo_account.py:176
 #, fuzzy
 #| msgid "PDF file"
 msgid "BYOF file"
 msgstr "PDF file"
 
-#: donations/forms/ngo_account.py:178
+#: donations/forms/ngo_account.py:177
 msgid "Upload the file with the data you want to transform into an ANAF XML."
 msgstr ""
 
@@ -1565,7 +1565,9 @@ msgid "redirected to NGOs through the platform"
 msgstr "redirected to NGOs through the platform"
 
 #: donations/views/site.py:62
-msgid "> €2 million"
+#, fuzzy
+#| msgid "> €2 million"
+msgid "> €9 million"
 msgstr "> €2 million"
 
 #: donations/views/site.py:115

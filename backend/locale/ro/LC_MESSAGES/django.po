@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-08 13:23+0200\n"
+"POT-Creation-Date: 2026-01-20 13:12+0200\n"
 "PO-Revision-Date: 2025-03-27 14:49+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -386,7 +386,7 @@ msgid "Slug"
 msgstr "URL"
 
 #: donations/forms/ngo_account.py:113 donations/forms/ngo_account.py:115
-#: donations/forms/ngo_account.py:172 donations/forms/ngo_account.py:174
+#: donations/forms/ngo_account.py:171 donations/forms/ngo_account.py:173
 #: donations/models/byof.py:58 donations/views/api_download.py:50
 #: templates/v2/ngo-account/byof/list-header.html:10
 #: templates/v2/ngo-account/byof/modal.html:75
@@ -394,27 +394,27 @@ msgstr "URL"
 msgid "IBAN"
 msgstr "IBAN"
 
-#: donations/forms/ngo_account.py:148
+#: donations/forms/ngo_account.py:147
 msgid "A cause with this URL already exists."
 msgstr "O cauză cu acest url există deja."
 
-#: donations/forms/ngo_account.py:151
+#: donations/forms/ngo_account.py:150
 msgid "This slug is already used by another form."
 msgstr "Acest URL este deja folosit."
 
-#: donations/forms/ngo_account.py:154
+#: donations/forms/ngo_account.py:153
 msgid "This slug is not allowed."
 msgstr "Acest url nu este permis."
 
-#: donations/forms/ngo_account.py:165
+#: donations/forms/ngo_account.py:164
 msgid "A cause with this IBAN already exists."
 msgstr "O cauză cu acest IBAN există deja."
 
-#: donations/forms/ngo_account.py:177
+#: donations/forms/ngo_account.py:176
 msgid "BYOF file"
 msgstr "Fișier extern"
 
-#: donations/forms/ngo_account.py:178
+#: donations/forms/ngo_account.py:177
 msgid "Upload the file with the data you want to transform into an ANAF XML."
 msgstr ""
 "Încarcă fișierul cu datele pe care vrei să le transformi într-un XML ANAF."
@@ -1457,8 +1457,8 @@ msgid "redirected to NGOs through the platform"
 msgstr "redirecționați către ONG-uri prin redirectioneaza.ro"
 
 #: donations/views/site.py:62
-msgid "> €2 million"
-msgstr "> 2 milioane €"
+msgid "> €9 million"
+msgstr "> 9 milioane €"
 
 #: donations/views/site.py:115
 msgid "About redirectioneaza.ro"
@@ -3282,8 +3282,8 @@ msgid ""
 "still accessible via a direct link, or \"Private\" to restrict access only "
 "to you."
 msgstr ""
-"Alege cine poate vedea și accesa formularul tău. Selectează „Public” pentru a "
-"îl face accesibil tuturor, „Nelistat” pentru a nu apărea în rezultatele de "
+"Alege cine poate vedea și accesa formularul tău. Selectează „Public” pentru "
+"a îl face accesibil tuturor, „Nelistat” pentru a nu apărea în rezultatele de "
 "căutare, dar totuși accesibil printr-un link direct, sau „Privat” pentru a "
 "restricționa accesul doar pentru tine."
 

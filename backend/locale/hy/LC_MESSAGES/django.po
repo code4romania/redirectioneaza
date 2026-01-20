@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-08 13:23+0200\n"
+"POT-Creation-Date: 2026-01-20 13:12+0200\n"
 "PO-Revision-Date: 2025-02-12 12:44+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Armenian <https://translate.commitglobal.org/projects/"
@@ -411,7 +411,7 @@ msgid "Slug"
 msgstr ""
 
 #: donations/forms/ngo_account.py:113 donations/forms/ngo_account.py:115
-#: donations/forms/ngo_account.py:172 donations/forms/ngo_account.py:174
+#: donations/forms/ngo_account.py:171 donations/forms/ngo_account.py:173
 #: donations/models/byof.py:58 donations/views/api_download.py:50
 #: templates/v2/ngo-account/byof/list-header.html:10
 #: templates/v2/ngo-account/byof/modal.html:75
@@ -419,31 +419,31 @@ msgstr ""
 msgid "IBAN"
 msgstr ""
 
-#: donations/forms/ngo_account.py:148
+#: donations/forms/ngo_account.py:147
 msgid "A cause with this URL already exists."
 msgstr ""
 
-#: donations/forms/ngo_account.py:151
+#: donations/forms/ngo_account.py:150
 msgid "This slug is already used by another form."
 msgstr ""
 
-#: donations/forms/ngo_account.py:154
+#: donations/forms/ngo_account.py:153
 #, fuzzy
 #| msgid "The ID number format is not valid"
 msgid "This slug is not allowed."
 msgstr "Նույնականացման համարի ձևաչափը վավեր չէ"
 
-#: donations/forms/ngo_account.py:165
+#: donations/forms/ngo_account.py:164
 msgid "A cause with this IBAN already exists."
 msgstr ""
 
-#: donations/forms/ngo_account.py:177
+#: donations/forms/ngo_account.py:176
 #, fuzzy
 #| msgid "PDF file"
 msgid "BYOF file"
 msgstr "PDF ֆայլ"
 
-#: donations/forms/ngo_account.py:178
+#: donations/forms/ngo_account.py:177
 msgid "Upload the file with the data you want to transform into an ANAF XML."
 msgstr ""
 
@@ -1639,7 +1639,7 @@ msgid "redirected to NGOs through the platform"
 msgstr ""
 
 #: donations/views/site.py:62
-msgid "> €2 million"
+msgid "> €9 million"
 msgstr ""
 
 #: donations/views/site.py:115
