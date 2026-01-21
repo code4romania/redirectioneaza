@@ -142,7 +142,7 @@ def validate_registration_number(ngo, registration_number) -> str | None:
     return ""
 
 
-def delete_ngo_prefilled_forms(ngo_id):
+def delete_ngo_prefilled_forms(ngo_id: int):
     """
     Delete prefilled forms associated with the given NGO ID.
     :param ngo_id: The ID of the NGO whose prefilled forms are to be deleted.

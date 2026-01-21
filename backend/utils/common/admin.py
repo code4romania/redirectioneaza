@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 class HasNgoFilter(admin.SimpleListFilter):
     title = _("Has NGO")
     parameter_name = "has_ngo"
+    horizontal = True
 
     def lookups(self, request, model_admin):
         return ("yes", "Yes"), ("no", "No")

@@ -52,7 +52,7 @@ class DonorModel(BaseModel):
     period: str | None = "1"
 
 
-def handle_external_data_processing(own_upload_id) -> dict | None:
+def handle_external_data_processing(own_upload_id: int) -> dict | None:
     try:
         own_upload = OwnFormsUpload.objects.select_related("ngo").get(pk=own_upload_id)
     except OwnFormsUpload.DoesNotExist:
