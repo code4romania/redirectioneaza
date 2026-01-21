@@ -23,13 +23,22 @@ class DonorAnonymizationTestCase(TestCase):
     def test_full_donor_anonymization(self):
         donor: Donor = DonorTestBuilder(cause=self.cause).with_all_fields().build()
 
-        self.assertNotEqual(donor.email, "")
         self.assertNotEqual(donor.f_name, "")
         self.assertNotEqual(donor.l_name, "")
         self.assertNotEqual(donor.initial, "")
         self.assertNotEqual(donor.get_cnp(), "")
 
-        donor.remove_personal_data(commit=True)
+        self.assertNotEqual(donor.city, "")
+        self.assertNotEqual(donor.county, "")
+
+        self.assertNotEqual(donor.phone, "")
+        self.assertNotEqual(donor.email, "")
+
+        self.assertNotEqual(donor.geoip, {})
+
+        self.assertNotEqual(donor.pdf_file.name, "")
+
+        donor.remove_personal_data()
 
         donor.refresh_from_db()
 
@@ -38,3 +47,13 @@ class DonorAnonymizationTestCase(TestCase):
         self.assertEqual(donor.l_name, "")
         self.assertEqual(donor.initial, "")
         self.assertEqual(donor.get_cnp(), "")
+
+        self.assertNotEqual(donor.city, "")
+        self.assertNotEqual(donor.county, "")
+
+        self.assertEqual(donor.phone, "")
+        self.assertEqual(donor.email, "")
+
+        self.assertEqual(donor.geoip, {})
+
+        self.assertEqual(donor.pdf_file.name, "")

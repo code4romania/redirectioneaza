@@ -1,7 +1,6 @@
 import random
 import string
 
-from django.core.files import File
 from django.core.management import BaseCommand
 from django.db.models import QuerySet
 from django_q.tasks import async_task
@@ -18,7 +17,7 @@ fake = Faker("ro_RO")
 
 def _generate_pdf_for_donor(donor_pk: int):
     selected_donor: Donor = Donor.objects.get(pk=donor_pk)
-    selected_donor.pdf_file = File(create_full_pdf(selected_donor))
+    selected_donor.pdf_file = create_full_pdf(selected_donor)
     selected_donor.save()
 
 

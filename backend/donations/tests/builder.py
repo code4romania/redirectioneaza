@@ -33,7 +33,8 @@ class DonorTestBuilder:
 
         donor.save()
 
-        donor.pdf_file = File(create_full_pdf(donor))
+        pdf = create_full_pdf(donor)
+        donor.pdf_file.save(f"donor_{donor.pk}.pdf", File(pdf))
 
         return donor
 

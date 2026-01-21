@@ -14,7 +14,6 @@ from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import ngettext_lazy
-from gevent.libev.watcher import async_
 from unfold.admin import ModelAdmin
 from unfold.contrib.filters.admin import RangeDateFilter, TextFilter
 from unfold.dataclasses import UnfoldAction
@@ -148,8 +147,6 @@ def anonymize_old_donations():
 
     base_donor_qs: QuerySet[Donor] = Donor.objects.filter(personal_data_removal_started_at__isnull=True)
 
-    # XXX: NO
-    remove_personal_data_in_bulk(Donor.objects.all())
     remove_personal_data_in_bulk(base_donor_qs.filter(date_created__date__lte=two_years_ago_date))
     remove_personal_data_in_bulk(base_donor_qs.filter(two_years=False, date_created__lte=one_year_ago_date))
 
@@ -319,6 +316,17 @@ class DonorAdmin(ModelAdmin):
         task_results = {TASK_SUCCESS_FLAG: 0, TASK_FAILURE_FLAG: 0, TASK_SCHEDULED_FLAG: 0}
 
         queryset_size: int = queryset.count()
+        if queryset_size > 100:
+            self.message_user(
+                request,
+                message=_(
+                    "Anonymizing a large number of redirections is not allowed via bulk action. "
+                    "This action should be done through a scheduled task or specific actions."
+                ),
+                level=messages.ERROR,
+            )
+            return
+
         for donor in queryset:
             task_result: str = remove_personal_data(donor)
             task_results[task_result] += 1

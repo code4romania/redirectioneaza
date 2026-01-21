@@ -194,11 +194,9 @@ class Donor(models.Model):
         if commit:
             self.save()
 
-    def remove_personal_data(self, commit: bool = True):
+    def remove_personal_data(self):
         if not self.personal_data_removal_started_at:
             self.personal_data_removal_started_at = timezone.now()
-
-        self.personal_data_removed_at = timezone.now()
 
         self.l_name = ""
         self.f_name = ""
@@ -212,11 +210,12 @@ class Donor(models.Model):
 
         self.geoip = {}
 
-        self.pdf_file.delete(save=commit)
+        self.pdf_file.delete()
         self.filename = ""
 
-        if commit:
-            self.save()
+        self.personal_data_removed_at = timezone.now()
+
+        self.save()
 
     def set_cnp(self, cnp: str):
         self.encrypted_cnp = self.encrypt_cnp(cnp)
