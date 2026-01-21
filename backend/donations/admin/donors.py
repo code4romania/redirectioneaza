@@ -14,6 +14,7 @@ from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import ngettext_lazy
+from gevent.libev.watcher import async_
 from unfold.admin import ModelAdmin
 from unfold.contrib.filters.admin import RangeDateFilter, TextFilter
 from unfold.dataclasses import UnfoldAction
@@ -127,7 +128,7 @@ def remove_personal_data(donor: Donor) -> str:
         donor.personal_data_removal_started_at = timezone.now()
         donor.save()
 
-        result = async_wrapper(donor.remove_personal_data, settings.USER_ANONIMIZATION_METHOD)
+        result = async_wrapper(donor.remove_personal_data, async_flag=settings.USER_ANONIMIZATION_METHOD)
 
         return TASK_SUCCESS_FLAG if result is None else TASK_SCHEDULED_FLAG
     except Exception as e:
@@ -392,7 +393,7 @@ class DonorAdmin(ModelAdmin):
 
     @action(description=_("Anonymize old donations"), url_path="anonymize-old-donations")
     def run_anonymize_old_donations(self, request):
-        async_wrapper(anonymize_old_donations, flag=settings.USER_ANONIMIZATION_METHOD)
+        async_wrapper(anonymize_old_donations, async_flag=settings.USER_ANONIMIZATION_METHOD)
 
         self.message_user(request, _("Succesfully scheduled"))
 

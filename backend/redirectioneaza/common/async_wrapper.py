@@ -7,8 +7,8 @@ from django_q.tasks import async_task
 
 def async_wrapper(
     func: Callable,
-    flag: str = None,
-    *args: Any,
+    *,
+    async_flag: str = None,
     **kwargs: Any,
 ) -> Callable:
     """
@@ -26,9 +26,9 @@ def async_wrapper(
         The result of the function execution
     """
 
-    run_method: str = flag if flag else settings.DEFAULT_RUN_METHOD
+    run_method: str = async_flag if async_flag else settings.DEFAULT_RUN_METHOD
 
     if run_method == "async":
-        return async_task(func, *args, **kwargs)
+        return async_task(func, **kwargs)
 
-    return func(*args, **kwargs)
+    return func(**kwargs)
