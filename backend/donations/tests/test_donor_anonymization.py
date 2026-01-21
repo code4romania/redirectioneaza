@@ -1,0 +1,40 @@
+from django.test import TestCase
+from faker import Faker
+
+from donations.models import Cause, Donor, Ngo
+from donations.tests.builder import DonorTestBuilder
+
+faker = Faker("ro_RO")
+
+
+class DonorAnonymizationTestCase(TestCase):
+    def setUp(self):
+        self.ngo = Ngo.objects.create(
+            name="Test NGO",
+            registration_number=faker.vat_id(),
+            address="123 Test St, Test City",
+        )
+        self.cause = Cause.objects.create(
+            ngo=self.ngo,
+            name="Test Cause",
+            description="A cause for testing purposes.",
+        )
+
+    def test_full_donor_anonymization(self):
+        donor: Donor = DonorTestBuilder(cause=self.cause).with_all_fields().build()
+
+        self.assertNotEqual(donor.email, "")
+        self.assertNotEqual(donor.f_name, "")
+        self.assertNotEqual(donor.l_name, "")
+        self.assertNotEqual(donor.initial, "")
+        self.assertNotEqual(donor.get_cnp(), "")
+
+        donor.remove_personal_data(commit=True)
+
+        donor.refresh_from_db()
+
+        self.assertEqual(donor.email, "")
+        self.assertEqual(donor.f_name, "")
+        self.assertEqual(donor.l_name, "")
+        self.assertEqual(donor.initial, "")
+        self.assertEqual(donor.get_cnp(), "")
