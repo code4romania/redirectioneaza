@@ -2736,7 +2736,7 @@ msgstr ""
 "Mulțumim că ai ales să susții %(cause_name)s! Formularul de redirecționare "
 "completat a fost eliminat la cererea organizației. Acest lucru se poate "
 "întâmpla, de exemplu, dacă a existat o greșeală în formularul inițial sau "
-"dacă acesta a fost completat de multiple ori. "
+"dacă acesta a fost completat de multiple ori."
 
 #: templates/v2/emails/donor/removed-redirection-ngo/main.html:28
 #: templates/v2/emails/donor/removed-redirection-ngo/main.txt:16

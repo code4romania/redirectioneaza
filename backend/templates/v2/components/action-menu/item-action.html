@@ -1,4 +1,8 @@
-<form action="{{ action.form }}" method="post" {% if action.modal == "confirmation" %} x-data="{ modalIsOpen: false }"{% endif %}>
+<form
+  action="{{ action.form }}"
+  method="post"
+  {% if action.modal == "confirmation" %} x-data="{ modalIsOpen: false }"{% endif %}
+>
 
   {% csrf_token %}
 
@@ -17,18 +21,19 @@
         name="{{ action.name }}"
         value="{{ action.value }}"
       {% endif %}
-      class="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 hover:cursor-pointer"
+        class="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 hover:cursor-pointer"
     {% else %}
-      class="w-full px-4 py-2 text-left text-sm text-gray-400"
+        class="w-full px-4 py-2 text-left text-sm text-gray-400"
     {% endif %}
 
     {% if help_text %}
-      x-data x-tooltip.raw="{{ action.help_text }}"
+        x-data x-tooltip.raw="{{ help_text }}"
     {% endif %}
 
-      role="menuitem"
-      tabindex="-1"
-      id="menu-item-{{ index }}">
+        role="menuitem"
+        tabindex="-1"
+        id="menu-item-{{ index }}"
+  >
 
     <span>{{ title }}</span>
 

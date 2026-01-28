@@ -31,10 +31,16 @@ def soft_delete_donor(donor_pk: int, notify: bool = False) -> str:
         donor.remove()
 
         if notify:
-            mail_context = {
-                "cause_name": donor.cause.name,
-                "action_url": build_uri(reverse("twopercent", kwargs={"cause_slug": donor.cause.slug})),
-            }
+            if donor.cause:
+                mail_context = {
+                    "cause_name": donor.cause.name,
+                    "action_url": build_uri(reverse("twopercent", kwargs={"cause_slug": donor.cause.slug})),
+                }
+            else:
+                mail_context = {
+                    "cause_name": _("<Cause no longer available>"),
+                    "action_url": build_uri(reverse("home")),
+                }
             mail_context.update(extend_email_context())
 
             send_email(
