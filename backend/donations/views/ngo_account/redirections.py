@@ -325,6 +325,33 @@ class RedirectionDownloadLinkView(BaseVisibleTemplateView):
         return redirect(donor.pdf_file.url)
 
 
+class RedirectionDisableLinkView(BaseVisibleTemplateView):
+    title = _("Disable redirection")
+
+    @method_decorator(login_required(login_url=reverse_lazy("login")))
+    def get(self, request, form_id, *args, **kwargs):
+        user: User = request.user
+        ngo: Ngo = user.ngo if user.ngo else None
+
+        if not ngo:
+            raise Http404
+
+        if not ngo.is_active:
+            raise PermissionDenied(_("Your organization is not active"))
+
+        try:
+            donor = Donor.objects.get(pk=form_id, ngo=ngo, has_signed=True)
+        except Donor.DoesNotExist:
+            raise Http404
+
+        donor.is_available = False
+        donor.save(update_fields=["is_available"])
+
+        messages.success(request, _("The redirection has been disabled successfully."))
+
+        return redirect(reverse("my-organization:redirections"))
+
+
 class RedirectionsDownloadJobLinkView(FileDownloadProxy):
     model = RedirectionsDownloadJob
 
