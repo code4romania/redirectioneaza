@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="generate_donations" type="Python.DjangoServer" factoryName="Django server" folderName="mock-data" singleton="false">
+  <configuration default="false" name="002.001 generate_causes 1" type="Python.DjangoServer" factoryName="Django server" folderName="mock-data" singleton="false">
     <module name="redirectioneaza" />
     <option name="ENV_FILES" value="$PROJECT_DIR$/.env.local" />
     <option name="INTERPRETER_OPTIONS" value="" />
@@ -9,19 +9,20 @@
       <env name="DJANGO_SETTINGS_MODULE" value="redirectioneaza.settings" />
     </envs>
     <option name="SDK_HOME" value="" />
-    <option name="SDK_NAME" value="Python 3.12 (redirectioneaza)" />
+    <option name="SDK_NAME" value="uv (redirectioneaza)" />
     <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/backend" />
     <option name="IS_MODULE_SDK" value="false" />
     <option name="ADD_CONTENT_ROOTS" value="true" />
     <option name="ADD_SOURCE_ROOTS" value="true" />
+    <option name="RUN_TOOL" value="true" />
     <option name="launchJavascriptDebuger" value="false" />
     <option name="host" value="" />
-    <option name="additionalOptions" value="20" />
+    <option name="additionalOptions" value="1" />
     <option name="browserUrl" value="" />
     <option name="runTestServer" value="false" />
     <option name="runNoReload" value="false" />
     <option name="useCustomRunCommand" value="true" />
-    <option name="customRunCommand" value="generate_donations" />
+    <option name="customRunCommand" value="generate_other_causes" />
     <method v="2" />
   </configuration>
 </component>
