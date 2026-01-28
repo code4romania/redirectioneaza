@@ -48,7 +48,7 @@
                 {% if cancel_id %}id="{{ cancel_id }}"{% endif %}
                 type="{{ cancel_type|default:'button' }}"
                 class="
-                  {{ cancel_classes|default:'w-full text-center outline-solid outline-gray-400 bg-white sm:text-base text-sm sm:px-6 sm:py-2 px-2 py-1 shadow-xs rounded-full text-gray-900 hover:bg-gray-100 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-300' }}"
+                  {{ cancel_classes|default:'w-full text-center outline-solid outline-gray-400 bg-white sm:text-base text-sm sm:px-6 sm:py-2 px-2 py-1 shadow-xs rounded-full text-gray-900 hover:bg-gray-100 hover:cursor-pointer focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-300' }}"
                 {% if cancel_attrs %}{{ cancel_attrs|safe }}{% endif %}>
                 {{ cancel_label }}
               </button>
@@ -59,7 +59,7 @@
                 {% if confirm_id %}id="{{ confirm_id }}"{% endif %}
                 type="{{ confirm_type|default:'button' }}"
                 class="
-                  {{ confirm_classes|default:'w-full text-center outline-solid outline-red-600 bg-red-600 sm:text-base text-sm sm:px-6 sm:py-2 px-2 py-1 shadow-xs rounded-full text-white hover:bg-red-200 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-300' }}"
+                  {{ confirm_classes|default:'w-full text-center outline-solid outline-red-600 bg-red-600 sm:text-base text-sm sm:px-6 sm:py-2 px-2 py-1 shadow-xs rounded-full text-white hover:bg-red-200 hover:cursor-pointer focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-300' }}"
                 {% if confirm_attrs %}{{ confirm_attrs|safe }}{% endif %}>
                 {{ confirm_label }}
               </button>

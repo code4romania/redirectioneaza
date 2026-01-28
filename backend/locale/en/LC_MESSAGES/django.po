@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-20 13:23+0200\n"
+"POT-Creation-Date: 2026-01-28 14:39+0200\n"
 "PO-Revision-Date: 2025-03-27 14:48+0000\n"
 "Last-Translator: Andrei Ioniță <andrei.ionita@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -947,13 +947,13 @@ msgid "Cause doesn't exist"
 msgstr "NGOs registered"
 
 #: donations/templatetags/cause_action_menu.py:90
-#: donations/templatetags/redirection_action_menu.py:33
+#: donations/templatetags/redirection_action_menu.py:66
 #, fuzzy
 #| msgid "Form description"
 msgid "Form options"
 msgstr "Form description"
 
-#: donations/templatetags/redirection_action_menu.py:18
+#: donations/templatetags/redirection_action_menu.py:16
 #: templates/v2/emails/donor/redirection-sans-signature/main.html:18
 #: templates/v2/emails/donor/redirection-with-signature/main.html:20
 #: templates/v2/emails/ngo/new-form-received/main.html:19
@@ -961,8 +961,41 @@ msgstr "Form description"
 msgid "Download form"
 msgstr "Download form"
 
+#: donations/templatetags/redirection_action_menu.py:28
+msgid ""
+"Disabling the redirection will remove it from your organization's list and "
+"prevent it from being added to the ANAF archive."
+msgstr ""
+
+#: donations/templatetags/redirection_action_menu.py:31
+msgid "This action cannot be undone."
+msgstr ""
+
 #: donations/templatetags/redirection_action_menu.py:34
-msgid "Downloads are disabled for unsigned redirections"
+#: donations/views/ngo_account/redirections.py:329
+#, fuzzy
+#| msgid "Successful redirection"
+msgid "Disable redirection"
+msgstr "Successful redirection"
+
+#: donations/templatetags/redirection_action_menu.py:42
+#, fuzzy
+#| msgid "Successful redirection"
+msgid "Disable redirection?"
+msgstr "Successful redirection"
+
+#: donations/templatetags/redirection_action_menu.py:44
+msgid "Disable"
+msgstr ""
+
+#: donations/templatetags/redirection_action_menu.py:45
+msgid "Cancel"
+msgstr ""
+
+#: donations/templatetags/redirection_action_menu.py:68
+msgid ""
+"All operations (i.e., downloading, disabling) are deactivated for unsigned "
+"redirections"
 msgstr ""
 
 #: donations/templatetags/text_format.py:11
@@ -1483,10 +1516,17 @@ msgid "Download donor form"
 msgstr "Download form"
 
 #: donations/views/ngo_account/redirections.py:315
+#: donations/views/ngo_account/redirections.py:340
 #, fuzzy
 #| msgid "The organization's contact info"
 msgid "Your organization is not active"
 msgstr "The organization's contact info"
+
+#: donations/views/ngo_account/redirections.py:350
+#, fuzzy
+#| msgid "The user has been successfully invited."
+msgid "The redirection has been disabled successfully."
+msgstr "The user has been successfully invited."
 
 #: donations/views/ngo_account/user_settings.py:17
 #: templates/v2/ngo-account/settings-account/main.html:10
@@ -2869,11 +2909,11 @@ msgstr "Organization forms"
 msgid "Cause information"
 msgstr "Data sharing information"
 
-#: templates/v2/form/modals/confirmation.html:35
+#: templates/v2/form/modals/confirmation.html:3
 msgid "Continue without signing?"
 msgstr "Continue without signing?"
 
-#: templates/v2/form/modals/confirmation.html:39
+#: templates/v2/form/modals/confirmation.html:5
 msgid ""
 "If you continue without signing online, your form will be generated, and you "
 "will be able to download the PDF, but it will not reach the NGO. We rely on "
@@ -2885,11 +2925,11 @@ msgstr ""
 "you to print, sign the form by hand, and send it to the NGO by post or "
 "email, or you will submit it independently to ANAF."
 
-#: templates/v2/form/modals/confirmation.html:55
+#: templates/v2/form/modals/confirmation.html:10
 msgid "Back"
 msgstr "Back"
 
-#: templates/v2/form/modals/confirmation.html:64
+#: templates/v2/form/modals/confirmation.html:12
 msgid "Continue"
 msgstr "Continue"
 

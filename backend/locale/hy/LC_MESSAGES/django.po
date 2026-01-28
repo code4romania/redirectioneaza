@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-20 13:23+0200\n"
+"POT-Creation-Date: 2026-01-28 14:39+0200\n"
 "PO-Revision-Date: 2025-02-12 12:44+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Armenian <https://translate.commitglobal.org/projects/"
@@ -983,13 +983,13 @@ msgid "Cause doesn't exist"
 msgstr ""
 
 #: donations/templatetags/cause_action_menu.py:90
-#: donations/templatetags/redirection_action_menu.py:33
+#: donations/templatetags/redirection_action_menu.py:66
 #, fuzzy
 #| msgid "description"
 msgid "Form options"
 msgstr "նկարագրություն"
 
-#: donations/templatetags/redirection_action_menu.py:18
+#: donations/templatetags/redirection_action_menu.py:16
 #: templates/v2/emails/donor/redirection-sans-signature/main.html:18
 #: templates/v2/emails/donor/redirection-with-signature/main.html:20
 #: templates/v2/emails/ngo/new-form-received/main.html:19
@@ -999,8 +999,41 @@ msgstr "նկարագրություն"
 msgid "Download form"
 msgstr "Մուտք գործելու սխալ"
 
+#: donations/templatetags/redirection_action_menu.py:28
+msgid ""
+"Disabling the redirection will remove it from your organization's list and "
+"prevent it from being added to the ANAF archive."
+msgstr ""
+
+#: donations/templatetags/redirection_action_menu.py:31
+msgid "This action cannot be undone."
+msgstr ""
+
 #: donations/templatetags/redirection_action_menu.py:34
-msgid "Downloads are disabled for unsigned redirections"
+#: donations/views/ngo_account/redirections.py:329
+#, fuzzy
+#| msgid "Successful tasks"
+msgid "Disable redirection"
+msgstr "Հաջողված առաջադրանքներ"
+
+#: donations/templatetags/redirection_action_menu.py:42
+#, fuzzy
+#| msgid "Successful tasks"
+msgid "Disable redirection?"
+msgstr "Հաջողված առաջադրանքներ"
+
+#: donations/templatetags/redirection_action_menu.py:44
+msgid "Disable"
+msgstr ""
+
+#: donations/templatetags/redirection_action_menu.py:45
+msgid "Cancel"
+msgstr ""
+
+#: donations/templatetags/redirection_action_menu.py:68
+msgid ""
+"All operations (i.e., downloading, disabling) are deactivated for unsigned "
+"redirections"
 msgstr ""
 
 #: donations/templatetags/text_format.py:11
@@ -1551,10 +1584,17 @@ msgid "Download donor form"
 msgstr "Մուտք գործելու սխալ"
 
 #: donations/views/ngo_account/redirections.py:315
+#: donations/views/ngo_account/redirections.py:340
 #, fuzzy
 #| msgid "NGO Hub organization ID"
 msgid "Your organization is not active"
 msgstr "NGO Hub կազմակերպության նույնականացման համար"
+
+#: donations/views/ngo_account/redirections.py:350
+#, fuzzy
+#| msgid "The import has been processed."
+msgid "The redirection has been disabled successfully."
+msgstr "Ներմուծումը կատարվել է։"
 
 #: donations/views/ngo_account/user_settings.py:17
 #: templates/v2/ngo-account/settings-account/main.html:10
@@ -2954,13 +2994,13 @@ msgstr "NGO Hub կազմակերպության նույնականացման հա
 msgid "Cause information"
 msgstr "NGO Hub կազմակերպության նույնականացման համար"
 
-#: templates/v2/form/modals/confirmation.html:35
+#: templates/v2/form/modals/confirmation.html:3
 #, fuzzy
 #| msgid "Login through NGO Hub"
 msgid "Continue without signing?"
 msgstr "Մուտք գործել NGO Hub-ի միջոցով"
 
-#: templates/v2/form/modals/confirmation.html:39
+#: templates/v2/form/modals/confirmation.html:5
 msgid ""
 "If you continue without signing online, your form will be generated, and you "
 "will be able to download the PDF, but it will not reach the NGO. We rely on "
@@ -2968,11 +3008,11 @@ msgid ""
 "email, or you will submit it independently to ANAF."
 msgstr ""
 
-#: templates/v2/form/modals/confirmation.html:55
+#: templates/v2/form/modals/confirmation.html:10
 msgid "Back"
 msgstr ""
 
-#: templates/v2/form/modals/confirmation.html:64
+#: templates/v2/form/modals/confirmation.html:12
 msgid "Continue"
 msgstr ""
 

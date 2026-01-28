@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.db.models import Count, F, OuterRef, QuerySet, Subquery
 from django.db.models.functions import JSONObject
-from django.http import Http404, HttpRequest, QueryDict
+from django.http import Http404, HttpRequest, HttpResponseNotAllowed, QueryDict
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
@@ -330,6 +330,10 @@ class RedirectionDisableLinkView(BaseVisibleTemplateView):
 
     @method_decorator(login_required(login_url=reverse_lazy("login")))
     def get(self, request, form_id, *args, **kwargs):
+        return HttpResponseNotAllowed(["POST"])
+
+    @method_decorator(login_required(login_url=reverse_lazy("login")))
+    def post(self, request, form_id, *args, **kwargs):
         user: User = request.user
         ngo: Ngo = user.ngo if user.ngo else None
 
@@ -338,6 +342,9 @@ class RedirectionDisableLinkView(BaseVisibleTemplateView):
 
         if not ngo.is_active:
             raise PermissionDenied(_("Your organization is not active"))
+
+        if request.POST.get("disable_redirection") != "true":
+            raise Http404
 
         try:
             donor = Donor.objects.get(pk=form_id, ngo=ngo, has_signed=True)
