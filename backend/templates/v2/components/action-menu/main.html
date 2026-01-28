@@ -54,9 +54,9 @@
 
       {% for item in items %}
         {% if item.link %}
-          {% include "components/action-menu/item_href.html" with index=forloop.counter title=item.title link=item.link active=item.active %}
+          {% include "components/action-menu/item_href.html" with index=forloop.counter title=item.title active=item.active help_text=item.help_text link=item.link %}
         {% elif item.action %}
-          {% include "components/action-menu/item-action.html" with index=forloop.counter title=item.title action=item.action active=item.active %}
+          {% include "components/action-menu/item-action.html" with index=forloop.counter title=item.title active=item.active help_text=item.help_text action=item.action %}
         {% endif %}
       {% endfor %}
 
