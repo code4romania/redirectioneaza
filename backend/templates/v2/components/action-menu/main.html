@@ -13,7 +13,7 @@
       {% if button_disabled %}disabled{% endif %}
       {% if button_title %}title="{{ button_title }}"{% endif %}
       type="button"
-      class="flex items-center rounded-full text-gray-700 disabled:text-gray-400 focus:outline-hidden focus:ring-2 focus:ring-amber-700 focus:ring-offset-2 focus:ring-offset-gray-100"
+      class="flex items-center rounded-full text-gray-700 disabled:text-gray-400 focus:outline-hidden focus:ring-2 focus:ring-amber-700 focus:ring-offset-2 focus:ring-offset-gray-100 {% if not button_disabled %}hover:cursor-pointer{% endif %}"
       id="menu-button"
       aria-expanded="true"
       aria-haspopup="true">
@@ -54,9 +54,9 @@
 
       {% for item in items %}
         {% if item.link %}
-          {% include "components/action-menu/item_href.html" with index=forloop.counter title=item.title link=item.link active=item.active %}
+          {% include "components/action-menu/item_href.html" with index=forloop.counter title=item.title active=item.active help_text=item.help_text link=item.link %}
         {% elif item.action %}
-          {% include "components/action-menu/item-action.html" with index=forloop.counter title=item.title action=item.action active=item.active %}
+          {% include "components/action-menu/item-action.html" with index=forloop.counter title=item.title active=item.active help_text=item.help_text action=item.action %}
         {% endif %}
       {% endfor %}
 

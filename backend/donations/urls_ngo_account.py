@@ -10,6 +10,7 @@ from donations.views.ngo_account.redirections import (
     ArchiveDownloadLinkView,
     NgoArchivesView,
     NgoRedirectionsView,
+    RedirectionDisableLinkView,
     RedirectionDownloadLinkView,
     RedirectionsDownloadJobLinkView,
     RedirectionsDownloadsView,
@@ -40,7 +41,12 @@ urlpatterns = [
         name="archive-download-link-redirect",
     ),
     path("setari-cont/", UserSettingsView.as_view(), name="settings-account"),
-    path("formular/<form_id>/", RedirectionDownloadLinkView.as_view(), name="redirection-download-link"),
+    path("formular/<form_id>/descarca/", RedirectionDownloadLinkView.as_view(), name="redirection-download-link"),
+    path("formular/<form_id>/dezactiveaza/", RedirectionDisableLinkView.as_view(), name="redirection-disable"),
+    path(
+        "formular/<form_id>/",
+        RedirectView.as_view(pattern_name="my-organization:redirection-download-link", permanent=True),
+    ),
 ]
 
 if settings.ENABLE_MULTIPLE_FORMS:

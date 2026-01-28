@@ -1,4 +1,8 @@
-<form action="{{ action.form }}" method="post">
+<form
+  action="{{ action.form }}"
+  method="post"
+  {% if action.modal == "confirmation" %} x-data="{ modalIsOpen: false }"{% endif %}
+>
 
   {% csrf_token %}
 
@@ -10,19 +14,42 @@
 
   <button
     {% if active %}
-      name="{{ action.name }}"
-      value="{{ action.value }}"
-      class="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+      {% if action.modal == "confirmation" %}
+        type="button"
+        @click="modalIsOpen = true"
+      {% else %}
+        name="{{ action.name }}"
+        value="{{ action.value }}"
+      {% endif %}
+        class="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 hover:cursor-pointer"
     {% else %}
-      class="w-full px-4 py-2 text-left text-sm text-gray-400"
+        class="w-full px-4 py-2 text-left text-sm text-gray-400"
     {% endif %}
-      role="menuitem"
-      tabindex="-1"
-      id="menu-item-{{ index }}">
+
+    {% if help_text %}
+        x-data x-tooltip.raw="{{ help_text }}"
+    {% endif %}
+
+        role="menuitem"
+        tabindex="-1"
+        id="menu-item-{{ index }}"
+  >
 
     <span>{{ title }}</span>
 
   </button>
 
+  {% if action.modal == "confirmation" %}
+    <div
+      x-cloak
+      x-show="modalIsOpen"
+      x-transition.opacity.duration.100ms
+      x-trap.noscroll="modalIsOpen"
+      @keydown.esc.window="modalIsOpen = false"
+      @click.self="modalIsOpen = false"
+      class="fixed inset-0 z-30">
+      {% include "public/components/modal.html" with modal_title=action.modal_title modal_body=action.modal_body modal_title_id="menu-item-modal-title-"|add:index cancel_label=action.cancel_label cancel_type="button" cancel_attrs='@click="modalIsOpen = false"' confirm_label=action.confirm_label confirm_type="submit" confirm_name=action.name confirm_value=action.value confirm_attrs='@click="modalIsOpen = false"' only %}
+    </div>
+  {% endif %}
 
 </form>

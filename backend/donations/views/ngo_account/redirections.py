@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.db.models import Count, F, OuterRef, QuerySet, Subquery
 from django.db.models.functions import JSONObject
-from django.http import Http404, HttpRequest, QueryDict
+from django.http import Http404, HttpRequest, HttpResponseNotAllowed, QueryDict
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
@@ -26,7 +26,9 @@ from donations.views.ngo_account_filters import (
     get_queryset_filters,
     get_redirections_filters,
 )
+from redirectioneaza.common.app_url import build_uri
 from redirectioneaza.common.cache import cache_decorator
+from redirectioneaza.common.messaging import extend_email_context, send_email
 from users.models import User
 from utils.common.filters import QueryFilter
 
@@ -323,6 +325,67 @@ class RedirectionDownloadLinkView(BaseVisibleTemplateView):
             raise Http404
 
         return redirect(donor.pdf_file.url)
+
+
+class RedirectionDisableLinkView(BaseVisibleTemplateView):
+    title = _("Disable redirection")
+
+    @method_decorator(login_required(login_url=reverse_lazy("login")))
+    def get(self, request, form_id, *args, **kwargs):
+        return HttpResponseNotAllowed(["POST"])
+
+    @method_decorator(login_required(login_url=reverse_lazy("login")))
+    def post(self, request, form_id, *args, **kwargs):
+        user: User = request.user
+        ngo: Ngo = user.ngo if user.ngo else None
+
+        if not ngo:
+            raise Http404
+
+        if not ngo.is_active:
+            raise PermissionDenied(_("Your organization is not active"))
+
+        if request.POST.get("disable_redirection") != "true":
+            raise Http404
+
+        try:
+            donor = Donor.objects.get(pk=form_id, ngo=ngo, has_signed=True)
+        except Donor.DoesNotExist:
+            raise Http404
+
+        donor.is_available = False
+        donor.save(update_fields=["is_available"])
+
+        messages.success(
+            request,
+            _(
+                "The redirection has been disabled successfully. "
+                "It will no longer appear in your list or the ANAF archive."
+            ),
+        )
+
+        if donor.cause:
+            mail_context = {
+                "cause_name": donor.cause.name,
+                "action_url": build_uri(reverse("twopercent", kwargs={"cause_slug": donor.cause.slug})),
+            }
+        else:
+            mail_context = {
+                "cause_name": _("<Cause no longer available>"),
+                "action_url": build_uri(reverse("home")),
+            }
+
+        mail_context.update(extend_email_context())
+
+        send_email(
+            subject=_("Warning regarding the redirection form"),
+            to_emails=[donor.email],
+            text_template="emails/donor/removed-redirection-ngo/main.txt",
+            html_template="emails/donor/removed-redirection-ngo/main.html",
+            context=mail_context,
+        )
+
+        return redirect(reverse("my-organization:redirections"))
 
 
 class RedirectionsDownloadJobLinkView(FileDownloadProxy):

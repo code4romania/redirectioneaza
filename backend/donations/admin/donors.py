@@ -24,25 +24,33 @@ REMOVE_DONATIONS_SUCCESS_FLAG = "success"
 REMOVE_DONATIONS_FAILURE_FLAG = "failure"
 
 
-def soft_delete_donor(donor_pk: int):
+def soft_delete_donor(donor_pk: int, notify: bool = False) -> str:
     logger.info(f"Deleting donor {donor_pk}")
     try:
         donor = Donor.available.get(pk=donor_pk)
         donor.remove()
 
-        mail_context = {
-            "cause_name": donor.cause.name,
-            "action_url": build_uri(reverse("twopercent", kwargs={"cause_slug": donor.cause.slug})),
-        }
-        mail_context.update(extend_email_context())
+        if notify:
+            if donor.cause:
+                mail_context = {
+                    "cause_name": donor.cause.name,
+                    "action_url": build_uri(reverse("twopercent", kwargs={"cause_slug": donor.cause.slug})),
+                }
+            else:
+                mail_context = {
+                    "cause_name": _("<Cause no longer available>"),
+                    "action_url": build_uri(reverse("home")),
+                }
+            mail_context.update(extend_email_context())
 
-        send_email(
-            subject=_("Donation removal"),
-            to_emails=[donor.email],
-            text_template="emails/donor/removed-redirection/main.txt",
-            html_template="emails/donor/removed-redirection/main.html",
-            context=mail_context,
-        )
+            send_email(
+                subject=_("Donation removal"),
+                to_emails=[donor.email],
+                text_template="emails/donor/removed-redirection-admin/main.txt",
+                html_template="emails/donor/removed-redirection-admin/main.html",
+                context=mail_context,
+            )
+
         return REMOVE_DONATIONS_SUCCESS_FLAG
     except Exception as e:
         logger.error(f"Failed to delete donor {donor_pk}: {e}")
@@ -140,7 +148,7 @@ class DonorAdmin(ModelAdmin):
         ),
     )
 
-    actions = ("remove_donations",)
+    actions = ("remove_donations_with_notification", "remove_donations_sans_notification")
     actions_list = ("run_redirections_stats_generator", "run_redirections_stats_generator_force")
 
     def has_change_permission(self, request, obj=None):
@@ -154,12 +162,19 @@ class DonorAdmin(ModelAdmin):
         return obj.form_url
 
     @action(description=_("Remove donations and notify donors"), url_path="remove-donations")
-    def remove_donations(self, request, queryset: QuerySet[Donor]):
+    def remove_donations_with_notification(self, request, queryset: QuerySet[Donor]):
+        self._remove_donations(request=request, queryset=queryset, notify=True)
+
+    @action(description=_("Remove donations without notifying donors"), url_path="remove-donations-sans-notification")
+    def remove_donations_sans_notification(self, request, queryset: QuerySet[Donor]):
+        self._remove_donations(request=request, queryset=queryset, notify=False)
+
+    def _remove_donations(self, *, request, queryset: QuerySet[Donor], notify: bool):
         task_results = {REMOVE_DONATIONS_SUCCESS_FLAG: 0, REMOVE_DONATIONS_FAILURE_FLAG: 0}
 
         queryset_size = queryset.count()
         for donor in queryset:
-            task_result = soft_delete_donor(donor.pk)
+            task_result = soft_delete_donor(donor.pk, notify=notify)
             task_results[task_result] += 1
 
         part_1 = ngettext_lazy(

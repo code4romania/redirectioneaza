@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-20 13:23+0200\n"
+"POT-Creation-Date: 2026-01-28 15:07+0200\n"
 "PO-Revision-Date: 2025-03-27 14:48+0000\n"
 "Last-Translator: Andrei Ioniță <andrei.ionita@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -947,13 +947,13 @@ msgid "Cause doesn't exist"
 msgstr "NGOs registered"
 
 #: donations/templatetags/cause_action_menu.py:90
-#: donations/templatetags/redirection_action_menu.py:33
+#: donations/templatetags/redirection_action_menu.py:72
 #, fuzzy
 #| msgid "Form description"
 msgid "Form options"
 msgstr "Form description"
 
-#: donations/templatetags/redirection_action_menu.py:18
+#: donations/templatetags/redirection_action_menu.py:16
 #: templates/v2/emails/donor/redirection-sans-signature/main.html:18
 #: templates/v2/emails/donor/redirection-with-signature/main.html:20
 #: templates/v2/emails/ngo/new-form-received/main.html:19
@@ -961,8 +961,46 @@ msgstr "Form description"
 msgid "Download form"
 msgstr "Download form"
 
+#: donations/templatetags/redirection_action_menu.py:28
+msgid ""
+"Disabling the redirection will remove it from your organization's list and "
+"prevent it from being added to the ANAF archive."
+msgstr ""
+
 #: donations/templatetags/redirection_action_menu.py:34
-msgid "Downloads are disabled for unsigned redirections"
+msgid ""
+"Additionally, the person that filled out the form will be informed via email."
+msgstr ""
+
+#: donations/templatetags/redirection_action_menu.py:36
+msgid "This action cannot be undone."
+msgstr ""
+
+#: donations/templatetags/redirection_action_menu.py:40
+#: donations/views/ngo_account/redirections.py:331
+#, fuzzy
+#| msgid "Successful redirection"
+msgid "Disable redirection"
+msgstr "Successful redirection"
+
+#: donations/templatetags/redirection_action_menu.py:48
+#, fuzzy
+#| msgid "Successful redirection"
+msgid "Disable redirection?"
+msgstr "Successful redirection"
+
+#: donations/templatetags/redirection_action_menu.py:50
+msgid "Disable"
+msgstr ""
+
+#: donations/templatetags/redirection_action_menu.py:51
+msgid "Cancel"
+msgstr ""
+
+#: donations/templatetags/redirection_action_menu.py:74
+msgid ""
+"All operations (i.e., downloading, disabling) are deactivated for unsigned "
+"redirections"
 msgstr ""
 
 #: donations/templatetags/text_format.py:11
@@ -1342,7 +1380,7 @@ msgstr ""
 
 #: donations/views/ngo_account/byof.py:56
 #: donations/views/ngo_account/causes.py:153
-#: donations/views/ngo_account/redirections.py:122
+#: donations/views/ngo_account/redirections.py:124
 msgid "You need to add your NGO's information first."
 msgstr ""
 
@@ -1452,7 +1490,7 @@ msgstr "Download the form"
 msgid "There are some errors on the presentation form."
 msgstr "There are some errors on the presentation form."
 
-#: donations/views/ngo_account/redirections.py:36
+#: donations/views/ngo_account/redirections.py:38
 #: redirectioneaza/context_processors/headers.py:111
 #: templates/v2/ngo-account/redirections/base.html:13
 #: templates/v2/ngo-account/redirections/base.html:31
@@ -1460,33 +1498,48 @@ msgstr "There are some errors on the presentation form."
 msgid "Redirections"
 msgstr "Redirections"
 
-#: donations/views/ngo_account/redirections.py:176
+#: donations/views/ngo_account/redirections.py:178
 #: templates/v2/ngo-account/archives/main.html:6
 msgid "Archives history"
 msgstr "Archives history"
 
-#: donations/views/ngo_account/redirections.py:223
+#: donations/views/ngo_account/redirections.py:225
 #, fuzzy
 #| msgid "Redirections"
 msgid "Redirections downloads"
 msgstr "Redirections"
 
-#: donations/views/ngo_account/redirections.py:268
+#: donations/views/ngo_account/redirections.py:270
 #: templates/v2/emails/ngo/download-archive/main.html:21
 msgid "Download archive"
 msgstr "Download archive"
 
-#: donations/views/ngo_account/redirections.py:304
+#: donations/views/ngo_account/redirections.py:306
 #, fuzzy
 #| msgid "Download form"
 msgid "Download donor form"
 msgstr "Download form"
 
-#: donations/views/ngo_account/redirections.py:315
+#: donations/views/ngo_account/redirections.py:317
+#: donations/views/ngo_account/redirections.py:346
 #, fuzzy
 #| msgid "The organization's contact info"
 msgid "Your organization is not active"
 msgstr "The organization's contact info"
+
+#: donations/views/ngo_account/redirections.py:362
+#, fuzzy
+#| msgid "The user has been successfully invited."
+msgid ""
+"The redirection has been disabled successfully. It will no longer appear in "
+"your list or the ANAF archive."
+msgstr "The user has been successfully invited."
+
+#: donations/views/ngo_account/redirections.py:374
+#, fuzzy
+#| msgid "There are some errors on the redirection form."
+msgid "Warning regarding the redirection form"
+msgstr "There are some errors on the redirection form."
 
 #: donations/views/ngo_account/user_settings.py:17
 #: templates/v2/ngo-account/settings-account/main.html:10
@@ -2445,6 +2498,8 @@ msgstr "Close"
 #: templates/v2/emails/account/ngohub-notification/main.txt:3
 #: templates/v2/emails/account/reset-password/main.html:6
 #: templates/v2/emails/account/reset-password/main.txt:3
+#: templates/v2/emails/donor/removed-redirection-ngo/main.html:13
+#: templates/v2/emails/donor/removed-redirection-ngo/main.txt:5
 #: templates/v2/emails/ngo/download-archive/main.html:6
 #: templates/v2/emails/ngo/download-archive/main.txt:3
 #: templates/v2/emails/ngo/download-csv/main.html:6
@@ -2733,8 +2788,10 @@ msgstr ""
 #: templates/v2/emails/donor/redirection-sans-signature/main.txt:32
 #: templates/v2/emails/donor/redirection-with-signature/main.html:26
 #: templates/v2/emails/donor/redirection-with-signature/main.txt:16
-#: templates/v2/emails/donor/removed-redirection/main.html:24
-#: templates/v2/emails/donor/removed-redirection/main.txt:16
+#: templates/v2/emails/donor/removed-redirection-admin/main.html:24
+#: templates/v2/emails/donor/removed-redirection-admin/main.txt:16
+#: templates/v2/emails/donor/removed-redirection-ngo/main.html:43
+#: templates/v2/emails/donor/removed-redirection-ngo/main.txt:28
 msgid "Thank you for your involvement!"
 msgstr "Thank you for your involvement!"
 
@@ -2769,15 +2826,17 @@ msgstr ""
 "organization, so you don't have to worry about anything else. You can see "
 "the form you have filled in by clicking the button below."
 
-#: templates/v2/emails/donor/removed-redirection/main.html:6
-#: templates/v2/emails/donor/removed-redirection/main.txt:3
+#: templates/v2/emails/donor/removed-redirection-admin/main.html:6
+#: templates/v2/emails/donor/removed-redirection-admin/main.txt:3
+#: templates/v2/emails/donor/removed-redirection-ngo/main.html:6
+#: templates/v2/emails/donor/removed-redirection-ngo/main.txt:3
 #, fuzzy
 #| msgid "A new NGO has registered on redirectioneaza.ro"
 msgid "Your redirection form was removed from redirectioneaza.ro"
 msgstr "A new NGO has registered on redirectioneaza.ro"
 
-#: templates/v2/emails/donor/removed-redirection/main.html:12
-#: templates/v2/emails/donor/removed-redirection/main.txt:5
+#: templates/v2/emails/donor/removed-redirection-admin/main.html:12
+#: templates/v2/emails/donor/removed-redirection-admin/main.txt:5
 #, python-format
 msgid ""
 "Thank you for choosing to support %(cause_name)s! The administrators of the "
@@ -2786,11 +2845,36 @@ msgid ""
 "please go to the following link:"
 msgstr ""
 
-#: templates/v2/emails/donor/removed-redirection/main.html:20
+#: templates/v2/emails/donor/removed-redirection-admin/main.html:20
+#: templates/v2/emails/donor/removed-redirection-ngo/main.html:39
 #, fuzzy
 #| msgid "Redirections"
 msgid "Redirect"
 msgstr "Redirections"
+
+#: templates/v2/emails/donor/removed-redirection-ngo/main.html:19
+#: templates/v2/emails/donor/removed-redirection-ngo/main.txt:9
+#, python-format
+msgid ""
+"Thank you for choosing to support %(cause_name)s! The redirection form you "
+"filled out has been removed at the NGO's request. This can happen, for "
+"example, if there was an error in the initial form or if it was filled out "
+"multiple times."
+msgstr ""
+
+#: templates/v2/emails/donor/removed-redirection-ngo/main.html:28
+#: templates/v2/emails/donor/removed-redirection-ngo/main.txt:16
+msgid ""
+"If you wish to find out more information about the removed form, please "
+"contact the organization directly."
+msgstr ""
+
+#: templates/v2/emails/donor/removed-redirection-ngo/main.html:34
+#: templates/v2/emails/donor/removed-redirection-ngo/main.txt:20
+msgid ""
+"If you wish to redirect again to the same cause, please go to the following "
+"link:"
+msgstr ""
 
 #: templates/v2/emails/ngo/download-archive/main.html:12
 #: templates/v2/emails/ngo/download-archive/main.txt:5
@@ -2869,11 +2953,11 @@ msgstr "Organization forms"
 msgid "Cause information"
 msgstr "Data sharing information"
 
-#: templates/v2/form/modals/confirmation.html:35
+#: templates/v2/form/modals/confirmation.html:3
 msgid "Continue without signing?"
 msgstr "Continue without signing?"
 
-#: templates/v2/form/modals/confirmation.html:39
+#: templates/v2/form/modals/confirmation.html:5
 msgid ""
 "If you continue without signing online, your form will be generated, and you "
 "will be able to download the PDF, but it will not reach the NGO. We rely on "
@@ -2885,11 +2969,11 @@ msgstr ""
 "you to print, sign the form by hand, and send it to the NGO by post or "
 "email, or you will submit it independently to ANAF."
 
-#: templates/v2/form/modals/confirmation.html:55
+#: templates/v2/form/modals/confirmation.html:10
 msgid "Back"
 msgstr "Back"
 
-#: templates/v2/form/modals/confirmation.html:64
+#: templates/v2/form/modals/confirmation.html:12
 msgid "Continue"
 msgstr "Continue"
 

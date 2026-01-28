@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-20 13:23+0200\n"
+"POT-Creation-Date: 2026-01-28 15:07+0200\n"
 "PO-Revision-Date: 2025-03-27 14:49+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -902,11 +902,11 @@ msgid "Cause doesn't exist"
 msgstr "Cauza nu există"
 
 #: donations/templatetags/cause_action_menu.py:90
-#: donations/templatetags/redirection_action_menu.py:33
+#: donations/templatetags/redirection_action_menu.py:72
 msgid "Form options"
 msgstr "Opțiuni formular"
 
-#: donations/templatetags/redirection_action_menu.py:18
+#: donations/templatetags/redirection_action_menu.py:16
 #: templates/v2/emails/donor/redirection-sans-signature/main.html:18
 #: templates/v2/emails/donor/redirection-with-signature/main.html:20
 #: templates/v2/emails/ngo/new-form-received/main.html:19
@@ -914,9 +914,48 @@ msgstr "Opțiuni formular"
 msgid "Download form"
 msgstr "Descarcă formular"
 
+#: donations/templatetags/redirection_action_menu.py:28
+msgid ""
+"Disabling the redirection will remove it from your organization's list and "
+"prevent it from being added to the ANAF archive."
+msgstr ""
+"Dezactivarea redirecționării o va elimina din lista organizației tale și va "
+"împiedica adăugarea acesteia în arhiva ANAF."
+
 #: donations/templatetags/redirection_action_menu.py:34
-msgid "Downloads are disabled for unsigned redirections"
-msgstr "Descărcările sunt dezactivate pentru redirecționările fără semnătură"
+msgid ""
+"Additionally, the person that filled out the form will be informed via email."
+msgstr ""
+"În plus, persoana care a completat formularul va fi informată prin email."
+
+#: donations/templatetags/redirection_action_menu.py:36
+msgid "This action cannot be undone."
+msgstr "Această acțiune nu poate fi anulată."
+
+#: donations/templatetags/redirection_action_menu.py:40
+#: donations/views/ngo_account/redirections.py:331
+msgid "Disable redirection"
+msgstr "Elimină redirecționarea"
+
+#: donations/templatetags/redirection_action_menu.py:48
+msgid "Disable redirection?"
+msgstr "Elimini redirecționarea?"
+
+#: donations/templatetags/redirection_action_menu.py:50
+msgid "Disable"
+msgstr "Elimină"
+
+#: donations/templatetags/redirection_action_menu.py:51
+msgid "Cancel"
+msgstr "Anulează"
+
+#: donations/templatetags/redirection_action_menu.py:74
+msgid ""
+"All operations (i.e., downloading, disabling) are deactivated for unsigned "
+"redirections"
+msgstr ""
+"Toate operațiunile (de ex., descărcare, eliminare) sunt dezactivate pentru "
+"redirecționările nesemnate"
 
 #: donations/templatetags/text_format.py:11
 #, python-format
@@ -1271,7 +1310,7 @@ msgstr "Generare din date externe"
 
 #: donations/views/ngo_account/byof.py:56
 #: donations/views/ngo_account/causes.py:153
-#: donations/views/ngo_account/redirections.py:122
+#: donations/views/ngo_account/redirections.py:124
 msgid "You need to add your NGO's information first."
 msgstr "Trebuie să adaugi informațiile ONG-ului tău mai întâi."
 
@@ -1361,7 +1400,7 @@ msgstr "Descarcă un fișier generat"
 msgid "There are some errors on the presentation form."
 msgstr "Există erori în formularul de prezentare."
 
-#: donations/views/ngo_account/redirections.py:36
+#: donations/views/ngo_account/redirections.py:38
 #: redirectioneaza/context_processors/headers.py:111
 #: templates/v2/ngo-account/redirections/base.html:13
 #: templates/v2/ngo-account/redirections/base.html:31
@@ -1369,27 +1408,40 @@ msgstr "Există erori în formularul de prezentare."
 msgid "Redirections"
 msgstr "Redirecționări"
 
-#: donations/views/ngo_account/redirections.py:176
+#: donations/views/ngo_account/redirections.py:178
 #: templates/v2/ngo-account/archives/main.html:6
 msgid "Archives history"
 msgstr "Istoric arhive exportate"
 
-#: donations/views/ngo_account/redirections.py:223
+#: donations/views/ngo_account/redirections.py:225
 msgid "Redirections downloads"
 msgstr "Descărcări redirecționări"
 
-#: donations/views/ngo_account/redirections.py:268
+#: donations/views/ngo_account/redirections.py:270
 #: templates/v2/emails/ngo/download-archive/main.html:21
 msgid "Download archive"
 msgstr "Descarcă arhiva"
 
-#: donations/views/ngo_account/redirections.py:304
+#: donations/views/ngo_account/redirections.py:306
 msgid "Download donor form"
 msgstr "Descarcă formular donator"
 
-#: donations/views/ngo_account/redirections.py:315
+#: donations/views/ngo_account/redirections.py:317
+#: donations/views/ngo_account/redirections.py:346
 msgid "Your organization is not active"
 msgstr "Organizația ta nu este activă"
+
+#: donations/views/ngo_account/redirections.py:362
+msgid ""
+"The redirection has been disabled successfully. It will no longer appear in "
+"your list or the ANAF archive."
+msgstr ""
+"Redirecționarea a fost eliminată cu succes. Nu va mai apărea în lista ta sau "
+"în arhiva ANAF."
+
+#: donations/views/ngo_account/redirections.py:374
+msgid "Warning regarding the redirection form"
+msgstr "Atenționare cu privire la formularul de redirecționare"
 
 #: donations/views/ngo_account/user_settings.py:17
 #: templates/v2/ngo-account/settings-account/main.html:10
@@ -2324,6 +2376,8 @@ msgstr "Închide"
 #: templates/v2/emails/account/ngohub-notification/main.txt:3
 #: templates/v2/emails/account/reset-password/main.html:6
 #: templates/v2/emails/account/reset-password/main.txt:3
+#: templates/v2/emails/donor/removed-redirection-ngo/main.html:13
+#: templates/v2/emails/donor/removed-redirection-ngo/main.txt:5
 #: templates/v2/emails/ngo/download-archive/main.html:6
 #: templates/v2/emails/ngo/download-archive/main.txt:3
 #: templates/v2/emails/ngo/download-csv/main.html:6
@@ -2605,8 +2659,10 @@ msgstr ""
 #: templates/v2/emails/donor/redirection-sans-signature/main.txt:32
 #: templates/v2/emails/donor/redirection-with-signature/main.html:26
 #: templates/v2/emails/donor/redirection-with-signature/main.txt:16
-#: templates/v2/emails/donor/removed-redirection/main.html:24
-#: templates/v2/emails/donor/removed-redirection/main.txt:16
+#: templates/v2/emails/donor/removed-redirection-admin/main.html:24
+#: templates/v2/emails/donor/removed-redirection-admin/main.txt:16
+#: templates/v2/emails/donor/removed-redirection-ngo/main.html:43
+#: templates/v2/emails/donor/removed-redirection-ngo/main.txt:28
 msgid "Thank you for your involvement!"
 msgstr "Mulțumim pentru implicare!"
 
@@ -2641,14 +2697,16 @@ msgstr ""
 "organizație, așa că nu mai trebuie să-ți faci griji. Poți vedea formularul "
 "pe care l-ai completat apăsând butonul de mai jos."
 
-#: templates/v2/emails/donor/removed-redirection/main.html:6
-#: templates/v2/emails/donor/removed-redirection/main.txt:3
+#: templates/v2/emails/donor/removed-redirection-admin/main.html:6
+#: templates/v2/emails/donor/removed-redirection-admin/main.txt:3
+#: templates/v2/emails/donor/removed-redirection-ngo/main.html:6
+#: templates/v2/emails/donor/removed-redirection-ngo/main.txt:3
 msgid "Your redirection form was removed from redirectioneaza.ro"
 msgstr ""
 "Formularul tău de redirecționare a fost eliminat de pe redirectioneaza.ro"
 
-#: templates/v2/emails/donor/removed-redirection/main.html:12
-#: templates/v2/emails/donor/removed-redirection/main.txt:5
+#: templates/v2/emails/donor/removed-redirection-admin/main.html:12
+#: templates/v2/emails/donor/removed-redirection-admin/main.txt:5
 #, python-format
 msgid ""
 "Thank you for choosing to support %(cause_name)s! The administrators of the "
@@ -2661,9 +2719,42 @@ msgstr ""
 "solicitări din partea ONG-ului. Dacă dorești să redirecționezi din nou către "
 "aceeași organizație, te rugăm să accesezi următorul link:"
 
-#: templates/v2/emails/donor/removed-redirection/main.html:20
+#: templates/v2/emails/donor/removed-redirection-admin/main.html:20
+#: templates/v2/emails/donor/removed-redirection-ngo/main.html:39
 msgid "Redirect"
 msgstr "Redirecționează"
+
+#: templates/v2/emails/donor/removed-redirection-ngo/main.html:19
+#: templates/v2/emails/donor/removed-redirection-ngo/main.txt:9
+#, python-format
+msgid ""
+"Thank you for choosing to support %(cause_name)s! The redirection form you "
+"filled out has been removed at the NGO's request. This can happen, for "
+"example, if there was an error in the initial form or if it was filled out "
+"multiple times."
+msgstr ""
+"Mulțumim că ai ales să susții %(cause_name)s! Formularul de redirecționare "
+"completat a fost eliminat la cererea organizației. Acest lucru se poate "
+"întâmpla, de exemplu, dacă a existat o greșeală în formularul inițial sau "
+"dacă acesta a fost completat de multiple ori."
+
+#: templates/v2/emails/donor/removed-redirection-ngo/main.html:28
+#: templates/v2/emails/donor/removed-redirection-ngo/main.txt:16
+msgid ""
+"If you wish to find out more information about the removed form, please "
+"contact the organization directly."
+msgstr ""
+"Dacă vrei să afli mai multe informații despre formularul eliminat, te "
+"rugăm să iei legătura direct cu organizația."
+
+#: templates/v2/emails/donor/removed-redirection-ngo/main.html:34
+#: templates/v2/emails/donor/removed-redirection-ngo/main.txt:20
+msgid ""
+"If you wish to redirect again to the same cause, please go to the following "
+"link:"
+msgstr ""
+"Dacă dorești să redirecționezi din nou către aceeași organizație, te rugăm "
+"să accesezi următorul link:"
 
 #: templates/v2/emails/ngo/download-archive/main.html:12
 #: templates/v2/emails/ngo/download-archive/main.txt:5
@@ -2729,11 +2820,11 @@ msgstr "Informații despre organizație"
 msgid "Cause information"
 msgstr "Informații despre cauză"
 
-#: templates/v2/form/modals/confirmation.html:35
+#: templates/v2/form/modals/confirmation.html:3
 msgid "Continue without signing?"
 msgstr "Continui fără să semnezi?"
 
-#: templates/v2/form/modals/confirmation.html:39
+#: templates/v2/form/modals/confirmation.html:5
 msgid ""
 "If you continue without signing online, your form will be generated, and you "
 "will be able to download the PDF, but it will not reach the NGO. We rely on "
@@ -2745,11 +2836,11 @@ msgstr ""
 "pe tine că vei imprima, semna formularul de mână și îl vei trimite către ONG "
 "prin poștă sau email, sau îl vei depune singur la ANAF."
 
-#: templates/v2/form/modals/confirmation.html:55
+#: templates/v2/form/modals/confirmation.html:10
 msgid "Back"
 msgstr "Înapoi"
 
-#: templates/v2/form/modals/confirmation.html:64
+#: templates/v2/form/modals/confirmation.html:12
 msgid "Continue"
 msgstr "Continuă"
 
