@@ -26,7 +26,9 @@ from donations.views.ngo_account_filters import (
     get_queryset_filters,
     get_redirections_filters,
 )
+from redirectioneaza.common.app_url import build_uri
 from redirectioneaza.common.cache import cache_decorator
+from redirectioneaza.common.messaging import extend_email_context, send_email
 from users.models import User
 from utils.common.filters import QueryFilter
 
@@ -360,6 +362,20 @@ class RedirectionDisableLinkView(BaseVisibleTemplateView):
                 "The redirection has been disabled successfully. "
                 "It will no longer appear in your list or the ANAF archive."
             ),
+        )
+
+        mail_context = {
+            "cause_name": donor.cause.name,
+            "action_url": build_uri(reverse("twopercent", kwargs={"cause_slug": donor.cause.slug})),
+        }
+        mail_context.update(extend_email_context())
+
+        send_email(
+            subject=_("Warning regarding the redirection form"),
+            to_emails=[donor.email],
+            text_template="emails/donor/removed-redirection-ngo/main.txt",
+            html_template="emails/donor/removed-redirection-ngo/main.html",
+            context=mail_context,
         )
 
         return redirect(reverse("my-organization:redirections"))

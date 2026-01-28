@@ -28,7 +28,13 @@ def _build_disable_button(redirection: dict) -> dict[str, Any]:
         "Disabling the redirection will remove it from your organization's list "
         "and prevent it from being added to the ANAF archive."
     )
-    modal_body = help_text + " " + _("This action cannot be undone.")
+    modal_body = (
+        help_text
+        + " "
+        + _("Additionally, the person that filled out the form will be informed via email.")
+        + " "
+        + _("This action cannot be undone.")
+    )
 
     return {
         "title": _("Disable redirection"),
