@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-28 14:39+0200\n"
+"POT-Creation-Date: 2026-01-28 14:53+0200\n"
 "PO-Revision-Date: 2025-03-27 14:48+0000\n"
 "Last-Translator: Andrei Ioniță <andrei.ionita@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -1516,16 +1516,18 @@ msgid "Download donor form"
 msgstr "Download form"
 
 #: donations/views/ngo_account/redirections.py:315
-#: donations/views/ngo_account/redirections.py:340
+#: donations/views/ngo_account/redirections.py:344
 #, fuzzy
 #| msgid "The organization's contact info"
 msgid "Your organization is not active"
 msgstr "The organization's contact info"
 
-#: donations/views/ngo_account/redirections.py:350
+#: donations/views/ngo_account/redirections.py:360
 #, fuzzy
 #| msgid "The user has been successfully invited."
-msgid "The redirection has been disabled successfully."
+msgid ""
+"The redirection has been disabled successfully. It will no longer appear in "
+"your list or the ANAF archive."
 msgstr "The user has been successfully invited."
 
 #: donations/views/ngo_account/user_settings.py:17

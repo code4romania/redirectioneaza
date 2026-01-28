@@ -354,7 +354,13 @@ class RedirectionDisableLinkView(BaseVisibleTemplateView):
         donor.is_available = False
         donor.save(update_fields=["is_available"])
 
-        messages.success(request, _("The redirection has been disabled successfully."))
+        messages.success(
+            request,
+            _(
+                "The redirection has been disabled successfully. "
+                "It will no longer appear in your list or the ANAF archive."
+            ),
+        )
 
         return redirect(reverse("my-organization:redirections"))
 

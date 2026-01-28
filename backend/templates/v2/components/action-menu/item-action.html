@@ -43,9 +43,7 @@
       @keydown.esc.window="modalIsOpen = false"
       @click.self="modalIsOpen = false"
       class="fixed inset-0 z-30">
-
-      {% include "public/components/modal.html" with modal_title=action.modal_title modal_body=action.modal_body modal_title_id="menu-item-modal-title-"|add:index cancel_label=action.cancel_label cancel_type="button" cancel_attrs='@click="modalIsOpen = false"' confirm_label=action.confirm_label confirm_type="submit" confirm_attrs='name="{{ action.name }}" value="{{ action.value }}" @click="modalIsOpen = false"' only %}
-
+      {% include "public/components/modal.html" with modal_title=action.modal_title modal_body=action.modal_body modal_title_id="menu-item-modal-title-"|add:index cancel_label=action.cancel_label cancel_type="button" cancel_attrs='@click="modalIsOpen = false"' confirm_label=action.confirm_label confirm_type="submit" confirm_name=action.name confirm_value=action.value confirm_attrs='@click="modalIsOpen = false"' only %}
     </div>
   {% endif %}
 
