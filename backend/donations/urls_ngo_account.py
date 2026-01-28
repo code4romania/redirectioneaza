@@ -10,8 +10,8 @@ from donations.views.ngo_account.redirections import (
     ArchiveDownloadLinkView,
     NgoArchivesView,
     NgoRedirectionsView,
-    RedirectionDownloadLinkView,
     RedirectionDisableLinkView,
+    RedirectionDownloadLinkView,
     RedirectionsDownloadJobLinkView,
     RedirectionsDownloadsView,
 )
