@@ -43,6 +43,8 @@ data "aws_iam_policy_document" "ecs_task" {
   statement {
     actions = [
       "ses:GetAccount",
+      "ses:ListIdentities",
+      "ses:GetSendStatistics"
     ]
 
     resources = [
