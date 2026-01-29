@@ -1,5 +1,5 @@
 import logging
-from datetime import datetime
+from datetime import date, datetime
 
 from django import forms
 from django.conf import settings
@@ -154,13 +154,12 @@ def anonymize_old_donations():
 
     now: datetime = timezone.now()
     current_year: int = now.year
-    current_timezone = now.tzinfo
 
-    two_years_ago_date: datetime = datetime(year=current_year - 2, month=12, day=31, tzinfo=current_timezone)
+    two_years_ago_date: date = date(year=current_year - 2, month=12, day=31)
     remove_personal_data_in_bulk(base_donor_qs.filter(date_created__date__lte=two_years_ago_date))
 
-    one_year_ago_date: datetime = datetime(year=current_year - 1, month=12, day=31, tzinfo=current_timezone)
-    remove_personal_data_in_bulk(base_donor_qs.filter(two_years=False, date_created__lte=one_year_ago_date))
+    one_year_ago_date: date = date(year=current_year - 1, month=12, day=31)
+    remove_personal_data_in_bulk(base_donor_qs.filter(date_created__date__lte=one_year_ago_date, two_years=False))
 
 
 class HasPersonalDataFilter(admin.SimpleListFilter):
