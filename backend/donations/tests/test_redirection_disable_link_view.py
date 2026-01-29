@@ -133,7 +133,7 @@ class RedirectionDisableLinkViewTests(TestCase):
 
         expected_action_url = reverse("twopercent", kwargs={"cause_slug": self.cause.slug})
         build_uri.assert_called_once_with(expected_action_url)
-        extend_email_context.assert_called_once_with()
+        extend_email_context.assert_called_once_with(response.wsgi_request)
 
     @patch("donations.views.ngo_account.redirections.extend_email_context", return_value={"site_title": "site"})
     @patch("donations.views.ngo_account.redirections.build_uri", return_value="https://example.com/home")
@@ -174,4 +174,4 @@ class RedirectionDisableLinkViewTests(TestCase):
         )
         expected_action_url = reverse("home")
         build_uri.assert_called_once_with(expected_action_url)
-        extend_email_context.assert_called_once_with()
+        extend_email_context.assert_called_once_with(response.wsgi_request)
