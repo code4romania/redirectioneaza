@@ -310,9 +310,12 @@ class Donor(models.Model):
         return datetime.strftime(self.date_created, "%Y%m%d")
 
     @property
-    def form_url(self):
+    def form_url(self) -> str:
         if not self.pk:
             raise ValueError
+
+        if self.personal_data_removed_at:
+            return "-"
 
         return reverse(
             "donor-download-link",
