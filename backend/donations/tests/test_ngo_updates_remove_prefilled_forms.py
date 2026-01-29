@@ -7,7 +7,7 @@ from django.urls import reverse
 
 from donations.models import Cause, Ngo
 from donations.models.ngos import CauseVisibilityChoices
-from redirectioneaza.common.testing import ApexClient
+from redirectioneaza.common.testing.client import ApexClient
 
 
 class NgoPrefilledFormsUpdate(TestCase):
