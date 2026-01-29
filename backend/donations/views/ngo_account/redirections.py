@@ -375,7 +375,7 @@ class RedirectionDisableLinkView(BaseVisibleTemplateView):
                 "action_url": build_uri(reverse("home")),
             }
 
-        mail_context.update(extend_email_context())
+        mail_context.update(extend_email_context(request))
 
         send_email(
             subject=_("Warning regarding the redirection form"),

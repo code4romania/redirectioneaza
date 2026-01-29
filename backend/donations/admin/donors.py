@@ -94,7 +94,7 @@ def _print_task_result(process: str, task_results: dict[str, int], queryset_size
     return ", ".join(message_parts)
 
 
-def soft_delete_donor(donor_pk: int, notify: bool = False) -> str:
+def soft_delete_donor(request: HttpRequest, donor_pk: int, notify: bool = False) -> str:
     logger.info(f"Deleting donor {donor_pk}")
     try:
         donor: Donor = Donor.available.get(pk=donor_pk)
@@ -111,7 +111,7 @@ def soft_delete_donor(donor_pk: int, notify: bool = False) -> str:
                     "cause_name": _("<Cause no longer available>"),
                     "action_url": build_uri(reverse("home")),
                 }
-            mail_context.update(extend_email_context())
+            mail_context.update(extend_email_context(request))
 
             send_email(
                 subject=_("Donation removal"),
@@ -322,7 +322,7 @@ class DonorAdmin(ModelAdmin):
 
         queryset_size: int = queryset.count()
         for donor in queryset:
-            task_result = soft_delete_donor(donor.pk, notify=notify)
+            task_result = soft_delete_donor(request=request, donor_pk=donor.pk, notify=notify)
             task_results[task_result] += 1
 
         message: str = _print_task_result(
