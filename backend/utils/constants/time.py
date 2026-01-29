@@ -5,7 +5,13 @@ SECOND = 1
 MINUTE = 60 * SECOND
 HOUR = 60 * MINUTE
 DAY = 24 * HOUR
-WEEK = 7 * DAY
+
+DAY_IN_DAYS = 1
+WEEK_IN_DAYS = 7 * DAY_IN_DAYS
+MONTH_IN_DAYS = 30 * DAY_IN_DAYS
+YEAR_IN_DAYS = 365 * DAY_IN_DAYS
+
+
 MONTHS = [
     {
         "month": _("January"),
