@@ -145,7 +145,7 @@ class NgoPresentationView(NgoBaseTemplateView):
             user.ngo = ngo
             user.save()
         elif must_refresh_prefilled_form:
-            async_wrapper(delete_ngo_prefilled_forms, ngo.id)
+            async_wrapper(delete_ngo_prefilled_forms, ngo_id=ngo.id)
 
         context["ngo"] = ngo
 

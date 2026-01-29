@@ -70,7 +70,7 @@ class NgoBringYourOwnFormView(NgoBaseListView):
         own_upload.ngo = ngo
         own_upload.save()
 
-        async_wrapper(handle_external_data_processing, own_upload.pk)
+        async_wrapper(handle_external_data_processing, own_upload_id=own_upload.pk)
 
         messages.success(request, _("The uploaded data file will be processed soon."))
 

@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="makemessages" type="Python.DjangoServer" factoryName="Django server" folderName="messages">
+  <configuration default="false" name="003.004 generate_donations 2000 onlyPDF" type="Python.DjangoServer" factoryName="Django server" folderName="mock-data" singleton="false">
     <module name="redirectioneaza" />
     <option name="ENV_FILES" value="$PROJECT_DIR$/.env.local" />
     <option name="INTERPRETER_OPTIONS" value="" />
@@ -17,12 +17,12 @@
     <option name="RUN_TOOL" value="true" />
     <option name="launchJavascriptDebuger" value="false" />
     <option name="host" value="" />
-    <option name="additionalOptions" value="-a" />
+    <option name="additionalOptions" value="11000 --pdf-only" />
     <option name="browserUrl" value="" />
     <option name="runTestServer" value="false" />
     <option name="runNoReload" value="false" />
     <option name="useCustomRunCommand" value="true" />
-    <option name="customRunCommand" value="makemessages" />
+    <option name="customRunCommand" value="generate_donations" />
     <method v="2" />
   </configuration>
 </component>

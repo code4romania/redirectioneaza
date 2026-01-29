@@ -115,7 +115,7 @@ class NgoCauseCommonView(NgoBaseTemplateView):
         cause.save()
 
         if must_refresh_prefilled_form:
-            async_wrapper(delete_cause_prefilled_form, cause.pk)
+            async_wrapper(delete_cause_prefilled_form, cause_id=cause.pk)
 
         context["cause"] = cause
         context["ngo"] = ngo
