@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-28 15:07+0200\n"
+"POT-Creation-Date: 2026-01-29 11:43+0200\n"
 "PO-Revision-Date: 2025-02-12 12:44+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Armenian <https://translate.commitglobal.org/projects/"
@@ -32,10 +32,10 @@ msgid "Public URL"
 msgstr ""
 
 #: donations/admin/causes.py:75 donations/admin/common.py:23
-#: donations/admin/donors.py:112 donations/admin/download_jobs.py:22
+#: donations/admin/donors.py:251 donations/admin/download_jobs.py:22
 #: donations/admin/download_jobs.py:50 donations/admin/jobs.py:22
 #: donations/admin/jobs.py:55 donations/admin/ngos.py:208
-#: donations/admin/ngos.py:296 donations/models/donors.py:70
+#: donations/admin/ngos.py:296 donations/models/donors.py:71
 #: donations/models/downloads.py:10 donations/models/jobs.py:13
 #: donations/models/ngos.py:263 partners/models.py:148 users/models.py:72
 msgid "NGO"
@@ -59,86 +59,184 @@ msgstr "հարցաթերթ"
 msgid "Data"
 msgstr "հարցաթերթ"
 
-#: donations/admin/common.py:62 donations/admin/donors.py:138
+#: donations/admin/common.py:62 donations/admin/donors.py:277
 #: donations/admin/download_jobs.py:40 donations/admin/jobs.py:45
 #: donations/admin/ngos.py:246 templates/v2/ngo-account/byof/list-header.html:7
 msgid "Date"
 msgstr "Ամսաթիվ"
 
-#: donations/admin/donors.py:40
+#: donations/admin/donors.py:37
+msgid "Please confirm"
+msgstr ""
+
+#: donations/admin/donors.py:39
+msgid ""
+"This action will PERMANENTLY anonymize the selected donor's personal data, "
+"removing any personally identifiable information and the form itself. THIS "
+"ACTION CANNOT BE UNDONE."
+msgstr ""
+
+#: donations/admin/donors.py:43
+msgid "Yes, I want to anonymize this donor"
+msgstr ""
+
+#: donations/admin/donors.py:52
+#, python-format
+msgid "Out of %(queryset_size)d donor, the %(process)s results were:"
+msgid_plural "Out of %(queryset_size)d donors, the %(process)s results were:"
+msgstr[0] ""
+msgstr[1] ""
+
+#: donations/admin/donors.py:65
+#, python-format
+msgid "%(success)d was processed"
+msgid_plural "%(success)d were processed"
+msgstr[0] ""
+msgstr[1] ""
+
+#: donations/admin/donors.py:75
+#, python-format
+msgid "%(failure)d was not processed"
+msgid_plural "%(failure)d were not processed"
+msgstr[0] ""
+msgstr[1] ""
+
+#: donations/admin/donors.py:85
+#, python-format
+msgid "%(scheduled)d was scheduled for processing"
+msgid_plural "%(scheduled)d were scheduled for processing"
+msgstr[0] ""
+msgstr[1] ""
+
+#: donations/admin/donors.py:111
+#: donations/views/ngo_account/redirections.py:374
+msgid "<Cause no longer available>"
+msgstr ""
+
+#: donations/admin/donors.py:117
 #, fuzzy
 #| msgid "Donation exports"
 msgid "Donation removal"
 msgstr "Նվիրատվության արտահանումները"
 
-#: donations/admin/donors.py:63
+#: donations/admin/donors.py:166
+#, fuzzy
+#| msgid "description"
+msgid "Has personal data"
+msgstr "նկարագրություն"
+
+#: donations/admin/donors.py:193
 #, python-format
 msgid "Invalid value for the %(title)s filter."
 msgstr ""
 
-#: donations/admin/donors.py:72 templates/v2/emails/admin/new-ngo/main.html:30
+#: donations/admin/donors.py:202 templates/v2/emails/admin/new-ngo/main.html:30
 #: templates/v2/emails/admin/new-ngo/main.txt:7
 msgid "NGO ID"
 msgstr ""
 
-#: donations/admin/donors.py:77
+#: donations/admin/donors.py:207
 msgid "Cause ID"
 msgstr ""
 
-#: donations/admin/donors.py:108
+#: donations/admin/donors.py:247
 msgid "Availability"
 msgstr ""
 
-#: donations/admin/donors.py:116
+#: donations/admin/donors.py:255
 msgid "Identity"
 msgstr "Ինքնություն"
 
-#: donations/admin/donors.py:130
+#: donations/admin/donors.py:269
 msgid "Info"
 msgstr "Տեղեկություն"
 
-#: donations/admin/donors.py:134
+#: donations/admin/donors.py:273
 msgid "File"
 msgstr "Ֆայլ"
 
-#: donations/admin/donors.py:152
+#: donations/admin/donors.py:308
 msgid "Form"
 msgstr "հարցաթերթ"
 
-#: donations/admin/donors.py:156
+#: donations/admin/donors.py:312
 msgid "Remove donations and notify donors"
 msgstr ""
 
-#: donations/admin/donors.py:166
-#, python-format
-msgid "Out of %(queryset_size)d donor"
-msgid_plural "Out of %(queryset_size)d donors"
-msgstr[0] ""
-msgstr[1] ""
+#: donations/admin/donors.py:316
+msgid "Remove donations without notifying donors"
+msgstr ""
 
-#: donations/admin/donors.py:172
-#, python-format
-msgid "%(success)d was deleted"
-msgid_plural "%(success)d were deleted"
-msgstr[0] ""
-msgstr[1] ""
+#: donations/admin/donors.py:336
+msgid "Anonymize personal data of donations"
+msgstr ""
 
-#: donations/admin/donors.py:178
-#, python-format
-msgid "%(failure)d was not deleted"
-msgid_plural "%(failure)d were not deleted"
-msgstr[0] ""
-msgstr[1] ""
+#: donations/admin/donors.py:345
+msgid ""
+"Anonymizing a large number of redirections is not allowed via bulk action. "
+"This action should be done through a scheduled task or specific actions."
+msgstr ""
 
-#: donations/admin/donors.py:185
+#: donations/admin/donors.py:364
+msgid "Anonymize personal data of the donation"
+msgstr ""
+
+#: donations/admin/donors.py:370
+#, fuzzy
+#| msgid "The import has been processed."
+msgid "The donor was successfully anonymized."
+msgstr "Ներմուծումը կատարվել է։"
+
+#: donations/admin/donors.py:372
+msgid "The donor anonymization was scheduled for processing."
+msgstr ""
+
+#: donations/admin/donors.py:374
+msgid "Failed to anonymize the donor. Check the logs for more details."
+msgstr ""
+
+#: donations/admin/donors.py:381
+#, fuzzy
+#| msgid "NGO Hub organization ID"
+msgid "Donor not found."
+msgstr "NGO Hub կազմակերպության նույնականացման համար"
+
+#: donations/admin/donors.py:393
+#, fuzzy
+#| msgid "NGO Hub organization ID"
+msgid "Please confirm the anonymization by checking the box."
+msgstr "NGO Hub կազմակերպության նույնականացման համար"
+
+#: donations/admin/donors.py:403
+msgid "Anonymize donor"
+msgstr ""
+
+#: donations/admin/donors.py:410
 #, fuzzy
 #| msgid "Successful tasks"
 msgid "Schedule redirections stats"
 msgstr "Հաջողված առաջադրանքներ"
 
-#: donations/admin/donors.py:189
+#: donations/admin/donors.py:415 donations/admin/donors.py:424
+msgid "Error calling the command"
+msgstr ""
+
+#: donations/admin/donors.py:417 donations/admin/donors.py:426
+#: donations/admin/donors.py:432
+#, fuzzy
+#| msgid "Successful tasks"
+msgid "Succesfully scheduled"
+msgstr "Հաջողված առաջադրանքներ"
+
+#: donations/admin/donors.py:419
 msgid "Schedule redirections stats [FORCE]"
 msgstr ""
+
+#: donations/admin/donors.py:428
+#, fuzzy
+#| msgid "Number of donations"
+msgid "Anonymize old donations"
+msgstr "Նվիրատվությունների քանակը"
 
 #: donations/admin/download_jobs.py:26 donations/admin/jobs.py:32
 #: donations/views/ngo_account_filters.py:114
@@ -518,7 +616,7 @@ msgstr "Բնակարան"
 msgid "Two years"
 msgstr "երկու տարի"
 
-#: donations/forms/redirection.py:36 donations/models/donors.py:125
+#: donations/forms/redirection.py:36 donations/models/donors.py:126
 msgid "ANAF GDPR"
 msgstr ""
 
@@ -596,7 +694,7 @@ msgid "status"
 msgstr "կարգավիճակ"
 
 #: donations/models/byof.py:84 donations/models/common.py:31
-#: donations/models/donors.py:159 donations/models/ngos.py:254
+#: donations/models/donors.py:160 donations/models/ngos.py:254
 #: donations/models/ngos.py:512 partners/models.py:82 users/models.py:96
 msgid "date created"
 msgstr "ամսաթիվը ստեղծվել է"
@@ -638,111 +736,121 @@ msgstr "Ավարտման ամսաթիվ"
 msgid "Filename cache"
 msgstr "Ֆայլի անվան քեշ"
 
-#: donations/models/donors.py:59
+#: donations/models/donors.py:60
 msgid "wage"
 msgstr "աշխատավարձ"
 
-#: donations/models/donors.py:60
+#: donations/models/donors.py:61
 msgid "pension"
 msgstr "կենսաթոշակ"
 
-#: donations/models/donors.py:64
+#: donations/models/donors.py:65
 msgid "is available"
 msgstr ""
 
-#: donations/models/donors.py:65
+#: donations/models/donors.py:66
 msgid "If the donation is available on the platform (not removed)"
 msgstr ""
 
-#: donations/models/donors.py:71 donations/models/jobs.py:20
+#: donations/models/donors.py:72 donations/models/jobs.py:20
 msgid "cause"
 msgstr ""
 
-#: donations/models/donors.py:74 donations/views/download_donations/main.py:187
+#: donations/models/donors.py:75 donations/views/download_donations/main.py:187
 msgid "last name"
 msgstr "ազգանուն"
 
-#: donations/models/donors.py:77 donations/views/download_donations/main.py:188
+#: donations/models/donors.py:78 donations/views/download_donations/main.py:188
 msgid "first name"
 msgstr "անուն"
 
-#: donations/models/donors.py:79
+#: donations/models/donors.py:80
 msgid "initials"
 msgstr "սկզբնատառերը"
 
-#: donations/models/donors.py:81 donations/views/download_donations/main.py:190
+#: donations/models/donors.py:82 donations/views/download_donations/main.py:190
 msgid "CNP"
 msgstr "Վկայագրված բուժքույր"
 
-#: donations/models/donors.py:84 donations/views/download_donations/main.py:195
+#: donations/models/donors.py:85 donations/views/download_donations/main.py:195
 msgid "city"
 msgstr "քաղաք"
 
-#: donations/models/donors.py:92 donations/models/ngos.py:224
+#: donations/models/donors.py:93 donations/models/ngos.py:224
 #: donations/views/download_donations/main.py:194
 msgid "county"
 msgstr "մարզ"
 
-#: donations/models/donors.py:99 donations/models/ngos.py:214
+#: donations/models/donors.py:100 donations/models/ngos.py:214
 msgid "address"
 msgstr "հասցե"
 
-#: donations/models/donors.py:103 donations/models/ngos.py:235
+#: donations/models/donors.py:104 donations/models/ngos.py:235
 msgid "telephone"
 msgstr "հեռախոս"
 
-#: donations/models/donors.py:111 donations/models/ngos.py:234
+#: donations/models/donors.py:112 donations/models/ngos.py:234
 #: donations/views/download_donations/main.py:193
 msgid "email"
 msgstr "էլ. փոստ"
 
-#: donations/models/donors.py:119 donations/views/api_download.py:63
+#: donations/models/donors.py:120 donations/views/api_download.py:63
 #: donations/views/api_download.py:64
 msgid "anonymous"
 msgstr "անանուն"
 
-#: donations/models/donors.py:122
+#: donations/models/donors.py:123
 msgid "If the user would like the ngo to see the donation"
 msgstr "Թե օգտատերը ցանկանում է, որ ՀԿ-ն տեսնի նվիրատվությունը"
 
-#: donations/models/donors.py:127
+#: donations/models/donors.py:128
 msgid "If the user agrees for ANAF to share their data with the NGO"
 msgstr ""
 
-#: donations/models/donors.py:132
+#: donations/models/donors.py:133
 msgid "income type"
 msgstr "եկամտի տեսակը"
 
-#: donations/models/donors.py:141
+#: donations/models/donors.py:142
 msgid "two years"
 msgstr "երկու տարի"
 
-#: donations/models/donors.py:143
+#: donations/models/donors.py:144
 msgid "If the user wants to donate for 2 years"
 msgstr "Եթե օգտատերը ցանկանում է նվիրատվություն անել 2 տարի"
 
-#: donations/models/donors.py:146
+#: donations/models/donors.py:147
 msgid "Geo IP"
 msgstr "Geo IP"
 
-#: donations/models/donors.py:148
+#: donations/models/donors.py:149
 #: donations/views/download_donations/main.py:203
 msgid "filename"
 msgstr "ֆայլի անունը"
 
-#: donations/models/donors.py:149
+#: donations/models/donors.py:150
 msgid "has signed"
 msgstr "ստորագրել է"
 
-#: donations/models/donors.py:152
+#: donations/models/donors.py:153
 msgid "PDF file"
 msgstr "PDF ֆայլ"
 
-#: donations/models/donors.py:171
+#: donations/models/donors.py:167
+msgid "date personal data removal started"
+msgstr ""
+
+#: donations/models/donors.py:172
+#, fuzzy
+#| msgid "description"
+msgid "date personal data removed"
+msgstr "նկարագրություն"
+
+#: donations/models/donors.py:186
 msgid "donor"
 msgstr "դոնոր"
 
-#: donations/models/donors.py:172
+#: donations/models/donors.py:187
 msgid "donors"
 msgstr "դոնորներ"
 
@@ -1603,7 +1711,7 @@ msgid ""
 "your list or the ANAF archive."
 msgstr "Ներմուծումը կատարվել է։"
 
-#: donations/views/ngo_account/redirections.py:374
+#: donations/views/ngo_account/redirections.py:381
 msgid "Warning regarding the redirection form"
 msgstr ""
 
@@ -4340,95 +4448,95 @@ msgstr "Խումբ"
 msgid "Has NGO"
 msgstr ""
 
-#: utils/constants/time.py:11
+#: utils/constants/time.py:17
 msgid "January"
 msgstr "Հունվար"
 
-#: utils/constants/time.py:12
+#: utils/constants/time.py:18
 msgid "Jan"
 msgstr "Հունվ"
 
-#: utils/constants/time.py:15
+#: utils/constants/time.py:21
 msgid "February"
 msgstr "Փետրվար"
 
-#: utils/constants/time.py:16
+#: utils/constants/time.py:22
 msgid "Feb"
 msgstr "Փետրվ"
 
-#: utils/constants/time.py:19
+#: utils/constants/time.py:25
 msgid "March"
 msgstr "Մարտ"
 
-#: utils/constants/time.py:20
+#: utils/constants/time.py:26
 msgid "Mar"
 msgstr "Մարտ"
 
-#: utils/constants/time.py:23
+#: utils/constants/time.py:29
 msgid "April"
 msgstr "Ապրիլ"
 
-#: utils/constants/time.py:24
+#: utils/constants/time.py:30
 msgid "Apr"
 msgstr "Ապր"
 
-#: utils/constants/time.py:27 utils/constants/time.py:28
+#: utils/constants/time.py:33 utils/constants/time.py:34
 msgid "May"
 msgstr "Մայիս"
 
-#: utils/constants/time.py:31
+#: utils/constants/time.py:37
 msgid "June"
 msgstr "Հունիս"
 
-#: utils/constants/time.py:32
+#: utils/constants/time.py:38
 msgid "Jun"
 msgstr "Հունիս"
 
-#: utils/constants/time.py:35
+#: utils/constants/time.py:41
 msgid "July"
 msgstr "Հուլիս"
 
-#: utils/constants/time.py:36
+#: utils/constants/time.py:42
 msgid "Jul"
 msgstr "Հուլ"
 
-#: utils/constants/time.py:39
+#: utils/constants/time.py:45
 msgid "August"
 msgstr "Օգոստոս"
 
-#: utils/constants/time.py:40
+#: utils/constants/time.py:46
 msgid "Aug"
 msgstr "Օգ"
 
-#: utils/constants/time.py:43
+#: utils/constants/time.py:49
 msgid "September"
 msgstr "Սեպտեմբեր"
 
-#: utils/constants/time.py:44
+#: utils/constants/time.py:50
 msgid "Sep"
 msgstr "Սեպտ"
 
-#: utils/constants/time.py:47
+#: utils/constants/time.py:53
 msgid "October"
 msgstr "Հոկտեմբեր"
 
-#: utils/constants/time.py:48
+#: utils/constants/time.py:54
 msgid "Oct"
 msgstr "Հոկտ"
 
-#: utils/constants/time.py:51
+#: utils/constants/time.py:57
 msgid "November"
 msgstr "Նոյեմբեր"
 
-#: utils/constants/time.py:52
+#: utils/constants/time.py:58
 msgid "Nov"
 msgstr "Նոյ"
 
-#: utils/constants/time.py:55
+#: utils/constants/time.py:61
 msgid "December"
 msgstr "Դեկտեմբեր"
 
-#: utils/constants/time.py:56
+#: utils/constants/time.py:62
 msgid "Dec"
 msgstr "Դեկտ"
 

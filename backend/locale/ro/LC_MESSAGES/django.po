@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-28 15:07+0200\n"
+"POT-Creation-Date: 2026-01-29 11:43+0200\n"
 "PO-Revision-Date: 2025-03-27 14:49+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -40,10 +40,10 @@ msgid "Public URL"
 msgstr "URL Public"
 
 #: donations/admin/causes.py:75 donations/admin/common.py:23
-#: donations/admin/donors.py:112 donations/admin/download_jobs.py:22
+#: donations/admin/donors.py:251 donations/admin/download_jobs.py:22
 #: donations/admin/download_jobs.py:50 donations/admin/jobs.py:22
 #: donations/admin/jobs.py:55 donations/admin/ngos.py:208
-#: donations/admin/ngos.py:296 donations/models/donors.py:70
+#: donations/admin/ngos.py:296 donations/models/donors.py:71
 #: donations/models/downloads.py:10 donations/models/jobs.py:13
 #: donations/models/ngos.py:263 partners/models.py:148 users/models.py:72
 msgid "NGO"
@@ -63,85 +63,179 @@ msgstr "Datele formularului"
 msgid "Data"
 msgstr "Date"
 
-#: donations/admin/common.py:62 donations/admin/donors.py:138
+#: donations/admin/common.py:62 donations/admin/donors.py:277
 #: donations/admin/download_jobs.py:40 donations/admin/jobs.py:45
 #: donations/admin/ngos.py:246 templates/v2/ngo-account/byof/list-header.html:7
 msgid "Date"
 msgstr "Data"
 
-#: donations/admin/donors.py:40
+#: donations/admin/donors.py:37
+msgid "Please confirm"
+msgstr "Te rog confirmă"
+
+#: donations/admin/donors.py:39
+msgid ""
+"This action will PERMANENTLY anonymize the selected donor's personal data, "
+"removing any personally identifiable information and the form itself. THIS "
+"ACTION CANNOT BE UNDONE."
+msgstr ""
+"Această acțiune va anonimizează PERMANENT datele personale ale donatorului "
+"selectat, eliminând orice informație de identificare personală și formularul "
+"în sine. ACEASTĂ ACȚIUNE NU POATE FI ANULATĂ."
+
+#: donations/admin/donors.py:43
+msgid "Yes, I want to anonymize this donor"
+msgstr "Da, vreau să anonimizez acest donator"
+
+#: donations/admin/donors.py:52
+#, python-format
+msgid "Out of %(queryset_size)d donor, the %(process)s results were:"
+msgid_plural "Out of %(queryset_size)d donors, the %(process)s results were:"
+msgstr[0] "Din %(queryset_size)d donator, rezultatele pentru %(process)s au fost:"
+msgstr[1] "Din %(queryset_size)d donatori, rezultatele pentru %(process)s au fost:"
+msgstr[2] "Din %(queryset_size)d de donatori, rezultatele pentru %(process)s au fost:"
+
+#: donations/admin/donors.py:65
+#, python-format
+msgid "%(success)d was processed"
+msgid_plural "%(success)d were processed"
+msgstr[0] "%(success)d a fost procesat/ă"
+msgstr[1] "%(success)d au fost procesați/te"
+msgstr[2] "%(success)d au fost procesați/te"
+
+#: donations/admin/donors.py:75
+#, python-format
+msgid "%(failure)d was not processed"
+msgid_plural "%(failure)d were not processed"
+msgstr[0] "%(failure)d nu a fost procesat/ă"
+msgstr[1] "%(failure)d nu au fost procesați/te"
+msgstr[2] "%(failure)d nu au fost procesați/te"
+
+#: donations/admin/donors.py:85
+#, python-format
+msgid "%(scheduled)d was scheduled for processing"
+msgid_plural "%(scheduled)d were scheduled for processing"
+msgstr[0] "%(scheduled)d a fost programat/ă pentru procesare"
+msgstr[1] "%(scheduled)d au fost programați/te pentru procesare"
+msgstr[2] "%(scheduled)d au fost programați/te pentru procesare"
+
+#: donations/admin/donors.py:111
+#: donations/views/ngo_account/redirections.py:374
+msgid "<Cause no longer available>"
+msgstr "<Cauză indisponibilă>"
+
+#: donations/admin/donors.py:117
 msgid "Donation removal"
 msgstr "Eliminare donație"
 
-#: donations/admin/donors.py:63
+#: donations/admin/donors.py:166
+msgid "Has personal data"
+msgstr "Are informații personale"
+
+#: donations/admin/donors.py:193
 #, python-format
 msgid "Invalid value for the %(title)s filter."
 msgstr "Valoare invalidă pentru filtrul %(title)s."
 
-#: donations/admin/donors.py:72 templates/v2/emails/admin/new-ngo/main.html:30
+#: donations/admin/donors.py:202 templates/v2/emails/admin/new-ngo/main.html:30
 #: templates/v2/emails/admin/new-ngo/main.txt:7
 msgid "NGO ID"
 msgstr "ID ONG"
 
-#: donations/admin/donors.py:77
+#: donations/admin/donors.py:207
 msgid "Cause ID"
 msgstr "ID Cauză"
 
-#: donations/admin/donors.py:108
+#: donations/admin/donors.py:247
 msgid "Availability"
 msgstr "Disponibilitate"
 
-#: donations/admin/donors.py:116
+#: donations/admin/donors.py:255
 msgid "Identity"
 msgstr "Identitate"
 
-#: donations/admin/donors.py:130
+#: donations/admin/donors.py:269
 msgid "Info"
 msgstr "Info"
 
-#: donations/admin/donors.py:134
+#: donations/admin/donors.py:273
 msgid "File"
 msgstr "Fișier"
 
-#: donations/admin/donors.py:152
+#: donations/admin/donors.py:308
 msgid "Form"
 msgstr "Formular"
 
-#: donations/admin/donors.py:156
+#: donations/admin/donors.py:312
 msgid "Remove donations and notify donors"
 msgstr "Elimină donațiile și notifică donatorii"
 
-#: donations/admin/donors.py:166
-#, python-format
-msgid "Out of %(queryset_size)d donor"
-msgid_plural "Out of %(queryset_size)d donors"
-msgstr[0] "Din %(queryset_size)d donator"
-msgstr[1] "Din %(queryset_size)d donatori"
-msgstr[2] "Din %(queryset_size)d de donatori"
+#: donations/admin/donors.py:316
+msgid "Remove donations without notifying donors"
+msgstr "Elimină donațiile fără a notifica donatorii"
 
-#: donations/admin/donors.py:172
-#, python-format
-msgid "%(success)d was deleted"
-msgid_plural "%(success)d were deleted"
-msgstr[0] "%(success)d a fost șters"
-msgstr[1] "%(success)d au fost șterse"
-msgstr[2] "%(success)d au fost șterse"
+#: donations/admin/donors.py:336
+msgid "Anonymize personal data of donations"
+msgstr "Anonimizează datele personale ale donațiilor"
 
-#: donations/admin/donors.py:178
-#, python-format
-msgid "%(failure)d was not deleted"
-msgid_plural "%(failure)d were not deleted"
-msgstr[0] "%(failure)d nu a fost șters"
-msgstr[1] "%(failure)d nu au fost șterse"
-msgstr[2] "%(failure)d nu au fost șterse"
+#: donations/admin/donors.py:345
+msgid ""
+"Anonymizing a large number of redirections is not allowed via bulk action. "
+"This action should be done through a scheduled task or specific actions."
+msgstr ""
+"Anonimizarea unui număr mare de redirecționări nu este permisă prin acțiuni "
+"în masă. Această acțiune trebuie efectuată printr-o sarcină programată sau "
+"acțiuni specifice."
 
-#: donations/admin/donors.py:185
+#: donations/admin/donors.py:364
+msgid "Anonymize personal data of the donation"
+msgstr "Anonimizează datele personale ale donației"
+
+#: donations/admin/donors.py:370
+msgid "The donor was successfully anonymized."
+msgstr "Donatorul a fost anonimizat cu succes."
+
+#: donations/admin/donors.py:372
+msgid "The donor anonymization was scheduled for processing."
+msgstr "Anonimizarea donatorului a fost programată pentru procesare."
+
+#: donations/admin/donors.py:374
+msgid "Failed to anonymize the donor. Check the logs for more details."
+msgstr "Nu s-a reușit anonimizarea donatorului. Verifică jurnalele pentru mai multe "
+"detalii."
+
+#: donations/admin/donors.py:381
+msgid "Donor not found."
+msgstr "Nu a fost găsit donatorul."
+
+#: donations/admin/donors.py:393
+msgid "Please confirm the anonymization by checking the box."
+msgstr "Te rog confirmă anonimizarea bifând căsuța."
+
+#: donations/admin/donors.py:403
+msgid "Anonymize donor"
+msgstr "Anonimizează donator"
+
+#: donations/admin/donors.py:410
 msgid "Schedule redirections stats"
 msgstr "Programează statistici redirecționări"
 
-#: donations/admin/donors.py:189
+#: donations/admin/donors.py:415 donations/admin/donors.py:424
+msgid "Error calling the command"
+msgstr "Eroare la apelarea comenzii"
+
+#: donations/admin/donors.py:417 donations/admin/donors.py:426
+#: donations/admin/donors.py:432
+msgid "Succesfully scheduled"
+msgstr "Programare reușită"
+
+#: donations/admin/donors.py:419
 msgid "Schedule redirections stats [FORCE]"
 msgstr "Programează statistici redirecționări [F]"
+
+#: donations/admin/donors.py:428
+msgid "Anonymize old donations"
+msgstr "Anonimizează donațiile vechi"
 
 #: donations/admin/download_jobs.py:26 donations/admin/jobs.py:32
 #: donations/views/ngo_account_filters.py:114
@@ -478,7 +572,7 @@ msgstr "Apartament"
 msgid "Two years"
 msgstr "Doi ani"
 
-#: donations/forms/redirection.py:36 donations/models/donors.py:125
+#: donations/forms/redirection.py:36 donations/models/donors.py:126
 msgid "ANAF GDPR"
 msgstr "ANAF GDPR"
 
@@ -544,7 +638,7 @@ msgid "status"
 msgstr "stare"
 
 #: donations/models/byof.py:84 donations/models/common.py:31
-#: donations/models/donors.py:159 donations/models/ngos.py:254
+#: donations/models/donors.py:160 donations/models/ngos.py:254
 #: donations/models/ngos.py:512 partners/models.py:82 users/models.py:96
 msgid "date created"
 msgstr "data creării"
@@ -586,112 +680,120 @@ msgstr "data terminării"
 msgid "Filename cache"
 msgstr "Cache nume fișier"
 
-#: donations/models/donors.py:59
+#: donations/models/donors.py:60
 msgid "wage"
 msgstr "salariu"
 
-#: donations/models/donors.py:60
+#: donations/models/donors.py:61
 msgid "pension"
 msgstr "pensie"
 
-#: donations/models/donors.py:64
+#: donations/models/donors.py:65
 msgid "is available"
 msgstr "este disponibil"
 
-#: donations/models/donors.py:65
+#: donations/models/donors.py:66
 msgid "If the donation is available on the platform (not removed)"
 msgstr "Dacă donația este disponibilă pe platformă (nu a fost eliminată)"
 
-#: donations/models/donors.py:71 donations/models/jobs.py:20
+#: donations/models/donors.py:72 donations/models/jobs.py:20
 msgid "cause"
 msgstr "cauză"
 
-#: donations/models/donors.py:74 donations/views/download_donations/main.py:187
+#: donations/models/donors.py:75 donations/views/download_donations/main.py:187
 msgid "last name"
 msgstr "nume"
 
-#: donations/models/donors.py:77 donations/views/download_donations/main.py:188
+#: donations/models/donors.py:78 donations/views/download_donations/main.py:188
 msgid "first name"
 msgstr "prenume"
 
-#: donations/models/donors.py:79
+#: donations/models/donors.py:80
 msgid "initials"
 msgstr "inițiale"
 
-#: donations/models/donors.py:81 donations/views/download_donations/main.py:190
+#: donations/models/donors.py:82 donations/views/download_donations/main.py:190
 msgid "CNP"
 msgstr "CNP"
 
-#: donations/models/donors.py:84 donations/views/download_donations/main.py:195
+#: donations/models/donors.py:85 donations/views/download_donations/main.py:195
 msgid "city"
 msgstr "oraș"
 
-#: donations/models/donors.py:92 donations/models/ngos.py:224
+#: donations/models/donors.py:93 donations/models/ngos.py:224
 #: donations/views/download_donations/main.py:194
 msgid "county"
 msgstr "județ"
 
-#: donations/models/donors.py:99 donations/models/ngos.py:214
+#: donations/models/donors.py:100 donations/models/ngos.py:214
 msgid "address"
 msgstr "adresă"
 
-#: donations/models/donors.py:103 donations/models/ngos.py:235
+#: donations/models/donors.py:104 donations/models/ngos.py:235
 msgid "telephone"
 msgstr "telefon"
 
-#: donations/models/donors.py:111 donations/models/ngos.py:234
+#: donations/models/donors.py:112 donations/models/ngos.py:234
 #: donations/views/download_donations/main.py:193
 msgid "email"
 msgstr "email"
 
-#: donations/models/donors.py:119 donations/views/api_download.py:63
+#: donations/models/donors.py:120 donations/views/api_download.py:63
 #: donations/views/api_download.py:64
 msgid "anonymous"
 msgstr "anonim"
 
-#: donations/models/donors.py:122
+#: donations/models/donors.py:123
 msgid "If the user would like the ngo to see the donation"
 msgstr "Dacă utilizatorul dorește ca ONG-ul să vadă donația"
 
-#: donations/models/donors.py:127
+#: donations/models/donors.py:128
 msgid "If the user agrees for ANAF to share their data with the NGO"
 msgstr ""
 "Dacă utilizatorul este de acord ca ANAF să împărtășească datele cu ONG-ul"
 
-#: donations/models/donors.py:132
+#: donations/models/donors.py:133
 msgid "income type"
 msgstr "tip venit"
 
-#: donations/models/donors.py:141
+#: donations/models/donors.py:142
 msgid "two years"
 msgstr "doi ani"
 
-#: donations/models/donors.py:143
+#: donations/models/donors.py:144
 msgid "If the user wants to donate for 2 years"
 msgstr "Dacă utilizatorul dorește să doneze pentru 2 ani"
 
-#: donations/models/donors.py:146
+#: donations/models/donors.py:147
 msgid "Geo IP"
 msgstr "Geo IP"
 
-#: donations/models/donors.py:148
+#: donations/models/donors.py:149
 #: donations/views/download_donations/main.py:203
 msgid "filename"
 msgstr "nume fișier"
 
-#: donations/models/donors.py:149
+#: donations/models/donors.py:150
 msgid "has signed"
 msgstr "a semnat"
 
-#: donations/models/donors.py:152
+#: donations/models/donors.py:153
 msgid "PDF file"
 msgstr "fișier PDF"
 
-#: donations/models/donors.py:171
+#: donations/models/donors.py:167
+msgid "date personal data removal started"
+msgstr "data începerii eliminării datelor personale"
+
+#: donations/models/donors.py:172
+msgid "date personal data removed"
+msgstr "data eliminării datelor personale"
+
+#: donations/models/donors.py:186
 msgid "donor"
 msgstr "donator"
 
-#: donations/models/donors.py:172
+#: donations/models/donors.py:187
 msgid "donors"
 msgstr "donatori"
 
@@ -1439,7 +1541,7 @@ msgstr ""
 "Redirecționarea a fost eliminată cu succes. Nu va mai apărea în lista ta sau "
 "în arhiva ANAF."
 
-#: donations/views/ngo_account/redirections.py:374
+#: donations/views/ngo_account/redirections.py:381
 msgid "Warning regarding the redirection form"
 msgstr "Atenționare cu privire la formularul de redirecționare"
 
@@ -2744,8 +2846,8 @@ msgid ""
 "If you wish to find out more information about the removed form, please "
 "contact the organization directly."
 msgstr ""
-"Dacă vrei să afli mai multe informații despre formularul eliminat, te "
-"rugăm să iei legătura direct cu organizația."
+"Dacă vrei să afli mai multe informații despre formularul eliminat, te rugăm "
+"să iei legătura direct cu organizația."
 
 #: templates/v2/emails/donor/removed-redirection-ngo/main.html:34
 #: templates/v2/emails/donor/removed-redirection-ngo/main.txt:20
@@ -4112,95 +4214,95 @@ msgstr "Grup"
 msgid "Has NGO"
 msgstr "Are ONG"
 
-#: utils/constants/time.py:11
+#: utils/constants/time.py:17
 msgid "January"
 msgstr "Ianuarie"
 
-#: utils/constants/time.py:12
+#: utils/constants/time.py:18
 msgid "Jan"
 msgstr "Ian"
 
-#: utils/constants/time.py:15
+#: utils/constants/time.py:21
 msgid "February"
 msgstr "Februarie"
 
-#: utils/constants/time.py:16
+#: utils/constants/time.py:22
 msgid "Feb"
 msgstr "Feb"
 
-#: utils/constants/time.py:19
+#: utils/constants/time.py:25
 msgid "March"
 msgstr "Martie"
 
-#: utils/constants/time.py:20
+#: utils/constants/time.py:26
 msgid "Mar"
 msgstr "Mar"
 
-#: utils/constants/time.py:23
+#: utils/constants/time.py:29
 msgid "April"
 msgstr "Aprilie"
 
-#: utils/constants/time.py:24
+#: utils/constants/time.py:30
 msgid "Apr"
 msgstr "Apr"
 
-#: utils/constants/time.py:27 utils/constants/time.py:28
+#: utils/constants/time.py:33 utils/constants/time.py:34
 msgid "May"
 msgstr "Mai"
 
-#: utils/constants/time.py:31
+#: utils/constants/time.py:37
 msgid "June"
 msgstr "Iun"
 
-#: utils/constants/time.py:32
+#: utils/constants/time.py:38
 msgid "Jun"
 msgstr "Iun"
 
-#: utils/constants/time.py:35
+#: utils/constants/time.py:41
 msgid "July"
 msgstr "Iulie"
 
-#: utils/constants/time.py:36
+#: utils/constants/time.py:42
 msgid "Jul"
 msgstr "Iul"
 
-#: utils/constants/time.py:39
+#: utils/constants/time.py:45
 msgid "August"
 msgstr "August"
 
-#: utils/constants/time.py:40
+#: utils/constants/time.py:46
 msgid "Aug"
 msgstr "Aug"
 
-#: utils/constants/time.py:43
+#: utils/constants/time.py:49
 msgid "September"
 msgstr "Septembrie"
 
-#: utils/constants/time.py:44
+#: utils/constants/time.py:50
 msgid "Sep"
 msgstr "Sep"
 
-#: utils/constants/time.py:47
+#: utils/constants/time.py:53
 msgid "October"
 msgstr "Octombrie"
 
-#: utils/constants/time.py:48
+#: utils/constants/time.py:54
 msgid "Oct"
 msgstr "Oct"
 
-#: utils/constants/time.py:51
+#: utils/constants/time.py:57
 msgid "November"
 msgstr "Noiembrie"
 
-#: utils/constants/time.py:52
+#: utils/constants/time.py:58
 msgid "Nov"
 msgstr "Noi"
 
-#: utils/constants/time.py:55
+#: utils/constants/time.py:61
 msgid "December"
 msgstr "Decembrie"
 
-#: utils/constants/time.py:56
+#: utils/constants/time.py:62
 msgid "Dec"
 msgstr "Dec"
 
@@ -4584,9 +4686,6 @@ msgstr "Subdomeniul trebuie să aibă între 3 și 100 de caractere."
 
 #~ msgid "Schedule the transfer of donor forms to the current storage"
 #~ msgstr "Programează transferul formularelor de donare în stocarea curentă"
-
-#~ msgid "The donor forms have been scheduled for transfer."
-#~ msgstr "Transferul formularelor de donare a fost programat."
 
 #~ msgid "Pending"
 #~ msgstr "În așteptare"

@@ -3,6 +3,7 @@ from unittest.mock import patch
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 
 from donations.models.donors import Donor
 from donations.models.ngos import Cause, CauseVisibilityChoices, Ngo
@@ -161,12 +162,12 @@ class RedirectionDisableLinkViewTests(TestCase):
         self.assertFalse(donor.is_available)
 
         send_email.assert_called_once()
-        _, kwargs = send_email.call_args
+        __, kwargs = send_email.call_args
         self.assertEqual(kwargs["to_emails"], ["nocause@example.com"])
         self.assertEqual(
             kwargs["context"],
             {
-                "cause_name": "<Cause no longer available>",
+                "cause_name": _("<Cause no longer available>"),
                 "action_url": "https://example.com/home",
                 "site_title": "site",
             },
