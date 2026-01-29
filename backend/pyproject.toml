@@ -5,13 +5,13 @@ description = "A tool to help NGOs with managing the redirection of people's tax
 
 requires-python = ">=3.13"
 dependencies = [
-  "blessed~=1.25.0",
+  "blessed~=1.28.0",
   "cryptography~=46.0.0",
   "django~=5.2.0",
-  "django-allauth~=65.13.0",
+  "django-allauth~=65.14.0",
   "django-auditlog~=3.4.0",
   "django-environ~=0.12.0",
-  "django-import-export~=4.3.0",
+  "django-import-export~=4.4.0",
   "django-ipware~=7.0.0",
   "django-localflavor~=5.0.0",
   "django-q2~=1.9.0",
@@ -19,10 +19,10 @@ dependencies = [
   "django-ses~=4.6.0",
   "django-storages[s3]~=1.14.0",
   "django-tinymce~=5.0.0",
-  "django-unfold~=0.75.0",
+  "django-unfold~=0.77.0",
   "django-vite~=3.1.0",
   "gevent~=25.9.0",
-  "gunicorn~=23.0.0",
+  "gunicorn~=24.1.0",
   "ngohub~=0.1.0",
   "phonenumbers~=9.0.0",
   "psutil~=7.2.0",
@@ -30,10 +30,10 @@ dependencies = [
   "pycognito~=2024.5.0",
   "pydantic[email]~=2.12.0",
   "pymysql~=1.1.0",
-  "pypdf~=6.5.0",
+  "pypdf~=6.6.0",
   "reportlab~=4.4.0",
   "requests~=2.32.0",
-  "sentry-sdk[django]~=2.48.0",
+  "sentry-sdk[django]~=2.51.0",
   "whitenoise~=6.11.0",
 ]
 
