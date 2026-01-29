@@ -1,5 +1,5 @@
 import logging
-from datetime import datetime, timedelta
+from datetime import datetime
 
 from django import forms
 from django.conf import settings
@@ -24,7 +24,6 @@ from redirectioneaza.common.app_url import build_uri
 from redirectioneaza.common.async_wrapper import async_wrapper
 from redirectioneaza.common.messaging import extend_email_context, send_email
 from utils.common.admin import HasNgoFilter
-from utils.constants.time import YEAR_IN_DAYS
 
 logger = logging.getLogger(__name__)
 
@@ -146,16 +145,21 @@ def remove_donor_data(donor: Donor) -> str:
 def anonymize_old_donations():
     def remove_personal_data_in_bulk(selected_donors: QuerySet[Donor]):
         # run the remove_personal_data async for each donor in the selected_donors queryset
-        for donor in selected_donors.iterator(chunk_size=500):
+        for donor in selected_donors.iterator(chunk_size=5000):
             remove_donor_data(donor)
 
+    base_donor_qs: QuerySet[Donor] = Donor.objects.filter(personal_data_removal_started_at__isnull=True).order_by(
+        "date_created"
+    )
+
     now: datetime = timezone.now()
-    one_year_ago_date: datetime = now - timedelta(days=1 * YEAR_IN_DAYS)
-    two_years_ago_date: datetime = now - timedelta(days=2 * YEAR_IN_DAYS)
+    current_year: int = now.year
+    current_timezone = now.tzinfo
 
-    base_donor_qs: QuerySet[Donor] = Donor.objects.filter(personal_data_removal_started_at__isnull=True)
-
+    two_years_ago_date: datetime = datetime(year=current_year - 2, month=12, day=31, tzinfo=current_timezone)
     remove_personal_data_in_bulk(base_donor_qs.filter(date_created__date__lte=two_years_ago_date))
+
+    one_year_ago_date: datetime = datetime(year=current_year - 1, month=12, day=31, tzinfo=current_timezone)
     remove_personal_data_in_bulk(base_donor_qs.filter(two_years=False, date_created__lte=one_year_ago_date))
 
 
