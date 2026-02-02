@@ -8,7 +8,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from donations.common.models_hashing import hash_id_secret
+from utils.models_hashing import hash_id_secret
 from utils.common.crypto_helper import decrypt_data, encrypt_data
 
 

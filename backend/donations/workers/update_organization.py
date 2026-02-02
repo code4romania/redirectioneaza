@@ -1,4 +1,3 @@
-import logging
 import mimetypes
 import random
 import string
@@ -13,19 +12,21 @@ from django.utils import timezone
 from django.utils.text import slugify
 from django_q.tasks import async_task
 from ngohub import NGOHub
+from ngohub.exceptions import HubHTTPException
 from ngohub.models.organization import Organization, OrganizationGeneral
 from pycognito import Cognito
 from requests import Response
 
+from utils.helper_logging import setup_logger
 from donations.common.validation.validate_slug import NgoSlugValidator
 from donations.models.common import CommonFilenameCacheModel
 from donations.models.ngos import Cause, Ngo
 from redirectioneaza.common.cache import cache_decorator
 
-logger = logging.getLogger(__name__)
+logger = setup_logger(__name__)
 
 
-def _remove_signature(s3_url: str) -> str:
+def _remove_s3_signature(s3_url: str) -> str:
     """
     Extract the S3 file name without the URL signature and the directory path
     """
@@ -43,7 +44,7 @@ def _copy_file_to_object_with_filename_cache(
     if not hasattr(target_object, attribute_name):
         raise AttributeError(f"Target object {target_object} has no attribute '{attribute_name}'")
 
-    filename: str = _remove_signature(signed_file_url)
+    filename: str = _remove_s3_signature(signed_file_url)
     if not filename and getattr(target_object, attribute_name):
         getattr(target_object, attribute_name).delete()
         error_message = f"ERROR: {attribute_name.upper()} file URL is empty, deleting the existing file."
@@ -243,7 +244,14 @@ def _update_organization_task(organization_id: int, token: str = "") -> dict[str
     ngo.save()
 
     ngohub_id: int = ngo.ngohub_org_id
-    ngohub_org_data: Organization = _get_ngo_hub_data(ngohub_id, token)
+    try:
+        ngohub_org_data: Organization = _get_ngo_hub_data(ngohub_id, token)
+    except HubHTTPException as e:
+        logger.exception(f"Error while fetching NGO Hub data for NGO ID {ngohub_id}:\n{e}")
+        return {
+            "ngo_id": ngo.id,
+            "errors": [f"Error while fetching NGO Hub data for NGO ID {ngohub_id}:\n{e}"],
+        }
 
     task_result = _update_local_ngo_with_ngohub_data(ngo, ngohub_org_data)
 
@@ -254,12 +262,20 @@ def update_organization(organization_id: int, update_method: str | None = None, 
     """
     Update the organization with the given ID asynchronously.
     """
+    logger.info(
+        f"Starting update for organization ID {organization_id} "
+        f"using method '{update_method or settings.UPDATE_ORGANIZATION_METHOD}'"
+    )
+
     update_method = update_method or settings.UPDATE_ORGANIZATION_METHOD
     function_args = [organization_id, token]
     if update_method == "async":
         async_task(_update_organization_task, *function_args)
+        task_result = {"status": "Task started asynchronously."}
     else:
-        _update_organization_task(*function_args)
+        task_result = _update_organization_task(*function_args)
+
+    return task_result
 
 
 def create_organization_for_user(user, ngohub_org_data: Organization) -> Ngo:

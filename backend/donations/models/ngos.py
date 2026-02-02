@@ -15,7 +15,7 @@ from django.db.models.query_utils import DeferredAttribute
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from donations.common.models_hashing import hash_id_secret
+from utils.models_hashing import hash_id_secret
 from donations.models.common import CommonFilenameCacheModel
 from donations.models.donors import Donor
 from utils.text.registration_number import (

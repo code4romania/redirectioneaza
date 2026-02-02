@@ -16,11 +16,13 @@ env = environ.Env(
     OLD_SESSION_KEY=(str, ""),
     ALLOW_OLD_PASSWORDS=(bool, True),
     SESSION_COOKIE_SECURE=(bool, True),
-    LOG_LEVEL=(str, "WARNING"),
     ENABLE_CACHE=(bool, True),
     IS_CONTAINERIZED=(bool, False),
     RECAPTCHA_ENABLED=(bool, True),
     FORCE_PARTNER=(bool, False),
+    # Genera logging & custom loggers
+    LOG_LEVEL=(str, "WARNING"),
+    CUSTOM_LOG_LEVEL=(str, ""),
     # Running methods
     DEFAULT_RUN_METHOD=(str, "async"),
     FORMS_DOWNLOAD_METHOD=(str, ""),

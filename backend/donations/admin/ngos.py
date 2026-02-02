@@ -393,10 +393,25 @@ class NgoAdmin(ModelAdmin):
 
     @action(description=_("Update from NGO Hub synchronously"))
     def update_from_ngohub_sync(self, request, queryset: QuerySet[Ngo]):
-        for ngo in queryset:
-            update_organization(ngo.id, update_method="sync")
+        show_errors: bool = True
 
-        self.message_user(request, _("NGOs updated from NGO Hub."))
+        task_results = []
+        for ngo in queryset:
+            task_results.append(update_organization(ngo.id, update_method="sync"))
+
+        message = "NGO Update Results: | "
+        for result in task_results:
+            message += f"- NGO ID {result['ngo_id']}: "
+            if errors := result.get("errors"):
+                for error in errors:
+                    message += f" |   * {error}"
+            else:
+                message += "Updated successfully."
+
+            message += "|"
+
+        message_level = "ERROR" if show_errors else "SUCCESS"
+        self.message_user(request, message, level=message_level)
 
     @action(description=_("Update from NGO Hub asynchronously"))
     def update_from_ngohub_async(self, request, queryset: QuerySet[Ngo]):
