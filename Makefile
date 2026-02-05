@@ -96,7 +96,7 @@ collectstatic:                                   ## collect the static files
 	docker exec redirect_dev sh -c "cd ./backend && python3 -Wd ./manage.py collectstatic --no-input"
 
 format:                                          ## format the code with black & ruff
-	docker exec redirect_dev sh -c "black ./backend && ruff check --fix ./backend"
+	docker exec redirect_dev sh -c "ruff format ./backend && ruff check --fix ./backend"
 
 pyshell:                                         ## start a django shell
 	docker exec -it redirect_dev sh -c "cd ./backend && python3 -Wd ./manage.py shell"
