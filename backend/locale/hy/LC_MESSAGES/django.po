@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-29 11:43+0200\n"
+"POT-Creation-Date: 2026-02-05 21:09+0200\n"
 "PO-Revision-Date: 2025-02-12 12:44+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Armenian <https://translate.commitglobal.org/projects/"
@@ -37,7 +37,7 @@ msgstr ""
 #: donations/admin/jobs.py:55 donations/admin/ngos.py:208
 #: donations/admin/ngos.py:296 donations/models/donors.py:71
 #: donations/models/downloads.py:10 donations/models/jobs.py:13
-#: donations/models/ngos.py:263 partners/models.py:148 users/models.py:72
+#: donations/models/ngos.py:263 partners/models.py:148 users/models.py:73
 msgid "NGO"
 msgstr "ՀԿ"
 
@@ -109,6 +109,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: donations/admin/donors.py:111
+#: donations/tests/test_redirection_disable_link_view.py:170
 #: donations/views/ngo_account/redirections.py:374
 msgid "<Cause no longer available>"
 msgstr ""
@@ -369,19 +370,15 @@ msgstr ""
 msgid "Update from NGO Hub synchronously"
 msgstr "Թարմացում NGO Hub-ին համաժամանակյա"
 
-#: donations/admin/ngos.py:399
-msgid "NGOs updated from NGO Hub."
-msgstr "ՀԿ-ները թարմացվել են NGO Hub-ից:"
-
-#: donations/admin/ngos.py:401
+#: donations/admin/ngos.py:416
 msgid "Update from NGO Hub asynchronously"
 msgstr "Թարմացում NGO Hub-ին ոչ համաժամանակյա"
 
-#: donations/admin/ngos.py:406
+#: donations/admin/ngos.py:421
 msgid "NGOs are being updated from NGO Hub."
 msgstr "ՀԿ-ները թարմացվում են NGO Hub-ից:"
 
-#: donations/admin/ngos.py:408
+#: donations/admin/ngos.py:423
 #, fuzzy
 #| msgid "Sign In Error"
 msgid "Remove prefilled forms"
@@ -695,12 +692,12 @@ msgstr "կարգավիճակ"
 
 #: donations/models/byof.py:84 donations/models/common.py:31
 #: donations/models/donors.py:160 donations/models/ngos.py:254
-#: donations/models/ngos.py:512 partners/models.py:82 users/models.py:96
+#: donations/models/ngos.py:512 partners/models.py:82 users/models.py:97
 msgid "date created"
 msgstr "ամսաթիվը ստեղծվել է"
 
 #: donations/models/byof.py:85 donations/models/ngos.py:255
-#: donations/models/ngos.py:513 partners/models.py:83 users/models.py:97
+#: donations/models/ngos.py:513 partners/models.py:83 users/models.py:98
 msgid "date updated"
 msgstr "ամսաթիվը թարմացվել է"
 
@@ -959,7 +956,7 @@ msgstr "ցուցադրման պատվեր"
 msgid "website"
 msgstr "վեբկայք"
 
-#: donations/models/ngos.py:243 users/models.py:88
+#: donations/models/ngos.py:243 users/models.py:89
 msgid "is verified"
 msgstr "վավերացված է"
 
@@ -1892,7 +1889,7 @@ msgid ""
 "The email address of the user who will be the administering the Partner."
 msgstr ""
 
-#: partners/admin.py:81 partners/models.py:89 users/models.py:80
+#: partners/admin.py:81 partners/models.py:89 users/models.py:81
 msgid "Partner"
 msgstr "Գործընկեր"
 
@@ -2232,7 +2229,7 @@ msgstr "Ստեղծել նվիրատվությունների արխիվ"
 msgid "Donation downloads"
 msgstr "Նվիրատվություններ"
 
-#: redirectioneaza/settings/unfold.py:149 users/models.py:180
+#: redirectioneaza/settings/unfold.py:149 users/models.py:208
 msgid "Groups"
 msgstr "Խմբեր"
 
@@ -4396,51 +4393,57 @@ msgstr "Ջանգո կայքի ադմին"
 msgid "Django administration"
 msgstr "Ջանգոյի ադմինիստրացիա"
 
-#: users/admin.py:57
+#: users/admin.py:64
 msgid "Permissions"
 msgstr "Թույլտվություններ"
 
-#: users/admin.py:66
+#: users/admin.py:73
 msgid "Important dates"
 msgstr "Կարևոր ամսաթվեր"
 
-#: users/models.py:39 users/tests.py:36
+#: users/models.py:40 users/tests.py:36
 msgid "Superuser must have is_staff=True."
 msgstr "Գերօգտատերը պետք է ունենա is_staff=True:"
 
-#: users/models.py:41 users/tests.py:39
+#: users/models.py:42 users/tests.py:39
 msgid "Superuser must have is_superuser=True."
 msgstr "Գերօգտագործողը պետք է ունենա is_superuser= True:"
 
-#: users/models.py:57
+#: users/models.py:58
 msgid "username"
 msgstr "օգտանուն"
 
-#: users/models.py:60
+#: users/models.py:61
 msgid "We do not use this field"
 msgstr "Մենք չենք օգտագործում այս դաշտը"
 
-#: users/models.py:67
+#: users/models.py:68
 msgid "email address"
 msgstr "էլ. փոստի հասցեն"
 
-#: users/models.py:68
+#: users/models.py:69
 msgid "is ngohub user"
 msgstr ""
 
-#: users/models.py:90
+#: users/models.py:91
 msgid "validation token"
 msgstr "վավերացման նշան"
 
-#: users/models.py:92
+#: users/models.py:93
 msgid "validation token timestamp"
 msgstr "վավերացման նշանի ժամանակի դրոշմ"
 
-#: users/models.py:94
+#: users/models.py:95
 msgid "old password"
 msgstr "հին գաղտնաբառ"
 
-#: users/models.py:179
+#: users/models.py:178
+#, fuzzy
+#| msgid "Sign In Error"
+msgid "Invalid filter parameters"
+msgstr "Մուտք գործելու սխալ"
+
+#: users/models.py:207
 msgid "Group"
 msgstr "Խումբ"
 
@@ -4591,6 +4594,9 @@ msgstr "Ենթադոմեյնը պետք է պարունակի միայն տառ�
 #: utils/validators.py:16
 msgid "Subdomain must have between 3 and 100 characters."
 msgstr "Ենթադոմեյնը պետք է պարունակի 3-ից 100 նիշ:"
+
+#~ msgid "NGOs updated from NGO Hub."
+#~ msgstr "ՀԿ-ները թարմացվել են NGO Hub-ից:"
 
 #~ msgid "Failed tasks"
 #~ msgstr "Չհաջողված առաջադրանքներ"

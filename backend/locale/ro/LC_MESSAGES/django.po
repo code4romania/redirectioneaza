@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-29 11:43+0200\n"
+"POT-Creation-Date: 2026-02-05 21:09+0200\n"
 "PO-Revision-Date: 2025-03-27 14:49+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -45,7 +45,7 @@ msgstr "URL Public"
 #: donations/admin/jobs.py:55 donations/admin/ngos.py:208
 #: donations/admin/ngos.py:296 donations/models/donors.py:71
 #: donations/models/downloads.py:10 donations/models/jobs.py:13
-#: donations/models/ngos.py:263 partners/models.py:148 users/models.py:72
+#: donations/models/ngos.py:263 partners/models.py:148 users/models.py:73
 msgid "NGO"
 msgstr "ONG"
 
@@ -91,9 +91,12 @@ msgstr "Da, vreau să anonimizez acest donator"
 #, python-format
 msgid "Out of %(queryset_size)d donor, the %(process)s results were:"
 msgid_plural "Out of %(queryset_size)d donors, the %(process)s results were:"
-msgstr[0] "Din %(queryset_size)d donator, rezultatele pentru %(process)s au fost:"
-msgstr[1] "Din %(queryset_size)d donatori, rezultatele pentru %(process)s au fost:"
-msgstr[2] "Din %(queryset_size)d de donatori, rezultatele pentru %(process)s au fost:"
+msgstr[0] ""
+"Din %(queryset_size)d donator, rezultatele pentru %(process)s au fost:"
+msgstr[1] ""
+"Din %(queryset_size)d donatori, rezultatele pentru %(process)s au fost:"
+msgstr[2] ""
+"Din %(queryset_size)d de donatori, rezultatele pentru %(process)s au fost:"
 
 #: donations/admin/donors.py:65
 #, python-format
@@ -120,6 +123,7 @@ msgstr[1] "%(scheduled)d au fost programați/te pentru procesare"
 msgstr[2] "%(scheduled)d au fost programați/te pentru procesare"
 
 #: donations/admin/donors.py:111
+#: donations/tests/test_redirection_disable_link_view.py:170
 #: donations/views/ngo_account/redirections.py:374
 msgid "<Cause no longer available>"
 msgstr "<Cauză indisponibilă>"
@@ -201,7 +205,8 @@ msgstr "Anonimizarea donatorului a fost programată pentru procesare."
 
 #: donations/admin/donors.py:374
 msgid "Failed to anonymize the donor. Check the logs for more details."
-msgstr "Nu s-a reușit anonimizarea donatorului. Verifică jurnalele pentru mai multe "
+msgstr ""
+"Nu s-a reușit anonimizarea donatorului. Verifică jurnalele pentru mai multe "
 "detalii."
 
 #: donations/admin/donors.py:381
@@ -362,19 +367,15 @@ msgstr "Schimbă administratorul ONG-ului '%(name)s'"
 msgid "Update from NGO Hub synchronously"
 msgstr "Actualizează din NGO Hub sincron"
 
-#: donations/admin/ngos.py:399
-msgid "NGOs updated from NGO Hub."
-msgstr "ONG-urile au fost actualizate din NGO Hub."
-
-#: donations/admin/ngos.py:401
+#: donations/admin/ngos.py:416
 msgid "Update from NGO Hub asynchronously"
 msgstr "Actualizează din NGO Hub asincron"
 
-#: donations/admin/ngos.py:406
+#: donations/admin/ngos.py:421
 msgid "NGOs are being updated from NGO Hub."
 msgstr "ONG-urile sunt actualizate din NGO Hub."
 
-#: donations/admin/ngos.py:408
+#: donations/admin/ngos.py:423
 msgid "Remove prefilled forms"
 msgstr "Elimină formularele pre-completate"
 
@@ -639,12 +640,12 @@ msgstr "stare"
 
 #: donations/models/byof.py:84 donations/models/common.py:31
 #: donations/models/donors.py:160 donations/models/ngos.py:254
-#: donations/models/ngos.py:512 partners/models.py:82 users/models.py:96
+#: donations/models/ngos.py:512 partners/models.py:82 users/models.py:97
 msgid "date created"
 msgstr "data creării"
 
 #: donations/models/byof.py:85 donations/models/ngos.py:255
-#: donations/models/ngos.py:513 partners/models.py:83 users/models.py:97
+#: donations/models/ngos.py:513 partners/models.py:83 users/models.py:98
 msgid "date updated"
 msgstr "data actualizării"
 
@@ -890,7 +891,7 @@ msgstr "afișează telefon"
 msgid "website"
 msgstr "website"
 
-#: donations/models/ngos.py:243 users/models.py:88
+#: donations/models/ngos.py:243 users/models.py:89
 msgid "is verified"
 msgstr "este verificat"
 
@@ -1689,7 +1690,7 @@ msgid ""
 "The email address of the user who will be the administering the Partner."
 msgstr "Adresa de email a utilizatorului care va administra Partenerul."
 
-#: partners/admin.py:81 partners/models.py:89 users/models.py:80
+#: partners/admin.py:81 partners/models.py:89 users/models.py:81
 msgid "Partner"
 msgstr "Partener"
 
@@ -1947,7 +1948,7 @@ msgstr "Task-uri în fundal"
 
 #: redirectioneaza/settings/unfold.py:13
 msgid "Audit Logs"
-msgstr "Loguri de audit"
+msgstr "Jurnal de audit"
 
 #: redirectioneaza/settings/unfold.py:19
 msgid "TASKS — Failed"
@@ -1985,7 +1986,7 @@ msgstr "Arhive ANAF externe"
 msgid "Donation downloads"
 msgstr "Descărcări de donații"
 
-#: redirectioneaza/settings/unfold.py:149 users/models.py:180
+#: redirectioneaza/settings/unfold.py:149 users/models.py:208
 msgid "Groups"
 msgstr "Grupuri"
 
@@ -4162,51 +4163,55 @@ msgstr "Administrație site Django"
 msgid "Django administration"
 msgstr "Administrație Django"
 
-#: users/admin.py:57
+#: users/admin.py:64
 msgid "Permissions"
 msgstr "Permisiuni"
 
-#: users/admin.py:66
+#: users/admin.py:73
 msgid "Important dates"
 msgstr "Date importante"
 
-#: users/models.py:39 users/tests.py:36
+#: users/models.py:40 users/tests.py:36
 msgid "Superuser must have is_staff=True."
 msgstr "Super-utilizatorul trebuie să aibă is_staff=True."
 
-#: users/models.py:41 users/tests.py:39
+#: users/models.py:42 users/tests.py:39
 msgid "Superuser must have is_superuser=True."
 msgstr "Super-utilizatorul trebuie să aibă is_superuser=True."
 
-#: users/models.py:57
+#: users/models.py:58
 msgid "username"
 msgstr "nume utilizator"
 
-#: users/models.py:60
+#: users/models.py:61
 msgid "We do not use this field"
 msgstr "Nu folosim acest câmp"
 
-#: users/models.py:67
+#: users/models.py:68
 msgid "email address"
 msgstr "adresă de email"
 
-#: users/models.py:68
+#: users/models.py:69
 msgid "is ngohub user"
 msgstr "utilizator NGO Hub"
 
-#: users/models.py:90
+#: users/models.py:91
 msgid "validation token"
 msgstr "token de validare"
 
-#: users/models.py:92
+#: users/models.py:93
 msgid "validation token timestamp"
 msgstr "dată token de validare"
 
-#: users/models.py:94
+#: users/models.py:95
 msgid "old password"
 msgstr "parolă veche"
 
-#: users/models.py:179
+#: users/models.py:178
+msgid "Invalid filter parameters"
+msgstr "Parametri de filtrare nevalizi"
+
+#: users/models.py:207
 msgid "Group"
 msgstr "Grup"
 
@@ -4355,6 +4360,9 @@ msgstr ""
 #: utils/validators.py:16
 msgid "Subdomain must have between 3 and 100 characters."
 msgstr "Subdomeniul trebuie să aibă între 3 și 100 de caractere."
+
+#~ msgid "NGOs updated from NGO Hub."
+#~ msgstr "ONG-urile au fost actualizate din NGO Hub."
 
 #~ msgid "Failed tasks"
 #~ msgstr "Task-uri eșuate"
