@@ -2,6 +2,7 @@ import hmac
 import uuid
 
 from auditlog.registry import auditlog
+from django.core.exceptions import ValidationError
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import AbstractUser, Group, UserManager
 from django.db import models
@@ -170,6 +171,33 @@ class User(AbstractUser):
     @property
     def is_ngo_member(self):
         return self.groups.filter(name__in=(NGO_ADMIN, NGO_MEMBER)).exists()
+
+    @staticmethod
+    def export_users(*, who_has_ngo=None, who_is_verified=None, who_is_ngohub_user=None):
+        users_query = User.objects
+        validation_error_text = _("Invalid filter parameters")
+
+        if who_has_ngo is not None:
+            try:
+                users_query = users_query.filter(ngo=who_has_ngo)
+            except ValidationError:
+                raise ValidationError(validation_error_text)
+
+        if who_is_verified is not None:
+            try:
+                users_query = users_query.filter(is_verified=who_is_verified)
+            except ValidationError:
+                raise ValidationError(validation_error_text)
+
+        if who_is_ngohub_user is not None:
+            try:
+                users_query = users_query.filter(is_ngohub_user=who_is_ngohub_user)
+            except ValidationError:
+                raise ValidationError(validation_error_text)
+
+        users = users_query.values_list("email", "first_name", "last_name", "is_verified", "is_ngohub_user")
+
+        return users
 
 
 class GroupProxy(Group):
