@@ -195,7 +195,7 @@ class User(AbstractUser):
             except ValidationError:
                 raise ValidationError(validation_error_text)
 
-        users = users_query.values_list("email", "first_name", "last_name", "is_verified", "is_ngohub_user")
+        users = users_query.values_list("email", "first_name", "last_name", "ngo", "is_verified", "is_ngohub_user")
 
         return users
 
