@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-05 21:09+0200\n"
+"POT-Creation-Date: 2026-02-06 11:32+0200\n"
 "PO-Revision-Date: 2025-03-27 14:48+0000\n"
 "Last-Translator: Andrei Ioniță <andrei.ionita@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -136,7 +136,7 @@ msgid "Invalid value for the %(title)s filter."
 msgstr "Invalid value for the %(title)s filter."
 
 #: donations/admin/donors.py:202 templates/v2/emails/admin/new-ngo/main.html:30
-#: templates/v2/emails/admin/new-ngo/main.txt:7
+#: templates/v2/emails/admin/new-ngo/main.txt:7 users/admin.py:119
 msgid "NGO ID"
 msgstr "NGO ID"
 
@@ -536,7 +536,7 @@ msgstr "Last name"
 #: donations/forms/redirection.py:13
 #: templates/v2/account/snippets/register-form.html:58
 #: templates/v2/form/redirection-open.html:45
-#: templates/v2/ngo-account/settings-account/main.html:58
+#: templates/v2/ngo-account/settings-account/main.html:58 users/admin.py:119
 msgid "First name"
 msgstr "First name"
 
@@ -547,7 +547,7 @@ msgstr "Initial"
 #: donations/forms/redirection.py:22 donations/views/api_download.py:47
 #: templates/v2/account/snippets/register-form.html:67
 #: templates/v2/emails/donor/redirection-sans-signature/main.txt:28
-#: templates/v2/form/redirection-open.html:60
+#: templates/v2/form/redirection-open.html:60 users/admin.py:119
 msgid "Email"
 msgstr "Email"
 
@@ -1222,7 +1222,7 @@ msgstr ""
 msgid "First Name"
 msgstr "First Name"
 
-#: donations/views/api_download.py:46 partners/admin.py:31
+#: donations/views/api_download.py:46 partners/admin.py:31 users/admin.py:119
 msgid "Last Name"
 msgstr "Last Name"
 
@@ -4305,6 +4305,18 @@ msgstr "Permissions"
 #: users/admin.py:73
 msgid "Important dates"
 msgstr "Important dates"
+
+#: users/admin.py:119
+#, fuzzy
+#| msgid "is verified"
+msgid "Is Verified"
+msgstr "is verified"
+
+#: users/admin.py:119
+#, fuzzy
+#| msgid "Last NGO Hub update"
+msgid "Is NGO Hub User"
+msgstr "Last NGO Hub update"
 
 #: users/models.py:40 users/tests.py:36
 msgid "Superuser must have is_staff=True."
