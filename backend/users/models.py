@@ -179,7 +179,7 @@ class User(AbstractUser):
 
         if who_has_ngo is not None:
             try:
-                users_query = users_query.filter(ngo=who_has_ngo)
+                users_query = users_query.filter(ngo__isnull=False if who_has_ngo else True)
             except ValidationError:
                 raise ValidationError(validation_error_text)
 
