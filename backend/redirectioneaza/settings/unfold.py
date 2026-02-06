@@ -1,5 +1,6 @@
 from django.templatetags.static import static
 from django.urls import reverse_lazy
+from django.utils.text import format_lazy
 from django.utils.translation import gettext_lazy as _
 
 from .app_configs import TITLE
@@ -7,6 +8,22 @@ from .base import VERSION_LABEL
 from .environment import env
 
 # Unfold Admin settings
+
+
+export_sidebar_options = [
+    {
+        "title": _("All users"),
+        "icon": "download_for_offline",
+        "link": reverse_lazy("admin:export-users"),
+        "permission": lambda request: request.user.is_superuser,
+    },
+    {
+        "title": _("Users with NGOs"),
+        "icon": "download_for_offline",
+        "link": format_lazy("{url}?ngo=1", url=reverse_lazy("admin:export-users")),
+        "permission": lambda request: request.user.is_superuser,
+    },
+]
 
 advanced_sidebar_options = [
     {
@@ -152,6 +169,11 @@ SIDEBAR_NAVIGATION = [
                 "permission": lambda request: request.user.is_superuser,
             },
         ],
+    },
+    {
+        "title": _("Data Export"),
+        "collapsible": True,
+        "items": export_sidebar_options,
     },
     {
         "title": _("Advanced"),
