@@ -115,6 +115,10 @@ class UserAdmin(ModelAdmin):
         response.write(codecs.BOM_UTF8)
 
         writer = csv.writer(response, dialect=csv.excel)
+        writer.writerow(
+            (_("Email"), _("First name"), _("Last Name"), _("NGO ID"), _("Is Verified"), _("Is NGO Hub User"))
+        )
+
         for user in users:
             writer.writerow(user)
 

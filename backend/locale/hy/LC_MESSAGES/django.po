@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-05 21:09+0200\n"
+"POT-Creation-Date: 2026-02-06 11:32+0200\n"
 "PO-Revision-Date: 2025-02-12 12:44+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Armenian <https://translate.commitglobal.org/projects/"
@@ -132,7 +132,7 @@ msgid "Invalid value for the %(title)s filter."
 msgstr ""
 
 #: donations/admin/donors.py:202 templates/v2/emails/admin/new-ngo/main.html:30
-#: templates/v2/emails/admin/new-ngo/main.txt:7
+#: templates/v2/emails/admin/new-ngo/main.txt:7 users/admin.py:119
 msgid "NGO ID"
 msgstr ""
 
@@ -554,7 +554,7 @@ msgstr "ազգանուն"
 #: donations/forms/redirection.py:13
 #: templates/v2/account/snippets/register-form.html:58
 #: templates/v2/form/redirection-open.html:45
-#: templates/v2/ngo-account/settings-account/main.html:58
+#: templates/v2/ngo-account/settings-account/main.html:58 users/admin.py:119
 #, fuzzy
 #| msgid "first name"
 msgid "First name"
@@ -569,7 +569,7 @@ msgstr "սկզբնական"
 #: donations/forms/redirection.py:22 donations/views/api_download.py:47
 #: templates/v2/account/snippets/register-form.html:67
 #: templates/v2/emails/donor/redirection-sans-signature/main.txt:28
-#: templates/v2/form/redirection-open.html:60
+#: templates/v2/form/redirection-open.html:60 users/admin.py:119
 #, fuzzy
 #| msgid "email"
 msgid "Email"
@@ -1289,7 +1289,7 @@ msgstr ""
 msgid "First Name"
 msgstr "անուն"
 
-#: donations/views/api_download.py:46 partners/admin.py:31
+#: donations/views/api_download.py:46 partners/admin.py:31 users/admin.py:119
 #, fuzzy
 #| msgid "last name"
 msgid "Last Name"
@@ -4400,6 +4400,18 @@ msgstr "Թույլտվություններ"
 #: users/admin.py:73
 msgid "Important dates"
 msgstr "Կարևոր ամսաթվեր"
+
+#: users/admin.py:119
+#, fuzzy
+#| msgid "is verified"
+msgid "Is Verified"
+msgstr "վավերացված է"
+
+#: users/admin.py:119
+#, fuzzy
+#| msgid "Last NGO Hub update"
+msgid "Is NGO Hub User"
+msgstr "NGO Hub-ի վերջին թարմացումը"
 
 #: users/models.py:40 users/tests.py:36
 msgid "Superuser must have is_staff=True."
