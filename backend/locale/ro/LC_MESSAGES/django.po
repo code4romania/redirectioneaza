@@ -2382,7 +2382,7 @@ msgstr "Linkul a fost copiat"
 
 #: templates/v2/components/cta-redirection.html:7
 msgid "Be a civic superhero"
-msgstr "Fii un super-erou civic"
+msgstr "Fii un supererou civic"
 
 #: templates/v2/components/cta-redirection.html:10
 msgid ""
@@ -2624,7 +2624,7 @@ msgid ""
 "If you want to be a true civic superhero, you can help the organization "
 "collect more forms! Here's how:"
 msgstr ""
-"Dacă vrei să fii un adevărat super erou civic, poți ajuta organizația să "
+"Dacă vrei să fii un adevărat supererou civic, poți ajuta organizația să "
 "strângă mai multe formulare! Iată cum:"
 
 #: templates/v2/emails/components/extra-hand.html:17
@@ -2910,7 +2910,7 @@ msgid ""
 "income tax. You can access the completed form by clicking the button below. "
 "Remember to submit it to ANAF to complete the process!"
 msgstr ""
-"Un nou super erou a decis să susțină organizația ta redirecționând impozitul "
+"Un nou supererou a decis să susțină organizația ta redirecționând impozitul "
 "pe venit. Poți accesa formularul completat apăsând butonul de mai jos. Nu "
 "uita să-l depui la ANAF pentru a finaliza procesul!"
 
@@ -4184,11 +4184,11 @@ msgstr "Este utilizator NGO Hub"
 
 #: users/models.py:40 users/tests.py:36
 msgid "Superuser must have is_staff=True."
-msgstr "Super-utilizatorul trebuie să aibă is_staff=True."
+msgstr "Superutilizatorul trebuie să aibă is_staff=True."
 
 #: users/models.py:42 users/tests.py:39
 msgid "Superuser must have is_superuser=True."
-msgstr "Super-utilizatorul trebuie să aibă is_superuser=True."
+msgstr "Superutilizatorul trebuie să aibă is_superuser=True."
 
 #: users/models.py:58
 msgid "username"
