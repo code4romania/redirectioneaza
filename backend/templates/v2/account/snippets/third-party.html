@@ -45,7 +45,7 @@
     </p>
   </div>
 
-  <div class="mx-auto mt-8 max-w-[368px]">
+  <div class="mx-auto mt-8 max-w-92">
 
     <div id="allauth-login-form-container" class="flex my-6 justify-stretch">
       <a
@@ -60,15 +60,6 @@
 
   <div class="mx-auto mt-8 p-4 max-w-md bg-gray-50">
     <dl class="grid gap-8 text-gray-500 text-base/7">
-
-      {% if page_type == "login" %}
-        <div class="font-medium prose text-center prose-p:text-gray-700">
-          <p>
-            {% trans "Log in problems?" %}
-            <a class="text-base font-normal text-cyan-700" href="https://www.ngohub.ro/ro/suport-tehnic-redirectioneaza">{% trans "Check the support page" %}</a>
-          </p>
-        </div>
-      {% endif %}
 
       <div class="relative px-4 text-center text-gray-900">
         <p>
@@ -162,14 +153,12 @@
 
   </div>
 
-  {% if page_type != "login" %}
-    <div class="font-medium prose text-center prose-p:text-gray-700 py-6">
-      <p>
-        {% trans "Log in problems?" %}
-        <a class="text-base font-normal text-cyan-700" href="https://www.ngohub.ro/ro/suport-tehnic-redirectioneaza">{% trans "Check the support page" %}</a>
-      </p>
-    </div>
-  {% endif %}
+  <div class="font-medium prose text-center prose-p:text-gray-700 py-6">
+    <p>
+      {% trans "Log in problems?" %}
+      <a class="text-base font-normal text-cyan-700" href="https://www.ngohub.ro/ro/suport-tehnic-redirectioneaza">{% trans "Check the support page" %}</a>
+    </p>
+  </div>
 
 </section>
 

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-09 11:06+0200\n"
+"POT-Creation-Date: 2026-02-09 16:54+0200\n"
 "PO-Revision-Date: 2025-02-12 12:44+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Armenian <https://translate.commitglobal.org/projects/"
@@ -2398,8 +2398,7 @@ msgid "Authentication problems?"
 msgstr "Աշխատանքն ընթացքի մեջ է"
 
 #: templates/v2/account/signup-confirmation.html:25
-#: templates/v2/account/snippets/third-party.html:68
-#: templates/v2/account/snippets/third-party.html:170
+#: templates/v2/account/snippets/third-party.html:160
 msgid "Check the support page"
 msgstr ""
 
@@ -2529,22 +2528,15 @@ msgid ""
 msgstr ""
 
 #: templates/v2/account/snippets/third-party.html:67
-#: templates/v2/account/snippets/third-party.html:169
-#, fuzzy
-#| msgid "Work in progress"
-msgid "Log in problems?"
-msgstr "Աշխատանքն ընթացքի մեջ է"
-
-#: templates/v2/account/snippets/third-party.html:76
 msgid "To access redirectioneaza.ro through your NGO Hub account, make sure:"
 msgstr ""
 
-#: templates/v2/account/snippets/third-party.html:80
+#: templates/v2/account/snippets/third-party.html:71
 msgid ""
 "To access redirectioneaza.ro through your NGO Hub account, follow the steps:"
 msgstr ""
 
-#: templates/v2/account/snippets/third-party.html:93
+#: templates/v2/account/snippets/third-party.html:84
 #, fuzzy
 #| msgid "To access your account, you need to authenticate through NGO Hub."
 msgid "You have an active account in NGO Hub"
@@ -2552,66 +2544,66 @@ msgstr ""
 "Ձեր օգտահաշիվ մուտք գործելու համար դուք պետք է նույնականացնեք NGO Hub-ի "
 "միջոցով:"
 
-#: templates/v2/account/snippets/third-party.html:95
+#: templates/v2/account/snippets/third-party.html:86
 #, fuzzy
 #| msgid "Login through NGO Hub"
 msgid "Create an account for your organization in NGO Hub"
 msgstr "Մուտք գործել NGO Hub-ի միջոցով"
 
-#: templates/v2/account/snippets/third-party.html:100
+#: templates/v2/account/snippets/third-party.html:91
 msgid ""
 "If you don't have an account in NGO Hub, you can create one for free. Learn "
 "more about the"
 msgstr ""
 
-#: templates/v2/account/snippets/third-party.html:104
+#: templates/v2/account/snippets/third-party.html:95
 #, fuzzy
 #| msgid "NGOs from NGO Hub"
 msgid "benefits of NGO Hub"
 msgstr "NGO Hub-ի ՀԿ-ները"
 
-#: templates/v2/account/snippets/third-party.html:106
+#: templates/v2/account/snippets/third-party.html:97
 msgid ""
 "Register your organization and discover all NGO Hub apps dedicated to the "
 "civic society. Simple and free."
 msgstr ""
 
-#: templates/v2/account/snippets/third-party.html:109
+#: templates/v2/account/snippets/third-party.html:100
 msgid "Read more"
 msgstr ""
 
-#: templates/v2/account/snippets/third-party.html:120
+#: templates/v2/account/snippets/third-party.html:111
 #, fuzzy
 #| msgid "Login through NGO Hub"
 msgid "You have activated the Redirecționează platform in your NGO Hub account"
 msgstr "Մուտք գործել NGO Hub-ի միջոցով"
 
-#: templates/v2/account/snippets/third-party.html:122
+#: templates/v2/account/snippets/third-party.html:113
 #, fuzzy
 #| msgid "Login through NGO Hub"
 msgid ""
 "Activate the Redirecționează application for your organization in NGO Hub"
 msgstr "Մուտք գործել NGO Hub-ի միջոցով"
 
-#: templates/v2/account/snippets/third-party.html:127
+#: templates/v2/account/snippets/third-party.html:118
 msgid ""
 "Check with your organization's administrator if access to this platform is "
 "correctly configured."
 msgstr ""
 
-#: templates/v2/account/snippets/third-party.html:129
+#: templates/v2/account/snippets/third-party.html:120
 msgid ""
 "Add the Redirecționează application for your organization in the All "
 "applications section of your administrator account. You and the team will be "
 "able to manage the online form collection."
 msgstr ""
 
-#: templates/v2/account/snippets/third-party.html:140
+#: templates/v2/account/snippets/third-party.html:131
 msgid ""
 "You have access permission from the organization's administrator in NGO Hub"
 msgstr ""
 
-#: templates/v2/account/snippets/third-party.html:142
+#: templates/v2/account/snippets/third-party.html:133
 #, fuzzy
 #| msgid "To access your account, you need to authenticate through NGO Hub."
 msgid "Give access to your colleagues in NGO Hub"
@@ -2619,18 +2611,24 @@ msgstr ""
 "Ձեր օգտահաշիվ մուտք գործելու համար դուք պետք է նույնականացնեք NGO Hub-ի "
 "միջոցով:"
 
-#: templates/v2/account/snippets/third-party.html:147
+#: templates/v2/account/snippets/third-party.html:138
 msgid ""
 "Check with your organization's administrator if they have given you access "
 "to the Redirecționează application."
 msgstr ""
 
-#: templates/v2/account/snippets/third-party.html:149
+#: templates/v2/account/snippets/third-party.html:140
 msgid ""
 "Add colleagues in NGO Hub by giving them redirectioneaza.ro accounts. For "
 "them to use the application, be sure to grant them access from the "
 "organization's administration account."
 msgstr ""
+
+#: templates/v2/account/snippets/third-party.html:159
+#, fuzzy
+#| msgid "Work in progress"
+msgid "Log in problems?"
+msgstr "Աշխատանքն ընթացքի մեջ է"
 
 #: templates/v2/components/action-menu/main.html:22
 #, fuzzy
