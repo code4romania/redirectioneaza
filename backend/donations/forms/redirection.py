@@ -64,3 +64,13 @@ class DonationForm(forms.Form, ReCaptchaMixin):
             raise forms.ValidationError(phone_number_validation["result"])
 
         return phone_number_validation["result"]
+
+    def clean_email_address(self):
+        email_address = self.cleaned_data["email_address"] or ""
+
+        # Only allow ASCII characters in the local part of the email address
+        local_part = email_address.split("@")[0]
+        if not local_part.isascii():
+            raise forms.ValidationError(_("Invalid letters in email address"))
+
+        return email_address
