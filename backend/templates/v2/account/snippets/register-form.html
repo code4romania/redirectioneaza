@@ -1,7 +1,7 @@
 {% load i18n static %}
 
 <script>
-  let registerForm = function () {
+  let registerForm = function() {
     return {
       form: undefined,
       pristine: undefined,
@@ -9,10 +9,10 @@
         this.form = document.getElementById("register-form");
 
         this.pristine = new Pristine(this.form, {
-          errorTextClass: "mt-2 text-sm text-red-600"
+          errorTextClass: "mt-2 text-sm text-red-600",
         });
 
-        this.form.addEventListener('submit', (e) => {
+        this.form.addEventListener("submit", (e) => {
           e.preventDefault();
           let valid = this.pristine.validate();
           this.isFormSubmitting = true;
@@ -86,8 +86,8 @@
                 required
                 class="col-start-1 row-start-1 bg-white border border-gray-300 rounded-sm appearance-none checked:border-amber-300 checked:bg-amber-300 indeterminate:border-amber-300 indeterminate:bg-amber-300 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300 disabled:border-gray-300 disabled:bg-gray-200 disabled:checked:bg-gray-100 forced-colors:appearance-auto">
               <svg class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-disabled:stroke-gray-950/25" viewBox="0 0 14 14" fill="none">
-                <path class="opacity-0 group-has-checked:opacity-100" d="M3 8L6 11L11 3.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                <path class="opacity-0 group-has-indeterminate:opacity-100" d="M3 7H11" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path class="opacity-0 group-has-checked:opacity-100" d="M3 8L6 11L11 3.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path class="opacity-0 group-has-indeterminate:opacity-100" d="M3 7H11" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </div>
           </div>
@@ -110,5 +110,5 @@
     </div>
   </div>
 
-  <div id=g-recaptcha" class="g-recaptcha" data-sitekey="{{ captcha_public_key }}" data-size="invisible" data-callback="onSubmit"></div>
+  {% include "components/recaptcha-div.html" with captcha_public_key=captcha_public_key %}
 </form>

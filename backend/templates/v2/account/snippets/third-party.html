@@ -58,22 +58,18 @@
     </div>
   </div>
 
-  {% if page_type == "login" %}
-    <div class="font-medium prose text-center prose-p:text-gray-700">
-      <p>
-        {% trans "You don't have an NGO HUB account?" %}
-        <a class="text-base font-normal text-cyan-700" href="https://app.ngohub.ro">{% trans "Register here" %}</a>
-      </p>
-      <p>
-        {% trans "Log in problems?" %}
-        <a class="text-base font-normal text-cyan-700" href="https://www.ngohub.ro/ro/suport-tehnic-redirectioneaza">{% trans "Check the support page" %}</a>
-      </p>
-    </div>
-  {% endif %}
-
   <div class="mx-auto mt-8 p-4 max-w-md bg-gray-50">
-
     <dl class="grid gap-8 text-gray-500 text-base/7">
+
+      {% if page_type == "login" %}
+        <div class="font-medium prose text-center prose-p:text-gray-700">
+          <p>
+            {% trans "Log in problems?" %}
+            <a class="text-base font-normal text-cyan-700" href="https://www.ngohub.ro/ro/suport-tehnic-redirectioneaza">{% trans "Check the support page" %}</a>
+          </p>
+        </div>
+      {% endif %}
+
       <div class="relative px-4 text-center text-gray-900">
         <p>
           {% if page_type == "login" %}

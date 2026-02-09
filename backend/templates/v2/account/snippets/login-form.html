@@ -4,7 +4,7 @@
 {% load static %}
 
 <script>
-  let loginForm = function () {
+  let loginForm = function() {
     return {
       form: undefined,
       pristine: undefined,
@@ -15,7 +15,7 @@
           errorTextClass: "mt-2 text-sm text-red-600",
         });
 
-        this.form.addEventListener('submit', (e) => {
+        this.form.addEventListener("submit", (e) => {
           e.preventDefault();
           let valid = this.pristine.validate();
           this.isFormSubmitting = true;
@@ -24,7 +24,7 @@
             this.form.submit();
           }
         });
-      }
+      },
     };
   };
 </script>
@@ -68,7 +68,7 @@
           <a href="{% url 'forgot' %}" class="text-sm/6 text-cyan-700">Ți-ai uitat parola?</a>
         </div>
       </div>
-      
+
       {% if form.non_field_errors %}
         <div class="mt-2 text-sm text-red-600">{{ form.non_field_errors }}</div>
       {% endif %}
@@ -80,6 +80,6 @@
     </div>
   </div>
 
-  <div id=g-recaptcha" class="g-recaptcha" data-sitekey="{{ captcha_public_key }}" data-size="invisible" data-callback="onSubmit"></div>
+  {% include "components/recaptcha-div.html" with captcha_public_key=captcha_public_key %}
 </form>
 

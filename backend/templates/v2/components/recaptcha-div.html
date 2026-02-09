@@ -1,0 +1,6 @@
+<div
+  id="g-recaptcha"
+  class="g-recaptcha"
+  data-sitekey="{{ captcha_public_key }}"
+  {% if not is_visible %}data-size="invisible"{% endif %}
+  data-callback="onSubmit"></div>

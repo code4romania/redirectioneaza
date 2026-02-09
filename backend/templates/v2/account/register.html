@@ -14,7 +14,7 @@
     {% endif %}
 
 
-    <div class="grid gap-16 lg:grid-cols-2 xl:gap-32 2xl:gap-64">
+    <div class="flex flex-col gap-16 lg:grid lg:grid-cols-2 xl:gap-32 2xl:gap-64">
 
       {% if SOCIALACCONUNT_ONLY %}
         <div class="md:col-span-2">
@@ -22,11 +22,11 @@
         </div>
       {% elif SOCIALACCOUNT_ENABLED %}
         <div>
-          {% include "account/snippets/third-party.html" with page_type="register" %}
+          {% include "account/snippets/register-form.html" %}
         </div>
 
         <div>
-          {% include "account/snippets/register-form.html" %}
+          {% include "account/snippets/third-party.html" with page_type="register" %}
         </div>
       {% else %}
         <div class="md:col-span-2">
@@ -34,7 +34,7 @@
         </div>
       {% endif %}
 
-      <div class="g-recaptcha" data-sitekey="{{ captcha_public_key }}" data-size="invisible" data-callback="onSubmit"></div>
+      {% include "components/recaptcha-div.html" with captcha_public_key=captcha_public_key %}
 
     </div>
 

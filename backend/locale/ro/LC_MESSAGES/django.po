@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-06 14:17+0200\n"
+"POT-Creation-Date: 2026-02-09 11:06+0200\n"
 "PO-Revision-Date: 2025-03-27 14:49+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -2136,8 +2136,8 @@ msgid "Authentication problems?"
 msgstr "Ai probleme la conectare?"
 
 #: templates/v2/account/signup-confirmation.html:25
-#: templates/v2/account/snippets/third-party.html:69
-#: templates/v2/account/snippets/third-party.html:174
+#: templates/v2/account/snippets/third-party.html:68
+#: templates/v2/account/snippets/third-party.html:170
 msgid "Check the support page"
 msgstr "Consultă pagina de suport"
 
@@ -2202,9 +2202,7 @@ msgid ""
 "NGO Hub without losing your existing data and forms."
 msgstr ""
 "Te-ai mai conectat în trecut pe redirectioneaza.ro? Poți folosi aceleași "
-"date de autentificare. Pentru acces la mai multe funcționalități și o "
-"autentificare mai simplă, poți trece la NGO Hub fără să pierzi datele și "
-"formularele existente."
+"date de autentificare."
 
 #: templates/v2/account/snippets/login-form.html:60
 msgid "Email address"
@@ -2212,15 +2210,14 @@ msgstr "Adresă de email"
 
 #: templates/v2/account/snippets/register-form.html:38
 msgid "Register without NGO Hub"
-msgstr "Înregistrare fără NGO Hub"
+msgstr "Înregistrare simplă"
 
 #: templates/v2/account/snippets/register-form.html:44
 msgid ""
 "You can use redirectioneaza.ro without having an account in NGO Hub. "
 "Register by filling out the form below."
 msgstr ""
-"Poți folosi platforma redirectioneaza.ro și fără a avea un cont în NGO Hub. "
-"Înregistrează-te completând formularul de mai jos."
+"Creează-ți un cont pe Redirecționează completând formularul de mai jos."
 
 #: templates/v2/account/snippets/register-form.html:97
 msgid "I agree with"
@@ -2259,54 +2256,48 @@ msgid ""
 "If you are an NGO you can access our entire civil society ecosystem for free "
 "through NGO Hub."
 msgstr ""
-"Dacă ești o organizație non-profit, poți beneficia gratuit de toate "
-"soluțiile din ecosistemul dedicat societății civile prin NGO Hub."
+"NGO Hub este un instrument dedicat organizațiilor non-profit, prin care "
+"acestea pot beneficia de ecosistemul de soluții Code for Romania dedicat "
+"societății civile. Dacă ești ONG te poți înregistra în NGO Hub, care îți va "
+"permite accesul la multiple platforme, inclusiv logarea pe Redirecționează."
 
-#: templates/v2/account/snippets/third-party.html:64
-msgid "You don't have an NGO HUB account?"
-msgstr "Nu ai cont pe NGO Hub"
-
-#: templates/v2/account/snippets/third-party.html:65
-msgid "Register here"
-msgstr "Înregistrează-te aici"
-
-#: templates/v2/account/snippets/third-party.html:68
-#: templates/v2/account/snippets/third-party.html:173
+#: templates/v2/account/snippets/third-party.html:67
+#: templates/v2/account/snippets/third-party.html:169
 msgid "Log in problems?"
 msgstr "Ai probleme la conectare?"
 
-#: templates/v2/account/snippets/third-party.html:80
+#: templates/v2/account/snippets/third-party.html:76
 msgid "To access redirectioneaza.ro through your NGO Hub account, make sure:"
 msgstr ""
 "Pentru a accesa Redirecționează prin contul tău NGO Hub, asigură-te că:"
 
-#: templates/v2/account/snippets/third-party.html:84
+#: templates/v2/account/snippets/third-party.html:80
 msgid ""
 "To access redirectioneaza.ro through your NGO Hub account, follow the steps:"
 msgstr ""
 "Pentru a accesa Redirecționează prin contul tău NGO Hub, urmează pașii de "
 "mai jos:"
 
-#: templates/v2/account/snippets/third-party.html:97
+#: templates/v2/account/snippets/third-party.html:93
 msgid "You have an active account in NGO Hub"
 msgstr "Ai un cont activ în NGO Hub"
 
-#: templates/v2/account/snippets/third-party.html:99
+#: templates/v2/account/snippets/third-party.html:95
 msgid "Create an account for your organization in NGO Hub"
 msgstr "Creează un cont pentru organizația ta în NGO Hub"
 
-#: templates/v2/account/snippets/third-party.html:104
+#: templates/v2/account/snippets/third-party.html:100
 msgid ""
 "If you don't have an account in NGO Hub, you can create one for free. Learn "
 "more about the"
 msgstr ""
 "Dacă nu ai un cont în NGO Hub, poți crea unul gratuit. Află mai multe despre "
 
-#: templates/v2/account/snippets/third-party.html:108
+#: templates/v2/account/snippets/third-party.html:104
 msgid "benefits of NGO Hub"
 msgstr "beneficiile NGO Hub"
 
-#: templates/v2/account/snippets/third-party.html:110
+#: templates/v2/account/snippets/third-party.html:106
 msgid ""
 "Register your organization and discover all NGO Hub apps dedicated to the "
 "civic society. Simple and free."
@@ -2314,20 +2305,20 @@ msgstr ""
 "Înregistrează-ți organizația și descoperă toate aplicațiile din NGO Hub "
 "dedicate societății civile. Simplu și gratuit."
 
-#: templates/v2/account/snippets/third-party.html:113
+#: templates/v2/account/snippets/third-party.html:109
 msgid "Read more"
 msgstr "Citește mai multe"
 
-#: templates/v2/account/snippets/third-party.html:124
+#: templates/v2/account/snippets/third-party.html:120
 msgid "You have activated the Redirecționează platform in your NGO Hub account"
 msgstr "Ai activat platforma Redirecționează pentru organizația ta în NGO Hub"
 
-#: templates/v2/account/snippets/third-party.html:126
+#: templates/v2/account/snippets/third-party.html:122
 msgid ""
 "Activate the Redirecționează application for your organization in NGO Hub"
 msgstr "Activează aplicația Redirecționează din NGO Hub pentru organizația ta"
 
-#: templates/v2/account/snippets/third-party.html:131
+#: templates/v2/account/snippets/third-party.html:127
 msgid ""
 "Check with your organization's administrator if access to this platform is "
 "correctly configured."
@@ -2335,7 +2326,7 @@ msgstr ""
 "Verifică cu administratorul organizației tale dacă accesul la această "
 "platformă este configurat corect."
 
-#: templates/v2/account/snippets/third-party.html:133
+#: templates/v2/account/snippets/third-party.html:129
 msgid ""
 "Add the Redirecționează application for your organization in the All "
 "applications section of your administrator account. You and the team will be "
@@ -2345,17 +2336,17 @@ msgstr ""
 "organizația ta, din contul de administrator. Tu și echipa ta veți putea "
 "gestiona colectarea formularelor online."
 
-#: templates/v2/account/snippets/third-party.html:144
+#: templates/v2/account/snippets/third-party.html:140
 msgid ""
 "You have access permission from the organization's administrator in NGO Hub"
 msgstr ""
 "Ai permisiunea de acces din partea administratorului organizației din NGO Hub"
 
-#: templates/v2/account/snippets/third-party.html:146
+#: templates/v2/account/snippets/third-party.html:142
 msgid "Give access to your colleagues in NGO Hub"
 msgstr "Oferă acces colegilor tăi în NGO Hub"
 
-#: templates/v2/account/snippets/third-party.html:151
+#: templates/v2/account/snippets/third-party.html:147
 msgid ""
 "Check with your organization's administrator if they have given you access "
 "to the Redirecționează application."
@@ -2363,7 +2354,7 @@ msgstr ""
 "Verifică cu administratorul organizației tale dacă ți-a oferit acces în "
 "aplicația Redirecționează."
 
-#: templates/v2/account/snippets/third-party.html:153
+#: templates/v2/account/snippets/third-party.html:149
 msgid ""
 "Add colleagues in NGO Hub by giving them redirectioneaza.ro accounts. For "
 "them to use the application, be sure to grant them access from the "
@@ -4380,6 +4371,12 @@ msgstr ""
 #: utils/validators.py:16
 msgid "Subdomain must have between 3 and 100 characters."
 msgstr "Subdomeniul trebuie să aibă între 3 și 100 de caractere."
+
+#~ msgid "You don't have an NGO HUB account?"
+#~ msgstr "Nu ai cont pe NGO Hub"
+
+#~ msgid "Register here"
+#~ msgstr "Înregistrează-te aici"
 
 #~ msgid "NGOs updated from NGO Hub."
 #~ msgstr "ONG-urile au fost actualizate din NGO Hub."

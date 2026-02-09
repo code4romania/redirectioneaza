@@ -188,7 +188,7 @@
         {% trans "Captcha" %}
       </legend>
 
-      <div id=g-recaptcha" class="g-recaptcha" data-sitekey="{{ captcha_public_key }}" data-callback="onSubmit"></div>
+      {% include "components/recaptcha-div.html" with captcha_public_key=captcha_public_key is_visible=True %}
     </fieldset>
 
     <div
