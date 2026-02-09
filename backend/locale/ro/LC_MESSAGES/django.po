@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-09 16:54+0200\n"
+"POT-Creation-Date: 2026-02-09 23:11+0200\n"
 "PO-Revision-Date: 2025-03-27 14:49+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -592,6 +592,10 @@ msgstr "Semnătura"
 #: donations/forms/redirection.py:52
 msgid "Invalid signature format"
 msgstr "Formatul semnăturii este invalid"
+
+#: donations/forms/redirection.py:74
+msgid "Invalid letters in email address"
+msgstr "Caractere invalide in adresa de email"
 
 #: donations/models/byof.py:25 donations/views/ngo_account/byof.py:40
 #, python-brace-format

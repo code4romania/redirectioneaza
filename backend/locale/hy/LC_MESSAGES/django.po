@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-09 16:54+0200\n"
+"POT-Creation-Date: 2026-02-09 23:11+0200\n"
 "PO-Revision-Date: 2025-02-12 12:44+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Armenian <https://translate.commitglobal.org/projects/"
@@ -638,6 +638,12 @@ msgstr "Գրանցվել"
 #| msgid "Sign In Error"
 msgid "Invalid signature format"
 msgstr "Մուտք գործելու սխալ"
+
+#: donations/forms/redirection.py:74
+#, fuzzy
+#| msgid "email address"
+msgid "Invalid letters in email address"
+msgstr "էլ. փոստի հասցեն"
 
 #: donations/models/byof.py:25 donations/views/ngo_account/byof.py:40
 #, python-brace-format

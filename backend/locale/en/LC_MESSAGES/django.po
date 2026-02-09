@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-09 16:54+0200\n"
+"POT-Creation-Date: 2026-02-09 23:11+0200\n"
 "PO-Revision-Date: 2025-03-27 14:48+0000\n"
 "Last-Translator: Andrei Ioniță <andrei.ionita@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -606,6 +606,12 @@ msgstr "Signature"
 #| msgid "Send signed form"
 msgid "Invalid signature format"
 msgstr "Send signed form"
+
+#: donations/forms/redirection.py:74
+#, fuzzy
+#| msgid "email address"
+msgid "Invalid letters in email address"
+msgstr "email address"
 
 #: donations/models/byof.py:25 donations/views/ngo_account/byof.py:40
 #, python-brace-format
