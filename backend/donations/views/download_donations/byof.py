@@ -41,7 +41,7 @@ class DonorModel(BaseModel):
     # noinspection PyTypeHints
     last_name: Annotated[str, StringConstraints(strip_whitespace=True, to_upper=True)]
     initial: str | None = Annotated[
-        str, StringConstraints(strip_whitespace=True, to_upper=True, min_length=1, max_length=1, pattern=r"^[a-zA-Z]$")
+        str, StringConstraints(strip_whitespace=True, to_upper=True, min_length=1, max_length=2, pattern=r"^[a-zA-Z]$")
     ]
 
     address: str | None = ""

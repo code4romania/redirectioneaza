@@ -11,7 +11,7 @@ from utils.text.phone_number import validate_phone_number
 class DonationForm(forms.Form, ReCaptchaMixin):
     l_name = forms.CharField(max_length=100, label=_("Last name"), required=True)
     f_name = forms.CharField(max_length=100, label=_("First name"), required=True)
-    initial = forms.CharField(max_length=1, label=_("Initial"), required=True)
+    initial = forms.CharField(max_length=2, label=_("Initial"), required=True)
 
     if settings.ENABLE_FULL_VALIDATION_CNP:
         cnp = ROCNPField(label="CNP", required=True)
