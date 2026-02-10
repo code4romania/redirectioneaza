@@ -12,13 +12,14 @@ trim_trailing_whitespace = true
 
 
 [*.html]
-max_line_length = 240
+# Unset max_line_length for HTML files to allow for the non-multiline-able Django tags
+max_line_length = unset
+
 
 [Makefile]
-tab_width = 4
+indent_size = 4
 indent_style = tab
 max_line_length = 240
 
 [{*.py,*.md}]
 indent_size = 4
-tab_width = 4
