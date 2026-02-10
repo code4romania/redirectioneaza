@@ -21,6 +21,7 @@
     fetchResults() {
       // persist other query parameters
       const params = new URLSearchParams(window.location.search);
+      params.set('page', 1);
       params.set('q', this.currentSearch);
 
       // update the URL in the address bar without reloading the page, so the url can still be shared with all params included
