@@ -45,9 +45,10 @@
           {% include "public/components/grid-card.html" with card_logo=cause.display_image card_slug=cause.slug card_title=cause.name card_description=cause.description %}
         {% endfor %}
       {% endif %}
+      
+      {% include "public/components/pagination.html" with page_obj=page_obj url_params=url_search_query %}
     </div>
 
-    {% include "public/components/pagination.html" with page_obj=page_obj url_params=url_search_query %}
   </section>
 
   {% include "account/snippets/cta-ngohub.html" %}
