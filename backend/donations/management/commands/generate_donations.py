@@ -120,7 +120,7 @@ class Command(BaseCommand):
                 cause=cause,
                 f_name=fake.first_name(),
                 l_name=fake.last_name(),
-                initial=random.choice(string.ascii_uppercase),
+                initial="".join(random.choices(string.ascii_uppercase, k=random.randint(1, 2))),
                 email=fake.email(),
                 phone=fake.phone_number(),
                 city=fake.city(),
