@@ -435,3 +435,14 @@ dist
 
 # GeoLite city database
 */GeoLite2-City/*
+
+
+# START Ruler Generated Files
+*.bak
+.github/copilot-instructions.md
+.github/copilot-instructions.md.bak
+.junie/guidelines.md
+.junie/guidelines.md.bak
+.vscode/mcp.json
+.vscode/mcp.json.bak
+# END Ruler Generated Files
