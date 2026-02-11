@@ -1,6 +1,9 @@
 from .base import DEBUG
 from .environment import env
 
+# Search tweaks
+ENABLE_NGO_SEARCH_WORD_SIMILARITY = env.bool("ENABLE_NGO_SEARCH_WORD_SIMILARITY", True)
+
 # Feature flags
 ENABLE_FLAG_CONTACT = env.bool("ENABLE_FLAG_CONTACT", False)
 ENABLE_MULTIPLE_FORMS = env.bool("ENABLE_MULTIPLE_FORMS", True)
