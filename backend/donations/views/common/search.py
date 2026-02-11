@@ -106,7 +106,7 @@ class CauseSearchMixin(CommonSearchMixin):
         search_vector: SearchVector = ConfigureSearch.vector(search_fields, language_code)
         search_query: SearchQuery = ConfigureSearch.query(query, language_code)
 
-        if settings.ENABLE_NGO_SEARCH_WORD_SIMILARITY:
+        if settings.ENABLE_CAUSE_SEARCH_WORD_SIMILARITY:
             trigram_similarity = TrigramWordSimilarity(query, "name")
             similarity_threshold = 0.4
         else:

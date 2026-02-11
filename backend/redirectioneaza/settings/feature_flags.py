@@ -3,6 +3,7 @@ from .environment import env
 
 # Search tweaks
 ENABLE_NGO_SEARCH_WORD_SIMILARITY = env.bool("ENABLE_NGO_SEARCH_WORD_SIMILARITY", True)
+ENABLE_CAUSE_SEARCH_WORD_SIMILARITY = env.bool("ENABLE_CAUSE_SEARCH_WORD_SIMILARITY", False)
 
 # Feature flags
 ENABLE_FLAG_CONTACT = env.bool("ENABLE_FLAG_CONTACT", False)
