@@ -134,7 +134,7 @@ class NgoCauseMixedSearchMixin(CommonSearchMixin):
 
         searched_causes = CauseSearchMixin.get_search_results(queryset, query, language_code)
 
-        return ngos_causes | searched_causes
+        return searched_causes | ngos_causes
 
 
 class DonorSearchMixin(CommonSearchMixin):
