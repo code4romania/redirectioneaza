@@ -1,7 +1,13 @@
 from typing import Any
 
 from django.conf import settings
-from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector, TrigramSimilarity
+from django.contrib.postgres.search import (
+    SearchQuery,
+    SearchRank,
+    SearchVector,
+    TrigramSimilarity,
+    TrigramWordSimilarity,
+)
 from django.db.models import Q, QuerySet
 from django.db.models.functions import Greatest
 from django.utils.translation import gettext_lazy as _
@@ -52,7 +58,7 @@ class CommonSearchMixin(ListView):
 
         if not queryset:
             if not self.queryset:
-                return queryset.none()
+                return queryset.none()  # TODO: this looks weird
             queryset = self.queryset
 
         if not query or len(query) < settings.SEARCH_QUERY_MIN_LENGTH:
@@ -73,12 +79,19 @@ class NgoSearchMixin(CommonSearchMixin):
         search_vector: SearchVector = ConfigureSearch.vector(search_fields, language_code)
         search_query: SearchQuery = ConfigureSearch.query(query, language_code)
 
+        if settings.ENABLE_NGO_SEARCH_WORD_SIMILARITY:
+            trigram_similarity = TrigramWordSimilarity(query, "name")
+            similarity_threshold = 0.4
+        else:
+            trigram_similarity = TrigramSimilarity("name", query)
+            similarity_threshold = 0.3
+
         ngos: QuerySet[Ngo] = (
             queryset.annotate(
                 rank=SearchRank(search_vector, search_query),
-                similarity=TrigramSimilarity("name", query),
+                similarity=trigram_similarity,
             )
-            .filter(Q(rank__gte=0.3) | Q(similarity__gt=0.3))
+            .filter(Q(rank__gte=0.3) | Q(similarity__gt=similarity_threshold))
             .order_by("name")
             .distinct("name")
         )
@@ -93,12 +106,19 @@ class CauseSearchMixin(CommonSearchMixin):
         search_vector: SearchVector = ConfigureSearch.vector(search_fields, language_code)
         search_query: SearchQuery = ConfigureSearch.query(query, language_code)
 
+        if settings.ENABLE_NGO_SEARCH_WORD_SIMILARITY:
+            trigram_similarity = TrigramWordSimilarity(query, "name")
+            similarity_threshold = 0.4
+        else:
+            trigram_similarity = TrigramSimilarity("name", query)
+            similarity_threshold = 0.3
+
         causes: QuerySet[Cause] = (
             queryset.annotate(
                 rank=SearchRank(search_vector, search_query),
-                similarity=TrigramSimilarity("name", query),
+                similarity=trigram_similarity,
             )
-            .filter(Q(rank__gte=0.3) | Q(similarity__gt=0.3))
+            .filter(Q(rank__gte=0.3) | Q(similarity__gt=similarity_threshold))
             .order_by("name")
             .distinct("name")
         )
@@ -114,7 +134,7 @@ class NgoCauseMixedSearchMixin(CommonSearchMixin):
 
         searched_causes = CauseSearchMixin.get_search_results(queryset, query, language_code)
 
-        return searched_causes | ngos_causes
+        return ngos_causes | searched_causes
 
 
 class DonorSearchMixin(CommonSearchMixin):
