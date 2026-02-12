@@ -110,6 +110,50 @@ If you managed to find a solution, please open a PR with the changes.
 3. Run `make run` to start the containers with an PostgreSQL database
 4. Open http://localhost:8080 in your browser
 
+### Managing Coding Assistants' instructions
+
+The instructions for the coding assistants are stored in the `.ruler/` directory.
+Each file corresponds to a specific part of the codebase and contains instructions for the coding assistants on how to
+write code, tests, and manage dependencies for that part of the codebase.
+
+More information can be found in the [ruler.toml](.ruler/ruler.toml) file and in
+the [GitHub repository](https://github.com/intellectronica/ruler) of the project.
+
+#### Updating the instructions
+
+If you want to update the instructions for the coding assistants, please update the corresponding file in the `.ruler/`
+directory and make a pull request with the changes.
+
+#### Installing Ruler
+
+Having NPM installed, run the following command to install Ruler globally:
+
+```
+npm install -g @intellectronica/ruler
+```
+
+or with NPX:
+
+```
+npx @intellectronica/ruler apply
+```
+
+#### Generating the instructions for the coding assistants
+
+1. Go to the root of the project
+2. Run `ruler apply` to generate the instructions for the coding assistants
+
+#### Adding new Coding Assistants
+
+You can find the enabled coding assistants in the `ruler.toml` file.
+To add a new coding assistant, edit the `ruler.toml` file
+and add a new agent to the `default_agents` list.
+Please check the Ruler docs if there are any agent-specific configurations that need to be added.
+
+1. Uncomment the corresponding section in the `ruler.toml` file
+2. Run `ruler apply` to generate the instructions for the coding assistants and `.gitignore` changes
+3. Make a pull request with the changes.
+
 ## Creating a new release
 
 The production deployment is done through a CI/CD pipeline using GitHub Actions.
