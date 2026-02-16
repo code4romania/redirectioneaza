@@ -77,7 +77,7 @@ class NgoExactSearchMixin(CommonSearchMixin):
     def get_search_results(cls, queryset: QuerySet, query: str, language_code: str) -> QuerySet:
         query_filter = Q(name__icontains=query)
 
-        # Try to guess is the user is looking for a registration number
+        # Try to guess if the user is looking for a registration number
         if query.isnumeric():
             query_filter = query_filter | Q(registration_number=query)
         elif query.upper().startswith("RO") and query[2:].isnumeric():
