@@ -17,6 +17,17 @@ from donations.models.donors import Donor
 from donations.models.ngos import Cause, Ngo
 
 
+def probably_registration_number(query: str) -> str | None:
+    """
+    Try to extract a registration number from the query string
+    """
+    if query.isnumeric():
+        return query
+    elif query.upper().startswith("RO") and query[2:].isnumeric():
+        return query[2:]
+    return None
+
+
 class ConfigureSearch:
     @staticmethod
     def query(query: str, language_code: str) -> SearchQuery:
@@ -76,12 +87,9 @@ class NgoExactSearchMixin(CommonSearchMixin):
     @classmethod
     def get_search_results(cls, queryset: QuerySet, query: str, language_code: str) -> QuerySet:
         query_filter = Q(name__icontains=query)
-
-        # Try to guess if the user is looking for a registration number
-        if query.isnumeric():
-            query_filter = query_filter | Q(registration_number=query)
-        elif query.upper().startswith("RO") and query[2:].isnumeric():
-            query_filter = query_filter | Q(registration_number=query[2:])
+        registration_number = probably_registration_number(query)
+        if registration_number:
+            query_filter = query_filter | Q(registration_number=registration_number)
 
         ngos: QuerySet[Ngo] = queryset.filter(query_filter).order_by("name").distinct("name")
 
@@ -148,7 +156,7 @@ class NgoCauseMixedSearchMixin(CommonSearchMixin):
         exact_causes = queryset.none()
         # If exact match search is enabled, only perform it if the search query excluding the first two symbols
         # is numeric (in order to look for registration numbers) or if the search query is longer than 20 chars
-        if settings.ENABLE_NGO_SEARCH_EXACT_MATCH and (query[2:].isnumeric() or len(query) > 20):
+        if settings.ENABLE_NGO_SEARCH_EXACT_MATCH and (probably_registration_number(query) or len(query) > 20):
             exact_ngos = NgoExactSearchMixin.get_search_results(Ngo.active, query, language_code)
             exact_causes = Cause.public_active.filter(ngo__in=exact_ngos).distinct("name")
 
