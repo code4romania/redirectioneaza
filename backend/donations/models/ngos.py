@@ -17,6 +17,7 @@ from django.utils.translation import gettext_lazy as _
 
 from donations.models.common import CommonFilenameCacheModel
 from donations.models.donors import Donor
+from editions.calendar import january_first
 from utils.models_hashing import hash_id_secret
 from utils.text.registration_number import (
     REGISTRATION_NUMBER_REGEX_WITH_VAT,
@@ -579,7 +580,7 @@ class Cause(CommonFilenameCacheModel):
 
     @property
     def redirections_count(self):
-        return self.donor_set.count()
+        return self.donor_set.filter(january_first()).count()
 
     @property
     def can_receive_redirections(self):
