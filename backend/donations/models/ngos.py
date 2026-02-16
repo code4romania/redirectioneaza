@@ -580,7 +580,7 @@ class Cause(CommonFilenameCacheModel):
 
     @property
     def redirections_count(self):
-        return self.donor_set.filter(january_first()).count()
+        return self.donor_set.filter(date_created__gte=january_first()).count()
 
     @property
     def can_receive_redirections(self):
