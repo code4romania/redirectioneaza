@@ -72,6 +72,22 @@ class CommonSearchMixin(ListView):
         return self.get_search_results(queryset, query, language_code)
 
 
+class NgoExactSearchMixin(CommonSearchMixin):
+    @classmethod
+    def get_search_results(cls, queryset: QuerySet, query: str, language_code: str) -> QuerySet:
+        query_filter = Q(name__icontains=query)
+
+        # Try to guess is the user is looking for a registration number
+        if query.isnumeric():
+            query_filter = query_filter | Q(registration_number=query)
+        elif query.upper().startswith("RO") and query[2:].isnumeric():
+            query_filter = query_filter | Q(registration_number=query[2:])
+
+        ngos: QuerySet[Ngo] = queryset.filter(query_filter).order_by("name").distinct("name")
+
+        return ngos
+
+
 class NgoSearchMixin(CommonSearchMixin):
     @classmethod
     def get_search_results(cls, queryset: QuerySet, query: str, language_code: str) -> QuerySet:
@@ -129,12 +145,22 @@ class CauseSearchMixin(CommonSearchMixin):
 class NgoCauseMixedSearchMixin(CommonSearchMixin):
     @classmethod
     def get_search_results(cls, queryset: QuerySet, query: str, language_code: str) -> QuerySet[Cause]:
-        ngos = NgoSearchMixin.get_search_results(Ngo.active, query, language_code)
-        ngos_causes = Cause.public_active.filter(ngo__in=ngos).distinct("name")
+        exact_causes = queryset.none()
+        # If exact match search is enabled, only perform it if the search query excluding the first two symbols
+        # is numeric (in order to look for registration numbers) or if the search query is longer than 20 chars
+        if settings.ENABLE_NGO_SEARCH_EXACT_MATCH and (query[2:].isnumeric() or len(query) > 20):
+            exact_ngos = NgoExactSearchMixin.get_search_results(Ngo.active, query, language_code)
+            exact_causes = Cause.public_active.filter(ngo__in=exact_ngos).distinct("name")
+
+        if exact_causes:
+            return exact_causes
+
+        fuzzy_ngos = NgoSearchMixin.get_search_results(Ngo.active, query, language_code)
+        fuzzy_causes = Cause.public_active.filter(ngo__in=fuzzy_ngos).distinct("name")
 
         searched_causes = CauseSearchMixin.get_search_results(queryset, query, language_code)
 
-        return searched_causes | ngos_causes
+        return searched_causes | fuzzy_causes
 
 
 class DonorSearchMixin(CommonSearchMixin):
