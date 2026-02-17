@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-09 23:11+0200\n"
+"POT-Creation-Date: 2026-02-17 12:10+0200\n"
 "PO-Revision-Date: 2025-03-27 14:49+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -1244,7 +1244,7 @@ msgstr[0] "%(time)d minut"
 msgstr[1] "%(time)d minute"
 msgstr[2] "%(time)d de minute"
 
-#: donations/views/common/search.py:46
+#: donations/views/common/search.py:52
 msgid "The search query must be at least 3 characters long"
 msgstr "Termenul de căutare trebuie să aibă cel puțin 3 caractere"
 
@@ -2468,7 +2468,7 @@ msgstr "Încarcă un logo în NGO Hub"
 msgid "Upload an image"
 msgstr "Încarcă o imagine"
 
-#: templates/v2/components/input/search-box.html:77
+#: templates/v2/components/input/search-box.html:78
 msgid "Clear search"
 msgstr "Șterge căutarea"
 
@@ -4100,6 +4100,18 @@ msgstr ""
 "Trimite-ne întrebarea ta la adresa de email <a href=\"mailto:"
 "%(contact_email)s\">%(contact_email)s</a> și vom răspunde în cel mai scurt "
 "timp posibil."
+
+#: templates/v2/public/faq.html:49
+msgid ""
+"Code for Romania ensures the optimal functioning of the Redirecționează "
+"platform and only provides technical support to users. For questions "
+"regarding the redirection procedure, please <a href=\"https://www.anaf.ro/"
+"anaf/internet/ANAF/contact/call_center/\">contact ANAF</a>."
+msgstr ""
+"Code for Romania asigură funcționarea optimă a platformei Redirecționează "
+"și oferă doar suport tehnic utilizatorilor. Pentru nelămuriri legate de "
+"procedura aferentă redirecționărilor, vă rugăm <a href=\"https://www.anaf.ro/"
+"anaf/internet/ANAF/contact/call_center/\">contactați ANAF</a>."
 
 #: templates/v2/redirect/footer.html:4
 msgid "Footer"
