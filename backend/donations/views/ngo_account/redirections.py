@@ -5,7 +5,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
-from django.db.models import Count, F, OuterRef, QuerySet, Subquery
+from django.db.models import Count, F, OuterRef, Q, QuerySet, Subquery
 from django.db.models.functions import JSONObject
 from django.http import Http404, HttpRequest, HttpResponseNotAllowed, QueryDict
 from django.shortcuts import redirect
@@ -26,6 +26,7 @@ from donations.views.ngo_account_filters import (
     get_queryset_filters,
     get_redirections_filters,
 )
+from editions.calendar import january_first
 from redirectioneaza.common.app_url import build_uri
 from redirectioneaza.common.cache import cache_decorator
 from redirectioneaza.common.messaging import extend_email_context, send_email
@@ -104,7 +105,7 @@ class NgoRedirectionsView(NgoBaseListView, DonorSearchMixin):
 
         return (
             ngo.causes.annotate(
-                redirections_count=Count("donor"),
+                redirections_count=Count("donor", filter=Q(date_created__gte=january_first())),
                 last_archive_job=Subquery(ngo_archive_jobs[:1]),
             )
             .values(

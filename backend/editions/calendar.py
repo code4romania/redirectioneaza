@@ -25,3 +25,10 @@ def get_current_year_range() -> list[int]:
     """
     current_year: int = timezone.now().year
     return list(range(settings.START_YEAR, current_year + 1))
+
+
+def january_first():
+    """
+    Returns a timezone aware datetime for January 1st of the current year
+    """
+    return timezone.localtime(timezone.now()).replace(month=1, day=1, hour=0, minute=0, second=0, microsecond=0)
