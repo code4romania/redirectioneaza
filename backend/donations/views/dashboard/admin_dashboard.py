@@ -61,7 +61,7 @@ def _get_header_stats() -> list[list[dict[str, str | int | datetime]]]:
     return [
         [
             {
-                "title": _("Donations this year"),
+                "title": f"{_('Donations')} {_('this year')}",
                 "icon": "edit_document",
                 "metric": current_year_redirections(),
                 "footer": format_stat_link(

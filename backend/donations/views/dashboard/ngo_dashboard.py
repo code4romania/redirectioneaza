@@ -75,7 +75,7 @@ def _get_donations_per_county(user_ngo):
     rows = [[index + 1] + row for index, row in enumerate(rows)]
 
     return {
-        "title": _("Current year donations per county"),
+        "title": f"{_('Donations')} {_('per county')} {_('this year')}",
         "data": {
             "headers": headers,
             "rows": rows,

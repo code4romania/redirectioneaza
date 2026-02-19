@@ -20,16 +20,24 @@
   {% endif %}
 >
 
-  <span class="flex grow content-start font-semibold">
+  <span
+    class="flex grow content-start font-semibold">
     {{ cause.name }}
   </span>
 
-  <span class="flex grow content-start">
+  <span
+    class="flex grow content-start">
     {% blocktrans trimmed count cause.redirections_count as redirections_count %}
-      {{ redirections_count }} form collected
+      {{ redirections_count }}
+      form
+      collected
       {% plural %}
-      {{ redirections_count }} forms collected
+      {{ redirections_count }}
+      forms
+      collected
     {% endblocktrans %}
+
+    {% trans "this year" %}
   </span>
 
 </button>
