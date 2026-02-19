@@ -105,7 +105,7 @@ class NgoRedirectionsView(NgoBaseListView, DonorSearchMixin):
 
         return (
             ngo.causes.annotate(
-                redirections_count=Count("donor", filter=Q(date_created__gte=january_first())),
+                redirections_count=Count("donor", filter=Q(donor__date_created__gte=january_first())),
                 last_archive_job=Subquery(ngo_archive_jobs[:1]),
             )
             .values(
