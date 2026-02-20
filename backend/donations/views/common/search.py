@@ -153,7 +153,7 @@ class ImprovedCauseSearchMixin(CommonSearchMixin):
                 query_filter = query_filter | (Q(ngo__registration_number=registration_number) & Q(is_main=True))
 
             exact_causes: QuerySet[Cause] = queryset.filter(query_filter).order_by("id").distinct("id")
-            if len(exact_causes):
+            if exact_causes.count():
                 return exact_causes
 
         search_vector: SearchVector = ConfigureSearch.vector(("name",), language_code)
