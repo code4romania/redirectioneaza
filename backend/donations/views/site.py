@@ -18,7 +18,7 @@ from redirectioneaza.common.cache import cache_decorator
 from ..models.donors import Donor
 from ..models.ngos import FRONTPAGE_NGOS_KEY, FRONTPAGE_STATS_KEY, Cause
 from .base import BaseVisibleTemplateView
-from .common.search import CauseSearchMixin, ImprovedCauseSearchMixin
+from .common.search import CauseSearchMixin
 
 logger = logging.getLogger(__name__)
 
@@ -139,7 +139,7 @@ class CausesListHandler(CauseSearchMixin):
         return context
 
 
-class NgoListHandler(ImprovedCauseSearchMixin):
+class NgoListHandler(CauseSearchMixin):
     template_name = "public/all-ngos.html"
     context_object_name = "causes"
     queryset = Cause.public_active

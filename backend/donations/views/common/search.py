@@ -100,7 +100,7 @@ class NgoSearchMixin(CommonSearchMixin):
         return ngos
 
 
-class CauseSearchMixin(CommonSearchMixin):
+class DeprecatedCauseSearchMixin(CommonSearchMixin):
     @classmethod
     def get_search_results(cls, queryset: QuerySet, query: str, language_code: str) -> QuerySet[Cause]:
         search_fields = ["name"]
@@ -127,14 +127,14 @@ class CauseSearchMixin(CommonSearchMixin):
         return causes
 
 
-class ImprovedCauseSearchMixin(CommonSearchMixin):
+class CauseSearchMixin(CommonSearchMixin):
     @classmethod
     def get_search_results(cls, queryset: QuerySet, query: str, language_code: str) -> QuerySet[Cause]:
         if settings.ENABLE_CAUSE_SEARCH_EXACT_MATCH:
             query_filter = Q(name__icontains=query)
-            registration_number = probable_registration_number(query)
             # If the query looks like a registration number then also try to find the main causes owned by
             # organisations which have that registration number
+            registration_number = probable_registration_number(query)
             if registration_number:
                 query_filter = query_filter | (Q(ngo__registration_number=registration_number) & Q(is_main=True))
 
