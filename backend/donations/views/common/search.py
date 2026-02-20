@@ -17,6 +17,21 @@ from donations.models.donors import Donor
 from donations.models.ngos import Cause, Ngo
 
 
+def probable_registration_number(query: str) -> str | None:
+    """
+    Try to guess if a query string could be a registration number and return that number
+    """
+    query = query.strip().upper()
+
+    if query.startswith("RO") and query[2:].isnumeric() and len(query) <= 12:
+        return query[2:]
+
+    if query.isnumeric() and len(query) <= 10:
+        return query
+
+    return None
+
+
 class ConfigureSearch:
     @staticmethod
     def query(query: str, language_code: str) -> SearchQuery:
@@ -124,6 +139,44 @@ class CauseSearchMixin(CommonSearchMixin):
         )
 
         return causes
+
+
+class ImprovedCauseSearchMixin(CommonSearchMixin):
+    @classmethod
+    def get_search_results(cls, queryset: QuerySet, query: str, language_code: str) -> QuerySet[Cause]:
+        if settings.ENABLE_CAUSE_SEARCH_EXACT_MATCH:
+            query_filter = Q(name__icontains=query)
+            registration_number = probable_registration_number(query)
+            # If the query looks like a registration number then also try to find the main causes owned by
+            # organisations which have that registration number
+            if registration_number:
+                query_filter = query_filter | (Q(ngo__registration_number=registration_number) & Q(is_main=True))
+
+            exact_causes: QuerySet[Cause] = queryset.filter(query_filter).order_by("id").distinct("id")
+            if len(exact_causes):
+                return exact_causes
+
+        search_vector: SearchVector = ConfigureSearch.vector(("name",), language_code)
+        search_query: SearchQuery = ConfigureSearch.query(query, language_code)
+
+        if settings.ENABLE_CAUSE_SEARCH_WORD_SIMILARITY:
+            trigram_similarity = TrigramWordSimilarity(query, "name")
+            similarity_threshold = 0.4
+        else:
+            trigram_similarity = TrigramSimilarity("name", query)
+            similarity_threshold = 0.3
+
+        fuzzy_causes: QuerySet[Cause] = (
+            queryset.annotate(
+                rank=SearchRank(search_vector, search_query),
+                similarity=trigram_similarity,
+            )
+            .filter(Q(rank__gte=0.3) | Q(similarity__gt=similarity_threshold))
+            .order_by("id")
+            .distinct("id")
+        )
+
+        return fuzzy_causes
 
 
 class NgoCauseMixedSearchMixin(CommonSearchMixin):
