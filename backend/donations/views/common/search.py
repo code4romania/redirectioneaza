@@ -15,21 +15,7 @@ from django.views.generic import ListView
 
 from donations.models.donors import Donor
 from donations.models.ngos import Cause, Ngo
-
-
-def probable_registration_number(query: str) -> str | None:
-    """
-    Try to guess if a query string could be a registration number and return that number
-    """
-    query = query.strip().upper()
-
-    if query.startswith("RO") and query[2:].isnumeric() and len(query) <= 12:
-        return query[2:]
-
-    if query.isnumeric() and len(query) <= 10:
-        return query
-
-    return None
+from utils.text.registration_number import probable_registration_number
 
 
 class ConfigureSearch:
