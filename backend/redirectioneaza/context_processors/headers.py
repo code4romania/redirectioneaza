@@ -203,12 +203,12 @@ def build_main_menu(request: HttpRequest) -> list[dict[str, str]]:
 
 
 def build_auth_menu(request: HttpRequest) -> list[dict[str, str]]:
-    try:
-        user = request.user
-    except AttributeError:
-        user = None
+    if not hasattr(request, "user"):
+        return []
 
-    if not user or (not user.is_anonymous and user.is_admin):
+    user = request.user
+
+    if not user.is_anonymous and user.is_admin:
         return [
             {
                 "title": _("Admin"),
