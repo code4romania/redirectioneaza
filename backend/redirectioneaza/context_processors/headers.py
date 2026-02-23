@@ -203,9 +203,12 @@ def build_main_menu(request: HttpRequest) -> list[dict[str, str]]:
 
 
 def build_auth_menu(request: HttpRequest) -> list[dict[str, str]]:
-    user = request.user
+    try:
+        user = request.user
+    except AttributeError:
+        user = None
 
-    if not user.is_anonymous and user.is_admin:
+    if not user or (not user.is_anonymous and user.is_admin):
         return [
             {
                 "title": _("Admin"),
