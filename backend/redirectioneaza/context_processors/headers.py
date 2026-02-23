@@ -203,6 +203,9 @@ def build_main_menu(request: HttpRequest) -> list[dict[str, str]]:
 
 
 def build_auth_menu(request: HttpRequest) -> list[dict[str, str]]:
+    if not hasattr(request, "user"):
+        return []
+
     user = request.user
 
     if not user.is_anonymous and user.is_admin:
