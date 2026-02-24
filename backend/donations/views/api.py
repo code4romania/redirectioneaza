@@ -27,7 +27,7 @@ from .common.misc import (
     has_archive_generation_deadline_passed,
     has_recent_archive_job,
 )
-from .common.search import NgoCauseMixedSearchMixin
+from .common.search import CauseSearchMixin
 
 logger = logging.getLogger(__name__)
 
@@ -49,7 +49,7 @@ class UpdateFromNgohub(BaseTemplateView):
         return redirect_success
 
 
-class SearchCausesApi(TemplateView, NgoCauseMixedSearchMixin):
+class SearchCausesApi(TemplateView, CauseSearchMixin):
     queryset = Cause.public_active
 
     def get(self, request, *args, **kwargs):
