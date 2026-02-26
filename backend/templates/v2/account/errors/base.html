@@ -10,16 +10,26 @@
 
 
 {% block content %}
-  <div class="container">
+  <div class="container mx-auto px-4">
+    <div class="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16">
+      <!-- Left column: Error text -->
+      <div class="flex-1 max-w-xl">
+          <h1 class="text-3xl font-bold text-gray-800 mb-8">
+            {% block title %}{% endblock %}
+          </h1>
+          <div class="mb-8">
+            {% block message %}{% endblock %}
+          </div>
+          <div>
+            <p class="mb-2">Încă întâmpini probleme la conectare?</p>
+            <p class="prose-a:text-cyan-700">Consultă <a href="{% url 'faq' %}">pagina de suport</a> sau contactează-ne la <a href="mailto:{{ CONTACT_EMAIL_ADDRESS }}">{{ CONTACT_EMAIL_ADDRESS }}</a></p>
+          </div>
+      </div>
 
-    <h1>
-      {% block title %}{% endblock %}
-    </h1>
-    <p>
-      {% block message %}{% endblock %}
-    </p>
-
-    {% block extra_content %}{% endblock %}
-
+      <!-- Right column: Image -->
+      <div class="flex-1 max-w-xl flex justify-center">
+          <img src="{% static 'images/error-illustration.svg' %}" alt="{% trans "Error illustration" %}" class="w-full max-w-md h-auto">
+      </div>
+    </div>
   </div>
 {% endblock %}
