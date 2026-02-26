@@ -2,6 +2,13 @@
 {% load static %}
 {% load i18n %}
 
+
+{% block additional_headers %}
+  {{ block.super }}  
+  <meta name="robots" content="noindex">
+{% endblock %}
+
+
 {% block content %}
   <div class="container">
 
