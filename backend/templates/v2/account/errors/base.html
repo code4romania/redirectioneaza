@@ -3,6 +3,9 @@
 {% load i18n %}
 
 
+{% block html_title %}{% trans "NGO Hub Authentication Error" %}{% endblock %}
+
+
 {% block additional_headers %}
   {{ block.super }}  
   <meta name="robots" content="noindex">
@@ -15,14 +18,25 @@
       <!-- Left column: Error text -->
       <div class="flex-1 max-w-xl">
           <h1 class="text-3xl font-bold text-gray-800 mb-8">
-            {% block title %}{% endblock %}
+            {% block title %}
+              {% trans "NGO Hub Authentication Error" %}
+            {% endblock %}
           </h1>
-          <div class="mb-8">
+          <div>
             {% block message %}{% endblock %}
           </div>
+          
           <div>
-            <p class="mb-2">Încă întâmpini probleme la conectare?</p>
-            <p class="prose-a:text-cyan-700">Consultă <a href="{% url 'faq' %}">pagina de suport</a> sau contactează-ne la <a href="mailto:{{ CONTACT_EMAIL_ADDRESS }}">{{ CONTACT_EMAIL_ADDRESS }}</a></p>
+            <p class="mt-8 mb-4 text-gray-900">
+              {% trans "Still encountering authentication problems?" %}
+            </p>
+
+            <p class="text-base text-gray-900">
+              <a class="text-base font-normal text-cyan-700" href="https://www.ngohub.ro/ro/suport-tehnic-redirectioneaza">{% trans "Check the support page" %}</a>
+              {% trans "or contact us at" %}
+              <a class="text-base font-normal text-cyan-700" href="mailto:redirectioneaza@code4.ro">{{ CONTACT_EMAIL_ADDRESS }}</a>
+            </p>
+
           </div>
       </div>
 

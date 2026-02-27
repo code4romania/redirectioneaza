@@ -1,12 +1,9 @@
 {% extends 'account/errors/login/base_login.html' %}
 {% load i18n %}
 
-{% block title %}
-  {% trans 'Multiple NGOs for this CUI' %}
-{% endblock %}
 
 {% block message %}
   <p class="text-gray-600">
-    {% trans 'Multiple NGOs have been found during synchronization. Admins have been notified and will resolve the issue shortly.' %}
+    {% trans 'Multiple NGOs with this registration number have been found during synchronization. Admins have been notified and will resolve the issue shortly.' %}
   </p>
 {% endblock %}

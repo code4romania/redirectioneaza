@@ -1,10 +1,9 @@
 {% extends 'account/errors/login/base_login.html' %}
 {% load i18n %}
 
-{% block title %}
-  {% trans 'Unknown role' %}
-{% endblock %}
 
 {% block message %}
-  {% trans "Your current role isn't supported." %}
+  <p class="text-gray-600">
+    {% trans "Your current user role is not supported." %}
+  </p>
 {% endblock %}

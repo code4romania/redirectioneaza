@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-19 15:49+0200\n"
+"POT-Creation-Date: 2026-02-27 14:59+0200\n"
 "PO-Revision-Date: 2025-03-27 14:49+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -1246,13 +1246,13 @@ msgstr[0] "%(time)d minut"
 msgstr[1] "%(time)d minute"
 msgstr[2] "%(time)d de minute"
 
-#: donations/views/common/search.py:52
+#: donations/views/common/search.py:53
 msgid "The search query must be at least 3 characters long"
 msgstr "Termenul de căutare trebuie să aibă cel puțin 3 caractere"
 
 #: donations/views/dashboard/admin_dashboard.py:64
 #: donations/views/dashboard/ngo_dashboard.py:78
-#: templates/v2/ngo-account/redirections/generate-archive/multiple-dropdown.html:42
+#: templates/v2/ngo-account/redirections/generate-archive/multiple-dropdown.html:40
 msgid "this year"
 msgstr "anul acesta"
 
@@ -1942,11 +1942,11 @@ msgstr "Pentru contribuabili"
 msgid "For organizations"
 msgstr "Pentru organizații"
 
-#: redirectioneaza/context_processors/headers.py:211
+#: redirectioneaza/context_processors/headers.py:214
 msgid "Admin"
 msgstr "Admin"
 
-#: redirectioneaza/context_processors/headers.py:238
+#: redirectioneaza/context_processors/headers.py:241
 msgid "My Organization"
 msgstr "Organizația mea"
 
@@ -2040,43 +2040,58 @@ msgstr "statistici"
 msgid "Password"
 msgstr "Parola"
 
+#: templates/v2/account/errors/base.html:6
+#: templates/v2/account/errors/base.html:22
+msgid "NGO Hub Authentication Error"
+msgstr "Eroare autentificare NGO Hub"
+
+#: templates/v2/account/errors/base.html:31
+msgid "Still encountering authentication problems?"
+msgstr "Încă întâmpini probleme la conectare?"
+
+#: templates/v2/account/errors/base.html:35
+#: templates/v2/account/signup-confirmation.html:25
+#: templates/v2/account/snippets/third-party.html:160
+msgid "Check the support page"
+msgstr "Consultă pagina de suport"
+
+#: templates/v2/account/errors/base.html:36
+#: templates/v2/account/signup-confirmation.html:26
+msgid "or contact us at"
+msgstr "sau contactează-ne la"
+
+#: templates/v2/account/errors/base.html:45
+msgid "Error illustration"
+msgstr "Ilustrație eroare"
+
 #: templates/v2/account/errors/login/app_missing.html:5
-msgid "Application not activated"
-msgstr "Aplicația nu este activată"
+msgid "Oops! Application not enabled"
+msgstr "Oops! Aplicația nu este activă"
 
 #: templates/v2/account/errors/login/app_missing.html:10
-msgid "The application is not activated for this user/organization."
-msgstr ""
-"Aplicația nu este activată pentru acest utilizator/această organizație."
-
-#: templates/v2/account/errors/login/app_missing.html:14
 msgid ""
-"If you are the owner of the organization, please activate it in NGO Hub."
+"It looks like there was a problem opening the Redirecționează application."
 msgstr ""
-"Dacă ești proprietarul organizației, te rugăm să o activezi în NGO Hub."
+"Se pare că a fost o problemă la deschiderea aplicației Redirecționează."
+
+#: templates/v2/account/errors/login/app_missing.html:11
+msgid "Check if you followed the steps below for a correct configuration."
+msgstr "Verifică dacă ai urmat pașii de mai jos pentru o configurare corectă."
 
 #: templates/v2/account/errors/login/base_login.html:6
 msgid "Return to login"
 msgstr "Întoarce-te la autentificare"
 
-#: templates/v2/account/errors/login/multiple_ngos.html:5
-msgid "Multiple NGOs for this CUI"
-msgstr "Mai multe ONG-uri cu acest CUI"
-
-#: templates/v2/account/errors/login/multiple_ngos.html:9
+#: templates/v2/account/errors/login/multiple_ngos.html:7
 msgid ""
-"Multiple NGOs have been found during synchronization. Admins have been "
-"notified and will resolve the issue shortly."
+"Multiple NGOs with this registration number have been found during "
+"synchronization. Admins have been notified and will resolve the issue "
+"shortly."
 msgstr ""
-"Au fost găsite mai multe ONG-uri în timpul sincronizării. Administratorii au "
-"fost notificați și vor rezolva problema în curând."
+"Au fost găsite mai multe ONG-uri cu acest CUI în timpul sincronizării. "
+"Administratorii au fost notificați și vor rezolva problema în curând."
 
-#: templates/v2/account/errors/login/unknown_error.html:5
-#: templates/v2/account/errors/login/unknown_role.html:5
-msgid "Unknown role"
-msgstr "Rol necunoscut"
-
-#: templates/v2/account/errors/login/unknown_error.html:9
+#: templates/v2/account/errors/login/unknown_error.html:6
 msgid ""
 "An unknown error occurred during authentication. Please try again later. The "
 "problem has been reported to the team."
@@ -2084,9 +2099,9 @@ msgstr ""
 "O eroare necunoscută a apărut în timpul autentificării. Te rugăm să "
 "reîncerci mai târziu. Problema a fost raportată echipei."
 
-#: templates/v2/account/errors/login/unknown_role.html:9
-msgid "Your current role isn't supported."
-msgstr "Rolul tău actual nu este suportat."
+#: templates/v2/account/errors/login/unknown_role.html:7
+msgid "Your current user role is not supported."
+msgstr "Tipul de utilizator al contului tău nu este suportat."
 
 #: templates/v2/account/reset-password.html:16
 msgid "Password recovery"
@@ -2142,15 +2157,6 @@ msgstr ""
 #: templates/v2/account/signup-confirmation.html:21
 msgid "Authentication problems?"
 msgstr "Ai probleme la conectare?"
-
-#: templates/v2/account/signup-confirmation.html:25
-#: templates/v2/account/snippets/third-party.html:160
-msgid "Check the support page"
-msgstr "Consultă pagina de suport"
-
-#: templates/v2/account/signup-confirmation.html:26
-msgid "or contact us at"
-msgstr "sau contactează-ne la"
 
 #: templates/v2/account/signup-verification.html:8
 msgid "Your account has been succesfully validated!"
@@ -4389,395 +4395,3 @@ msgstr ""
 #: utils/validators.py:16
 msgid "Subdomain must have between 3 and 100 characters."
 msgstr "Subdomeniul trebuie să aibă între 3 și 100 de caractere."
-
-#~ msgid "Donations per county"
-#~ msgstr "Donații per județ"
-
-#~ msgid "Current year donations per county"
-#~ msgstr "Donații pe județe pentru anul curent"
-
-#~ msgid "Donations this year"
-#~ msgstr "Donații anul acesta"
-
-#~ msgid "You don't have an NGO HUB account?"
-#~ msgstr "Nu ai cont pe NGO Hub"
-
-#~ msgid "Register here"
-#~ msgstr "Înregistrează-te aici"
-
-#~ msgid "NGOs updated from NGO Hub."
-#~ msgstr "ONG-urile au fost actualizate din NGO Hub."
-
-#~ msgid "Failed tasks"
-#~ msgstr "Task-uri eșuate"
-
-#~ msgid "Queued tasks"
-#~ msgstr "Task-uri în așteptare"
-
-#~ msgid "Scheduled tasks"
-#~ msgstr "Task-uri programate"
-
-#~ msgid "Successful tasks"
-#~ msgstr "Task-uri reușite"
-
-#~ msgid "is accepting forms"
-#~ msgstr "acceptă formulare"
-
-#~ msgid "Importer"
-#~ msgstr "Importator"
-
-#~ msgid "Clean up registration numbers"
-#~ msgstr "Curăță numerele de înregistrare"
-
-#~ msgid "Successfully cleaned registration numbers"
-#~ msgstr "Au fost curățate cu succes numerele de înregistrare"
-
-#, python-format
-#~ msgid " for 1 NGO."
-#~ msgid_plural " for %(ngos)d NGOs."
-#~ msgstr[0] "pentru 1 ONG."
-#~ msgstr[1] "pentru %(ngos)d ONG-uri."
-#~ msgstr[2] "pentru %(ngos)d de ONG-uri."
-
-#~ msgid "Details"
-#~ msgstr "Detalii"
-
-#~ msgid "form with prefilled ngo data"
-#~ msgstr "formular cu datele ONG-ului completate"
-
-#~ msgid "to a cause of your choice"
-#~ msgstr "către un ONG la alegere"
-
-#~ msgid ""
-#~ "Choose the IBAN you will use for collecting and submitting to ANAF. "
-#~ "Changing the IBAN will not update the forms already completed by "
-#~ "taxpayers."
-#~ msgstr ""
-#~ "Alege IBAN-ul pe care îl vei folosi pentru colectarea și depunerea la "
-#~ "ANAF. Schimbarea IBAN-ului nu va actualiza formularele deja completate de "
-#~ "contribuabili."
-
-#~ msgid "Legal information"
-#~ msgstr "Informații privind partajarea datelor"
-
-#~ msgid ""
-#~ "<p> Your organization is not accepting forms by e-mail. This means that "
-#~ "users will have to download and print the form, fill it in, and send it "
-#~ "to the organization's address or to their ANAF office. </p>"
-#~ msgstr ""
-#~ "<p>Organizația ta nu a activat momentan semnarea online a formularelor de "
-#~ "redirecționare. Acum, utilizatorii vor trebui să descarce și să imprime "
-#~ "formularul, să-l completeze manual și să-l trimită fie la adresa "
-#~ "organizației, fie la un oficiu ANAF. Permite semnarea online, bifând "
-#~ "opțiunea din pagina “Date formular”.</p>"
-
-#~ msgid "Organization URL"
-#~ msgstr "URL-ul organizației"
-
-#~ msgid "Search"
-#~ msgstr "Caută"
-
-#~ msgid "Registration numbers are clean."
-#~ msgstr "Numerele de înregistrare sunt curate."
-
-#~ msgid "An image saying \"Thank you\" for your redirection"
-#~ msgstr "O imagine care spune \"Mulțumim\" pentru redirecționare"
-
-#~ msgid ""
-#~ "Thank you for your redirection! Your form has been sent to the NGO, and "
-#~ "you have also received a copy of it by email."
-#~ msgstr ""
-#~ "Îți mulțumim! Formularul tău a fost trimis organizației și ai primit si "
-#~ "tu o copie a acestuia pe email."
-
-#~ msgid ""
-#~ "If you want to support the organization further, tell your friends to "
-#~ "visit <a href=\"https://redirectioneaza.ro/\">redirectioneaza.ro</a>."
-#~ msgstr ""
-#~ "Dacă vrei să susții organizația mai departe, spune și prietenilor tăi să "
-#~ "intre pe <a href=\"https://redirectioneaza.ro\">redirectioneaza.ro</a>."
-
-#~ msgid ""
-#~ "The first step was filling in the form. Now, here are the next steps:"
-#~ msgstr ""
-#~ "Primul pas a fost completarea formularului. Acum, iată pașii următori:"
-
-#~ msgid "Step 2."
-#~ msgstr "Pasul 2."
-
-#~ msgid "Print the form and sign it."
-#~ msgstr "Imprimă formularul și semnează-l."
-
-#~ msgid "Step 3."
-#~ msgstr "Pasul 3."
-
-#~ msgid "Is accepting forms"
-#~ msgstr "Acceptă formulare"
-
-#~ msgid "The URL is blocked"
-#~ msgstr "URL-ul este blocat"
-
-#~ msgid "The URL is already used"
-#~ msgstr "URL-ul este deja folosit"
-
-#~ msgid "PNG, JPG, GIF up to 2MB"
-#~ msgstr "PNG, JPG, GIF până la 2MB"
-
-#~ msgid "Archives history "
-#~ msgstr "Istoric arhive"
-
-#~ msgid ""
-#~ "We have received your request and have created an archive with all the "
-#~ "information you need."
-#~ msgstr ""
-#~ "Am primit cererea ta și am creat un arhivă cu toate informațiile de care "
-#~ "ai nevoie."
-
-#~ msgid ""
-#~ "Some of the settings here are managed by the NGO Hub platform. If you "
-#~ "need to change them, make the updates on NGO Hub."
-#~ msgstr ""
-#~ "Unele dintre setările de aici sunt gestionate de platforma NGO Hub. Dacă "
-#~ "ai nevoie să le modifici, fă actualizările pe NGO Hub."
-
-#~ msgid "User Guide"
-#~ msgstr "Ghidul utilizatorului"
-
-#~ msgid "We have succesfully verified your account"
-#~ msgstr "Contul tău a fost validat cu succes"
-
-#~ msgid "Go to the login page to access your account."
-#~ msgstr "Mergi la pagina de autentificare pentru a accesa contul tău."
-
-#~ msgid "Go to login"
-#~ msgstr "Mergi la autentificare"
-
-#~ msgid "Please check your email for a confirmation link, then log in."
-#~ msgstr ""
-#~ "Te rugăm să verifici emailul pentru un link de confirmare, apoi te poți "
-#~ "conecta."
-
-#~ msgid ""
-#~ "In NGO Hub, each of your colleagues can have their own account. Make sure "
-#~ "you give your colleagues access to the applications they work with every "
-#~ "day."
-#~ msgstr ""
-#~ "În NGO Hub fiecare coleg de-al tău poate avea propriul său cont. Asigură-"
-#~ "te că le oferi acces colegilor tăi la aplicațiile cu care lucrează zi de "
-#~ "zi."
-
-#~ msgid ""
-#~ "Look for the Redirecționează application in the All applications section. "
-#~ "It is one of the many applications offered for free to non-profit "
-#~ "organizations in Romania."
-#~ msgstr ""
-#~ "Caută aplicația Redirecționează în secțiunea Toate aplicațiile. Este una "
-#~ "dintre multele aplicații oferite gratuit organizațiilor nonprofit din "
-#~ "România"
-
-#~ msgid "FAQ"
-#~ msgstr "Întrebări frecvente"
-
-#~ msgid "If you didn't request a password reset, you can ignore this email."
-#~ msgstr "Dacă nu ai cerut resetarea parolei, poți ignora acest email."
-
-#~ msgid ""
-#~ "To log in to your account or manage your password, you will have to log "
-#~ "in through your NGO Hub account."
-#~ msgstr ""
-#~ "Pentru a te conecta la contul tău sau a-ți gestiona parola, va trebui să "
-#~ "te conectezi prin contul tău NGO Hub."
-
-#, python-format
-#~ msgid ""
-#~ "To log in to your account or manage your password, you will have to log "
-#~ "in through <a href=\"%(ngohub_site)s\">your NGO Hub account</a>."
-#~ msgstr ""
-#~ "Pentru a te conecta la contul tău sau a-ți gestiona parola, va trebui să "
-#~ "te conectezi prin <a href=\"%(ngohub_site)s\">contul tău NGO Hub</a>."
-
-#~ msgid ""
-#~ "We received a request to reset your password on redirectioneaza.ro, but "
-#~ "your account is connected through NGO Hub."
-#~ msgstr ""
-#~ "Am primit o cerere de resetare a parolei tale pe redirectioneaza.ro, dar "
-#~ "contul tău este conectat prin NGO Hub."
-
-#~ msgid ""
-#~ "If your organization doesn't have an account on NGO Hub, you can log in "
-#~ "to redirectioneaza.ro using the same login details as in previous years."
-#~ msgstr ""
-#~ "Dacă organizația ta nu are cont în NGO Hub, te poți autentifica pe "
-#~ "redirectioneaza.ro folosind aceleași date de logare ca anii trecuți."
-
-#~ msgid ""
-#~ "You can choose to create an account on NGO Hub at any time, without "
-#~ "losing the data and forms collected in previous years."
-#~ msgstr ""
-#~ "Poți alege oricând să-ți creezi cont în NGO Hub, fără a pierde datele și "
-#~ "formularele strânse anii trecuți. "
-
-#~ msgid "supported by"
-#~ msgstr "susținute de"
-
-#~ msgid "All rights reserved."
-#~ msgstr "Toate drepturile rezervate."
-
-#~ msgid ""
-#~ "If you're a non-profit organization, you can benefit from all the "
-#~ "solutions in the NGO-dedicated ecosystem through NGO Hub. To access "
-#~ "redirectioneaza.ro through your NGO Hub account, make sure:"
-#~ msgstr ""
-#~ "Dacă ești o organizație non-profit, poți beneficia de toate soluțiile din "
-#~ "ecosistemul dedicat sectorului ONG prin NGO Hub. Pentru a accesa "
-#~ "redirectioneaza.ro prin contul tău NGO Hub, asigură-te că:"
-
-#~ msgid "here"
-#~ msgstr "aici"
-
-#~ msgid ""
-#~ "If the button above does not work, you can also click on the following "
-#~ "link:"
-#~ msgstr ""
-#~ "Dacă butonul de mai sus nu funcționează, poți apăsa și pe următorul link:"
-
-#~ msgid ""
-#~ "If you want to fill in the form by hand, you can download the template. "
-#~ "Print it, fill it in, sign it, and send it yourself."
-#~ msgstr ""
-#~ "Dacă vrei să completezi formularul de mână, poți descărca modelul. "
-#~ "Imprimă-l, completează-l, semnează-l și trimite-l singur."
-
-#~ msgid "Check the FAQ for more details."
-#~ msgstr "Verifică pagina de întrebări frecvente pentru mai multe detalii."
-
-#~ msgid "Download here"
-#~ msgstr "Descarcă aici"
-
-#~ msgid "Active region:"
-#~ msgstr "Regiune activă:"
-
-#, python-format
-#~ msgid "%(ngo.county|to_county)s county"
-#~ msgstr "județul %(ngo.county|to_county)s"
-
-#~ msgid "Submit form"
-#~ msgstr "Trimite formularul"
-
-#~ msgid "Django Q"
-#~ msgstr "Django Q"
-
-#~ msgid "My Account"
-#~ msgstr "Contul meu"
-
-#~ msgid "Organization data"
-#~ msgstr "Date organizație"
-
-#~ msgid "Close sidebar"
-#~ msgstr "Închide bara laterală"
-
-#~ msgid "Terms"
-#~ msgstr "Termeni"
-
-#~ msgid "Sign"
-#~ msgstr "Semnează"
-
-#~ msgid "Forms export history "
-#~ msgstr "Istoric export formulare"
-
-#~ msgid "Classic registration"
-#~ msgstr "Înregistrare clasică"
-
-#, python-format
-#~ msgid ""
-#~ "To access your account, click the <strong>%(account_button)s</strong> "
-#~ "button and you will be able to enter the platform using your NGO Hub "
-#~ "credentials."
-#~ msgstr ""
-#~ "Pentru a accesa contul, apasă butonul <strong>%(account_button)s</strong> "
-#~ "și vei putea intra pe platformă folosind datele tale de autentificare din "
-#~ "NGO Hub."
-
-#~ msgid "After authentication, you will be redirected to your account."
-#~ msgstr "După autentificare, vei fi redirecționat către contul tău."
-
-#~ msgid "sign up"
-#~ msgstr "înregistrare"
-
-#~ msgid ""
-#~ "Click the \"Go to account\" button and you will be redirected to the page "
-#~ "where you need to authenticate using your NGO Hub credentials."
-#~ msgstr ""
-#~ "Apasă butonul „Mergi la cont” și vei fi redirecționat către pagina unde "
-#~ "trebuie să te autentifici folosind datele tale de autentificare din NGO "
-#~ "Hub."
-
-#~ msgid "PDF URL"
-#~ msgstr "URL PDF"
-
-#~ msgid "Process the selected import jobs"
-#~ msgstr "Procesează job-urile de import selectate"
-
-#~ msgid "Schedule the transfer of logos to the current storage"
-#~ msgstr "Programează transferul logourilor în stocarea curentă"
-
-#~ msgid "The logos have been transferred."
-#~ msgstr "Logourile au fost transferate."
-
-#~ msgid "Transfer of donor forms to the current storage (dry run)"
-#~ msgstr "Transferă formularele de donare în stocarea curentă (rulare test)"
-
-#~ msgid "The donor forms have been transferred."
-#~ msgstr "Formularele de donare au fost transferate."
-
-#~ msgid "Transfer of donor forms to the current storage"
-#~ msgstr "Transferă formularele de donare în stocarea curentă"
-
-#~ msgid "Schedule the transfer of donor forms to the current storage"
-#~ msgstr "Programează transferul formularelor de donare în stocarea curentă"
-
-#~ msgid "Pending"
-#~ msgstr "În așteptare"
-
-#~ msgid "Import type"
-#~ msgstr "Tip import"
-
-#~ msgid "Has header"
-#~ msgstr "Are antet"
-
-#~ msgid "Import"
-#~ msgstr "Import"
-
-#~ msgid "logo url"
-#~ msgstr "url logo"
-
-#~ msgid "image url"
-#~ msgstr "url imagine"
-
-#~ msgid "image"
-#~ msgstr "imagine"
-
-#~ msgid "other emails"
-#~ msgstr "alte emailuri"
-
-#~ msgid "The address is not available yet. This field will be available soon."
-#~ msgstr ""
-#~ "Adresa nu este încă disponibilă. Acest câmp va fi disponibil în curând."
-
-#~ msgid ""
-#~ "If you want a simpler option, you can always return to redirectioneaza.ro "
-#~ "to complete the form again and sign it online, in which case it will go "
-#~ "directly to the organization in digital format."
-#~ msgstr ""
-#~ "Dacă vrei o variantă mai simplă, te poți întoarce oricând pe "
-#~ "redirectioneaza.ro. să recompletezi formularul și să-l semnezi online, "
-#~ "caz în care va ajunge direct la organizație în format digital."
-
-#~ msgid "Imports"
-#~ msgstr "Importuri"
-
-#~ msgid "Sign In Error"
-#~ msgstr "Eroare la autentificare"
-
-#~ msgid "Create an account"
-#~ msgstr "Creează un cont"

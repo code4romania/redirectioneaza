@@ -1,10 +1,8 @@
 {% extends 'account/errors/login/base_login.html' %}
 {% load i18n %}
 
-{% block title %}
-  {% trans 'Unknown role' %}
-{% endblock %}
-
 {% block message %}
-  {% trans "An unknown error occurred during authentication. Please try again later. The problem has been reported to the team." %}
+  <p class="text-gray-600">
+    {% trans "An unknown error occurred during authentication. Please try again later. The problem has been reported to the team." %}
+  </p>
 {% endblock %}

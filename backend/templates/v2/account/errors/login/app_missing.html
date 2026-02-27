@@ -2,17 +2,13 @@
 {% load i18n %}
 
 {% block title %}
-  {% trans "Application not activated" %}
+  {% trans "Oops! Application not enabled" %}
 {% endblock %}
 
 {% block message %}
-  <p>
-    {% trans "The application is not activated for this user/organization." %}
+  <p class="text-gray-600">
+    {% trans "It looks like there was a problem opening the Redirecționează application." %}
+    {% trans "Check if you followed the steps below for a correct configuration." %}
   </p>
-
-  <p>
-    {% trans "If you are the owner of the organization, please activate it in NGO Hub." %}
-  </p>
-
 
 {% endblock %}
