@@ -2,17 +2,46 @@
 {% load static %}
 {% load i18n %}
 
+
+{% block html_title %}{% trans "NGO Hub Authentication Error" %}{% endblock %}
+
+
+{% block additional_headers %}
+  {{ block.super }}  
+  <meta name="robots" content="noindex">
+{% endblock %}
+
+
 {% block content %}
-  <div class="container">
+  <div class="container mx-auto px-4">
+    <div class="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16">
+      <div class="flex-1 max-w-xl">
+          <h1 class="text-3xl font-bold text-gray-800 mb-8">
+            {% block title %}
+              {% trans "NGO Hub Authentication Error" %}
+            {% endblock %}
+          </h1>
+          <div>
+            {% block message %}{% endblock %}
+          </div>
+          
+          <div>
+            <p class="mt-8 mb-4 text-gray-900">
+              {% trans "Still encountering authentication problems?" %}
+            </p>
 
-    <h1>
-      {% block title %}{% endblock %}
-    </h1>
-    <p>
-      {% block message %}{% endblock %}
-    </p>
+            <p class="text-base text-gray-900">
+              <a class="text-base font-normal text-cyan-700" href="https://www.ngohub.ro/ro/suport-tehnic-redirectioneaza">{% trans "Check the support page" %}</a>
+              {% trans "or contact us at" %}
+              <a class="text-base font-normal text-cyan-700" href="mailto:redirectioneaza@code4.ro">{{ CONTACT_EMAIL_ADDRESS }}</a>
+            </p>
 
-    {% block extra_content %}{% endblock %}
+          </div>
+      </div>
 
+      <div class="flex-1 max-w-xl flex justify-center">
+          <img src="{% static 'images/error-illustration.svg' %}" alt="{% trans "Error illustration" %}" class="w-full max-w-md h-auto">
+      </div>
+    </div>
   </div>
 {% endblock %}

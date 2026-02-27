@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-19 15:49+0200\n"
+"POT-Creation-Date: 2026-02-27 16:45+0200\n"
 "PO-Revision-Date: 2025-03-27 14:48+0000\n"
 "Last-Translator: Andrei Ioniță <andrei.ionita@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -1311,7 +1311,7 @@ msgid_plural "%(time)d minutes"
 msgstr[0] "%(time)d minute"
 msgstr[1] "%(time)d minutes"
 
-#: donations/views/common/search.py:52
+#: donations/views/common/search.py:53
 #, fuzzy
 #| msgid "The IBAN number must have 24 characters"
 msgid "The search query must be at least 3 characters long"
@@ -1319,7 +1319,7 @@ msgstr "The IBAN number must have 24 characters"
 
 #: donations/views/dashboard/admin_dashboard.py:64
 #: donations/views/dashboard/ngo_dashboard.py:78
-#: templates/v2/ngo-account/redirections/generate-archive/multiple-dropdown.html:42
+#: templates/v2/ngo-account/redirections/generate-archive/multiple-dropdown.html:40
 #, fuzzy
 #| msgid "two years"
 msgid "this year"
@@ -2059,11 +2059,11 @@ msgstr "For donors"
 msgid "For organizations"
 msgstr "For organizations"
 
-#: redirectioneaza/context_processors/headers.py:211
+#: redirectioneaza/context_processors/headers.py:214
 msgid "Admin"
 msgstr "Admin"
 
-#: redirectioneaza/context_processors/headers.py:238
+#: redirectioneaza/context_processors/headers.py:241
 msgid "My Organization"
 msgstr "My Organization"
 
@@ -2175,49 +2175,140 @@ msgstr "status"
 msgid "Password"
 msgstr "Password"
 
+#: templates/v2/account/errors/base.html:6
+#: templates/v2/account/errors/base.html:22
+#, fuzzy
+#| msgid "Authentication problems?"
+msgid "NGO Hub Authentication Error"
+msgstr "Authentication problems?"
+
+#: templates/v2/account/errors/base.html:31
+#, fuzzy
+#| msgid "Authentication problems?"
+msgid "Still encountering authentication problems?"
+msgstr "Authentication problems?"
+
+#: templates/v2/account/errors/base.html:35
+#: templates/v2/account/signup-confirmation.html:25
+#: templates/v2/account/snippets/third-party.html:160
+msgid "Check the support page"
+msgstr "Check the support page"
+
+#: templates/v2/account/errors/base.html:36
+#: templates/v2/account/signup-confirmation.html:26
+msgid "or contact us at"
+msgstr "or contact us at"
+
+#: templates/v2/account/errors/base.html:45
+msgid "Error illustration"
+msgstr ""
+
 #: templates/v2/account/errors/login/app_missing.html:5
-msgid "Application not activated"
+#, fuzzy
+#| msgid "Application not activated"
+msgid "Oops! Application not enabled"
 msgstr "Application not activated"
 
-#: templates/v2/account/errors/login/app_missing.html:10
-msgid "The application is not activated for this user/organization."
-msgstr "The application is not activated for this user/organization."
-
-#: templates/v2/account/errors/login/app_missing.html:14
+#: templates/v2/account/errors/login/app_missing.html:11
 msgid ""
-"If you are the owner of the organization, please activate it in NGO Hub."
+"It looks like there was a problem opening the Redirecționează application."
 msgstr ""
-"If you are the owner of the organization, please activate it in NGO Hub."
+
+#: templates/v2/account/errors/login/app_missing.html:12
+msgid "Check if you followed the steps below for a correct configuration."
+msgstr ""
+
+#: templates/v2/account/errors/login/app_missing.html:17
+#, fuzzy
+#| msgid ""
+#| "To access redirectioneaza.ro through your NGO Hub account, make sure:"
+msgid "To access Redirecționează through your NGO Hub account, make sure that:"
+msgstr "To access redirectioneaza.ro through your NGO Hub account, make sure:"
+
+#: templates/v2/account/errors/login/app_missing.html:21
+#, fuzzy
+#| msgid ""
+#| "Activate the Redirecționează application for your organization in NGO Hub"
+msgid ""
+"You have activated the Redirecționează app for your organization in NGO Hub"
+msgstr ""
+"Activate the Redirecționează application for your organization in NGO Hub"
+
+#: templates/v2/account/errors/login/app_missing.html:22
+#, fuzzy
+#| msgid ""
+#| "Check with your organization's administrator if access to this platform "
+#| "is correctly configured."
+msgid ""
+"Check with your organization's administrator if Redirecționează app access "
+"is configured correctly for your organization."
+msgstr ""
+"Check with your organization's administrator if access to this platform is "
+"correctly configured."
+
+#: templates/v2/account/errors/login/app_missing.html:25
+#, fuzzy
+#| msgid ""
+#| "Check with your organization's administrator if they have given you "
+#| "access to the Redirecționează application."
+msgid ""
+"You have been granted the required permissions by the organization's NGO Hub "
+"administrator for the Redirecționează app"
+msgstr ""
+"Check with your organization's administrator if they have given you access "
+"to the Redirecționează application."
+
+#: templates/v2/account/errors/login/app_missing.html:27
+#, fuzzy
+#| msgid ""
+#| "Check with your organization's administrator if they have given you "
+#| "access to the Redirecționează application."
+msgid ""
+"Check with your organization's administrator to see if they have given you "
+"access to the Redirecționează app."
+msgstr ""
+"Check with your organization's administrator if they have given you access "
+"to the Redirecționează application."
+
+#: templates/v2/account/errors/login/app_missing.html:28
+#, fuzzy
+#| msgid "Read more"
+msgid "Read more in"
+msgstr "Read more"
+
+#: templates/v2/account/errors/login/app_missing.html:28
+#, fuzzy
+#| msgid "User guide"
+msgid "the User Guide"
+msgstr "User guide"
 
 #: templates/v2/account/errors/login/base_login.html:6
 msgid "Return to login"
 msgstr "Return to login"
 
-#: templates/v2/account/errors/login/multiple_ngos.html:5
-msgid "Multiple NGOs for this CUI"
-msgstr "Multiple NGOs for this CUI"
-
-#: templates/v2/account/errors/login/multiple_ngos.html:9
+#: templates/v2/account/errors/login/multiple_ngos.html:7
+#, fuzzy
+#| msgid ""
+#| "Multiple NGOs have been found during synchronization. Admins have been "
+#| "notified and will resolve the issue shortly."
 msgid ""
-"Multiple NGOs have been found during synchronization. Admins have been "
-"notified and will resolve the issue shortly."
+"Multiple NGOs with this registration number have been found during "
+"synchronization. Admins have been notified and will resolve the issue "
+"shortly."
 msgstr ""
 "Multiple NGOs have been found during synchronization. Admins have been "
 "notified and will resolve the issue shortly."
 
-#: templates/v2/account/errors/login/unknown_error.html:5
-#: templates/v2/account/errors/login/unknown_role.html:5
-msgid "Unknown role"
-msgstr "Unknown role"
-
-#: templates/v2/account/errors/login/unknown_error.html:9
+#: templates/v2/account/errors/login/unknown_error.html:6
 msgid ""
 "An unknown error occurred during authentication. Please try again later. The "
 "problem has been reported to the team."
 msgstr ""
 
-#: templates/v2/account/errors/login/unknown_role.html:9
-msgid "Your current role isn't supported."
+#: templates/v2/account/errors/login/unknown_role.html:7
+#, fuzzy
+#| msgid "Your current role isn't supported."
+msgid "Your current user role is not supported."
 msgstr "Your current role isn't supported."
 
 #: templates/v2/account/reset-password.html:16
@@ -2274,15 +2365,6 @@ msgstr ""
 #: templates/v2/account/signup-confirmation.html:21
 msgid "Authentication problems?"
 msgstr "Authentication problems?"
-
-#: templates/v2/account/signup-confirmation.html:25
-#: templates/v2/account/snippets/third-party.html:160
-msgid "Check the support page"
-msgstr "Check the support page"
-
-#: templates/v2/account/signup-confirmation.html:26
-msgid "or contact us at"
-msgstr "or contact us at"
 
 #: templates/v2/account/signup-verification.html:8
 msgid "Your account has been succesfully validated!"
@@ -4537,6 +4619,20 @@ msgstr "Subdomain must contain only alphanumeric characters and '-' (hyphens)."
 #: utils/validators.py:16
 msgid "Subdomain must have between 3 and 100 characters."
 msgstr "Subdomain must have between 3 and 100 characters."
+
+#~ msgid "The application is not activated for this user/organization."
+#~ msgstr "The application is not activated for this user/organization."
+
+#~ msgid ""
+#~ "If you are the owner of the organization, please activate it in NGO Hub."
+#~ msgstr ""
+#~ "If you are the owner of the organization, please activate it in NGO Hub."
+
+#~ msgid "Unknown role"
+#~ msgstr "Unknown role"
+
+#~ msgid "Multiple NGOs for this CUI"
+#~ msgstr "Multiple NGOs for this CUI"
 
 #, fuzzy
 #~| msgid "Donations per month"

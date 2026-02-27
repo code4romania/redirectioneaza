@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-19 15:49+0200\n"
+"POT-Creation-Date: 2026-02-27 16:45+0200\n"
 "PO-Revision-Date: 2025-02-12 12:44+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Armenian <https://translate.commitglobal.org/projects/"
@@ -1372,7 +1372,7 @@ msgid_plural "%(time)d minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: donations/views/common/search.py:52
+#: donations/views/common/search.py:53
 #, fuzzy
 #| msgid "The IBAN number must have 24 characters"
 msgid "The search query must be at least 3 characters long"
@@ -1380,7 +1380,7 @@ msgstr "IBAN համարը պետք է ունենա 24 նիշ"
 
 #: donations/views/dashboard/admin_dashboard.py:64
 #: donations/views/dashboard/ngo_dashboard.py:78
-#: templates/v2/ngo-account/redirections/generate-archive/multiple-dropdown.html:42
+#: templates/v2/ngo-account/redirections/generate-archive/multiple-dropdown.html:40
 #, fuzzy
 #| msgid "two years"
 msgid "this year"
@@ -2181,11 +2181,11 @@ msgstr "դոնորներ"
 msgid "For organizations"
 msgstr "NGO Hub կազմակերպության նույնականացման համար"
 
-#: redirectioneaza/context_processors/headers.py:211
+#: redirectioneaza/context_processors/headers.py:214
 msgid "Admin"
 msgstr ""
 
-#: redirectioneaza/context_processors/headers.py:238
+#: redirectioneaza/context_processors/headers.py:241
 #, fuzzy
 #| msgid "NGO Hub organization ID"
 msgid "My Organization"
@@ -2301,48 +2301,119 @@ msgstr "կարգավիճակ"
 msgid "Password"
 msgstr "հին գաղտնաբառ"
 
+#: templates/v2/account/errors/base.html:6
+#: templates/v2/account/errors/base.html:22
+#, fuzzy
+#| msgid "Work in progress"
+msgid "NGO Hub Authentication Error"
+msgstr "Աշխատանքն ընթացքի մեջ է"
+
+#: templates/v2/account/errors/base.html:31
+#, fuzzy
+#| msgid "Work in progress"
+msgid "Still encountering authentication problems?"
+msgstr "Աշխատանքն ընթացքի մեջ է"
+
+#: templates/v2/account/errors/base.html:35
+#: templates/v2/account/signup-confirmation.html:25
+#: templates/v2/account/snippets/third-party.html:160
+msgid "Check the support page"
+msgstr ""
+
+#: templates/v2/account/errors/base.html:36
+#: templates/v2/account/signup-confirmation.html:26
+#, fuzzy
+#| msgid "Contact us"
+msgid "or contact us at"
+msgstr "Կապ հաստասեք մեզ հետ"
+
+#: templates/v2/account/errors/base.html:45
+msgid "Error illustration"
+msgstr ""
+
 #: templates/v2/account/errors/login/app_missing.html:5
-msgid "Application not activated"
+#, fuzzy
+#| msgid "Application not activated"
+msgid "Oops! Application not enabled"
 msgstr "Հավելվածն ակտիվացված չէ"
 
-#: templates/v2/account/errors/login/app_missing.html:10
-msgid "The application is not activated for this user/organization."
-msgstr "Այս օգտատիրոջ/կազմակերպության համար հավելվածն ակտիվացված չէ:"
-
-#: templates/v2/account/errors/login/app_missing.html:14
+#: templates/v2/account/errors/login/app_missing.html:11
 msgid ""
-"If you are the owner of the organization, please activate it in NGO Hub."
+"It looks like there was a problem opening the Redirecționează application."
 msgstr ""
+
+#: templates/v2/account/errors/login/app_missing.html:12
+msgid "Check if you followed the steps below for a correct configuration."
+msgstr ""
+
+#: templates/v2/account/errors/login/app_missing.html:17
+#, fuzzy
+#| msgid "Login through NGO Hub"
+msgid "To access Redirecționează through your NGO Hub account, make sure that:"
+msgstr "Մուտք գործել NGO Hub-ի միջոցով"
+
+#: templates/v2/account/errors/login/app_missing.html:21
+#, fuzzy
+#| msgid "Login through NGO Hub"
+msgid ""
+"You have activated the Redirecționează app for your organization in NGO Hub"
+msgstr "Մուտք գործել NGO Hub-ի միջոցով"
+
+#: templates/v2/account/errors/login/app_missing.html:22
+msgid ""
+"Check with your organization's administrator if Redirecționează app access "
+"is configured correctly for your organization."
+msgstr ""
+
+#: templates/v2/account/errors/login/app_missing.html:25
+msgid ""
+"You have been granted the required permissions by the organization's NGO Hub "
+"administrator for the Redirecționează app"
+msgstr ""
+
+#: templates/v2/account/errors/login/app_missing.html:27
+msgid ""
+"Check with your organization's administrator to see if they have given you "
+"access to the Redirecționează app."
+msgstr ""
+
+#: templates/v2/account/errors/login/app_missing.html:28
+msgid "Read more in"
+msgstr ""
+
+#: templates/v2/account/errors/login/app_missing.html:28
+#, fuzzy
+#| msgid "User Link"
+msgid "the User Guide"
+msgstr "Օգտատիրոջ հղում"
 
 #: templates/v2/account/errors/login/base_login.html:6
 msgid "Return to login"
 msgstr "Վերադառնալ մուտք գործելու դաշտ"
 
-#: templates/v2/account/errors/login/multiple_ngos.html:5
-msgid "Multiple NGOs for this CUI"
-msgstr "Բազմաթիվ ՀԿ-ներ այս վերահսկվող ոչ գաղտնի տեղեկատվության համար"
-
-#: templates/v2/account/errors/login/multiple_ngos.html:9
+#: templates/v2/account/errors/login/multiple_ngos.html:7
+#, fuzzy
+#| msgid ""
+#| "Multiple NGOs have been found during synchronization. Admins have been "
+#| "notified and will resolve the issue shortly."
 msgid ""
-"Multiple NGOs have been found during synchronization. Admins have been "
-"notified and will resolve the issue shortly."
+"Multiple NGOs with this registration number have been found during "
+"synchronization. Admins have been notified and will resolve the issue "
+"shortly."
 msgstr ""
 "Համաժամացման ընթացքում հայտնաբերվել են բազմաթիվ ՀԿ-ներ: Ադմինները ծանուցվել "
 "են և շուտով կլուծեն խնդիրը:"
 
-#: templates/v2/account/errors/login/unknown_error.html:5
-#: templates/v2/account/errors/login/unknown_role.html:5
-msgid "Unknown role"
-msgstr "Անհայտ դեր"
-
-#: templates/v2/account/errors/login/unknown_error.html:9
+#: templates/v2/account/errors/login/unknown_error.html:6
 msgid ""
 "An unknown error occurred during authentication. Please try again later. The "
 "problem has been reported to the team."
 msgstr ""
 
-#: templates/v2/account/errors/login/unknown_role.html:9
-msgid "Your current role isn't supported."
+#: templates/v2/account/errors/login/unknown_role.html:7
+#, fuzzy
+#| msgid "Your current role isn't supported."
+msgid "Your current user role is not supported."
 msgstr "Ձեր ներկայիս դերը չի աջակցվում:"
 
 #: templates/v2/account/reset-password.html:16
@@ -2410,17 +2481,6 @@ msgstr ""
 #| msgid "Work in progress"
 msgid "Authentication problems?"
 msgstr "Աշխատանքն ընթացքի մեջ է"
-
-#: templates/v2/account/signup-confirmation.html:25
-#: templates/v2/account/snippets/third-party.html:160
-msgid "Check the support page"
-msgstr ""
-
-#: templates/v2/account/signup-confirmation.html:26
-#, fuzzy
-#| msgid "Contact us"
-msgid "or contact us at"
-msgstr "Կապ հաստասեք մեզ հետ"
 
 #: templates/v2/account/signup-verification.html:8
 #, fuzzy
@@ -4630,6 +4690,15 @@ msgstr "Ենթադոմեյնը պետք է պարունակի միայն տառ�
 #: utils/validators.py:16
 msgid "Subdomain must have between 3 and 100 characters."
 msgstr "Ենթադոմեյնը պետք է պարունակի 3-ից 100 նիշ:"
+
+#~ msgid "The application is not activated for this user/organization."
+#~ msgstr "Այս օգտատիրոջ/կազմակերպության համար հավելվածն ակտիվացված չէ:"
+
+#~ msgid "Unknown role"
+#~ msgstr "Անհայտ դեր"
+
+#~ msgid "Multiple NGOs for this CUI"
+#~ msgstr "Բազմաթիվ ՀԿ-ներ այս վերահսկվող ոչ գաղտնի տեղեկատվության համար"
 
 #, fuzzy
 #~| msgid "Donations per month"
