@@ -6,9 +6,30 @@
 {% endblock %}
 
 {% block message %}
-  <p class="text-gray-600">
-    {% trans "It looks like there was a problem opening the Redirecționează application." %}
-    {% trans "Check if you followed the steps below for a correct configuration." %}
-  </p>
+  <div class="mb-8">
+    <p class="text-gray-600">
+      {% trans "It looks like there was a problem opening the Redirecționează application." %}
+      {% trans "Check if you followed the steps below for a correct configuration." %}
+    </p>
+  </div>
 
+  <div class="bg-gray-50 p-6">
+    <p class="text-gray-600 mb-4">
+      {% trans "To access Redirecționează through your NGO Hub account, make sure that:" %}
+    </p>
+
+    <ul class="list-disc pl-5">
+      <li class="mb-4">
+        <div class="font-bold">{% trans "You have activated the Redirecționează app for your organization in NGO Hub" %}</div>
+        <div>{% trans "Check with your organization's administrator if Redirecționează app access is configured correctly for your organization." %}</div>
+      </li>
+      <li>
+        <div class="font-bold">{% trans "You have been granted the required permissions by the organization's NGO Hub administrator for the Redirecționează app" %}</div>
+        <div>
+          {% trans "Check with your organization's administrator to see if they have given you access to the Redirecționează app." %}
+          {% trans "Read more in" %} <a class="text-base font-normal text-cyan-700" href="https://ngohub.ro/">{% trans "the User Guide" %}</a>
+        </div>
+      </li>
+    </ul>
+  </div>
 {% endblock %}

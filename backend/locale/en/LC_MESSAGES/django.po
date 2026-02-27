@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-27 14:59+0200\n"
+"POT-Creation-Date: 2026-02-27 16:45+0200\n"
 "PO-Revision-Date: 2025-03-27 14:48+0000\n"
 "Last-Translator: Andrei Ioniță <andrei.ionita@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -2209,14 +2209,78 @@ msgstr ""
 msgid "Oops! Application not enabled"
 msgstr "Application not activated"
 
-#: templates/v2/account/errors/login/app_missing.html:10
+#: templates/v2/account/errors/login/app_missing.html:11
 msgid ""
 "It looks like there was a problem opening the Redirecționează application."
 msgstr ""
 
-#: templates/v2/account/errors/login/app_missing.html:11
+#: templates/v2/account/errors/login/app_missing.html:12
 msgid "Check if you followed the steps below for a correct configuration."
 msgstr ""
+
+#: templates/v2/account/errors/login/app_missing.html:17
+#, fuzzy
+#| msgid ""
+#| "To access redirectioneaza.ro through your NGO Hub account, make sure:"
+msgid "To access Redirecționează through your NGO Hub account, make sure that:"
+msgstr "To access redirectioneaza.ro through your NGO Hub account, make sure:"
+
+#: templates/v2/account/errors/login/app_missing.html:21
+#, fuzzy
+#| msgid ""
+#| "Activate the Redirecționează application for your organization in NGO Hub"
+msgid ""
+"You have activated the Redirecționează app for your organization in NGO Hub"
+msgstr ""
+"Activate the Redirecționează application for your organization in NGO Hub"
+
+#: templates/v2/account/errors/login/app_missing.html:22
+#, fuzzy
+#| msgid ""
+#| "Check with your organization's administrator if access to this platform "
+#| "is correctly configured."
+msgid ""
+"Check with your organization's administrator if Redirecționează app access "
+"is configured correctly for your organization."
+msgstr ""
+"Check with your organization's administrator if access to this platform is "
+"correctly configured."
+
+#: templates/v2/account/errors/login/app_missing.html:25
+#, fuzzy
+#| msgid ""
+#| "Check with your organization's administrator if they have given you "
+#| "access to the Redirecționează application."
+msgid ""
+"You have been granted the required permissions by the organization's NGO Hub "
+"administrator for the Redirecționează app"
+msgstr ""
+"Check with your organization's administrator if they have given you access "
+"to the Redirecționează application."
+
+#: templates/v2/account/errors/login/app_missing.html:27
+#, fuzzy
+#| msgid ""
+#| "Check with your organization's administrator if they have given you "
+#| "access to the Redirecționează application."
+msgid ""
+"Check with your organization's administrator to see if they have given you "
+"access to the Redirecționează app."
+msgstr ""
+"Check with your organization's administrator if they have given you access "
+"to the Redirecționează application."
+
+#: templates/v2/account/errors/login/app_missing.html:28
+#, fuzzy
+#| msgid "Read more"
+msgid "Read more in"
+msgstr "Read more"
+
+#: templates/v2/account/errors/login/app_missing.html:28
+#, fuzzy
+#| msgid "User guide"
+msgid "the User Guide"
+msgstr "User guide"
 
 #: templates/v2/account/errors/login/base_login.html:6
 msgid "Return to login"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-27 14:59+0200\n"
+"POT-Creation-Date: 2026-02-27 16:45+0200\n"
 "PO-Revision-Date: 2025-03-27 14:49+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -2068,15 +2068,57 @@ msgstr "Ilustrație eroare"
 msgid "Oops! Application not enabled"
 msgstr "Oops! Aplicația nu este activă"
 
-#: templates/v2/account/errors/login/app_missing.html:10
+#: templates/v2/account/errors/login/app_missing.html:11
 msgid ""
 "It looks like there was a problem opening the Redirecționează application."
 msgstr ""
 "Se pare că a fost o problemă la deschiderea aplicației Redirecționează."
 
-#: templates/v2/account/errors/login/app_missing.html:11
+#: templates/v2/account/errors/login/app_missing.html:12
 msgid "Check if you followed the steps below for a correct configuration."
 msgstr "Verifică dacă ai urmat pașii de mai jos pentru o configurare corectă."
+
+#: templates/v2/account/errors/login/app_missing.html:17
+msgid "To access Redirecționează through your NGO Hub account, make sure that:"
+msgstr ""
+"Pentru a accesa Redirecționează prin contul tău NGO Hub, asigură-te că:"
+
+#: templates/v2/account/errors/login/app_missing.html:21
+msgid ""
+"You have activated the Redirecționează app for your organization in NGO Hub"
+msgstr "Ai activat platforma Redirecționează pentru organizația ta în NGO Hub"
+
+#: templates/v2/account/errors/login/app_missing.html:22
+msgid ""
+"Check with your organization's administrator if Redirecționează app access "
+"is configured correctly for your organization."
+msgstr ""
+"Verifică cu administratorul organizației tale dacă accesul în aplicația "
+"Redirecționează este configurat corect pentru organizația din care faci parte. "
+
+#: templates/v2/account/errors/login/app_missing.html:25
+msgid ""
+"You have been granted the required permissions by the organization's NGO Hub "
+"administrator for the Redirecționează app"
+msgstr ""
+"Ai permisiunea de acces pentru aplicația Redirecționează din partea "
+"administratorului organizației din NGO Hub"
+
+#: templates/v2/account/errors/login/app_missing.html:27
+msgid ""
+"Check with your organization's administrator to see if they have given you "
+"access to the Redirecționează app."
+msgstr ""
+"Verifică cu administratorul organizației tale dacă ți-a oferit acces în "
+"aplicația Redirecționează."
+
+#: templates/v2/account/errors/login/app_missing.html:28
+msgid "Read more in"
+msgstr "Citește mai multe"
+
+#: templates/v2/account/errors/login/app_missing.html:28
+msgid "the User Guide"
+msgstr "Ghidul utilizatorului"
 
 #: templates/v2/account/errors/login/base_login.html:6
 msgid "Return to login"
