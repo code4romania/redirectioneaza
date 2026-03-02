@@ -6,30 +6,47 @@
 {% endblock %}
 
 {% block message %}
-  <div class="mb-8">
+  <div>
     <p class="text-gray-600">
       {% trans "It looks like there was a problem opening the Redirecționează application." %}
       {% trans "Check if you followed the steps below for a correct configuration." %}
     </p>
   </div>
 
-  <div class="bg-gray-50 p-6">
-    <p class="text-gray-600 mb-4">
-      {% trans "To access Redirecționează through your NGO Hub account, make sure that:" %}
-    </p>
+  <div class="mt-8 p-4 bg-gray-50">
+    <dl class="grid gap-8 text-gray-500 text-base/7">
 
-    <ul class="list-disc pl-5">
-      <li class="mb-4">
-        <div class="font-bold">{% trans "You have activated the Redirecționează app for your organization in NGO Hub" %}</div>
-        <div>{% trans "Check with your organization's administrator if Redirecționează app access is configured correctly for your organization." %}</div>
-      </li>
-      <li>
-        <div class="font-bold">{% trans "You have been granted the required permissions by the organization's NGO Hub administrator for the Redirecționează app" %}</div>
-        <div>
+      <div class="relative text-gray-900">
+        <p>
+          {% trans "To access Redirecționează through your NGO Hub account, make sure that:" %}
+        </p>
+      </div>
+
+      <div class="relative pl-9">
+        <dt class="font-medium text-gray-900">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="absolute left-0 text-cyan-700 top-1 size-5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/>
+          </svg>
+          {% trans "You have activated the Redirecționează app for your organization in NGO Hub" %}
+        </dt>
+        <dd class="mt-2">
+          {% trans "Check with your organization's administrator if Redirecționează app access is configured correctly for your organization." %}
+        </dd>
+      </div>
+
+      <div class="relative pl-9">
+        <dt class="font-medium text-gray-900">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="absolute left-0 text-cyan-700 top-1 size-5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/>
+          </svg>
+          {% trans "You have been granted the required permissions by the organization's NGO Hub administrator for the Redirecționează app" %}
+        </dt>
+        <dd class="mt-2">
           {% trans "Check with your organization's administrator to see if they have given you access to the Redirecționează app." %}
           {% trans "Read more in" %} <a class="text-base font-normal text-cyan-700" href="https://ngohub.ro/">{% trans "the User Guide" %}</a>
-        </div>
-      </li>
-    </ul>
+        </dd>
+      </div>
+      
+    </dl>
   </div>
 {% endblock %}
