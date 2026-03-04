@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-27 16:45+0200\n"
+"POT-Creation-Date: 2026-03-04 15:39+0200\n"
 "PO-Revision-Date: 2025-03-27 14:49+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -356,7 +356,7 @@ msgstr "Administratorul a fost schimbat cu succes."
 msgid "Change owner"
 msgstr "Schimbă administrator"
 
-#: donations/admin/ngos.py:379 partners/admin.py:181
+#: donations/admin/ngos.py:379 partners/admin.py:179
 msgid "The form is not valid."
 msgstr "Formularul nu este valid."
 
@@ -972,14 +972,14 @@ msgid "form with prefilled cause"
 msgstr "formular cu datele ONG-ului completate"
 
 #: donations/models/ngos.py:524 donations/views/ngo_account_filters.py:154
-#: partners/admin.py:50 partners/models.py:182
+#: partners/admin.py:49 partners/models.py:182
 #: templates/v2/ngo-account/archives/list-header.html:13
 #: templates/v2/ngo-account/causes/list-header.html:4
 msgid "Cause"
 msgstr "Cauză"
 
 #: donations/models/ngos.py:525 donations/views/ngo_account/causes.py:181
-#: donations/views/ngo_account/causes.py:232 partners/admin.py:51
+#: donations/views/ngo_account/causes.py:232 partners/admin.py:50
 #: partners/models.py:75 redirectioneaza/settings/unfold.py:102
 #: templates/v2/ngo-account/causes/main.html:11
 msgid "Causes"
@@ -1076,71 +1076,71 @@ msgstr "Sector %s"
 msgid "Reset password"
 msgstr "Resetare parolă"
 
-#: donations/views/account_management.py:53
+#: donations/views/account_management.py:52
 msgid "Reset redirectioneaza.ro password"
 msgstr "Resetare parolă redirectioneaza.ro"
 
-#: donations/views/account_management.py:70
+#: donations/views/account_management.py:68
 msgid "Your redirectioneaza.ro account"
 msgstr "Contul tău redirectioneaza.ro"
 
-#: donations/views/account_management.py:102
+#: donations/views/account_management.py:100
 msgid ""
 "If the email address is valid, you will receive an email with instructions."
 msgstr "Dacă adresa de email este validă, vei primi un email cu instrucțiuni."
 
-#: donations/views/account_management.py:110
+#: donations/views/account_management.py:108
 #: templates/v2/socialaccount/login.html:6
 msgid "Sign In"
 msgstr "Autentificare"
 
-#: donations/views/account_management.py:132
+#: donations/views/account_management.py:130
 #: templates/v2/emails/account/ngohub-notification/main.html:22
 msgid "Continue with NGO Hub"
 msgstr "Continuă cu NGO Hub"
 
-#: donations/views/account_management.py:133
+#: donations/views/account_management.py:131
 msgid "I have an NGO Hub account"
 msgstr "Am cont în NGO Hub"
 
-#: donations/views/account_management.py:157
-#: donations/views/account_management.py:190
+#: donations/views/account_management.py:155
+#: donations/views/account_management.py:188
 msgid "It seems that this email and password combination is incorrect."
 msgstr "Se pare că această combinație de email și parolă este incorectă."
 
-#: donations/views/account_management.py:173
+#: donations/views/account_management.py:171
 msgid "Sign Out"
 msgstr "Deconectare"
 
-#: donations/views/account_management.py:182
+#: donations/views/account_management.py:180
 msgid "Set New Password"
 msgstr "Setare parolă nouă"
 
-#: donations/views/account_management.py:217
+#: donations/views/account_management.py:215
 msgid "New account"
 msgstr "Cont nou"
 
-#: donations/views/account_management.py:233
+#: donations/views/account_management.py:231
 msgid "Register new account"
 msgstr "Creează un cont în NGO Hub"
 
-#: donations/views/account_management.py:235
+#: donations/views/account_management.py:233
 msgid "Register through NGO Hub"
 msgstr "Înregistrare prin NGO Hub"
 
-#: donations/views/account_management.py:296
+#: donations/views/account_management.py:294
 msgid "Welcome to redirectioneaza.ro"
 msgstr "Confirmare cont redirectioneaza.ro"
 
-#: donations/views/account_management.py:309
+#: donations/views/account_management.py:307
 msgid "Account created"
 msgstr "Cont creat"
 
-#: donations/views/account_management.py:314
+#: donations/views/account_management.py:312
 msgid "Account verified"
 msgstr "Cont validat"
 
-#: donations/views/account_management.py:325
+#: donations/views/account_management.py:323
 msgid "Verification"
 msgstr "Verificare"
 
@@ -1171,11 +1171,11 @@ msgstr "Valoarea de vizibilitate nu este validă."
 msgid "The visibility of '%(cause_name)s' has been updated successfully."
 msgstr "Vizibilitatea cauzei '%(cause_name)s' a fost actualizată cu succes."
 
-#: donations/views/api_download.py:45 partners/admin.py:25
+#: donations/views/api_download.py:45 partners/admin.py:24
 msgid "First Name"
 msgstr "Prenume"
 
-#: donations/views/api_download.py:46 partners/admin.py:31 users/admin.py:119
+#: donations/views/api_download.py:46 partners/admin.py:30 users/admin.py:119
 msgid "Last Name"
 msgstr "Nume"
 
@@ -1478,32 +1478,32 @@ msgstr "Formulare organizație"
 msgid "Add new cause form"
 msgstr "Adaugă formular cauză nouă"
 
-#: donations/views/ngo_account/common.py:20
+#: donations/views/ngo_account/common.py:19
 #: donations/views/ngo_account/my_organization.py:23
 msgid "Organization details"
 msgstr "Detalii organizație"
 
-#: donations/views/ngo_account/common.py:61
+#: donations/views/ngo_account/common.py:59
 msgid "Go to the organization details."
 msgstr "Mergi la detaliile organizației"
 
-#: donations/views/ngo_account/common.py:68
+#: donations/views/ngo_account/common.py:66
 msgid "Go to the form."
 msgstr "Mergi la formular."
 
-#: donations/views/ngo_account/common.py:118
+#: donations/views/ngo_account/common.py:116
 msgid "The IBAN number must have 24 characters"
 msgstr "IBAN-ul trebuie să aibă 24 de cifre"
 
-#: donations/views/ngo_account/common.py:121
+#: donations/views/ngo_account/common.py:119
 msgid "The IBAN number must contain only letters and digits"
 msgstr "IBAN-ul trebuie să conțină doar litere și cifre"
 
-#: donations/views/ngo_account/common.py:124
+#: donations/views/ngo_account/common.py:122
 msgid "The IBAN number must start with 'RO'"
 msgstr "IBAN-ul trebuie să înceapă cu 'RO'"
 
-#: donations/views/ngo_account/common.py:177
+#: donations/views/ngo_account/common.py:175
 msgid "Download generated file"
 msgstr "Descarcă un fișier generat"
 
@@ -1635,11 +1635,11 @@ msgstr "Toate cauzele"
 msgid "Information notice"
 msgstr "Notă de informare"
 
-#: donations/views/site.py:193 templates/v2/redirect/footer.html:186
+#: donations/views/site.py:192 templates/v2/redirect/footer.html:186
 msgid "Privacy policy"
 msgstr "Politica de confidențialitate"
 
-#: donations/views/site.py:198 templates/v2/redirect/footer.html:191
+#: donations/views/site.py:197 templates/v2/redirect/footer.html:191
 msgid "Terms & conditions"
 msgstr "Termeni și condiții"
 
@@ -1675,55 +1675,55 @@ msgstr "Răspuns"
 msgid "Questions"
 msgstr "Întrebări"
 
-#: frequent_questions/views.py:11 frequent_questions/views.py:17
+#: frequent_questions/views.py:10 frequent_questions/views.py:16
 #: templates/v2/public/faq.html:11 templates/v2/redirect/footer.html:124
 #: templates/v2/redirect/footer.html:154 templates/v2/redirect/footer.html:167
 msgid "Frequently Asked Questions"
 msgstr "Întrebări frecvente"
 
-#: partners/admin.py:26
+#: partners/admin.py:25
 msgid "The first name of the user who will be the administering the Partner."
 msgstr "Prenumele utilizatorului care va administra Partenerul."
 
-#: partners/admin.py:32
+#: partners/admin.py:31
 msgid "The last name of the user who will be the administering the Partner."
 msgstr "Numele utilizatorului care va administra Partenerul."
 
-#: partners/admin.py:38
+#: partners/admin.py:37
 msgid "User Email"
 msgstr "Email utilizator"
 
-#: partners/admin.py:39
+#: partners/admin.py:38
 msgid ""
 "The email address of the user who will be the administering the Partner."
 msgstr "Adresa de email a utilizatorului care va administra Partenerul."
 
-#: partners/admin.py:81 partners/models.py:89 users/models.py:81
+#: partners/admin.py:80 partners/models.py:89 users/models.py:81
 msgid "Partner"
 msgstr "Partener"
 
-#: partners/admin.py:90
+#: partners/admin.py:89
 msgid "Options"
 msgstr "Opțiuni"
 
-#: partners/admin.py:100
+#: partners/admin.py:99
 msgid "Metadata"
 msgstr "Metadate"
 
-#: partners/admin.py:130
+#: partners/admin.py:129
 #, python-format
 msgid "An error occurred while creating the user: %(error)s"
 msgstr "A apărut o eroare la crearea utilizatorului: %(error)s"
 
-#: partners/admin.py:155
+#: partners/admin.py:153
 msgid "Join redirectioneaza.ro"
 msgstr "Alătură-te redirectioneaza.ro"
 
-#: partners/admin.py:164
+#: partners/admin.py:162
 msgid "The user has been successfully invited."
 msgstr "Contul tău a fost verificat cu succes!"
 
-#: partners/admin.py:167 partners/admin.py:191
+#: partners/admin.py:165 partners/admin.py:189
 msgid "Invite new manager"
 msgstr "Invită un nou manager"
 
@@ -2041,26 +2041,26 @@ msgid "Password"
 msgstr "Parola"
 
 #: templates/v2/account/errors/base.html:6
-#: templates/v2/account/errors/base.html:22
+#: templates/v2/account/errors/base.html:21
 msgid "NGO Hub Authentication Error"
 msgstr "Eroare autentificare NGO Hub"
 
-#: templates/v2/account/errors/base.html:31
+#: templates/v2/account/errors/base.html:30
 msgid "Still encountering authentication problems?"
 msgstr "Încă întâmpini probleme la conectare?"
 
-#: templates/v2/account/errors/base.html:35
+#: templates/v2/account/errors/base.html:34
 #: templates/v2/account/signup-confirmation.html:25
 #: templates/v2/account/snippets/third-party.html:160
 msgid "Check the support page"
 msgstr "Consultă pagina de suport"
 
-#: templates/v2/account/errors/base.html:36
+#: templates/v2/account/errors/base.html:35
 #: templates/v2/account/signup-confirmation.html:26
 msgid "or contact us at"
 msgstr "sau contactează-ne la"
 
-#: templates/v2/account/errors/base.html:45
+#: templates/v2/account/errors/base.html:43
 msgid "Error illustration"
 msgstr "Ilustrație eroare"
 
@@ -2078,25 +2078,26 @@ msgstr ""
 msgid "Check if you followed the steps below for a correct configuration."
 msgstr "Verifică dacă ai urmat pașii de mai jos pentru o configurare corectă."
 
-#: templates/v2/account/errors/login/app_missing.html:17
+#: templates/v2/account/errors/login/app_missing.html:21
 msgid "To access Redirecționează through your NGO Hub account, make sure that:"
 msgstr ""
 "Pentru a accesa Redirecționează prin contul tău NGO Hub, asigură-te că:"
 
-#: templates/v2/account/errors/login/app_missing.html:21
+#: templates/v2/account/errors/login/app_missing.html:30
 msgid ""
 "You have activated the Redirecționează app for your organization in NGO Hub"
 msgstr "Ai activat platforma Redirecționează pentru organizația ta în NGO Hub"
 
-#: templates/v2/account/errors/login/app_missing.html:22
+#: templates/v2/account/errors/login/app_missing.html:33
 msgid ""
 "Check with your organization's administrator if Redirecționează app access "
 "is configured correctly for your organization."
 msgstr ""
 "Verifică cu administratorul organizației tale dacă accesul în aplicația "
-"Redirecționează este configurat corect pentru organizația din care faci parte. "
+"Redirecționează este configurat corect pentru organizația din care faci "
+"parte. "
 
-#: templates/v2/account/errors/login/app_missing.html:25
+#: templates/v2/account/errors/login/app_missing.html:42
 msgid ""
 "You have been granted the required permissions by the organization's NGO Hub "
 "administrator for the Redirecționează app"
@@ -2104,7 +2105,7 @@ msgstr ""
 "Ai permisiunea de acces pentru aplicația Redirecționează din partea "
 "administratorului organizației din NGO Hub"
 
-#: templates/v2/account/errors/login/app_missing.html:27
+#: templates/v2/account/errors/login/app_missing.html:45
 msgid ""
 "Check with your organization's administrator to see if they have given you "
 "access to the Redirecționează app."
@@ -2112,11 +2113,11 @@ msgstr ""
 "Verifică cu administratorul organizației tale dacă ți-a oferit acces în "
 "aplicația Redirecționează."
 
-#: templates/v2/account/errors/login/app_missing.html:28
+#: templates/v2/account/errors/login/app_missing.html:46
 msgid "Read more in"
 msgstr "Citește mai multe"
 
-#: templates/v2/account/errors/login/app_missing.html:28
+#: templates/v2/account/errors/login/app_missing.html:46
 msgid "the User Guide"
 msgstr "Ghidul utilizatorului"
 
@@ -2573,28 +2574,27 @@ msgid "Thank you for being part of this community!"
 msgstr "Mulțumim că faci parte din această comunitate!"
 
 #: templates/v2/emails/account/ignore-email.html:4
-#, python-format
 msgid ""
 "If you didn't request a password reset, you can ignore this email. For any "
 "other questions or concerns, feel free to write to us at <a href=\"mailto:"
-"%(contact_email)s\">%(contact_email)s</a> or <a href=\"https://www.ngohub.ro/"
-"ro/suport-tehnic-redirectioneaza\">check out the support page</a>."
+"%(CONTACT_EMAIL_ADDRESS)s\">%(CONTACT_EMAIL_ADDRESS)s</a> or <a "
+"href=\"https://www.ngohub.ro/ro/suport-tehnic-redirectioneaza\">check out "
+"the support page</a>."
 msgstr ""
 "Dacă nu ai cerut schimbarea parolei, te rugăm să ignori acest mesaj. Pentru "
 "alte întrebări sau nelămuriri, scrie-ne cu încredere la <a href=\"mailto:"
-"%(contact_email)s\">%(contact_email)s</a> sau <a href=\"https://"
+"%(CONTACT_EMAIL_ADDRESS)s\">%(CONTACT_EMAIL_ADDRESS)s</a> sau <a href=\"https://"
 "www.ngohub.ro/ro/suport-tehnic-redirectioneaza\">consultă pagina de suport</"
 "a>."
 
 #: templates/v2/emails/account/ignore-email.txt:3
-#, python-format
 msgid ""
 "If you didn't request a password reset, you can ignore this email. For any "
-"other questions or concerns, feel free to write to us at %(contact_email)s "
-"or check out the support page."
+"other questions or concerns, feel free to write to us at "
+"%(CONTACT_EMAIL_ADDRESS)s or check out the support page."
 msgstr ""
 "Dacă nu ai cerut schimbarea parolei, te rugăm să ignori acest mesaj. Pentru "
-"alte întrebări sau nelămuriri, scrie-ne cu încredere la %(contact_email)s "
+"alte întrebări sau nelămuriri, scrie-ne cu încredere la %(CONTACT_EMAIL_ADDRESS)s "
 "sau consultă pagina de suport."
 
 #: templates/v2/emails/account/invite-partner/main.html:13
@@ -2724,21 +2724,19 @@ msgstr ""
 "copii și să-i convingi pe colegii, prietenii sau familia ta să-l completeze."
 
 #: templates/v2/emails/components/misdelivered.html:4
-#, python-format
 msgid ""
 "Did you receive this email by mistake? Please let us know at <a "
-"href=\"mailto:%(contact_email)s\">%(contact_email)s</a>."
+"href=\"mailto:%(CONTACT_EMAIL_ADDRESS)s\">%(CONTACT_EMAIL_ADDRESS)s</a>."
 msgstr ""
 "Ai primit acest email din greșeală? Contactează-ne la <a href=\"mailto:"
-"%(contact_email)s\">%(contact_email)s</a>."
+"%(CONTACT_EMAIL_ADDRESS)s\">%(CONTACT_EMAIL_ADDRESS)s</a>."
 
 #: templates/v2/emails/components/misdelivered.txt:3
-#, python-format
 msgid ""
 "Did you receive this email by mistake? Please let us know at "
-"%(contact_email)s."
+"%(CONTACT_EMAIL_ADDRESS)s."
 msgstr ""
-"Ai primit acest email din greșeală? Contactează-ne la %(contact_email)s."
+"Ai primit acest email din greșeală? Contactează-ne la %(CONTACT_EMAIL_ADDRESS)s."
 
 #: templates/v2/emails/components/subcopy.html:6
 #, python-format
@@ -3726,17 +3724,16 @@ msgid "Please complete the organization data before configuring the form."
 msgstr "Te rugăm să completezi mai întâi detaliile organizației."
 
 #: templates/v2/ngo-account/my-organization/base.html:63
-#, python-format
 msgid ""
 "<p> At this moment, donors can't access your form and your organization is "
 "not visible on redirectioneaza.ro. To reactivate your profile, please "
-"contact us at <a href=\"mailto:%(contact_email)s\" class=\"text-blue-600 "
-"underline\">%(contact_email)s</a>. </p>"
+"contact us at <a href=\"mailto:%(CONTACT_EMAIL_ADDRESS)s\" class=\"text-"
+"blue-600 underline\">%(CONTACT_EMAIL_ADDRESS)s</a>. </p>"
 msgstr ""
 "<p>În acest moment, donatorii nu pot accesa formularul tău și organizația ta "
 "nu este vizibilă pe redirectioneaza.ro. Pentru a reactiva profilul tău, te "
-"rugăm să ne contactezi la <a href=\"mailto:%(contact_email)s\" class=\"text-"
-"blue-600 underline\">%(contact_email)s</a>.</p>"
+"rugăm să ne contactezi la <a href=\"mailto:%(CONTACT_EMAIL_ADDRESS)s\" class=\"text-"
+"blue-600 underline\">%(CONTACT_EMAIL_ADDRESS)s</a>.</p>"
 
 #: templates/v2/ngo-account/my-organization/base.html:83
 msgid ""
@@ -4143,14 +4140,13 @@ msgid "Couldn't find what you were looking for?"
 msgstr "Nu ai găsit ce căutai?"
 
 #: templates/v2/public/faq.html:41
-#, python-format
 msgid ""
 "Send us your question at <a href=\"mailto:"
-"%(contact_email)s\">%(contact_email)s</a> and we will get back to you as "
-"soon as possible."
+"%(CONTACT_EMAIL_ADDRESS)s\">%(CONTACT_EMAIL_ADDRESS)s</a> and we will get "
+"back to you as soon as possible."
 msgstr ""
 "Trimite-ne întrebarea ta la adresa de email <a href=\"mailto:"
-"%(contact_email)s\">%(contact_email)s</a> și vom răspunde în cel mai scurt "
+"%(CONTACT_EMAIL_ADDRESS)s\">%(CONTACT_EMAIL_ADDRESS)s</a> și vom răspunde în cel mai scurt "
 "timp posibil."
 
 #: templates/v2/public/faq.html:49
