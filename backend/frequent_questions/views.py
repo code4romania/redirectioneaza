@@ -15,7 +15,6 @@ class FAQHandler(BaseVisibleTemplateView):
 
         context = {
             "title": _("Frequently Asked Questions"),
-            "contact_email": settings.CONTACT_EMAIL_ADDRESS,
             "questions": questions,
         }
         return render(request, self.template_name, context)
