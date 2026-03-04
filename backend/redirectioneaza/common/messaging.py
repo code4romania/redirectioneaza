@@ -16,13 +16,14 @@ logger = logging.getLogger(__name__)
 
 def extend_email_context(request: HttpRequest | None = None) -> dict:
     return {
+        "CONTACT_EMAIL_ADDRESS": settings.CONTACT_EMAIL_ADDRESS,
         "donation_limit_day": edition_deadline().day,
         "donation_limit_month_name": settings.REDIRECTIONS_LIMIT_MONTH_NAME,
         "donation_limit_year": edition_deadline().year,
         "logo_code4romania": build_uri(static("images/code4romania.png"), request),
-        "logo_instagram": build_uri(static("images/social-icons/instagram.png"), request),
         "logo_facebook": build_uri(static("images/social-icons/facebook.png"), request),
         "logo_github": build_uri(static("images/social-icons/github.png"), request),
+        "logo_instagram": build_uri(static("images/social-icons/instagram.png"), request),
         "logo_redirect": build_uri(static("images/logo.png"), request),
     }
 
