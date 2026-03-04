@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-27 16:45+0200\n"
+"POT-Creation-Date: 2026-03-04 15:39+0200\n"
 "PO-Revision-Date: 2025-02-12 12:44+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Armenian <https://translate.commitglobal.org/projects/"
@@ -357,7 +357,7 @@ msgstr "Ներմուծումը կատարվել է։"
 msgid "Change owner"
 msgstr "հին գաղտնաբառ"
 
-#: donations/admin/ngos.py:379 partners/admin.py:181
+#: donations/admin/ngos.py:379 partners/admin.py:179
 #, fuzzy
 #| msgid "The ID number format is not valid"
 msgid "The form is not valid."
@@ -1047,14 +1047,14 @@ msgid "form with prefilled cause"
 msgstr "ձևաթուղթ՝ նախապես լրացված ՀԿ-ի տվյալներով"
 
 #: donations/models/ngos.py:524 donations/views/ngo_account_filters.py:154
-#: partners/admin.py:50 partners/models.py:182
+#: partners/admin.py:49 partners/models.py:182
 #: templates/v2/ngo-account/archives/list-header.html:13
 #: templates/v2/ngo-account/causes/list-header.html:4
 msgid "Cause"
 msgstr ""
 
 #: donations/models/ngos.py:525 donations/views/ngo_account/causes.py:181
-#: donations/views/ngo_account/causes.py:232 partners/admin.py:51
+#: donations/views/ngo_account/causes.py:232 partners/admin.py:50
 #: partners/models.py:75 redirectioneaza/settings/unfold.py:102
 #: templates/v2/ngo-account/causes/main.html:11
 #, fuzzy
@@ -1166,93 +1166,93 @@ msgstr "Ընտրանքներ"
 msgid "Reset password"
 msgstr "Վերակայել գաղտնաբառը"
 
-#: donations/views/account_management.py:53
+#: donations/views/account_management.py:52
 #, fuzzy
 msgid "Reset redirectioneaza.ro password"
 msgstr "Վերականգնել redirectioneaza.ro գաղտնաբառը"
 
-#: donations/views/account_management.py:70
+#: donations/views/account_management.py:68
 #, fuzzy
 #| msgid "Welcome to redirectioneaza.ro"
 msgid "Your redirectioneaza.ro account"
 msgstr "էլփոստ"
 
-#: donations/views/account_management.py:102
+#: donations/views/account_management.py:100
 msgid ""
 "If the email address is valid, you will receive an email with instructions."
 msgstr "Եթե էլփոստի հասցեն վավեր է, դուք կստանաք նամակ` հրահանգներով:"
 
-#: donations/views/account_management.py:110
+#: donations/views/account_management.py:108
 #: templates/v2/socialaccount/login.html:6
 msgid "Sign In"
 msgstr "Գրանցվել"
 
-#: donations/views/account_management.py:132
+#: donations/views/account_management.py:130
 #: templates/v2/emails/account/ngohub-notification/main.html:22
 #, fuzzy
 #| msgid "Login through NGO Hub"
 msgid "Continue with NGO Hub"
 msgstr "Մուտք գործել NGO Hub-ի միջոցով"
 
-#: donations/views/account_management.py:133
+#: donations/views/account_management.py:131
 #, fuzzy
 #| msgid "Has NGO Hub account"
 msgid "I have an NGO Hub account"
 msgstr "Ունի NGO Hub օգտահաշիվ"
 
-#: donations/views/account_management.py:157
-#: donations/views/account_management.py:190
+#: donations/views/account_management.py:155
+#: donations/views/account_management.py:188
 msgid "It seems that this email and password combination is incorrect."
 msgstr "Կարծես թե այս էլփոստի և գաղտնաբառի համակցությունը սխալ է:"
 
-#: donations/views/account_management.py:173
+#: donations/views/account_management.py:171
 #, fuzzy
 #| msgid "Sign In"
 msgid "Sign Out"
 msgstr "Գրանցվել"
 
-#: donations/views/account_management.py:182
+#: donations/views/account_management.py:180
 #, fuzzy
 #| msgid "Reset password"
 msgid "Set New Password"
 msgstr "Վերակայել գաղտնաբառը"
 
-#: donations/views/account_management.py:217
+#: donations/views/account_management.py:215
 #, fuzzy
 #| msgid "bank account"
 msgid "New account"
 msgstr "բանկային հաշիվ"
 
-#: donations/views/account_management.py:233
+#: donations/views/account_management.py:231
 #, fuzzy
 #| msgid "Create an account"
 msgid "Register new account"
 msgstr "Ստեղծել հաշիվ"
 
-#: donations/views/account_management.py:235
+#: donations/views/account_management.py:233
 #, fuzzy
 #| msgid "Login through NGO Hub"
 msgid "Register through NGO Hub"
 msgstr "Մուտք գործել NGO Hub-ի միջոցով"
 
-#: donations/views/account_management.py:296
+#: donations/views/account_management.py:294
 #, fuzzy
 msgid "Welcome to redirectioneaza.ro"
 msgstr "էլփոստ"
 
-#: donations/views/account_management.py:309
+#: donations/views/account_management.py:307
 #, fuzzy
 #| msgid "date created"
 msgid "Account created"
 msgstr "ամսաթիվը ստեղծվել է"
 
-#: donations/views/account_management.py:314
+#: donations/views/account_management.py:312
 #, fuzzy
 #| msgid "date created"
 msgid "Account verified"
 msgstr "ամսաթիվը ստեղծվել է"
 
-#: donations/views/account_management.py:325
+#: donations/views/account_management.py:323
 #, fuzzy
 #| msgid "description"
 msgid "Verification"
@@ -1291,13 +1291,13 @@ msgstr "ID համարը վավեր չէ"
 msgid "The visibility of '%(cause_name)s' has been updated successfully."
 msgstr ""
 
-#: donations/views/api_download.py:45 partners/admin.py:25
+#: donations/views/api_download.py:45 partners/admin.py:24
 #, fuzzy
 #| msgid "first name"
 msgid "First Name"
 msgstr "անուն"
 
-#: donations/views/api_download.py:46 partners/admin.py:31 users/admin.py:119
+#: donations/views/api_download.py:46 partners/admin.py:30 users/admin.py:119
 #, fuzzy
 #| msgid "last name"
 msgid "Last Name"
@@ -1632,38 +1632,38 @@ msgstr "NGO Hub կազմակերպության նույնականացման հա
 msgid "Add new cause form"
 msgstr ""
 
-#: donations/views/ngo_account/common.py:20
+#: donations/views/ngo_account/common.py:19
 #: donations/views/ngo_account/my_organization.py:23
 #, fuzzy
 #| msgid "NGO Hub organization ID"
 msgid "Organization details"
 msgstr "NGO Hub կազմակերպության նույնականացման համար"
 
-#: donations/views/ngo_account/common.py:61
+#: donations/views/ngo_account/common.py:59
 #, fuzzy
 #| msgid "NGO Hub organization ID"
 msgid "Go to the organization details."
 msgstr "NGO Hub կազմակերպության նույնականացման համար"
 
-#: donations/views/ngo_account/common.py:68
+#: donations/views/ngo_account/common.py:66
 #, fuzzy
 #| msgid "Sign In Error"
 msgid "Go to the form."
 msgstr "Մուտք գործելու սխալ"
 
-#: donations/views/ngo_account/common.py:118
+#: donations/views/ngo_account/common.py:116
 msgid "The IBAN number must have 24 characters"
 msgstr "IBAN համարը պետք է ունենա 24 նիշ"
 
-#: donations/views/ngo_account/common.py:121
+#: donations/views/ngo_account/common.py:119
 msgid "The IBAN number must contain only letters and digits"
 msgstr "IBAN համարը պետք է պարունակի միայն տառեր և թվեր"
 
-#: donations/views/ngo_account/common.py:124
+#: donations/views/ngo_account/common.py:122
 msgid "The IBAN number must start with 'RO'"
 msgstr "IBAN համարը պետք է սկսվի «RO»-ով"
 
-#: donations/views/ngo_account/common.py:177
+#: donations/views/ngo_account/common.py:175
 #, fuzzy
 #| msgid "Sign In Error"
 msgid "Download generated file"
@@ -1826,11 +1826,11 @@ msgstr ""
 msgid "Information notice"
 msgstr ""
 
-#: donations/views/site.py:193 templates/v2/redirect/footer.html:186
+#: donations/views/site.py:192 templates/v2/redirect/footer.html:186
 msgid "Privacy policy"
 msgstr ""
 
-#: donations/views/site.py:198 templates/v2/redirect/footer.html:191
+#: donations/views/site.py:197 templates/v2/redirect/footer.html:191
 #, fuzzy
 #| msgid "description"
 msgid "Terms & conditions"
@@ -1878,61 +1878,61 @@ msgstr ""
 msgid "Questions"
 msgstr "Ընտրանքներ"
 
-#: frequent_questions/views.py:11 frequent_questions/views.py:17
+#: frequent_questions/views.py:10 frequent_questions/views.py:16
 #: templates/v2/public/faq.html:11 templates/v2/redirect/footer.html:124
 #: templates/v2/redirect/footer.html:154 templates/v2/redirect/footer.html:167
 msgid "Frequently Asked Questions"
 msgstr "Հաճախակի Տրվող Հարցեր"
 
-#: partners/admin.py:26
+#: partners/admin.py:25
 msgid "The first name of the user who will be the administering the Partner."
 msgstr ""
 
-#: partners/admin.py:32
+#: partners/admin.py:31
 msgid "The last name of the user who will be the administering the Partner."
 msgstr ""
 
-#: partners/admin.py:38
+#: partners/admin.py:37
 #, fuzzy
 #| msgid "User Details"
 msgid "User Email"
 msgstr "Օգտատիրոջ տվյալներ"
 
-#: partners/admin.py:39
+#: partners/admin.py:38
 msgid ""
 "The email address of the user who will be the administering the Partner."
 msgstr ""
 
-#: partners/admin.py:81 partners/models.py:89 users/models.py:81
+#: partners/admin.py:80 partners/models.py:89 users/models.py:81
 msgid "Partner"
 msgstr "Գործընկեր"
 
-#: partners/admin.py:90
+#: partners/admin.py:89
 msgid "Options"
 msgstr "Տարբերակներ"
 
-#: partners/admin.py:100
+#: partners/admin.py:99
 msgid "Metadata"
 msgstr "Մետատվյալներ"
 
-#: partners/admin.py:130
+#: partners/admin.py:129
 #, python-format
 msgid "An error occurred while creating the user: %(error)s"
 msgstr ""
 
-#: partners/admin.py:155
+#: partners/admin.py:153
 #, fuzzy
 #| msgid "Welcome to redirectioneaza.ro"
 msgid "Join redirectioneaza.ro"
 msgstr "Բարի գալուստ redirectioneaza.ro"
 
-#: partners/admin.py:164
+#: partners/admin.py:162
 #, fuzzy
 #| msgid "The import has been processed."
 msgid "The user has been successfully invited."
 msgstr "Ներմուծումը կատարվել է։"
 
-#: partners/admin.py:167 partners/admin.py:191
+#: partners/admin.py:165 partners/admin.py:189
 msgid "Invite new manager"
 msgstr ""
 
@@ -2302,32 +2302,32 @@ msgid "Password"
 msgstr "հին գաղտնաբառ"
 
 #: templates/v2/account/errors/base.html:6
-#: templates/v2/account/errors/base.html:22
+#: templates/v2/account/errors/base.html:21
 #, fuzzy
 #| msgid "Work in progress"
 msgid "NGO Hub Authentication Error"
 msgstr "Աշխատանքն ընթացքի մեջ է"
 
-#: templates/v2/account/errors/base.html:31
+#: templates/v2/account/errors/base.html:30
 #, fuzzy
 #| msgid "Work in progress"
 msgid "Still encountering authentication problems?"
 msgstr "Աշխատանքն ընթացքի մեջ է"
 
-#: templates/v2/account/errors/base.html:35
+#: templates/v2/account/errors/base.html:34
 #: templates/v2/account/signup-confirmation.html:25
 #: templates/v2/account/snippets/third-party.html:160
 msgid "Check the support page"
 msgstr ""
 
-#: templates/v2/account/errors/base.html:36
+#: templates/v2/account/errors/base.html:35
 #: templates/v2/account/signup-confirmation.html:26
 #, fuzzy
 #| msgid "Contact us"
 msgid "or contact us at"
 msgstr "Կապ հաստասեք մեզ հետ"
 
-#: templates/v2/account/errors/base.html:45
+#: templates/v2/account/errors/base.html:43
 msgid "Error illustration"
 msgstr ""
 
@@ -2346,42 +2346,42 @@ msgstr ""
 msgid "Check if you followed the steps below for a correct configuration."
 msgstr ""
 
-#: templates/v2/account/errors/login/app_missing.html:17
+#: templates/v2/account/errors/login/app_missing.html:21
 #, fuzzy
 #| msgid "Login through NGO Hub"
 msgid "To access Redirecționează through your NGO Hub account, make sure that:"
 msgstr "Մուտք գործել NGO Hub-ի միջոցով"
 
-#: templates/v2/account/errors/login/app_missing.html:21
+#: templates/v2/account/errors/login/app_missing.html:30
 #, fuzzy
 #| msgid "Login through NGO Hub"
 msgid ""
 "You have activated the Redirecționează app for your organization in NGO Hub"
 msgstr "Մուտք գործել NGO Hub-ի միջոցով"
 
-#: templates/v2/account/errors/login/app_missing.html:22
+#: templates/v2/account/errors/login/app_missing.html:33
 msgid ""
 "Check with your organization's administrator if Redirecționează app access "
 "is configured correctly for your organization."
 msgstr ""
 
-#: templates/v2/account/errors/login/app_missing.html:25
+#: templates/v2/account/errors/login/app_missing.html:42
 msgid ""
 "You have been granted the required permissions by the organization's NGO Hub "
 "administrator for the Redirecționează app"
 msgstr ""
 
-#: templates/v2/account/errors/login/app_missing.html:27
+#: templates/v2/account/errors/login/app_missing.html:45
 msgid ""
 "Check with your organization's administrator to see if they have given you "
 "access to the Redirecționează app."
 msgstr ""
 
-#: templates/v2/account/errors/login/app_missing.html:28
+#: templates/v2/account/errors/login/app_missing.html:46
 msgid "Read more in"
 msgstr ""
 
-#: templates/v2/account/errors/login/app_missing.html:28
+#: templates/v2/account/errors/login/app_missing.html:46
 #, fuzzy
 #| msgid "User Link"
 msgid "the User Guide"
@@ -2861,16 +2861,17 @@ msgstr ""
 msgid ""
 "If you didn't request a password reset, you can ignore this email. For any "
 "other questions or concerns, feel free to write to us at <a href=\"mailto:"
-"%(contact_email)s\">%(contact_email)s</a> or <a href=\"https://www.ngohub.ro/"
-"ro/suport-tehnic-redirectioneaza\">check out the support page</a>."
+"%(CONTACT_EMAIL_ADDRESS)s\">%(CONTACT_EMAIL_ADDRESS)s</a> or <a "
+"href=\"https://www.ngohub.ro/ro/suport-tehnic-redirectioneaza\">check out "
+"the support page</a>."
 msgstr ""
 
 #: templates/v2/emails/account/ignore-email.txt:3
 #, python-format
 msgid ""
 "If you didn't request a password reset, you can ignore this email. For any "
-"other questions or concerns, feel free to write to us at %(contact_email)s "
-"or check out the support page."
+"other questions or concerns, feel free to write to us at "
+"%(CONTACT_EMAIL_ADDRESS)s or check out the support page."
 msgstr ""
 
 #: templates/v2/emails/account/invite-partner/main.html:13
@@ -2992,14 +2993,14 @@ msgstr ""
 #, python-format
 msgid ""
 "Did you receive this email by mistake? Please let us know at <a "
-"href=\"mailto:%(contact_email)s\">%(contact_email)s</a>."
+"href=\"mailto:%(CONTACT_EMAIL_ADDRESS)s\">%(CONTACT_EMAIL_ADDRESS)s</a>."
 msgstr ""
 
 #: templates/v2/emails/components/misdelivered.txt:3
 #, python-format
 msgid ""
 "Did you receive this email by mistake? Please let us know at "
-"%(contact_email)s."
+"%(CONTACT_EMAIL_ADDRESS)s."
 msgstr ""
 
 #: templates/v2/emails/components/subcopy.html:6
@@ -3955,8 +3956,8 @@ msgstr "NGO Hub կազմակերպության նույնականացման հա
 msgid ""
 "<p> At this moment, donors can't access your form and your organization is "
 "not visible on redirectioneaza.ro. To reactivate your profile, please "
-"contact us at <a href=\"mailto:%(contact_email)s\" class=\"text-blue-600 "
-"underline\">%(contact_email)s</a>. </p>"
+"contact us at <a href=\"mailto:%(CONTACT_EMAIL_ADDRESS)s\" class=\"text-"
+"blue-600 underline\">%(CONTACT_EMAIL_ADDRESS)s</a>. </p>"
 msgstr ""
 
 #: templates/v2/ngo-account/my-organization/base.html:83
@@ -4391,8 +4392,8 @@ msgstr ""
 #, python-format
 msgid ""
 "Send us your question at <a href=\"mailto:"
-"%(contact_email)s\">%(contact_email)s</a> and we will get back to you as "
-"soon as possible."
+"%(CONTACT_EMAIL_ADDRESS)s\">%(CONTACT_EMAIL_ADDRESS)s</a> and we will get "
+"back to you as soon as possible."
 msgstr ""
 
 #: templates/v2/public/faq.html:49
