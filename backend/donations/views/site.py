@@ -183,7 +183,6 @@ class NoteHandler(BaseVisibleTemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["contact_email"] = settings.CONTACT_EMAIL_ADDRESS
 
         return context
 
@@ -199,7 +198,6 @@ class TermsHandler(BaseVisibleTemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["contact_email"] = settings.CONTACT_EMAIL_ADDRESS
 
         return context
 
@@ -231,12 +229,6 @@ class EmailDemoHandler(BaseVisibleTemplateView):
         self.template_name = f"{self.template_name}/{email_path}.html"
 
         context = super().get_context_data(**kwargs)
-
-        context.update(
-            {
-                "contact_email": settings.CONTACT_EMAIL_ADDRESS,
-            }
-        )
 
         query_params = self.request.GET.items()
         for key, value in query_params:

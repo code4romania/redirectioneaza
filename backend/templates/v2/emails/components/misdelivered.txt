@@ -3,5 +3,5 @@
 {% blocktranslate trimmed %}
   Did you receive this email by mistake?
   Please let us know at
-  {{ contact_email }}.
+  {{ CONTACT_EMAIL_ADDRESS }}.
 {% endblocktranslate %}

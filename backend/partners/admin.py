@@ -147,7 +147,6 @@ class PartnerAdmin(ModelAdmin):
         template_context = {
             "first_name": new_user.first_name,
             "action_url": new_password_url,
-            "contact_email": settings.CONTACT_EMAIL_ADDRESS,
         }
         template_context.update(extend_email_context(request))
 

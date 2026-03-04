@@ -45,7 +45,6 @@ class ForgotPasswordView(BaseVisibleTemplateView):
         template_context = {
             "first_name": user.first_name,
             "action_url": verification_url,
-            "contact_email": settings.CONTACT_EMAIL_ADDRESS,
         }
         template_context.update(extend_email_context(request))
 
@@ -60,7 +59,6 @@ class ForgotPasswordView(BaseVisibleTemplateView):
     def _send_ngohub_notification(self, request: HttpRequest, user: UserModel):
         template_context = {
             "first_name": user.first_name,
-            "contact_email": settings.CONTACT_EMAIL_ADDRESS,
             "ngohub_site": settings.NGOHUB_APP_BASE,
             "action_url": reverse_lazy("allauth-login"),
         }
