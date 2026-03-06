@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-04 15:39+0200\n"
+"POT-Creation-Date: 2026-03-06 17:23+0200\n"
 "PO-Revision-Date: 2025-03-27 14:48+0000\n"
 "Last-Translator: Andrei Ioniță <andrei.ionita@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -317,7 +317,8 @@ msgstr "Has owner"
 #: donations/views/dashboard/ngo_dashboard.py:78
 #: donations/views/dashboard/stats_helpers/utils.py:12
 #: redirectioneaza/context_processors/headers.py:68
-#: redirectioneaza/settings/unfold.py:93 redirectioneaza/settings/unfold.py:108
+#: redirectioneaza/settings/unfold.py:103
+#: redirectioneaza/settings/unfold.py:118
 msgid "Donations"
 msgstr "Donations"
 
@@ -950,7 +951,7 @@ msgstr "is active"
 
 #: donations/models/ngos.py:265 partners/models.py:68
 #: redirectioneaza/context_processors/headers.py:63
-#: redirectioneaza/settings/unfold.py:96
+#: redirectioneaza/settings/unfold.py:106
 msgid "NGOs"
 msgstr "NGOs"
 
@@ -1017,7 +1018,7 @@ msgstr "Cause"
 
 #: donations/models/ngos.py:525 donations/views/ngo_account/causes.py:181
 #: donations/views/ngo_account/causes.py:232 partners/admin.py:50
-#: partners/models.py:75 redirectioneaza/settings/unfold.py:102
+#: partners/models.py:75 redirectioneaza/settings/unfold.py:112
 #: templates/v2/ngo-account/causes/main.html:11
 msgid "Causes"
 msgstr "Causes"
@@ -1776,7 +1777,7 @@ msgstr "Order"
 msgid "Section"
 msgstr "Section"
 
-#: frequent_questions/models.py:16 redirectioneaza/settings/unfold.py:143
+#: frequent_questions/models.py:16 redirectioneaza/settings/unfold.py:153
 msgid "Sections"
 msgstr "Sections"
 
@@ -1788,7 +1789,7 @@ msgstr "Question"
 msgid "Answer"
 msgstr "Answer"
 
-#: frequent_questions/models.py:41 redirectioneaza/settings/unfold.py:149
+#: frequent_questions/models.py:41 redirectioneaza/settings/unfold.py:159
 msgid "Questions"
 msgstr "Questions"
 
@@ -1847,7 +1848,7 @@ msgstr "Invite new manager"
 
 #: partners/apps.py:8 partners/models.py:90
 #: redirectioneaza/context_processors/headers.py:73
-#: redirectioneaza/settings/unfold.py:132
+#: redirectioneaza/settings/unfold.py:142
 msgid "Partners"
 msgstr "Partners"
 
@@ -1961,7 +1962,7 @@ msgstr ""
 
 #: redirectioneaza/context_processors/headers.py:27
 #: redirectioneaza/context_processors/headers.py:37
-#: redirectioneaza/settings/unfold.py:140
+#: redirectioneaza/settings/unfold.py:150
 msgid "Frequently asked questions"
 msgstr "Frequently asked questions"
 
@@ -2004,13 +2005,13 @@ msgid "FAQ Questions"
 msgstr "FAQ Questions"
 
 #: redirectioneaza/context_processors/headers.py:83
-#: redirectioneaza/settings/unfold.py:157
-#: redirectioneaza/settings/unfold.py:160 users/apps.py:8
+#: redirectioneaza/settings/unfold.py:167
+#: redirectioneaza/settings/unfold.py:170 users/apps.py:8
 msgid "Users"
 msgstr "Users"
 
 #: redirectioneaza/context_processors/headers.py:88
-#: redirectioneaza/settings/unfold.py:76 redirectioneaza/settings/unfold.py:79
+#: redirectioneaza/settings/unfold.py:86 redirectioneaza/settings/unfold.py:89
 msgid "Dashboard"
 msgstr "Dashboard"
 
@@ -2103,43 +2104,47 @@ msgstr ""
 msgid "TASKS — Successful"
 msgstr ""
 
-#: redirectioneaza/settings/unfold.py:65
+#: redirectioneaza/settings/unfold.py:64
+msgid "Clear staging data"
+msgstr ""
+
+#: redirectioneaza/settings/unfold.py:75
 msgid "Django SES Stats"
 msgstr ""
 
-#: redirectioneaza/settings/unfold.py:85
+#: redirectioneaza/settings/unfold.py:95
 msgid "Home page"
 msgstr "Home page"
 
-#: redirectioneaza/settings/unfold.py:114
+#: redirectioneaza/settings/unfold.py:124
 #, fuzzy
 #| msgid "Generate ANAF Archive"
 msgid "Internal ANAF Archives"
 msgstr "Generate ANAF Archive"
 
-#: redirectioneaza/settings/unfold.py:120
+#: redirectioneaza/settings/unfold.py:130
 #, fuzzy
 #| msgid "Generate ANAF Archive"
 msgid "External ANAF Archives"
 msgstr "Generate ANAF Archive"
 
-#: redirectioneaza/settings/unfold.py:126
+#: redirectioneaza/settings/unfold.py:136
 #, fuzzy
 #| msgid "Donations"
 msgid "Donation downloads"
 msgstr "Donations"
 
-#: redirectioneaza/settings/unfold.py:166 users/models.py:208
+#: redirectioneaza/settings/unfold.py:176 users/models.py:208
 msgid "Groups"
 msgstr "Groups"
 
-#: redirectioneaza/settings/unfold.py:174
+#: redirectioneaza/settings/unfold.py:184
 #, fuzzy
 #| msgid "Donation exports"
 msgid "Data Export"
 msgstr "Donation exports"
 
-#: redirectioneaza/settings/unfold.py:179
+#: redirectioneaza/settings/unfold.py:189
 msgid "Advanced"
 msgstr ""
 
