@@ -4,6 +4,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.core import management
+from django.core.cache import cache
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect
 from django.urls import reverse
@@ -77,13 +78,17 @@ def reset_staging(generate_orgs_count=0, generate_causes_count=0, generate_donat
     management.call_command("generate_donations", generate_donations_count)
     logger.info("Generated %d demo donations", generate_donations_count)
 
+    # Clear the server cache
+    cache.clear()
+    logger.info("Cleared the server cache")
+
 
 def schedule_reset_staging(request):
     if not request.user or not request.user.has_perm("can_reset_staging"):
         raise PermissionDenied
 
     logger.info("Scheduling a staging environment reset")
-    async_task(reset_staging, generate_orgs_count=12, generate_causes_count=15, generate_donations_count=50)
+    async_task(reset_staging, generate_orgs_count=20, generate_causes_count=25, generate_donations_count=100)
 
     messages.add_message(
         request,
