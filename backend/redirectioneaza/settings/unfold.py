@@ -58,6 +58,16 @@ advanced_sidebar_options = [
     },
 ]
 
+if env.str("ENVIRONMENT") in ("staging", "development"):
+    advanced_sidebar_options.append(
+        {
+            "title": _("Clear staging data"),
+            "icon": "reset_wrench",
+            "link": reverse_lazy("schedule-reset-staging"),
+            "permission": lambda request: request.user.has_perm("can_reset_staging"),
+        },
+    )
+
 if env.str("EMAIL_BACKEND") == "django_ses.SESBackend":
     advanced_sidebar_options.insert(
         0,

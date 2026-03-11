@@ -141,6 +141,9 @@ env = environ.Env(
     ENABLE_BULK_ANONYMIZATION=(bool, False),
     #
     AUDITLOG_EXPIRY_DAYS=(int, 1 * 365),  # 1 year
+    # Admins
+    SEED_ADMIN_EMAIL=(str, ""),
+    DJANGO_ADMIN_EMAIL=(str, ""),
 )
 
 environ.Env.read_env(ENV_FILE_PATH)

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-04 15:39+0200\n"
+"POT-Creation-Date: 2026-03-11 08:05+0200\n"
 "PO-Revision-Date: 2025-02-12 12:44+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Armenian <https://translate.commitglobal.org/projects/"
@@ -309,7 +309,8 @@ msgstr "Ունի օգտատեր"
 #: donations/views/dashboard/ngo_dashboard.py:78
 #: donations/views/dashboard/stats_helpers/utils.py:12
 #: redirectioneaza/context_processors/headers.py:68
-#: redirectioneaza/settings/unfold.py:93 redirectioneaza/settings/unfold.py:108
+#: redirectioneaza/settings/unfold.py:103
+#: redirectioneaza/settings/unfold.py:118
 msgid "Donations"
 msgstr "Նվիրատվություններ"
 
@@ -984,7 +985,7 @@ msgstr "ակտիվ է"
 
 #: donations/models/ngos.py:265 partners/models.py:68
 #: redirectioneaza/context_processors/headers.py:63
-#: redirectioneaza/settings/unfold.py:96
+#: redirectioneaza/settings/unfold.py:106
 msgid "NGOs"
 msgstr "ՀԿ-ներ"
 
@@ -1055,7 +1056,7 @@ msgstr ""
 
 #: donations/models/ngos.py:525 donations/views/ngo_account/causes.py:181
 #: donations/views/ngo_account/causes.py:232 partners/admin.py:50
-#: partners/models.py:75 redirectioneaza/settings/unfold.py:102
+#: partners/models.py:75 redirectioneaza/settings/unfold.py:112
 #: templates/v2/ngo-account/causes/main.html:11
 #, fuzzy
 #| msgid "Partners"
@@ -1856,7 +1857,7 @@ msgstr ""
 msgid "Section"
 msgstr "նկարագրություն"
 
-#: frequent_questions/models.py:16 redirectioneaza/settings/unfold.py:143
+#: frequent_questions/models.py:16 redirectioneaza/settings/unfold.py:153
 #, fuzzy
 #| msgid "Options"
 msgid "Sections"
@@ -1872,7 +1873,7 @@ msgstr "նկարագրություն"
 msgid "Answer"
 msgstr ""
 
-#: frequent_questions/models.py:41 redirectioneaza/settings/unfold.py:149
+#: frequent_questions/models.py:41 redirectioneaza/settings/unfold.py:159
 #, fuzzy
 #| msgid "Options"
 msgid "Questions"
@@ -1938,7 +1939,7 @@ msgstr ""
 
 #: partners/apps.py:8 partners/models.py:90
 #: redirectioneaza/context_processors/headers.py:73
-#: redirectioneaza/settings/unfold.py:132
+#: redirectioneaza/settings/unfold.py:142
 msgid "Partners"
 msgstr "Գործընկերներ"
 
@@ -2065,7 +2066,7 @@ msgstr ""
 
 #: redirectioneaza/context_processors/headers.py:27
 #: redirectioneaza/context_processors/headers.py:37
-#: redirectioneaza/settings/unfold.py:140
+#: redirectioneaza/settings/unfold.py:150
 #, fuzzy
 #| msgid "Frequently Asked Questions"
 msgid "Frequently asked questions"
@@ -2113,14 +2114,14 @@ msgid "FAQ Questions"
 msgstr "Ընտրանքներ"
 
 #: redirectioneaza/context_processors/headers.py:83
-#: redirectioneaza/settings/unfold.py:157
-#: redirectioneaza/settings/unfold.py:160 users/apps.py:8
+#: redirectioneaza/settings/unfold.py:167
+#: redirectioneaza/settings/unfold.py:170 users/apps.py:8
 #, fuzzy
 msgid "Users"
 msgstr "Օգտագործողներ"
 
 #: redirectioneaza/context_processors/headers.py:88
-#: redirectioneaza/settings/unfold.py:76 redirectioneaza/settings/unfold.py:79
+#: redirectioneaza/settings/unfold.py:86 redirectioneaza/settings/unfold.py:89
 msgid "Dashboard"
 msgstr "Վահանակ"
 
@@ -2225,45 +2226,49 @@ msgstr ""
 msgid "TASKS — Successful"
 msgstr ""
 
-#: redirectioneaza/settings/unfold.py:65
+#: redirectioneaza/settings/unfold.py:64
+msgid "Clear staging data"
+msgstr ""
+
+#: redirectioneaza/settings/unfold.py:75
 msgid "Django SES Stats"
 msgstr ""
 
-#: redirectioneaza/settings/unfold.py:85
+#: redirectioneaza/settings/unfold.py:95
 #, fuzzy
 #| msgid "address"
 msgid "Home page"
 msgstr "հասցե"
 
-#: redirectioneaza/settings/unfold.py:114
+#: redirectioneaza/settings/unfold.py:124
 #, fuzzy
 #| msgid "Generate donations archive"
 msgid "Internal ANAF Archives"
 msgstr "Ստեղծել նվիրատվությունների արխիվ"
 
-#: redirectioneaza/settings/unfold.py:120
+#: redirectioneaza/settings/unfold.py:130
 #, fuzzy
 #| msgid "Generate donations archive"
 msgid "External ANAF Archives"
 msgstr "Ստեղծել նվիրատվությունների արխիվ"
 
-#: redirectioneaza/settings/unfold.py:126
+#: redirectioneaza/settings/unfold.py:136
 #, fuzzy
 #| msgid "Donations"
 msgid "Donation downloads"
 msgstr "Նվիրատվություններ"
 
-#: redirectioneaza/settings/unfold.py:166 users/models.py:208
+#: redirectioneaza/settings/unfold.py:176 users/models.py:211
 msgid "Groups"
 msgstr "Խմբեր"
 
-#: redirectioneaza/settings/unfold.py:174
+#: redirectioneaza/settings/unfold.py:184
 #, fuzzy
 #| msgid "Donation exports"
 msgid "Data Export"
 msgstr "Նվիրատվության արտահանումները"
 
-#: redirectioneaza/settings/unfold.py:179
+#: redirectioneaza/settings/unfold.py:189
 msgid "Advanced"
 msgstr ""
 
@@ -4534,13 +4539,13 @@ msgstr "վավերացման նշանի ժամանակի դրոշմ"
 msgid "old password"
 msgstr "հին գաղտնաբառ"
 
-#: users/models.py:178
+#: users/models.py:181
 #, fuzzy
 #| msgid "Sign In Error"
 msgid "Invalid filter parameters"
 msgstr "Մուտք գործելու սխալ"
 
-#: users/models.py:207
+#: users/models.py:210
 msgid "Group"
 msgstr "Խումբ"
 
@@ -4639,6 +4644,12 @@ msgstr "Դեկտեմբեր"
 #: utils/constants/time.py:62
 msgid "Dec"
 msgstr "Դեկտ"
+
+#: utils/staging.py:24
+msgid ""
+"The staging environment reset has been scheduled. This may take a few "
+"minutes."
+msgstr ""
 
 #: utils/text/phone_number.py:15
 #, fuzzy
