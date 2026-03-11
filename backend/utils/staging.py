@@ -67,7 +67,7 @@ def reset_staging(generate_orgs_count=0, generate_causes_count=0, generate_donat
     logger.info("Deleted all users except the default admins")
 
     # Generate new demo organizations
-    management.call_command("generate_orgs", generate_orgs_count, valid=True, ngohub=False)
+    management.call_command("generate_orgs", generate_orgs_count, ngohub=False)
     logger.info("Generated %d demo organizations", generate_orgs_count)
 
     # Generate new demo causes
@@ -88,7 +88,7 @@ def schedule_reset_staging(request):
         raise PermissionDenied
 
     logger.info("Scheduling a staging environment reset")
-    async_task(reset_staging, generate_orgs_count=20, generate_causes_count=25, generate_donations_count=100)
+    async_task(reset_staging, generate_orgs_count=25, generate_causes_count=30, generate_donations_count=150)
 
     messages.add_message(
         request,
