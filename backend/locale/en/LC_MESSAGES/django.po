@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-06 17:23+0200\n"
+"POT-Creation-Date: 2026-03-11 08:05+0200\n"
 "PO-Revision-Date: 2025-03-27 14:48+0000\n"
 "Last-Translator: Andrei Ioniță <andrei.ionita@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -2134,7 +2134,7 @@ msgstr "Generate ANAF Archive"
 msgid "Donation downloads"
 msgstr "Donations"
 
-#: redirectioneaza/settings/unfold.py:176 users/models.py:208
+#: redirectioneaza/settings/unfold.py:176 users/models.py:211
 msgid "Groups"
 msgstr "Groups"
 
@@ -4492,13 +4492,13 @@ msgstr "validation token timestamp"
 msgid "old password"
 msgstr "old password"
 
-#: users/models.py:178
+#: users/models.py:181
 #, fuzzy
 #| msgid "Send signed form"
 msgid "Invalid filter parameters"
 msgstr "Send signed form"
 
-#: users/models.py:207
+#: users/models.py:210
 msgid "Group"
 msgstr "Group"
 
@@ -4597,6 +4597,12 @@ msgstr "December"
 #: utils/constants/time.py:62
 msgid "Dec"
 msgstr "Dec"
+
+#: utils/staging.py:24
+msgid ""
+"The staging environment reset has been scheduled. This may take a few "
+"minutes."
+msgstr ""
 
 #: utils/text/phone_number.py:15
 msgid "Invalid country code"

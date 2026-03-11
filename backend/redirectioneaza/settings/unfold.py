@@ -63,9 +63,9 @@ if env.str("ENVIRONMENT") in ("staging", "development"):
         {
             "title": _("Clear staging data"),
             "icon": "reset_wrench",
-            "link": reverse_lazy("admin:django_q_success_changelist"),  # TODO: Add the real link
-            "permission": lambda request: request.user.is_superuser,
-        },  
+            "link": reverse_lazy("schedule-reset-staging"),
+            "permission": lambda request: request.user.has_perm("can_reset_staging"),
+        },
     )
 
 if env.str("EMAIL_BACKEND") == "django_ses.SESBackend":

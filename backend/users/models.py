@@ -106,7 +106,10 @@ class User(AbstractUser):
         constraints = [
             models.UniqueConstraint(Lower("email"), name="email_unique"),
         ]
-        permissions = (("can_view_old_dashboard", "Can view the old dashboard"),)
+        permissions = (
+            ("can_view_old_dashboard", "Can view the old dashboard"),
+            ("can_reset_staging", "Can reset the staging environment"),
+        )
 
     def get_cognito_id(self):
         social = self.socialaccount_set.filter(provider="amazon_cognito").last()

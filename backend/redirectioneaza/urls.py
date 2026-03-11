@@ -58,6 +58,7 @@ from donations.views.site import (
 )
 from frequent_questions.views import FAQHandler
 from redirectioneaza.views import StaticPageView
+from utils import staging
 
 admin.site.site_header = f"Admin | {settings.VERSION_LABEL}"
 
@@ -140,6 +141,7 @@ urlpatterns = (
         path("admin/avansat/", RedirectView.as_view(pattern_name="admin:index", permanent=True)),
         path("admin/django/", RedirectView.as_view(pattern_name="admin:index", permanent=True)),
         path("admin/organizatii/", RedirectView.as_view(pattern_name="admin:index", permanent=True)),
+        path("admin/reset-staging/", staging.schedule_reset_staging, name="schedule-reset-staging"),
         path("admin/", admin.site.urls),
         # must always be the last set of urls
         # people could initially redirect 2%; we kept this name because it is easier to find than redirection
