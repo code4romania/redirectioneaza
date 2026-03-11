@@ -12,7 +12,7 @@ from django_q.tasks import async_task
 from donations.models.byof import OwnFormsUpload
 from donations.models.donors import Donor
 from donations.models.jobs import Job
-from donations.models.ngos import Ngo, Cause
+from donations.models.ngos import Cause, Ngo
 
 logger = logging.getLogger(__name__)
 
