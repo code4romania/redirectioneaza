@@ -3,8 +3,8 @@ import logging
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import get_user_model
-from django.core.exceptions import PermissionDenied
 from django.core import management
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
@@ -83,7 +83,7 @@ def schedule_reset_staging(request):
         raise PermissionDenied
 
     logger.info("Scheduling a staging environment reset")
-    async_task(reset_staging, generate_orgs_count=12, generate_causes_count=15, generate_donations_count=30)
+    async_task(reset_staging, generate_orgs_count=12, generate_causes_count=15, generate_donations_count=50)
 
     messages.add_message(
         request,
