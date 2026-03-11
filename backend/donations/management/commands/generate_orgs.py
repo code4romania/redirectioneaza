@@ -735,6 +735,11 @@ class Command(BaseCommand):
             help="Generate only valid, active organizations",
         )
         parser.add_argument(
+            "--ngohub",
+            action="store_true",
+            help="Also generate organizations which have an NGO Hub id",
+        )
+        parser.add_argument(
             "--user_only",
             action="store_true",
             help="Generate only users with no organization",
@@ -795,6 +800,7 @@ class Command(BaseCommand):
         total_organizations = options["total_orgs"]
         create_valid = options.get("valid", None)
         create_user_only = options.get("user_only", None)
+        create_ngohub_id = options.get("ngohub", None)
 
         organizations: list[dict[str, Any]] = []
         generated_organization_names: list[str] = []
@@ -859,7 +865,7 @@ class Command(BaseCommand):
                 "website": fake.url(),
                 "is_active": create_valid or random.choice([True, False]),
                 "has_online_tax_account": create_valid or random.choice([True, False]),
-                "ngohub_org_id": random.choice([random.randint(1, 9999), None]),
+                "ngohub_org_id": random.choice([random.randint(1, 9999), None]) if create_ngohub_id else None,
             }
             try:
                 org = Ngo.objects.create(**organization_details)
