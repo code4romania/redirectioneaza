@@ -4,6 +4,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.core.exceptions import PermissionDenied
+from django.core import management
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
@@ -62,8 +63,19 @@ def reset_staging(generate_orgs_count=0, generate_causes_count=0, generate_donat
 
     # Delete all users except the default admin accounts
     get_user_model().objects.exclude(email__in=(settings.DJANGO_ADMIN_EMAIL, settings.SEED_ADMIN_EMAIL)).delete()
+    logger.info("Deleted all users except the default admins")
 
-    # TODO: Add logic to generate new organizations, causes and donations if the counts are greater than 0
+    # Generate new demo organizations
+    management.call_command("generate_orgs", generate_orgs_count)
+    logger.info("Generated %d demo organizations", generate_orgs_count)
+
+    # Generate new demo causes
+    management.call_command("generate_other_causes", generate_causes_count)
+    logger.info("Generated %d demo causes", generate_causes_count)
+
+    # Generate new demo donations
+    management.call_command("generate_donations", generate_donations_count)
+    logger.info("Generated %d demo donations", generate_donations_count)
 
 
 def schedule_reset_staging(request):
@@ -71,7 +83,7 @@ def schedule_reset_staging(request):
         raise PermissionDenied
 
     logger.info("Scheduling a staging environment reset")
-    async_task(reset_staging, generate_orgs_count=100, generate_causes_count=100, generate_donations_count=1000)
+    async_task(reset_staging, generate_orgs_count=12, generate_causes_count=15, generate_donations_count=30)
 
     messages.add_message(
         request,
