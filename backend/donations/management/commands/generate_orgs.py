@@ -8,6 +8,7 @@ from faker import Faker
 from localflavor.ro.ro_counties import COUNTIES_CHOICES
 
 from donations.models.ngos import Cause, Ngo
+from utils.random import random_33p, random_75p
 from utils.text.cleanup import clean_slug, strip_accents
 
 fake = Faker("ro_RO")
@@ -844,13 +845,13 @@ class Command(BaseCommand):
                     password=owner_email.split("@")[0],
                     first_name=first_name,
                     last_name=last_name,
-                    is_verified=random.choice([True, False]),
+                    is_verified=random_75p(),
                 )
                 owner.save()
             except IntegrityError:
                 continue
 
-            should_not_have_ngo = random.choice(range(0, 6)) == 3
+            should_not_have_ngo = random_33p()
             if create_user_only or not create_valid and should_not_have_ngo:
                 continue
 
@@ -863,8 +864,8 @@ class Command(BaseCommand):
                 "phone": fake.phone_number(),
                 "email": random.choice([owner_email, fake.email()]),
                 "website": fake.url(),
-                "is_active": create_valid or random.choice([True, False]),
-                "has_online_tax_account": create_valid or random.choice([True, False]),
+                "is_active": create_valid or random_75p(),
+                "has_online_tax_account": create_valid or random_75p(),
                 "ngohub_org_id": random.choice([random.randint(1, 9999), None]) if create_ngohub_id else None,
             }
             try:
@@ -879,7 +880,7 @@ class Command(BaseCommand):
             owner.ngo = org
             owner.save()
 
-            ignore_cause = not create_valid or random.choice(range(0, 6)) == 3
+            ignore_cause = not create_valid or random_33p()
 
             if ignore_cause:
                 continue
@@ -888,7 +889,7 @@ class Command(BaseCommand):
                 ngo_cause = Cause.objects.create(
                     ngo=org,
                     is_main=True,
-                    allow_online_collection=org.has_online_tax_account and random.choice(range(0, 6)) == 3,
+                    allow_online_collection=org.has_online_tax_account and random_75p(),
                     slug=kebab_case_name,
                     name=org_name,
                     description=fake.paragraph(nb_sentences=3, variable_nb_sentences=True),

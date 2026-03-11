@@ -5,6 +5,7 @@ from django.db import IntegrityError
 from faker import Faker
 
 from donations.models.ngos import Cause, CauseVisibilityChoices, Ngo
+from utils.random import random_75p
 
 fake = Faker("ro_RO")
 
@@ -301,9 +302,7 @@ class Command(BaseCommand):
                     ]
                 )
 
-            allow_online_collection = (
-                ngo.has_online_tax_account if not ngo.has_online_tax_account else random.choice(range(0, 6)) == 3
-            )
+            allow_online_collection = ngo.has_online_tax_account and random_75p()
             causes.append(
                 Cause(
                     ngo=ngo,
