@@ -67,7 +67,7 @@ def reset_staging(generate_orgs_count=0, generate_causes_count=0, generate_donat
     logger.info("Deleted all users except the default admins")
 
     # Generate new demo organizations
-    management.call_command("generate_orgs", generate_orgs_count)
+    management.call_command("generate_orgs", generate_orgs_count, valid=True, ngohub=False)
     logger.info("Generated %d demo organizations", generate_orgs_count)
 
     # Generate new demo causes
