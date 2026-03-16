@@ -252,10 +252,18 @@ class Ngo(CommonFilenameCacheModel):
     # originally: active — the user cannot modify this property, it is set by the admin/by the NGO Hub settings
     is_active = models.BooleanField(verbose_name=_("is active"), db_index=True, default=True)
 
-    is_in_cult_registry = models.BooleanField(verbose_name=_("presence in the ANAF Cult Registry"), null=True, blank=True, editable=False)
-    cult_registry_check_date = models.DateTimeField(verbose_name=_("last check in the ANAF Cult Registry"), null=True, blank=True, editable=False)
-    pause_cult_registry_check = models.BooleanField(verbose_name=_("pause checking the ANAF Cult Registry"), default=False)
-    acknowledge_missing_cult_registry = models.BooleanField(verbose_name=_("acknowledge missing ANAF Cult Registry info"), default=False)
+    is_in_cult_registry = models.BooleanField(
+        verbose_name=_("presence in the ANAF Cult Registry"), null=True, blank=True, editable=False
+    )
+    cult_registry_check_date = models.DateTimeField(
+        verbose_name=_("last check in the ANAF Cult Registry"), null=True, blank=True, editable=False
+    )
+    pause_cult_registry_check = models.BooleanField(
+        verbose_name=_("pause checking the ANAF Cult Registry"), default=False
+    )
+    acknowledge_missing_cult_registry = models.BooleanField(
+        verbose_name=_("acknowledge missing ANAF Cult Registry info"), default=False
+    )
 
     date_created = models.DateTimeField(verbose_name=_("date created"), db_index=True, auto_now_add=True)
     date_updated = models.DateTimeField(verbose_name=_("date updated"), db_index=True, auto_now=True)
