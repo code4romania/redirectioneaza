@@ -188,7 +188,13 @@ class NgoAdmin(ModelAdmin):
 
     inlines = (NgoCauseInline, NgoPartnerInline, NgoUserInline)
 
-    readonly_fields = ("date_created", "date_updated", "get_donations_link")
+    readonly_fields = (
+        "date_created",
+        "date_updated",
+        "get_donations_link",
+        "is_in_cult_registry",
+        "cult_registry_check_date",
+    )
 
     actions_detail = ("change_owner",)
 
@@ -223,6 +229,17 @@ class NgoAdmin(ModelAdmin):
                     "is_active",
                     "has_online_tax_account",
                     "is_social_service_viable",
+                )
+            },
+        ),
+        (
+            _("ANAF Cult Registry"),
+            {
+                "fields": (
+                    "is_in_cult_registry",
+                    "cult_registry_check_date",
+                    "pause_cult_registry_check",
+                    "acknowledge_missing_cult_registry",
                 )
             },
         ),
