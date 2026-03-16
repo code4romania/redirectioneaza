@@ -177,6 +177,7 @@ class NgoAdmin(ModelAdmin):
         "is_verified",
         "is_active",
         "has_online_tax_account",
+        "is_in_cult_registry",
         "partners",
         HasOwnerFilter,
         "county",
