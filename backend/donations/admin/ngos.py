@@ -194,7 +194,7 @@ class NgoAdmin(ModelAdmin):
         "date_updated",
         "get_donations_link",
         "is_in_cult_registry",
-        "cult_registry_check_date",
+        "cult_registry_check_ended",
     )
 
     actions_detail = ("change_owner",)
@@ -238,9 +238,9 @@ class NgoAdmin(ModelAdmin):
             {
                 "fields": (
                     "is_in_cult_registry",
-                    "cult_registry_check_date",
-                    "pause_cult_registry_check",
                     "acknowledge_missing_cult_registry",
+                    "cult_registry_check_ended",
+                    "pause_cult_registry_check",
                 )
             },
         ),
