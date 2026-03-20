@@ -22,6 +22,7 @@ from .email import *
 from .environment import *
 from .feature_flags import *
 from .i18n import *
+from .integrations import *
 from .locations import *
 from .logging import *
 from .path_constants import *

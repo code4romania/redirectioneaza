@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-11 08:05+0200\n"
+"POT-Creation-Date: 2026-03-17 14:39+0200\n"
 "PO-Revision-Date: 2025-02-12 12:44+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Armenian <https://translate.commitglobal.org/projects/"
@@ -34,10 +34,10 @@ msgstr ""
 #: donations/admin/causes.py:75 donations/admin/common.py:23
 #: donations/admin/donors.py:251 donations/admin/download_jobs.py:22
 #: donations/admin/download_jobs.py:50 donations/admin/jobs.py:22
-#: donations/admin/jobs.py:55 donations/admin/ngos.py:208
-#: donations/admin/ngos.py:296 donations/models/donors.py:71
+#: donations/admin/jobs.py:55 donations/admin/ngos.py:215
+#: donations/admin/ngos.py:314 donations/models/donors.py:71
 #: donations/models/downloads.py:10 donations/models/jobs.py:13
-#: donations/models/ngos.py:264 partners/models.py:148 users/models.py:73
+#: donations/models/ngos.py:281 partners/models.py:148 users/models.py:73
 msgid "NGO"
 msgstr "ՀԿ"
 
@@ -61,7 +61,7 @@ msgstr "հարցաթերթ"
 
 #: donations/admin/common.py:62 donations/admin/donors.py:277
 #: donations/admin/download_jobs.py:40 donations/admin/jobs.py:45
-#: donations/admin/ngos.py:246 templates/v2/ngo-account/byof/list-header.html:7
+#: donations/admin/ngos.py:264 templates/v2/ngo-account/byof/list-header.html:7
 msgid "Date"
 msgstr "Ամսաթիվ"
 
@@ -304,7 +304,7 @@ msgstr "ոչ"
 msgid "Has owner"
 msgstr "Ունի օգտատեր"
 
-#: donations/admin/ngos.py:204 donations/admin/ngos.py:322 donations/apps.py:8
+#: donations/admin/ngos.py:211 donations/admin/ngos.py:340 donations/apps.py:8
 #: donations/views/dashboard/admin_dashboard.py:64
 #: donations/views/dashboard/ngo_dashboard.py:78
 #: donations/views/dashboard/stats_helpers/utils.py:12
@@ -314,74 +314,78 @@ msgstr "Ունի օգտատեր"
 msgid "Donations"
 msgstr "Նվիրատվություններ"
 
-#: donations/admin/ngos.py:219
+#: donations/admin/ngos.py:226
 msgid "Activity"
 msgstr "Գործունեություն"
 
-#: donations/admin/ngos.py:230 redirectioneaza/context_processors/headers.py:43
+#: donations/admin/ngos.py:237
+msgid "ANAF Cult Registry"
+msgstr ""
+
+#: donations/admin/ngos.py:248 redirectioneaza/context_processors/headers.py:43
 msgid "Contact"
 msgstr "Կապ"
 
-#: donations/admin/ngos.py:308
+#: donations/admin/ngos.py:326
 msgid "NGO Hub link"
 msgstr ""
 
-#: donations/admin/ngos.py:318
+#: donations/admin/ngos.py:336
 msgid "CIF"
 msgstr ""
 
-#: donations/admin/ngos.py:324
+#: donations/admin/ngos.py:342
 msgid "Open the NGO donor list"
 msgstr "Բացել ՀԿ-ների դոնորների ցանկը"
 
-#: donations/admin/ngos.py:335
+#: donations/admin/ngos.py:353
 msgid "This user already has an NGO."
 msgstr ""
 
-#: donations/admin/ngos.py:341
+#: donations/admin/ngos.py:359
 msgid "This user is a staff member."
 msgstr ""
 
-#: donations/admin/ngos.py:347
+#: donations/admin/ngos.py:365
 msgid "This user is an NGO Hub user."
 msgstr ""
 
-#: donations/admin/ngos.py:359
+#: donations/admin/ngos.py:377
 #, fuzzy
 #| msgid "The import has been processed."
 msgid "Owner changed successfully."
 msgstr "Ներմուծումը կատարվել է։"
 
-#: donations/admin/ngos.py:362
+#: donations/admin/ngos.py:380
 #, fuzzy
 #| msgid "old password"
 msgid "Change owner"
 msgstr "հին գաղտնաբառ"
 
-#: donations/admin/ngos.py:379 partners/admin.py:179
+#: donations/admin/ngos.py:397 partners/admin.py:179
 #, fuzzy
 #| msgid "The ID number format is not valid"
 msgid "The form is not valid."
 msgstr "Նույնականացման համարի ձևաչափը վավեր չէ"
 
-#: donations/admin/ngos.py:389
+#: donations/admin/ngos.py:407
 #, python-format
 msgid "Change owner of NGO '%(name)s'"
 msgstr ""
 
-#: donations/admin/ngos.py:394
+#: donations/admin/ngos.py:412
 msgid "Update from NGO Hub synchronously"
 msgstr "Թարմացում NGO Hub-ին համաժամանակյա"
 
-#: donations/admin/ngos.py:416
+#: donations/admin/ngos.py:434
 msgid "Update from NGO Hub asynchronously"
 msgstr "Թարմացում NGO Hub-ին ոչ համաժամանակյա"
 
-#: donations/admin/ngos.py:421
+#: donations/admin/ngos.py:439
 msgid "NGOs are being updated from NGO Hub."
 msgstr "ՀԿ-ները թարմացվում են NGO Hub-ից:"
 
-#: donations/admin/ngos.py:423
+#: donations/admin/ngos.py:441
 #, fuzzy
 #| msgid "Sign In Error"
 msgid "Remove prefilled forms"
@@ -700,13 +704,13 @@ msgid "status"
 msgstr "կարգավիճակ"
 
 #: donations/models/byof.py:84 donations/models/common.py:31
-#: donations/models/donors.py:160 donations/models/ngos.py:255
-#: donations/models/ngos.py:513 partners/models.py:82 users/models.py:97
+#: donations/models/donors.py:160 donations/models/ngos.py:272
+#: donations/models/ngos.py:530 partners/models.py:82 users/models.py:97
 msgid "date created"
 msgstr "ամսաթիվը ստեղծվել է"
 
-#: donations/models/byof.py:85 donations/models/ngos.py:256
-#: donations/models/ngos.py:514 partners/models.py:83 users/models.py:98
+#: donations/models/byof.py:85 donations/models/ngos.py:273
+#: donations/models/ngos.py:531 partners/models.py:83 users/models.py:98
 msgid "date updated"
 msgstr "ամսաթիվը թարմացվել է"
 
@@ -983,78 +987,98 @@ msgstr "Գնալ դեպի օգտահաշիվ"
 msgid "is active"
 msgstr "ակտիվ է"
 
-#: donations/models/ngos.py:265 partners/models.py:68
+#: donations/models/ngos.py:257
+msgid "last started check in the ANAF Cult Registry"
+msgstr ""
+
+#: donations/models/ngos.py:260
+msgid "last completed check in the ANAF Cult Registry"
+msgstr ""
+
+#: donations/models/ngos.py:263
+msgid "pause checking the ANAF Cult Registry"
+msgstr ""
+
+#: donations/models/ngos.py:266
+msgid "presence in the ANAF Cult Registry"
+msgstr ""
+
+#: donations/models/ngos.py:269
+msgid "acknowledge missing ANAF Cult Registry info"
+msgstr ""
+
+#: donations/models/ngos.py:282 partners/models.py:68
 #: redirectioneaza/context_processors/headers.py:63
 #: redirectioneaza/settings/unfold.py:106
 msgid "NGOs"
 msgstr "ՀԿ-ներ"
 
-#: donations/models/ngos.py:443
+#: donations/models/ngos.py:460
 msgid "public"
 msgstr ""
 
-#: donations/models/ngos.py:444
+#: donations/models/ngos.py:461
 #, fuzzy
 #| msgid "old password"
 msgid "unlisted"
 msgstr "հին գաղտնաբառ"
 
-#: donations/models/ngos.py:445
+#: donations/models/ngos.py:462
 msgid "private"
 msgstr ""
 
-#: donations/models/ngos.py:467
+#: donations/models/ngos.py:484
 msgid "is main cause"
 msgstr ""
 
-#: donations/models/ngos.py:468
+#: donations/models/ngos.py:485
 msgid "allow online collection"
 msgstr ""
 
-#: donations/models/ngos.py:471
+#: donations/models/ngos.py:488
 msgid "form visibility"
 msgstr ""
 
-#: donations/models/ngos.py:481
+#: donations/models/ngos.py:498
 msgid "logo"
 msgstr "լոգո"
 
-#: donations/models/ngos.py:489
+#: donations/models/ngos.py:506
 msgid "slug"
 msgstr "slug"
 
-#: donations/models/ngos.py:498 partners/models.py:30 stats/models.py:7
+#: donations/models/ngos.py:515 partners/models.py:30 stats/models.py:7
 msgid "name"
 msgstr "անուն"
 
-#: donations/models/ngos.py:499
+#: donations/models/ngos.py:516
 msgid "description"
 msgstr "նկարագրություն"
 
-#: donations/models/ngos.py:501
+#: donations/models/ngos.py:518
 msgid "bank account"
 msgstr "բանկային հաշիվ"
 
-#: donations/models/ngos.py:503
+#: donations/models/ngos.py:520
 #, fuzzy
 #| msgid "Contact"
 msgid "notifications email"
 msgstr "Կապ"
 
-#: donations/models/ngos.py:506
+#: donations/models/ngos.py:523
 #, fuzzy
 #| msgid "form with prefilled ngo data"
 msgid "form with prefilled cause"
 msgstr "ձևաթուղթ՝ նախապես լրացված ՀԿ-ի տվյալներով"
 
-#: donations/models/ngos.py:524 donations/views/ngo_account_filters.py:154
+#: donations/models/ngos.py:541 donations/views/ngo_account_filters.py:154
 #: partners/admin.py:49 partners/models.py:182
 #: templates/v2/ngo-account/archives/list-header.html:13
 #: templates/v2/ngo-account/causes/list-header.html:4
 msgid "Cause"
 msgstr ""
 
-#: donations/models/ngos.py:525 donations/views/ngo_account/causes.py:181
+#: donations/models/ngos.py:542 donations/views/ngo_account/causes.py:181
 #: donations/views/ngo_account/causes.py:232 partners/admin.py:50
 #: partners/models.py:75 redirectioneaza/settings/unfold.py:112
 #: templates/v2/ngo-account/causes/main.html:11
@@ -4645,7 +4669,7 @@ msgstr "Դեկտեմբեր"
 msgid "Dec"
 msgstr "Դեկտ"
 
-#: utils/staging.py:24
+#: utils/staging.py:96
 msgid ""
 "The staging environment reset has been scheduled. This may take a few "
 "minutes."

@@ -18,6 +18,7 @@ from unfold.widgets import UnfoldAdminSelectWidget
 
 from donations.admin.common import CommonCauseFields, span_external, span_internal
 from donations.models.ngos import Cause, Ngo
+from donations.workers.check_organization import cult_registry_check_organizations
 from donations.workers.update_organization import update_organization
 from users.models import User
 
@@ -177,6 +178,7 @@ class NgoAdmin(ModelAdmin):
         "is_verified",
         "is_active",
         "has_online_tax_account",
+        "is_in_cult_registry",
         "partners",
         HasOwnerFilter,
         "county",
@@ -188,13 +190,21 @@ class NgoAdmin(ModelAdmin):
 
     inlines = (NgoCauseInline, NgoPartnerInline, NgoUserInline)
 
-    readonly_fields = ("date_created", "date_updated", "get_donations_link")
+    readonly_fields = (
+        "date_created",
+        "date_updated",
+        "get_donations_link",
+        "is_in_cult_registry",
+        "cult_registry_check_ended",
+    )
 
     actions_detail = ("change_owner",)
 
     actions = (
-        "update_from_ngohub_sync",
+        "check_cult_registry_async",
+        "check_cult_registry_sync",
         "update_from_ngohub_async",
+        "update_from_ngohub_sync",
     )
 
     actions_list = ("remove_prefilled_forms",)
@@ -223,6 +233,17 @@ class NgoAdmin(ModelAdmin):
                     "is_active",
                     "has_online_tax_account",
                     "is_social_service_viable",
+                )
+            },
+        ),
+        (
+            _("ANAF Cult Registry"),
+            {
+                "fields": (
+                    "is_in_cult_registry",
+                    "acknowledge_missing_cult_registry",
+                    "cult_registry_check_ended",
+                    "pause_cult_registry_check",
                 )
             },
         ),
@@ -419,6 +440,32 @@ class NgoAdmin(ModelAdmin):
             update_organization(ngo.id, update_method="async")
 
         self.message_user(request, _("NGOs are being updated from NGO Hub."))
+
+    @action(description=_("Check in ANAF Cult Registry synchronously"))
+    def check_cult_registry_sync(self, request, queryset: QuerySet[Ngo]):
+        show_errors: bool = True
+
+        registration_numbers = queryset.values_list("registration_number", flat=True)
+        task_result = cult_registry_check_organizations(registration_numbers, update_method="sync")
+
+        message = "ANAF Registry Results: | "
+
+        if errors := task_result.get("errors"):
+            for error in errors:
+                message += f" |   * {error}"
+        else:
+            message += "Checked successfully."
+
+        message += "|"
+
+        message_level = "ERROR" if show_errors else "SUCCESS"
+        self.message_user(request, message, level=message_level)
+
+    @action(description=_("Check in ANAF Cult Registry asynchronously"))
+    def check_cult_registry_async(self, request, queryset: QuerySet[Ngo]):
+        registration_numbers = queryset.values_list("registration_number", flat=True)
+        cult_registry_check_organizations(registration_numbers, update_method="async")
+        self.message_user(request, _("NGOs are being searched in ANAF Cult Registry."))
 
     @action(description=_("Remove prefilled forms"), url_path="remove-forms", permissions=["remove_forms"])
     def remove_prefilled_forms(self, request: HttpRequest):
