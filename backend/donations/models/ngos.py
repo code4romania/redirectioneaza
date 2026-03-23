@@ -49,7 +49,7 @@ def ngo_directory_path(subdir: str, instance: "Ngo", filename: str) -> str:
 
 def cause_directory_path(subdir: str, instance: "Cause", filename: str) -> str:
     """
-    The file will be uploaded to MEDIA_ROOT/<subdir>/ngo-<ngo.id>/c-<cause.id>-<cause.hash>/<filename>
+    The file will be uploaded to MEDIA_ROOT/<subdir>/ngo-<ngo.pk>/c-<cause.pk>-<cause.hash>/<filename>
     """
     ngo_pk = instance.ngo.pk
 
@@ -61,7 +61,7 @@ def cause_directory_path(subdir: str, instance: "Cause", filename: str) -> str:
 
 def year_ngo_directory_path(subdir: str, instance: "Ngo", filename: str) -> str:
     """
-    The file will be uploaded to MEDIA_ROOT/<subdir>/<year>/ngo-<ngo.id>-<ngo.hash>/<filename>
+    The file will be uploaded to MEDIA_ROOT/<subdir>/<year>/ngo-<ngo.pk>-<ngo.hash>/<filename>
     """
     timestamp = timezone.now()
 
@@ -75,7 +75,7 @@ def year_ngo_directory_path(subdir: str, instance: "Ngo", filename: str) -> str:
 
 def year_cause_directory_path(subdir: str, instance: "Cause", filename: str) -> str:
     """
-    The file will be uploaded to MEDIA_ROOT/<subdir>/<year>/c-<cause.id>-<cause.hash>/<filename>
+    The file will be uploaded to MEDIA_ROOT/<subdir>/<year>/c-<cause.pk>-<cause.hash>/<filename>
     """
     timestamp = timezone.now()
 
@@ -289,7 +289,7 @@ class Ngo(CommonFilenameCacheModel):
         return f"{self.name}"
 
     def save(self, *args, **kwargs):
-        is_new = self.id is None
+        is_new = self.pk is None
 
         if self.registration_number:
             uppercase_registration_number = self.registration_number
