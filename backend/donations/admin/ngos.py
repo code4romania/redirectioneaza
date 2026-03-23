@@ -274,25 +274,25 @@ class NgoAdmin(ModelAdmin):
         ),
     )
 
-    def get_actions(self, request):
+    def get_actions(self, request: HttpRequest):
         if request.user.is_superuser:
             return super().get_actions(request)
 
         return []
 
-    def get_actions_detail(self, request, object_id):
+    def get_actions_detail(self, request: HttpRequest, object_id: int):
         if request.user.is_superuser:
             return super().get_actions_detail(request, object_id)
 
         return []
 
-    def get_inlines(self, request, obj):
+    def get_inlines(self, request: HttpRequest, obj: Ngo):
         if request.user.is_superuser:
             return super().get_inlines(request, obj)
 
         return []
 
-    def get_queryset(self, request):
+    def get_queryset(self, request: HttpRequest):
         if request.user.is_superuser:
             return super().get_queryset(request)
 
@@ -413,7 +413,7 @@ class NgoAdmin(ModelAdmin):
         )
 
     @action(description=_("Update from NGO Hub synchronously"))
-    def update_from_ngohub_sync(self, request, queryset: QuerySet[Ngo]):
+    def update_from_ngohub_sync(self, request: HttpRequest, queryset: QuerySet[Ngo]):
         show_errors: bool = True
 
         task_results = []
@@ -435,14 +435,14 @@ class NgoAdmin(ModelAdmin):
         self.message_user(request, message, level=message_level)
 
     @action(description=_("Update from NGO Hub asynchronously"))
-    def update_from_ngohub_async(self, request, queryset: QuerySet[Ngo]):
+    def update_from_ngohub_async(self, request: HttpRequest, queryset: QuerySet[Ngo]):
         for ngo in queryset:
             update_organization(ngo.id, update_method="async")
 
         self.message_user(request, _("NGOs are being updated from NGO Hub."))
 
     @action(description=_("Check in ANAF Cult Registry synchronously"))
-    def check_cult_registry_sync(self, request, queryset: QuerySet[Ngo]):
+    def check_cult_registry_sync(self, request: HttpRequest, queryset: QuerySet[Ngo]):
         show_errors: bool = True
 
         registration_numbers = queryset.values_list("registration_number", flat=True)
