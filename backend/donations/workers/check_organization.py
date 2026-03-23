@@ -12,20 +12,23 @@ from utils.helper_logging import setup_logger
 logger = setup_logger(__name__)
 
 
-def _get_cult_registry_data(registration_numbers: list):
-    if registration_numbers is None:
-        registration_numbers = []
-    else:
+def _get_cult_registry_data(registration_numbers: list[str]):
+    if not registration_numbers:
+        return {"present": [], "absent": [], "error": False}
+
+    if len(registration_numbers) > 500:
+        logger.warning("Only the first 500 registration numbers will be checked in ANAF Cult Registry")
         registration_numbers = registration_numbers[:500]
 
     yesterday = timezone.now() - timedelta(days=1)
     date_str = yesterday.strftime("%Y-%m-%d")
-    headers = {"Content-Type": "application/json"}
 
+    headers = {"Content-Type": "application/json"}
     payload = [{"cui": registration_number, "data": date_str} for registration_number in registration_numbers]
 
     r = requests.post(settings.ANAF_CULT_REGISTRY_ENDPOINT, headers=headers, data=json.dumps(payload))
     if r.status_code != 200:
+        logger.warning("Failed to check ANAF Cult Registry for: %s", " ".join(registration_numbers))
         return {"present": [], "absent": [], "error": True}
 
     present_registration_numbers = []
@@ -65,7 +68,7 @@ def _check_organizations_task(registration_numbers: list[str]) -> dict[str, int 
     return task_result
 
 
-def cult_registry_check_organizations(id_registration_numbers: list[tuple[int, str]], update_method: str | None = None):
+def cult_registry_check_organizations(id_registration_numbers: list[str], update_method: str | None = None):
     """
     Update the organization with the given ID asynchronously.
     """
