@@ -345,7 +345,7 @@ class NgoAdmin(ModelAdmin):
         link_name = _("Open the NGO donor list")
         link_url = reverse("admin:donations_donor_changelist")
         return format_html(
-            f'<a data-popup="yes" id="ngo_donor_list" class="related-widget-wrapper-link" href="{link_url}?ngo_id={obj.id}&_popup=1" target="_blank">{link_name}</a>'
+            f'<a data-popup="yes" id="ngo_donor_list" class="related-widget-wrapper-link" href="{link_url}?ngo_id={obj.pk}&_popup=1" target="_blank">{link_name}</a>'
         )
 
     @transaction.atomic
@@ -418,7 +418,7 @@ class NgoAdmin(ModelAdmin):
 
         task_results = []
         for ngo in queryset:
-            task_results.append(update_organization(ngo.id, update_method="sync"))
+            task_results.append(update_organization(ngo.pk, update_method="sync"))
 
         message = "NGO Update Results: | "
         for result in task_results:
@@ -437,7 +437,7 @@ class NgoAdmin(ModelAdmin):
     @action(description=_("Update from NGO Hub asynchronously"))
     def update_from_ngohub_async(self, request: HttpRequest, queryset: QuerySet[Ngo]):
         for ngo in queryset:
-            update_organization(ngo.id, update_method="async")
+            update_organization(ngo.pk, update_method="async")
 
         self.message_user(request, _("NGOs are being updated from NGO Hub."))
 
