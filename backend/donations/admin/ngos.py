@@ -1,14 +1,18 @@
+import codecs
+import csv
 import logging
 
 from django import forms
 from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth import get_user_model
+from django.core.exceptions import PermissionDenied, ValidationError
 from django.db import transaction
 from django.db.models import QuerySet
-from django.http import HttpRequest
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
-from django.urls import reverse, reverse_lazy
+from django.urls import path, reverse, reverse_lazy
+from django.utils import timezone
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 from unfold.admin import ModelAdmin, StackedInline, TabularInline
@@ -273,6 +277,62 @@ class NgoAdmin(ModelAdmin):
             },
         ),
     )
+
+    def get_urls(self):
+        return [
+            path(
+                "export/",
+                self.admin_site.admin_view(self.export_ngos),
+                name="export-cult-registry-ngos",
+            ),
+            *super().get_urls(),
+        ]
+
+    def export_ngos(self, request: HttpRequest):
+        if not request.user.has_perm("users.view_ngo"):
+            raise PermissionDenied
+
+        raw_registered = request.GET.get("registered")
+        if raw_registered is None:
+            registered = None
+        else:
+            registered = bool(int(raw_registered))
+
+        try:
+            ngos = Ngo.export_cult_registry(registered=registered)
+        except ValidationError as e:
+            return HttpResponse(e.message)
+
+        filename = "ngos_cult_registry_export_{}.csv".format(timezone.now())
+
+        response = HttpResponse(
+            content_type="text/csv; charset=utf-8-sig",
+            headers={"Content-Disposition": 'attachment; filename="{}"'.format(filename)},
+        )
+        response.write(codecs.BOM_UTF8)
+
+        writer = csv.writer(response, dialect=csv.excel)
+        writer.writerow(
+            (
+                _("Legal name"),
+                _("date created"),
+                _("NGO Hub organization ID"),
+                _("VAT ID"),
+                _("registration number"),
+                _("email"),
+                _("telephone"),
+                _("website"),
+                _("is verified"),
+                _("is active"),
+                _("presence in the ANAF Cult Registry"),
+                _("last completed check in the ANAF Cult Registry"),
+            )
+        )
+
+        for ngo in ngos:
+            writer.writerow(ngo)
+
+        return response
 
     def get_actions(self, request: HttpRequest):
         if request.user.is_superuser:

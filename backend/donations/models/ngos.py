@@ -455,6 +455,33 @@ class Ngo(CommonFilenameCacheModel):
         for cause in ngo.causes.all():
             cause.delete_prefilled_form()
 
+    @staticmethod
+    def export_cult_registry(*, registered: None | bool):
+        ngos_query = Ngo.objects
+        if registered is None:
+            ngos_query = ngos_query.filter(is_in_cult_registry__isnull=True)
+        elif not registered:
+            ngos_query = ngos_query.filter(is_in_cult_registry=False)
+        else:
+            ngos_query = ngos_query.filter(is_in_cult_registry=True)
+
+        ngos = ngos_query.values_list(
+            "name",
+            "date_created",
+            "ngohub_org_id",
+            "vat_id",
+            "registration_number",
+            "email",
+            "phone",
+            "website",
+            "is_verified",
+            "is_active",
+            "is_in_cult_registry",
+            "cult_registry_check_ended",
+        )
+
+        return ngos
+
 
 class CauseVisibilityChoices(models.TextChoices):
     PUBLIC = "pub", _("public")

@@ -12,6 +12,12 @@ from .environment import env
 
 export_sidebar_options = [
     {
+        "title": _("NGOs not in Cult Registry"),
+        "icon": "download_for_offline",
+        "link": format_lazy("{url}?registered=0", url=reverse_lazy("admin:export-cult-registry-ngos")),
+        "permission": lambda request: request.user.is_superuser,
+    },
+    {
         "title": _("All users"),
         "icon": "download_for_offline",
         "link": reverse_lazy("admin:export-users"),

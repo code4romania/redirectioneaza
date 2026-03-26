@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-23 11:55+0200\n"
+"POT-Creation-Date: 2026-03-26 16:28+0200\n"
 "PO-Revision-Date: 2025-03-27 14:49+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -312,8 +312,8 @@ msgstr "Are utilizator"
 #: donations/views/dashboard/ngo_dashboard.py:78
 #: donations/views/dashboard/stats_helpers/utils.py:12
 #: redirectioneaza/context_processors/headers.py:68
-#: redirectioneaza/settings/unfold.py:103
-#: redirectioneaza/settings/unfold.py:118
+#: redirectioneaza/settings/unfold.py:109
+#: redirectioneaza/settings/unfold.py:124
 msgid "Donations"
 msgstr "Redirecționări"
 
@@ -952,7 +952,7 @@ msgstr "acceptă lipsa înregistrării în Registrul entităților de cult"
 
 #: donations/models/ngos.py:282 partners/models.py:68
 #: redirectioneaza/context_processors/headers.py:63
-#: redirectioneaza/settings/unfold.py:106
+#: redirectioneaza/settings/unfold.py:112
 msgid "NGOs"
 msgstr "ONG-uri"
 
@@ -1017,7 +1017,7 @@ msgstr "Cauză"
 
 #: donations/models/ngos.py:542 donations/views/ngo_account/causes.py:181
 #: donations/views/ngo_account/causes.py:232 partners/admin.py:50
-#: partners/models.py:75 redirectioneaza/settings/unfold.py:112
+#: partners/models.py:75 redirectioneaza/settings/unfold.py:118
 #: templates/v2/ngo-account/causes/main.html:11
 msgid "Causes"
 msgstr "Cauze"
@@ -1696,7 +1696,7 @@ msgstr "Ordine"
 msgid "Section"
 msgstr "Secțiune"
 
-#: frequent_questions/models.py:16 redirectioneaza/settings/unfold.py:153
+#: frequent_questions/models.py:16 redirectioneaza/settings/unfold.py:159
 msgid "Sections"
 msgstr "Secțiuni"
 
@@ -1708,7 +1708,7 @@ msgstr "Întrebare"
 msgid "Answer"
 msgstr "Răspuns"
 
-#: frequent_questions/models.py:41 redirectioneaza/settings/unfold.py:159
+#: frequent_questions/models.py:41 redirectioneaza/settings/unfold.py:165
 msgid "Questions"
 msgstr "Întrebări"
 
@@ -1766,7 +1766,7 @@ msgstr "Invită un nou manager"
 
 #: partners/apps.py:8 partners/models.py:90
 #: redirectioneaza/context_processors/headers.py:73
-#: redirectioneaza/settings/unfold.py:142
+#: redirectioneaza/settings/unfold.py:148
 msgid "Partners"
 msgstr "Parteneri"
 
@@ -1882,7 +1882,7 @@ msgstr ""
 
 #: redirectioneaza/context_processors/headers.py:27
 #: redirectioneaza/context_processors/headers.py:37
-#: redirectioneaza/settings/unfold.py:150
+#: redirectioneaza/settings/unfold.py:156
 msgid "Frequently asked questions"
 msgstr "Întrebări frecvente"
 
@@ -1926,13 +1926,13 @@ msgid "FAQ Questions"
 msgstr "FAQ Întrebări"
 
 #: redirectioneaza/context_processors/headers.py:83
-#: redirectioneaza/settings/unfold.py:167
-#: redirectioneaza/settings/unfold.py:170 users/apps.py:8
+#: redirectioneaza/settings/unfold.py:173
+#: redirectioneaza/settings/unfold.py:176 users/apps.py:8
 msgid "Users"
 msgstr "Utilizatori"
 
 #: redirectioneaza/context_processors/headers.py:88
-#: redirectioneaza/settings/unfold.py:86 redirectioneaza/settings/unfold.py:89
+#: redirectioneaza/settings/unfold.py:92 redirectioneaza/settings/unfold.py:95
 msgid "Dashboard"
 msgstr "Tablou de bord"
 
@@ -1992,66 +1992,70 @@ msgid "Background Tasks"
 msgstr "Task-uri în fundal"
 
 #: redirectioneaza/settings/unfold.py:15
+msgid "NGOs not in Cult Registry"
+msgstr "ONG-uri neînscrise în Registrul entităților de cult"
+
+#: redirectioneaza/settings/unfold.py:21
 msgid "All users"
 msgstr "Toți utilizatorii"
 
-#: redirectioneaza/settings/unfold.py:21
+#: redirectioneaza/settings/unfold.py:27
 msgid "Users with NGOs"
 msgstr "Utilizatorii cu ONG-uri"
 
-#: redirectioneaza/settings/unfold.py:30
+#: redirectioneaza/settings/unfold.py:36
 msgid "Audit Logs"
 msgstr "Jurnal de audit"
 
-#: redirectioneaza/settings/unfold.py:36
+#: redirectioneaza/settings/unfold.py:42
 msgid "TASKS — Failed"
 msgstr "TASKS — Eșuate"
 
-#: redirectioneaza/settings/unfold.py:42
+#: redirectioneaza/settings/unfold.py:48
 msgid "TASKS — Queued"
 msgstr "TASKS — În coadă"
 
-#: redirectioneaza/settings/unfold.py:48
+#: redirectioneaza/settings/unfold.py:54
 msgid "TASKS — Scheduled"
 msgstr "TASKS — Recurente"
 
-#: redirectioneaza/settings/unfold.py:54
+#: redirectioneaza/settings/unfold.py:60
 msgid "TASKS — Successful"
 msgstr "TASKS — Reușite"
 
-#: redirectioneaza/settings/unfold.py:64
+#: redirectioneaza/settings/unfold.py:70
 msgid "Clear staging data"
 msgstr "Șterge datele din staging"
 
-#: redirectioneaza/settings/unfold.py:75
+#: redirectioneaza/settings/unfold.py:81
 msgid "Django SES Stats"
 msgstr "Statistici SES"
 
-#: redirectioneaza/settings/unfold.py:95
+#: redirectioneaza/settings/unfold.py:101
 msgid "Home page"
 msgstr "Pagina principală"
 
-#: redirectioneaza/settings/unfold.py:124
+#: redirectioneaza/settings/unfold.py:130
 msgid "Internal ANAF Archives"
 msgstr "Arhive ANAF interne"
 
-#: redirectioneaza/settings/unfold.py:130
+#: redirectioneaza/settings/unfold.py:136
 msgid "External ANAF Archives"
 msgstr "Arhive ANAF externe"
 
-#: redirectioneaza/settings/unfold.py:136
+#: redirectioneaza/settings/unfold.py:142
 msgid "Donation downloads"
 msgstr "Descărcări de donații"
 
-#: redirectioneaza/settings/unfold.py:176 users/models.py:211
+#: redirectioneaza/settings/unfold.py:182 users/models.py:211
 msgid "Groups"
 msgstr "Grupuri"
 
-#: redirectioneaza/settings/unfold.py:184
+#: redirectioneaza/settings/unfold.py:190
 msgid "Data Export"
 msgstr "Export de date"
 
-#: redirectioneaza/settings/unfold.py:189
+#: redirectioneaza/settings/unfold.py:195
 msgid "Advanced"
 msgstr "Avansat"
 
