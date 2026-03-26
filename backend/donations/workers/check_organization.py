@@ -44,7 +44,7 @@ def _get_cult_registry_data(registration_numbers: list[str]):
 
 def _check_organizations_task(registration_numbers: list[str]) -> dict[str, int | list[str]]:
     """
-    Check the organizations with the given ID.
+    Check the organizations with the given registration numbers
     """
     Ngo.objects.filter(registration_number__in=registration_numbers).update(cult_registry_check_started=timezone.now())
 
