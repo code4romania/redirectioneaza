@@ -1,0 +1,9 @@
+#!/command/with-contenv sh
+
+[ "${ENVIRONMENT}" = "development" ] || [ "${ENVIRONMENT}" = "debug" ] || [ "${ENVIRONMENT}" = "debugwait" ] || exit 0
+
+exec watchmedo shell-command \
+  --patterns="*.po" \
+  --recursive \
+  --command='echo "Recompiling messages..." && python3 /var/www/redirect/backend/manage.py compilemessages' \
+  /var/www/redirect/backend/locale/
