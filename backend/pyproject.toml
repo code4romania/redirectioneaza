@@ -32,7 +32,7 @@ dependencies = [
   "pymysql~=1.1.0",
   "pypdf~=6.9.2",
   "reportlab~=4.4.0",
-  "requests~=2.32.0",
+  "requests~=2.33.0",
   "sentry-sdk[django]~=2.51.0",
   "whitenoise~=6.11.0",
 ]
