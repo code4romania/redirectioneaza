@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-26 16:28+0200\n"
+"POT-Creation-Date: 2026-03-29 23:47+0300\n"
 "PO-Revision-Date: 2025-03-27 14:48+0000\n"
 "Last-Translator: Andrei Ioniță <andrei.ionita@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -40,10 +40,10 @@ msgstr ""
 #: donations/admin/causes.py:75 donations/admin/common.py:23
 #: donations/admin/donors.py:251 donations/admin/download_jobs.py:22
 #: donations/admin/download_jobs.py:50 donations/admin/jobs.py:22
-#: donations/admin/jobs.py:55 donations/admin/ngos.py:218
-#: donations/admin/ngos.py:317 donations/models/donors.py:71
+#: donations/admin/jobs.py:55 donations/admin/ngos.py:222
+#: donations/admin/ngos.py:380 donations/models/donors.py:71
 #: donations/models/downloads.py:10 donations/models/jobs.py:13
-#: donations/models/ngos.py:281 partners/models.py:148 users/models.py:73
+#: donations/models/ngos.py:282 partners/models.py:148 users/models.py:73
 msgid "NGO"
 msgstr "NGO"
 
@@ -65,7 +65,7 @@ msgstr "Form Data"
 
 #: donations/admin/common.py:62 donations/admin/donors.py:277
 #: donations/admin/download_jobs.py:40 donations/admin/jobs.py:45
-#: donations/admin/ngos.py:267 templates/v2/ngo-account/byof/list-header.html:7
+#: donations/admin/ngos.py:271 templates/v2/ngo-account/byof/list-header.html:7
 msgid "Date"
 msgstr "Date"
 
@@ -254,11 +254,11 @@ msgstr "Number of donations"
 msgid "Status"
 msgstr "Status"
 
-#: donations/admin/ngos.py:38
+#: donations/admin/ngos.py:42
 msgid "Existing User"
 msgstr "Existing User"
 
-#: donations/admin/ngos.py:39
+#: donations/admin/ngos.py:43
 msgid ""
 "Select the new owner of the NGO. You can only select active users that don't "
 "have an NGO."
@@ -266,33 +266,33 @@ msgstr ""
 "Select the new owner of the NGO. You can only select active users that don't "
 "have an NGO."
 
-#: donations/admin/ngos.py:73
+#: donations/admin/ngos.py:77
 #, fuzzy
 #| msgid "User Link"
 msgid "Cause link"
 msgstr "User Link"
 
-#: donations/admin/ngos.py:104
+#: donations/admin/ngos.py:108
 msgid "User Link"
 msgstr "User Link"
 
-#: donations/admin/ngos.py:108
+#: donations/admin/ngos.py:112
 msgid "User Details"
 msgstr "User Details"
 
-#: donations/admin/ngos.py:112
+#: donations/admin/ngos.py:116
 msgid "User Permissions"
 msgstr "User Permissions"
 
-#: donations/admin/ngos.py:120
+#: donations/admin/ngos.py:124
 msgid "User"
 msgstr "User"
 
-#: donations/admin/ngos.py:127
+#: donations/admin/ngos.py:131
 msgid "Has NGO Hub account"
 msgstr "Has NGO Hub account"
 
-#: donations/admin/ngos.py:131 donations/admin/ngos.py:151
+#: donations/admin/ngos.py:135 donations/admin/ngos.py:155
 #: donations/forms/ngo_account.py:46
 #: donations/views/ngo_account/my_organization.py:55
 #: templates/v2/ngo-account/causes/list-items.html:46
@@ -300,7 +300,7 @@ msgstr "Has NGO Hub account"
 msgid "Yes"
 msgstr "Yes"
 
-#: donations/admin/ngos.py:131 donations/admin/ngos.py:151
+#: donations/admin/ngos.py:135 donations/admin/ngos.py:155
 #: donations/forms/ngo_account.py:46
 #: donations/views/ngo_account/my_organization.py:55
 #: templates/v2/ngo-account/causes/list-items.html:48
@@ -308,11 +308,11 @@ msgstr "Yes"
 msgid "No"
 msgstr "No"
 
-#: donations/admin/ngos.py:147
+#: donations/admin/ngos.py:151
 msgid "Has owner"
 msgstr "Has owner"
 
-#: donations/admin/ngos.py:214 donations/admin/ngos.py:343 donations/apps.py:8
+#: donations/admin/ngos.py:218 donations/admin/ngos.py:406 donations/apps.py:8
 #: donations/views/dashboard/admin_dashboard.py:64
 #: donations/views/dashboard/ngo_dashboard.py:78
 #: donations/views/dashboard/stats_helpers/utils.py:12
@@ -322,84 +322,158 @@ msgstr "Has owner"
 msgid "Donations"
 msgstr "Donations"
 
-#: donations/admin/ngos.py:229
+#: donations/admin/ngos.py:233
 msgid "Activity"
 msgstr "Activity"
 
-#: donations/admin/ngos.py:240
+#: donations/admin/ngos.py:244
 msgid "ANAF Cult Registry"
 msgstr ""
 
-#: donations/admin/ngos.py:251 redirectioneaza/context_processors/headers.py:43
+#: donations/admin/ngos.py:255 redirectioneaza/context_processors/headers.py:43
 msgid "Contact"
 msgstr "Contact"
 
-#: donations/admin/ngos.py:329
+#: donations/admin/ngos.py:317
+#, fuzzy
+#| msgid "first name"
+msgid "User first name"
+msgstr "first name"
+
+#: donations/admin/ngos.py:318
+#, fuzzy
+#| msgid "last name"
+msgid "User last name"
+msgstr "last name"
+
+#: donations/admin/ngos.py:319
+#, fuzzy
+#| msgid "User Email"
+msgid "User email"
+msgstr "User Email"
+
+#: donations/admin/ngos.py:320 donations/models/ngos.py:179
+#, fuzzy
+#| msgid "Last name"
+msgid "Legal name"
+msgstr "Last name"
+
+#: donations/admin/ngos.py:321 donations/models/byof.py:84
+#: donations/models/common.py:31 donations/models/donors.py:160
+#: donations/models/ngos.py:273 donations/models/ngos.py:563
+#: partners/models.py:82 users/models.py:97
+msgid "date created"
+msgstr "date created"
+
+#: donations/admin/ngos.py:322 donations/models/ngos.py:183
+msgid "NGO Hub organization ID"
+msgstr "NGO Hub organization ID"
+
+#: donations/admin/ngos.py:323 donations/models/ngos.py:203
+msgid "VAT ID"
+msgstr "VAT ID"
+
+#: donations/admin/ngos.py:324 donations/models/ngos.py:194
+msgid "registration number"
+msgstr "registration number"
+
+#: donations/admin/ngos.py:325 templates/v2/emails/admin/new-ngo/main.html:22
+#: templates/v2/emails/admin/new-ngo/main.txt:6
+msgid "NGO email"
+msgstr "NGO email"
+
+#: donations/admin/ngos.py:326 donations/models/donors.py:104
+#: donations/models/ngos.py:237
+msgid "telephone"
+msgstr "telephone"
+
+#: donations/admin/ngos.py:327 donations/models/ngos.py:242
+msgid "website"
+msgstr "website"
+
+#: donations/admin/ngos.py:328 donations/models/ngos.py:245 users/models.py:89
+msgid "is verified"
+msgstr "is verified"
+
+#: donations/admin/ngos.py:329 donations/models/ngos.py:254
+#: partners/models.py:45
+msgid "is active"
+msgstr "is active"
+
+#: donations/admin/ngos.py:330 donations/models/ngos.py:267
+msgid "presence in the ANAF Cult Registry"
+msgstr ""
+
+#: donations/admin/ngos.py:331 donations/models/ngos.py:261
+msgid "last completed check in the ANAF Cult Registry"
+msgstr ""
+
+#: donations/admin/ngos.py:392
 msgid "NGO Hub link"
 msgstr "NGO Hub link"
 
-#: donations/admin/ngos.py:339
+#: donations/admin/ngos.py:402
 msgid "CIF"
 msgstr "CIF"
 
-#: donations/admin/ngos.py:345
+#: donations/admin/ngos.py:408
 msgid "Open the NGO donor list"
 msgstr "Open the NGO donor list"
 
-#: donations/admin/ngos.py:356
+#: donations/admin/ngos.py:419
 msgid "This user already has an NGO."
 msgstr "This user already has an NGO."
 
-#: donations/admin/ngos.py:362
+#: donations/admin/ngos.py:425
 msgid "This user is a staff member."
 msgstr "This user is a staff member."
 
-#: donations/admin/ngos.py:368
+#: donations/admin/ngos.py:431
 msgid "This user is an NGO Hub user."
 msgstr "This user is an NGO Hub user."
 
-#: donations/admin/ngos.py:380
+#: donations/admin/ngos.py:443
 msgid "Owner changed successfully."
 msgstr "Owner changed successfully."
 
-#: donations/admin/ngos.py:383
+#: donations/admin/ngos.py:446
 msgid "Change owner"
 msgstr "Change owner"
 
-#: donations/admin/ngos.py:400 partners/admin.py:179
+#: donations/admin/ngos.py:463 partners/admin.py:179
 msgid "The form is not valid."
 msgstr "The form is not valid."
 
-#: donations/admin/ngos.py:410
+#: donations/admin/ngos.py:473
 #, python-format
 msgid "Change owner of NGO '%(name)s'"
 msgstr "Change owner of NGO '%(name)s'"
 
-#: donations/admin/ngos.py:415
+#: donations/admin/ngos.py:478
 msgid "Update from NGO Hub synchronously"
 msgstr "Update from NGO Hub synchronously"
 
-#: donations/admin/ngos.py:437
+#: donations/admin/ngos.py:500
 msgid "Update from NGO Hub asynchronously"
 msgstr "Update from NGO Hub asynchronously"
 
-#: donations/admin/ngos.py:442
+#: donations/admin/ngos.py:505
 msgid "NGOs are being updated from NGO Hub."
 msgstr "NGOs are being updated from NGO Hub."
 
-#: donations/admin/ngos.py:444
+#: donations/admin/ngos.py:507
 msgid "Check in ANAF Cult Registry synchronously"
 msgstr ""
 
-#: donations/admin/ngos.py:464
+#: donations/admin/ngos.py:527
 msgid "Check in ANAF Cult Registry asynchronously"
 msgstr ""
 
-#: donations/admin/ngos.py:468
+#: donations/admin/ngos.py:531
 msgid "NGOs are being searched in ANAF Cult Registry."
 msgstr ""
 
-#: donations/admin/ngos.py:470
+#: donations/admin/ngos.py:533
 msgid "Remove prefilled forms"
 msgstr "Remove prefilled forms"
 
@@ -683,14 +757,8 @@ msgstr ""
 msgid "status"
 msgstr "status"
 
-#: donations/models/byof.py:84 donations/models/common.py:31
-#: donations/models/donors.py:160 donations/models/ngos.py:272
-#: donations/models/ngos.py:530 partners/models.py:82 users/models.py:97
-msgid "date created"
-msgstr "date created"
-
-#: donations/models/byof.py:85 donations/models/ngos.py:273
-#: donations/models/ngos.py:531 partners/models.py:83 users/models.py:98
+#: donations/models/byof.py:85 donations/models/ngos.py:274
+#: donations/models/ngos.py:564 partners/models.py:83 users/models.py:98
 msgid "date updated"
 msgstr "date updated"
 
@@ -766,20 +834,16 @@ msgstr "CNP"
 msgid "city"
 msgstr "city"
 
-#: donations/models/donors.py:93 donations/models/ngos.py:225
+#: donations/models/donors.py:93 donations/models/ngos.py:226
 #: donations/views/download_donations/main.py:194
 msgid "county"
 msgstr "county"
 
-#: donations/models/donors.py:100 donations/models/ngos.py:215
+#: donations/models/donors.py:100 donations/models/ngos.py:216
 msgid "address"
 msgstr "address"
 
-#: donations/models/donors.py:104 donations/models/ngos.py:236
-msgid "telephone"
-msgstr "telephone"
-
-#: donations/models/donors.py:112 donations/models/ngos.py:235
+#: donations/models/donors.py:112 donations/models/ngos.py:236
 #: donations/views/download_donations/main.py:193
 msgid "email"
 msgstr "email"
@@ -892,7 +956,7 @@ msgstr "job"
 msgid "jobs"
 msgstr "jobs"
 
-#: donations/models/ngos.py:92
+#: donations/models/ngos.py:93
 #, python-format
 msgid ""
 "'%(value)s' is not a valid identifier. The identifier must look like "
@@ -901,158 +965,120 @@ msgstr ""
 "'%(value)s' is not a valid identifier. The identifier must look like "
 "%(sample)s"
 
-#: donations/models/ngos.py:178
-#, fuzzy
-#| msgid "Last name"
-msgid "Legal name"
-msgstr "Last name"
-
-#: donations/models/ngos.py:182
-msgid "NGO Hub organization ID"
-msgstr "NGO Hub organization ID"
-
-#: donations/models/ngos.py:188 donations/models/ngos.py:189
+#: donations/models/ngos.py:189 donations/models/ngos.py:190
 msgid "Last NGO Hub update"
 msgstr "Last NGO Hub update"
 
-#: donations/models/ngos.py:193
-msgid "registration number"
-msgstr "registration number"
-
-#: donations/models/ngos.py:202
-msgid "VAT ID"
-msgstr "VAT ID"
-
-#: donations/models/ngos.py:210
+#: donations/models/ngos.py:211
 msgid "registration validation failed"
 msgstr "registration validation failed"
 
-#: donations/models/ngos.py:217
+#: donations/models/ngos.py:218
 msgid "locality"
 msgstr "locality"
 
-#: donations/models/ngos.py:233
+#: donations/models/ngos.py:234
 msgid "active region"
 msgstr "active region"
 
-#: donations/models/ngos.py:238
+#: donations/models/ngos.py:239
 msgid "display email"
 msgstr "display email"
 
-#: donations/models/ngos.py:239
+#: donations/models/ngos.py:240
 msgid "display phone"
 msgstr "display phone"
 
-#: donations/models/ngos.py:241
-msgid "website"
-msgstr "website"
-
-#: donations/models/ngos.py:244 users/models.py:89
-msgid "is verified"
-msgstr "is verified"
-
-#: donations/models/ngos.py:248
+#: donations/models/ngos.py:249
 msgid "has special status"
 msgstr "has special status"
 
-#: donations/models/ngos.py:250
+#: donations/models/ngos.py:251
 #, fuzzy
 #| msgid "Go to account"
 msgid "has online tax account"
 msgstr "Go to account"
 
-#: donations/models/ngos.py:253 partners/models.py:45
-msgid "is active"
-msgstr "is active"
-
-#: donations/models/ngos.py:257
+#: donations/models/ngos.py:258
 msgid "last started check in the ANAF Cult Registry"
 msgstr ""
 
-#: donations/models/ngos.py:260
-msgid "last completed check in the ANAF Cult Registry"
-msgstr ""
-
-#: donations/models/ngos.py:263
+#: donations/models/ngos.py:264
 msgid "pause checking the ANAF Cult Registry"
 msgstr ""
 
-#: donations/models/ngos.py:266
-msgid "presence in the ANAF Cult Registry"
-msgstr ""
-
-#: donations/models/ngos.py:269
+#: donations/models/ngos.py:270
 msgid "acknowledge missing ANAF Cult Registry info"
 msgstr ""
 
-#: donations/models/ngos.py:282 partners/models.py:68
+#: donations/models/ngos.py:283 partners/models.py:68
 #: redirectioneaza/context_processors/headers.py:63
 #: redirectioneaza/settings/unfold.py:112
 msgid "NGOs"
 msgstr "NGOs"
 
-#: donations/models/ngos.py:460
+#: donations/models/ngos.py:493
 msgid "public"
 msgstr ""
 
-#: donations/models/ngos.py:461
+#: donations/models/ngos.py:494
 msgid "unlisted"
 msgstr ""
 
-#: donations/models/ngos.py:462
+#: donations/models/ngos.py:495
 msgid "private"
 msgstr ""
 
-#: donations/models/ngos.py:484
+#: donations/models/ngos.py:517
 msgid "is main cause"
 msgstr ""
 
-#: donations/models/ngos.py:485
+#: donations/models/ngos.py:518
 msgid "allow online collection"
 msgstr "allow online collection"
 
-#: donations/models/ngos.py:488
+#: donations/models/ngos.py:521
 msgid "form visibility"
 msgstr ""
 
-#: donations/models/ngos.py:498
+#: donations/models/ngos.py:531
 msgid "logo"
 msgstr "logo"
 
-#: donations/models/ngos.py:506
+#: donations/models/ngos.py:539
 msgid "slug"
 msgstr "slug"
 
-#: donations/models/ngos.py:515 partners/models.py:30 stats/models.py:7
+#: donations/models/ngos.py:548 partners/models.py:30 stats/models.py:7
 msgid "name"
 msgstr "name"
 
-#: donations/models/ngos.py:516
+#: donations/models/ngos.py:549
 msgid "description"
 msgstr "description"
 
-#: donations/models/ngos.py:518
+#: donations/models/ngos.py:551
 msgid "bank account"
 msgstr "bank account"
 
-#: donations/models/ngos.py:520
+#: donations/models/ngos.py:553
 #, fuzzy
 #| msgid "Donation exports"
 msgid "notifications email"
 msgstr "Donation exports"
 
-#: donations/models/ngos.py:523
+#: donations/models/ngos.py:556
 msgid "form with prefilled cause"
 msgstr "form with prefilled ngo data"
 
-#: donations/models/ngos.py:541 donations/views/ngo_account_filters.py:154
+#: donations/models/ngos.py:574 donations/views/ngo_account_filters.py:154
 #: partners/admin.py:49 partners/models.py:182
 #: templates/v2/ngo-account/archives/list-header.html:13
 #: templates/v2/ngo-account/causes/list-header.html:4
 msgid "Cause"
 msgstr "Cause"
 
-#: donations/models/ngos.py:542 donations/views/ngo_account/causes.py:181
+#: donations/models/ngos.py:575 donations/views/ngo_account/causes.py:181
 #: donations/views/ngo_account/causes.py:232 partners/admin.py:50
 #: partners/models.py:75 redirectioneaza/settings/unfold.py:118
 #: templates/v2/ngo-account/causes/main.html:11
@@ -2868,11 +2894,6 @@ msgstr "A new NGO has registered on redirectioneaza.ro"
 #: templates/v2/emails/admin/new-ngo/main.txt:5
 msgid "NGO name"
 msgstr "NGO name"
-
-#: templates/v2/emails/admin/new-ngo/main.html:22
-#: templates/v2/emails/admin/new-ngo/main.txt:6
-msgid "NGO email"
-msgstr "NGO email"
 
 #: templates/v2/emails/base-footer.html:19
 msgid "If you have any questions, please contact us at"

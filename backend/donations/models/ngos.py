@@ -5,6 +5,7 @@ from typing import Any
 
 from auditlog.registry import auditlog
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.core.cache import cache
 from django.core.exceptions import ValidationError
 from django.core.files.storage import storages
@@ -457,27 +458,32 @@ class Ngo(CommonFilenameCacheModel):
 
     @staticmethod
     def export_cult_registry(*, registered: None | bool):
-        ngos_query = Ngo.objects
+        UserModel = get_user_model()
+
+        ngos_query = UserModel.objects.exclude(ngo__isnull=True).select_related("ngo").distinct("ngo")
         if registered is None:
-            ngos_query = ngos_query.filter(is_in_cult_registry__isnull=True)
+            ngos_query = ngos_query.filter(ngo__is_in_cult_registry__isnull=True)
         elif not registered:
-            ngos_query = ngos_query.filter(is_in_cult_registry=False)
+            ngos_query = ngos_query.filter(ngo__is_in_cult_registry=False)
         else:
-            ngos_query = ngos_query.filter(is_in_cult_registry=True)
+            ngos_query = ngos_query.filter(ngo__is_in_cult_registry=True)
 
         ngos = ngos_query.values_list(
-            "name",
-            "date_created",
-            "ngohub_org_id",
-            "vat_id",
-            "registration_number",
+            "first_name",
+            "last_name",
             "email",
-            "phone",
-            "website",
-            "is_verified",
-            "is_active",
-            "is_in_cult_registry",
-            "cult_registry_check_ended",
+            "ngo__name",
+            "ngo__date_created",
+            "ngo__ngohub_org_id",
+            "ngo__vat_id",
+            "ngo__registration_number",
+            "ngo__email",
+            "ngo__phone",
+            "ngo__website",
+            "ngo__is_verified",
+            "ngo__is_active",
+            "ngo__is_in_cult_registry",
+            "ngo__cult_registry_check_ended",
         )
 
         return ngos
