@@ -314,12 +314,15 @@ class NgoAdmin(ModelAdmin):
         writer = csv.writer(response, dialect=csv.excel)
         writer.writerow(
             (
+                _("User first name"),
+                _("User last name"),
+                _("User email"),
                 _("Legal name"),
                 _("date created"),
                 _("NGO Hub organization ID"),
                 _("VAT ID"),
                 _("registration number"),
-                _("email"),
+                _("NGO email"),
                 _("telephone"),
                 _("website"),
                 _("is verified"),
