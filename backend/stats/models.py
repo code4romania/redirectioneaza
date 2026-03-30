@@ -20,7 +20,7 @@ class Stat(models.Model):
         verbose_name = _("statistic")
         verbose_name_plural = _("statistics")
 
-        ordering = ["-date", "name"]
+        ordering = ("-date", "name")
 
         constraints = [
             models.UniqueConstraint(

@@ -83,7 +83,7 @@ class NgoPresentationForm(forms.Form):
             return None
 
         # allowed types: PNG, JPG, GIF, HEIF
-        allowed_types = ["image/jpeg", "image/png", "image/gif", "image/heif"]
+        allowed_types = ("image/jpeg", "image/png", "image/gif", "image/heif")
         if logo.content_type not in allowed_types:
             raise forms.ValidationError(_("The logo type is not supported."))
 
@@ -180,4 +180,4 @@ class BringYourOwnDataForm(forms.ModelForm):
 
     class Meta:
         model = OwnFormsUpload
-        fields = ["bank_account", "uploaded_data"]
+        fields = ("bank_account", "uploaded_data")

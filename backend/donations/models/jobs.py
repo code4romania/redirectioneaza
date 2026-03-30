@@ -41,5 +41,5 @@ class Job(AsyncJob):
         verbose_name = _("job")
         verbose_name_plural = _("jobs")
 
-        ordering = ["-date_created"]
+        ordering = ("-date_created",)
         get_latest_by = "date_created"
