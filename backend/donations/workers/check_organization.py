@@ -26,9 +26,14 @@ def _get_cult_registry_data(registration_numbers: list[str]):
     headers = {"Content-Type": "application/json"}
     payload = [{"cui": registration_number, "data": date_str} for registration_number in registration_numbers]
 
-    r = requests.post(settings.ANAF_CULT_REGISTRY_ENDPOINT, headers=headers, data=json.dumps(payload))
+    try:
+        r = requests.post(settings.ANAF_CULT_REGISTRY_ENDPOINT, headers=headers, data=json.dumps(payload))
+    except ConnectionResetError:
+        logger.exception("Failed to check ANAF Cult Registry for: %s", ", ".join(registration_numbers))
+        return {"present": [], "absent": [], "error": True}
+
     if r.status_code != 200:
-        logger.warning("Failed to check ANAF Cult Registry for: %s", " ".join(registration_numbers))
+        logger.error("Failed to check ANAF Cult Registry for: %s", ", ".join(registration_numbers))
         return {"present": [], "absent": [], "error": True}
 
     present_registration_numbers = []
