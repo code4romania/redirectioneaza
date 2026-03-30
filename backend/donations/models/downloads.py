@@ -27,5 +27,5 @@ class RedirectionsDownloadJob(AsyncJob):
         verbose_name = _("download job")
         verbose_name_plural = _("download jobs")
 
-        ordering = ["-date_created"]
+        ordering = ("-date_created",)
         get_latest_by = "date_created"

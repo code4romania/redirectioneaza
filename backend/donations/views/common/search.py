@@ -76,7 +76,7 @@ class CommonSearchMixin(ListView):
 class NgoSearchMixin(CommonSearchMixin):
     @classmethod
     def get_search_results(cls, queryset: QuerySet, query: str, language_code: str) -> QuerySet:
-        search_fields = ["name", "registration_number"]
+        search_fields = ("name", "registration_number")
         search_vector: SearchVector = ConfigureSearch.vector(search_fields, language_code)
         search_query: SearchQuery = ConfigureSearch.query(query, language_code)
 
@@ -103,7 +103,7 @@ class NgoSearchMixin(CommonSearchMixin):
 class DeprecatedCauseSearchMixin(CommonSearchMixin):
     @classmethod
     def get_search_results(cls, queryset: QuerySet, query: str, language_code: str) -> QuerySet[Cause]:
-        search_fields = ["name"]
+        search_fields = ("name",)
         search_vector: SearchVector = ConfigureSearch.vector(search_fields, language_code)
         search_query: SearchQuery = ConfigureSearch.query(query, language_code)
 
@@ -179,11 +179,11 @@ class NgoCauseMixedSearchMixin(CommonSearchMixin):
 class DonorSearchMixin(CommonSearchMixin):
     @classmethod
     def get_search_results(cls, queryset: QuerySet[Donor], query: str, language_code: str) -> QuerySet:
-        search_fields = ["f_name", "l_name"]
+        search_fields = ("f_name", "l_name")
         name_search_vector: SearchVector = ConfigureSearch.vector(search_fields, language_code)
         name_search_query: SearchQuery = ConfigureSearch.query(query, language_code)
 
-        contact_search_fields = ["email", "phone"]
+        contact_search_fields = ("email", "phone")
         contact_search_vector: SearchVector = ConfigureSearch.vector(contact_search_fields, language_code)
         contact_search_query: SearchQuery = ConfigureSearch.query(query, language_code)
 
