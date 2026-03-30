@@ -17,6 +17,7 @@ class Command(BaseCommand):
 
         registration_numbers = set(
             Ngo.objects.exclude(pause_cult_registry_check=True)
+            .filter(registration_number_valid=True)
             .filter(
                 # ASAP check NGOs which are were not yet checked in the registry:
                 Q(Q(is_in_cult_registry__isnull=True) & Q(cult_registry_check_started__isnull=True))
