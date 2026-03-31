@@ -14,7 +14,7 @@ from utils.models_hashing import hash_id_secret
 
 def year_ngo_donor_directory_path(subdir: str, instance: "Donor", filename: str) -> str:
     """
-    The file will be uploaded to MEDIA_ROOT/<subdir>/<year>/c-<cause.id>-<cause.hash>/<id>_<hash>_<filename>
+    The file will be uploaded to MEDIA_ROOT/<subdir>/<year>/c-<cause.pk>-<cause.hash>/<id>_<hash>_<filename>
     """
     timestamp = timezone.now()
     year = timestamp.date().year
@@ -321,7 +321,7 @@ class Donor(models.Model):
             "donor-download-link",
             kwargs={
                 "donor_date_str": self.date_str,
-                "donor_id": self.id,
+                "donor_id": self.pk,
                 "donor_hash": self.donation_hash,
             },
         )

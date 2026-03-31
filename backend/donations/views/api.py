@@ -134,9 +134,9 @@ class GenerateCauseArchive(BaseTemplateView):
 
         try:
             if settings.FORMS_DOWNLOAD_METHOD == "async":
-                call_command("download_donations", new_job.id)
+                call_command("download_donations", new_job.pk)
             else:
-                call_command("download_donations", new_job.id, "--run")
+                call_command("download_donations", new_job.pk, "--run")
         except Exception as e:
             logging.error(e)
 

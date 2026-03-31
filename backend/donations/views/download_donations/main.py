@@ -34,7 +34,7 @@ logger = logging.getLogger(__name__)
 
 def download_donations_job(job_id: int = 0):
     try:
-        job: Job = Job.objects.select_related("cause").get(id=job_id)
+        job: Job = Job.objects.select_related("cause").get(pk=job_id)
     except Job.DoesNotExist:
         logger.error("Job with ID %d does not exist", job_id)
         return
@@ -53,7 +53,7 @@ def download_donations_job(job_id: int = 0):
 
         return
 
-    file_name = f"n{cause.id:06d}__{datetime.strftime(timestamp, '%Y%m%d_%H%M')}.zip"
+    file_name = f"n{cause.pk:06d}__{datetime.strftime(timestamp, '%Y%m%d_%H%M')}.zip"
 
     with tempfile.TemporaryDirectory(prefix=f"rdr_zip_{job_id:06d}_") as tmp_dir_name:
         logger.info("Created temporary directory '%s'", tmp_dir_name)
@@ -70,7 +70,7 @@ def download_donations_job(job_id: int = 0):
             return
 
     mail_context = {
-        "action_url": build_uri(reverse("my-organization:archive-download-link", kwargs={"job_id": job.id})),
+        "action_url": build_uri(reverse("my-organization:archive-download-link", kwargs={"job_id": job.pk})),
     }
     mail_context.update(extend_email_context())
 
@@ -113,7 +113,7 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], cause: Cau
                 continue
 
             donation_timestamp: datetime = donation_object.date_created
-            filename = f"{datetime.strftime(donation_timestamp, '%Y%m%d_%H%M')}__d{donation_object.id:06d}.pdf"
+            filename = f"{datetime.strftime(donation_timestamp, '%Y%m%d_%H%M')}__d{donation_object.pk:06d}.pdf"
 
             retries_left = 2
             while retries_left > 0:
@@ -258,9 +258,9 @@ def _get_pdf_url(donation: Donor) -> str:
         source_url = ""
 
     if not source_url:
-        logger.info("Donation #%d has no PDF URL", donation.id)
+        logger.info("Donation #%d has no PDF URL", donation.pk)
     else:
-        logger.debug("Donation #%d PDF URL: '%s'", donation.id, source_url)
+        logger.debug("Donation #%d PDF URL: '%s'", donation.pk, source_url)
 
     return source_url
 

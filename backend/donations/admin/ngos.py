@@ -445,7 +445,7 @@ class NgoAdmin(ModelAdmin):
 
     @action(description=_("Change owner"))
     def change_owner(self, request: HttpRequest, object_id):
-        ngo = Ngo.objects.get(id=object_id)
+        ngo = Ngo.objects.get(pk=object_id)
 
         if request.method == "POST":
             form = ChangeNgoOwnerForm(request.POST)

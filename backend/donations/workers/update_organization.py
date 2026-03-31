@@ -198,17 +198,17 @@ def _update_local_ngo_with_ngohub_data(ngo: Ngo, ngohub_ngo: Organization) -> di
         ngo.full_clean()
         ngo.save()
     except DatabaseError as e:
-        logger.exception(f"Database error while saving NGO {ngo.id}:\n{e}")
-        errors.append(f"Database error while saving NGO {ngo.id}:\n{e}")
+        logger.exception(f"Database error while saving NGO {ngo.pk}:\n{e}")
+        errors.append(f"Database error while saving NGO {ngo.pk}:\n{e}")
         return {
-            "ngo_id": ngo.id,
+            "ngo_id": ngo.pk,
             "errors": errors,
         }
     except ValidationError as e:
-        logger.exception(f"Validation error while updating NGO {ngo.id}:\n{e}")
-        errors.append(f"Validation error while updating NGO {ngo.id}:\n{e}")
+        logger.exception(f"Validation error while updating NGO {ngo.pk}:\n{e}")
+        errors.append(f"Validation error while updating NGO {ngo.pk}:\n{e}")
         return {
-            "ngo_id": ngo.id,
+            "ngo_id": ngo.pk,
             "errors": errors,
         }
 
@@ -225,7 +225,7 @@ def _update_local_ngo_with_ngohub_data(ngo: Ngo, ngohub_ngo: Organization) -> di
     ngo.save()
 
     task_result: dict = {
-        "ngo_id": ngo.id,
+        "ngo_id": ngo.pk,
         "errors": errors,
     }
 
@@ -249,7 +249,7 @@ def _update_organization_task(organization_id: int, token: str = "") -> dict[str
     except HubHTTPException as e:
         logger.exception(f"Error while fetching NGO Hub data for NGO ID {ngohub_id}:\n{e}")
         return {
-            "ngo_id": ngo.id,
+            "ngo_id": ngo.pk,
             "errors": [f"Error while fetching NGO Hub data for NGO ID {ngohub_id}:\n{e}"],
         }
 
@@ -294,7 +294,7 @@ def create_organization_for_user(user, ngohub_org_data: Organization) -> Ngo:
         _update_local_ngo_with_ngohub_data(ngo, ngohub_org_data)
     except DatabaseError as e:
         logger.exception(
-            f"Database error while creating NGO for user {user.id} with NGO Hub ID {ngohub_org_data.id}:\n{e}"
+            f"Database error while creating NGO for user {user.pk} with NGO Hub ID {ngohub_org_data.id}:\n{e}"
         )
         ngo.delete()
         raise e

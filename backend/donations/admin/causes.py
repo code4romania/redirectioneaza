@@ -47,11 +47,11 @@ class CauseAdmin(ModelAdmin, CommonCauseFields):
 
             try:
                 if settings.FORMS_DOWNLOAD_METHOD == "async":
-                    call_command("download_donations", new_job.id)
+                    call_command("download_donations", new_job.pk)
                 else:
-                    call_command("download_donations", new_job.id, "--run")
+                    call_command("download_donations", new_job.pk, "--run")
 
-                ngo_names.append(f"{ngo.id} - {ngo.name}")
+                ngo_names.append(f"{ngo.pk} - {ngo.name}")
             except Exception as e:
                 logger.error(e)
 
