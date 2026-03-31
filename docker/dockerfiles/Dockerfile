@@ -43,7 +43,7 @@ ENV PATH="${VIRTUAL_ENV}/bin:${PATH}"
 WORKDIR /build
 
 COPY ./backend/pyproject.toml ./backend/uv.lock ./
-RUN uv sync --active --locked --compile-bytecode
+RUN uv sync --no-dev --active --locked --compile-bytecode
 
 
 FROM python:${PYTHON_VERSION}-slim-trixie
