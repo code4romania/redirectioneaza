@@ -1,5 +1,6 @@
 import logging
 from datetime import timedelta
+from random import randint
 
 from django.utils import timezone
 from django_q.models import Schedule
@@ -19,5 +20,5 @@ class Command(SchedulerCommand):
         "schedule_type": Schedule.MINUTES,
         "minutes": 5,
         "repeats": -1,
-        "next_run": timezone.now() + timedelta(minutes=0),
+        "next_run": timezone.now() + timedelta(seconds=randint(0, 3 * 60)),
     }

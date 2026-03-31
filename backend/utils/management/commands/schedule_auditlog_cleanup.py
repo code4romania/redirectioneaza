@@ -18,5 +18,5 @@ class Command(SchedulerCommand):
     schedule_details = {
         "schedule_type": Schedule.DAILY,
         "repeats": -1,
-        "next_run": timezone.now() + timedelta(minutes=7),
+        "next_run": timezone.now() + timedelta(minutes=50),
     }
