@@ -242,7 +242,11 @@ class NgoCauseEditView(NgoCauseCommonView):
         if not (ngo and cause_id):
             raise Http404
 
-        cause = Cause.objects.filter(pk=cause_id, ngo=ngo).first()
+        try:
+            cause = Cause.objects.filter(pk=cause_id, ngo=ngo).first()
+        except ValueError:
+            raise Http404
+
         if not cause:
             raise Http404
 
