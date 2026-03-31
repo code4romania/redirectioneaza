@@ -278,7 +278,7 @@ class ArchiveDownloadLinkView(BaseVisibleTemplateView):
             # The admin can always get the download link
             try:
                 job = Job.objects.get(pk=job_id)
-            except Job.DoesNotExist:
+            except (Job.DoesNotExist, ValueError):
                 raise Http404
 
         elif not user.ngo:
@@ -293,7 +293,7 @@ class ArchiveDownloadLinkView(BaseVisibleTemplateView):
             # Check that the requested job belongs to the current user
             try:
                 job = Job.objects.get(pk=job_id, ngo=user.ngo)
-            except Job.DoesNotExist:
+            except (Job.DoesNotExist, ValueError):
                 raise Http404
 
         # Check that the job has a zip file
@@ -319,7 +319,7 @@ class RedirectionDownloadLinkView(BaseVisibleTemplateView):
 
         try:
             donor = Donor.objects.get(pk=form_id, ngo=ngo)
-        except Donor.DoesNotExist:
+        except (Donor.DoesNotExist, ValueError):
             raise Http404
 
         if not donor.pdf_file:
@@ -351,7 +351,7 @@ class RedirectionDisableLinkView(BaseVisibleTemplateView):
 
         try:
             donor = Donor.objects.get(pk=form_id, ngo=ngo, has_signed=True)
-        except Donor.DoesNotExist:
+        except (Donor.DoesNotExist, ValueError):
             raise Http404
 
         donor.is_available = False
