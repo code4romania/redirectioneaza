@@ -138,7 +138,7 @@ class PartnerAdmin(ModelAdmin):
                 "verification",
                 kwargs={
                     "verification_type": "p",
-                    "user_id": new_user.id,
+                    "user_id": new_user.pk,
                     "signup_token": new_user.refresh_token(),
                 },
             )

@@ -448,7 +448,7 @@ class Ngo(CommonFilenameCacheModel):
     @staticmethod
     def delete_prefilled_form(ngo_id):
         try:
-            ngo = Ngo.objects.get(id=ngo_id)
+            ngo = Ngo.objects.get(pk=ngo_id)
         except Ngo.DoesNotExist:
             logging.info("NGO id %d does not exist for prefilled form deletion", ngo_id)
             return

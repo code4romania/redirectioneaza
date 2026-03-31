@@ -79,7 +79,7 @@ class Command(BaseCommand):
         target_org = options.get("org", None)
 
         if target_org:
-            ngos = [Ngo.objects.get(id=target_org)]
+            ngos = [Ngo.objects.get(pk=target_org)]
         else:
             ngos = list(Ngo.active.all())
 

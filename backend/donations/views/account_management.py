@@ -36,7 +36,7 @@ class ForgotPasswordView(BaseVisibleTemplateView):
                 "verification",
                 kwargs={
                     "verification_type": "p",
-                    "user_id": user.id,
+                    "user_id": user.pk,
                     "signup_token": user.refresh_token(),
                 },
             )
@@ -278,7 +278,7 @@ class SignupView(BaseVisibleTemplateView):
                 "verification",
                 kwargs={
                     "verification_type": "v",
-                    "user_id": user.id,
+                    "user_id": user.pk,
                     "signup_token": user.refresh_token(),
                 },
             )
