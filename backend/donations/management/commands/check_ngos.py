@@ -1,3 +1,5 @@
+import logging
+
 from django.conf import settings
 from django.core.management import BaseCommand
 from django.db.models import Q
@@ -5,11 +7,17 @@ from django.db.models import Q
 from donations.models.ngos import Ngo
 from donations.workers.check_organization import cult_registry_check_organizations
 
+logger = logging.getLogger(__name__)
+
 
 class Command(BaseCommand):
     help = "Check NGOs in ANAF Cult Registry"
 
     def handle(self, *args, **options):
+        if not settings.ENABLE_ANAF_CULT_REGISTRY:
+            logger.info("ANAF Cult Registry checks are disabled")
+            return
+
         qs: list[str] = (
             Ngo.objects.exclude(pause_cult_registry_check=True)
             # check only NGOs whose registration number is valid:
