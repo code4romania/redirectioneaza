@@ -1,5 +1,7 @@
 import logging
+import time
 
+import requests
 from django.conf import settings
 from django.core.management import BaseCommand
 
@@ -12,10 +14,26 @@ logger = logging.getLogger(__name__)
 class Command(BaseCommand):
     help = "Check NGOs in ANAF Cult Registry"
 
+    def check_endpoint_alive(self):
+        try:
+            requests.get(settings.ANAF_CULT_REGISTRY_ENDPOINT)
+        except ConnectionError:
+            return False
+        else:
+            return True
+
     def handle(self, *args, **options):
         if not settings.ENABLE_ANAF_CULT_REGISTRY:
             logger.info("ANAF Cult Registry checks are disabled")
             return
+
+        if not self.check_endpoint_alive():
+            # If the endpoint is down, there's no point in continuing with the checks
+            self.stdout.write("ANAF endpoint is down. Ending the NGO Registry check task.")
+            return
+        else:
+            # If the endpoint is up, pause for a bit in order to not break the endpoint request limit
+            time.sleep(2)
 
         qs: list[str] = (
             Ngo.objects.exclude(pause_cult_registry_check=True)
