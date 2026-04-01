@@ -2,7 +2,6 @@ import logging
 
 from django.conf import settings
 from django.core.management import BaseCommand
-from django.db.models import Q
 
 from donations.models.ngos import Ngo
 from donations.workers.check_organization import cult_registry_check_organizations
