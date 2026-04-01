@@ -23,7 +23,7 @@ class Command(BaseCommand):
             # check only NGOs whose registration number is valid:
             .filter(registration_number_valid=True)
             # check NGOs which are were not yet checked in the registry:
-            .filter(Q(is_in_cult_registry__isnull=True, cult_registry_check_started__isnull=True))
+            .filter(is_in_cult_registry__isnull=True)
             .distinct("registration_number")
             .values_list("registration_number", flat=True)
         )
