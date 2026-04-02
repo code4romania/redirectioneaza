@@ -263,6 +263,9 @@ class Ngo(CommonFilenameCacheModel):
     pause_cult_registry_check = models.BooleanField(
         verbose_name=_("pause checking the ANAF Cult Registry"), default=False
     )
+    became_absent_from_cult_registry = models.BooleanField(
+        verbose_name=_("became absent from the ANAF Cult Registry"), null=True, blank=True, editable=False
+    )
     is_in_cult_registry = models.BooleanField(
         verbose_name=_("presence in the ANAF Cult Registry"), null=True, blank=True, editable=False
     )
