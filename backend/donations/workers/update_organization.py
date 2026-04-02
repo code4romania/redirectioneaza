@@ -16,6 +16,7 @@ from ngohub.exceptions import HubHTTPException
 from ngohub.models.organization import Organization, OrganizationGeneral
 from pycognito import Cognito
 from requests import Response
+from requests.exceptions import Timeout
 
 from donations.common.validation.validate_slug import NgoSlugValidator
 from donations.models.common import CommonFilenameCacheModel
@@ -60,9 +61,18 @@ def _copy_file_to_object_with_filename_cache(
         logger.info(f"{attribute_name.upper()} file is already up to date.")
         return None
 
-    r: Response = requests.get(signed_file_url)
-    if r.status_code != requests.codes.ok:
-        logger.info(f"{attribute_name.upper()} file request status = {r.status_code}")
+    failed = False
+    try:
+        r: Response = requests.get(signed_file_url, timeout=20)
+    except Timeout:
+        failed = True
+        r = None
+    else:
+        if r.status_code != requests.codes.ok:
+            failed = True
+
+    if failed:
+        logger.info("%s file request status = %s", attribute_name.upper(), r.status_code if r else "TIMEOUT")
         error_message = f"ERROR: Could not download {attribute_name} file from NGO Hub, error status {r.status_code}."
         logger.warning(error_message)
         return error_message

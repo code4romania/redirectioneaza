@@ -7,6 +7,7 @@ from django.conf import settings
 from django.core.management import BaseCommand
 from django.db.models import Q
 from django.utils import timezone
+from requests.exceptions import Timeout
 
 from donations.models.ngos import Ngo
 from donations.workers.check_organization import cult_registry_check_organizations
@@ -19,8 +20,8 @@ class Command(BaseCommand):
 
     def check_endpoint_alive(self):
         try:
-            requests.get(settings.ANAF_CULT_REGISTRY_ENDPOINT)
-        except ConnectionError:
+            requests.get(settings.ANAF_CULT_REGISTRY_ENDPOINT, timeout=5)
+        except (ConnectionError, Timeout):
             return False
         else:
             return True

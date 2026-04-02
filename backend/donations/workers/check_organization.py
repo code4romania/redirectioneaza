@@ -5,6 +5,7 @@ import requests
 from django.conf import settings
 from django.utils import timezone
 from django_q.tasks import async_task
+from requests.exceptions import Timeout
 
 from donations.models.ngos import Ngo
 from utils.helper_logging import setup_logger
@@ -27,8 +28,8 @@ def _get_cult_registry_data(registration_numbers: list[str]):
     payload = [{"cui": registration_number, "data": date_str} for registration_number in registration_numbers]
 
     try:
-        r = requests.post(settings.ANAF_CULT_REGISTRY_ENDPOINT, headers=headers, data=json.dumps(payload))
-    except ConnectionError:
+        r = requests.post(settings.ANAF_CULT_REGISTRY_ENDPOINT, headers=headers, data=json.dumps(payload), timeout=20)
+    except (ConnectionError, Timeout):
         logger.warning("Failed to check ANAF Cult Registry for: %s", ", ".join(registration_numbers))
         return {"present": [], "absent": [], "error": True}
 
