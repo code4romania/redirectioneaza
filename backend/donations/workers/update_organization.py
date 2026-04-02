@@ -72,8 +72,9 @@ def _copy_file_to_object_with_filename_cache(
             failed = True
 
     if failed:
-        logger.info("%s file request status = %s", attribute_name.upper(), r.status_code if r else "TIMEOUT")
-        error_message = f"ERROR: Could not download {attribute_name} file from NGO Hub, error status {r.status_code}."
+        error_code = r.status_code if r else "TIMEOUT"
+        logger.info("%s file request status = %s", attribute_name.upper(), error_code)
+        error_message = f"ERROR: Could not download {attribute_name} file from NGO Hub, error status {error_code}."
         logger.warning(error_message)
         return error_message
 
