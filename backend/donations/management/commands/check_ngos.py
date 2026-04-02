@@ -1,9 +1,12 @@
 import logging
 import time
+from datetime import timedelta
 
 import requests
 from django.conf import settings
 from django.core.management import BaseCommand
+from django.db.models import Q
+from django.utils import timezone
 
 from donations.models.ngos import Ngo
 from donations.workers.check_organization import cult_registry_check_organizations
@@ -35,12 +38,25 @@ class Command(BaseCommand):
             # If the endpoint is up, pause for a bit in order to not break the endpoint request limit
             time.sleep(2)
 
+        ts = timezone.now()
+        long_deadline = ts - timedelta(days=90)
+        recent_deadline = ts - timedelta(hours=2)
+        short_deadline = ts - timedelta(days=30)
+
         qs: list[str] = (
             Ngo.objects.exclude(pause_cult_registry_check=True)
             # check only NGOs whose registration number is valid:
             .filter(registration_number_valid=True)
-            # check NGOs which are were not yet checked in the registry:
-            .filter(is_in_cult_registry__isnull=True)
+            .filter(
+                # select NGOs which were not yet checked in the registry:
+                Q(is_in_cult_registry__isnull=True, cult_registry_check_started__isnull=True)
+                # select NGOs which were chosen in the past but the check did not finish:
+                | Q(cult_registry_check_ended__isnull=True, cult_registry_check_started__lte=recent_deadline)
+                # select NGOs which were already present in the registry:
+                | Q(is_in_cult_registry=True, cult_registry_check_started__lte=long_deadline)
+                # select NGOs which were absent from the registry:
+                | Q(is_in_cult_registry=False, cult_registry_check_started__lte=short_deadline)
+            )
             .distinct("registration_number")
             .values_list("registration_number", flat=True)
         )
