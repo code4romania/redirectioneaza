@@ -22,11 +22,11 @@ def get_was_last_job_recent(ngo: Ngo | None) -> bool:
         last_job_date = last_ngo_job.date_created
         last_job_status = last_ngo_job.status
 
-        timedelta = datetime.timedelta(0)
+        td = datetime.timedelta(0)
         if last_job_status != JobStatusChoices.ERROR:
-            timedelta = datetime.timedelta(minutes=settings.TIMEDELTA_FORMS_DOWNLOAD_MINUTES)
+            td = datetime.timedelta(minutes=settings.TIMEDELTA_FORMS_DOWNLOAD_MINUTES)
 
-        if last_job_date > now - timedelta:
+        if last_job_date > now - td:
             return True
 
     return False
@@ -36,9 +36,9 @@ def archive_job_was_recent(job_status: str, job_created: datetime) -> bool:
     if job_status == JobStatusChoices.ERROR:
         return False
 
-    timedelta = datetime.timedelta(minutes=settings.TIMEDELTA_FORMS_DOWNLOAD_MINUTES)
+    td = datetime.timedelta(minutes=settings.TIMEDELTA_FORMS_DOWNLOAD_MINUTES)
 
-    if job_created > timezone.now() - timedelta:
+    if job_created > timezone.now() - td:
         return True
 
     return False
