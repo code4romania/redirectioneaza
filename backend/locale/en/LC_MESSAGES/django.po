@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-29 23:47+0300\n"
+"POT-Creation-Date: 2026-04-02 16:08+0300\n"
 "PO-Revision-Date: 2025-03-27 14:48+0000\n"
 "Last-Translator: Andrei Ioniță <andrei.ionita@commitglobal.org>\n"
 "Language-Team: English <https://translate.commitglobal.org/projects/act4good/"
@@ -43,7 +43,7 @@ msgstr ""
 #: donations/admin/jobs.py:55 donations/admin/ngos.py:222
 #: donations/admin/ngos.py:380 donations/models/donors.py:71
 #: donations/models/downloads.py:10 donations/models/jobs.py:13
-#: donations/models/ngos.py:282 partners/models.py:148 users/models.py:73
+#: donations/models/ngos.py:289 partners/models.py:148 users/models.py:73
 msgid "NGO"
 msgstr "NGO"
 
@@ -360,7 +360,7 @@ msgstr "Last name"
 
 #: donations/admin/ngos.py:321 donations/models/byof.py:84
 #: donations/models/common.py:31 donations/models/donors.py:160
-#: donations/models/ngos.py:273 donations/models/ngos.py:563
+#: donations/models/ngos.py:280 donations/models/ngos.py:570
 #: partners/models.py:82 users/models.py:97
 msgid "date created"
 msgstr "date created"
@@ -400,11 +400,11 @@ msgstr "is verified"
 msgid "is active"
 msgstr "is active"
 
-#: donations/admin/ngos.py:330 donations/models/ngos.py:267
+#: donations/admin/ngos.py:330 donations/models/ngos.py:274
 msgid "presence in the ANAF Cult Registry"
 msgstr ""
 
-#: donations/admin/ngos.py:331 donations/models/ngos.py:261
+#: donations/admin/ngos.py:331 donations/models/ngos.py:265
 msgid "last completed check in the ANAF Cult Registry"
 msgstr ""
 
@@ -757,8 +757,8 @@ msgstr ""
 msgid "status"
 msgstr "status"
 
-#: donations/models/byof.py:85 donations/models/ngos.py:274
-#: donations/models/ngos.py:564 partners/models.py:83 users/models.py:98
+#: donations/models/byof.py:85 donations/models/ngos.py:281
+#: donations/models/ngos.py:571 partners/models.py:83 users/models.py:98
 msgid "date updated"
 msgstr "date updated"
 
@@ -1003,82 +1003,86 @@ msgstr "Go to account"
 msgid "last started check in the ANAF Cult Registry"
 msgstr ""
 
-#: donations/models/ngos.py:264
+#: donations/models/ngos.py:268
 msgid "pause checking the ANAF Cult Registry"
 msgstr ""
 
-#: donations/models/ngos.py:270
+#: donations/models/ngos.py:271
+msgid "became absent from the ANAF Cult Registry"
+msgstr ""
+
+#: donations/models/ngos.py:277
 msgid "acknowledge missing ANAF Cult Registry info"
 msgstr ""
 
-#: donations/models/ngos.py:283 partners/models.py:68
+#: donations/models/ngos.py:290 partners/models.py:68
 #: redirectioneaza/context_processors/headers.py:63
 #: redirectioneaza/settings/unfold.py:112
 msgid "NGOs"
 msgstr "NGOs"
 
-#: donations/models/ngos.py:493
+#: donations/models/ngos.py:500
 msgid "public"
 msgstr ""
 
-#: donations/models/ngos.py:494
+#: donations/models/ngos.py:501
 msgid "unlisted"
 msgstr ""
 
-#: donations/models/ngos.py:495
+#: donations/models/ngos.py:502
 msgid "private"
 msgstr ""
 
-#: donations/models/ngos.py:517
+#: donations/models/ngos.py:524
 msgid "is main cause"
 msgstr ""
 
-#: donations/models/ngos.py:518
+#: donations/models/ngos.py:525
 msgid "allow online collection"
 msgstr "allow online collection"
 
-#: donations/models/ngos.py:521
+#: donations/models/ngos.py:528
 msgid "form visibility"
 msgstr ""
 
-#: donations/models/ngos.py:531
+#: donations/models/ngos.py:538
 msgid "logo"
 msgstr "logo"
 
-#: donations/models/ngos.py:539
+#: donations/models/ngos.py:546
 msgid "slug"
 msgstr "slug"
 
-#: donations/models/ngos.py:548 partners/models.py:30 stats/models.py:7
+#: donations/models/ngos.py:555 partners/models.py:30 stats/models.py:7
 msgid "name"
 msgstr "name"
 
-#: donations/models/ngos.py:549
+#: donations/models/ngos.py:556
 msgid "description"
 msgstr "description"
 
-#: donations/models/ngos.py:551
+#: donations/models/ngos.py:558
 msgid "bank account"
 msgstr "bank account"
 
-#: donations/models/ngos.py:553
+#: donations/models/ngos.py:560
 #, fuzzy
 #| msgid "Donation exports"
 msgid "notifications email"
 msgstr "Donation exports"
 
-#: donations/models/ngos.py:556
+#: donations/models/ngos.py:563
 msgid "form with prefilled cause"
 msgstr "form with prefilled ngo data"
 
-#: donations/models/ngos.py:574 donations/views/ngo_account_filters.py:154
+#: donations/models/ngos.py:581 donations/views/ngo_account_filters.py:154
 #: partners/admin.py:49 partners/models.py:182
 #: templates/v2/ngo-account/archives/list-header.html:13
 #: templates/v2/ngo-account/causes/list-header.html:4
 msgid "Cause"
 msgstr "Cause"
 
-#: donations/models/ngos.py:575 donations/views/ngo_account/causes.py:181
+#: donations/models/ngos.py:582 donations/views/ngo_account/causes.py:181
 #: donations/views/ngo_account/causes.py:232 partners/admin.py:50
 #: partners/models.py:75 redirectioneaza/settings/unfold.py:118
 #: templates/v2/ngo-account/causes/main.html:11
