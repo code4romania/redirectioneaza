@@ -7,7 +7,7 @@ from django.conf import settings
 from django.core.management import BaseCommand
 from django.db.models import Q
 from django.utils import timezone
-from requests.exceptions import Timeout
+from requests.exceptions import ConnectionError, Timeout
 
 from donations.models.ngos import Ngo
 from donations.workers.check_organization import cult_registry_check_organizations
