@@ -61,12 +61,27 @@ def _check_organizations_task(registration_numbers: list[str]) -> dict[str, int 
             "errors": [f"Error while fetching ANAF data:\n{e}"],
         }
 
+    end_ts = timezone.now()
+
     Ngo.objects.filter(registration_number__in=anaf_data.get("present", [])).update(
-        cult_registry_check_ended=timezone.now(), is_in_cult_registry=True
+        cult_registry_check_ended=end_ts, is_in_cult_registry=True, became_absent_from_cult_registry=False
     )
-    Ngo.objects.filter(registration_number__in=anaf_data.get("absent", [])).update(
-        cult_registry_check_ended=timezone.now(), is_in_cult_registry=False
+
+    current_absent = anaf_data.get("absent", [])
+
+    # Registration numbers which were previously marked as not absent from the Cult Registry
+    prev_not_absent = (
+        Ngo.objects.exclude(is_in_cult_registry=False)
+        .filter(registration_number__in=current_absent)
+        .values_list("registration_number", flat=True)
     )
+
+    Ngo.objects.filter(registration_number__in=current_absent).update(
+        cult_registry_check_ended=end_ts, is_in_cult_registry=False, became_absent_from_cult_registry=False
+    )
+
+    # Flag NGOs which were not absent from the registry in the past but are absent now
+    Ngo.objects.filter(registration_number__in=prev_not_absent).update(became_absent_from_cult_registry=True)
 
     task_result = {}  # TODO
 
