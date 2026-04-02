@@ -183,6 +183,7 @@ class NgoAdmin(ModelAdmin):
         "is_active",
         "has_online_tax_account",
         "is_in_cult_registry",
+        "became_absent_from_cult_registry",
         "partners",
         HasOwnerFilter,
         "county",
@@ -199,6 +200,8 @@ class NgoAdmin(ModelAdmin):
         "date_updated",
         "get_donations_link",
         "is_in_cult_registry",
+        "became_absent_from_cult_registry",
+        "cult_registry_check_started",
         "cult_registry_check_ended",
     )
 
@@ -245,7 +248,9 @@ class NgoAdmin(ModelAdmin):
             {
                 "fields": (
                     "is_in_cult_registry",
+                    "became_absent_from_cult_registry",
                     "acknowledge_missing_cult_registry",
+                    "cult_registry_check_started",
                     "cult_registry_check_ended",
                     "pause_cult_registry_check",
                 )
@@ -328,6 +333,7 @@ class NgoAdmin(ModelAdmin):
                 _("is verified"),
                 _("is active"),
                 _("presence in the ANAF Cult Registry"),
+                _("became absent from the ANAF Cult Registry"),
                 _("last completed check in the ANAF Cult Registry"),
             )
         )

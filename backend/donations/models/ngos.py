@@ -208,7 +208,7 @@ class Ngo(CommonFilenameCacheModel):
         db_index=True,
     )
     registration_number_valid = models.BooleanField(
-        verbose_name=_("registration validation failed"),
+        verbose_name=_("the registration number is valid"),
         db_index=True,
         null=True,
     )
@@ -268,7 +268,7 @@ class Ngo(CommonFilenameCacheModel):
         verbose_name=_("pause checking the ANAF Cult Registry"), default=False
     )
     became_absent_from_cult_registry = models.BooleanField(
-        verbose_name=_("became absent from the ANAF Cult Registry"), null=True, blank=True, editable=False
+        verbose_name=_("became absent from the ANAF Cult Registry"), null=False, default=False, editable=False
     )
     is_in_cult_registry = models.BooleanField(
         verbose_name=_("presence in the ANAF Cult Registry"), null=True, blank=True, editable=False
@@ -490,6 +490,7 @@ class Ngo(CommonFilenameCacheModel):
             "ngo__is_verified",
             "ngo__is_active",
             "ngo__is_in_cult_registry",
+            "ngo__became_absent_from_cult_registry",
             "ngo__cult_registry_check_ended",
         )
 
