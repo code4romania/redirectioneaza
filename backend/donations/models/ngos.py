@@ -255,7 +255,11 @@ class Ngo(CommonFilenameCacheModel):
 
     # ANAF Cult Registry
     cult_registry_check_started = models.DateTimeField(
-        verbose_name=_("last started check in the ANAF Cult Registry"), null=True, blank=True, editable=False
+        verbose_name=_("last started check in the ANAF Cult Registry"),
+        null=True,
+        blank=True,
+        editable=False,
+        db_index=True,
     )
     cult_registry_check_ended = models.DateTimeField(
         verbose_name=_("last completed check in the ANAF Cult Registry"), null=True, blank=True, editable=False
