@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-02 16:08+0300\n"
+"POT-Creation-Date: 2026-04-02 16:16+0300\n"
 "PO-Revision-Date: 2025-03-27 14:49+0000\n"
 "Last-Translator: Tudor Amariei <tudor.amariei@commitglobal.org>\n"
 "Language-Team: Romanian <https://translate.commitglobal.org/projects/"
@@ -42,8 +42,8 @@ msgstr "URL Public"
 #: donations/admin/causes.py:75 donations/admin/common.py:23
 #: donations/admin/donors.py:251 donations/admin/download_jobs.py:22
 #: donations/admin/download_jobs.py:50 donations/admin/jobs.py:22
-#: donations/admin/jobs.py:55 donations/admin/ngos.py:222
-#: donations/admin/ngos.py:380 donations/models/donors.py:71
+#: donations/admin/jobs.py:55 donations/admin/ngos.py:224
+#: donations/admin/ngos.py:385 donations/models/donors.py:71
 #: donations/models/downloads.py:10 donations/models/jobs.py:13
 #: donations/models/ngos.py:289 partners/models.py:148 users/models.py:73
 msgid "NGO"
@@ -65,7 +65,7 @@ msgstr "Date"
 
 #: donations/admin/common.py:62 donations/admin/donors.py:277
 #: donations/admin/download_jobs.py:40 donations/admin/jobs.py:45
-#: donations/admin/ngos.py:271 templates/v2/ngo-account/byof/list-header.html:7
+#: donations/admin/ngos.py:275 templates/v2/ngo-account/byof/list-header.html:7
 msgid "Date"
 msgstr "Data"
 
@@ -307,7 +307,7 @@ msgstr "Nu"
 msgid "Has owner"
 msgstr "Are utilizator"
 
-#: donations/admin/ngos.py:218 donations/admin/ngos.py:406 donations/apps.py:8
+#: donations/admin/ngos.py:220 donations/admin/ngos.py:411 donations/apps.py:8
 #: donations/views/dashboard/admin_dashboard.py:64
 #: donations/views/dashboard/ngo_dashboard.py:78
 #: donations/views/dashboard/stats_helpers/utils.py:12
@@ -317,150 +317,154 @@ msgstr "Are utilizator"
 msgid "Donations"
 msgstr "Redirecționări"
 
-#: donations/admin/ngos.py:233
+#: donations/admin/ngos.py:235
 msgid "Activity"
 msgstr "Activitate"
 
-#: donations/admin/ngos.py:244
+#: donations/admin/ngos.py:246
 msgid "ANAF Cult Registry"
 msgstr "Registrul entităților de cult ANAF"
 
-#: donations/admin/ngos.py:255 redirectioneaza/context_processors/headers.py:43
+#: donations/admin/ngos.py:259 redirectioneaza/context_processors/headers.py:43
 msgid "Contact"
 msgstr "Contact"
 
-#: donations/admin/ngos.py:317
+#: donations/admin/ngos.py:321
 msgid "User first name"
 msgstr "Prenume utilizator"
 
-#: donations/admin/ngos.py:318
+#: donations/admin/ngos.py:322
 msgid "User last name"
 msgstr "Nume utilizator"
 
-#: donations/admin/ngos.py:319
+#: donations/admin/ngos.py:323
 msgid "User email"
 msgstr "Email utilizator"
 
-#: donations/admin/ngos.py:320 donations/models/ngos.py:179
+#: donations/admin/ngos.py:324 donations/models/ngos.py:179
 msgid "Legal name"
 msgstr "Denumire legală"
 
-#: donations/admin/ngos.py:321 donations/models/byof.py:84
+#: donations/admin/ngos.py:325 donations/models/byof.py:84
 #: donations/models/common.py:31 donations/models/donors.py:160
-#: donations/models/ngos.py:280 donations/models/ngos.py:570
+#: donations/models/ngos.py:280 donations/models/ngos.py:571
 #: partners/models.py:82 users/models.py:97
 msgid "date created"
 msgstr "data creării"
 
-#: donations/admin/ngos.py:322 donations/models/ngos.py:183
+#: donations/admin/ngos.py:326 donations/models/ngos.py:183
 msgid "NGO Hub organization ID"
 msgstr "ID organizație în NGO Hub"
 
-#: donations/admin/ngos.py:323 donations/models/ngos.py:203
+#: donations/admin/ngos.py:327 donations/models/ngos.py:203
 msgid "VAT ID"
 msgstr "COD TVA"
 
-#: donations/admin/ngos.py:324 donations/models/ngos.py:194
+#: donations/admin/ngos.py:328 donations/models/ngos.py:194
 msgid "registration number"
 msgstr "număr de înregistrare"
 
-#: donations/admin/ngos.py:325 templates/v2/emails/admin/new-ngo/main.html:22
+#: donations/admin/ngos.py:329 templates/v2/emails/admin/new-ngo/main.html:22
 #: templates/v2/emails/admin/new-ngo/main.txt:6
 msgid "NGO email"
 msgstr "Email ONG"
 
-#: donations/admin/ngos.py:326 donations/models/donors.py:104
+#: donations/admin/ngos.py:330 donations/models/donors.py:104
 #: donations/models/ngos.py:237
 msgid "telephone"
 msgstr "telefon"
 
-#: donations/admin/ngos.py:327 donations/models/ngos.py:242
+#: donations/admin/ngos.py:331 donations/models/ngos.py:242
 msgid "website"
 msgstr "website"
 
-#: donations/admin/ngos.py:328 donations/models/ngos.py:245 users/models.py:89
+#: donations/admin/ngos.py:332 donations/models/ngos.py:245 users/models.py:89
 msgid "is verified"
 msgstr "este verificat"
 
-#: donations/admin/ngos.py:329 donations/models/ngos.py:254
+#: donations/admin/ngos.py:333 donations/models/ngos.py:254
 #: partners/models.py:45
 msgid "is active"
 msgstr "este activ"
 
-#: donations/admin/ngos.py:330 donations/models/ngos.py:274
+#: donations/admin/ngos.py:334 donations/models/ngos.py:274
 msgid "presence in the ANAF Cult Registry"
 msgstr "prezentă în Registrul entităților de cult"
 
-#: donations/admin/ngos.py:331 donations/models/ngos.py:265
+#: donations/admin/ngos.py:335 donations/models/ngos.py:271
+msgid "became absent from the ANAF Cult Registry"
+msgstr "a devenit absentă din Registrul entităților de cult"
+
+#: donations/admin/ngos.py:336 donations/models/ngos.py:265
 msgid "last completed check in the ANAF Cult Registry"
 msgstr "ultima verificare terminată în Registrul entităților de cult"
 
-#: donations/admin/ngos.py:392
+#: donations/admin/ngos.py:397
 msgid "NGO Hub link"
 msgstr "Link NGO Hub"
 
-#: donations/admin/ngos.py:402
+#: donations/admin/ngos.py:407
 msgid "CIF"
 msgstr "CUI/CIF"
 
-#: donations/admin/ngos.py:408
+#: donations/admin/ngos.py:413
 msgid "Open the NGO donor list"
 msgstr "Deschide lista de donatori pentru acest ONG"
 
-#: donations/admin/ngos.py:419
+#: donations/admin/ngos.py:424
 msgid "This user already has an NGO."
 msgstr "Acest utilizator are deja un ONG."
 
-#: donations/admin/ngos.py:425
+#: donations/admin/ngos.py:430
 msgid "This user is a staff member."
 msgstr "Acest utilizator este un membru al staff-ului."
 
-#: donations/admin/ngos.py:431
+#: donations/admin/ngos.py:436
 msgid "This user is an NGO Hub user."
 msgstr "Acest utilizator este un utilizator NGO Hub."
 
-#: donations/admin/ngos.py:443
+#: donations/admin/ngos.py:448
 msgid "Owner changed successfully."
 msgstr "Administratorul a fost schimbat cu succes."
 
-#: donations/admin/ngos.py:446
+#: donations/admin/ngos.py:451
 msgid "Change owner"
 msgstr "Schimbă administrator"
 
-#: donations/admin/ngos.py:463 partners/admin.py:179
+#: donations/admin/ngos.py:468 partners/admin.py:179
 msgid "The form is not valid."
 msgstr "Formularul nu este valid."
 
-#: donations/admin/ngos.py:473
+#: donations/admin/ngos.py:478
 #, python-format
 msgid "Change owner of NGO '%(name)s'"
 msgstr "Schimbă administratorul ONG-ului '%(name)s'"
 
-#: donations/admin/ngos.py:478
+#: donations/admin/ngos.py:483
 msgid "Update from NGO Hub synchronously"
 msgstr "Actualizează din NGO Hub sincron"
 
-#: donations/admin/ngos.py:500
+#: donations/admin/ngos.py:505
 msgid "Update from NGO Hub asynchronously"
 msgstr "Actualizează din NGO Hub asincron"
 
-#: donations/admin/ngos.py:505
+#: donations/admin/ngos.py:510
 msgid "NGOs are being updated from NGO Hub."
 msgstr "ONG-urile sunt actualizate din NGO Hub."
 
-#: donations/admin/ngos.py:507
+#: donations/admin/ngos.py:512
 msgid "Check in ANAF Cult Registry synchronously"
 msgstr "Verifică în Registrul entităților de cult ANAF sincron"
 
-#: donations/admin/ngos.py:527
+#: donations/admin/ngos.py:532
 msgid "Check in ANAF Cult Registry asynchronously"
 msgstr "Verifică în Registrul entităților de cult ANAF asincron"
 
-#: donations/admin/ngos.py:531
+#: donations/admin/ngos.py:536
 msgid "NGOs are being searched in ANAF Cult Registry."
 msgstr "ONG-urile sunt căutate în Registrul entităților de cult ANAF"
 
-#: donations/admin/ngos.py:533
+#: donations/admin/ngos.py:538
 msgid "Remove prefilled forms"
 msgstr "Elimină formularele pre-completate"
 
@@ -728,7 +732,7 @@ msgid "status"
 msgstr "stare"
 
 #: donations/models/byof.py:85 donations/models/ngos.py:281
-#: donations/models/ngos.py:571 partners/models.py:83 users/models.py:98
+#: donations/models/ngos.py:572 partners/models.py:83 users/models.py:98
 msgid "date updated"
 msgstr "data actualizării"
 
@@ -931,8 +935,8 @@ msgid "Last NGO Hub update"
 msgstr "Ultima actualizare din NGO Hub"
 
 #: donations/models/ngos.py:211
-msgid "registration validation failed"
-msgstr "validarea înregistrării a eșuat"
+msgid "the registration number is valid"
+msgstr "numărul de înregistrare e valid"
 
 #: donations/models/ngos.py:218
 msgid "locality"
@@ -966,10 +970,6 @@ msgstr "ultima verificare începută în Registrul entităților de cult"
 msgid "pause checking the ANAF Cult Registry"
 msgstr "pauză verificare în Registrul entităților de cult"
 
-#: donations/models/ngos.py:271
-msgid "became absent from the ANAF Cult Registry"
-msgstr "a devenit absentă din Registrul entităților de cult"
-
 #: donations/models/ngos.py:277
 msgid "acknowledge missing ANAF Cult Registry info"
 msgstr "acceptă lipsa înregistrării în Registrul entităților de cult"
@@ -980,66 +980,66 @@ msgstr "acceptă lipsa înregistrării în Registrul entităților de cult"
 msgid "NGOs"
 msgstr "ONG-uri"
 
-#: donations/models/ngos.py:500
+#: donations/models/ngos.py:501
 msgid "public"
 msgstr "public"
 
-#: donations/models/ngos.py:501
+#: donations/models/ngos.py:502
 msgid "unlisted"
 msgstr "nelistat"
 
-#: donations/models/ngos.py:502
+#: donations/models/ngos.py:503
 msgid "private"
 msgstr "privat"
 
-#: donations/models/ngos.py:524
+#: donations/models/ngos.py:525
 msgid "is main cause"
 msgstr "este cauză principală"
 
-#: donations/models/ngos.py:525
+#: donations/models/ngos.py:526
 msgid "allow online collection"
 msgstr "permite colectarea online"
 
-#: donations/models/ngos.py:528
+#: donations/models/ngos.py:529
 msgid "form visibility"
 msgstr "vizibilitate formular"
 
-#: donations/models/ngos.py:538
+#: donations/models/ngos.py:539
 msgid "logo"
 msgstr "logo"
 
-#: donations/models/ngos.py:546
+#: donations/models/ngos.py:547
 msgid "slug"
 msgstr "URL"
 
-#: donations/models/ngos.py:555 partners/models.py:30 stats/models.py:7
+#: donations/models/ngos.py:556 partners/models.py:30 stats/models.py:7
 msgid "name"
 msgstr "nume"
 
-#: donations/models/ngos.py:556
+#: donations/models/ngos.py:557
 msgid "description"
 msgstr "descriere"
 
-#: donations/models/ngos.py:558
+#: donations/models/ngos.py:559
 msgid "bank account"
 msgstr "cont bancar"
 
-#: donations/models/ngos.py:560
+#: donations/models/ngos.py:561
 msgid "notifications email"
 msgstr "email notificări"
 
-#: donations/models/ngos.py:563
+#: donations/models/ngos.py:564
 msgid "form with prefilled cause"
 msgstr "formular cu datele ONG-ului completate"
 
-#: donations/models/ngos.py:581 donations/views/ngo_account_filters.py:154
+#: donations/models/ngos.py:582 donations/views/ngo_account_filters.py:154
 #: partners/admin.py:49 partners/models.py:182
 #: templates/v2/ngo-account/archives/list-header.html:13
 #: templates/v2/ngo-account/causes/list-header.html:4
 msgid "Cause"
 msgstr "Cauză"
 
-#: donations/models/ngos.py:582 donations/views/ngo_account/causes.py:181
+#: donations/models/ngos.py:583 donations/views/ngo_account/causes.py:181
 #: donations/views/ngo_account/causes.py:232 partners/admin.py:50
 #: partners/models.py:75 redirectioneaza/settings/unfold.py:118
 #: templates/v2/ngo-account/causes/main.html:11
@@ -4510,3 +4510,6 @@ msgstr ""
 #: utils/validators.py:16
 msgid "Subdomain must have between 3 and 100 characters."
 msgstr "Subdomeniul trebuie să aibă între 3 și 100 de caractere."
+
+#~ msgid "registration validation failed"
+#~ msgstr "validarea înregistrării a eșuat"
