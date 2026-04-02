@@ -17,6 +17,7 @@ from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from requests.exceptions import Timeout
 
 import redirectioneaza.settings.locations
 from donations.models.common import JobDownloadError, JobStatusChoices
@@ -274,9 +275,14 @@ def _download_file(source_url: str) -> bytes:
     if not source_url:
         raise ValueError("source_url is empty")
 
-    response = requests.get(source_url)
+    try:
+        response = requests.get(source_url, timeout=20)
+    except Timeout:
+        logger.warning("Timed out while downloading redirection form file")
+        raise JobDownloadError
 
     if response.status_code != 200:
+        logger.warning("Status code %d while downloading redirection form file", response.status_code)
         raise JobDownloadError
 
     return response.content
