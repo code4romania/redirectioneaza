@@ -118,7 +118,8 @@ requirements-build:               ## run pip compile and add requirements from t
 requirements-update:              ## run pip compile and rebuild the requirements files
 	docker exec redirect_dev sh -c " \
 		cd ./backend && \
-		uv sync --active -U \
+		uv sync --active -U && \
+		npm update \
 	"
 
 
