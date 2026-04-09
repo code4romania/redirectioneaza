@@ -40,7 +40,9 @@
 
           {% trans "IBAN on form" as input_title %}
           {% blocktrans trimmed asvar iban_helptext %}
-            Changing the IBAN will not update the forms already completed by taxpayers.
+            The full IBAN must belong to the organization. 
+            Using a personal IBAN may invalidate the form. 
+            Changing the IBAN in the field above will not update forms already completed by the taxpayer.
           {% endblocktrans %}
           {% if not cause %}
             {% blocktrans trimmed asvar iban_helptext %}
