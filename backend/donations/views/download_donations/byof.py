@@ -98,6 +98,7 @@ def handle_external_data_processing(own_upload_id: int) -> dict | None:
 
     # Save to FileField
     own_upload.result_data.save("data.xml", xml_file, save=False)
+    own_upload.result_data.storage.object_parameters.update({"ContentType": "application/octet-stream"})
     own_upload.status = OwnFormsStatusChoices.SUCCESS
     own_upload.save()
 
