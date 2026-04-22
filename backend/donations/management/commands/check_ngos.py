@@ -6,6 +6,7 @@ import requests
 from django.conf import settings
 from django.core.management import BaseCommand
 from django.db.models import Q
+from django.db.models.query import ValuesQuerySet
 from django.utils import timezone
 from requests.exceptions import ConnectionError, Timeout
 
@@ -44,7 +45,7 @@ class Command(BaseCommand):
         recent_deadline = ts - timedelta(hours=2)
         short_deadline = ts - timedelta(days=30)
 
-        qs: list[str] = (
+        qs: ValuesQuerySet = (
             Ngo.objects.exclude(pause_cult_registry_check=True)
             # check only NGOs whose registration number is valid:
             .filter(registration_number_valid=True)
