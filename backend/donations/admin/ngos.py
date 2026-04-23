@@ -182,6 +182,7 @@ class NgoAdmin(ModelAdmin):
         "is_verified",
         "is_active",
         "has_online_tax_account",
+        "cult_registry_check_started",
         "is_in_cult_registry",
         "became_absent_from_cult_registry",
         "partners",
