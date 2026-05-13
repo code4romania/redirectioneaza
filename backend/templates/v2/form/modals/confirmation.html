@@ -11,4 +11,4 @@
 
 {% trans "Continue" as confirm_label %}
 
-{% include "public/components/modal.html" with modal_title=confirmation_title modal_body=confirmation_body modal_title_id="confirmation-modal-title" cancel_label=cancel_label cancel_id="back-to-signature" cancel_type="button" cancel_attrs='@click="confirmationModalIsOpen = false" aria-label="Close"' confirm_label=confirm_label confirm_id="submit-without-signature" confirm_type="submit" confirm_attrs='data-action="send" x-on:click="confirmationModalIsOpen = false"' only %}
+{% include "public/components/modal.html" with modal_title=confirmation_title modal_body=confirmation_body modal_title_id="confirmation-modal-title" cancel_label=cancel_label cancel_id="back-to-signature" cancel_type="button" cancel_attrs='@click="confirmationModalIsOpen = false" aria-label="Close"' confirm_label=confirm_label confirm_id="submit-without-signature" confirm_type="submit" confirm_attrs='data-action="send" @click="clearSignature(); confirmationModalIsOpen = false"' only %}
