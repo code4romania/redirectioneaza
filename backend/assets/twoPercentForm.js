@@ -10,6 +10,7 @@ export default function() {
       this.form = document.getElementById("two-percent-form");
       this.signatureInput = document.getElementById("signature-input");
       this.signaturePreview = document.getElementById("signature-preview");
+      this.submitButton = document.getElementById("submit-with-signature");
 
       this.pristine = new Pristine(this.form, {
         errorTextClass: "mt-2 text-sm text-red-600",
@@ -25,9 +26,17 @@ export default function() {
         }
       }, "Acest câmp este obligatoriu", 2, false);
     },
+    tempDisableSubmitButton() {
+      this.submitButton.disabled = true;
+      setTimeout(function() { this.enableSubmitButton(); }, 5000);
+    },
+    enableSubmitButton() {
+      this.submitButton.disabled = false;
+    },
     sendSignedForm() {
       this.validateSignature = true;
       if (this.pristine.validate()) {
+        this.tempDisableSubmitButton();
         this.form.submit();
       }
     },
