@@ -5,7 +5,7 @@ This includes all Python code, tests, and any other files related to the backend
 
 ## Coding Standards
 
-- Use Python 3.14 and Django 5.2 conventions.
+- Use Python 3.13 and Django 5.2 conventions.
 - Always follow PEP8 and Python best practices for style and structure with a line length of 120.
 - Name variables, functions, and classes descriptively and consistently.
 - Write modular code: split logic into reusable functions and classes.
