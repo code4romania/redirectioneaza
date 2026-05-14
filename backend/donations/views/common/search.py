@@ -70,7 +70,10 @@ class CommonSearchMixin(ListView):
             language_code = self.request.LANGUAGE_CODE
         language_code = language_code.lower()
 
-        return self.get_search_results(queryset, query, language_code)
+        try:
+            return self.get_search_results(queryset, query, language_code)
+        except ValueError:
+            return queryset.none()
 
 
 class NgoSearchMixin(CommonSearchMixin):
