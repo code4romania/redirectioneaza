@@ -9,3 +9,8 @@
 {% endblocktrans %}
 
 {{ action_url }}
+
+{% blocktrans trimmed %}
+  The download link is valid for one year.
+{% endblocktrans %}
+

@@ -17,8 +17,29 @@
     {% endblocktrans %}
   </p>
 
+  {% if donation_is_two_years %}
+    <p>
+      {% blocktrans trimmed %}
+        Redirection duration: 2 years
+      {% endblocktrans %}
+    </p>
+  {% else %}
+    <p>
+      {% blocktrans trimmed %}
+        Redirection duration: 1 year
+      {% endblocktrans %}
+    </p>
+  {% endif %}
+
+
   {% trans "Download form" as action_title %}
   {% include "emails/components/action.html" with title=action_title url=action_url %}
+
+  <p>
+    {% blocktrans trimmed %}
+      The download link is valid for one year.
+    {% endblocktrans %}
+  </p>
 
   {% include "emails/components/extra-hand.html" %}
 

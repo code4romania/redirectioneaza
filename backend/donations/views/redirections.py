@@ -294,7 +294,6 @@ class RedirectionHandler(TemplateView):
             }
         )
 
-        # TODO: add a text for two-year donations
         # send and email to the donor with a link to the PDF file
         if signature:
             if cause.notifications_email:
