@@ -47,7 +47,7 @@ test = [
   "pytest-xdist~=3.8.0",
 ]
 ruff = [
-  "ruff~=0.15.0"
+  "ruff~=0.15.15"
 ]
 dev = [
   "debugpy~=1.8.0",
