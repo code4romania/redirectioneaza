@@ -7,7 +7,10 @@ resource "aws_ecs_task_definition" "this" {
   network_mode          = var.network_mode
   pid_mode              = var.pid_mode
 
-  memory = var.container_memory_hard_limit
+  # TODO: Task-level cpu and memory values have been set using default/conservative values.
+  # They should be verified based on CloudWatch Container Insights or actual production metrics.
+  cpu    = var.task_cpu != null ? var.task_cpu : 1024
+  memory = var.task_memory != null ? var.task_memory : var.container_memory_hard_limit
 
   dynamic "placement_constraints" {
     for_each = var.placement_constraints

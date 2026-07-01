@@ -452,3 +452,15 @@ variable "use_load_balancer" {
   type    = bool
   default = false
 }
+
+variable "task_cpu" {
+  description = "The number of cpu units used by the task. If not specified, a conservative default of 1024 is used."
+  type        = number
+  default     = null
+}
+
+variable "task_memory" {
+  description = "The amount (in MiB) of memory used by the task. If not specified, defaults to container_memory_hard_limit for backward compatibility."
+  type        = number
+  default     = null
+}
