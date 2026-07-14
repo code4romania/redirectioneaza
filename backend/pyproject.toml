@@ -5,10 +5,10 @@ description = "A tool to help NGOs with managing the redirection of people's tax
 
 requires-python = ">=3.13"
 dependencies = [
-  "blessed~=1.39.0",
+  "blessed~=1.44.0",
   "cryptography~=48.0.0",
   "django~=5.2.0",
-  "django-allauth~=65.16.0",
+  "django-allauth~=65.18.0",
   "django-auditlog~=3.4.0",
   "django-environ~=0.13.0",
   "django-import-export~=4.4.0",
@@ -21,7 +21,7 @@ dependencies = [
   "django-tinymce~=5.0.0",
   "django-unfold~=0.92.0",
   "django-vite~=3.1.0",
-  "gevent~=26.4.0",
+  "gevent~=26.5.0",
   "gunicorn~=26.0.0",
   "ngohub~=0.1.0",
   "phonenumbers~=9.0.0",
@@ -30,7 +30,7 @@ dependencies = [
   "pycognito~=2024.5.0",
   "pydantic[email]~=2.13.0",
   "pymysql~=1.1.0",
-  "pypdf~=6.11.0",
+  "pypdf~=6.13.0",
   "reportlab~=4.5.0",
   "requests~=2.33.0",
   "sentry-sdk[django]~=2.59.0",
@@ -113,8 +113,6 @@ select = [
 fixable = ["A", "B", "C", "D", "E", "F", "G", "I", "N", "Q", "S", "T", "W", "ANN", "ARG", "BLE", "COM", "DJ", "DTZ", "EM", "ERA", "EXE", "FBT", "ICN", "INP", "ISC", "NPY", "PD", "PGH", "PIE", "PL", "PT", "PTH", "PYI", "RET", "RSE", "RUF", "SIM", "SLF", "TCH", "TID", "TRY", "UP", "YTT"]
 unfixable = []
 
-[tool.uv]
-  version = "0.11.28"
 
 [tool.ruff.lint.mccabe]
 # Unlike Flake8, default to a complexity level of 10.
