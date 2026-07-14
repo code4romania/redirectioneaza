@@ -88,6 +88,9 @@ def get_ngo_archive_download_status(ngo: Ngo | None) -> dict:
 
 
 def has_archive_generation_deadline_passed() -> bool:
+    if settings.UNLIMITED_CURRENT_YEAR_REDIRECTIONS_DOWNLOAD:
+        return False
+
     if timezone.now().date() > edition_deadline() + datetime.timedelta(
         days=settings.TIMEDELTA_REDIRECTIONS_LIMIT_DOWNLOAD_DAYS
     ):
