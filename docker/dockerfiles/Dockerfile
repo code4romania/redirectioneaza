@@ -1,8 +1,8 @@
-ARG NODE_VERSION=24.14.1
+ARG NODE_VERSION=24.18.0
 # Python 3.14 introduced a new GC which has some memory issues:
 # https://discuss.python.org/t/reverting-the-incremental-gc-in-python-3-14-and-3-15/107014
-ARG PYTHON_VERSION=3.13.13
-ARG S6_OVERLAY_VERSION=3.2.2.0
+ARG PYTHON_VERSION=3.13.14
+ARG S6_OVERLAY_VERSION=3.2.3.0
 
 
 FROM node:${NODE_VERSION}-alpine AS frontend
