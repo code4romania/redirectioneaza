@@ -49,6 +49,7 @@ ADD ./docker/third-party/uv/installer.sh /uv-installer.sh
 
 # Run the installer then remove it
 RUN sh /uv-installer.sh && rm /uv-installer.sh
+RUN uv self update
 
 # Python virtualenv paths
 ENV VIRTUAL_ENV=/opt/venv
