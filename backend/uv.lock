@@ -1297,7 +1297,7 @@ requires-dist = [
     { name = "django-q2", specifier = "~=1.10.0" },
     { name = "django-recaptcha", specifier = "~=4.1.0" },
     { name = "django-ses", specifier = "~=4.7.0" },
-    { name = "django-storages", extras = ["s3"], specifier = "~=1.14.0" },
+    { name = "django-storages", extras = ["s3"], specifier = "~=1.14.6" },
     { name = "django-tinymce", specifier = "~=5.0.0" },
     { name = "django-unfold", specifier = "~=0.92.0" },
     { name = "django-vite", specifier = "~=3.1.0" },
