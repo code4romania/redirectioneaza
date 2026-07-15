@@ -28,7 +28,7 @@ ADMIN_DASHBOARD_CHART_CACHE_KEY = "ADMIN_DASHBOARD_CHART"
 ADMIN_DASHBOARD_YEARLY_CACHE_KEY = "ADMIN_DASHBOARD_YEARLY"
 
 
-def callback(_, context) -> dict:
+def callback(request, context) -> dict:
     context.update(_get_admin_stats())
     return context
 
@@ -36,7 +36,7 @@ def callback(_, context) -> dict:
 def _get_admin_stats() -> dict:
     years_range_ascending = get_current_year_range()
 
-    header_stats: list[list[dict[str, str | int]]] = _get_header_stats()
+    header_stats: list[list[dict[str, str | int | datetime]]] = _get_header_stats()
 
     yearly_stats: list[dict] = _get_yearly_stats(years_range_ascending)
 
@@ -54,7 +54,7 @@ def _get_header_stats() -> list[list[dict[str, str | int | datetime]]]:
     today: datetime = now()
 
     current_year: int = today.year
-    tz_info: tzinfo = today.tzinfo
+    tz_info: tzinfo | None = today.tzinfo
 
     current_year_range = get_encoded_current_year_range(current_year, tz_info)
 

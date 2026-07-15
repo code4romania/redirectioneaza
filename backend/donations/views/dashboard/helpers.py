@@ -15,7 +15,7 @@ DATASET_PARAMETERS_CACHE_KEY = "DATASET_PARAMETERS"
 
 
 @cache_decorator(timeout=settings.TIMEOUT_CACHE_LONG, cache_key_prefix=ENCODED_CURRENT_YEAR_RANGE_CACHE_KEY)
-def get_encoded_current_year_range(current_year: int, tz_info: tzinfo) -> str:
+def get_encoded_current_year_range(current_year: int, tz_info: tzinfo | None) -> str:
     start_of_year: datetime = datetime(year=current_year, month=1, day=1, hour=0, minute=0, second=0, tzinfo=tz_info)
     end_of_next_year: datetime = start_of_year.replace(year=current_year + 1)
 

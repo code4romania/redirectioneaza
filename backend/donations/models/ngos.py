@@ -280,12 +280,16 @@ class Ngo(CommonFilenameCacheModel):
     date_created = models.DateTimeField(verbose_name=_("date created"), db_index=True, auto_now_add=True)
     date_updated = models.DateTimeField(verbose_name=_("date updated"), db_index=True, auto_now=True)
 
+    # Type hinting for related models
+    causes: "models.manager.RelatedManager[Cause]"
+
+    # Model managers
     objects = models.Manager()
     active = NgoActiveManager()
     ngo_hub = NgoHubManager()
     with_forms_this_year = NgoWithFormsThisYearManager()
 
-    class Meta:
+    class Meta:  # type: ignore
         verbose_name = _("NGO")
         verbose_name_plural = _("NGOs")
 
@@ -540,7 +544,7 @@ class Cause(CommonFilenameCacheModel):
         blank=True,
         null=False,
         storage=select_public_storage,
-        upload_to=partial(cause_directory_path, "logos"),
+        upload_to=partial(cause_directory_path, "logos"),  # type: ignore
     )
 
     slug = models.SlugField(
@@ -571,6 +575,10 @@ class Cause(CommonFilenameCacheModel):
     date_created = models.DateTimeField(verbose_name=_("date created"), db_index=True, auto_now_add=True)
     date_updated = models.DateTimeField(verbose_name=_("date updated"), db_index=True, auto_now=True)
 
+    # Type hinting for related models
+    donor_set: "models.manager.RelatedManager[Donor]"
+
+    # Model managers
     objects = models.Manager()
     active = CauseActiveManager()
     main = CauseMainManager()
@@ -578,7 +586,7 @@ class Cause(CommonFilenameCacheModel):
     public_active = CausePublicFormManager()
     nonprivate_active = CauseNonPrivateFormManager()
 
-    class Meta:
+    class Meta:  # type: ignore
         verbose_name = _("Cause")
         verbose_name_plural = _("Causes")
         constraints = [

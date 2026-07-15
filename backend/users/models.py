@@ -2,6 +2,7 @@ import hmac
 import uuid
 
 from auditlog.registry import auditlog
+from allauth.socialaccount.models import SocialAccount
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import AbstractUser, Group, UserManager
 from django.core.exceptions import ValidationError
@@ -27,12 +28,12 @@ class CustomUserManager(UserManager):
         user.save(using=self._db)
         return user
 
-    def create_user(self, email=None, password=None, **extra_fields):
+    def create_user(self, email=None, password=None, **extra_fields):  # type: ignore
         extra_fields.setdefault("is_staff", False)
         extra_fields.setdefault("is_superuser", False)
         return self._create_user(email, password, **extra_fields)
 
-    def create_superuser(self, email=None, password=None, **extra_fields):
+    def create_superuser(self, email=None, password=None, **extra_fields):  # type: ignore
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
 
@@ -97,6 +98,10 @@ class User(AbstractUser):
     date_created = models.DateTimeField(verbose_name=_("date created"), db_index=True, auto_now_add=True)
     date_updated = models.DateTimeField(verbose_name=_("date updated"), db_index=True, auto_now=True)
 
+    # Type hinting for related models
+    socialaccount_set: "models.manager.RelatedManager[SocialAccount]"
+
+    # Model managers
     objects = CustomUserManager()
 
     USERNAME_FIELD = "email"
@@ -125,7 +130,7 @@ class User(AbstractUser):
         return self.validation_token
 
     def verify_token(self, token):
-        validation_token: uuid.UUID = self.validation_token
+        validation_token: uuid.UUID | None = self.validation_token
         if not validation_token or not token:
             return False
         if hmac.compare_digest(validation_token.hex, token.hex):

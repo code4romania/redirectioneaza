@@ -7,7 +7,7 @@ UserModel = get_user_model()
 
 
 def callback(request, context):
-    user: UserModel = request.user
+    user: UserModel = request.user  # type: ignore
 
     if not user or not user.is_authenticated:
         return context
