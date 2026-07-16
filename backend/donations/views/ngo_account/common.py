@@ -22,7 +22,7 @@ class NgoBaseView(BaseContextPropertiesMixin):
 
     def get_extra_context(self):
         user: User = self.request.user
-        ngo: Ngo = user.ngo if user.ngo else None
+        ngo: Ngo | None = user.ngo if user.ngo else None
 
         return {
             "user": user,
@@ -160,7 +160,7 @@ def delete_cause_prefilled_form(cause_id):
     :param cause_id: The ID of the cause whose prefilled form is to be deleted.
     :return: The result of the `Cause.delete_prefilled_form` method.
     """
-    cause: Cause = Cause.objects.filter(pk=cause_id).first()
+    cause: Cause | None = Cause.objects.filter(pk=cause_id).first()
     if not cause:
         return None
     return cause.delete_prefilled_form()

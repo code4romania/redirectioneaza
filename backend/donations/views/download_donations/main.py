@@ -40,7 +40,11 @@ def download_donations_job(job_id: int = 0):
         logger.error("Job with ID %d does not exist", job_id)
         return
 
-    cause: Cause = job.cause
+    cause: Cause | None = job.cause
+    if not cause:
+        job.status = JobStatusChoices.ERROR
+        job.save()
+        return
 
     timestamp: datetime = timezone.now()
     donations: QuerySet[Donor] = Donor.current_year_signed.filter(cause=cause).order_by("-date_created").all()

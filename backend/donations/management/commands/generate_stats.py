@@ -23,7 +23,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         statistic_type: str = options["statistic"]
-        for_date_str: str = options.get("date")
+        for_date_str: str = options.get("date", "")
 
         if statistic_type == StatsChoices.REDIRECTIONS_PER_DAY and not for_date_str:
             self.stderr.write("Error: --date argument is required for REDIRECTIONS_PER_DAY statistic.")

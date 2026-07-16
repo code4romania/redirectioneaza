@@ -53,37 +53,37 @@ class DonorTestBuilder:
             .with_misc()
         )
 
-    def with_first_name(self, first_name: str = None) -> "DonorTestBuilder":
+    def with_first_name(self, first_name: str | None = None) -> "DonorTestBuilder":
         self.donor_data["f_name"] = first_name if first_name else faker.first_name()
 
         return self
 
-    def with_last_name(self, last_name: str = None) -> "DonorTestBuilder":
+    def with_last_name(self, last_name: str | None = None) -> "DonorTestBuilder":
         self.donor_data["l_name"] = last_name if last_name else faker.last_name()
 
         return self
 
-    def with_initial(self, initial: str = None) -> "DonorTestBuilder":
+    def with_initial(self, initial: str | None = None) -> "DonorTestBuilder":
         self.donor_data["initial"] = initial if initial else faker.random_uppercase_letter()
 
         return self
 
-    def with_cnp(self, cnp: str = None) -> "DonorTestBuilder":
+    def with_cnp(self, cnp: str | None = None) -> "DonorTestBuilder":
         self.donor_data["cnp"] = cnp if cnp else faker.ssn()
 
         return self
 
-    def with_city(self, city: str = None) -> "DonorTestBuilder":
+    def with_city(self, city: str | None = None) -> "DonorTestBuilder":
         self.donor_data["city"] = city if city else faker.city()
 
         return self
 
-    def with_county(self, county: str = None) -> "DonorTestBuilder":
+    def with_county(self, county: str | None = None) -> "DonorTestBuilder":
         self.donor_data["county"] = county if county else faker.state()
 
         return self
 
-    def with_address(self, address: dict[str, str] = None) -> "DonorTestBuilder":
+    def with_address(self, address: dict[str, str] | None = None) -> "DonorTestBuilder":
         if address is None:
             address = {
                 "street_name": faker.street_name(),
@@ -102,17 +102,17 @@ class DonorTestBuilder:
 
         return self
 
-    def with_phone(self, phone: str = None) -> "DonorTestBuilder":
+    def with_phone(self, phone: str | None = None) -> "DonorTestBuilder":
         self.donor_data["phone"] = phone if phone else faker.phone_number()
 
         return self
 
-    def with_email(self, email: str = None) -> "DonorTestBuilder":
+    def with_email(self, email: str | None = None) -> "DonorTestBuilder":
         self.donor_data["email"] = email if email else faker.email()
 
         return self
 
-    def with_geoip(self, geoip: dict[str, Any] = None) -> "DonorTestBuilder":
+    def with_geoip(self, geoip: dict[str, Any] | None = None) -> "DonorTestBuilder":
         if geoip is None:
             geoip = {
                 "ip": faker.ipv4(),
@@ -129,11 +129,11 @@ class DonorTestBuilder:
     def with_misc(
         self,
         *,
-        is_anonymous: bool = None,
-        anaf_gdpr: bool = None,
-        two_years: bool = None,
-        has_signed: bool = None,
-        income_type: str = None,
+        is_anonymous: bool | None = None,
+        anaf_gdpr: bool | None = None,
+        two_years: bool | None = None,
+        has_signed: bool | None = None,
+        income_type: str | None = None,
     ):
         if is_anonymous is None:
             is_anonymous = random.choice([True, False])

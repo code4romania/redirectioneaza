@@ -1,7 +1,7 @@
 import logging
 import re
 from functools import partial
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from auditlog.registry import auditlog
 from django.conf import settings
@@ -24,6 +24,11 @@ from utils.text.registration_number import (
     REGISTRATION_NUMBER_REGEX_WITH_VAT,
     ngo_id_number_validator,
 )
+
+if TYPE_CHECKING:
+    from partners.models import Partner
+    from donations.models import Job, RedirectionsDownloadJob
+
 
 ALL_NGOS_CACHE_KEY = "ALL_NGOS"
 ALL_NGO_IDS_CACHE_KEY = "ALL_NGO_IDS"
@@ -282,6 +287,10 @@ class Ngo(CommonFilenameCacheModel):
 
     # Type hinting for related models
     causes: "models.manager.RelatedManager[Cause]"
+    partners: "models.manager.RelatedManager[Partner]"
+    jobs: "models.manager.RelatedManager[Job]"
+    download_jobs: "models.manager.RelatedManager[RedirectionsDownloadJob]"
+    donor_set: "models.manager.RelatedManager[Donor]"
 
     # Model managers
     objects = models.Manager()
@@ -392,7 +401,7 @@ class Ngo(CommonFilenameCacheModel):
     @classmethod
     def mandatory_fields(cls):
         # noinspection PyTypeChecker
-        field_names: list[DeferredAttribute] = [
+        field_names = [
             Ngo.name,
             Ngo.registration_number,
         ]

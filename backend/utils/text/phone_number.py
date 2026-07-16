@@ -42,7 +42,10 @@ def validate_phone_number(raw_phone_number) -> dict[str, str]:
     }
 
 
-def clean_phone_number(raw_phone_number: str) -> str:
+def clean_phone_number(raw_phone_number: str | None) -> str:
+    if not raw_phone_number:
+        return ""
+
     try:
         phone_number: PhoneNumber = phonenumbers.parse(raw_phone_number, region="RO")
     except phonenumbers.NumberParseException:

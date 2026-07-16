@@ -28,7 +28,7 @@ class NgoBringYourOwnFormView(NgoBaseListView):
         context = super().get_context_data(**kwargs)
 
         user: User = self.request.user
-        ngo: Ngo = user.ngo if user.ngo else None
+        ngo: Ngo | None = user.ngo if user.ngo else None
 
         context.update(
             {
@@ -51,7 +51,7 @@ class NgoBringYourOwnFormView(NgoBaseListView):
     def post(self, request: HttpRequest, *args, **kwargs):
         user: User = request.user
 
-        ngo: Ngo = user.ngo if user.ngo else None
+        ngo: Ngo | None = user.ngo if user.ngo else None
         if not ngo:
             messages.error(request, _("You need to add your NGO's information first."))
             return redirect(reverse_lazy("my-organization:presentation"))

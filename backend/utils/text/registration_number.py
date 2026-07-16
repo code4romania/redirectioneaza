@@ -37,7 +37,7 @@ def extract_vat_id(registration_number: str) -> dict[str, str]:
     return result
 
 
-def clean_registration_number(registration_number: str) -> str | None:
+def clean_registration_number(registration_number: str) -> str:
     """
     Clean up a registration number by uppercasing the string, then removing any whitespace or forbidden characters.
     :param registration_number: The registration number to clean.

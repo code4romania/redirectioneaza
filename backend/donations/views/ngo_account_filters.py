@@ -1,6 +1,7 @@
 from typing import Any
 
 from django.db.models import QuerySet
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 import redirectioneaza.settings.locations
@@ -33,7 +34,7 @@ class FormYearQueryFilter(NgoQueryFilter):
 
     def options_default(self) -> list[dict[str, int | str]]:
         last_year = edition_deadline().year
-        ngo_date_created = self.ngo.date_created
+        ngo_date_created = self.ngo.date_created if self.ngo else timezone.now()
         year_range = range(ngo_date_created.year, last_year + 1)
 
         return [{"title": str(year), "value": str(year)} for year in year_range]

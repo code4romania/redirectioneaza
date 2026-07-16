@@ -79,7 +79,7 @@ class NgoCauseCommonView(NgoBaseTemplateView):
         post = request.POST
         user: User = request.user
 
-        ngo: Ngo = user.ngo
+        ngo: Ngo | None = user.ngo
 
         must_refresh_prefilled_form = False
 

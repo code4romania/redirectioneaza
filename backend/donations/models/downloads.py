@@ -23,7 +23,7 @@ class RedirectionsDownloadJob(AsyncJob):
         null=True,
     )
 
-    class Meta:
+    class Meta:  # type: ignore
         verbose_name = _("download job")
         verbose_name_plural = _("download jobs")
 

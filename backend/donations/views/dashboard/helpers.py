@@ -67,7 +67,7 @@ def generate_donations_per_month_chart(
                 "datasets": [
                     {
                         "label": str(data["year"]),
-                        "data": donations_per_month[data["year"]],
+                        "data": donations_per_month[int(data["year"])],
                         "borderColor": data["border_color"],
                         "backgroundColor": data["background_color"],
                         "borderWidth": data.get("border_width", default_border_width),

@@ -118,12 +118,12 @@ def build_borderou_data_from_raw(
     element.append(new_xml_element(tag="denD", text=ngo_name, clean="alnums"))
     element.append(new_xml_element(tag="cifD", text=ngo_registration_number, clean="numbers"))
 
-    ngo_address: str = ngo_address
+    full_ngo_address: str = ngo_address
     if ngo_locality:
-        ngo_address += ", " + ngo_locality
+        full_ngo_address += ", " + ngo_locality
     if ngo_county:
-        ngo_address += ", " + ngo_county
-    element.append(new_xml_element(tag="adresaD", text=ngo_address, clean="custom"))
+        full_ngo_address += ", " + ngo_county
+    element.append(new_xml_element(tag="adresaD", text=full_ngo_address, clean="custom"))
 
     element.append(new_xml_element(tag="ibanD", text=bank_account, clean="alnum"))
 
@@ -171,9 +171,15 @@ def build_donor_raw(
     element.append(nrCrt)
 
     contributor_identity = Element("idCnt")
-    contributor_identity.append(new_xml_element(tag="nume", text=donor_last_name.upper(), clean="alphabets"))
-    contributor_identity.append(new_xml_element(tag="init", text=donor_initial.upper(), clean="alphabet"))
-    contributor_identity.append(new_xml_element(tag="pren", text=donor_first_name.upper(), clean="alphabets"))
+    contributor_identity.append(
+        new_xml_element(tag="nume", text=donor_last_name.upper() if donor_last_name else "", clean="alphabets")
+    )
+    contributor_identity.append(
+        new_xml_element(tag="init", text=donor_initial.upper() if donor_initial else "", clean="alphabet")
+    )
+    contributor_identity.append(
+        new_xml_element(tag="pren", text=donor_first_name.upper() if donor_first_name else "", clean="alphabets")
+    )
     contributor_identity.append(new_xml_element(tag="cif_c", text=donor_cnp, clean="numbers"))
     contributor_identity.append(new_xml_element(tag="adresa", text=donor_address, clean="custom"))
     contributor_identity.append(new_xml_element(tag="telefon", text=clean_phone_number(donor_phone), clean="numbers"))

@@ -120,8 +120,8 @@ def _get_ngo_hub_data(ngohub_org_id: int, token: str = "") -> Organization:
         return hub.get_organization_profile(ngo_token=token)
 
     # if no token is provided, attempt to authenticate as an admin for the organization endpoint
-    token: str = _authenticate_with_ngohub()
-    return hub.get_organization(organization_id=ngohub_org_id, admin_token=token)
+    new_token: str = _authenticate_with_ngohub()
+    return hub.get_organization(organization_id=ngohub_org_id, admin_token=new_token)
 
 
 def _update_main_cause_of_ngo(ngo: Ngo, ngohub_general_data: OrganizationGeneral) -> list[str] | Cause:
@@ -258,7 +258,13 @@ def _update_organization_task(organization_id: int, token: str = "") -> dict[str
     ngo.ngohub_last_update_started = last_update_start
     ngo.save()
 
-    ngohub_id: int = ngo.ngohub_org_id
+    ngohub_id: int | None = ngo.ngohub_org_id
+    if not ngohub_id:
+        return {
+            "ngo_id": ngo.pk,
+            "errors": ["This NGO has no NGO Hub ID"],
+        }
+
     try:
         ngohub_org_data: Organization = _get_ngo_hub_data(ngohub_id, token)
     except HubHTTPException as e:
