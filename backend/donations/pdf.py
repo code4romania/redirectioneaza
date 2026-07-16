@@ -25,7 +25,7 @@ form_image_path = abs_path + "/static_extras/images/formular-2025.jpg"
 
 def _format_bank_account(bank_account: str):
     # remove spaces from the bank account number
-    bank_account: str = bank_account.replace(" ", "")
+    bank_account = bank_account.replace(" ", "")
 
     account: str = ""
     for i, letter in enumerate(bank_account):
@@ -58,7 +58,7 @@ def _add_ngo_data(start_y: int, c: Canvas, cause: Cause | None, ngo: Ngo):
     c.setFontSize(11)
 
     # the bank account
-    bank_account: str = cause.bank_account if cause else ngo.bank_account
+    bank_account: str = (cause.bank_account if cause else ngo.bank_account) or ""
     account: str = _format_bank_account(bank_account)
     c.drawString(110, start_ngo_y - 84, account)
 
@@ -159,7 +159,7 @@ def _add_donor_data(start_y, c: Canvas, donor: Donor):
     cnp: str = donor.get_cnp()
     for letter in cnp:
         c.drawString(cnp_x, cnp_y, letter)
-        cnp_x += 18.5
+        cnp_x += 18
 
     # email
     start_email_x: int = donor_block_x + 296
@@ -189,9 +189,9 @@ def _add_donor_data(start_y, c: Canvas, donor: Donor):
         c.drawString(donor_block_x - 39, donor_block_y - 362, "x")
 
 
-def _add_signature_to_pdf(c: Canvas, signature: str, new_height: int = 30):
+def _add_signature_to_pdf(c: Canvas, raw_signature: str, new_height: int = 30):
     # Remove the header added by JavaScript
-    headerless_signature: str = signature.split(",")[1]
+    headerless_signature: str = raw_signature.split(",")[1]
     # Make sure the string has the right padding
     signature: str = headerless_signature + "=" * (-len(headerless_signature) % 4)
 
@@ -279,7 +279,10 @@ def create_full_pdf(donor: Donor, signature: str | None = None):
     # DRAW DONOR DATA
     _add_donor_data(start_y, c, donor)
 
-    _add_ngo_data(start_y, c, donor.cause, donor.ngo)
+    if donor.ngo:
+        _add_ngo_data(start_y, c, donor.cause, donor.ngo)
+    else:
+        print("Cannot add NGO data to PDF because there is no NGO")
 
     if signature:
         _add_signature_to_pdf(c, signature)

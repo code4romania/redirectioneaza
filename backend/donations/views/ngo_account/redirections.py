@@ -57,7 +57,9 @@ class NgoRedirectionsView(NgoBaseListView, DonorSearchMixin):
         context = super().get_context_data(**kwargs)
 
         user: User = self.request.user
-        ngo: Ngo = user.ngo if user.ngo else None
+        ngo: Ngo | None = user.ngo if user.ngo else None
+
+        # TODO: Handle non existing NGO
 
         causes = self._get_ngo_causes(ngo=ngo) if ngo else None
         context.update(
@@ -186,7 +188,7 @@ class NgoArchivesView(NgoBaseListView):
         context = super().get_context_data(**kwargs)
 
         user: User = self.request.user
-        ngo: Ngo = user.ngo if user.ngo else None
+        ngo: Ngo | None = user.ngo if user.ngo else None
 
         context.update(
             {
@@ -309,7 +311,7 @@ class RedirectionDownloadLinkView(BaseVisibleTemplateView):
     @method_decorator(login_required(login_url=reverse_lazy("login")))
     def get(self, request, form_id, *args, **kwargs):
         user: User = request.user
-        ngo: Ngo = user.ngo if user.ngo else None
+        ngo: Ngo | None = user.ngo if user.ngo else None
 
         if not ngo:
             raise Http404
@@ -338,7 +340,7 @@ class RedirectionDisableLinkView(BaseVisibleTemplateView):
     @method_decorator(login_required(login_url=reverse_lazy("login")))
     def post(self, request, form_id, *args, **kwargs):
         user: User = request.user
-        ngo: Ngo = user.ngo if user.ngo else None
+        ngo: Ngo | None = user.ngo if user.ngo else None
 
         if not ngo:
             raise Http404

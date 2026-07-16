@@ -139,7 +139,7 @@ class CauseForm(forms.ModelForm):
         return cause
 
     def clean_slug(self):
-        slug = self.cleaned_data.get("slug").lower()
+        slug = self.cleaned_data.get("slug", "").lower()
 
         ngo_slug_validator(slug)
 
@@ -155,7 +155,7 @@ class CauseForm(forms.ModelForm):
         return slug
 
     def clean_description(self):
-        return self.cleaned_data.get("description").strip()
+        return self.cleaned_data.get("description", "").strip()
 
     def clean_bank_account(self):
         bank_account = self.cleaned_data.get("bank_account")

@@ -295,7 +295,7 @@ class RedirectionHandler(TemplateView):
         )
 
         # send and email to the donor with a link to the PDF file
-        if signature:
+        if signature and cause:
             if cause.notifications_email:
                 send_email(
                     subject=_("Un nou formular de redirecționare"),

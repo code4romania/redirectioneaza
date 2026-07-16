@@ -405,7 +405,7 @@ class DonorAdmin(ModelAdmin):
             },
         )
 
-        return redirect(reverse_lazy("admin:donations_donor_change", args=[donor.pk]))
+        # return redirect(reverse_lazy("admin:donations_donor_change", args=[donor.pk]))
 
     @action(description=_("Schedule redirections stats"), url_path="schedule-redirections-stats-generator")
     def run_redirections_stats_generator(self, request):

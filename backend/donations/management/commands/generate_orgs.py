@@ -1,5 +1,4 @@
 import random
-from typing import Any
 
 from django.contrib.auth import get_user_model
 from django.core.management import BaseCommand
@@ -803,7 +802,7 @@ class Command(BaseCommand):
         create_user_only = options.get("user_only", None)
         create_ngohub_id = options.get("ngohub", None)
 
-        organizations: list[dict[str, Any]] = []
+        organizations: list[Ngo] = []
         generated_organization_names: list[str] = []
 
         user_model = get_user_model()

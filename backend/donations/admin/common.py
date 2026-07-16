@@ -24,7 +24,7 @@ class CommonCauseFields:
         {"fields": ("ngo",)},
     )
 
-    flags_fieldset: tuple[str, dict[str, tuple[str]]] = (
+    flags_fieldset = (
         _("Flags"),
         {
             "fields": (
@@ -36,7 +36,7 @@ class CommonCauseFields:
         },
     )
 
-    form_data_fieldset: tuple[str, dict[str, tuple[str]]] = (
+    form_data_fieldset = (
         _("Form Data"),
         {
             "fields": (
@@ -46,7 +46,7 @@ class CommonCauseFields:
         },
     )
 
-    data_fieldset: tuple[str, dict[str, tuple[str]]] = (
+    data_fieldset = (
         _("Data"),
         {
             "fields": (
@@ -58,7 +58,7 @@ class CommonCauseFields:
         },
     )
 
-    dates_fieldset: tuple[str, dict[str, tuple[str]]] = (
+    dates_fieldset = (
         _("Date"),
         {
             "fields": (
@@ -70,7 +70,7 @@ class CommonCauseFields:
 
     readonly_fields = ("ngo", "date_created", "date_updated")
 
-    def get_readonly_fields(self, _: HttpRequest, obj=None):
+    def get_readonly_fields(self, request: HttpRequest, obj=None):
         if obj and not obj.has_online_tax_account:
             return self.readonly_fields + ("allow_online_collection",)
 

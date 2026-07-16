@@ -21,7 +21,7 @@ class UserSettingsView(NgoBaseTemplateView):
         context = super().get_context_data(**kwargs)
 
         user: User = self.request.user
-        ngo: Ngo = user.ngo if user.ngo else None
+        ngo: Ngo | None = user.ngo if user.ngo else None
 
         has_ngohub = None
         if ngo:

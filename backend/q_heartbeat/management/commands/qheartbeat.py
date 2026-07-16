@@ -50,7 +50,7 @@ class Command(BaseCommand):
         else:
             logger.info("The task queue seems to be working")
 
-    def terminate_workers(self, hard_attempt: False) -> None:
+    def terminate_workers(self, hard_attempt=False) -> None:
         """
         Terminate or kill all cluster workers
         """

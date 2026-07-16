@@ -1,7 +1,7 @@
 import logging
 import re
 from functools import partial
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from auditlog.registry import auditlog
 from django.conf import settings
@@ -24,6 +24,11 @@ from utils.text.registration_number import (
     REGISTRATION_NUMBER_REGEX_WITH_VAT,
     ngo_id_number_validator,
 )
+
+if TYPE_CHECKING:
+    from donations.models import Job, RedirectionsDownloadJob
+    from partners.models import Partner
+
 
 ALL_NGOS_CACHE_KEY = "ALL_NGOS"
 ALL_NGO_IDS_CACHE_KEY = "ALL_NGO_IDS"
@@ -280,12 +285,20 @@ class Ngo(CommonFilenameCacheModel):
     date_created = models.DateTimeField(verbose_name=_("date created"), db_index=True, auto_now_add=True)
     date_updated = models.DateTimeField(verbose_name=_("date updated"), db_index=True, auto_now=True)
 
+    # Type hinting for related models
+    causes: "models.manager.RelatedManager[Cause]"
+    partners: "models.manager.RelatedManager[Partner]"
+    jobs: "models.manager.RelatedManager[Job]"
+    download_jobs: "models.manager.RelatedManager[RedirectionsDownloadJob]"
+    donor_set: "models.manager.RelatedManager[Donor]"
+
+    # Model managers
     objects = models.Manager()
     active = NgoActiveManager()
     ngo_hub = NgoHubManager()
     with_forms_this_year = NgoWithFormsThisYearManager()
 
-    class Meta:
+    class Meta:  # type: ignore
         verbose_name = _("NGO")
         verbose_name_plural = _("NGOs")
 
@@ -388,7 +401,7 @@ class Ngo(CommonFilenameCacheModel):
     @classmethod
     def mandatory_fields(cls):
         # noinspection PyTypeChecker
-        field_names: list[DeferredAttribute] = [
+        field_names = [
             Ngo.name,
             Ngo.registration_number,
         ]
@@ -540,7 +553,7 @@ class Cause(CommonFilenameCacheModel):
         blank=True,
         null=False,
         storage=select_public_storage,
-        upload_to=partial(cause_directory_path, "logos"),
+        upload_to=partial(cause_directory_path, "logos"),  # type: ignore
     )
 
     slug = models.SlugField(
@@ -571,6 +584,10 @@ class Cause(CommonFilenameCacheModel):
     date_created = models.DateTimeField(verbose_name=_("date created"), db_index=True, auto_now_add=True)
     date_updated = models.DateTimeField(verbose_name=_("date updated"), db_index=True, auto_now=True)
 
+    # Type hinting for related models
+    donor_set: "models.manager.RelatedManager[Donor]"
+
+    # Model managers
     objects = models.Manager()
     active = CauseActiveManager()
     main = CauseMainManager()
@@ -578,7 +595,7 @@ class Cause(CommonFilenameCacheModel):
     public_active = CausePublicFormManager()
     nonprivate_active = CauseNonPrivateFormManager()
 
-    class Meta:
+    class Meta:  # type: ignore
         verbose_name = _("Cause")
         verbose_name_plural = _("Causes")
         constraints = [

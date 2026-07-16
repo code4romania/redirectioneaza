@@ -88,7 +88,7 @@ class NgoCauseInline(StackedInline, CommonCauseFields):
 
 class NgoPartnerInline(TabularInline):
     # noinspection PyUnresolvedReferences
-    model = Ngo.partners.through
+    model = Ngo.partners.through  # type: ignore
     extra = 1
     tab = True
 
@@ -515,7 +515,7 @@ class NgoAdmin(ModelAdmin):
     def check_cult_registry_sync(self, request: HttpRequest, queryset: QuerySet[Ngo]):
         show_errors: bool = True
 
-        registration_numbers = queryset.values_list("registration_number", flat=True)
+        registration_numbers: list[str] = queryset.values_list("registration_number", flat=True)  # type: ignore
         task_result = cult_registry_check_organizations(registration_numbers, update_method="sync")
 
         message = "ANAF Registry Results: | "
@@ -533,7 +533,7 @@ class NgoAdmin(ModelAdmin):
 
     @action(description=_("Check in ANAF Cult Registry asynchronously"))
     def check_cult_registry_async(self, request, queryset: QuerySet[Ngo]):
-        registration_numbers = queryset.values_list("registration_number", flat=True)
+        registration_numbers: list[str] = queryset.values_list("registration_number", flat=True)  # type: ignore
         cult_registry_check_organizations(registration_numbers, update_method="async")
         self.message_user(request, _("NGOs are being searched in ANAF Cult Registry."))
 

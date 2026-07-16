@@ -37,7 +37,7 @@ class Job(AsyncJob):
     def __str__(self):
         return f"{self.cause} {self.status}"
 
-    class Meta:
+    class Meta:  # type: ignore
         verbose_name = _("job")
         verbose_name_plural = _("jobs")
 
