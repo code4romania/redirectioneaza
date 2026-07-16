@@ -26,8 +26,8 @@ from utils.text.registration_number import (
 )
 
 if TYPE_CHECKING:
-    from partners.models import Partner
     from donations.models import Job, RedirectionsDownloadJob
+    from partners.models import Partner
 
 
 ALL_NGOS_CACHE_KEY = "ALL_NGOS"

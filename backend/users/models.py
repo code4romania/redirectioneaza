@@ -1,8 +1,8 @@
 import hmac
 import uuid
 
-from auditlog.registry import auditlog
 from allauth.socialaccount.models import SocialAccount
+from auditlog.registry import auditlog
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import AbstractUser, Group, UserManager
 from django.core.exceptions import ValidationError
