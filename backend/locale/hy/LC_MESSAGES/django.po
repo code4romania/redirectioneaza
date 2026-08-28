@@ -3500,60 +3500,6 @@ msgstr "Մուտք գործել NGO Hub-ի միջոցով"
 msgid "Send the form"
 msgstr "Մուտք գործելու սխալ"
 
-#: templates/v2/form/success/signed.html:4
-msgid "Thank you! Part of your income tax will go to the cause you believe in"
-msgstr ""
-
-#: templates/v2/form/success/signed.html:10
-msgid ""
-"Your form has been sent to the organization, and they will take care of "
-"submitting it to the tax office. You will receive a copy of it by email "
-"shortly."
-msgstr ""
-
-#: templates/v2/form/success/signed.html:25
-#: templates/v2/form/success/unsigned.html:96
-msgid ""
-"Together we can make a positive change in society, that's why we need as "
-"many people like you as possible. See below how you can contribute more."
-msgstr ""
-
-#: templates/v2/form/success/unsigned.html:4
-msgid "You are one step closer to redirecting your income tax..."
-msgstr ""
-
-#: templates/v2/form/success/unsigned.html:10
-msgid ""
-"We have generated the form with your data. Next, it needs to be signed and "
-"sent. See below, or in the email, the steps you need to follow."
-msgstr ""
-
-#: templates/v2/form/success/unsigned.html:30
-msgid "After you print and sign the form, you have the following options:"
-msgstr ""
-
-#: templates/v2/form/success/unsigned.html:41
-msgid ""
-"You scan and send it by email to the NGO, and they will take care of "
-"submitting it. The NGO's email address is:"
-msgstr ""
-
-#: templates/v2/form/success/unsigned.html:54
-msgid ""
-"You send it by post with a registered letter to the tax office (ANAF) you "
-"belong to."
-msgstr ""
-
-#: templates/v2/form/success/unsigned.html:59
-msgid "Search for the office you belong to in this list;"
-msgstr ""
-
-#: templates/v2/form/success/unsigned.html:72
-msgid ""
-"You send it by post or courier to the NGO's address, and they will take care "
-"of submitting it. Their address is:"
-msgstr ""
-
 #: templates/v2/form/success/unsigned.html:77
 #, fuzzy
 #| msgid "county"
@@ -3765,10 +3711,6 @@ msgstr "Մուտք գործելու սխալ"
 #| msgid "Form"
 msgid "Form data"
 msgstr "հարցաթերթ"
-
-#: templates/v2/ngo-account/cause/form.html:19
-msgid "For filling in the form, we will use the following organization data:"
-msgstr ""
 
 #: templates/v2/ngo-account/cause/form.html:24
 #, fuzzy
@@ -4085,36 +4027,6 @@ msgstr "NGO Hub կազմակերպության նույնականացման հա
 #| msgid "NGO Hub organization ID"
 msgid "Organization logo"
 msgstr "NGO Hub կազմակերպության նույնականացման համար"
-
-#: templates/v2/ngo-account/my-organization/ngo-form.html:14
-msgid ""
-"This is the name of your organization. It will be displayed on the public "
-"page of the main form as well as all the other forms created by your "
-"organization."
-msgstr ""
-
-#: templates/v2/ngo-account/my-organization/ngo-form.html:20
-msgid ""
-"Choose a text that best describes your organization. This will be displayed "
-"on the public page of the main form as well as all the other forms created "
-"by your organization."
-msgstr ""
-
-#: templates/v2/ngo-account/my-organization/ngo-form.html:26
-msgid ""
-"The logo of the organization will be displayed on the public page of the "
-"main form as well as all the other forms created by your organization."
-msgstr ""
-
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:38
-msgid "Official data"
-msgstr ""
-
-#: templates/v2/ngo-account/my-organization/ngo-presentation.html:39
-msgid ""
-"This data will appear on the filled-out form and, if you activate online "
-"signing, on the archive generated for ANAF."
-msgstr ""
 
 #: templates/v2/ngo-account/my-organization/ngo-presentation.html:48
 #, fuzzy
