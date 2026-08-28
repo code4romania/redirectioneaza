@@ -49,3 +49,12 @@ LOGGING = {
         },
     },
 }
+
+# Auditlog configuration
+
+AUDITLOG_EXPIRY_DAYS = env.int("AUDITLOG_EXPIRY_DAYS")
+AUDITLOG_INCLUDE_ALL_MODELS = False
+
+
+# Custom logging configuration
+CUSTOM_LOG_LEVEL = env.str("CUSTOM_LOG_LEVEL")

@@ -1,5 +1,4 @@
 from django import forms
-from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
@@ -14,6 +13,7 @@ from unfold.widgets import UnfoldAdminEmailInputWidget, UnfoldAdminTextInputWidg
 
 from redirectioneaza.common.messaging import extend_email_context, send_email
 from users.groups_management import PARTNER_MANAGER
+
 from .models import Partner
 
 UserModel = get_user_model()
@@ -62,8 +62,7 @@ class PartnerAdmin(ModelAdmin):
     list_filter = (
         "is_active",
         "date_updated",
-        "has_custom_header",
-        "has_custom_note",
+        "custom_cta",
     )
     search_fields = (
         "subdomain",
@@ -91,8 +90,7 @@ class PartnerAdmin(ModelAdmin):
             {
                 "fields": (
                     "is_active",
-                    "has_custom_header",
-                    "has_custom_note",
+                    "custom_cta",
                     "display_ordering",
                 )
             },
@@ -140,7 +138,7 @@ class PartnerAdmin(ModelAdmin):
                 "verification",
                 kwargs={
                     "verification_type": "p",
-                    "user_id": new_user.id,
+                    "user_id": new_user.pk,
                     "signup_token": new_user.refresh_token(),
                 },
             )
@@ -148,7 +146,6 @@ class PartnerAdmin(ModelAdmin):
         template_context = {
             "first_name": new_user.first_name,
             "action_url": new_password_url,
-            "contact_email": settings.CONTACT_EMAIL_ADDRESS,
         }
         template_context.update(extend_email_context(request))
 

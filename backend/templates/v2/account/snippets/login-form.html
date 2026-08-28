@@ -4,7 +4,7 @@
 {% load static %}
 
 <script>
-  let loginForm = function () {
+  let loginForm = function() {
     return {
       form: undefined,
       pristine: undefined,
@@ -15,7 +15,7 @@
           errorTextClass: "mt-2 text-sm text-red-600",
         });
 
-        this.form.addEventListener('submit', (e) => {
+        this.form.addEventListener("submit", (e) => {
           e.preventDefault();
           let valid = this.pristine.validate();
           this.isFormSubmitting = true;
@@ -24,7 +24,7 @@
             this.form.submit();
           }
         });
-      }
+      },
     };
   };
 </script>
@@ -55,7 +55,7 @@
 
   {% csrf_token %}
 
-  <div class="overflow-hidden rounded-lg bg-white drop-shadow ring-1 ring-gray-200 max-w-[448px] mx-auto">
+  <div class="overflow-hidden rounded-lg bg-white drop-shadow-sm ring-1 ring-gray-200 max-w-[448px] mx-auto">
     <div class="grid gap-6 px-10 py-8">
       {% trans "Email address" as email_label %}
       {% include "account/components/email-input.html" with input_title=email_label input_name="email" value=form.email.value|default_if_none:"" %}
@@ -68,18 +68,18 @@
           <a href="{% url 'forgot' %}" class="text-sm/6 text-cyan-700">Ți-ai uitat parola?</a>
         </div>
       </div>
-      
+
       {% if form.non_field_errors %}
         <div class="mt-2 text-sm text-red-600">{{ form.non_field_errors }}</div>
       {% endif %}
 
       <button type="submit"
-              class="w-full px-2 py-1 text-sm text-center text-gray-900 rounded-full shadow-sm bg-amber-300 sm:text-base sm:px-6 sm:py-2 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
+              class="w-full px-2 py-1 text-sm text-center text-gray-900 rounded-full shadow-xs bg-amber-300 sm:text-base sm:px-6 sm:py-2 hover:bg-amber-200 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
         Intră în cont
       </button>
     </div>
   </div>
 
-  <div id=g-recaptcha" class="g-recaptcha" data-sitekey="{{ captcha_public_key }}" data-size="invisible" data-callback="onSubmit"></div>
+  {% include "components/recaptcha-div.html" with captcha_public_key=captcha_public_key %}
 </form>
 

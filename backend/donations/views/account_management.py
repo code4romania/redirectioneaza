@@ -13,8 +13,9 @@ from django.utils.translation import gettext_lazy as _
 
 from redirectioneaza.common.messaging import extend_email_context, send_email
 from users.models import User
-from .base import BaseVisibleTemplateView
+
 from ..forms.account import ForgotPasswordForm, LoginForm, RegisterForm, ResetPasswordForm
+from .base import BaseVisibleTemplateView
 
 logger = logging.getLogger(__name__)
 
@@ -35,7 +36,7 @@ class ForgotPasswordView(BaseVisibleTemplateView):
                 "verification",
                 kwargs={
                     "verification_type": "p",
-                    "user_id": user.id,
+                    "user_id": user.pk,
                     "signup_token": user.refresh_token(),
                 },
             )
@@ -44,7 +45,6 @@ class ForgotPasswordView(BaseVisibleTemplateView):
         template_context = {
             "first_name": user.first_name,
             "action_url": verification_url,
-            "contact_email": settings.CONTACT_EMAIL_ADDRESS,
         }
         template_context.update(extend_email_context(request))
 
@@ -59,7 +59,6 @@ class ForgotPasswordView(BaseVisibleTemplateView):
     def _send_ngohub_notification(self, request: HttpRequest, user: UserModel):
         template_context = {
             "first_name": user.first_name,
-            "contact_email": settings.CONTACT_EMAIL_ADDRESS,
             "ngohub_site": settings.NGOHUB_APP_BASE,
             "action_url": reverse_lazy("allauth-login"),
         }
@@ -186,12 +185,12 @@ class SetPasswordView(BaseVisibleTemplateView):
         form = ResetPasswordForm(request.POST)
         if not form.is_valid():
             context["errors"] = form.errors
+            form.add_error(None, _("It seems that this email and password combination is incorrect."))
             return render(request, self.template_name, context)
 
         user = request.user
 
         if not user or user.is_anonymous:
-
             if not form.cleaned_data.get("token"):
                 logger.warning("Invalid user")
                 return redirect(reverse("login"))
@@ -279,7 +278,7 @@ class SignupView(BaseVisibleTemplateView):
                 "verification",
                 kwargs={
                     "verification_type": "v",
-                    "user_id": user.id,
+                    "user_id": user.pk,
                     "signup_token": user.refresh_token(),
                 },
             )

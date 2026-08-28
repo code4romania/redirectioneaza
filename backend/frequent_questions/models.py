@@ -1,3 +1,4 @@
+from auditlog.registry import auditlog
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from tinymce.models import HTMLField
@@ -9,7 +10,7 @@ class Section(models.Model):
     order = models.IntegerField(_("Order"), default=0)
 
     class Meta:
-        ordering = ["order", "title"]
+        ordering = ("order", "title")
 
         verbose_name = _("Section")
         verbose_name_plural = _("Sections")
@@ -34,7 +35,7 @@ class Question(models.Model):
     order = models.IntegerField(_("Order"), default=0)
 
     class Meta:
-        ordering = ["order", "title"]
+        ordering = ("order", "title")
 
         verbose_name = _("Question")
         verbose_name_plural = _("Questions")
@@ -80,3 +81,7 @@ class Question(models.Model):
             )
 
         return questions
+
+
+auditlog.register(Section)
+auditlog.register(Question)

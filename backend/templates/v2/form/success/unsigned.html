@@ -16,7 +16,7 @@
 
 <a
   href="{{ donor.form_url }}"
-  class="my-12 px-2 py-1 sm:px-6 sm:py-4 hover:cursor-pointer text-lg text-gray-900 font-medium no-underline rounded-full shadow-sm bg-amber-300 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
+  class="my-12 px-2 py-1 sm:px-6 sm:py-4 hover:cursor-pointer text-lg text-gray-900 font-medium no-underline rounded-full shadow-xs bg-amber-300 hover:bg-amber-200 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
   target="_blank">
   {% trans "Download the form" %}
 </a>
@@ -82,7 +82,7 @@
 
 </div>
 
-{% if donor and donor.cause and donor.cause.ngo and donor.cause.ngo.is_accepting_forms and donor.cause.allow_online_collection %}
+{% if donor and donor.cause and donor.cause.ngo and donor.cause.allow_online_collection %}
   <p class="my-12 text-base text-gray-900">
     {% blocktranslate trimmed %}
       Alternatively, you can choose to refill the form and sign it online at any time,

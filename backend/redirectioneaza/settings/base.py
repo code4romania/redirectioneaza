@@ -1,5 +1,6 @@
 import hashlib
 import os
+from warnings import filterwarnings
 
 from .environment import env
 
@@ -39,6 +40,9 @@ SESSION_COOKIE_SECURE = env.bool("SESSION_COOKIE_SECURE")
 CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS")
 CORS_ALLOW_ALL_ORIGINS = env.bool("CORS_ALLOW_ALL_ORIGINS")
 
+
+# XXX: Remove in Django >=6.0
+filterwarnings("ignore", "The FORMS_URLFIELD_ASSUME_HTTPS transitional setting is deprecated.")
 FORMS_URLFIELD_ASSUME_HTTPS = True
 
 # Application definition
@@ -77,6 +81,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.staticfiles",
     # third party apps:
+    "auditlog",
     "django_q",
     "django_recaptcha",
     "django_vite",
@@ -89,13 +94,17 @@ INSTALLED_APPS = [
     "allauth.socialaccount",
     "allauth.socialaccount.providers.amazon_cognito",
     # custom apps:
+    "utils",
+    "stats",
     "donations",
     "frequent_questions",
-    "importer",
     "partners",
     "q_heartbeat",
     "users",
 ]
+
+if env.str("EMAIL_BACKEND") == "django_ses.SESBackend":
+    INSTALLED_APPS.append("django_ses")
 
 if not env.bool("USE_S3"):
     INSTALLED_APPS.append("whitenoise.runserver_nostatic")
@@ -112,6 +121,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "partners.middleware.PartnerDomainMiddleware",
     "allauth.account.middleware.AccountMiddleware",
+    "auditlog.middleware.AuditlogMiddleware",
 ]
 
 AUTHENTICATION_BACKENDS = [

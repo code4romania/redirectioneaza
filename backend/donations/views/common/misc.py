@@ -1,15 +1,17 @@
 import datetime
-from typing import Dict, Optional
 
 from django.conf import settings
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import ngettext_lazy
-from donations.models.jobs import Job, JobStatusChoices
+
+from donations.models.common import JobStatusChoices
+from donations.models.jobs import Job
 from donations.models.ngos import Cause, Ngo
+from editions.calendar import edition_deadline
 
 
-def get_was_last_job_recent(ngo: Optional[Ngo]) -> bool:
+def get_was_last_job_recent(ngo: Ngo | None) -> bool:
     if not ngo:
         return True
 
@@ -20,11 +22,11 @@ def get_was_last_job_recent(ngo: Optional[Ngo]) -> bool:
         last_job_date = last_ngo_job.date_created
         last_job_status = last_ngo_job.status
 
-        timedelta = datetime.timedelta(0)
+        td = datetime.timedelta(0)
         if last_job_status != JobStatusChoices.ERROR:
-            timedelta = datetime.timedelta(minutes=settings.TIMEDELTA_FORMS_DOWNLOAD_MINUTES)
+            td = datetime.timedelta(minutes=settings.TIMEDELTA_FORMS_DOWNLOAD_MINUTES)
 
-        if last_job_date > now - timedelta:
+        if last_job_date > now - td:
             return True
 
     return False
@@ -34,9 +36,9 @@ def archive_job_was_recent(job_status: str, job_created: datetime) -> bool:
     if job_status == JobStatusChoices.ERROR:
         return False
 
-    timedelta = datetime.timedelta(minutes=settings.TIMEDELTA_FORMS_DOWNLOAD_MINUTES)
+    td = datetime.timedelta(minutes=settings.TIMEDELTA_FORMS_DOWNLOAD_MINUTES)
 
-    if job_created > timezone.now() - timedelta:
+    if job_created > timezone.now() - td:
         return True
 
     return False
@@ -71,30 +73,33 @@ def get_time_between_retries() -> str:
     return period_between_retries
 
 
-def get_ngo_archive_download_status(ngo: Optional[Ngo]) -> Dict:
+def get_ngo_archive_download_status(ngo: Ngo | None) -> dict:
     last_job_was_recent = get_was_last_job_recent(ngo)
-    context = {
+    context: dict[str, str | bool] = {
         "last_job_was_recent": last_job_was_recent,
     }
 
     if not last_job_was_recent:
         return context
 
-    context["period_between_retries"] = get_time_between_retries()
+    context["period_between_retries"]: str = get_time_between_retries()
 
     return context
 
 
 def has_archive_generation_deadline_passed() -> bool:
-    if timezone.now().date() > settings.DONATIONS_LIMIT + datetime.timedelta(
-        days=settings.TIMEDELTA_DONATIONS_LIMIT_DOWNLOAD_DAYS
+    if settings.UNLIMITED_CURRENT_YEAR_REDIRECTIONS_DOWNLOAD:
+        return False
+
+    if timezone.now().date() > edition_deadline() + datetime.timedelta(
+        days=settings.TIMEDELTA_REDIRECTIONS_LIMIT_DOWNLOAD_DAYS
     ):
         return True
 
     return False
 
 
-def get_cause_response_item(cause: Cause) -> Dict:
+def get_cause_response_item(cause: Cause) -> dict:
     return {
         "name": cause.name,
         "url": reverse("twopercent", kwargs={"cause_slug": cause.slug}),

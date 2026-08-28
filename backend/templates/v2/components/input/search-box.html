@@ -7,7 +7,45 @@
     {{ search_title }}
   </label>
 
-  <div x-data="{currentSearch: '{{ search_query }}',clearSearch: function() {this.currentSearch = '';document.getElementById('{{ search_box_id }}').focus();}}">
+  <div x-data="{
+    currentSearch: '{{ search_query }}',
+    parser: new DOMParser(),
+    clearSearch() {
+      this.currentSearch = '';
+      const input = document.getElementById('{{ search_box_id }}');
+      input.value = this.currentSearch;
+      // fire an event to trigger the x-on directive on the search box below
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+      input.focus();
+    },
+    fetchResults() {
+      // persist other query parameters
+      const params = new URLSearchParams(window.location.search);
+      params.set('page', 1);
+      params.set('q', this.currentSearch);
+
+      // update the URL in the address bar without reloading the page, so the url can still be shared with all params included
+      const newUrl = `${window.location.pathname}?${params.toString()}`;
+      window.history.replaceState({}, '', newUrl); // or pushState if you want to add a new entry to history
+
+      fetch(`?${params.toString()}`)
+      .then(res => res.text())
+      .then(html => {
+        // re-render only the DOM element with the '{{ target_id }}' identifier
+        const doc = this.parser.parseFromString(html, 'text/html');
+        const newContent = doc.querySelector('{{ target_id }}');
+
+        if (newContent) {
+          document.querySelector('{{ target_id }}').replaceWith(newContent);
+        }
+
+        // focus on the input box and move cursor to the end
+        const input = document.getElementById('{{ search_box_id }}');
+        input.focus();
+        input.setSelectionRange(input.value.length, input.value.length);
+      });
+    }
+  }">
 
     <label class="relative grid grid-cols-1">
 
@@ -15,10 +53,11 @@
 
       <input
         x-model="currentSearch"
+        x-on:input.debounce.300ms="fetchResults"
         id="{{ search_box_id }}"
         type="text"
         name="q"
-        class="border-none col-start-1 row-start-1 block w-full bg-white py-1.5 pl-10 pr-3 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-300 sm:pl-9 sm:text-sm/6 focus:outline-none focus:ring-0
+        class="border-none col-start-1 row-start-1 block w-full bg-white py-1.5 pl-10 pr-3 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-solid focus:outline-2 focus:-outline-offset-2 focus:outline-amber-300 sm:pl-9 sm:text-sm/6 focus:outline-hidden focus:ring-0
           {% if box_style %}{{ box_style }}{% else %}rounded-full{% endif %}"
         placeholder="{% if search_placeholder %}{{ search_placeholder }}{% else %}{{ search_title }}{% endif %}"
         title="{{ search_title }}"
@@ -38,7 +77,7 @@
         x-on:click="clearSearch()"
         aria-label="{% trans 'Clear search' %}"
         type="button"
-        class="w-full items-center rounded-xl bg-white text-gray-400 hover:bg-gray-100 hover:text-gray-600 focus:bg-gray-100 focus:text-gray-800 focus:outline-none">
+        class="w-full items-center rounded-xl bg-white text-gray-400 hover:bg-gray-100 hover:text-gray-600 focus:bg-gray-100 focus:text-gray-800 focus:outline-hidden">
         <svg class="size-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
           <path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z"/>
         </svg>

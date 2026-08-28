@@ -1,10 +1,11 @@
 import random
-from typing import List
 
 from django.core.management import BaseCommand
 from django.db import IntegrityError
-from donations.models.ngos import Cause, CauseVisibilityChoices, Ngo
 from faker import Faker
+
+from donations.models.ngos import Cause, CauseVisibilityChoices, Ngo
+from utils.random import random_75p
 
 fake = Faker("ro_RO")
 
@@ -26,7 +27,7 @@ MOCK_CAUSE_NAMES = {
         "Fii alături de {name}",
         "Fii eroul lui {name}",
         "Fără durere pentru {name}",
-        "Hai să-l ajutăm pe {name}!",
+        "Hai să-l ajutăm pe {name}",
         "Lumina pentru {name}",
         "Mai mult timp pentru {name}",
         "Mediu curat pentru generațiile viitoare",
@@ -87,12 +88,12 @@ MOCK_CAUSE_NAMES = {
         "{name} merită să alerge",
         "{name} merită să fie fericit",
         "{name} nu renunță la visul lui",
-        "{name} nu renunță!",
-        "{name} nu trebuie să renunțe!",
-        "{name} trebuie să lupte!",
-        "{name} trebuie să lupte!",
+        "{name} nu renunță",
+        "{name} nu trebuie să renunțe",
+        "{name} trebuie să lupte",
+        "{name} trebuie să lupte",
         "{name} trebuie să trăiască",
-        "{name} trebuie să învingă!",
+        "{name} trebuie să învingă",
         "{name} vrea să meargă din nou",
         "{name} vrea să meargă din nou",
         "{name} vrea să trăiască",
@@ -245,8 +246,8 @@ class Command(BaseCommand):
         target_org_id = options.get("org", None)
         create_visible = options.get("visible", None)
 
-        causes: List[Cause] = []
-        generated_cause_names: List[str] = []
+        causes: list[Cause] = []
+        generated_cause_names: list[str] = []
 
         self.stdout.write(self.style.SUCCESS(f"Generating {total_causes} cause(s) to the database."))
 
@@ -257,10 +258,10 @@ class Command(BaseCommand):
         consecutive_identical_names: int = 0
         while len(causes) < total_causes:
             if target_org:
-                ngo: Ngo = target_org
+                ngo: Ngo | None = target_org
             else:
-                ngo: Ngo = Ngo.active.order_by("?").first()
-                if not ngo.can_create_causes:
+                ngo: Ngo | None = Ngo.active.order_by("?").first()
+                if not ngo or not ngo.can_create_causes:
                     continue
 
             cause_title = MOCK_CAUSE_NAMES["titles"][random.randint(0, len(MOCK_CAUSE_NAMES["titles"]) - 1)]
@@ -301,15 +302,13 @@ class Command(BaseCommand):
                     ]
                 )
 
-            is_accepting_forms_choice = (
-                ngo.is_accepting_forms if not ngo.is_accepting_forms else random.choice(range(0, 6)) == 3
-            )
+            allow_online_collection = ngo.has_online_tax_account and random_75p()
             causes.append(
                 Cause(
                     ngo=ngo,
                     is_main=False,
                     visibility=visibility,
-                    allow_online_collection=is_accepting_forms_choice,
+                    allow_online_collection=allow_online_collection,
                     slug=kebab_case_name,
                     name=cause_name,
                     description=fake.paragraph(nb_sentences=random.randint(1, 3), variable_nb_sentences=True),

@@ -4,7 +4,7 @@
   If you didn't request a password reset,
   you can ignore this email.
   For any other questions or concerns, feel free to write to us at
-  {{ contact_email }}
+  {{ CONTACT_EMAIL_ADDRESS }}
   or
   check out the support page.
 {% endblocktrans %}

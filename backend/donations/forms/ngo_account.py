@@ -4,9 +4,12 @@ from django.utils.translation import gettext_lazy as _
 from localflavor.generic.forms import IBANFormField
 from localflavor.ro.forms import ROCIFField
 
-from donations.common.validation.phone_number import validate_phone_number
+import redirectioneaza.settings.locations
+import utils.constants.memory
 from donations.common.validation.validate_slug import NgoSlugValidator
-from donations.models.ngos import Cause, Ngo, ngo_slug_validator, CauseVisibilityChoices
+from donations.models.byof import OwnFormsUpload
+from donations.models.ngos import Cause, Ngo, ngo_slug_validator
+from utils.text.phone_number import validate_phone_number
 
 
 class NgoPresentationForm(forms.Form):
@@ -29,12 +32,18 @@ class NgoPresentationForm(forms.Form):
     locality = forms.CharField(label=_("Locality"), max_length=100, required=False)
     county = forms.ChoiceField(
         label=_("County"),
-        choices=settings.FORM_COUNTIES_CHOICES,
+        choices=redirectioneaza.settings.locations.FORM_COUNTIES_CHOICES,
         required=True,
     )
     active_region = forms.ChoiceField(
         label=_("Active region"),
-        choices=settings.FORM_COUNTIES_NATIONAL_CHOICES,
+        choices=redirectioneaza.settings.locations.FORM_COUNTIES_NATIONAL_CHOICES,
+        required=True,
+    )
+
+    has_spv_option = forms.ChoiceField(
+        label=_("Do you have an SPV account?"),
+        choices=[("yes", _("Yes")), ("no", _("No"))],
         required=True,
     )
 
@@ -74,11 +83,11 @@ class NgoPresentationForm(forms.Form):
             return None
 
         # allowed types: PNG, JPG, GIF, HEIF
-        allowed_types = ["image/jpeg", "image/png", "image/gif", "image/heif"]
+        allowed_types = ("image/jpeg", "image/png", "image/gif", "image/heif")
         if logo.content_type not in allowed_types:
             raise forms.ValidationError(_("The logo type is not supported."))
 
-        if logo.size > 2 * settings.MEBIBYTE:
+        if logo.size > 2 * utils.constants.memory.MEBIBYTE:
             raise forms.ValidationError(_("The logo size is too large."))
 
         return logo
@@ -123,7 +132,6 @@ class CauseForm(forms.ModelForm):
 
         if self.for_main_cause:
             cause.is_main = True
-            cause.visibility = CauseVisibilityChoices.PUBLIC
 
         if commit:
             cause.save()
@@ -131,7 +139,7 @@ class CauseForm(forms.ModelForm):
         return cause
 
     def clean_slug(self):
-        slug = self.cleaned_data.get("slug").lower()
+        slug = self.cleaned_data.get("slug", "").lower()
 
         ngo_slug_validator(slug)
 
@@ -147,7 +155,7 @@ class CauseForm(forms.ModelForm):
         return slug
 
     def clean_description(self):
-        return self.cleaned_data.get("description").strip()
+        return self.cleaned_data.get("description", "").strip()
 
     def clean_bank_account(self):
         bank_account = self.cleaned_data.get("bank_account")
@@ -156,3 +164,20 @@ class CauseForm(forms.ModelForm):
             raise forms.ValidationError(_("A cause with this IBAN already exists."))
 
         return bank_account
+
+
+class BringYourOwnDataForm(forms.ModelForm):
+    if settings.ENABLE_FULL_VALIDATION_IBAN:
+        bank_account = IBANFormField(label=_("IBAN"), include_countries=("RO",), required=True)
+    else:
+        bank_account = forms.CharField(label=_("IBAN"), max_length=24, min_length=24, required=True)
+
+    uploaded_data = forms.FileField(
+        label=_("BYOF file"),
+        help_text=_("Upload the file with the data you want to transform into an ANAF XML."),
+        required=True,
+    )
+
+    class Meta:
+        model = OwnFormsUpload
+        fields = ("bank_account", "uploaded_data")

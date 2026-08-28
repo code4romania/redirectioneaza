@@ -1,8 +1,11 @@
 import hmac
 import uuid
 
+from allauth.socialaccount.models import SocialAccount
+from auditlog.registry import auditlog
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import AbstractUser, Group, UserManager
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models.functions import Lower
 from django.urls import reverse
@@ -25,12 +28,12 @@ class CustomUserManager(UserManager):
         user.save(using=self._db)
         return user
 
-    def create_user(self, email=None, password=None, **extra_fields):
+    def create_user(self, email=None, password=None, **extra_fields):  # type: ignore
         extra_fields.setdefault("is_staff", False)
         extra_fields.setdefault("is_superuser", False)
         return self._create_user(email, password, **extra_fields)
 
-    def create_superuser(self, email=None, password=None, **extra_fields):
+    def create_superuser(self, email=None, password=None, **extra_fields):  # type: ignore
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
 
@@ -95,6 +98,10 @@ class User(AbstractUser):
     date_created = models.DateTimeField(verbose_name=_("date created"), db_index=True, auto_now_add=True)
     date_updated = models.DateTimeField(verbose_name=_("date updated"), db_index=True, auto_now=True)
 
+    # Type hinting for related models
+    socialaccount_set: "models.manager.RelatedManager[SocialAccount]"
+
+    # Model managers
     objects = CustomUserManager()
 
     USERNAME_FIELD = "email"
@@ -104,7 +111,10 @@ class User(AbstractUser):
         constraints = [
             models.UniqueConstraint(Lower("email"), name="email_unique"),
         ]
-        permissions = (("can_view_old_dashboard", "Can view the old dashboard"),)
+        permissions = (
+            ("can_view_old_dashboard", "Can view the old dashboard"),
+            ("can_reset_staging", "Can reset the staging environment"),
+        )
 
     def get_cognito_id(self):
         social = self.socialaccount_set.filter(provider="amazon_cognito").last()
@@ -120,7 +130,7 @@ class User(AbstractUser):
         return self.validation_token
 
     def verify_token(self, token):
-        validation_token: uuid.UUID = self.validation_token
+        validation_token: uuid.UUID | None = self.validation_token
         if not validation_token or not token:
             return False
         if hmac.compare_digest(validation_token.hex, token.hex):
@@ -170,6 +180,33 @@ class User(AbstractUser):
     def is_ngo_member(self):
         return self.groups.filter(name__in=(NGO_ADMIN, NGO_MEMBER)).exists()
 
+    @staticmethod
+    def export_users(*, who_has_ngo=None, who_is_verified=None, who_is_ngohub_user=None):
+        users_query = User.objects
+        validation_error_text = _("Invalid filter parameters")
+
+        if who_has_ngo is not None:
+            try:
+                users_query = users_query.filter(ngo__isnull=False if who_has_ngo else True)
+            except ValidationError:
+                raise ValidationError(validation_error_text)
+
+        if who_is_verified is not None:
+            try:
+                users_query = users_query.filter(is_verified=who_is_verified)
+            except ValidationError:
+                raise ValidationError(validation_error_text)
+
+        if who_is_ngohub_user is not None:
+            try:
+                users_query = users_query.filter(is_ngohub_user=who_is_ngohub_user)
+            except ValidationError:
+                raise ValidationError(validation_error_text)
+
+        users = users_query.values_list("email", "first_name", "last_name", "ngo", "is_verified", "is_ngohub_user")
+
+        return users
+
 
 class GroupProxy(Group):
     class Meta:
@@ -177,3 +214,15 @@ class GroupProxy(Group):
 
         verbose_name = _("Group")
         verbose_name_plural = _("Groups")
+
+
+auditlog.register(
+    User,
+    exclude_fields=[
+        "password",
+        "last_login",
+        "old_password",
+        "validation_token",
+        "token_timestamp",
+    ],
+)

@@ -1,0 +1,21 @@
+{% extends "ngo-account/redirections/base.html" %}
+
+{% load i18n static %}
+
+{% block page_title %}
+  {% trans "Generate the XML for the ANAF smart PDF from external data" %}
+{% endblock %}
+
+{% block page_subtitle %}
+  {% blocktrans trimmed %}
+    Here you can upload your own table of data in CSV format,
+    and we will generate the XML for the ANAF smart PDF.
+  {% endblocktrans %}
+{% endblock %}
+
+
+{% block content %}
+  {% include "ngo-account/byof/upload.html" %}
+
+  {% include "ngo-account/byof/listing.html" %}
+{% endblock %}

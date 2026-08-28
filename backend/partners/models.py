@@ -1,12 +1,11 @@
-from typing import Dict
-
+from auditlog.registry import auditlog
 from django.db import models
 from django.db.models import QuerySet
 from django.db.models.functions import Lower
 from django.utils.translation import gettext_lazy as _
 
 from donations.models.ngos import Cause, Ngo
-from redirectioneaza.common.validators import url_validator
+from utils.validators import url_validator
 
 
 class DisplayOrderingChoices(models.TextChoices):
@@ -48,6 +47,15 @@ class Partner(models.Model):
         default=True,
     )
 
+    custom_cta = models.TextField(
+        verbose_name=_("custom call-to-action"),
+        help_text=_("Custom call-to-action for the partner, if empty, the default call-to-action will be used."),
+        blank=True,
+        null=False,
+        default="",
+        max_length=50,
+    )
+
     has_custom_header = models.BooleanField(verbose_name=_("has custom header"), default=False)
     has_custom_note = models.BooleanField(verbose_name=_("has custom note"), default=False)
     display_ordering = models.CharField(
@@ -56,7 +64,6 @@ class Partner(models.Model):
         choices=DisplayOrderingChoices.choices,
         default=DisplayOrderingChoices.RANDOM,
     )
-
     ngos = models.ManyToManyField(
         verbose_name=_("NGOs"),
         to=Ngo,
@@ -89,7 +96,7 @@ class Partner(models.Model):
         return f"{self.name}"
 
     def ordered_causes(self) -> QuerySet[Cause]:
-        display_ordering_mapping: Dict[str, str] = {
+        display_ordering_mapping: dict[str, str] = {
             str(DisplayOrderingChoices.ALPHABETICAL): "name",
             str(DisplayOrderingChoices.ALPHABETICAL_REVERSE): "-name",
             str(DisplayOrderingChoices.OLDEST): "date_created",
@@ -103,7 +110,7 @@ class Partner(models.Model):
         return self.causes.order_by(order).all()
 
     def ordered_ngos(self) -> QuerySet[Ngo]:
-        display_ordering_mapping: Dict[str, str] = {
+        display_ordering_mapping: dict[str, str] = {
             str(DisplayOrderingChoices.ALPHABETICAL): "name",
             str(DisplayOrderingChoices.ALPHABETICAL_REVERSE): "-name",
             str(DisplayOrderingChoices.OLDEST): "date_created",
@@ -196,3 +203,8 @@ class PartnerCause(models.Model):
             self.display_order = number_of_partner_causes + 1
 
         super().save(*args, **kwargs)
+
+
+auditlog.register(Partner)
+auditlog.register(PartnerNgo)
+auditlog.register(PartnerCause)

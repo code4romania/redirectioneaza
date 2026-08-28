@@ -7,13 +7,13 @@ help:                                            ## Display a help message detai
 ## [Managing the project]
 ### Stopping the containers and dropping the databases
 stop-psql:                                       ## stops the psql dev project
-	docker compose -f docker-compose.yml down -t 60
+	docker compose -f docker-compose.yml stop
 
 drop-psql:                                       ## drops the psql dev project
 	docker compose -f docker-compose.yml down -v -t 60
 
 stop-prod:                                       ## stops the prod project
-	docker compose -f docker-compose.prod.yml down -t 60
+	docker compose -f docker-compose.prod.yml stop
 
 drop-prod:                                       ## drops the prod project
 	docker compose -f docker-compose.prod.yml down -v -t 60
@@ -26,10 +26,10 @@ upd-psql:                                        ## run the project with psql in
 	docker compose -f docker-compose.yml up -d --build
 
 up-psql-db:                                      ## run only the database with psql
-	docker compose -f docker-compose.yml up db
+	docker compose -f docker-compose.yml up db_psql_dev
 
 upd-psql-db:                                     ## run only the database with psql in detached mode
-	docker compose -f docker-compose.yml up -d db
+	docker compose -f docker-compose.yml up -d db_psql_dev
 
 up-prod:                                         ## run the project with psql in production
 	docker compose -f docker-compose.prod.yml up --build
@@ -77,29 +77,29 @@ logs-prod:                                       ## show the logs of the contain
 
 ## [Django operations]
 makemigrations:                                  ## generate migrations in a clean container
-	docker exec redirect_dev sh -c "python3 -Wd ./backend/manage.py makemigrations $(apps)"
+	docker exec redirect_dev sh -c "cd ./backend && python3 -Wd ./manage.py makemigrations $(apps)"
 
 migrate:                                         ## apply migrations in a clean container
-	docker exec redirect_dev sh -c "python3 -Wd ./backend/manage.py migrate $(apps)"
+	docker exec redirect_dev sh -c "cd ./backend && python3 -Wd ./manage.py migrate $(apps)"
 
 migrations: makemigrations migrate               ## generate and apply migrations
 
 makemessages:                                    ## generate the strings marked for translation
-	docker exec redirect_dev sh -c "python3 -Wd ./backend/manage.py makemessages -a"
+	docker exec redirect_dev sh -c "cd ./backend && python3 -Wd ./manage.py makemessages -a"
 
 compilemessages:                                 ## compile the translations
-	docker exec redirect_dev sh -c "python3 -Wd ./backend/manage.py compilemessages"
+	docker exec redirect_dev sh -c "cd ./backend && python3 -Wd ./manage.py compilemessages"
 
 messages: makemessages compilemessages ## generate and compile the translations
 
 collectstatic:                                   ## collect the static files
-	docker exec redirect_dev sh -c "python3 -Wd ./backend/manage.py collectstatic --no-input"
+	docker exec redirect_dev sh -c "cd ./backend && python3 -Wd ./manage.py collectstatic --no-input"
 
 format:                                          ## format the code with black & ruff
-	docker exec redirect_dev sh -c "black ./backend && ruff check --fix ./backend"
+	docker exec redirect_dev sh -c "ruff format ./backend && ruff check --fix ./backend"
 
 pyshell:                                         ## start a django shell
-	docker exec -it redirect_dev sh -c "python3 -Wd ./backend/manage.py shell"
+	docker exec -it redirect_dev sh -c "cd ./backend && python3 -Wd ./manage.py shell"
 
 sh:                                              ## start a sh shell
 	docker exec -it redirect_dev sh -c "sh"
@@ -109,20 +109,17 @@ bash:                                            ## start a bash shell
 
 
 ## [Requirements management]
-requirements-build:                              ## run pip compile and add requirements from the *.in files
+requirements-build:               ## run pip compile and add requirements from the *.in files
 	docker exec redirect_dev sh -c " \
 		cd ./backend && \
-		pip-compile --strip-extras --resolver=backtracking -o requirements.txt requirements.in && \
-		pip-compile --strip-extras --resolver=backtracking -o requirements-dev.txt requirements-dev.in \
+		uv sync --active \
 	"
 
-requirements-update:                             ## run pip compile and rebuild the requirements files
+requirements-update:              ## run pip compile and rebuild the requirements files
 	docker exec redirect_dev sh -c " \
 		cd ./backend && \
-		pip-compile --strip-extras --resolver=backtracking -r -U -o requirements.txt requirements.in && \
-		pip-compile --strip-extras --resolver=backtracking -r -U -o requirements-dev.txt requirements-dev.in && \
-		chmod a+r requirements.txt && \
-		chmod a+r requirements-dev.txt \
+		uv sync --active -U && \
+		npm update \
 	"
 
 
@@ -152,7 +149,40 @@ clean: clean-docker clean-extras clean-db        ## remove all build, test, cove
 
 ## [Project-specific operations]
 mock-data:                                       ## generate fake data
-	docker exec redirect_dev python3 -Wd ./backend/manage.py generate_orgs 20
-	docker exec redirect_dev python3 -Wd ./backend/manage.py generate_orgs 50 --valid
-	docker exec redirect_dev python3 -Wd ./backend/manage.py generate_partners 5
-	docker exec redirect_dev python3 -Wd ./backend/manage.py generate_donations 100
+	docker exec redirect_dev sh -c "\
+		cd ./backend \
+		&& python3 -Wd ./manage.py generate_orgs 20 \
+		&& python3 -Wd ./manage.py generate_orgs 50 --valid \
+		&& python3 -Wd ./manage.py generate_other_causes 20 \
+		&& python3 -Wd ./manage.py generate_other_causes 20 --visible \
+		&& python3 -Wd ./manage.py generate_partners 5 \
+		&& python3 -Wd ./manage.py generate_donations 100"
+
+mock-generate-orgs:
+	docker exec redirect_dev sh -c "cd ./backend && python3 -Wd ./manage.py generate_orgs 20"
+
+mock-generate-orgs-valid:
+	docker exec redirect_dev sh -c "cd ./backend && python3 -Wd ./manage.py generate_orgs 50 --valid"
+
+mock-generate-other-causes:
+	docker exec redirect_dev sh -c "cd ./backend && python3 -Wd ./manage.py generate_other_causes 20"
+
+mock-generate-other-causes-valid:
+	docker exec redirect_dev sh -c "cd ./backend && python3 -Wd ./manage.py generate_other_causes 20 --visible"
+
+mock-generate-partners:
+	docker exec redirect_dev sh -c "cd ./backend && python3 -Wd ./manage.py generate_partners 5"
+
+mock-generate-donations:
+	docker exec redirect_dev sh -c "cd ./backend && python3 -Wd ./manage.py generate_donations 100"
+
+## [Tests]
+tests:                            ## run the tests
+	docker exec redirect_dev sh -c " \
+		cd ./backend && python3 -Wd manage.py test \
+	"
+
+tests-coverage:                  ## run the tests with coverage
+	docker exec redirect_dev sh -c " \
+		cd ./backend && coverage run -m pytest && coverage report \
+	"

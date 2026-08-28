@@ -1,14 +1,13 @@
-from typing import Dict
-
 from django import template
 from django.utils import dateparse
+
 from donations.views.common.misc import archive_job_was_recent
 
 register = template.Library()
 
 
 @register.filter
-def job_was_recent(job: Dict) -> bool:
+def job_was_recent(job: dict) -> bool:
     """
     Check if the job was created recently.
     """

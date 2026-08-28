@@ -6,7 +6,7 @@ import math
 import os
 import tempfile
 from datetime import datetime
-from typing import Any, Dict, List, Tuple
+from typing import Any
 from zipfile import ZIP_DEFLATED, ZipFile
 
 import requests
@@ -17,27 +17,34 @@ from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from requests.exceptions import Timeout
 
-from donations.common.validation.phone_number import clean_phone_number
+import redirectioneaza.settings.locations
+from donations.models.common import JobDownloadError, JobStatusChoices
 from donations.models.donors import Donor
-from donations.models.jobs import Job, JobDownloadError, JobStatusChoices
+from donations.models.jobs import Job
 from donations.models.ngos import Cause
 from donations.views.download_donations.build_xml import add_xml_to_zip
 from redirectioneaza.common.app_url import build_uri
-from redirectioneaza.common.clean import duration_flag_to_int, normalize_text_alnum
 from redirectioneaza.common.messaging import extend_email_context, send_email
+from utils.text.cleanup import anaf_gdpr_flag_to_int, duration_flag_to_int, normalize_text_alnum
+from utils.text.phone_number import clean_phone_number
 
 logger = logging.getLogger(__name__)
 
 
 def download_donations_job(job_id: int = 0):
     try:
-        job: Job = Job.objects.select_related("cause").get(id=job_id)
+        job: Job = Job.objects.select_related("cause").get(pk=job_id)
     except Job.DoesNotExist:
         logger.error("Job with ID %d does not exist", job_id)
         return
 
-    cause: Cause = job.cause
+    cause: Cause | None = job.cause
+    if not cause:
+        job.status = JobStatusChoices.ERROR
+        job.save()
+        return
 
     timestamp: datetime = timezone.now()
     donations: QuerySet[Donor] = Donor.current_year_signed.filter(cause=cause).order_by("-date_created").all()
@@ -51,7 +58,7 @@ def download_donations_job(job_id: int = 0):
 
         return
 
-    file_name = f"n{cause.id:06d}__{datetime.strftime(timestamp, '%Y%m%d_%H%M')}.zip"
+    file_name = f"n{cause.pk:06d}__{datetime.strftime(timestamp, '%Y%m%d_%H%M')}.zip"
 
     with tempfile.TemporaryDirectory(prefix=f"rdr_zip_{job_id:06d}_") as tmp_dir_name:
         logger.info("Created temporary directory '%s'", tmp_dir_name)
@@ -68,7 +75,7 @@ def download_donations_job(job_id: int = 0):
             return
 
     mail_context = {
-        "action_url": build_uri(reverse("my-organization:archive-download-link", kwargs={"job_id": job.id})),
+        "action_url": build_uri(reverse("my-organization:archive-download-link", kwargs={"job_id": job.pk})),
     }
     mail_context.update(extend_email_context())
 
@@ -92,7 +99,7 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], cause: Cau
 
     zipped_files: int = 0
 
-    cnp_idx: Dict[str, Dict[str, Any]] = {}
+    cnp_idx: dict[str, dict[str, Any]] = {}
     with ZipFile(zip_path, mode="w", compression=ZIP_DEFLATED, compresslevel=1) as zip_archive:
         # Attach a TXT help file
         logger.info("Attaching the TXT help file to the ZIP")
@@ -101,7 +108,7 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], cause: Cau
             handler.write(help_text.encode())
 
         # record a CNP first appearance 1-based-index in the data list of donations
-        donations_data: List[Dict] = []
+        donations_data: list[dict] = []
 
         donation_object: Donor
         for donation_object in donations:
@@ -111,7 +118,7 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], cause: Cau
                 continue
 
             donation_timestamp: datetime = donation_object.date_created
-            filename = f"{datetime.strftime(donation_timestamp, '%Y%m%d_%H%M')}__d{donation_object.id:06d}.pdf"
+            filename = f"{datetime.strftime(donation_timestamp, '%Y%m%d_%H%M')}__d{donation_object.pk:06d}.pdf"
 
             retries_left = 2
             while retries_left > 0:
@@ -146,7 +153,7 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], cause: Cau
                     else:
                         cnp_idx[donation_cnp]["has_duplicate"] = True
 
-                    detailed_address: Dict = donation_object.get_address(include_full=True)
+                    detailed_address: dict = donation_object.get_address(include_full=True)
                     county = (
                         donation_object.county
                         if len(str(donation_object.county)) > 1
@@ -173,6 +180,7 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], cause: Cau
                             "filename": filename,
                             "date": donation_object.date_created,
                             "duration": duration_flag_to_int(donation_object.two_years),
+                            "anaf_gdpr": anaf_gdpr_flag_to_int(donation_object.anaf_gdpr),
                         }
                     )
 
@@ -200,6 +208,7 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], cause: Cau
                 _("filename"),
                 _("date"),
                 _("duration"),
+                _("anaf gdpr"),
             ]
         )
         for index, donation_csv in enumerate(donations_data):
@@ -225,6 +234,7 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], cause: Cau
                     donation_csv["filename"],
                     donation_csv["date"],
                     donation_csv["duration"],
+                    donation_csv["anaf_gdpr"],
                 ]
             )
 
@@ -253,9 +263,9 @@ def _get_pdf_url(donation: Donor) -> str:
         source_url = ""
 
     if not source_url:
-        logger.info("Donation #%d has no PDF URL", donation.id)
+        logger.info("Donation #%d has no PDF URL", donation.pk)
     else:
-        logger.debug("Donation #%d PDF URL: '%s'", donation.id, source_url)
+        logger.debug("Donation #%d PDF URL: '%s'", donation.pk, source_url)
 
     return source_url
 
@@ -269,9 +279,14 @@ def _download_file(source_url: str) -> bytes:
     if not source_url:
         raise ValueError("source_url is empty")
 
-    response = requests.get(source_url)
+    try:
+        response = requests.get(source_url, timeout=20)
+    except Timeout:
+        logger.warning("Timed out while downloading redirection form file")
+        raise JobDownloadError
 
     if response.status_code != 200:
+        logger.warning("Status code %d while downloading redirection form file", response.status_code)
         raise JobDownloadError
 
     return response.content
@@ -282,7 +297,7 @@ def _generate_xml_files(
     zip_archive: ZipFile,
     zip_64_flag: bool,
     zip_timestamp: datetime,
-    cnp_idx: Dict[str, Dict[str, Any]],
+    cnp_idx: dict[str, dict[str, Any]],
 ):
     if not cnp_idx or not cause or not zip_archive:
         return
@@ -312,7 +327,7 @@ def _generate_xml_files(
 def _generate_donations_by_county(cnp_idx, cause: Cause, ngo_donations, zip_64_flag, zip_archive, zip_timestamp):
     donations_limit: int = settings.DONATIONS_XML_LIMIT_PER_FILE
 
-    number_of_donations_by_county: QuerySet[Tuple[str, int]] = (
+    number_of_donations_by_county: QuerySet[tuple[str, int]] = (
         ngo_donations.values("county").annotate(count=Count("county")).order_by("count").values_list("county", "count")
     )
 
@@ -320,7 +335,7 @@ def _generate_donations_by_county(cnp_idx, cause: Cause, ngo_donations, zip_64_f
     for current_county, current_county_count in number_of_donations_by_county:
         # if there are more than donations_limit donations for a county, split them into multiple files
         clean_county_name = normalize_text_alnum(current_county)
-        county_code = settings.COUNTIES_CHOICES_WITH_SECTORS_REVERSED_CLEAN.get(
+        county_code = redirectioneaza.settings.locations.COUNTIES_CHOICES_WITH_SECTORS_REVERSED_CLEAN.get(
             clean_county_name, f"sector{clean_county_name}"
         )
         county_code = county_code.lower().replace(" ", "_")

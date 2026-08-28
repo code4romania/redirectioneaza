@@ -12,7 +12,7 @@
 
 {% block content %}
   <form action="" method="post" novalidate>
-    <div class="aligned border border-base-200 mb-8 rounded pt-3 px-3 shadow-sm dark:border-base-800">
+    <div class="aligned border border-base-200 mb-8 rounded-sm pt-3 px-3 shadow-xs dark:border-base-800">
       {% csrf_token %}
 
       {% for field in form %}

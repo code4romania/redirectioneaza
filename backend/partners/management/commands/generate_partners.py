@@ -1,5 +1,5 @@
 import random
-from typing import List
+from typing import list
 
 from django.core.management import BaseCommand
 from django.db import IntegrityError
@@ -60,6 +60,7 @@ class Command(BaseCommand):
                     subdomain=partner_subdomain,
                     name=partner_name,
                     display_ordering=random.choice([c[0] for c in DisplayOrderingChoices.choices]),
+                    custom_cta=random.choice(["", fake.text(max_nb_chars=50)]),
                     has_custom_header=random.choice([True, False]),
                     has_custom_note=random.choice([True, False]),
                 )
@@ -69,7 +70,7 @@ class Command(BaseCommand):
                 errors_count += 1
                 continue
 
-            partner_causes: List[Cause] = random.sample(causes, num_causes)
+            partner_causes: list[Cause] = random.sample(causes, num_causes)
             partner.causes.add(*partner_causes, through_defaults={"display_order": 1})
 
             generated_partners_count += 1

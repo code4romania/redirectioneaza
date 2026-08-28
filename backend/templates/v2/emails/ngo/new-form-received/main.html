@@ -19,4 +19,10 @@
   {% trans "Download form" as action_title %}
   {% include "emails/components/action.html" with title=action_title url=action_url %}
 
+  <p>
+    {% blocktrans trimmed %}
+      The download link is valid for one year.
+    {% endblocktrans %}
+  </p>
+
 {% endblock %}

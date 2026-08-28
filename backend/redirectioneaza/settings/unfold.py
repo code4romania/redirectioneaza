@@ -1,11 +1,90 @@
 from django.templatetags.static import static
 from django.urls import reverse_lazy
+from django.utils.text import format_lazy
 from django.utils.translation import gettext_lazy as _
 
 from .app_configs import TITLE
 from .base import VERSION_LABEL
+from .environment import env
 
 # Unfold Admin settings
+
+
+export_sidebar_options = [
+    {
+        "title": _("NGOs not in Cult Registry"),
+        "icon": "download_for_offline",
+        "link": format_lazy("{url}?registered=0", url=reverse_lazy("admin:export-cult-registry-ngos")),
+        "permission": lambda request: request.user.is_superuser,
+    },
+    {
+        "title": _("All users"),
+        "icon": "download_for_offline",
+        "link": reverse_lazy("admin:export-users"),
+        "permission": lambda request: request.user.is_superuser,
+    },
+    {
+        "title": _("Users with NGOs"),
+        "icon": "download_for_offline",
+        "link": format_lazy("{url}?ngo=1", url=reverse_lazy("admin:export-users")),
+        "permission": lambda request: request.user.is_superuser,
+    },
+]
+
+advanced_sidebar_options = [
+    {
+        "title": _("Audit Logs"),
+        "icon": "history",
+        "link": reverse_lazy("admin:auditlog_logentry_changelist"),
+        "permission": lambda request: request.user.is_superuser,
+    },
+    {
+        "title": _("TASKS — Failed"),
+        "icon": "assignment_late",
+        "link": reverse_lazy("admin:django_q_failure_changelist"),
+        "permission": lambda request: request.user.is_superuser,
+    },
+    {
+        "title": _("TASKS — Queued"),
+        "icon": "assignment_add",
+        "link": reverse_lazy("admin:django_q_ormq_changelist"),
+        "permission": lambda request: request.user.is_superuser,
+    },
+    {
+        "title": _("TASKS — Scheduled"),
+        "icon": "assignment",
+        "link": reverse_lazy("admin:django_q_schedule_changelist"),
+        "permission": lambda request: request.user.is_superuser,
+    },
+    {
+        "title": _("TASKS — Successful"),
+        "icon": "assignment_turned_in",
+        "link": reverse_lazy("admin:django_q_success_changelist"),
+        "permission": lambda request: request.user.is_superuser,
+    },
+]
+
+if env.str("ENVIRONMENT") in ("staging", "development"):
+    advanced_sidebar_options.append(
+        {
+            "title": _("Clear staging data"),
+            "icon": "reset_wrench",
+            "link": reverse_lazy("schedule-reset-staging"),
+            "permission": lambda request: request.user.has_perm("can_reset_staging"),
+        },
+    )
+
+if env.str("EMAIL_BACKEND") == "django_ses.SESBackend":
+    advanced_sidebar_options.insert(
+        0,
+        {
+            "title": _("Django SES Stats"),
+            "icon": "email",
+            "link": reverse_lazy("admin:django_ses_sesstat_changelist"),
+            "permission": lambda request: request.user.is_superuser,
+        },
+    )
+
 
 SIDEBAR_NAVIGATION = [
     # Supported icon set: https://fonts.google.com/icons
@@ -48,9 +127,21 @@ SIDEBAR_NAVIGATION = [
                 "permission": lambda request: request.user.is_superuser,
             },
             {
-                "title": _("Donation exports"),
+                "title": _("Internal ANAF Archives"),
                 "icon": "file_copy",
                 "link": reverse_lazy("admin:donations_job_changelist"),
+                "permission": lambda request: request.user.is_superuser,
+            },
+            {
+                "title": _("External ANAF Archives"),
+                "icon": "download",
+                "link": reverse_lazy("admin:donations_ownformsupload_changelist"),
+                "permission": lambda request: request.user.is_superuser,
+            },
+            {
+                "title": _("Donation downloads"),
+                "icon": "download",
+                "link": reverse_lazy("admin:donations_redirectionsdownloadjob_changelist"),
                 "permission": lambda request: request.user.is_superuser,
             },
             {
@@ -96,33 +187,14 @@ SIDEBAR_NAVIGATION = [
         ],
     },
     {
-        "title": _("Background Tasks"),
-        "items": [
-            {
-                "title": _("Failed tasks"),
-                "icon": "assignment_late",
-                "link": reverse_lazy("admin:django_q_failure_changelist"),
-                "permission": lambda request: request.user.is_superuser,
-            },
-            {
-                "title": _("Queued tasks"),
-                "icon": "assignment_add",
-                "link": reverse_lazy("admin:django_q_ormq_changelist"),
-                "permission": lambda request: request.user.is_superuser,
-            },
-            {
-                "title": _("Scheduled tasks"),
-                "icon": "assignment",
-                "link": reverse_lazy("admin:django_q_schedule_changelist"),
-                "permission": lambda request: request.user.is_superuser,
-            },
-            {
-                "title": _("Successful tasks"),
-                "icon": "assignment_turned_in",
-                "link": reverse_lazy("admin:django_q_success_changelist"),
-                "permission": lambda request: request.user.is_superuser,
-            },
-        ],
+        "title": _("Data Export"),
+        "collapsible": True,
+        "items": export_sidebar_options,
+    },
+    {
+        "title": _("Advanced"),
+        "collapsible": True,
+        "items": advanced_sidebar_options,
     },
 ]
 

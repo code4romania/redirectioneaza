@@ -1,10 +1,10 @@
 import logging
+from datetime import timedelta
 
 import psutil
-from django_q.models import Schedule, Success
 from django.core.management.base import BaseCommand
 from django.utils import timezone
-
+from django_q.models import Schedule, Success
 
 logger = logging.getLogger(__name__)
 
@@ -42,7 +42,7 @@ class Command(BaseCommand):
             return
 
         # Check if there were any successful tasks started in the past N minutes
-        cutoff = timezone.now() - timezone.timedelta(minutes=check_minutes)
+        cutoff = timezone.now() - timedelta(minutes=check_minutes)
         if not Success.objects.filter(started__gte=cutoff).exists():
             # If there are no successful tasks, then try to terminate the workers
             logger.error("The task queue seems to be stuck, attempting to terminate it")
@@ -50,7 +50,7 @@ class Command(BaseCommand):
         else:
             logger.info("The task queue seems to be working")
 
-    def terminate_workers(self, hard_attempt: False) -> None:
+    def terminate_workers(self, hard_attempt=False) -> None:
         """
         Terminate or kill all cluster workers
         """

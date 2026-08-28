@@ -1,12 +1,11 @@
 import logging
 from datetime import datetime, timedelta
-from typing import Optional
 from urllib.parse import urlparse
 
 from django.conf import settings
 from django.contrib import messages
 from django.core.files import File
-from django.db.models import Prefetch
+from django.db.models import Prefetch, QuerySet
 from django.http import Http404, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
@@ -14,6 +13,9 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 from ipware import get_client_ip
+
+import redirectioneaza.settings.locations
+from editions.calendar import edition_deadline
 from redirectioneaza.common.messaging import extend_email_context, send_email
 from users.models import User
 
@@ -37,7 +39,7 @@ class RedirectionSuccessHandler(BaseVisibleTemplateView):
 
         cause_url = cause_slug.lower().strip()
         try:
-            cause: Optional[Cause] = Cause.nonprivate_active.select_related("ngo").get(slug=cause_url)
+            cause: Cause | None = Cause.nonprivate_active.select_related("ngo").get(slug=cause_url)
             ngo: Ngo = cause.ngo
         except Cause.DoesNotExist:
             raise Http404("Cause not found")
@@ -57,7 +59,7 @@ class RedirectionSuccessHandler(BaseVisibleTemplateView):
             {
                 "absolute_path": absolute_path,
                 "donor": donor,
-                "limit": settings.DONATIONS_LIMIT,
+                "limit": edition_deadline(),
             }
         )
 
@@ -80,36 +82,25 @@ class RedirectionHandler(TemplateView):
 
         request = self.request
 
-        main_cause_qs = Cause.objects.filter(is_main=True).only("id", "slug", "name", "description")
+        main_cause_qs: QuerySet[Cause] = Cause.objects.filter(is_main=True).only("id", "slug", "name", "description")
+
+        prefetch_qs = Cause.active.select_related("ngo").prefetch_related(
+            Prefetch(
+                lookup="ngo__causes",
+                queryset=main_cause_qs,
+                to_attr="main_cause_list",
+            )
+        )
 
         cause: Cause = get_object_or_404(
-            Cause.active.select_related("ngo").prefetch_related(
-                Prefetch(
-                    lookup="ngo__causes",
-                    queryset=main_cause_qs,
-                    to_attr="main_cause_list",
-                )
-            ),
+            prefetch_qs,
             slug=cause_slug,
         )
 
         user: User = request.user
-        if cause.visibility == CauseVisibilityChoices.PRIVATE:
-            # if the cause is private, we need to check if the user is logged in
-            # and if the user is allowed to see the cause
-            if not user.is_authenticated:
-                raise Http404("Cause not found")
+        self._check_cause_visibility(cause, user)
 
-            if not user.is_staff and cause.ngo != user.ngo:
-                raise Http404("Cause not found")
-
-        # if we didn't find it or the ngo doesn't have an active page
-        if (ngo := cause.ngo) is None:
-            logger.exception(f"NGO not found for cause {cause.pk}")
-            raise Http404
-
-        if not ngo.can_create_causes:
-            raise Http404
+        ngo = self._get_ngo_or_404(cause)
 
         # noinspection PyUnresolvedReferences
         main_cause = cause if cause.is_main else (ngo.main_cause_list[0] if ngo.main_cause_list else None)
@@ -125,8 +116,10 @@ class RedirectionHandler(TemplateView):
             # also we can use request.session.clear(), but it might delete the logged-in user's session
 
         now = timezone.now()
-        is_donation_period_active = not now.date() > settings.DONATIONS_LIMIT
+        is_donation_period_active = not now.date() > edition_deadline()
         donation_status = "open" if is_donation_period_active else "closed"
+
+        ngo_website, ngo_website_description = self._get_cause_website(cause)
 
         context.update(
             {
@@ -137,63 +130,88 @@ class RedirectionHandler(TemplateView):
                 "absolute_path": absolute_path,
                 "donation_status": donation_status,
                 "is_admin": user.is_staff,
-                "limit": settings.DONATIONS_LIMIT,
-                "month_limit": settings.DONATIONS_LIMIT_MONTH_NAME,
-            }
-        )
-        if donation_status == "closed":
-            return context
-
-        ngo_website_description = ""
-        ngo_website = cause.ngo.website if cause.ngo.website else ""
-
-        if ngo_website:
-            # try and parse the url to see if it's valid
-            try:
-                url_dict = urlparse(ngo_website)
-
-                if not url_dict.scheme:
-                    url_dict = url_dict._replace(scheme="http")
-
-                # if we have a netloc, then the URL is valid
-                # use the netloc as the website name
-                if url_dict.netloc:
-                    ngo_website_description = url_dict.netloc
-                    ngo_website = url_dict.geturl()
-
-                # of we don't have the netloc, when parsing the url
-                # urlparse might send it to path
-                # move that to netloc and remove the path
-                elif url_dict.path:
-                    url_dict = url_dict._replace(netloc=url_dict.path)
-                    ngo_website_description = url_dict.path
-
-                    url_dict = url_dict._replace(path="")
-
-                    ngo_website = url_dict.geturl()
-                else:
-                    raise
-
-            except Exception:
-                ngo_website = None
-
-        context.update(
-            {
-                "counties": settings.FORM_COUNTIES_WITH_SECTORS,
-                "captcha_public_key": settings.RECAPTCHA_PUBLIC_KEY,
+                "limit": edition_deadline(),
+                "day_limit": edition_deadline().day,
+                "month_limit": settings.REDIRECTIONS_LIMIT_MONTH_NAME,
                 "ngo_website_description": ngo_website_description,
                 "ngo_website": ngo_website,
             }
         )
 
+        if donation_status != "closed":
+            context.update(
+                {
+                    "counties": redirectioneaza.settings.locations.FORM_COUNTIES_WITH_SECTORS,
+                    "captcha_public_key": settings.RECAPTCHA_PUBLIC_KEY,
+                }
+            )
+
         return context
+
+    def _get_ngo_or_404(self, cause: Cause) -> Ngo:
+        # if we didn't find it or the ngo doesn't have an active page
+        if (ngo := cause.ngo) is None:
+            logger.exception(f"NGO not found for cause {cause.pk}")
+            raise Http404
+
+        if not ngo.can_create_causes:
+            raise Http404
+
+        return ngo
+
+    def _check_cause_visibility(self, cause: Cause, user: User):
+        if cause.visibility == CauseVisibilityChoices.PRIVATE:
+            # if the cause is private, we need to check if the user is logged in
+            # and if the user is allowed to see the cause
+            if not user.is_authenticated:
+                raise Http404("Cause not found")
+
+            if not user.is_staff and cause.ngo != user.ngo:
+                raise Http404("Cause not found")
+
+    def _get_cause_website(self, cause: Cause) -> tuple[str, str]:
+        """
+        Extracts the NGO website from the cause and returns a tuple with the full URL and a description.
+        """
+        ngo_website_description = ""
+        ngo_website = cause.ngo.website if cause.ngo.website else ""
+
+        try:
+            url_dict = urlparse(ngo_website)
+
+            if not url_dict.scheme:
+                url_dict = url_dict._replace(scheme="http")
+
+            # if we have a netloc, then the URL is valid
+            # use the netloc as the website name
+            if url_dict.netloc:
+                ngo_website_description = url_dict.netloc
+                ngo_website = url_dict.geturl()
+
+            # of we don't have the netloc, when parsing the url
+            # urlparse might send it to path
+            # move that to netloc and remove the path
+            elif url_dict.path:
+                url_dict = url_dict._replace(netloc=url_dict.path)
+                ngo_website_description = url_dict.path
+
+                url_dict = url_dict._replace(path="")
+
+                ngo_website = url_dict.geturl()
+            else:
+                raise
+
+        except Exception:
+            ngo_website = None
+
+        return ngo_website, ngo_website_description
 
     def post(self, request, cause_slug):
         post = self.request.POST
 
         cause_url = cause_slug.lower().strip()
         try:
-            cause: Optional[Cause] = Cause.nonprivate_active.select_related("ngo").get(slug=cause_url)
+            cause: Cause | None = Cause.nonprivate_active.select_related("ngo").get(slug=cause_url)
             ngo: Ngo = cause.ngo
         except Cause.DoesNotExist:
             raise Http404("Cause not found")
@@ -276,9 +294,8 @@ class RedirectionHandler(TemplateView):
             }
         )
 
-        # TODO: add a text for two-year donations
         # send and email to the donor with a link to the PDF file
-        if signature:
+        if signature and cause:
             if cause.notifications_email:
                 send_email(
                     subject=_("Un nou formular de redirecționare"),

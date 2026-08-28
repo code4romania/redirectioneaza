@@ -7,8 +7,8 @@ module "ecs_redirectioneaza" {
 
   name         = local.namespace
   cluster_name = module.ecs_cluster.cluster_name
-  min_capacity = 2
-  max_capacity = 8
+  min_capacity = 1
+  max_capacity = 4
 
   image_repo = local.image_repo
   image_tag  = local.image_tag
@@ -136,6 +136,10 @@ module "ecs_redirectioneaza" {
       value = 3
     },
     {
+      name  = "GUNICORN_WORKERS_TIMEOUT"
+      value = 60
+    },
+    {
       name  = "DJANGO_Q_WORKERS_COUNT"
       value = 2
     },
@@ -160,11 +164,19 @@ module "ecs_redirectioneaza" {
       value = 20
     },
     {
-      name  = "DONATIONS_LIMIT_DAY"
-      value = 26
+      name  = "REDIRECTIONS_LIMIT_DAY"
+      value = 25
     },
     {
       name  = "ENABLE_MULTIPLE_FORMS"
+      value = tostring(true)
+    },
+    {
+      name  = "ENABLE_BYOF"
+      value = tostring(true)
+    },
+    {
+      name  = "ENABLE_CSV_DOWNLOAD"
       value = tostring(true)
     },
     {

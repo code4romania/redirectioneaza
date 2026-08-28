@@ -1,5 +1,4 @@
 import logging
-from typing import Dict, List, Optional
 
 from django.conf import settings
 from django.contrib import messages
@@ -17,7 +16,8 @@ from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 
-from ..models.jobs import Job, JobStatusChoices
+from ..models.common import JobStatusChoices
+from ..models.jobs import Job
 from ..models.ngos import NGO_CAUSES_QUERY_CACHE_KEY, Cause, CauseVisibilityChoices, Ngo
 from ..pdf import create_cause_pdf
 from ..workers.update_organization import update_organization
@@ -27,7 +27,7 @@ from .common.misc import (
     has_archive_generation_deadline_passed,
     has_recent_archive_job,
 )
-from .common.search import NgoCauseMixedSearchMixin
+from .common.search import CauseSearchMixin
 
 logger = logging.getLogger(__name__)
 
@@ -49,13 +49,13 @@ class UpdateFromNgohub(BaseTemplateView):
         return redirect_success
 
 
-class SearchCausesApi(TemplateView, NgoCauseMixedSearchMixin):
+class SearchCausesApi(TemplateView, CauseSearchMixin):
     queryset = Cause.public_active
 
     def get(self, request, *args, **kwargs):
         causes = self.search()
 
-        response: List[Dict] = []
+        response: list[dict] = []
         for cause in causes:
             if not cause.slug:
                 continue
@@ -110,7 +110,7 @@ class GetCausePrefilledForm(TemplateView):
 
 
 class GenerateCauseArchive(BaseTemplateView):
-    def generate_archive_for_cause_slug(self, cause_slug: Optional[str], request) -> Optional[Job]:
+    def generate_archive_for_cause_slug(self, cause_slug: str | None, request) -> Job | None:
         if not cause_slug:
             return None
 
@@ -134,9 +134,9 @@ class GenerateCauseArchive(BaseTemplateView):
 
         try:
             if settings.FORMS_DOWNLOAD_METHOD == "async":
-                call_command("download_donations", new_job.id)
+                call_command("download_donations", new_job.pk)
             else:
-                call_command("download_donations", new_job.id, "--run")
+                call_command("download_donations", new_job.pk, "--run")
         except Exception as e:
             logging.error(e)
 
@@ -159,6 +159,7 @@ class GenerateCauseArchive(BaseTemplateView):
 
         status = self.generate_archive_for_cause_slug(cause_slug, request)
         if not status:
+            messages.error(request, _("No archives were generated"))
             return failure_response
 
         return redirect(success_redirect_url)

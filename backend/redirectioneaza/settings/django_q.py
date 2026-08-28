@@ -1,4 +1,5 @@
 from django.utils.translation import gettext_lazy as _
+
 from .environment import env
 
 # Django Q2 — https://django-q2.readthedocs.io/en/stable/configure.html#configuration

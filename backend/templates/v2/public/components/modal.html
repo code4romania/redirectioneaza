@@ -1,0 +1,77 @@
+<div class="relative z-10" aria-labelledby="{{ modal_title_id|default:'modal-title' }}" role="dialog" aria-modal="true">
+  <!--
+    Background backdrop, show/hide based on modal state.
+
+    Entering: "ease-out duration-300"
+      From: "opacity-0"
+      To: "opacity-100"
+    Leaving: "ease-in duration-200"
+      From: "opacity-100"
+      To: "opacity-0"
+  -->
+  <div class="fixed inset-0 bg-gray-500/75 transition-opacity" aria-hidden="true"></div>
+
+  <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+    <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+      <!--
+        Modal panel, show/hide based on modal state.
+
+        Entering: "ease-out duration-300"
+          From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+          To: "opacity-100 translate-y-0 sm:scale-100"
+        Leaving: "ease-in duration-200"
+          From: "opacity-100 translate-y-0 sm:scale-100"
+          To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+      -->
+      <div
+        class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
+
+        {% if modal_title or modal_body %}
+          <div class="text-left sm:mt-5">
+            {% if modal_title %}
+              <h3 class="-mt-1 text-base font-semibold text-gray-900" id="{{ modal_title_id|default:'modal-title' }}">
+                {{ modal_title }}
+              </h3>
+            {% endif %}
+            {% if modal_body %}
+              <div class="mt-2">
+                <p class="text-sm text-gray-500">{{ modal_body }}</p>
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
+
+        {% if cancel_label or confirm_label %}
+          <div class="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
+            {% if cancel_label %}
+              <button
+                {% if cancel_id %}id="{{ cancel_id }}"{% endif %}
+                {% if cancel_name %}name="{{ cancel_name }}"{% endif %}
+                {% if cancel_value %}value="{{ cancel_value }}"{% endif %}
+                type="{{ cancel_type|default:'button' }}"
+                class="
+                  {{ cancel_classes|default:'w-full text-center outline-solid outline-gray-400 bg-white sm:text-base text-sm sm:px-6 sm:py-2 px-2 py-1 shadow-xs rounded-full text-gray-900 hover:bg-gray-100 hover:cursor-pointer focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-300' }}"
+                {% if cancel_attrs %}{{ cancel_attrs|safe }}{% endif %}>
+                {{ cancel_label }}
+              </button>
+            {% endif %}
+
+            {% if confirm_label %}
+              <button
+                {% if confirm_id %}id="{{ confirm_id }}"{% endif %}
+                {% if confirm_name %}name="{{ confirm_name }}"{% endif %}
+                {% if confirm_value %}value="{{ confirm_value }}"{% endif %}
+                type="{{ confirm_type|default:'button' }}"
+                class="
+                  {{ confirm_classes|default:'w-full text-center outline-solid outline-red-600 bg-red-600 sm:text-base text-sm sm:px-6 sm:py-2 px-2 py-1 shadow-xs rounded-full text-white hover:bg-red-200 hover:cursor-pointer focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-300' }}"
+                {% if confirm_attrs %}{{ confirm_attrs|safe }}{% endif %}>
+                {{ confirm_label }}
+              </button>
+            {% endif %}
+          </div>
+        {% endif %}
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -20,6 +20,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path, re_path, reverse
 from django.views.generic import RedirectView
+
 from donations.views.account_management import (
     ForgotPasswordView,
     LoginView,
@@ -37,6 +38,7 @@ from donations.views.api import (
     SearchCausesApi,
     UpdateFromNgohub,
 )
+from donations.views.api_download import DownloadNgoRedirections
 from donations.views.errors import create_error_view
 from donations.views.redirections import (
     OwnFormDownloadLinkHandler,
@@ -56,6 +58,7 @@ from donations.views.site import (
 )
 from frequent_questions.views import FAQHandler
 from redirectioneaza.views import StaticPageView
+from utils import staging
 
 admin.site.site_header = f"Admin | {settings.VERSION_LABEL}"
 
@@ -119,10 +122,16 @@ urlpatterns = (
             StaticPageView.as_view(template_name="account/errors/login/unknown_role.html"),
             name="error-unknown-user-role",
         ),
+        path(
+            "contul-meu/eroare/eroare-necunoscuta/",
+            StaticPageView.as_view(template_name="account/errors/login/unknown_error.html"),
+            name="error-unknown-error",
+        ),
         # APIs
         path("api/ngohub-refresh/", UpdateFromNgohub.as_view(), name="api-ngohub-refresh"),
         path("api/ngo/form/<cause_slug>/", GetCausePrefilledForm.as_view(), name="api-cause-form"),
         path("api/ngo/forms/archive/", GenerateCauseArchive.as_view(), name="api-generate-cause-archive"),
+        path("api/ngo/forms/download/", DownloadNgoRedirections.as_view(), name="api-download-redirections"),
         path("api/ngo/forms/visibility/", ChangeCauseVisibility.as_view(), name="api-change-cause-visibility"),
         #
         path("api/search/", SearchCausesApi.as_view(), name="api-search-ngos"),
@@ -131,8 +140,8 @@ urlpatterns = (
         path("admin/avansat/login/", RedirectView.as_view(pattern_name="login", permanent=True)),
         path("admin/avansat/", RedirectView.as_view(pattern_name="admin:index", permanent=True)),
         path("admin/django/", RedirectView.as_view(pattern_name="admin:index", permanent=True)),
-        # ADMIN HANDLERS
         path("admin/organizatii/", RedirectView.as_view(pattern_name="admin:index", permanent=True)),
+        path("admin/reset-staging/", staging.schedule_reset_staging, name="schedule-reset-staging"),
         path("admin/", admin.site.urls),
         # must always be the last set of urls
         # people could initially redirect 2%; we kept this name because it is easier to find than redirection
@@ -144,7 +153,7 @@ urlpatterns = (
         path(
             "allauth/login/",
             RedirectView.as_view(
-                url=f'/allauth{reverse("amazon_cognito_login", urlconf="allauth.urls")}',
+                url=f"/allauth{reverse('amazon_cognito_login', urlconf='allauth.urls')}",
                 permanent=True,
             ),
             name="allauth-login",
@@ -156,6 +165,13 @@ urlpatterns = (
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 )
+
+if settings.EMAIL_BACKEND == "django_ses.SESBackend":
+    urlpatterns.extend(
+        [
+            path("admin/django-ses/", include("django_ses.urls")),
+        ]
+    )
 
 if settings.DEBUG:
     urlpatterns.extend(

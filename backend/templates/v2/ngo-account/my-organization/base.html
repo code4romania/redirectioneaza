@@ -33,7 +33,10 @@
         {% if ngo %}
           {% include "ngo-account/components/tab.html" with tab_title=tab_form target="form" %}
         {% else %}
-          {% include "ngo-account/components/tab.html" with tab_title=tab_form target="form" is_disabled=True %}
+          {% blocktrans trimmed asvar form_tab_disabled_tooltip_text %}
+            Please complete the organization data before configuring the form.
+          {% endblocktrans %}
+          {% include "ngo-account/components/tab.html" with tab_title=tab_form target="form" is_disabled=True disabled_tooltip_text=form_tab_disabled_tooltip_text %}
         {% endif %}
 
       </nav>
@@ -63,7 +66,7 @@
             and your organization is not visible on redirectioneaza.ro.
             To reactivate your profile,
             please contact us at
-            <a href="mailto:{{ contact_email }}" class="text-blue-600 underline">{{ contact_email }}</a>.
+            <a href="mailto:{{ CONTACT_EMAIL_ADDRESS }}" class="text-blue-600 underline">{{ CONTACT_EMAIL_ADDRESS }}</a>.
           </p>
         {% endblocktranslate %}
 
@@ -101,7 +104,7 @@
       {% endif %}
     {% endif %}
 
-    {% if cause %}
+    {% if cause and ngo_has_tax_account %}
       {% if not cause.allow_online_collection %}
         {% include "ngo-account/banners/form-emails-banner.html" %}
       {% elif not cause.notifications_email %}

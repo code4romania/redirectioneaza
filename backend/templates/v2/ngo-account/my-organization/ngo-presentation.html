@@ -57,6 +57,18 @@
               {% include "components/input/input.html" with input_id="cif" input_type="text" input_name="cif" is_required=True is_disabled=disable_ngohub_fields value=ngo.full_registration_number field=ngo_presentation.cif max_length=100 %}
             </div>
 
+            <div>
+              {% if not has_spv_input_title %}
+                {% trans "Do you have an SPV account?" as has_spv_input_title %}
+              {% endif %}
+              {% blocktrans trimmed asvar has_spv_help_text %}
+                SPV (the Virtual Private Space) is the online platform provided by ANAF
+                for submitting tax forms digitally.
+                An SPV account is required for submitting forms completed with online signature.
+              {% endblocktrans %}
+              {% include "components/input/select.html" with input_title=has_spv_input_title input_id="has_spv_option" input_name="has_spv_option" current_value=ngo.has_spv_option field=ngo_presentation.has_spv_option options=spv_choices include_default_option=True help_text=has_spv_help_text is_required=True %}
+            </div>
+
           </fieldset>
 
 

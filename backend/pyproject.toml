@@ -1,40 +1,99 @@
+[project]
+name = "redirectioneaza"
+version = "3.0.0"
+description = "A tool to help NGOs with managing the redirection of people's tax income."
+
+requires-python = ">=3.13"
+dependencies = [
+  "blessed~=1.44.0",
+  "cryptography~=48.0.0",
+  "django~=5.2.0",
+  "django-allauth~=65.18.0",
+  "django-auditlog~=3.4.0",
+  "django-environ~=0.13.0",
+  "django-import-export~=4.4.0",
+  "django-ipware~=7.0.0",
+  "django-localflavor~=5.0.0",
+  "django-q2~=1.10.0",
+  "django-recaptcha~=4.1.0",
+  "django-ses~=4.7.0",
+  "django-storages[s3]~=1.14.0",
+  "django-tinymce~=5.0.0",
+  "django-unfold~=0.92.0",
+  "django-vite~=3.1.0",
+  "gevent~=26.5.0",
+  "gunicorn~=26.0.0",
+  "ngohub~=0.1.0",
+  "phonenumbers~=9.0.0",
+  "psutil~=7.2.0",
+  "psycopg2-binary~=2.9.0",
+  "pycognito~=2024.5.0",
+  "pydantic[email]~=2.13.0",
+  "pymysql~=1.1.0",
+  "pypdf~=6.13.0",
+  "reportlab~=4.5.0",
+  "requests~=2.33.0",
+  "sentry-sdk[django]~=2.59.0",
+  "whitenoise~=6.12.0",
+]
+
+
+[dependency-groups]
+test = [
+  "faker~=40.15.0",
+  "pytest~=9.0.0",
+  "pytest-cov~=7.1.0",
+  "pytest-django~=4.12.0",
+  "pytest-xdist~=3.8.0",
+]
+ruff = [
+  "ruff~=0.15.0"
+]
+dev = [
+  "debugpy~=1.8.0",
+  "pre-commit~=4.6.0",
+  { include-group = "ruff" },
+  { include-group = "test" },
+]
+
+
 [tool.ruff]
 # Enable the following rules
 # More info: https://docs.astral.sh/ruff/rules/
 
 # Exclude a variety of commonly ignored directories.
 exclude = [
-    ".bzr",
-    ".direnv",
-    ".eggs",
-    ".git",
-    ".git-rewrite",
-    ".hg",
-    ".mypy_cache",
-    ".nox",
-    ".pants.d",
-    ".pytype",
-    ".ruff_cache",
-    ".svn",
-    ".tox",
-    ".venv",
-    ".vscode",
-    "__pypackages__",
-    "_build",
-    "buck-out",
-    "build",
-    "dist",
-    "node_modules",
-    "venv",
-    "migrations",
-    "_appengine_legacy",
+  ".bzr",
+  ".direnv",
+  ".eggs",
+  ".git",
+  ".git-rewrite",
+  ".hg",
+  ".mypy_cache",
+  ".nox",
+  ".pants.d",
+  ".pytype",
+  ".ruff_cache",
+  ".svn",
+  ".tox",
+  ".venv",
+  ".vscode",
+  "__pypackages__",
+  "_build",
+  "buck-out",
+  "build",
+  "dist",
+  "node_modules",
+  "venv",
+  "migrations",
+  "_appengine_legacy",
 ]
 
 # Same as Black.
 line-length = 120
 
-# Assume Python 3.12.
-target-version = "py312"
+# Assume Python 3.13.
+target-version = "py313"
 
 
 [lint]
@@ -43,12 +102,12 @@ dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 ignore = []
 
 select = [
-    "DJ",   # Flake8-Django - https://docs.astral.sh/ruff/rules/#flake8-django-dj
-    "E",    # Pycodestyle errors - https://docs.astral.sh/ruff/rules/#error-e
-    "W",    # Pycodestyle warnings - https://docs.astral.sh/ruff/rules/#warning-w
-    "F",    # Pyflakes - https://docs.astral.sh/ruff/rules/#pyflakes-f
-    "T10",  # Debugger - https://docs.astral.sh/ruff/rules/#flake8-debugger-t10
-    "T20",  # Remove print/pprint statements - https://docs.astral.sh/ruff/rules/#flake8-print-t20
+  "DJ", # Flake8-Django - https://docs.astral.sh/ruff/rules/#flake8-django-dj
+  "E", # Pycodestyle errors - https://docs.astral.sh/ruff/rules/#error-e
+  "W", # Pycodestyle warnings - https://docs.astral.sh/ruff/rules/#warning-w
+  "F", # Pyflakes - https://docs.astral.sh/ruff/rules/#pyflakes-f
+  "T10", # Debugger - https://docs.astral.sh/ruff/rules/#flake8-debugger-t10
+  "T20", # Remove print/pprint statements - https://docs.astral.sh/ruff/rules/#flake8-print-t20
 ]
 # Allow autofix for all enabled rules (when `--fix`) is provided.
 fixable = ["A", "B", "C", "D", "E", "F", "G", "I", "N", "Q", "S", "T", "W", "ANN", "ARG", "BLE", "COM", "DJ", "DTZ", "EM", "ERA", "EXE", "FBT", "ICN", "INP", "ISC", "NPY", "PD", "PGH", "PIE", "PL", "PT", "PTH", "PYI", "RET", "RSE", "RUF", "SIM", "SLF", "TCH", "TID", "TRY", "UP", "YTT"]
@@ -69,23 +128,31 @@ max-complexity = 10
 DJANGO_SETTINGS_MODULE = "redirectioneaza.settings"
 
 python_files = [
-    "test.py",
-    "test*.py",
-    "*test.py",
-    "*tests.py",
-    "backend/*/tests/*.py",
+  "test.py",
+  "test*.py",
+  "*test.py",
+  "*tests.py",
+  "backend/*/tests/*.py",
 ]
 filterwarnings = [
-    "ignore:The django.utils.baseconv module is deprecated."
+  "ignore:The django.utils.baseconv module is deprecated."
+]
+
+
+[tool.coverage.run]
+omit = [
+  # omit all migration folders
+  "*/migrations/*",
+  # omit all test folders
+  "*/tests/*",
 ]
 
 
 [tool.black]
 line-length = 120
-target-version = ["py312"]
+target-version = ["py313"]
 extend-exclude = '''
 /(
-  | _appengine_legacy
   | migrations
 )/
 '''

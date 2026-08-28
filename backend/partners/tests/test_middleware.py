@@ -1,21 +1,19 @@
-import pytest
+from django.test import TestCase
 
-from ..middleware import InvalidSubdomain, PartnerDomainMiddleware
-
-
-@pytest.mark.parametrize(
-    "apex, subdomain, expected",
-    [
-        ("example.com", "test1.example.com", "test1"),
-        ("example.com", "TesT1.exaMpLe.com", "test1"),
-        ("example.com", "exAmple.com", ""),
-    ],
-)
-def test_partner_domain_middleware_extraction(apex, subdomain, expected):
-    subdomain = PartnerDomainMiddleware.extract_subdomain(subdomain, apex)
-    assert subdomain == expected
+from partners.middleware import InvalidSubdomain, PartnerDomainMiddleware
 
 
-def test_invalid_subdomain():
-    with pytest.raises(InvalidSubdomain):
-        PartnerDomainMiddleware.extract_subdomain("test1.example.ORG", "example.com")
+class PartnerMiddlewareTests(TestCase):
+    def setUp(self):
+        pass
+
+    def test_partner_domain_middleware_extraction(self):
+        apex = "example.com"
+        self.assertEqual("test1", PartnerDomainMiddleware.extract_subdomain("test1.example.com", apex))
+        self.assertEqual("test1", PartnerDomainMiddleware.extract_subdomain("test1.exaMpLe.com", apex))
+        self.assertEqual("", PartnerDomainMiddleware.extract_subdomain("exAmple.com", apex))
+
+    def test_invalid_subdomain(self):
+        self.assertRaises(
+            InvalidSubdomain, PartnerDomainMiddleware.extract_subdomain, "test1.example.ORG", "example.com"
+        )

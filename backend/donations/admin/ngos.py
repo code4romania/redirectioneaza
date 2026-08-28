@@ -1,17 +1,20 @@
+import codecs
+import csv
 import logging
 
 from django import forms
 from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth import get_user_model
-from django.core.management import call_command
+from django.core.exceptions import PermissionDenied, ValidationError
 from django.db import transaction
 from django.db.models import QuerySet
-from django.http import HttpRequest
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
-from django.urls import reverse, reverse_lazy
+from django.urls import path, reverse, reverse_lazy
+from django.utils import timezone
 from django.utils.html import format_html
-from django.utils.translation import gettext_lazy as _, ngettext_lazy
+from django.utils.translation import gettext_lazy as _
 from unfold.admin import ModelAdmin, StackedInline, TabularInline
 from unfold.contrib.filters.admin import SingleNumericFilter
 from unfold.decorators import action
@@ -19,6 +22,7 @@ from unfold.widgets import UnfoldAdminSelectWidget
 
 from donations.admin.common import CommonCauseFields, span_external, span_internal
 from donations.models.ngos import Cause, Ngo
+from donations.workers.check_organization import cult_registry_check_organizations
 from donations.workers.update_organization import update_organization
 from users.models import User
 
@@ -53,7 +57,27 @@ class NgoCauseInline(StackedInline, CommonCauseFields):
     extra = 0
     tab = True
 
-    fieldsets = (CommonCauseFields.editable_fieldset,)
+    readonly_fields = (
+        "ngo",
+        "date_created",
+        "date_updated",
+        "link_to_cause",
+    )
+
+    fieldsets = (
+        (
+            None,
+            {"fields": ("link_to_cause",)},
+        ),
+        CommonCauseFields.flags_fieldset,
+        CommonCauseFields.form_data_fieldset,
+        CommonCauseFields.data_fieldset,
+    )
+
+    @admin.display(description=_("Cause link"))
+    def link_to_cause(self, obj: Cause):
+        link_url = reverse("admin:donations_cause_change", args=(obj.pk,))
+        return span_internal(href=link_url, content=obj.name)
 
     def has_add_permission(self, request, obj):
         return False
@@ -64,7 +88,7 @@ class NgoCauseInline(StackedInline, CommonCauseFields):
 
 class NgoPartnerInline(TabularInline):
     # noinspection PyUnresolvedReferences
-    model = Ngo.partners.through
+    model = Ngo.partners.through  # type: ignore
     extra = 1
     tab = True
 
@@ -120,6 +144,8 @@ class HasNgoHubFilter(admin.SimpleListFilter):
         if filter_value is not None:
             return queryset.filter(ngohub_org_id__isnull=not filter_value)
 
+        return queryset
+
 
 class HasOwnerFilter(admin.SimpleListFilter):
     title = _("Has owner")
@@ -138,13 +164,15 @@ class HasOwnerFilter(admin.SimpleListFilter):
         if filter_value is not None:
             return queryset.filter(users__isnull=filter_value)
 
+        return queryset
+
 
 @admin.register(Ngo)
 class NgoAdmin(ModelAdmin):
     list_filter_submit = True
 
-    list_display = ("id", "get_ngohub_link", "get_cif", "name", "slug", "is_accepting_forms", "is_active")
-    list_display_links = ("id", "get_cif", "name", "slug")
+    list_display = ("id", "get_ngohub_link", "get_cif", "name", "has_online_tax_account", "is_active")
+    list_display_links = ("id", "get_cif", "name", "has_online_tax_account")
     list_editable = ("is_active",)
 
     list_filter = (
@@ -153,30 +181,41 @@ class NgoAdmin(ModelAdmin):
         ("ngohub_org_id", SingleNumericFilter),
         "is_verified",
         "is_active",
-        "is_accepting_forms",
+        "has_online_tax_account",
+        "cult_registry_check_started",
+        "is_in_cult_registry",
+        "became_absent_from_cult_registry",
         "partners",
         HasOwnerFilter,
         "county",
-        "active_region",
         "registration_number_valid",
     )
     list_per_page = 30
 
-    search_fields = ("name", "registration_number", "slug", "description")
+    search_fields = ("name", "registration_number", "email", "phone")
 
     inlines = (NgoCauseInline, NgoPartnerInline, NgoUserInline)
 
-    readonly_fields = ("date_created", "date_updated", "get_donations_link")
+    readonly_fields = (
+        "date_created",
+        "date_updated",
+        "get_donations_link",
+        "is_in_cult_registry",
+        "became_absent_from_cult_registry",
+        "cult_registry_check_started",
+        "cult_registry_check_ended",
+    )
 
     actions_detail = ("change_owner",)
 
     actions = (
-        "clean_registration_numbers",
-        "update_from_ngohub_sync",
+        "check_cult_registry_async",
+        "check_cult_registry_sync",
         "update_from_ngohub_async",
+        "update_from_ngohub_sync",
     )
 
-    actions_list = ("clean_registration_numbers", "remove_prefilled_forms")
+    actions_list = ("remove_prefilled_forms",)
 
     fieldsets = (
         (
@@ -190,9 +229,7 @@ class NgoAdmin(ModelAdmin):
                     "vat_id",
                     "registration_number",
                     "ngohub_org_id",
-                    "slug",
                     "name",
-                    "description",
                 )
             },
         ),
@@ -202,14 +239,23 @@ class NgoAdmin(ModelAdmin):
                 "fields": (
                     "is_verified",
                     "is_active",
-                    "is_accepting_forms",
+                    "has_online_tax_account",
                     "is_social_service_viable",
                 )
             },
         ),
         (
-            _("Logo"),
-            {"fields": ("logo",)},
+            _("ANAF Cult Registry"),
+            {
+                "fields": (
+                    "is_in_cult_registry",
+                    "became_absent_from_cult_registry",
+                    "acknowledge_missing_cult_registry",
+                    "cult_registry_check_started",
+                    "cult_registry_check_ended",
+                    "pause_cult_registry_check",
+                )
+            },
         ),
         (
             _("Contact"),
@@ -228,15 +274,6 @@ class NgoAdmin(ModelAdmin):
             },
         ),
         (
-            _("Details"),
-            {
-                "fields": (
-                    "bank_account",
-                    "prefilled_form",
-                )
-            },
-        ),
-        (
             _("Date"),
             {
                 "fields": (
@@ -247,25 +284,85 @@ class NgoAdmin(ModelAdmin):
         ),
     )
 
-    def get_actions(self, request):
+    def get_urls(self):
+        return [
+            path(
+                "export/",
+                self.admin_site.admin_view(self.export_ngos),
+                name="export-cult-registry-ngos",
+            ),
+            *super().get_urls(),
+        ]
+
+    def export_ngos(self, request: HttpRequest):
+        if not request.user.has_perm("users.view_ngo"):
+            raise PermissionDenied
+
+        raw_registered = request.GET.get("registered")
+        if raw_registered is None:
+            registered = None
+        else:
+            registered = bool(int(raw_registered))
+
+        try:
+            ngos = Ngo.export_cult_registry(registered=registered)
+        except ValidationError as e:
+            return HttpResponse(e.message)
+
+        filename = "ngos_cult_registry_export_{}.csv".format(timezone.now())
+
+        response = HttpResponse(
+            content_type="text/csv; charset=utf-8-sig",
+            headers={"Content-Disposition": 'attachment; filename="{}"'.format(filename)},
+        )
+        response.write(codecs.BOM_UTF8)
+
+        writer = csv.writer(response, dialect=csv.excel)
+        writer.writerow(
+            (
+                _("User first name"),
+                _("User last name"),
+                _("User email"),
+                _("Legal name"),
+                _("date created"),
+                _("NGO Hub organization ID"),
+                _("VAT ID"),
+                _("registration number"),
+                _("NGO email"),
+                _("telephone"),
+                _("website"),
+                _("is verified"),
+                _("is active"),
+                _("presence in the ANAF Cult Registry"),
+                _("became absent from the ANAF Cult Registry"),
+                _("last completed check in the ANAF Cult Registry"),
+            )
+        )
+
+        for ngo in ngos:
+            writer.writerow(ngo)
+
+        return response
+
+    def get_actions(self, request: HttpRequest):
         if request.user.is_superuser:
             return super().get_actions(request)
 
         return []
 
-    def get_actions_detail(self, request, object_id):
+    def get_actions_detail(self, request: HttpRequest, object_id: int):
         if request.user.is_superuser:
             return super().get_actions_detail(request, object_id)
 
         return []
 
-    def get_inlines(self, request, obj):
+    def get_inlines(self, request: HttpRequest, obj: Ngo):
         if request.user.is_superuser:
             return super().get_inlines(request, obj)
 
         return []
 
-    def get_queryset(self, request):
+    def get_queryset(self, request: HttpRequest):
         if request.user.is_superuser:
             return super().get_queryset(request)
 
@@ -291,15 +388,9 @@ class NgoAdmin(ModelAdmin):
                 {
                     "fields": (
                         "name",
-                        "slug",
                         "registration_number",
-                        "description",
                     )
                 },
-            ),
-            (
-                _("Logo"),
-                {"fields": ("logo",)},
             ),
         )
 
@@ -324,7 +415,7 @@ class NgoAdmin(ModelAdmin):
         link_name = _("Open the NGO donor list")
         link_url = reverse("admin:donations_donor_changelist")
         return format_html(
-            f'<a data-popup="yes" id="ngo_donor_list" class="related-widget-wrapper-link" href="{link_url}?ngo_id={obj.id}&_popup=1" target="_blank">{link_name}</a>'
+            f'<a data-popup="yes" id="ngo_donor_list" class="related-widget-wrapper-link" href="{link_url}?ngo_id={obj.pk}&_popup=1" target="_blank">{link_name}</a>'
         )
 
     @transaction.atomic
@@ -361,7 +452,7 @@ class NgoAdmin(ModelAdmin):
 
     @action(description=_("Change owner"))
     def change_owner(self, request: HttpRequest, object_id):
-        ngo = Ngo.objects.get(id=object_id)
+        ngo = Ngo.objects.get(pk=object_id)
 
         if request.method == "POST":
             form = ChangeNgoOwnerForm(request.POST)
@@ -391,43 +482,60 @@ class NgoAdmin(ModelAdmin):
             },
         )
 
-    @action(description=_("Clean up registration numbers"))
-    def clean_registration_numbers(self, request, queryset: QuerySet[Ngo] = None, object_id=None):
-        target_ngos = None
-        if queryset:
-            target_ngos = queryset.values_list("pk", flat=True)
-            result = call_command("registration_numbers_cleanup", "--ngos", *target_ngos)
-        else:
-            result = call_command("registration_numbers_cleanup")
-
-        if result:
-            self.message_user(request, result, level="ERROR")
-        else:
-            success_message = _("Successfully cleaned registration numbers")
-            if target_ngos:
-                success_message += ngettext_lazy(
-                    " for 1 NGO.",
-                    " for %(ngos)d NGOs.",
-                    target_ngos.count(),
-                ) % {"ngos": target_ngos.count()}
-
-            self.message_user(request, success_message, level="SUCCESS")
-
-        return redirect(reverse_lazy("admin:donations_ngo_changelist"))
-
     @action(description=_("Update from NGO Hub synchronously"))
-    def update_from_ngohub_sync(self, request, queryset: QuerySet[Ngo]):
-        for ngo in queryset:
-            update_organization(ngo.id, update_method="sync")
+    def update_from_ngohub_sync(self, request: HttpRequest, queryset: QuerySet[Ngo]):
+        show_errors: bool = True
 
-        self.message_user(request, _("NGOs updated from NGO Hub."))
+        task_results = []
+        for ngo in queryset:
+            task_results.append(update_organization(ngo.pk, update_method="sync"))
+
+        message = "NGO Update Results: | "
+        for result in task_results:
+            message += f"- NGO ID {result['ngo_id']}: "
+            if errors := result.get("errors"):
+                for error in errors:
+                    message += f" |   * {error}"
+            else:
+                message += "Updated successfully."
+
+            message += "|"
+
+        message_level = "ERROR" if show_errors else "SUCCESS"
+        self.message_user(request, message, level=message_level)
 
     @action(description=_("Update from NGO Hub asynchronously"))
-    def update_from_ngohub_async(self, request, queryset: QuerySet[Ngo]):
+    def update_from_ngohub_async(self, request: HttpRequest, queryset: QuerySet[Ngo]):
         for ngo in queryset:
-            update_organization(ngo.id, update_method="async")
+            update_organization(ngo.pk, update_method="async")
 
         self.message_user(request, _("NGOs are being updated from NGO Hub."))
+
+    @action(description=_("Check in ANAF Cult Registry synchronously"))
+    def check_cult_registry_sync(self, request: HttpRequest, queryset: QuerySet[Ngo]):
+        show_errors: bool = True
+
+        registration_numbers: list[str] = queryset.values_list("registration_number", flat=True)  # type: ignore
+        task_result = cult_registry_check_organizations(registration_numbers, update_method="sync")
+
+        message = "ANAF Registry Results: | "
+
+        if errors := task_result.get("errors"):
+            for error in errors:
+                message += f" |   * {error}"
+        else:
+            message += "Checked successfully."
+
+        message += "|"
+
+        message_level = "ERROR" if show_errors else "SUCCESS"
+        self.message_user(request, message, level=message_level)
+
+    @action(description=_("Check in ANAF Cult Registry asynchronously"))
+    def check_cult_registry_async(self, request, queryset: QuerySet[Ngo]):
+        registration_numbers: list[str] = queryset.values_list("registration_number", flat=True)  # type: ignore
+        cult_registry_check_organizations(registration_numbers, update_method="async")
+        self.message_user(request, _("NGOs are being searched in ANAF Cult Registry."))
 
     @action(description=_("Remove prefilled forms"), url_path="remove-forms", permissions=["remove_forms"])
     def remove_prefilled_forms(self, request: HttpRequest):

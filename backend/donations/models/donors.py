@@ -1,20 +1,20 @@
 import json
+import logging
 from datetime import datetime
 from functools import partial
-from typing import Dict
 
-from django.conf import settings
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from donations.common.models_hashing import hash_id_secret
+from utils.common.crypto_helper import decrypt_data, encrypt_data
+from utils.models_hashing import hash_id_secret
 
 
 def year_ngo_donor_directory_path(subdir: str, instance: "Donor", filename: str) -> str:
     """
-    The file will be uploaded to MEDIA_ROOT/<subdir>/<year>/c-<cause.id>-<cause.hash>/<id>_<hash>_<filename>
+    The file will be uploaded to MEDIA_ROOT/<subdir>/<year>/c-<cause.pk>-<cause.hash>/<id>_<hash>_<filename>
     """
     timestamp = timezone.now()
     year = timestamp.date().year
@@ -45,12 +45,12 @@ class DonorSignedManager(DonorAvailableManager):
         return super().get_queryset().filter(has_signed=True)
 
 
-class DonorCurrentYearSignedManager(DonorSignedManager):
+class DonorCurrentYearManager(DonorAvailableManager):
     def get_queryset(self):
         return super().get_queryset().filter(date_created__year=timezone.now().year)
 
 
-class DonorCurrentYearManager(DonorAvailableManager):
+class DonorCurrentYearSignedManager(DonorSignedManager):
     def get_queryset(self):
         return super().get_queryset().filter(date_created__year=timezone.now().year)
 
@@ -162,8 +162,22 @@ class Donor(models.Model):
         auto_now_add=True,
     )
 
+    # personal data removal information
+    personal_data_removal_started_at = models.DateTimeField(
+        verbose_name=_("date personal data removal started"),
+        blank=True,
+        null=True,
+    )
+    personal_data_removed_at = models.DateTimeField(
+        verbose_name=_("date personal data removed"),
+        blank=True,
+        null=True,
+    )
+
     objects = models.Manager()
+
     available = DonorAvailableManager()
+
     signed = DonorSignedManager()
     current_year = DonorCurrentYearManager()
     current_year_signed = DonorCurrentYearSignedManager()
@@ -175,8 +189,37 @@ class Donor(models.Model):
     def __str__(self):
         return f"{self.cause} {self.date_created} {self.email}"
 
-    def remove(self):
+    def disable(self, commit: bool = True):
         self.is_available = False
+
+        if commit:
+            self.save()
+
+    def remove_personal_data(self):
+        if not self.personal_data_removal_started_at:
+            self.personal_data_removal_started_at = timezone.now()
+
+        self.l_name = ""
+        self.f_name = ""
+        self.initial = ""
+        self.set_cnp("")
+
+        self._set_address({})
+
+        self.phone = ""
+        self.email = ""
+
+        self.geoip = {}
+
+        if self.pdf_file and self.pdf_file.name:
+            try:
+                self.pdf_file.delete()
+            except Exception as e:
+                logging.exception("Error deleting donor pdf file for donor id %s: %s", self.pk, e)
+
+        self.filename = ""
+
+        self.personal_data_removed_at = timezone.now()
 
         self.save()
 
@@ -217,8 +260,8 @@ class Donor(models.Model):
     def _set_address(self, address: dict):
         self.encrypted_address = self.encrypt_address(address)
 
-    def get_address(self, *, include_full: bool = False) -> Dict:
-        address: Dict = self.decrypt_address(self.encrypted_address)
+    def get_address(self, *, include_full: bool = False) -> dict:
+        address: dict = self.decrypt_address(self.encrypted_address)
         if not include_full:
             return address
 
@@ -234,7 +277,7 @@ class Donor(models.Model):
         return self.address_to_string(address)
 
     @staticmethod
-    def address_to_string(address: Dict) -> str:
+    def address_to_string(address: dict) -> str:
         street_name = address.get("str", "")
         street_number = address.get("nr", "")
         street_bl = address.get("bl", "")
@@ -267,37 +310,40 @@ class Donor(models.Model):
         return datetime.strftime(self.date_created, "%Y%m%d")
 
     @property
-    def form_url(self):
+    def form_url(self) -> str:
         if not self.pk:
             raise ValueError
+
+        if self.personal_data_removed_at:
+            return "-"
 
         return reverse(
             "donor-download-link",
             kwargs={
                 "donor_date_str": self.date_str,
-                "donor_id": self.id,
+                "donor_id": self.pk,
                 "donor_hash": self.donation_hash,
             },
         )
 
     @staticmethod
     def encrypt_cnp(cnp: str) -> str:
-        return settings.FERNET_OBJECT.encrypt(cnp.encode()).decode()
+        return encrypt_data(cnp.encode())
 
     @staticmethod
     def decrypt_cnp(cnp: str) -> str:
         if not cnp:
             return cnp
 
-        return settings.FERNET_OBJECT.decrypt(cnp.encode()).decode()
+        return decrypt_data(cnp.encode())
 
     @staticmethod
-    def encrypt_address(address: Dict) -> str:
-        return settings.FERNET_OBJECT.encrypt(json.dumps(address).encode()).decode()
+    def encrypt_address(address: dict) -> str:
+        return encrypt_data(json.dumps(address).encode())
 
     @staticmethod
-    def decrypt_address(address: str) -> Dict:
+    def decrypt_address(address: str) -> dict:
         if not address:
             return {}
 
-        return json.loads(settings.FERNET_OBJECT.decrypt(address.encode()).decode())
+        return json.loads(decrypt_data(address.encode()))

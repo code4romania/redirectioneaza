@@ -9,7 +9,7 @@
             {% if filter.type == "combobox" %}
               {% include "components/input/combobox.html" %}
             {% elif filter.type == "select" %}
-              {% include "components/input/select.html" with include_default_option=True on_change="handleChange" %}
+              {% include "components/input/select.html" with include_default_option=True on_change="submitOnChange" %}
             {% endif %}
 
           {% endwith %}

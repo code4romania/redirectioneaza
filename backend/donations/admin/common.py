@@ -1,5 +1,3 @@
-from typing import Dict, Tuple
-
 from django.http import HttpRequest
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
@@ -21,26 +19,46 @@ def span_internal(href: str, content: str) -> str:
 
 
 class CommonCauseFields:
-    ngo_fieldset: Tuple[str, Dict[str, Tuple[str]]] = (
+    ngo_fieldset: tuple[str, dict[str, tuple[str]]] = (
         _("NGO"),
         {"fields": ("ngo",)},
     )
 
-    editable_fieldset: Tuple[str, Dict[str, Tuple[str]]] = (
-        _("Cause"),
+    flags_fieldset = (
+        _("Flags"),
         {
             "fields": (
+                "is_main",
                 "allow_online_collection",
+                "visibility",
+                "notifications_email",
+            )
+        },
+    )
+
+    form_data_fieldset = (
+        _("Form Data"),
+        {
+            "fields": (
+                "bank_account",
+                "prefilled_form",
+            )
+        },
+    )
+
+    data_fieldset = (
+        _("Data"),
+        {
+            "fields": (
                 "name",
                 "slug",
                 "description",
-                "bank_account",
                 "display_image",
             )
         },
     )
 
-    date_fieldset: Tuple[str, Dict[str, Tuple[str]]] = (
+    dates_fieldset = (
         _("Date"),
         {
             "fields": (
@@ -52,8 +70,8 @@ class CommonCauseFields:
 
     readonly_fields = ("ngo", "date_created", "date_updated")
 
-    def get_readonly_fields(self, _: HttpRequest, obj=None):
-        if obj and not obj.is_accepting_forms:
+    def get_readonly_fields(self, request: HttpRequest, obj=None):
+        if obj and not obj.has_online_tax_account:
             return self.readonly_fields + ("allow_online_collection",)
 
         return self.readonly_fields

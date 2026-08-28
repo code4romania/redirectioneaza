@@ -12,7 +12,7 @@ class LoginForm(forms.Form, ReCaptchaMixin):
     password = forms.CharField(widget=forms.PasswordInput(), required=True, max_length=150)
 
     class Meta:
-        fields = ["email", "password"]
+        fields = ("email", "password")
 
     def clean_email(self):
         email = self.cleaned_data["email"]
@@ -63,7 +63,7 @@ class ForgotPasswordForm(forms.Form, ReCaptchaMixin):
     email = forms.EmailField(required=True)
 
     class Meta:
-        fields = ["email"]
+        fields = ("email",)
 
     def clean_email(self):
         email = self.cleaned_data["email"]
@@ -79,4 +79,4 @@ class ResetPasswordForm(forms.Form, ReCaptchaMixin, TwoPasswordMixin):
     password_confirm = forms.CharField(widget=forms.PasswordInput(), required=True, max_length=150)
 
     class Meta:
-        fields = ["password", "password_confirm"]
+        fields = ("password", "password_confirm")

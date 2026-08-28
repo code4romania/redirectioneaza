@@ -2,6 +2,7 @@ import logging
 
 from django.conf import settings
 from django.http import Http404
+from django.shortcuts import redirect
 
 from .models import Partner
 
@@ -23,9 +24,6 @@ class PartnerDomainMiddleware:
         dot_apex = "." + apex
         host = host.strip().lower()
 
-        # Drop the port number (if present)
-        host = host.split(":", maxsplit=1)[0]
-
         # Drop the `www.` prefix (if present)
         if host[:4] == "www.":
             host = host[4:]
@@ -40,37 +38,44 @@ class PartnerDomainMiddleware:
 
         return subdomain
 
-    def _get_partner_from_subdomain(self, request):
-        if settings.FORCE_PARTNER:
-            return Partner.active.first()
-
+    def _get_subdomain_from_request(self, request) -> str:
         try:
             subdomain = PartnerDomainMiddleware.extract_subdomain(request.get_host(), settings.APEX_DOMAIN)
         except InvalidSubdomain:
             raise Http404(f"Invalid APEX_DOMAIN: {settings.APEX_DOMAIN}")
 
+        return subdomain
+
+    def _get_partner_from_subdomain(self, subdomain) -> Partner | None:
+        if settings.FORCE_PARTNER:
+            return Partner.active.first()
+
         logger.debug("Subdomain %s", subdomain or "None")
 
         if not subdomain:
-            partner = None
-        else:
-            try:
-                partner = Partner.active.get(subdomain=subdomain)
-            except Partner.DoesNotExist:
-                partner = None
+            return None
 
-        return partner
+        try:
+            return Partner.active.get(subdomain=subdomain)
+        except Partner.DoesNotExist:
+            return None
 
     def __init__(self, get_response):
         self.get_response = get_response
 
     def __call__(self, request):
+        request.partner = None
+
         if request.path == "/health/":
             logger.debug("Healthcheck: Skipping PartnerDomainMiddleware")
             return self.get_response(request)
 
         logger.debug("Request host %s", request.get_host())
-        partner = self._get_partner_from_subdomain(request)
+        subdomain: str = self._get_subdomain_from_request(request)
+        partner: Partner = self._get_partner_from_subdomain(subdomain)
+
+        if subdomain and not partner:
+            return redirect(f"{request.scheme}://{settings.APEX_DOMAIN}{request.path}", permanent=False)
 
         request.partner = partner
         logger.debug("Request partner %s", request.partner or "None")

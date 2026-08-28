@@ -45,11 +45,11 @@
     </p>
   </div>
 
-  <div class="mx-auto mt-8 max-w-[368px]">
+  <div class="mx-auto mt-8 max-w-92">
 
     <div id="allauth-login-form-container" class="flex my-6 justify-stretch">
       <a
-        class="w-full px-2 py-1 text-sm text-center text-gray-900 rounded-full shadow-sm bg-amber-300 sm:text-base sm:px-6 sm:py-2 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
+        class="w-full px-2 py-1 text-sm text-center text-gray-900 rounded-full shadow-xs bg-amber-300 sm:text-base sm:px-6 sm:py-2 hover:bg-amber-200 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
         href="{{ form_action }}"
         {% if account_button_is_external %}target="_blank"{% endif %}
       >
@@ -58,22 +58,9 @@
     </div>
   </div>
 
-  {% if page_type == "login" %}
-    <div class="font-medium prose text-center prose-p:text-gray-700">
-      <p>
-        {% trans "You don't have an NGO HUB account?" %}
-        <a class="text-base font-normal text-cyan-700" href="https://app.ngohub.ro">{% trans "Register here" %}</a>
-      </p>
-      <p>
-        {% trans "Log in problems?" %}
-        <a class="text-base font-normal text-cyan-700" href="https://www.ngohub.ro/ro/suport-tehnic-redirectioneaza">{% trans "Check the support page" %}</a>
-      </p>
-    </div>
-  {% endif %}
-
   <div class="mx-auto mt-8 p-4 max-w-md bg-gray-50">
-
     <dl class="grid gap-8 text-gray-500 text-base/7">
+
       <div class="relative px-4 text-center text-gray-900">
         <p>
           {% if page_type == "login" %}
@@ -166,14 +153,12 @@
 
   </div>
 
-  {% if page_type != "login" %}
-    <div class="font-medium prose text-center prose-p:text-gray-700 py-6">
-      <p>
-        {% trans "Log in problems?" %}
-        <a class="text-base font-normal text-cyan-700" href="https://www.ngohub.ro/ro/suport-tehnic-redirectioneaza">{% trans "Check the support page" %}</a>
-      </p>
-    </div>
-  {% endif %}
+  <div class="font-medium prose text-center prose-p:text-gray-700 py-6">
+    <p>
+      {% trans "Log in problems?" %}
+      <a class="text-base font-normal text-cyan-700" href="https://www.ngohub.ro/ro/suport-tehnic-redirectioneaza">{% trans "Check the support page" %}</a>
+    </p>
+  </div>
 
 </section>
 

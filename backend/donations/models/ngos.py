@@ -1,9 +1,11 @@
 import logging
 import re
 from functools import partial
-from typing import Any, List, Optional
+from typing import TYPE_CHECKING, Any
 
+from auditlog.registry import auditlog
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.core.cache import cache
 from django.core.exceptions import ValidationError
 from django.core.files.storage import storages
@@ -13,14 +15,20 @@ from django.db.models.functions import Lower
 from django.db.models.query_utils import DeferredAttribute
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-from donations.common.models_hashing import hash_id_secret
-from donations.common.validation.clean_slug import clean_slug
-from donations.common.validation.registration_number import (
+
+from donations.models.common import CommonFilenameCacheModel
+from donations.models.donors import Donor
+from editions.calendar import january_first
+from utils.models_hashing import hash_id_secret
+from utils.text.registration_number import (
     REGISTRATION_NUMBER_REGEX_WITH_VAT,
     ngo_id_number_validator,
 )
-from donations.models.common import CommonFilenameCacheModel
-from donations.models.donors import Donor
+
+if TYPE_CHECKING:
+    from donations.models import Job, RedirectionsDownloadJob
+    from partners.models import Partner
+
 
 ALL_NGOS_CACHE_KEY = "ALL_NGOS"
 ALL_NGO_IDS_CACHE_KEY = "ALL_NGO_IDS"
@@ -47,7 +55,7 @@ def ngo_directory_path(subdir: str, instance: "Ngo", filename: str) -> str:
 
 def cause_directory_path(subdir: str, instance: "Cause", filename: str) -> str:
     """
-    The file will be uploaded to MEDIA_ROOT/<subdir>/ngo-<ngo.id>/c-<cause.id>-<cause.hash>/<filename>
+    The file will be uploaded to MEDIA_ROOT/<subdir>/ngo-<ngo.pk>/c-<cause.pk>-<cause.hash>/<filename>
     """
     ngo_pk = instance.ngo.pk
 
@@ -59,7 +67,7 @@ def cause_directory_path(subdir: str, instance: "Cause", filename: str) -> str:
 
 def year_ngo_directory_path(subdir: str, instance: "Ngo", filename: str) -> str:
     """
-    The file will be uploaded to MEDIA_ROOT/<subdir>/<year>/ngo-<ngo.id>-<ngo.hash>/<filename>
+    The file will be uploaded to MEDIA_ROOT/<subdir>/<year>/ngo-<ngo.pk>-<ngo.hash>/<filename>
     """
     timestamp = timezone.now()
 
@@ -73,7 +81,7 @@ def year_ngo_directory_path(subdir: str, instance: "Ngo", filename: str) -> str:
 
 def year_cause_directory_path(subdir: str, instance: "Cause", filename: str) -> str:
     """
-    The file will be uploaded to MEDIA_ROOT/<subdir>/<year>/c-<cause.id>-<cause.hash>/<filename>
+    The file will be uploaded to MEDIA_ROOT/<subdir>/<year>/c-<cause.pk>-<cause.hash>/<filename>
     """
     timestamp = timezone.now()
 
@@ -110,13 +118,10 @@ class NgoActiveManager(models.Manager):
             .exclude(
                 Q(name__isnull=True)
                 | Q(name__exact="")
-                | Q(slug__isnull=True)
-                | Q(slug__exact="")
-                | Q(bank_account__isnull=True)
-                | Q(bank_account__exact="")
                 | Q(registration_number__isnull=True)
                 | Q(registration_number__exact=""),
             )
+            # TODO: also exclude NGOs which do not have at least one Cause with a bank account or slug
         )
 
 
@@ -166,7 +171,7 @@ class NgoHubManager(models.Manager):
 
 class NgoWithFormsManager(models.Manager):
     def get_queryset(self):
-        return super().get_queryset().filter(is_active=True, is_accepting_forms=True)
+        return super().get_queryset().filter(is_active=True, has_online_tax_account=True)
 
 
 class NgoWithFormsThisYearManager(models.Manager):
@@ -176,19 +181,7 @@ class NgoWithFormsThisYearManager(models.Manager):
 
 
 class Ngo(CommonFilenameCacheModel):
-    slug = models.SlugField(
-        verbose_name=_("slug"),
-        blank=False,
-        null=False,
-        max_length=150,
-        db_index=True,
-        unique=True,
-        validators=[ngo_slug_validator],
-    )
-
-    name = models.CharField(verbose_name=_("Name"), blank=False, null=False, max_length=200, db_index=True)
-    # XXX: [MULTI-FORM] Move to Cause
-    description = models.TextField(verbose_name=_("description"))
+    name = models.CharField(verbose_name=_("Legal name"), blank=False, null=False, max_length=200, db_index=True)
 
     # NGO Hub details
     ngohub_org_id = models.IntegerField(
@@ -201,20 +194,6 @@ class Ngo(CommonFilenameCacheModel):
     ngohub_last_update_started = models.DateTimeField(_("Last NGO Hub update"), null=True, blank=True, editable=False)
     ngohub_last_update_ended = models.DateTimeField(_("Last NGO Hub update"), null=True, blank=True, editable=False)
 
-    # originally: logo
-    # XXX: [MULTI-FORM] Should we move this to Cause ???
-    logo = models.ImageField(
-        verbose_name=_("logo"),
-        blank=True,
-        null=False,
-        storage=select_public_storage,
-        upload_to=partial(ngo_directory_path, "logos"),
-    )
-
-    # XXX: [MULTI-FORM] Move to Cause
-    bank_account = models.CharField(verbose_name=_("bank account"), max_length=100)
-
-    # originally: cif
     # TODO: the number's length should be between 2 and 10 (or 8)
     registration_number = models.CharField(
         verbose_name=_("registration number"),
@@ -234,7 +213,7 @@ class Ngo(CommonFilenameCacheModel):
         db_index=True,
     )
     registration_number_valid = models.BooleanField(
-        verbose_name=_("registration validation failed"),
+        verbose_name=_("the registration number is valid"),
         db_index=True,
         null=True,
     )
@@ -256,14 +235,8 @@ class Ngo(CommonFilenameCacheModel):
         max_length=100,
         db_index=True,
     )
-    active_region = models.CharField(
-        verbose_name=_("active region"),
-        blank=True,
-        null=False,
-        default="",
-        max_length=100,
-        db_index=True,
-    )
+
+    active_region = models.TextField(verbose_name=_("active region"), blank=True, null=False, default="")
 
     email = models.EmailField(verbose_name=_("email"), blank=True, null=False, default="", db_index=True)
     phone = models.CharField(verbose_name=_("telephone"), blank=True, null=False, default="", max_length=30)
@@ -280,35 +253,64 @@ class Ngo(CommonFilenameCacheModel):
     # if the ngo has a special status (e.g. social ngo) they are entitled to 3.5% donation, not 2%
     is_social_service_viable = models.BooleanField(verbose_name=_("has special status"), db_index=True, default=False)
 
-    # originally: accepts_forms
-    # if the ngo accepts to receive donation forms through email
-    is_accepting_forms = models.BooleanField(verbose_name=_("is accepting forms"), db_index=True, default=True)
+    has_online_tax_account = models.BooleanField(verbose_name=_("has online tax account"), db_index=True, default=False)
 
     # originally: active — the user cannot modify this property, it is set by the admin/by the NGO Hub settings
     is_active = models.BooleanField(verbose_name=_("is active"), db_index=True, default=True)
 
-    # url to the form that contains only the ngo's details
-    prefilled_form = models.FileField(
-        verbose_name=_("form with prefilled ngo data"),
+    # ANAF Cult Registry
+    cult_registry_check_started = models.DateTimeField(
+        verbose_name=_("last started check in the ANAF Cult Registry"),
+        null=True,
         blank=True,
-        null=False,
-        storage=select_public_storage,
-        upload_to=partial(year_ngo_directory_path, "ngo-forms"),
+        editable=False,
+        db_index=True,
+    )
+    cult_registry_check_ended = models.DateTimeField(
+        verbose_name=_("last completed check in the ANAF Cult Registry"), null=True, blank=True, editable=False
+    )
+    pause_cult_registry_check = models.BooleanField(
+        verbose_name=_("pause checking the ANAF Cult Registry"), default=False
+    )
+    became_absent_from_cult_registry = models.BooleanField(
+        verbose_name=_("became absent from the ANAF Cult Registry"), null=False, default=False, editable=False
+    )
+    is_in_cult_registry = models.BooleanField(
+        verbose_name=_("presence in the ANAF Cult Registry"), null=True, blank=True, editable=False
+    )
+    acknowledge_missing_cult_registry = models.BooleanField(
+        verbose_name=_("acknowledge missing ANAF Cult Registry info"), default=False
     )
 
     date_created = models.DateTimeField(verbose_name=_("date created"), db_index=True, auto_now_add=True)
     date_updated = models.DateTimeField(verbose_name=_("date updated"), db_index=True, auto_now=True)
 
+    # Type hinting for related models
+    causes: "models.manager.RelatedManager[Cause]"
+    partners: "models.manager.RelatedManager[Partner]"
+    jobs: "models.manager.RelatedManager[Job]"
+    download_jobs: "models.manager.RelatedManager[RedirectionsDownloadJob]"
+    donor_set: "models.manager.RelatedManager[Donor]"
+
+    # Model managers
     objects = models.Manager()
     active = NgoActiveManager()
     ngo_hub = NgoHubManager()
     with_forms_this_year = NgoWithFormsThisYearManager()
 
+    class Meta:  # type: ignore
+        verbose_name = _("NGO")
+        verbose_name_plural = _("NGOs")
+
+        constraints = [
+            models.UniqueConstraint(Lower("registration_number"), name="registration_number__unique"),
+        ]
+
+    def __str__(self):
+        return f"{self.name}"
+
     def save(self, *args, **kwargs):
-        is_new = self.id is None
-        self.slug = self.slug.lower()
-        if not self.slug:
-            self.slug = clean_slug(self.name)
+        is_new = self.pk is None
 
         if self.registration_number:
             uppercase_registration_number = self.registration_number
@@ -316,21 +318,15 @@ class Ngo(CommonFilenameCacheModel):
                 self.vat_id = uppercase_registration_number[:2]
                 self.registration_number = uppercase_registration_number[2:]
 
+        if not is_new and not self.has_online_tax_account:
+            old_self: Ngo = Ngo.objects.get(pk=self.pk)
+            if old_self.has_online_tax_account != self.has_online_tax_account:
+                self.causes.update(allow_online_collection=False, notifications_email="")
+
         super().save(*args, **kwargs)
 
         if is_new and settings.ENABLE_CACHE:
             cache.delete(ALL_NGOS_CACHE_KEY)
-
-    class Meta:
-        verbose_name = _("NGO")
-        verbose_name_plural = _("NGOs")
-
-        constraints = [
-            models.UniqueConstraint(Lower("slug"), name="slug__unique"),
-        ]
-
-    def __str__(self):
-        return f"{self.name}"
 
     def get_full_form_url(self):
         if self.slug:
@@ -357,14 +353,55 @@ class Ngo(CommonFilenameCacheModel):
             self.save()
 
     @property
+    def main_cause(self) -> "Cause | None":
+        if not self.pk:
+            return None
+
+        return self.causes.filter(is_main=True).first()
+
+    @property
+    def slug(self):
+        if main_cause := self.main_cause:
+            return main_cause.slug
+
+        return None
+
+    @property
+    def description(self):
+        if main_cause := self.main_cause:
+            return main_cause.description
+
+        return None
+
+    @property
+    def logo(self):
+        if main_cause := self.main_cause:
+            return main_cause.display_image
+
+        return None
+
+    @property
+    def bank_account(self):
+        if main_cause := self.main_cause:
+            return main_cause.bank_account
+
+        return None
+
+    @property
+    def prefilled_form(self):
+        if main_cause := self.main_cause:
+            return main_cause.prefilled_form
+
+        return None
+
+    @property
     def has_ngo_hub(self):
         return bool(self.ngohub_org_id)
 
     @classmethod
     def mandatory_fields(cls):
-
         # noinspection PyTypeChecker
-        field_names: List[DeferredAttribute] = [
+        field_names = [
             Ngo.name,
             Ngo.registration_number,
         ]
@@ -391,10 +428,6 @@ class Ngo(CommonFilenameCacheModel):
         return [field.capitalize() for field in self.missing_mandatory_fields_names]
 
     @property
-    def main_cause(self) -> "Cause":
-        return self.causes.filter(is_main=True).first()
-
-    @property
     def can_create_causes(self):
         """
         An NGO can create causes if they are active and have all the mandatory fields filled
@@ -415,7 +448,7 @@ class Ngo(CommonFilenameCacheModel):
         if not self.can_create_causes:
             return False
 
-        main_cause: Optional[Cause] = self.main_cause
+        main_cause: Cause | None = self.main_cause
         if not main_cause:
             return False
 
@@ -425,19 +458,56 @@ class Ngo(CommonFilenameCacheModel):
         return True
 
     @property
+    def has_spv_option(self) -> str:
+        return "yes" if self.has_online_tax_account else "no"
+
+    @property
     def full_registration_number(self):
         return f"{self.vat_id}{self.registration_number}" if self.vat_id else self.registration_number
 
     @staticmethod
     def delete_prefilled_form(ngo_id):
         try:
-            ngo = Ngo.objects.get(id=ngo_id)
+            ngo = Ngo.objects.get(pk=ngo_id)
         except Ngo.DoesNotExist:
             logging.info("NGO id %d does not exist for prefilled form deletion", ngo_id)
             return
 
         for cause in ngo.causes.all():
             cause.delete_prefilled_form()
+
+    @staticmethod
+    def export_cult_registry(*, registered: None | bool):
+        UserModel = get_user_model()
+
+        ngos_query = UserModel.objects.exclude(ngo__isnull=True).select_related("ngo").distinct("ngo")
+        if registered is None:
+            ngos_query = ngos_query.filter(ngo__is_in_cult_registry__isnull=True)
+        elif not registered:
+            ngos_query = ngos_query.filter(ngo__is_in_cult_registry=False)
+        else:
+            ngos_query = ngos_query.filter(ngo__is_in_cult_registry=True)
+
+        ngos = ngos_query.values_list(
+            "first_name",
+            "last_name",
+            "email",
+            "ngo__name",
+            "ngo__date_created",
+            "ngo__ngohub_org_id",
+            "ngo__vat_id",
+            "ngo__registration_number",
+            "ngo__email",
+            "ngo__phone",
+            "ngo__website",
+            "ngo__is_verified",
+            "ngo__is_active",
+            "ngo__is_in_cult_registry",
+            "ngo__became_absent_from_cult_registry",
+            "ngo__cult_registry_check_ended",
+        )
+
+        return ngos
 
 
 class CauseVisibilityChoices(models.TextChoices):
@@ -483,7 +553,7 @@ class Cause(CommonFilenameCacheModel):
         blank=True,
         null=False,
         storage=select_public_storage,
-        upload_to=partial(cause_directory_path, "logos"),
+        upload_to=partial(cause_directory_path, "logos"),  # type: ignore
     )
 
     slug = models.SlugField(
@@ -514,6 +584,10 @@ class Cause(CommonFilenameCacheModel):
     date_created = models.DateTimeField(verbose_name=_("date created"), db_index=True, auto_now_add=True)
     date_updated = models.DateTimeField(verbose_name=_("date updated"), db_index=True, auto_now=True)
 
+    # Type hinting for related models
+    donor_set: "models.manager.RelatedManager[Donor]"
+
+    # Model managers
     objects = models.Manager()
     active = CauseActiveManager()
     main = CauseMainManager()
@@ -521,7 +595,7 @@ class Cause(CommonFilenameCacheModel):
     public_active = CausePublicFormManager()
     nonprivate_active = CauseNonPrivateFormManager()
 
-    class Meta:
+    class Meta:  # type: ignore
         verbose_name = _("Cause")
         verbose_name_plural = _("Causes")
         constraints = [
@@ -538,9 +612,8 @@ class Cause(CommonFilenameCacheModel):
 
     @classmethod
     def mandatory_fields(cls):
-
         # noinspection PyTypeChecker
-        field_names: List[DeferredAttribute] = [
+        field_names: list[DeferredAttribute] = [
             Cause.name,
             Cause.slug,
             Cause.description,
@@ -577,12 +650,12 @@ class Cause(CommonFilenameCacheModel):
         return [field.capitalize() for field in self.missing_mandatory_fields_names]
 
     @property
-    def mandatory_fields_values(self) -> List[Any]:
+    def mandatory_fields_values(self) -> list[Any]:
         return [getattr(self, field.name) for field in Cause.mandatory_fields()]
 
     @property
     def redirections_count(self):
-        return self.donor_set.count()
+        return self.donor_set.filter(date_created__gte=january_first()).count()
 
     @property
     def can_receive_redirections(self):
@@ -596,5 +669,8 @@ class Cause(CommonFilenameCacheModel):
 
     def delete_prefilled_form(self):
         if self.prefilled_form:
-            self.prefilled_form.delete(save=False)
-            self.save()
+            self.prefilled_form.delete()
+
+
+auditlog.register(Ngo)
+auditlog.register(Cause)

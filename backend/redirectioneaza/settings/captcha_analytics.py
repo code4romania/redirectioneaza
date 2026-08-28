@@ -15,4 +15,4 @@ RECAPTCHA_POST_PARAM = env.str("CAPTCHA_POST_PARAM")
 RECAPTCHA_ENABLED = env.bool("RECAPTCHA_ENABLED", True if RECAPTCHA_PUBLIC_KEY else False)
 
 if DEBUG or not RECAPTCHA_ENABLED:
-    SILENCED_SYSTEM_CHECKS = ["django_recaptcha.recaptcha_test_key_error"]
+    SILENCED_SYSTEM_CHECKS = ("django_recaptcha.recaptcha_test_key_error",)

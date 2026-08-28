@@ -5572,7 +5572,7 @@ msgstr "IBAN-urile cu prefixul %(country_code)s nu sunt permise în acest câmp.
 
 #: generic/validators.py:220
 msgid "Not a valid IBAN."
-msgstr "Nu este un IBAN valid."
+msgstr "IBAN-ul nu este valid."
 
 #: generic/validators.py:246
 msgid "BIC codes have either 8 or 11 characters."

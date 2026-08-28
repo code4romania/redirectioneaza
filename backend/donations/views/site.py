@@ -2,7 +2,6 @@ import json
 import logging
 import random
 from datetime import datetime
-from typing import Dict, List, Union
 
 from django.conf import settings
 from django.db.models import QuerySet
@@ -12,13 +11,14 @@ from django.utils.translation import gettext_lazy as _
 from django.utils.translation import ngettext_lazy
 from django.views.generic import TemplateView
 
+from editions.calendar import edition_deadline
 from partners.models import Partner
 from redirectioneaza.common.cache import cache_decorator
 
 from ..models.donors import Donor
 from ..models.ngos import FRONTPAGE_NGOS_KEY, FRONTPAGE_STATS_KEY, Cause
 from .base import BaseVisibleTemplateView
-from .common.search import CauseSearchMixin, NgoCauseMixedSearchMixin
+from .common.search import CauseSearchMixin
 
 logger = logging.getLogger(__name__)
 
@@ -27,8 +27,10 @@ class HomePage(BaseVisibleTemplateView):
     template_name = "public/home.html"
     title = "redirectioneaza.ro"
 
-    @cache_decorator(timeout=settings.TIMEOUT_CACHE_SHORT, cache_key_prefix=FRONTPAGE_STATS_KEY)
-    def _get_stats(self, now: datetime = None, queryset: QuerySet = None) -> List[Dict[str, Union[str, int]]]:
+    @cache_decorator(timeout=settings.TIMEOUT_CACHE_NORMAL, cache_key_prefix=FRONTPAGE_STATS_KEY)
+    def _get_stats(
+        self, now: datetime | None = None, queryset: QuerySet | None = None
+    ) -> list[dict[str, str | int | datetime]]:
         if now is None:
             now = timezone.now()
 
@@ -48,14 +50,17 @@ class HomePage(BaseVisibleTemplateView):
             {
                 "title": _("organizations registered in the platform"),
                 "value": queryset.count(),
+                "timestamp": timezone.now(),
             },
             {
                 "title": pluralized_title + " " + str(start_of_year.year),
                 "value": forms_filled_count,
+                "timestamp": timezone.now(),
             },
             {
                 "title": _("redirected to NGOs through the platform"),
-                "value": _("> €2 million"),
+                "value": _("> €9 million"),
+                "timestamp": timezone.now(),
             },
         ]
 
@@ -64,12 +69,11 @@ class HomePage(BaseVisibleTemplateView):
         all_cause_ids = list(Cause.public_active.values_list("pk", flat=True))
         return queryset.filter(id__in=random.sample(all_cause_ids, num_items))
 
-    def _partner_response(self, context: Dict, partner: Partner):
+    def _partner_response(self, context: dict, partner: Partner):
         context.update(
             {
                 "company_name": partner.name,
-                "has_custom_header": partner.has_custom_header,
-                "has_custom_note": partner.has_custom_note,
+                "heading_secondary": partner.custom_cta,
                 "causes": partner.ordered_causes(),
             }
         )
@@ -88,8 +92,8 @@ class HomePage(BaseVisibleTemplateView):
         context.update(
             {
                 "title": "redirectioneaza.ro",
-                "limit": settings.DONATIONS_LIMIT,
-                "month_limit": settings.DONATIONS_LIMIT_MONTH_NAME,
+                "limit": edition_deadline(),
+                "month_limit": settings.REDIRECTIONS_LIMIT_MONTH_NAME,
                 "current_year": now.year,
             }
         )
@@ -128,14 +132,14 @@ class CausesListHandler(CauseSearchMixin):
         context.update(
             {
                 "title": _("All causes"),
-                "limit": settings.DONATIONS_LIMIT,
-                "month_limit": settings.DONATIONS_LIMIT_MONTH_NAME,
+                "limit": edition_deadline(),
+                "month_limit": settings.REDIRECTIONS_LIMIT_MONTH_NAME,
             }
         )
         return context
 
 
-class NgoListHandler(NgoCauseMixedSearchMixin):
+class NgoListHandler(CauseSearchMixin):
     template_name = "public/all-ngos.html"
     context_object_name = "causes"
     queryset = Cause.public_active
@@ -143,9 +147,12 @@ class NgoListHandler(NgoCauseMixedSearchMixin):
     paginate_by = 8
 
     def get_queryset(self):
-        queryset = self.search()
+        queryset: QuerySet[Cause] = self.search()
 
-        return queryset
+        if self._search_query():
+            return queryset
+
+        return queryset.order_by("pk")
 
     def get_context_data(self, **kwargs):
         search_query = self._search_query()
@@ -157,8 +164,8 @@ class NgoListHandler(NgoCauseMixedSearchMixin):
         context.update(
             {
                 "title": "Toate ONG-urile",
-                "limit": settings.DONATIONS_LIMIT,
-                "month_limit": settings.DONATIONS_LIMIT_MONTH_NAME,
+                "limit": edition_deadline(),
+                "month_limit": settings.REDIRECTIONS_LIMIT_MONTH_NAME,
                 "search_query": search_query,
                 "url_search_query": query_dict.urlencode(),
             }
@@ -176,7 +183,6 @@ class NoteHandler(BaseVisibleTemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["contact_email"] = settings.CONTACT_EMAIL_ADDRESS
 
         return context
 
@@ -192,7 +198,6 @@ class TermsHandler(BaseVisibleTemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["contact_email"] = settings.CONTACT_EMAIL_ADDRESS
 
         return context
 
@@ -224,12 +229,6 @@ class EmailDemoHandler(BaseVisibleTemplateView):
         self.template_name = f"{self.template_name}/{email_path}.html"
 
         context = super().get_context_data(**kwargs)
-
-        context.update(
-            {
-                "contact_email": settings.CONTACT_EMAIL_ADDRESS,
-            }
-        )
 
         query_params = self.request.GET.items()
         for key, value in query_params:

@@ -1,29 +1,33 @@
-import logging
 import mimetypes
 import random
 import string
 import tempfile
-from typing import Dict, List, Optional, Union
 
 import requests
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.core.files import File
+from django.db import DatabaseError
 from django.utils import timezone
 from django.utils.text import slugify
 from django_q.tasks import async_task
+from ngohub import NGOHub
+from ngohub.exceptions import HubHTTPException
+from ngohub.models.organization import Organization, OrganizationGeneral
+from pycognito import Cognito
+from requests import Response
+from requests.exceptions import ConnectionError, Timeout
+
 from donations.common.validation.validate_slug import NgoSlugValidator
 from donations.models.common import CommonFilenameCacheModel
 from donations.models.ngos import Cause, Ngo
-from ngohub import NGOHub
-from ngohub.models.organization import Organization, OrganizationGeneral
-from pycognito import Cognito
 from redirectioneaza.common.cache import cache_decorator
-from requests import Response
+from utils.helper_logging import setup_logger
 
-logger = logging.getLogger(__name__)
+logger = setup_logger(__name__)
 
 
-def _remove_signature(s3_url: str) -> str:
+def _remove_s3_signature(s3_url: str) -> str:
     """
     Extract the S3 file name without the URL signature and the directory path
     """
@@ -41,7 +45,7 @@ def _copy_file_to_object_with_filename_cache(
     if not hasattr(target_object, attribute_name):
         raise AttributeError(f"Target object {target_object} has no attribute '{attribute_name}'")
 
-    filename: str = _remove_signature(signed_file_url)
+    filename: str = _remove_s3_signature(signed_file_url)
     if not filename and getattr(target_object, attribute_name):
         getattr(target_object, attribute_name).delete()
         error_message = f"ERROR: {attribute_name.upper()} file URL is empty, deleting the existing file."
@@ -57,18 +61,34 @@ def _copy_file_to_object_with_filename_cache(
         logger.info(f"{attribute_name.upper()} file is already up to date.")
         return None
 
-    r: Response = requests.get(signed_file_url)
-    if r.status_code != requests.codes.ok:
-        logger.info(f"{attribute_name.upper()} file request status = {r.status_code}")
-        error_message = f"ERROR: Could not download {attribute_name} file from NGO Hub, error status {r.status_code}."
+    failed = False
+    error_code = ""
+    try:
+        r: Response = requests.get(signed_file_url, timeout=20)
+    except Timeout:
+        failed = True
+        error_code = "Connection Timeout"
+    except ConnectionError:
+        failed = True
+        error_code = "Connection Error"
+    else:
+        if r.status_code != requests.codes.ok:
+            error_code = r.status_code
+            failed = True
+
+    if failed:
+        logger.info("%s file request status = %s", attribute_name.upper(), error_code)
+        error_message = f"ERROR: Could not download {attribute_name} file from NGO Hub, error status {error_code}."
         logger.warning(error_message)
         return error_message
 
-    extension: str = mimetypes.guess_extension(r.headers["content-type"])
+    extension: str = filename.split(".")[-1]
+    if not extension or len(extension) > 4:
+        extension: str = mimetypes.guess_extension(r.headers["content-type"])
 
-    if extension == ".bin":
-        extension = ""
-        logger.error(f"{attribute_name.upper()} file extension = {extension} for object {target_object}")
+        if extension == ".bin":
+            logger.warning(f"Could not get extension for attribute {attribute_name.upper()} for object {target_object}")
+            extension = ""
 
     with tempfile.TemporaryFile() as fp:
         fp.write(r.content)
@@ -100,11 +120,11 @@ def _get_ngo_hub_data(ngohub_org_id: int, token: str = "") -> Organization:
         return hub.get_organization_profile(ngo_token=token)
 
     # if no token is provided, attempt to authenticate as an admin for the organization endpoint
-    token: str = _authenticate_with_ngohub()
-    return hub.get_organization(organization_id=ngohub_org_id, admin_token=token)
+    new_token: str = _authenticate_with_ngohub()
+    return hub.get_organization(organization_id=ngohub_org_id, admin_token=new_token)
 
 
-def _update_main_cause_of_ngo(ngo: Ngo, ngohub_general_data: OrganizationGeneral) -> Union[List[str], Cause]:
+def _update_main_cause_of_ngo(ngo: Ngo, ngohub_general_data: OrganizationGeneral) -> list[str] | Cause:
     try:
         cause: Cause = ngo.causes.get(is_main=True)
     except Cause.DoesNotExist:
@@ -114,10 +134,10 @@ def _update_main_cause_of_ngo(ngo: Ngo, ngohub_general_data: OrganizationGeneral
     return _update_main_cause(cause, ngohub_general_data)
 
 
-def _update_main_cause(cause: Cause, ngohub_general_data: OrganizationGeneral) -> Union[List[str], Cause]:
+def _update_main_cause(cause: Cause, ngohub_general_data: OrganizationGeneral) -> list[str] | Cause:
     errors = []
 
-    logo_url_error: Optional[str] = _copy_file_to_object_with_filename_cache(
+    logo_url_error: str | None = _copy_file_to_object_with_filename_cache(
         cause,
         ngohub_general_data.logo,
         "display_image",
@@ -147,16 +167,13 @@ def _create_main_cause(ngo: Ngo, ngohub_general_data: OrganizationGeneral) -> Ca
 
     cause.slug = new_slug
 
-    if ngo.logo:
-        cause.display_image = ngo.logo
-
     cause.save()
 
     return cause
 
 
-def _update_local_ngo_with_ngohub_data(ngo: Ngo, ngohub_ngo: Organization) -> Dict[str, Union[int, List[str]]]:
-    errors: List[str] = []
+def _update_local_ngo_with_ngohub_data(ngo: Ngo, ngohub_ngo: Organization) -> dict[str, int | list[str]]:
+    errors: list[str] = []
 
     if not ngo.filename_cache:
         ngo.filename_cache = {}
@@ -164,10 +181,6 @@ def _update_local_ngo_with_ngohub_data(ngo: Ngo, ngohub_ngo: Organization) -> Di
     ngohub_general_data: OrganizationGeneral = ngohub_ngo.general_data
 
     ngo.name = ngohub_general_data.name
-
-    # XXX: [MULTI-FORM] The NGO shouldn't have a description anymore, right?
-    if ngo.description is None:
-        ngo.description = ngohub_general_data.description or ""
 
     ngo.registration_number = ngohub_general_data.cui
 
@@ -178,20 +191,41 @@ def _update_local_ngo_with_ngohub_data(ngo: Ngo, ngohub_ngo: Organization) -> Di
 
     active_region: str = ngohub_ngo.activity_data.area
     if ngohub_ngo.activity_data.area == "Regional":
-        regions: List[str] = [region.name for region in ngohub_ngo.activity_data.regions]
+        regions: list[str] = [region.name for region in ngohub_ngo.activity_data.regions]
         active_region = f"{ngohub_ngo.activity_data.area} ({','.join(regions)})"
     elif ngohub_ngo.activity_data.area == "Local":
-        counties: List[str] = [city.county.name for city in ngohub_ngo.activity_data.cities]
+        counties: list[str] = [city.county.name for city in ngohub_ngo.activity_data.cities]
         active_region = f"{ngohub_ngo.activity_data.area} ({','.join(counties)})"
     ngo.active_region = active_region
 
     ngo.phone = ngohub_general_data.phone
     ngo.email = ngohub_general_data.email
+
     ngo.website = ngohub_general_data.website or ""
+    # noinspection HttpUrlsUsage
+    if ngo.website and not ngo.website.startswith(("http://", "https://")):
+        ngo.website = f"https://{ngo.website}"
 
     ngo.is_social_service_viable = ngohub_ngo.activity_data.is_social_service_viable
     ngo.is_verified = True
-    ngo.save()
+
+    try:
+        ngo.full_clean()
+        ngo.save()
+    except DatabaseError as e:
+        logger.exception(f"Database error while saving NGO {ngo.pk}:\n{e}")
+        errors.append(f"Database error while saving NGO {ngo.pk}:\n{e}")
+        return {
+            "ngo_id": ngo.pk,
+            "errors": errors,
+        }
+    except ValidationError as e:
+        logger.exception(f"Validation error while updating NGO {ngo.pk}:\n{e}")
+        errors.append(f"Validation error while updating NGO {ngo.pk}:\n{e}")
+        return {
+            "ngo_id": ngo.pk,
+            "errors": errors,
+        }
 
     if not ngo.causes.exists():
         main_cause = _create_main_cause(ngo, ngohub_general_data)
@@ -205,15 +239,15 @@ def _update_local_ngo_with_ngohub_data(ngo: Ngo, ngohub_ngo: Organization) -> Di
     ngo.ngohub_last_update_ended = timezone.now()
     ngo.save()
 
-    task_result: Dict = {
-        "ngo_id": ngo.id,
+    task_result: dict = {
+        "ngo_id": ngo.pk,
         "errors": errors,
     }
 
     return task_result
 
 
-def _update_organization_task(organization_id: int, token: str = "") -> Dict[str, Union[int, List[str]]]:
+def _update_organization_task(organization_id: int, token: str = "") -> dict[str, int | list[str]]:
     """
     Update the organization with the given ID.
     """
@@ -224,24 +258,45 @@ def _update_organization_task(organization_id: int, token: str = "") -> Dict[str
     ngo.ngohub_last_update_started = last_update_start
     ngo.save()
 
-    ngohub_id: int = ngo.ngohub_org_id
-    ngohub_org_data: Organization = _get_ngo_hub_data(ngohub_id, token)
+    ngohub_id: int | None = ngo.ngohub_org_id
+    if not ngohub_id:
+        return {
+            "ngo_id": ngo.pk,
+            "errors": ["This NGO has no NGO Hub ID"],
+        }
+
+    try:
+        ngohub_org_data: Organization = _get_ngo_hub_data(ngohub_id, token)
+    except HubHTTPException as e:
+        logger.exception(f"Error while fetching NGO Hub data for NGO ID {ngohub_id}:\n{e}")
+        return {
+            "ngo_id": ngo.pk,
+            "errors": [f"Error while fetching NGO Hub data for NGO ID {ngohub_id}:\n{e}"],
+        }
 
     task_result = _update_local_ngo_with_ngohub_data(ngo, ngohub_org_data)
 
     return task_result
 
 
-def update_organization(organization_id: int, update_method: str = None, token: str = ""):
+def update_organization(organization_id: int, update_method: str | None = None, token: str = ""):
     """
     Update the organization with the given ID asynchronously.
     """
+    logger.info(
+        f"Starting update for organization ID {organization_id} "
+        f"using method '{update_method or settings.UPDATE_ORGANIZATION_METHOD}'"
+    )
+
     update_method = update_method or settings.UPDATE_ORGANIZATION_METHOD
     function_args = [organization_id, token]
     if update_method == "async":
         async_task(_update_organization_task, *function_args)
+        task_result = {"status": "Task started asynchronously."}
     else:
-        _update_organization_task(*function_args)
+        task_result = _update_organization_task(*function_args)
+
+    return task_result
 
 
 def create_organization_for_user(user, ngohub_org_data: Organization) -> Ngo:
@@ -249,10 +304,21 @@ def create_organization_for_user(user, ngohub_org_data: Organization) -> Ngo:
     Create a blank organization for the given user.
     The data regarding the organization will be added from NGO Hub.
     """
-    ngo = Ngo(registration_number=ngohub_org_data.general_data.cui, ngohub_org_id=ngohub_org_data.id)
+    ngo = Ngo(
+        registration_number=ngohub_org_data.general_data.cui,
+        ngohub_org_id=ngohub_org_data.id,
+        registration_number_valid=True,
+    )
     ngo.save()
 
-    _update_local_ngo_with_ngohub_data(ngo, ngohub_org_data)
+    try:
+        _update_local_ngo_with_ngohub_data(ngo, ngohub_org_data)
+    except DatabaseError as e:
+        logger.exception(
+            f"Database error while creating NGO for user {user.pk} with NGO Hub ID {ngohub_org_data.id}:\n{e}"
+        )
+        ngo.delete()
+        raise e
 
     user.ngo = ngo
     user.save()

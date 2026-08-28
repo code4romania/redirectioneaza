@@ -1,5 +1,4 @@
 import logging
-from typing import Dict, List
 
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
@@ -9,26 +8,27 @@ from django.templatetags.static import static
 from django.utils.translation import gettext_lazy as _
 from django_q.tasks import async_task
 
+from editions.calendar import edition_deadline
 from redirectioneaza.common.app_url import build_uri
 
 logger = logging.getLogger(__name__)
 
 
-def extend_email_context(request: HttpRequest = None) -> Dict:
+def extend_email_context(request: HttpRequest | None = None) -> dict:
     return {
-        "donation_limit_day": settings.DONATIONS_LIMIT.day,
-        "donation_limit_month_name": settings.DONATIONS_LIMIT_MONTH_NAME,
-        "donation_limit_year": settings.DONATIONS_LIMIT.year,
-        "contact_email": settings.CONTACT_EMAIL_ADDRESS,
+        "CONTACT_EMAIL_ADDRESS": settings.CONTACT_EMAIL_ADDRESS,
+        "donation_limit_day": edition_deadline().day,
+        "donation_limit_month_name": settings.REDIRECTIONS_LIMIT_MONTH_NAME,
+        "donation_limit_year": edition_deadline().year,
         "logo_code4romania": build_uri(static("images/code4romania.png"), request),
-        "logo_instagram": build_uri(static("images/social-icons/instagram.png"), request),
         "logo_facebook": build_uri(static("images/social-icons/facebook.png"), request),
         "logo_github": build_uri(static("images/social-icons/github.png"), request),
+        "logo_instagram": build_uri(static("images/social-icons/instagram.png"), request),
         "logo_redirect": build_uri(static("images/logo.png"), request),
     }
 
 
-def send_email(subject: str, to_emails: List[str], text_template: str, html_template: str, context: Dict):
+def send_email(subject: str, to_emails: list[str], text_template: str, html_template: str, context: dict):
     if settings.EMAIL_SEND_METHOD == "async":
         async_send_email(
             subject,
@@ -51,10 +51,10 @@ def send_email(subject: str, to_emails: List[str], text_template: str, html_temp
 
 def async_send_email(
     subject: str,
-    to_emails: List[str],
+    to_emails: list[str],
     text_template: str,
     html_template: str,
-    html_context: Dict,
+    html_context: dict,
 ):
     logger.info(f"Asynchronously sending {len(to_emails)} emails with subject: {subject}.")
 
@@ -69,11 +69,11 @@ def async_send_email(
 
 
 def send_emails(
-    user_emails: List[str],
+    user_emails: list[str],
     subject: str,
     text_template: str,
     html_template: str,
-    html_context: Dict,
+    html_context: dict,
 ):
     logger.info(f"Sending emails to {len(user_emails)} users.")
 

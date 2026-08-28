@@ -1,15 +1,16 @@
-from typing import Any, Dict, List
+from typing import Any
 
 from django import template
 from django.urls import reverse, reverse_lazy
 from django.utils.translation import gettext_lazy as _
+
 from donations.models.ngos import Cause, CauseVisibilityChoices
 
 register = template.Library()
 
 
 @register.filter
-def dropdown(cause: Cause) -> List[Dict[str, Any]]:
+def dropdown(cause: Cause) -> list[dict[str, Any]]:
     edit_cause_link = ""
     download_form_link = ""
     if can_receive_forms := cause.can_receive_redirections:

@@ -1,0 +1,28 @@
+{% load i18n %}
+
+{% trans "Your redirection form was removed from redirectioneaza.ro" %}
+
+{% blocktrans trimmed %}
+  Hello,
+{% endblocktrans %}
+
+{% blocktrans trimmed %}
+  Thank you for choosing to support {{ cause_name }}!
+  The redirection form you filled out has been removed at the NGO's request.
+  This can happen, for example,
+  if there was an error in the initial form or if it was filled out multiple times.
+{% endblocktrans %}
+
+{% blocktrans trimmed %}
+  If you wish to find out more information about the removed form, please contact the organization directly.
+{% endblocktrans %}
+
+{% blocktrans trimmed %}
+  If you wish to redirect again to the same cause, please go to the following link:
+{% endblocktrans %}
+
+{{ action_url }}
+
+{% include "emails/components/extra-hand.txt" %}
+
+{% trans "Thank you for your involvement!" %}

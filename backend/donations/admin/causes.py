@@ -1,5 +1,4 @@
 import logging
-from typing import List
 
 from django.conf import settings
 from django.contrib import admin
@@ -11,7 +10,8 @@ from unfold.admin import ModelAdmin
 from unfold.decorators import action
 
 from donations.admin.common import CommonCauseFields, span_external, span_internal
-from donations.models.jobs import Job, JobStatusChoices
+from donations.models.common import JobStatusChoices
+from donations.models.jobs import Job
 from donations.models.ngos import Cause, Ngo
 from redirectioneaza.common.app_url import build_uri
 
@@ -28,15 +28,17 @@ class CauseAdmin(ModelAdmin, CommonCauseFields):
 
     fieldsets = (
         CommonCauseFields.ngo_fieldset,
-        CommonCauseFields.editable_fieldset,
-        CommonCauseFields.date_fieldset,
+        CommonCauseFields.flags_fieldset,
+        CommonCauseFields.form_data_fieldset,
+        CommonCauseFields.data_fieldset,
+        CommonCauseFields.dates_fieldset,
     )
 
     readonly_fields = CommonCauseFields.readonly_fields
 
     @action(description=_("Generate donations archive"))
     def generate_donations_archive(self, request, queryset: QuerySet[Cause]):
-        ngo_names: List[str] = []
+        ngo_names: list[str] = []
 
         for cause in queryset:
             ngo = cause.ngo
@@ -45,11 +47,11 @@ class CauseAdmin(ModelAdmin, CommonCauseFields):
 
             try:
                 if settings.FORMS_DOWNLOAD_METHOD == "async":
-                    call_command("download_donations", new_job.id)
+                    call_command("download_donations", new_job.pk)
                 else:
-                    call_command("download_donations", new_job.id, "--run")
+                    call_command("download_donations", new_job.pk, "--run")
 
-                ngo_names.append(f"{ngo.id} - {ngo.name}")
+                ngo_names.append(f"{ngo.pk} - {ngo.name}")
             except Exception as e:
                 logger.error(e)
 

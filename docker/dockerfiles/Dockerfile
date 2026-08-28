@@ -1,5 +1,8 @@
-ARG NODE_VERSION=22
-ARG PYTHON_VERSION=3.12.8
+ARG NODE_VERSION=24.18.0
+# Python 3.14 introduced a new GC which has some memory issues:
+# https://discuss.python.org/t/reverting-the-incremental-gc-in-python-3-14-and-3-15/107014
+ARG PYTHON_VERSION=3.13.14
+ARG S6_OVERLAY_VERSION=3.2.3.0
 
 
 FROM node:${NODE_VERSION}-alpine AS frontend
@@ -8,35 +11,45 @@ WORKDIR /build
 
 COPY ./backend/assets assets
 COPY ./backend/templates templates
-COPY ./backend/package.json ./backend/package-lock.json ./backend/postcss.config.js ./backend/vite.config.js ./backend/tailwind.config.js ./
+COPY ./backend/package.json ./backend/package-lock.json ./backend/postcss.config.js ./backend/vite.config.js ./
 
-RUN npm ci --no-audit --ignore-scripts
-RUN npm run build
+RUN npm ci --no-audit --ignore-scripts && \
+    npm run build
 
 
-FROM python:${PYTHON_VERSION}-bookworm AS backend
+FROM python:${PYTHON_VERSION}-trixie AS backend
 
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y --no-install-recommends \
+    curl ca-certificates \
     gettext && \
-    python3 -m pip install --upgrade pip setuptools cython
+    apt-get clean
+
+# Make sure scripts in .local are usable:
+ENV PATH="/root/.local/bin:${PATH}"
+
+# Download the latest UV installer
+ADD ./docker/third-party/uv/installer.sh /uv-installer.sh
+
+# Run the installer then remove it
+RUN sh /uv-installer.sh && rm /uv-installer.sh
+RUN uv self update
 
 # Python virtualenv paths
 ENV VIRTUAL_ENV=/opt/venv
-RUN python3 -m venv ${VIRTUAL_ENV}
+RUN uv venv ${VIRTUAL_ENV}
 ENV PATH="${VIRTUAL_ENV}/bin:${PATH}"
 
 WORKDIR /build
-COPY ./backend/requirements.txt .
 
-RUN python3 -m pip install --upgrade pip setuptools && \
-    python3 -m pip install -r ./requirements.txt
+COPY ./backend/pyproject.toml ./backend/uv.lock ./
+RUN uv sync --no-dev --active --locked --compile-bytecode
 
 
-FROM python:${PYTHON_VERSION}-slim-bookworm
+FROM python:${PYTHON_VERSION}-slim-trixie
 
 ENV PYTHONUNBUFFERED=1
 
@@ -44,11 +57,11 @@ ENV DEBUG=False
 ENV ENVIRONMENT=production
 ENV LOG_LEVEL=${LOG_LEVEL:-WARNING}
 
-ENV RUN_MIGRATIONS=True
-ENV RUN_COMPILE_MESSAGES=True
-ENV RUN_COLLECT_STATIC=True
-ENV RUN_CREATE_SUPER_USER=True
-ENV RUN_SEED_GROUPS=True
+ENV RUN_MIGRATIONS=${RUN_MIGRATIONS:-True}
+ENV RUN_COMPILE_MESSAGES=${RUN_COMPILE_MESSAGES:-True}
+ENV RUN_COLLECT_STATIC=${RUN_COLLECT_STATIC:-True}
+ENV RUN_CREATE_SUPER_USER=${RUN_CREATE_SUPER_USER:-True}
+ENV RUN_SEED_GROUPS=${RUN_SEED_GROUPS:-True}
 
 ENV IS_CONTAINERIZED=True
 
@@ -61,7 +74,7 @@ RUN apt-get update && \
     cron nginx gcc xz-utils gettext
 
 # configure process manager
-ARG S6_OVERLAY_VERSION=3.2.0.2
+ARG S6_OVERLAY_VERSION
 ENV S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0
 
 ADD https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-noarch.tar.xz /tmp
@@ -75,27 +88,29 @@ COPY ./docker/s6-rc.d /etc/s6-overlay/s6-rc.d
 
 
 # Python virtualenv paths
-ENV VIRTUAL_ENV=/opt/venv
+ENV VIRTUAL_ENV="/opt/venv"
 ENV PATH="${VIRTUAL_ENV}/bin:${PATH}"
 
-# copy the backend and frontend source code:
-COPY --from=backend "${VIRTUAL_ENV}" "${VIRTUAL_ENV}"
-COPY ./backend/ /var/www/redirect/backend/
+ENV SOURCE_DIR="/var/www/redirect"
 
-COPY --from=frontend /build/dist/ /var/www/redirect/backend/dist/
+# Copy the backend and frontend source code:
+COPY --from=backend "${VIRTUAL_ENV}" "${VIRTUAL_ENV}"
+COPY ./backend/ "${SOURCE_DIR}/backend/"
+
+COPY --from=frontend /build/dist/ "${SOURCE_DIR}/backend/dist/"
 
 
 ARG VERSION
 ARG REVISION
-ENV VERSION=${VERSION}
-ENV REVISION=${REVISION}
+ENV VERSION="${VERSION}"
+ENV REVISION="${REVISION}"
 
-RUN touch /var/www/redirect/.version && \
-    echo "$VERSION+$(echo ${REVISION} | cut -c 1-7)" > /var/www/redirect/.version
+RUN touch "${SOURCE_DIR}/.version" && \
+    echo "$VERSION+$(echo ${REVISION} | cut -c 1-7)" > "${SOURCE_DIR}/.version"
 
 ENTRYPOINT ["/init"]
 
 
-WORKDIR /var/www/redirect/
+WORKDIR "${SOURCE_DIR}/"
 
 EXPOSE 80

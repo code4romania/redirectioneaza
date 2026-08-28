@@ -1,23 +1,23 @@
 import json
-from datetime import datetime
-from typing import Dict, List, Union
+from datetime import datetime, tzinfo
 from urllib.parse import urlencode
 
 from django.conf import settings
 from django.utils.timezone import localtime
 from django.utils.translation import gettext_lazy as _
 
+import utils.constants.time
+from editions.calendar import edition_deadline, get_current_year_range
 from redirectioneaza.common.cache import cache_decorator
 
 ENCODED_CURRENT_YEAR_RANGE_CACHE_KEY = "ENCODED_CURRENT_YEAR_RANGE"
 DATASET_PARAMETERS_CACHE_KEY = "DATASET_PARAMETERS"
-YEAR_RANGE_CACHE_KEY = "YEAR_RANGE"
 
 
 @cache_decorator(timeout=settings.TIMEOUT_CACHE_LONG, cache_key_prefix=ENCODED_CURRENT_YEAR_RANGE_CACHE_KEY)
-def get_encoded_current_year_range(current_year, tz_info) -> str:
-    start_of_year = datetime(year=current_year, month=1, day=1, hour=0, minute=0, second=0, tzinfo=tz_info)
-    end_of_next_year = start_of_year.replace(year=current_year + 1)
+def get_encoded_current_year_range(current_year: int, tz_info: tzinfo | None) -> str:
+    start_of_year: datetime = datetime(year=current_year, month=1, day=1, hour=0, minute=0, second=0, tzinfo=tz_info)
+    end_of_next_year: datetime = start_of_year.replace(year=current_year + 1)
 
     year_range: str = urlencode(
         {
@@ -29,15 +29,8 @@ def get_encoded_current_year_range(current_year, tz_info) -> str:
     return year_range
 
 
-@cache_decorator(timeout=settings.TIMEOUT_CACHE_LONG, cache_key_prefix=YEAR_RANGE_CACHE_KEY)
-def get_current_year_range() -> List[int]:
-    today = datetime.now().date()
-
-    return list(range(settings.START_YEAR, today.year + 1))
-
-
 @cache_decorator(timeout=settings.TIMEOUT_CACHE_LONG, cache_key_prefix=DATASET_PARAMETERS_CACHE_KEY)
-def _get_chart_dataset_parameters() -> List[Dict[str, Union[int, str]]]:
+def _get_chart_dataset_parameters() -> list[dict[str, int | str]]:
     years_range_ascending = get_current_year_range()
 
     return [
@@ -62,20 +55,19 @@ def _get_chart_dataset_parameters() -> List[Dict[str, Union[int, str]]]:
     ]
 
 
-def generate_donations_per_month_chart(default_border_width, donations_per_month_queryset):
+def generate_donations_per_month_chart(
+    default_border_width: int, donations_per_month: dict[int, list[int]]
+) -> dict[str, str]:
     dataset_parameters = _get_chart_dataset_parameters()
     forms_per_month_chart = {
         "title": _("Donations per month"),
         "data": json.dumps(
             {
-                "labels": [str(month["label"]) for month in settings.MONTHS[: settings.DONATIONS_LIMIT.month]],
+                "labels": [str(month["label"]) for month in utils.constants.time.MONTHS[: edition_deadline().month]],
                 "datasets": [
                     {
                         "label": str(data["year"]),
-                        "data": [
-                            donations.filter(date_created__year=data["year"]).count()
-                            for donations in donations_per_month_queryset
-                        ],
+                        "data": donations_per_month[int(data["year"])],
                         "borderColor": data["border_color"],
                         "backgroundColor": data["background_color"],
                         "borderWidth": data.get("border_width", default_border_width),

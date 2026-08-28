@@ -1,11 +1,9 @@
-from typing import Dict, List
-
 from django.conf import settings
 from django.http import HttpRequest
 from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 
-HEADER_ITEMS: Dict[str, Dict[str, str]] = {
+HEADER_ITEMS: dict[str, dict[str, str]] = {
     "about": {
         "title": _("About"),
         "url": reverse_lazy("about"),
@@ -115,11 +113,23 @@ HEADER_ITEMS: Dict[str, Dict[str, str]] = {
         "url": reverse_lazy("my-organization:redirections"),
         "icon": "M10.125 2.25h-4.5c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125v-9M10.125 2.25h.375a9 9 0 0 1 9 9v.375M10.125 2.25A3.375 3.375 0 0 1 13.5 5.625v1.5c0 .621.504 1.125 1.125 1.125h1.5a3.375 3.375 0 0 1 3.375 3.375M9 15l2.25 2.25L15 12",
     },
+    "ngo_redirections_downloads": {
+        "title": _("Redirections Downloads"),
+        "target": "org-downloads",
+        "url": reverse_lazy("my-organization:downloads"),
+        "icon": "M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3",
+    },
     "ngo_archives": {
         "title": _("Archive History"),
         "target": "org-archives",
         "url": reverse_lazy("my-organization:archives"),
-        "icon": "M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3",
+        "icon": "m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z",
+    },
+    "ngo_byof": {
+        "title": _("Generate from external data"),
+        "target": "org-byof",
+        "url": reverse_lazy("my-organization:byof"),
+        "icon": "M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 0 0-3.7-3.7 48.678 48.678 0 0 0-7.324 0 4.006 4.006 0 0 0-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 0 0 3.7 3.7 48.656 48.656 0 0 0 7.324 0 4.006 4.006 0 0 0 3.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3-3 3",
     },
     "account_settings": {
         "title": _("Account Settings"),
@@ -147,8 +157,8 @@ HEADER_ITEMS: Dict[str, Dict[str, str]] = {
 }
 
 
-def build_main_menu(request: HttpRequest) -> List[Dict[str, str]]:
-    if request.partner:
+def build_main_menu(request: HttpRequest) -> list[dict[str, str]]:
+    if hasattr(request, "partner") and request.partner:
         return [
             HEADER_ITEMS["about"],
             HEADER_ITEMS["faq_user"],
@@ -192,7 +202,10 @@ def build_main_menu(request: HttpRequest) -> List[Dict[str, str]]:
     ]
 
 
-def build_auth_menu(request: HttpRequest) -> List[Dict[str, str]]:
+def build_auth_menu(request: HttpRequest) -> list[dict[str, str]]:
+    if not hasattr(request, "user"):
+        return []
+
     user = request.user
 
     if not user.is_anonymous and user.is_admin:
@@ -214,7 +227,7 @@ def build_auth_menu(request: HttpRequest) -> List[Dict[str, str]]:
             }
         ]
 
-    if request.partner:
+    if hasattr(request, "partner") and request.partner:
         return []
 
     if user.is_anonymous:
@@ -232,9 +245,13 @@ def build_auth_menu(request: HttpRequest) -> List[Dict[str, str]]:
                 # HEADER_ITEMS["ngo_dashboard"],
                 HEADER_ITEMS["ngo_data"],
                 HEADER_ITEMS["ngo_forms"],
-                HEADER_ITEMS["ngo_causes"],
+                HEADER_ITEMS["separator"],
                 HEADER_ITEMS["ngo_redirections"],
                 HEADER_ITEMS["ngo_archives"],
+                HEADER_ITEMS["ngo_redirections_downloads"],
+                HEADER_ITEMS["ngo_byof"],
+                HEADER_ITEMS["separator"],
+                HEADER_ITEMS["ngo_causes"],
                 HEADER_ITEMS["separator"],
                 HEADER_ITEMS["account_settings"],
                 HEADER_ITEMS["separator"],
@@ -246,10 +263,16 @@ def build_auth_menu(request: HttpRequest) -> List[Dict[str, str]]:
     if not settings.ENABLE_MULTIPLE_FORMS:
         auth_menu[0]["content"].remove(HEADER_ITEMS["ngo_causes"])
 
+    if not settings.ENABLE_BYOF:
+        auth_menu[0]["content"].remove(HEADER_ITEMS["ngo_byof"])
+
+    if not settings.ENABLE_CSV_DOWNLOAD:
+        auth_menu[0]["content"].remove(HEADER_ITEMS["ngo_redirections_downloads"])
+
     return auth_menu
 
 
-def main(request: HttpRequest) -> Dict[str, Dict[str, List[Dict[str, str]]]]:
+def main(request: HttpRequest) -> dict[str, dict[str, list[dict[str, str]]]]:
     """
     Context processor for the header content.
     :param request: HttpRequest

@@ -5,7 +5,7 @@
     {% trans "Redirect easily and quickly" %}
   </h2>
 
-  {% if cause.ngo.is_accepting_forms and cause.allow_online_collection %}
+  {% if cause.allow_online_collection %}
     {% blocktranslate trimmed asvar banner_message %}
       Since 2022, form 230 can be submitted online.
       Fill in the form with the data from your ID,
@@ -48,7 +48,7 @@
 
       <div class="sm:col-span-1">
         {% trans "Father's initial" as input_title %}
-        {% include "components/input/input.html" with input_id="initial" input_name="initial" field=redirection_form.initial input_type="text" max_length=1 is_required=True %}
+        {% include "components/input/input.html" with input_id="initial" input_name="initial" field=redirection_form.initial input_type="text" max_length=2 is_required=True %}
       </div>
 
       <div class="sm:col-span-4 sm:col-start-1">
@@ -118,7 +118,7 @@
 
     </fieldset>
 
-    {% if cause.ngo.is_accepting_forms and cause.allow_online_collection %}
+    {% if cause.allow_online_collection %}
 
       <hr class="border-t border-gray-200">
 
@@ -188,7 +188,7 @@
         {% trans "Captcha" %}
       </legend>
 
-      <div id=g-recaptcha" class="g-recaptcha" data-sitekey="{{ captcha_public_key }}" data-callback="onSubmit"></div>
+      {% include "components/recaptcha-div.html" with captcha_public_key=captcha_public_key is_visible=True %}
     </fieldset>
 
     <div
@@ -215,13 +215,13 @@
         </div>
       </div>
 
-      {% if cause.ngo.is_accepting_forms and cause.allow_online_collection %}
+      {% if cause.allow_online_collection %}
 
         <button
           id="submit-with-signature"
           type="button"
           @click="sendSignedForm()"
-          class="px-4 py-2 text-sm text-center text-gray-900 rounded-full shadow-sm outline outline-amber-300 bg-amber-300 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
+          class="px-4 py-2 text-sm text-center text-gray-900 rounded-full shadow-xs outline-solid outline-amber-300 bg-amber-300 hover:bg-amber-200 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
           {% trans "Send signed form" %}
         </button>
 
@@ -230,7 +230,7 @@
           id="show-confirmation-modal"
           @click="sendUnsignedForm()"
           type="button"
-          class="px-4 py-2 text-sm text-center text-gray-900 bg-white rounded-full shadow-sm outline outline-amber-300 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
+          class="px-4 py-2 text-sm text-center text-gray-900 bg-white rounded-full shadow-xs outline-solid outline-amber-300 hover:bg-amber-200 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
           {% trans "Continue without signing" %}
         </button>
 
@@ -240,7 +240,7 @@
           id="submit-ngo-without-signature"
           @click="sendFormWithoutSignatureField()"
           type="button"
-          class="px-4 py-2 text-sm text-center text-gray-900 rounded-full shadow-sm h-9 outline outline-amber-300 bg-amber-300 hover:bg-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
+          class="px-4 py-2 text-sm text-center text-gray-900 rounded-full shadow-xs h-9 outline-solid outline-amber-300 bg-amber-300 hover:bg-amber-200 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
           {% trans "Send the form" %}
         </button>
 

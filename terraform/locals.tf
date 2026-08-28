@@ -1,7 +1,7 @@
 locals {
   namespace  = "redirectioneaza-${var.env}"
   image_repo = "code4romania/redirectioneaza"
-  image_tag  = "3.3.1"
+  image_tag  = "3.5.26"
 
   availability_zone = data.aws_availability_zones.current.names[0]
 
@@ -18,7 +18,7 @@ locals {
 
   db = {
     name           = "redirectioneaza"
-    instance_class = var.env == "production" ? "db.t4g.medium" : "db.t4g.micro"
+    instance_class = "db.t4g.medium" # "db.t4g.micro"
   }
 
   networking = {

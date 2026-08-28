@@ -4,6 +4,7 @@ from django.conf import settings
 from django.contrib.auth.models import Group
 
 from users.groups_management import MAIN_ADMIN
+
 from ._private.seed_user import CommonCreateUserCommand
 
 logger = logging.getLogger(__name__)
