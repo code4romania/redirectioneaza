@@ -1,8 +1,8 @@
-ARG NODE_VERSION=24.18.0
+ARG NODE_VERSION=24.20.0
 # Python 3.14 introduced a new GC which has some memory issues:
 # https://discuss.python.org/t/reverting-the-incremental-gc-in-python-3-14-and-3-15/107014
-ARG PYTHON_VERSION=3.13.14
-ARG S6_OVERLAY_VERSION=3.2.3.0
+ARG PYTHON_VERSION=3.13.15
+ARG S6_OVERLAY_VERSION=3.2.3.2
 
 
 FROM node:${NODE_VERSION}-alpine AS frontend
@@ -25,7 +25,8 @@ RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y --no-install-recommends \
     curl ca-certificates \
-    gettext && \
+    gettext \
+    build-essential default-libmysqlclient-dev pkg-config && \
     apt-get clean
 
 # Make sure scripts in .local are usable:
@@ -71,7 +72,9 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y --no-install-recommends \
-    cron nginx gcc xz-utils gettext
+    cron nginx gcc xz-utils gettext \
+    build-essential default-libmysqlclient-dev pkg-config && \
+    apt-get clean
 
 # configure process manager
 ARG S6_OVERLAY_VERSION

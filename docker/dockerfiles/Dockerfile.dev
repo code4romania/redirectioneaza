@@ -1,5 +1,5 @@
-ARG NODE_VERSION=24.18.0
-ARG S6_OVERLAY_VERSION=3.2.3.0
+ARG NODE_VERSION=24.20.0
+ARG S6_OVERLAY_VERSION=3.2.3.2
 
 FROM node:${NODE_VERSION}-trixie-slim
 
@@ -25,6 +25,7 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     curl ca-certificates \
     cron procps \
+    build-essential default-libmysqlclient-dev pkg-config \
     nginx gcc xz-utils gettext git postgresql-client libpq-dev && \
     apt-get clean
 
