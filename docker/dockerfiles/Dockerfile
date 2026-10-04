@@ -25,7 +25,8 @@ RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y --no-install-recommends \
     curl ca-certificates \
-    gettext && \
+    gettext \
+    build-essential default-libmysqlclient-dev pkg-config && \
     apt-get clean
 
 # Make sure scripts in .local are usable:
@@ -71,7 +72,9 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y --no-install-recommends \
-    cron nginx gcc xz-utils gettext
+    cron nginx gcc xz-utils gettext \
+    build-essential default-libmysqlclient-dev pkg-config && \
+    apt-get clean
 
 # configure process manager
 ARG S6_OVERLAY_VERSION
