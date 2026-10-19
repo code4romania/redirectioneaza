@@ -38,7 +38,7 @@ would like the UI to look like if you’re suggesting new UI elements.
 
 ### Programming languages
 
-- Backend: [Python 3.13](https://www.python.org/) with [Django 5.2](https://www.djangoproject.com/)
+- Backend: [Python 3.15](https://www.python.org/) with [Django 5.2](https://www.djangoproject.com/)
 - Frontend: [JavaScript ES6+](https://developer.mozilla.org/en-US/docs/Web/JavaScript) with
   [Vite 7](https://vitejs.dev/) + [AlpineJS 3](https://alpinejs.dev/) + [TailwindCSS 4](https://tailwindcss.com/)
 
@@ -79,7 +79,7 @@ would like the UI to look like if you’re suggesting new UI elements.
     3. Run `npm install` to install the Node.js dependencies
 5. Set up the Python environment
     1. Go to the `backend` directory
-    2. Create a virtual environment with `uv venv --python 3.13`
+    2. Create a virtual environment with `uv venv --python 3.15`
     3. Run `uv sync --active` to install the Python dependencies
 
 #### Running the project
