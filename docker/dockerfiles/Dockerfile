@@ -24,7 +24,7 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     curl ca-certificates \
     gettext \
-    build-essential default-libmysqlclient-dev pkg-config && \
+    build-essential python3-dev default-libmysqlclient-dev pkg-config && \
     apt-get clean
 
 # Make sure scripts in .local are usable:
@@ -70,8 +70,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y --no-install-recommends \
-    cron nginx gcc xz-utils gettext \
-    build-essential default-libmysqlclient-dev pkg-config && \
+    cron procps nginx gcc xz-utils gettext libmariadb3 && \
     apt-get clean
 
 # configure process manager
