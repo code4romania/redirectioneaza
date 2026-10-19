@@ -1,6 +1,7 @@
 #!/bin/sh
 # shellcheck shell=dash
 # shellcheck disable=SC2039  # local is non-POSIX
+# shellcheck disable=SC2268  # no harm in supporting older shells
 #
 # Licensed under the MIT license
 # <LICENSE-MIT or https://opensource.org/licenses/MIT>, at your
@@ -23,19 +24,19 @@ has_local 2>/dev/null || alias local=typeset
 set -u
 
 APP_NAME="uv"
-APP_VERSION="0.9.17"
-# Look for GitHub Enterprise-style base URL first
-if [ -n "${UV_INSTALLER_GHE_BASE_URL:-}" ]; then
-    INSTALLER_BASE_URL="$UV_INSTALLER_GHE_BASE_URL"
-else
-    INSTALLER_BASE_URL="${UV_INSTALLER_GITHUB_BASE_URL:-https://github.com}"
-fi
+APP_VERSION="0.13.1"
 if [ -n "${UV_DOWNLOAD_URL:-}" ]; then
-    ARTIFACT_DOWNLOAD_URL="$UV_DOWNLOAD_URL"
+    ARTIFACT_DOWNLOAD_URLS="$UV_DOWNLOAD_URL"
 elif [ -n "${INSTALLER_DOWNLOAD_URL:-}" ]; then
-    ARTIFACT_DOWNLOAD_URL="$INSTALLER_DOWNLOAD_URL"
+    ARTIFACT_DOWNLOAD_URLS="$INSTALLER_DOWNLOAD_URL"
+elif [ -n "${UV_INSTALLER_GHE_BASE_URL:-}" ]; then
+    INSTALLER_BASE_URL="$UV_INSTALLER_GHE_BASE_URL"
+    ARTIFACT_DOWNLOAD_URLS="${INSTALLER_BASE_URL}/astral-sh/uv/releases/download/0.13.1"
+elif [ -n "${UV_INSTALLER_GITHUB_BASE_URL:-}" ]; then
+    INSTALLER_BASE_URL="$UV_INSTALLER_GITHUB_BASE_URL"
+    ARTIFACT_DOWNLOAD_URLS="${INSTALLER_BASE_URL}/astral-sh/uv/releases/download/0.13.1"
 else
-    ARTIFACT_DOWNLOAD_URL="${INSTALLER_BASE_URL}/astral-sh/uv/releases/download/0.9.17"
+    ARTIFACT_DOWNLOAD_URLS="https://releases.astral.sh/github/uv/releases/download/0.13.1 https://github.com/astral-sh/uv/releases/download/0.13.1"
 fi
 if [ -n "${UV_PRINT_VERBOSE:-}" ]; then
     PRINT_VERBOSE="$UV_PRINT_VERBOSE"
@@ -65,7 +66,7 @@ fi
 AUTH_TOKEN="${UV_GITHUB_TOKEN:-}"
 
 read -r RECEIPT <<EORECEIPT
-{"binaries":["CARGO_DIST_BINS"],"binary_aliases":{},"cdylibs":["CARGO_DIST_DYLIBS"],"cstaticlibs":["CARGO_DIST_STATICLIBS"],"install_layout":"unspecified","install_prefix":"AXO_INSTALL_PREFIX","modify_path":true,"provider":{"source":"cargo-dist","version":"0.30.2"},"source":{"app_name":"uv","name":"uv","owner":"astral-sh","release_type":"github"},"version":"0.9.17"}
+{"binaries":["CARGO_DIST_BINS"],"binary_aliases":{},"cdylibs":["CARGO_DIST_DYLIBS"],"cstaticlibs":["CARGO_DIST_STATICLIBS"],"install_layout":"unspecified","install_prefix":"AXO_INSTALL_PREFIX","modify_path":true,"provider":{"source":"cargo-dist","version":"0.32.0"},"source":{"app_name":"uv","name":"uv","owner":"astral-sh","release_type":"github"},"version":"0.13.1"}
 EORECEIPT
 
 # Some Linux distributions don't set HOME
@@ -79,6 +80,19 @@ get_home() {
         getent passwd "$(id -un)" | cut -d: -f6
     fi
 }
+
+# Check if running on Windows with POSIX-compliant shell (CYGWIN, MSYS, MINGW)
+is_windows_posix() {
+    case "$(uname)" in
+        CYGWIN*|MSYS*|MINGW*)
+            return 0
+            ;;
+        *)
+            return 1
+            ;;
+    esac
+}
+
 # The HOME reference to show in user output. If `$HOME` isn't set, we show the absolute path instead.
 get_home_expression() {
     if [ -n "${HOME:-}" ]; then
@@ -93,17 +107,23 @@ get_home_expression() {
 INFERRED_HOME=$(get_home)
 # shellcheck disable=SC2034
 INFERRED_HOME_EXPRESSION=$(get_home_expression)
-RECEIPT_HOME="${XDG_CONFIG_HOME:-$INFERRED_HOME/.config}/uv"
+
+# On Windows POSIX shells, use LOCALAPPDATA for receipt storage to match axoupdater expectations
+if is_windows_posix && [ -n "${LOCALAPPDATA:-}" ]; then
+    RECEIPT_HOME="$LOCALAPPDATA/uv"
+else
+    RECEIPT_HOME="${XDG_CONFIG_HOME:-$INFERRED_HOME/.config}/uv"
+fi
 
 usage() {
     # print help (this cat/EOF stuff is a "heredoc" string)
     cat <<EOF
 uv-installer.sh
 
-The installer for uv 0.9.17
+The installer for uv 0.13.1
 
 This script detects what platform you're on and fetches an appropriate archive from
-https://github.com/astral-sh/uv/releases/download/0.9.17
+https://releases.astral.sh/github/uv/releases/download/0.13.1
 then unpacks the binaries and installs them to the first of the following locations
 
     \$XDG_BIN_HOME
@@ -207,6 +227,8 @@ download_binary_and_run_installer() {
         "uv-aarch64-apple-darwin.tar.gz")
             _arch="aarch64-apple-darwin"
             _zip_ext=".tar.gz"
+            _checksum_style="sha256"
+            _checksum_value="cfe454573412ff7380d15fc7dae5997ab53ffce72fce0a78e91ddbc84001acd2"
             _bins="uv uvx"
             _bins_js_array='"uv","uvx"'
             _libs=""
@@ -219,6 +241,8 @@ download_binary_and_run_installer() {
         "uv-aarch64-pc-windows-msvc.zip")
             _arch="aarch64-pc-windows-msvc"
             _zip_ext=".zip"
+            _checksum_style="sha256"
+            _checksum_value="ec7846a5939b4654afee24f2d82bf6fde71bd7a6952d7748f1135ab301dd0a49"
             _bins="uv.exe uvx.exe uvw.exe"
             _bins_js_array='"uv.exe","uvx.exe","uvw.exe"'
             _libs=""
@@ -231,6 +255,8 @@ download_binary_and_run_installer() {
         "uv-aarch64-unknown-linux-gnu.tar.gz")
             _arch="aarch64-unknown-linux-gnu"
             _zip_ext=".tar.gz"
+            _checksum_style="sha256"
+            _checksum_value="9041c73c99fdc5892cf128140beb354eca9231d502068cc36e6cb53a8e59ad14"
             _bins="uv uvx"
             _bins_js_array='"uv","uvx"'
             _libs=""
@@ -243,6 +269,8 @@ download_binary_and_run_installer() {
         "uv-aarch64-unknown-linux-musl.tar.gz")
             _arch="aarch64-unknown-linux-musl-static"
             _zip_ext=".tar.gz"
+            _checksum_style="sha256"
+            _checksum_value="345a8308e4d1835cdfaadf692836fd3137a6d45864773f05ad7bf59442b1ba16"
             _bins="uv uvx"
             _bins_js_array='"uv","uvx"'
             _libs=""
@@ -255,6 +283,8 @@ download_binary_and_run_installer() {
         "uv-arm-unknown-linux-musleabihf.tar.gz")
             _arch="arm-unknown-linux-musl-staticeabihf"
             _zip_ext=".tar.gz"
+            _checksum_style="sha256"
+            _checksum_value="68d35d155ed7555da1fa811e16b1f8711227e5bcf0c5d45bbc7282333ec82970"
             _bins="uv uvx"
             _bins_js_array='"uv","uvx"'
             _libs=""
@@ -267,6 +297,8 @@ download_binary_and_run_installer() {
         "uv-armv7-unknown-linux-gnueabihf.tar.gz")
             _arch="armv7-unknown-linux-gnueabihf"
             _zip_ext=".tar.gz"
+            _checksum_style="sha256"
+            _checksum_value="833bb2b4a47ba2aa4356e577eb52be2deb15d145d79e559dfe8fcc3bf546017b"
             _bins="uv uvx"
             _bins_js_array='"uv","uvx"'
             _libs=""
@@ -279,6 +311,8 @@ download_binary_and_run_installer() {
         "uv-armv7-unknown-linux-musleabihf.tar.gz")
             _arch="armv7-unknown-linux-musl-staticeabihf"
             _zip_ext=".tar.gz"
+            _checksum_style="sha256"
+            _checksum_value="443b8bc3e4ef03b20b38aa1b03bc0604f55dfa74e091b7acc4851bcd5e5d6c58"
             _bins="uv uvx"
             _bins_js_array='"uv","uvx"'
             _libs=""
@@ -291,6 +325,8 @@ download_binary_and_run_installer() {
         "uv-i686-pc-windows-msvc.zip")
             _arch="i686-pc-windows-msvc"
             _zip_ext=".zip"
+            _checksum_style="sha256"
+            _checksum_value="fcebe7cd3be7e2b1b4b5802bac36c85eeb724837c48be48d41a226367ef7d4a3"
             _bins="uv.exe uvx.exe uvw.exe"
             _bins_js_array='"uv.exe","uvx.exe","uvw.exe"'
             _libs=""
@@ -303,6 +339,8 @@ download_binary_and_run_installer() {
         "uv-i686-unknown-linux-gnu.tar.gz")
             _arch="i686-unknown-linux-gnu"
             _zip_ext=".tar.gz"
+            _checksum_style="sha256"
+            _checksum_value="99645fd8923859e74a8f481d4f949318dae47beb65adc4b13a73f2582da9f853"
             _bins="uv uvx"
             _bins_js_array='"uv","uvx"'
             _libs=""
@@ -315,18 +353,8 @@ download_binary_and_run_installer() {
         "uv-i686-unknown-linux-musl.tar.gz")
             _arch="i686-unknown-linux-musl-static"
             _zip_ext=".tar.gz"
-            _bins="uv uvx"
-            _bins_js_array='"uv","uvx"'
-            _libs=""
-            _libs_js_array=""
-            _staticlibs=""
-            _staticlibs_js_array=""
-            _updater_name=""
-            _updater_bin=""
-            ;;
-        "uv-powerpc64-unknown-linux-gnu.tar.gz")
-            _arch="powerpc64-unknown-linux-gnu"
-            _zip_ext=".tar.gz"
+            _checksum_style="sha256"
+            _checksum_value="8fd67e5a8d3ef4ec75acda39d16df00821e2b0728f1f0e7f8aef24101ba88ddf"
             _bins="uv uvx"
             _bins_js_array='"uv","uvx"'
             _libs=""
@@ -339,6 +367,8 @@ download_binary_and_run_installer() {
         "uv-powerpc64le-unknown-linux-gnu.tar.gz")
             _arch="powerpc64le-unknown-linux-gnu"
             _zip_ext=".tar.gz"
+            _checksum_style="sha256"
+            _checksum_value="66b890c75291de97617705dcc275a3e4ed99446e73b93c7748c6ca28d6793203"
             _bins="uv uvx"
             _bins_js_array='"uv","uvx"'
             _libs=""
@@ -351,6 +381,22 @@ download_binary_and_run_installer() {
         "uv-riscv64gc-unknown-linux-gnu.tar.gz")
             _arch="riscv64gc-unknown-linux-gnu"
             _zip_ext=".tar.gz"
+            _checksum_style="sha256"
+            _checksum_value="52d9f0677840c20a14ed037a6cba515cc2f20a03001aaa605f928e80f4b55ec2"
+            _bins="uv uvx"
+            _bins_js_array='"uv","uvx"'
+            _libs=""
+            _libs_js_array=""
+            _staticlibs=""
+            _staticlibs_js_array=""
+            _updater_name=""
+            _updater_bin=""
+            ;;
+        "uv-riscv64gc-unknown-linux-musl.tar.gz")
+            _arch="riscv64gc-unknown-linux-musl-static"
+            _zip_ext=".tar.gz"
+            _checksum_style="sha256"
+            _checksum_value="b60c852c5a072640a624438935ffc1eddc4c38842c8422db890d6912e5d586d3"
             _bins="uv uvx"
             _bins_js_array='"uv","uvx"'
             _libs=""
@@ -363,6 +409,8 @@ download_binary_and_run_installer() {
         "uv-s390x-unknown-linux-gnu.tar.gz")
             _arch="s390x-unknown-linux-gnu"
             _zip_ext=".tar.gz"
+            _checksum_style="sha256"
+            _checksum_value="d04236f6631a514824e06ce45f1b4832edfb43648d2e9fed2188c9fc66d8c95f"
             _bins="uv uvx"
             _bins_js_array='"uv","uvx"'
             _libs=""
@@ -375,6 +423,8 @@ download_binary_and_run_installer() {
         "uv-x86_64-apple-darwin.tar.gz")
             _arch="x86_64-apple-darwin"
             _zip_ext=".tar.gz"
+            _checksum_style="sha256"
+            _checksum_value="bb7b805bdcf3d0bc8c74ceb94569e6b3e8aa35bd492acdbb9d46bf46d9d4ff6b"
             _bins="uv uvx"
             _bins_js_array='"uv","uvx"'
             _libs=""
@@ -387,6 +437,8 @@ download_binary_and_run_installer() {
         "uv-x86_64-pc-windows-msvc.zip")
             _arch="x86_64-pc-windows-msvc"
             _zip_ext=".zip"
+            _checksum_style="sha256"
+            _checksum_value="3b2661a463a5baea7f5076ea2b25ab71d77f36a6c0d809e5350651792f80a672"
             _bins="uv.exe uvx.exe uvw.exe"
             _bins_js_array='"uv.exe","uvx.exe","uvw.exe"'
             _libs=""
@@ -399,6 +451,8 @@ download_binary_and_run_installer() {
         "uv-x86_64-unknown-linux-gnu.tar.gz")
             _arch="x86_64-unknown-linux-gnu"
             _zip_ext=".tar.gz"
+            _checksum_style="sha256"
+            _checksum_value="eadd9d27c134ab5ac1ffd4473b97a741407f3ea238288f03121fc4deddf90220"
             _bins="uv uvx"
             _bins_js_array='"uv","uvx"'
             _libs=""
@@ -411,6 +465,8 @@ download_binary_and_run_installer() {
         "uv-x86_64-unknown-linux-musl.tar.gz")
             _arch="x86_64-unknown-linux-musl-static"
             _zip_ext=".tar.gz"
+            _checksum_style="sha256"
+            _checksum_value="6c86040a8f045ab9adc9e3ec4cdafa03fd00e9a988ed2bf28971c7fc2d0debd0"
             _bins="uv uvx"
             _bins_js_array='"uv","uvx"'
             _libs=""
@@ -431,49 +487,63 @@ download_binary_and_run_installer() {
     RECEIPT="$(echo "$RECEIPT" | sed s/'"CARGO_DIST_DYLIBS"'/"$_libs_js_array"/)"
     RECEIPT="$(echo "$RECEIPT" | sed s/'"CARGO_DIST_STATICLIBS"'/"$_staticlibs_js_array"/)"
 
-    # download the archive
-    local _url="$ARTIFACT_DOWNLOAD_URL/$_artifact_name"
     local _dir
-    _dir="$(ensure mktemp -d)" || return 1
-    local _file="$_dir/input$_zip_ext"
-
+    local _download_result=0
+    local _is_first_url=1
     say "downloading $APP_NAME $APP_VERSION ${_arch}" 1>&2
-    say_verbose "  from $_url" 1>&2
-    say_verbose "  to $_file" 1>&2
+    for _base_url in $ARTIFACT_DOWNLOAD_URLS; do
+        if [ "$_is_first_url" = "0" ]; then
+            say "trying alternative download URL" 1>&2
+        fi
+        _is_first_url=0
 
-    ensure mkdir -p "$_dir"
+        # download the archive
+        local _url="$_base_url/$_artifact_name"
+        
+        _dir="$(ensure mktemp -d)" || return 1
+        local _file="$_dir/input$_zip_ext"
 
-    if ! downloader "$_url" "$_file"; then
-      say "failed to download $_url"
-      say "this may be a standard network error, but it may also indicate"
-      say "that $APP_NAME's release process is not working. When in doubt"
-      say "please feel free to open an issue!"
-      exit 1
-    fi
+        say_verbose "  from $_url" 1>&2
+        say_verbose "  to $_file" 1>&2
 
-    if [ -n "${_checksum_style:-}" ]; then
-        verify_checksum "$_file" "$_checksum_style" "$_checksum_value"
-    else
-        say "no checksums to verify"
-    fi
+        ensure mkdir -p "$_dir"
 
-    # ...and then the updater, if it exists
-    if [ -n "$_updater_name" ] && [ "$INSTALL_UPDATER" = "1" ]; then
-        local _updater_url="$ARTIFACT_DOWNLOAD_URL/$_updater_name"
-        # This renames the artifact while doing the download, removing the
-        # target triple and leaving just the appname-update format
-        local _updater_file="$_dir/$APP_NAME-update"
-
-        if ! downloader "$_updater_url" "$_updater_file"; then
-          say "failed to download $_updater_url"
-          say "this may be a standard network error, but it may also indicate"
-          say "that $APP_NAME's release process is not working. When in doubt"
-          say "please feel free to open an issue!"
-          exit 1
+        if ! downloader "$_url" "$_file"; then
+            say "failed to download $_url" 1>&2
+            continue
         fi
 
-        # Add the updater to the list of binaries to install
-        _bins="$_bins $APP_NAME-update"
+        if [ -n "${_checksum_style:-}" ]; then
+            verify_checksum "$_file" "$_checksum_style" "$_checksum_value"
+        else
+            say "no checksums to verify" 1>&2
+        fi
+
+        # ...and then the updater, if it exists
+        if [ -n "$_updater_name" ] && [ "$INSTALL_UPDATER" = "1" ]; then
+            local _updater_url="$_base_url/$_updater_name"
+            # This renames the artifact while doing the download, removing the
+            # target triple and leaving just the appname-update format
+            local _updater_file="$_dir/$APP_NAME-update"
+
+            if ! downloader "$_updater_url" "$_updater_file"; then
+                say "failed to download $_updater_url"
+                continue
+            fi
+
+            # Add the updater to the list of binaries to install
+            _bins="$_bins $APP_NAME-update"
+        fi
+
+        _download_result=1
+        break
+    done
+
+    if [ "$_download_result" = "0" ]; then
+        say "this may be a standard network error, but it may also indicate" 1>&2
+        say "that $APP_NAME's release process is not working. When in doubt" 1>&2
+        say "please feel free to open an issue!" 1>&2
+        exit 1
     fi
 
     # unpack the archive
@@ -483,7 +553,7 @@ download_binary_and_run_installer() {
             ;;
 
         ".tar."*)
-            ensure tar xf "$_file" --strip-components 1 -C "$_dir"
+            ensure tar xf "$_file" --no-same-owner --strip-components 1 -C "$_dir"
             ;;
         *)
             err "unknown archive format: $_zip_ext"
@@ -575,13 +645,16 @@ json_binary_aliases() {
     "i686-unknown-linux-musl-static")
         echo '{}'
         ;;
-    "powerpc64-unknown-linux-gnu")
-        echo '{}'
-        ;;
     "powerpc64le-unknown-linux-gnu")
         echo '{}'
         ;;
     "riscv64gc-unknown-linux-gnu")
+        echo '{}'
+        ;;
+    "riscv64gc-unknown-linux-musl-dynamic")
+        echo '{}'
+        ;;
+    "riscv64gc-unknown-linux-musl-static")
         echo '{}'
         ;;
     "s390x-unknown-linux-gnu")
@@ -718,13 +791,6 @@ aliases_for_binary() {
             ;;
         esac
         ;;
-    "powerpc64-unknown-linux-gnu")
-        case "$_bin" in
-        *)
-            echo ""
-            ;;
-        esac
-        ;;
     "powerpc64le-unknown-linux-gnu")
         case "$_bin" in
         *)
@@ -733,6 +799,20 @@ aliases_for_binary() {
         esac
         ;;
     "riscv64gc-unknown-linux-gnu")
+        case "$_bin" in
+        *)
+            echo ""
+            ;;
+        esac
+        ;;
+    "riscv64gc-unknown-linux-musl-dynamic")
+        case "$_bin" in
+        *)
+            echo ""
+            ;;
+        esac
+        ;;
+    "riscv64gc-unknown-linux-musl-static")
         case "$_bin" in
         *)
             echo ""
@@ -952,16 +1032,6 @@ select_archive_for_arch() {
                 return 0
             fi
             ;;
-        "powerpc64-unknown-linux-gnu")
-            _archive="uv-powerpc64-unknown-linux-gnu.tar.gz"
-            if ! check_glibc "2" "17"; then
-                _archive=""
-            fi
-            if [ -n "$_archive" ]; then
-                echo "$_archive"
-                return 0
-            fi
-            ;;
         "powerpc64le-unknown-linux-gnu")
             _archive="uv-powerpc64le-unknown-linux-gnu.tar.gz"
             if ! check_glibc "2" "17"; then
@@ -977,6 +1047,25 @@ select_archive_for_arch() {
             if ! check_glibc "2" "31"; then
                 _archive=""
             fi
+            if [ -n "$_archive" ]; then
+                echo "$_archive"
+                return 0
+            fi
+            _archive="uv-riscv64gc-unknown-linux-musl.tar.gz"
+            if [ -n "$_archive" ]; then
+                echo "$_archive"
+                return 0
+            fi
+            ;;
+        "riscv64gc-unknown-linux-musl-dynamic")
+            _archive="uv-riscv64gc-unknown-linux-musl.tar.gz"
+            if [ -n "$_archive" ]; then
+                echo "$_archive"
+                return 0
+            fi
+            ;;
+        "riscv64gc-unknown-linux-musl-static")
+            _archive="uv-riscv64gc-unknown-linux-musl.tar.gz"
             if [ -n "$_archive" ]; then
                 echo "$_archive"
                 return 0
@@ -1238,7 +1327,14 @@ install() {
     _fish_env_script_path_expr="${_env_script_path_expr}.fish"
 
     # Replace the temporary cargo home with the calculated one
-    RECEIPT=$(echo "$RECEIPT" | sed "s,AXO_INSTALL_PREFIX,$_receipt_install_dir,")
+    if is_windows_posix && check_cmd cygpath; then
+        # Use cygpath to convert to Windows path, then escape backslashes for JSON
+        # Need 4 backslashes to survive: command substitution + double quotes in sed command
+        _win_path=$(cygpath -w "$_receipt_install_dir" | sed 's/\\/\\\\\\\\/g')
+        RECEIPT=$(echo "$RECEIPT" | sed "s,AXO_INSTALL_PREFIX,$_win_path,")
+    else
+        RECEIPT=$(echo "$RECEIPT" | sed "s,AXO_INSTALL_PREFIX,$_receipt_install_dir,")
+    fi
     # Also replace the aliases with the arch-specific one
     RECEIPT=$(echo "$RECEIPT" | sed "s'\"binary_aliases\":{}'\"binary_aliases\":$(json_binary_aliases "$_arch")'")
     # And replace the install layout
@@ -1250,38 +1346,53 @@ install() {
     say "installing to $_install_dir"
     ensure mkdir -p "$_install_dir"
     ensure mkdir -p "$_lib_install_dir"
+    _install_temp=$(mktemp -d "$_install_dir/tmp.XXXXXXXXXX")
+    _lib_install_temp=$(mktemp -d "$_lib_install_dir/tmp.XXXXXXXXXX")
 
-    # copy all the binaries to the install dir
+    # First move all the binaries and libraries to temporary directories within
+    # the target installation directories. This is done because those
+    # directories may be on a different filesystem to the temporary directory
+    # and as such this process might take time. This in turn increases the
+    # chance of an interruption leading to a broken installation.
+
     local _src_dir="$1"
     local _bins="$2"
     local _libs="$3"
     local _staticlibs="$4"
     local _arch="$5"
     for _bin_name in $_bins; do
-        local _bin="$_src_dir/$_bin_name"
-        ensure mv "$_bin" "$_install_dir"
+        ensure mv "$_src_dir/$_bin_name" "$_install_temp"
         # unzip seems to need this chmod
-        ensure chmod +x "$_install_dir/$_bin_name"
-        for _dest in $(aliases_for_binary "$_bin_name" "$_arch"); do
-            ln -sf "$_install_dir/$_bin_name" "$_install_dir/$_dest"
-        done
+        ensure chmod +x "$_install_temp/$_bin_name"
         say "  $_bin_name"
     done
     # Like the above, but no aliases
-    for _lib_name in $_libs; do
-        local _lib="$_src_dir/$_lib_name"
-        ensure mv "$_lib" "$_lib_install_dir"
+    for _lib_name in $_libs $_staticlibs; do
+        ensure mv "$_src_dir/$_lib_name" "$_lib_install_temp"
         # unzip seems to need this chmod
         ensure chmod +x "$_lib_install_dir/$_lib_name"
         say "  $_lib_name"
     done
-    for _lib_name in $_staticlibs; do
-        local _lib="$_src_dir/$_lib_name"
-        ensure mv "$_lib" "$_lib_install_dir"
-        # unzip seems to need this chmod
-        ensure chmod +x "$_lib_install_dir/$_lib_name"
-        say "  $_lib_name"
+
+    # Now move all the binaries and libraries into their final locations with
+    # plain mv. There's still a possibility of interruption here, but we've
+    # already written everything to the target filesystem (if it was ever
+    # different from the source) which means that this operation should be very
+    # fast, and we've already created directories within the target
+    # directories, so it's unlikely for anything here to fail due to missing
+    # permissions.
+
+    for _bin_name in $_bins; do
+        ensure mv "$_install_temp/$_bin_name" "$_install_dir"
+        for _dest in $(aliases_for_binary "$_bin_name" "$_arch"); do
+            ln -sf "$_install_dir/$_bin_name" "$_install_dir/$_dest"
+        done
     done
+    for _lib_name in $_libs $_staticlibs; do
+        ensure mv "$_lib_install_temp/$_lib_name" "$_lib_install_dir"
+    done
+
+    ignore rm -rf "$_install_temp" "$_lib_install_temp"
 
     say "everything's installed!"
 
