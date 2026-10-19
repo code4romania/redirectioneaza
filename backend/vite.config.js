@@ -10,6 +10,7 @@ export default defineConfig(({ command, mode }) => {
     // root: resolve(__dirname, './src'),
     base: '/static/',
     server: {
+      origin: env.DJANGO_VITE_DEV_SERVER_ORIGIN || `http://localhost:${env.DJANGO_VITE_DEV_SERVER_PORT || 3000}`,
       open: false,
       host: '0.0.0.0',
       port: env.DJANGO_VITE_DEV_SERVER_PORT || 3000,

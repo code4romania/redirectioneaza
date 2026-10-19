@@ -37,7 +37,7 @@ jobs:
         uses: astral-sh/setup-uv@v7
         with:
           working-directory: ./backend
-          python-version: "3.13"
+          python-version: "3.15"
           cache-dependency-glob: |
             **/pyproject.toml
             **/uv.lock
@@ -70,7 +70,7 @@ jobs:
         uses: astral-sh/setup-uv@v7
         with:
           working-directory: ./backend
-          python-version: "3.13"
+          python-version: "3.15"
           cache-dependency-glob: |
             **/pyproject.toml
             **/uv.lock
@@ -97,7 +97,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python: [ "3.13", "3.14" ]
+        python: [ "3.15" ]
 
     services:
       postgres:

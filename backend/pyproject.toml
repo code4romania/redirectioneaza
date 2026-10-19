@@ -3,55 +3,55 @@ name = "redirectioneaza"
 version = "3.0.0"
 description = "A tool to help NGOs with managing the redirection of people's tax income."
 
-requires-python = ">=3.13"
+requires-python = ">=3.15"
 dependencies = [
-  "blessed~=1.44.0",
+  "blessed~=1.51.0",
   "cryptography~=50.0.0",
   "django~=5.2.0",
-  "django-allauth~=65.18.0",
+  "django-allauth~=65.20.0",
   "django-auditlog~=3.4.0",
-  "django-environ~=0.13.0",
+  "django-environ~=0.14.0",
   "django-import-export~=4.4.0",
-  "django-ipware~=7.0.0",
-  "django-localflavor~=5.0.0",
-  "django-q2~=1.10.0",
+  "django-ipware~=8.0.0",
+  "django-localflavor~=5.1.0",
+  "django-q2~=1.11.0",
   "django-recaptcha~=4.1.0",
-  "django-ses~=4.7.0",
+  "django-ses~=4.8.0",
   "django-storages[s3]~=1.14.0",
   "django-tinymce~=5.0.0",
-  "django-unfold~=0.92.0",
-  "django-vite~=3.1.0",
-  "gevent~=26.5.0",
-  "gunicorn~=26.0.0",
-  "mysqlclient~=2.2.8",
+  "django-unfold~=0.110.0",
+  "django-vite~=3.2.0",
+  "gevent~=26.9.0",
+  "gunicorn~=26.2.0",
+  "mysqlclient~=2.3.0",
   "ngohub~=0.1.0",
   "phonenumbers~=9.0.0",
   "psutil~=7.2.0",
   "psycopg2-binary~=2.9.0",
   "pycognito~=2024.5.0",
-  "pydantic[email]~=2.13.0",
-  "pypdf~=6.19.0",
-  "reportlab~=4.5.0",
-  "requests~=2.33.0",
-  "sentry-sdk[django]~=2.59.0",
+  "pydantic[email]~=2.14.0",
+  "pypdf~=6.21.0",
+  "reportlab~=5.0.0",
+  "requests~=2.34.0",
+  "sentry-sdk[django]~=2.72.0",
   "whitenoise~=6.12.0",
 ]
 
 
 [dependency-groups]
 test = [
-  "faker~=40.15.0",
-  "pytest~=9.0.0",
+  "faker~=40.43.0",
+  "pytest~=9.1.0",
   "pytest-cov~=7.1.0",
-  "pytest-django~=4.12.0",
+  "pytest-django~=4.14.0",
   "pytest-xdist~=3.8.0",
 ]
 ruff = [
-  "ruff~=0.15.0"
+  "ruff~=0.17.0"
 ]
 dev = [
   "debugpy~=1.8.0",
-  "pre-commit~=4.6.0",
+  "pre-commit~=4.7.0",
   { include-group = "ruff" },
   { include-group = "test" },
 ]
@@ -92,8 +92,8 @@ exclude = [
 # Same as Black.
 line-length = 120
 
-# Assume Python 3.13.
-target-version = "py313"
+# Assume Python 3.15.
+target-version = "py315"
 
 
 [lint]
@@ -150,7 +150,7 @@ omit = [
 
 [tool.black]
 line-length = 120
-target-version = ["py313"]
+target-version = ["py315"]
 extend-exclude = '''
 /(
   | migrations
