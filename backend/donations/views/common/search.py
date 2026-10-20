@@ -1,5 +1,6 @@
 from typing import Any
 
+import typesense
 from django.conf import settings
 from django.contrib.postgres.search import (
     SearchQuery,
@@ -133,6 +134,21 @@ class DeprecatedCauseSearchMixin(CommonSearchMixin):
 class CauseSearchMixin(CommonSearchMixin):
     @classmethod
     def get_search_results(cls, queryset: QuerySet, query: str, language_code: str) -> QuerySet[Cause]:
+        search_client = typesense.Client(
+            {
+                "nodes": [
+                    {
+                        "host": settings.TYPESENSE_HOST,
+                        "port": settings.TYPESENSE_PORT,
+                        "protocol": settings.TYPESENSE_PROTO,
+                    }
+                ],
+                "api_key": settings.TYPESENSE_KEY,
+                "connection_timeout_seconds": 2,
+            }
+        )
+        print("TYPESENSE COLLECTIONS:", search_client.collections.retrieve())
+
         if settings.ENABLE_CAUSE_SEARCH_EXACT_MATCH:
             query_filter = Q(name__icontains=query)
             # If the query looks like a registration number then also try to find the main causes owned by
