@@ -8,7 +8,11 @@ from users.groups_management import USER_GROUPS
 
 class Command(BaseCommand):
     logger = logging.getLogger(__name__)
-    _permissions_cache: dict[str, int] = {}
+    _permissions_cache: dict[str, int] | None = None
+
+    def __init__(self, *args, **kwargs):
+        self._permissions_cache = {}
+        super().__init__(*args, **kwargs)
 
     def handle(self, *args, **kwargs):
         group_names: set[str] = set(USER_GROUPS.keys())
@@ -42,6 +46,9 @@ class Command(BaseCommand):
 
     def _permission_names_to_ids(self, group_permissions: list[str]) -> list[int]:
         permission_ids: list[int] = []
+
+        if self._permissions_cache is None:
+            self._permissions_cache = {}
 
         for permission_name in group_permissions:
             if permission_name not in self._permissions_cache:
