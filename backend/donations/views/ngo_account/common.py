@@ -206,7 +206,7 @@ class FileDownloadProxy(BaseVisibleTemplateView):
 
         try:
             result = self.model.objects.get(**queryset)
-        except (ObjectDoesNotExist, ValueError):
+        except ObjectDoesNotExist, ValueError:
             return None
 
         return result

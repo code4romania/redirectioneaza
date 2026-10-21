@@ -12,7 +12,7 @@ from utils.common.crypto_helper import decrypt_data, encrypt_data
 from utils.models_hashing import hash_id_secret
 
 
-def year_ngo_donor_directory_path(subdir: str, instance: "Donor", filename: str) -> str:
+def year_ngo_donor_directory_path(subdir: str, instance: Donor, filename: str) -> str:
     """
     The file will be uploaded to MEDIA_ROOT/<subdir>/<year>/c-<cause.pk>-<cause.hash>/<id>_<hash>_<filename>
     """

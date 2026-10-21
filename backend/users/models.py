@@ -99,7 +99,7 @@ class User(AbstractUser):
     date_updated = models.DateTimeField(verbose_name=_("date updated"), db_index=True, auto_now=True)
 
     # Type hinting for related models
-    socialaccount_set: "models.manager.RelatedManager[SocialAccount]"
+    socialaccount_set: models.manager.RelatedManager[SocialAccount]
 
     # Model managers
     objects = CustomUserManager()

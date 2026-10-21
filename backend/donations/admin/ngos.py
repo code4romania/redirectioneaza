@@ -309,11 +309,11 @@ class NgoAdmin(ModelAdmin):
         except ValidationError as e:
             return HttpResponse(e.message)
 
-        filename = "ngos_cult_registry_export_{}.csv".format(timezone.now())
+        filename = f"ngos_cult_registry_export_{timezone.now()}.csv"
 
         response = HttpResponse(
             content_type="text/csv; charset=utf-8-sig",
-            headers={"Content-Disposition": 'attachment; filename="{}"'.format(filename)},
+            headers={"Content-Disposition": f'attachment; filename="{filename}"'},
         )
         response.write(codecs.BOM_UTF8)
 
@@ -551,7 +551,7 @@ class NgoAdmin(ModelAdmin):
                 cause.prefilled_form.delete()
                 removed_count += 1
             except Exception as e:
-                errors.append("Error removing `form_url` from cause {0}: {1}".format(cause.pk, e))
+                errors.append(f"Error removing `form_url` from cause {cause.pk}: {e}")
 
         result_message = f"Total of {removed_count}/{expected_count} prefilled forms removed."
         if errors:

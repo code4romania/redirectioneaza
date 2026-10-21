@@ -102,8 +102,8 @@ STORAGES = {
 # Django Vite config
 
 # Where ViteJS assets are built
-django_vite_assets_path = os.path.abspath("dist")  # noqa
-django_vite_sources_dir = os.path.abspath("assets")  # noqa
+django_vite_assets_path = os.path.abspath("dist")
+django_vite_sources_dir = os.path.abspath("assets")
 
 django_vite_dev_mode = env.bool("DJANGO_VITE_DEV_MODE")
 django_vite_settings: dict[str, Any] = {

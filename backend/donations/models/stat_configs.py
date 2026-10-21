@@ -77,9 +77,7 @@ def _create_stat_ngos_active():
 
 
 def _create_stat_ngos_active_yearly(*, for_date: date):
-    metric: Decimal = Decimal(
-        len((Donor.available.filter(date_created__year=for_date.year).values("ngo_id").distinct()))
-    )
+    metric: Decimal = Decimal(len(Donor.available.filter(date_created__year=for_date.year).values("ngo_id").distinct()))
     expiration: datetime | None = _calculate_expiration(delta={"minutes": 15}, for_date=for_date)
 
     _save_stat(name=StatsChoices.NGOS_ACTIVE_PER_YEAR, metric=metric, expiration=expiration, for_date=for_date)

@@ -131,12 +131,12 @@ def _get_yearly_stats(years_range_ascending) -> list[dict[str, int | list[dict]]
         if index == 0:
             continue
 
-        statistics[index]["donations_difference"] = statistics[index]["donations"] - statistics[index - 1]["donations"]
+        statistics[index]["donations_difference"] = statistic["donations"] - statistics[index - 1]["donations"]
         statistics[index]["ngos_registered_difference"] = (
-            statistics[index]["ngos_registered"] - statistics[index - 1]["ngos_registered"]
+            statistic["ngos_registered"] - statistics[index - 1]["ngos_registered"]
         )
         statistics[index]["ngos_with_forms_difference"] = (
-            statistics[index]["ngos_with_forms"] - statistics[index - 1]["ngos_with_forms"]
+            statistic["ngos_with_forms"] - statistics[index - 1]["ngos_with_forms"]
         )
 
     final_statistics = format_yearly_stats(statistics)

@@ -43,7 +43,7 @@ def select_public_storage():
     return storages["public"]
 
 
-def ngo_directory_path(subdir: str, instance: "Ngo", filename: str) -> str:
+def ngo_directory_path(subdir: str, instance: Ngo, filename: str) -> str:
     """
     The file will be uploaded to MEDIA_ROOT/<subdir>/ngo-<id>-<hash>/<filename>
     """
@@ -53,7 +53,7 @@ def ngo_directory_path(subdir: str, instance: "Ngo", filename: str) -> str:
     return f"{subdir}/ngo-{ngo_pk}-{ngo_hash}/{filename}"
 
 
-def cause_directory_path(subdir: str, instance: "Cause", filename: str) -> str:
+def cause_directory_path(subdir: str, instance: Cause, filename: str) -> str:
     """
     The file will be uploaded to MEDIA_ROOT/<subdir>/ngo-<ngo.pk>/c-<cause.pk>-<cause.hash>/<filename>
     """
@@ -65,7 +65,7 @@ def cause_directory_path(subdir: str, instance: "Cause", filename: str) -> str:
     return f"{subdir}/ngo-{ngo_pk}/c-{cause_pk}-{cause_hash}/{filename}"
 
 
-def year_ngo_directory_path(subdir: str, instance: "Ngo", filename: str) -> str:
+def year_ngo_directory_path(subdir: str, instance: Ngo, filename: str) -> str:
     """
     The file will be uploaded to MEDIA_ROOT/<subdir>/<year>/ngo-<ngo.pk>-<ngo.hash>/<filename>
     """
@@ -79,7 +79,7 @@ def year_ngo_directory_path(subdir: str, instance: "Ngo", filename: str) -> str:
     return f"{subdir}/{year}/ngo-{ngo_pk}-{ngo_hash}/{filename}"
 
 
-def year_cause_directory_path(subdir: str, instance: "Cause", filename: str) -> str:
+def year_cause_directory_path(subdir: str, instance: Cause, filename: str) -> str:
     """
     The file will be uploaded to MEDIA_ROOT/<subdir>/<year>/c-<cause.pk>-<cause.hash>/<filename>
     """
@@ -286,11 +286,11 @@ class Ngo(CommonFilenameCacheModel):
     date_updated = models.DateTimeField(verbose_name=_("date updated"), db_index=True, auto_now=True)
 
     # Type hinting for related models
-    causes: "models.manager.RelatedManager[Cause]"
-    partners: "models.manager.RelatedManager[Partner]"
-    jobs: "models.manager.RelatedManager[Job]"
-    download_jobs: "models.manager.RelatedManager[RedirectionsDownloadJob]"
-    donor_set: "models.manager.RelatedManager[Donor]"
+    causes: models.manager.RelatedManager[Cause]
+    partners: models.manager.RelatedManager[Partner]
+    jobs: models.manager.RelatedManager[Job]
+    download_jobs: models.manager.RelatedManager[RedirectionsDownloadJob]
+    donor_set: models.manager.RelatedManager[Donor]
 
     # Model managers
     objects = models.Manager()
@@ -353,7 +353,7 @@ class Ngo(CommonFilenameCacheModel):
             self.save()
 
     @property
-    def main_cause(self) -> "Cause | None":
+    def main_cause(self) -> Cause | None:
         if not self.pk:
             return None
 
@@ -585,7 +585,7 @@ class Cause(CommonFilenameCacheModel):
     date_updated = models.DateTimeField(verbose_name=_("date updated"), db_index=True, auto_now=True)
 
     # Type hinting for related models
-    donor_set: "models.manager.RelatedManager[Donor]"
+    donor_set: models.manager.RelatedManager[Donor]
 
     # Model managers
     objects = models.Manager()

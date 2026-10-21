@@ -140,7 +140,6 @@ env = environ.Env(
     # Feature flags
     ENABLE_MULTIPLE_FORMS=(bool, False),
     ENABLE_BULK_ANONYMIZATION=(bool, False),
-    #
     AUDITLOG_EXPIRY_DAYS=(int, 1 * 365),  # 1 year
     # Admins
     SEED_ADMIN_EMAIL=(str, ""),

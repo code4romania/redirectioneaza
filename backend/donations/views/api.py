@@ -83,7 +83,7 @@ class GetCausePrefilledForm(TemplateView):
         try:
             cause.prefilled_form.save(filename, File(pdf))
             logger.info(f"Prefilled form saved successfully: {filename}")
-        except (IOError, OSError) as file_error:
+        except OSError as file_error:
             logger.error(f"File handling error while saving {filename}: {file_error}")
         except DatabaseError as db_error:
             logger.error(f"Database error while saving prefilled form {filename}: {db_error}")
