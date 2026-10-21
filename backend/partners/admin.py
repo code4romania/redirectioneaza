@@ -123,7 +123,7 @@ class PartnerAdmin(ModelAdmin):
             )
             new_user.set_unusable_password()
             new_user.save()
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             return {
                 "status": "ERROR",
                 "message": _("An error occurred while creating the user: %(error)s") % {"error": str(e)},

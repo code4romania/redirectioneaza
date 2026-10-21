@@ -68,7 +68,7 @@ def download_donations_job(job_id: int = 0):
                 job.zip.save(file_name, File(f), save=False)
             job.status = JobStatusChoices.DONE
             job.save()
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             logger.error("Error processing job %d: %s", job_id, e)
             job.status = JobStatusChoices.ERROR
             job.save()
@@ -131,7 +131,7 @@ def _package_donations(tmp_dir_name: str, donations: QuerySet[Donor], cause: Cau
                         source_url,
                         retries_left,
                     )
-                except Exception as e:
+                except Exception as e:  # noqa: BLE001
                     retries_left = 0
                     logger.error("Could not download '%s'. Exception %s", source_url, e)
                 else:
