@@ -213,14 +213,14 @@ def _update_local_ngo_with_ngohub_data(ngo: Ngo, ngohub_ngo: Organization) -> di
         ngo.full_clean()
         ngo.save()
     except DatabaseError as e:
-        logger.exception(f"Database error while saving NGO {ngo.pk}:\n{e}")
+        logger.exception(f"Database error while saving NGO {ngo.pk}")
         errors.append(f"Database error while saving NGO {ngo.pk}:\n{e}")
         return {
             "ngo_id": ngo.pk,
             "errors": errors,
         }
     except ValidationError as e:
-        logger.exception(f"Validation error while updating NGO {ngo.pk}:\n{e}")
+        logger.exception(f"Validation error while updating NGO {ngo.pk}")
         errors.append(f"Validation error while updating NGO {ngo.pk}:\n{e}")
         return {
             "ngo_id": ngo.pk,
@@ -268,7 +268,7 @@ def _update_organization_task(organization_id: int, token: str = "") -> dict[str
     try:
         ngohub_org_data: Organization = _get_ngo_hub_data(ngohub_id, token)
     except HubHTTPException as e:
-        logger.exception(f"Error while fetching NGO Hub data for NGO ID {ngohub_id}:\n{e}")
+        logger.exception(f"Error while fetching NGO Hub data for NGO ID {ngohub_id}")
         return {
             "ngo_id": ngo.pk,
             "errors": [f"Error while fetching NGO Hub data for NGO ID {ngohub_id}:\n{e}"],
@@ -313,12 +313,10 @@ def create_organization_for_user(user, ngohub_org_data: Organization) -> Ngo:
 
     try:
         _update_local_ngo_with_ngohub_data(ngo, ngohub_org_data)
-    except DatabaseError as e:
-        logger.exception(
-            f"Database error while creating NGO for user {user.pk} with NGO Hub ID {ngohub_org_data.id}:\n{e}"
-        )
+    except DatabaseError:
+        logger.exception(f"Database error while creating NGO for user {user.pk} with NGO Hub ID {ngohub_org_data.id}")
         ngo.delete()
-        raise e
+        raise
 
     user.ngo = ngo
     user.save()

@@ -57,7 +57,7 @@ def _check_organizations_task(registration_numbers: list[str]) -> dict[str, int 
     try:
         anaf_data = _get_cult_registry_data(registration_numbers)
     except Exception as e:
-        logger.exception(f"Error while fetching ANAF data:\n{e}")
+        logger.exception("Error while fetching ANAF data")
         return {
             "errors": [f"Error while fetching ANAF data:\n{e}"],
         }

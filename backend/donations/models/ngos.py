@@ -462,7 +462,7 @@ class Ngo(CommonFilenameCacheModel):
         try:
             ngo = Ngo.objects.get(pk=ngo_id)
         except Ngo.DoesNotExist:
-            logging.info("NGO id %d does not exist for prefilled form deletion", ngo_id)
+            logger.info("NGO id %d does not exist for prefilled form deletion", ngo_id)
             return
 
         for cause in ngo.causes.all():
