@@ -435,10 +435,7 @@ class Ngo(CommonFilenameCacheModel):
         if not self.is_active:
             return False
 
-        if any(self.missing_mandatory_fields()):
-            return False
-
-        return True
+        return any(self.missing_mandatory_fields())
 
     @property
     def can_receive_redirections(self):
@@ -452,10 +449,7 @@ class Ngo(CommonFilenameCacheModel):
         if not main_cause:
             return False
 
-        if not main_cause.can_receive_redirections:
-            return False
-
-        return True
+        return main_cause.can_receive_redirections
 
     @property
     def has_spv_option(self) -> str:
@@ -662,10 +656,7 @@ class Cause(CommonFilenameCacheModel):
         """
         A cause can receive donations if all the mandatory fields are filled
         """
-        if not all(self.mandatory_fields_values):
-            return False
-
-        return True
+        return all(self.mandatory_fields_values)
 
     def delete_prefilled_form(self):
         if self.prefilled_form:
