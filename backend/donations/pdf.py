@@ -242,20 +242,19 @@ def create_cause_pdf(cause: Cause | None, ngo: Ngo):
 
     # packet = StringIO()
     # we could also use StringIO
-    packet = TemporaryFile(mode="w+b")
+    with TemporaryFile(mode="w+b") as packet:
+        c: Canvas = _initialize_pdf_canvas(packet)
 
-    c: Canvas = _initialize_pdf_canvas(packet)
+        _add_year_to_pdf(c, start_x, start_y)
 
-    _add_year_to_pdf(c, start_x, start_y)
+        _add_ngo_data(start_y, c, cause, ngo)
 
-    _add_ngo_data(start_y, c, cause, ngo)
+        c.save()
 
-    c.save()
+        # go to the beginning of the file
+        packet.seek(0)
 
-    # go to the beginning of the file
-    packet.seek(0)
-
-    return packet
+        return packet
 
 
 def create_full_pdf(donor: Donor, signature: str | None = None):
@@ -270,26 +269,25 @@ def create_full_pdf(donor: Donor, signature: str | None = None):
 
     # packet = StringIO()
     # we could also use StringIO
-    packet = TemporaryFile(mode="w+b")
+    with TemporaryFile(mode="w+b") as packet:
+        c: Canvas = _initialize_pdf_canvas(packet)
 
-    c: Canvas = _initialize_pdf_canvas(packet)
+        _add_year_to_pdf(c, start_x, start_y)
 
-    _add_year_to_pdf(c, start_x, start_y)
+        # DRAW DONOR DATA
+        _add_donor_data(start_y, c, donor)
 
-    # DRAW DONOR DATA
-    _add_donor_data(start_y, c, donor)
+        if donor.ngo:
+            _add_ngo_data(start_y, c, donor.cause, donor.ngo)
+        else:
+            print("Cannot add NGO data to PDF because there is no NGO")
 
-    if donor.ngo:
-        _add_ngo_data(start_y, c, donor.cause, donor.ngo)
-    else:
-        print("Cannot add NGO data to PDF because there is no NGO")
+        if signature:
+            _add_signature_to_pdf(c, signature)
 
-    if signature:
-        _add_signature_to_pdf(c, signature)
+        c.save()
 
-    c.save()
+        # go to the beginning of the file
+        packet.seek(0)
 
-    # go to the beginning of the file
-    packet.seek(0)
-
-    return packet
+        return packet
