@@ -16,7 +16,7 @@ class SchedulerCommand(BaseCommand):
     function_args: tuple
 
     schedule_name: str
-    schedule_details: dict[str, int | datetime]
+    schedule_details: frozendict[str, int | str | datetime]
 
     def handle(self, *args, **kwargs):
         logger.info("Scheduling the task")

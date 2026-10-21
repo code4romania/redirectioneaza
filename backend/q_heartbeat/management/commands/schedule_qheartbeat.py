@@ -16,9 +16,11 @@ class Command(SchedulerCommand):
     command_name: str = "qheartbeat"
 
     schedule_name: str = SCHEDULE_NAME
-    schedule_details = {
-        "schedule_type": Schedule.MINUTES,
-        "minutes": 10,
-        "repeats": -1,
-        "next_run": timezone.now() + timedelta(minutes=0),
-    }
+    schedule_details = frozendict(
+        {
+            "schedule_type": Schedule.MINUTES,
+            "minutes": 10,
+            "repeats": -1,
+            "next_run": timezone.now() + timedelta(minutes=0),
+        }
+    )

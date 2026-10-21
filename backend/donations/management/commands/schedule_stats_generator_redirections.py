@@ -16,9 +16,11 @@ class Command(SchedulerCommand):
     command_name: str = "generate_redirections_stats"
 
     schedule_name: str = "GENERATE_STATS_REDIRECTIONS"
-    schedule_details = {
-        "schedule_type": Schedule.MINUTES,
-        "minutes": 5,
-        "repeats": -1,
-        "next_run": timezone.now() + timedelta(seconds=randint(0, 3 * 60)),
-    }
+    schedule_details = frozendict(
+        {
+            "schedule_type": Schedule.MINUTES,
+            "minutes": 5,
+            "repeats": -1,
+            "next_run": timezone.now() + timedelta(seconds=randint(0, 3 * 60)),
+        }
+    )

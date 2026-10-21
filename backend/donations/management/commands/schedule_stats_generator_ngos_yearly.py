@@ -17,12 +17,14 @@ class Command(SchedulerCommand):
     command_name: str = "generate_ngo_yearly_stats"
 
     schedule_prefix: str = "GENERATE_STATS_NGOS"
-    schedule_details = {
-        "schedule_type": Schedule.MINUTES,
-        "minutes": 15,
-        "repeats": -1,
-        "next_run": timezone.now() + timedelta(seconds=randint(0, 10 * 60)),
-    }
+    schedule_details = frozendict(
+        {
+            "schedule_type": Schedule.MINUTES,
+            "minutes": 15,
+            "repeats": -1,
+            "next_run": timezone.now() + timedelta(seconds=randint(0, 10 * 60)),
+        }
+    )
 
     choices = (
         StatsChoices.NGOS_REGISTERED_PER_YEAR,
