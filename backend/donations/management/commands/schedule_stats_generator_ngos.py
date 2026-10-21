@@ -24,7 +24,7 @@ class Command(SchedulerCommand):
         "next_run": timezone.now() + timedelta(seconds=randint(0, 10 * 60)),
     }
 
-    choices = [StatsChoices.NGOS_REGISTERED, StatsChoices.NGOS_ACTIVE, StatsChoices.NGOS_WITH_NGOHUB]
+    choices = (StatsChoices.NGOS_REGISTERED, StatsChoices.NGOS_ACTIVE, StatsChoices.NGOS_WITH_NGOHUB)
 
     def add_arguments(self, parser):
         parser.add_argument(

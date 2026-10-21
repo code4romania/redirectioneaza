@@ -302,9 +302,7 @@ class Ngo(CommonFilenameCacheModel):
         verbose_name = _("NGO")
         verbose_name_plural = _("NGOs")
 
-        constraints = [
-            models.UniqueConstraint(Lower("registration_number"), name="registration_number__unique"),
-        ]
+        constraints = (models.UniqueConstraint(Lower("registration_number"), name="registration_number__unique"),)
 
     def __str__(self):
         return f"{self.name}"
@@ -592,10 +590,10 @@ class Cause(CommonFilenameCacheModel):
     class Meta:  # type: ignore
         verbose_name = _("Cause")
         verbose_name_plural = _("Causes")
-        constraints = [
+        constraints = (
             models.UniqueConstraint(fields=["ngo", "bank_account"], name="ngo_bank_account_unique"),
             models.UniqueConstraint(fields=["ngo"], condition=Q(is_main=True), name="ngo_main_cause_unique"),
-        ]
+        )
 
     def __str__(self):
         return f"{self.ngo.name} - {self.name}"

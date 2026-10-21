@@ -117,11 +117,11 @@ class CauseForm(forms.ModelForm):
     class Meta:
         model = Cause
 
-        exclude = [
+        exclude = (
             "ngo",
             "date_created",
             "date_updated",
-        ]
+        )
 
     def __init__(self, *args, for_main_cause=False, **kwargs):
         super().__init__(*args, **kwargs)

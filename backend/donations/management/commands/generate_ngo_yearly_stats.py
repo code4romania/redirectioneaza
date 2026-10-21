@@ -15,11 +15,11 @@ logger = logging.getLogger(__name__)
 class Command(BaseCommand):
     help = "Run a task that generates redirection statistics for all ngos."
 
-    choices = [
+    choices = (
         StatsChoices.NGOS_REGISTERED_PER_YEAR,
         StatsChoices.NGOS_ACTIVE_PER_YEAR,
         StatsChoices.NGOS_WITH_NGOHUB_PER_YEAR,
-    ]
+    )
 
     def add_arguments(self, parser):
         parser.add_argument(

@@ -32,13 +32,13 @@ class RegisterForm(forms.ModelForm, ReCaptchaMixin, TwoPasswordMixin):
 
     class Meta:
         model = UserModel
-        fields = [
+        fields = (
             "first_name",
             "last_name",
             "email",
             "password",
             "password_confirm",
-        ]
+        )
 
     def clean_first_name(self):
         first_name = self.cleaned_data["first_name"]

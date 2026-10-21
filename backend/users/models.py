@@ -108,9 +108,7 @@ class User(AbstractUser):
     REQUIRED_FIELDS = []
 
     class Meta:
-        constraints = [
-            models.UniqueConstraint(Lower("email"), name="email_unique"),
-        ]
+        constraints = (models.UniqueConstraint(Lower("email"), name="email_unique"),)
         permissions = (
             ("can_view_old_dashboard", "Can view the old dashboard"),
             ("can_reset_staging", "Can reset the staging environment"),

@@ -24,6 +24,6 @@ class Command(SchedulerCommand):
 
     def handle(self, *args, **kwargs):
         self.schedule_name = "CHECK_NGOS"
-        self.function_args = tuple()
+        self.function_args = ()
 
         super().handle(*args, **kwargs)
