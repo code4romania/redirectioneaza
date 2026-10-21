@@ -4,7 +4,7 @@ from .base import ENVIRONMENT, VERSION_LABEL
 from .environment import env
 
 # Sentry
-ENABLE_SENTRY = True if env.str("SENTRY_DSN") else False
+ENABLE_SENTRY = bool(env.str("SENTRY_DSN"))
 if ENABLE_SENTRY:
     sentry_sdk.init(
         dsn=env.str("SENTRY_DSN"),
