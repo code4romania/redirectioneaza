@@ -131,9 +131,7 @@ class User(AbstractUser):
         validation_token: uuid.UUID | None = self.validation_token
         if not validation_token or not token:
             return False
-        if hmac.compare_digest(validation_token.hex, token.hex):
-            return True
-        return False
+        return hmac.compare_digest(validation_token.hex, token.hex)
 
     def clear_token(self, commit=True):
         self.token_timestamp = None
@@ -185,7 +183,7 @@ class User(AbstractUser):
 
         if who_has_ngo is not None:
             try:
-                users_query = users_query.filter(ngo__isnull=False if who_has_ngo else True)
+                users_query = users_query.filter(ngo__isnull=not who_has_ngo)
             except ValidationError:
                 raise ValidationError(validation_error_text)
 

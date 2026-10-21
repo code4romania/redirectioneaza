@@ -188,9 +188,7 @@ class FileDownloadProxy(BaseVisibleTemplateView):
         if user.is_staff:
             return True
 
-        if user.ngo and user.ngo.is_active:
-            return True
-        return False
+        return bool(user.ngo) and user.ngo.is_active
 
     def get_downloadable_object(self, user: User, pk: int):
         """
