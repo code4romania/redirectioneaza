@@ -37,9 +37,11 @@ class QuestionAdmin(ImportExportModelAdmin, ModelAdmin):
     search_fields = ("title", "section__title")
     ordering = ("section__order", "section__title", "order", "title")
 
-    formfield_overrides = {
-        models.TextField: {"widget": AdminTinyMCE()},
-    }
+    formfield_overrides = frozendict(
+        {
+            models.TextField: {"widget": AdminTinyMCE()},
+        }
+    )
 
     #     save_on_top = True
     fieldsets = (
