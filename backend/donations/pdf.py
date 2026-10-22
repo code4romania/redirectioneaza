@@ -242,19 +242,20 @@ def create_cause_pdf(cause: Cause | None, ngo: Ngo):
 
     # packet = StringIO()
     # we could also use StringIO
-    with TemporaryFile(mode="w+b") as packet:
-        c: Canvas = _initialize_pdf_canvas(packet)
+    packet = TemporaryFile(mode="w+b")  # noqa: SIM115
 
-        _add_year_to_pdf(c, start_x, start_y)
+    c: Canvas = _initialize_pdf_canvas(packet)
 
-        _add_ngo_data(start_y, c, cause, ngo)
+    _add_year_to_pdf(c, start_x, start_y)
 
-        c.save()
+    _add_ngo_data(start_y, c, cause, ngo)
 
-        # go to the beginning of the file
-        packet.seek(0)
+    c.save()
 
-        return packet
+    # go to the beginning of the file
+    packet.seek(0)
+
+    return packet
 
 
 def create_full_pdf(donor: Donor, signature: str | None = None):
@@ -269,25 +270,26 @@ def create_full_pdf(donor: Donor, signature: str | None = None):
 
     # packet = StringIO()
     # we could also use StringIO
-    with TemporaryFile(mode="w+b") as packet:
-        c: Canvas = _initialize_pdf_canvas(packet)
+    packet = TemporaryFile(mode="w+b")  # noqa: SIM115
 
-        _add_year_to_pdf(c, start_x, start_y)
+    c: Canvas = _initialize_pdf_canvas(packet)
 
-        # DRAW DONOR DATA
-        _add_donor_data(start_y, c, donor)
+    _add_year_to_pdf(c, start_x, start_y)
 
-        if donor.ngo:
-            _add_ngo_data(start_y, c, donor.cause, donor.ngo)
-        else:
-            print("Cannot add NGO data to PDF because there is no NGO")
+    # DRAW DONOR DATA
+    _add_donor_data(start_y, c, donor)
 
-        if signature:
-            _add_signature_to_pdf(c, signature)
+    if donor.ngo:
+        _add_ngo_data(start_y, c, donor.cause, donor.ngo)
+    else:
+        print("Cannot add NGO data to PDF because there is no NGO")
 
-        c.save()
+    if signature:
+        _add_signature_to_pdf(c, signature)
 
-        # go to the beginning of the file
-        packet.seek(0)
+    c.save()
 
-        return packet
+    # go to the beginning of the file
+    packet.seek(0)
+
+    return packet
