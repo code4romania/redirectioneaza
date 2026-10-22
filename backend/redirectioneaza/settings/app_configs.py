@@ -3,6 +3,7 @@ from base64 import urlsafe_b64encode
 from cryptography.fernet import Fernet
 
 from utils.constants.time import MONTHS
+from utils.exceptions import SettingsError
 
 from .environment import env
 
@@ -60,7 +61,7 @@ CHART_COLORS = [
 # Encryption settings
 ENCRYPT_KEY = env.str("ENCRYPT_KEY", "%INVALID%")
 if len(ENCRYPT_KEY) != 32 or ENCRYPT_KEY == "%INVALID%":
-    raise Exception("ENCRYPT_KEY must be exactly 32 characters long")
+    raise SettingsError("ENCRYPT_KEY must be exactly 32 characters long")
 FERNET_OBJECT = Fernet(urlsafe_b64encode(ENCRYPT_KEY.encode("utf-8")))
 
 SEARCH_QUERY_MIN_LENGTH = env.int("SEARCH_QUERY_MIN_LENGTH", 3)
