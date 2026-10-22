@@ -433,7 +433,7 @@ class Ngo(CommonFilenameCacheModel):
         if not self.is_active:
             return False
 
-        return any(self.missing_mandatory_fields())
+        return not any(self.missing_mandatory_fields())
 
     @property
     def can_receive_redirections(self):
