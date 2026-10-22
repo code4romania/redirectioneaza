@@ -20,6 +20,12 @@ services:
     depends_on:
       - db
 
+  typesense:
+    extends:
+      file: docker-compose.base.yml
+      service: typesense_base
+    container_name: redirect_typesense
+
   db:
     extends:
       file: docker-compose.base.yml
@@ -27,5 +33,6 @@ services:
     container_name: redirect_psql
 
 volumes:
+  redirect_typesense:
   redirect_psql:
   node_modules:

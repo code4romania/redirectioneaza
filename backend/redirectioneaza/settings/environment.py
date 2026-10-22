@@ -140,10 +140,16 @@ env = environ.Env(
     # Feature flags
     ENABLE_MULTIPLE_FORMS=(bool, False),
     ENABLE_BULK_ANONYMIZATION=(bool, False),
+    # Auditlog
     AUDITLOG_EXPIRY_DAYS=(int, 1 * 365),  # 1 year
     # Admins
     SEED_ADMIN_EMAIL=(str, ""),
     DJANGO_ADMIN_EMAIL=(str, ""),
+    # Search
+    TYPESENSE_KEY=(str, ""),
+    TYPESENSE_PORT=(str, "8108"),
+    TYPESENSE_HOST=(str, "localhost"),
+    TYPESENSE_PROTO=(str, "http"),
 )
 
 environ.Env.read_env(ENV_FILE_PATH)
