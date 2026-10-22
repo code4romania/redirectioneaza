@@ -119,7 +119,7 @@ def generate_csv_from_download_job(download_job_id: int):
         download_job.output_rows = redirections_queryset.count()
         download_job.status = JobStatusChoices.DONE
         download_job.save()
-    except Exception as e:  # noqa: BLE001
+    except Exception as e:  # noqa: BLE001  # we want to log all exception types
         logger.error(f"Error generating CSV file: {e}")
         download_job.status = JobStatusChoices.ERROR
         download_job.save()
@@ -194,7 +194,7 @@ class DownloadNgoRedirections(BaseTemplateView):
                 response["Content-Disposition"] = f'attachment; filename="{download_job.output_file.name}"'
 
                 return response
-        except Exception as e:  # noqa: BLE001
+        except Exception as e:  # noqa: BLE001  # we want to log all exception types
             logger.error(f"Error generating CSV file: {e}")
             return HttpResponseBadRequest(_("An error occurred while generating the CSV file."))
 

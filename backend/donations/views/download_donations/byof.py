@@ -207,7 +207,7 @@ def parse_file_data(file) -> list[DonorModel]:
             parsed_data.append(donor)
         except ValidationError as e:
             errors.append({"line_num": reader.line_num - 1, "line": str(line), "errors": e.errors()})
-        except Exception as e:  # noqa: BLE001
+        except Exception as e:  # noqa: BLE001  # we want to log all exception types
             raise ValueError(
                 _("Invalid data in line %(line_num)d %(line)s. Error: %(error)s")
                 % {

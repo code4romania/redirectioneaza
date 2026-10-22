@@ -137,7 +137,7 @@ class GenerateCauseArchive(BaseTemplateView):
                 call_command("download_donations", new_job.pk)
             else:
                 call_command("download_donations", new_job.pk, "--run")
-        except Exception as e:  # noqa: BLE001
+        except Exception as e:  # noqa: BLE001  # we want to log all exception types
             logger.error(e)
 
             new_job.status = JobStatusChoices.ERROR

@@ -122,7 +122,7 @@ def soft_delete_donor(request: HttpRequest, donor_pk: int, notify: bool = False)
             )
 
         return TASK_SUCCESS_FLAG
-    except Exception as e:  # noqa: BLE001
+    except Exception as e:  # noqa: BLE001  # we want to log all exception types
         logger.error(f"Failed to delete donor {donor_pk}: {e}")
         return TASK_FAILURE_FLAG
 
@@ -137,7 +137,7 @@ def remove_donor_data(donor: Donor) -> str:
         result = async_wrapper(donor.remove_personal_data, async_flag=settings.USER_ANONYMIZATION_METHOD)
 
         return TASK_SUCCESS_FLAG if result is None else TASK_SCHEDULED_FLAG
-    except Exception as e:  # noqa: BLE001
+    except Exception as e:  # noqa: BLE001  # we want to log all exception types
         logger.error(f"Failed to anonymize donor {donor.pk}: {e}")
         return TASK_FAILURE_FLAG
 

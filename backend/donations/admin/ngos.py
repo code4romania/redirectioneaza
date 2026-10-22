@@ -550,7 +550,7 @@ class NgoAdmin(ModelAdmin):
             try:
                 cause.prefilled_form.delete()
                 removed_count += 1
-            except Exception as e:  # noqa: BLE001
+            except Exception as e:  # noqa: BLE001  # we want to log all exception types
                 errors.append(f"Error removing `form_url` from cause {cause.pk}: {e}")
 
         result_message = f"Total of {removed_count}/{expected_count} prefilled forms removed."
