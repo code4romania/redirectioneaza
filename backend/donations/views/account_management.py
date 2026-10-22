@@ -151,7 +151,7 @@ class LoginView(BaseVisibleTemplateView):
 
         user: User = authenticate(email=email, password=password)
         if user is None:
-            logger.warning("Invalid email or password: {0}".format(email))
+            logger.warning(f"Invalid email or password: {email}")
             form.add_error(None, _("It seems that this email and password combination is incorrect."))
 
             return render(request, self.template_name, context)

@@ -78,9 +78,7 @@ def dropdown(cause: Cause) -> list[dict[str, Any]]:
 
 @register.filter
 def button_disabled(cause: Cause) -> bool:
-    if not cause:
-        return True
-    return False
+    return bool(not cause)
 
 
 @register.filter

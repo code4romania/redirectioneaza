@@ -55,7 +55,7 @@ class Command(BaseCommand):
 
         try:
             return self.clean_ngo_registration_number(ngo)
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001  # we want to log all exception types
             self.stdout.write(self.style.ERROR(f"Error while cleaning NGO {ngo.pk}: {e}"))
 
             return {

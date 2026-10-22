@@ -15,8 +15,10 @@ class Command(SchedulerCommand):
     command_name = "cleanup_auditlog"
 
     schedule_name = "CLEANUP_AUDITLOG"
-    schedule_details = {
-        "schedule_type": Schedule.DAILY,
-        "repeats": -1,
-        "next_run": timezone.now() + timedelta(minutes=50),
-    }
+    schedule_details = frozendict(
+        {
+            "schedule_type": Schedule.DAILY,
+            "repeats": -1,
+            "next_run": timezone.now() + timedelta(minutes=50),
+        }
+    )

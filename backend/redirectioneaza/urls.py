@@ -133,7 +133,6 @@ urlpatterns = (
         path("api/ngo/forms/archive/", GenerateCauseArchive.as_view(), name="api-generate-cause-archive"),
         path("api/ngo/forms/download/", DownloadNgoRedirections.as_view(), name="api-download-redirections"),
         path("api/ngo/forms/visibility/", ChangeCauseVisibility.as_view(), name="api-change-cause-visibility"),
-        #
         path("api/search/", SearchCausesApi.as_view(), name="api-search-ngos"),
         # Django Admin
         path("admin/login/", RedirectView.as_view(pattern_name="login", permanent=True)),

@@ -242,7 +242,7 @@ def create_cause_pdf(cause: Cause | None, ngo: Ngo):
 
     # packet = StringIO()
     # we could also use StringIO
-    packet = TemporaryFile(mode="w+b")
+    packet = TemporaryFile(mode="w+b")  # noqa: SIM115  # we must not close the file
 
     c: Canvas = _initialize_pdf_canvas(packet)
 
@@ -270,7 +270,7 @@ def create_full_pdf(donor: Donor, signature: str | None = None):
 
     # packet = StringIO()
     # we could also use StringIO
-    packet = TemporaryFile(mode="w+b")
+    packet = TemporaryFile(mode="w+b")  # noqa: SIM115  # we must not close the file
 
     c: Canvas = _initialize_pdf_canvas(packet)
 

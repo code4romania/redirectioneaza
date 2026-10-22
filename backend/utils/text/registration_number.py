@@ -97,9 +97,7 @@ def ngo_id_number_validator(value):
     )
     control_result: int = sum(cif_key_pairs) * 10 % 11
 
-    if control_result == cif_control_digit:
-        return
-    elif control_result == 10 and cif_control_digit == 0:
+    if control_result == cif_control_digit or control_result == 10 and cif_control_digit == 0:
         return
 
     raise ValidationError(_("The ID number is not valid"))

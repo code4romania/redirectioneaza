@@ -15,15 +15,17 @@ class Command(SchedulerCommand):
 
     command_name: str = "check_ngos"
 
-    schedule_details = {
-        "schedule_type": Schedule.MINUTES,
-        "minutes": 12,
-        "repeats": -1,
-        "next_run": timezone.now() + timedelta(seconds=randint(0, 8 * 60)),
-    }
+    schedule_details = frozendict(
+        {
+            "schedule_type": Schedule.MINUTES,
+            "minutes": 12,
+            "repeats": -1,
+            "next_run": timezone.now() + timedelta(seconds=randint(0, 8 * 60)),
+        }
+    )
 
     def handle(self, *args, **kwargs):
         self.schedule_name = "CHECK_NGOS"
-        self.function_args = tuple()
+        self.function_args = ()
 
         super().handle(*args, **kwargs)

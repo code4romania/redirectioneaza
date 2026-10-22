@@ -52,7 +52,7 @@ class CauseAdmin(ModelAdmin, CommonCauseFields):
                     call_command("download_donations", new_job.pk, "--run")
 
                 ngo_names.append(f"{ngo.pk} - {ngo.name}")
-            except Exception as e:
+            except Exception as e:  # noqa: BLE001  # we want to log all exception types
                 logger.error(e)
 
                 new_job.status = JobStatusChoices.ERROR

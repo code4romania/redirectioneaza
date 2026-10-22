@@ -21,9 +21,7 @@ def cache_decorator(
                 _cache_key: str = cache_key_custom.format(*args, **kwargs)
             else:
                 cache_suffix = (
-                    hash(f"{func.__name__}__{str(args)}_{str(kwargs)}")
-                    .to_bytes(length=8, byteorder="big", signed=True)
-                    .hex()
+                    hash(f"{func.__name__}__{args!s}_{kwargs!s}").to_bytes(length=8, byteorder="big", signed=True).hex()
                 )
                 _cache_key: str = f"{cache_key_prefix}__{cache_suffix}"
 

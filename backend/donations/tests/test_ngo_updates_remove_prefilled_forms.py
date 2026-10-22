@@ -155,9 +155,7 @@ class NgoPrefilledFormsUpdate(TestCase):
 
         # Change the registration_number of the NGO
         new_registration_number = random.choice(self.other_cifs)
-        if new_registration_number.startswith("RO"):
-            # Remove the "RO" prefix if it exists
-            new_registration_number = new_registration_number[2:]
+        new_registration_number = new_registration_number.removeprefix("RO")
         self.assertNotEqual(new_registration_number, self.ngo.registration_number)
 
         ngo_update_url = reverse("my-organization:presentation")

@@ -43,7 +43,7 @@ def select_public_storage():
     return storages["public"]
 
 
-def ngo_directory_path(subdir: str, instance: "Ngo", filename: str) -> str:
+def ngo_directory_path(subdir: str, instance: Ngo, filename: str) -> str:
     """
     The file will be uploaded to MEDIA_ROOT/<subdir>/ngo-<id>-<hash>/<filename>
     """
@@ -53,7 +53,7 @@ def ngo_directory_path(subdir: str, instance: "Ngo", filename: str) -> str:
     return f"{subdir}/ngo-{ngo_pk}-{ngo_hash}/{filename}"
 
 
-def cause_directory_path(subdir: str, instance: "Cause", filename: str) -> str:
+def cause_directory_path(subdir: str, instance: Cause, filename: str) -> str:
     """
     The file will be uploaded to MEDIA_ROOT/<subdir>/ngo-<ngo.pk>/c-<cause.pk>-<cause.hash>/<filename>
     """
@@ -65,7 +65,7 @@ def cause_directory_path(subdir: str, instance: "Cause", filename: str) -> str:
     return f"{subdir}/ngo-{ngo_pk}/c-{cause_pk}-{cause_hash}/{filename}"
 
 
-def year_ngo_directory_path(subdir: str, instance: "Ngo", filename: str) -> str:
+def year_ngo_directory_path(subdir: str, instance: Ngo, filename: str) -> str:
     """
     The file will be uploaded to MEDIA_ROOT/<subdir>/<year>/ngo-<ngo.pk>-<ngo.hash>/<filename>
     """
@@ -79,7 +79,7 @@ def year_ngo_directory_path(subdir: str, instance: "Ngo", filename: str) -> str:
     return f"{subdir}/{year}/ngo-{ngo_pk}-{ngo_hash}/{filename}"
 
 
-def year_cause_directory_path(subdir: str, instance: "Cause", filename: str) -> str:
+def year_cause_directory_path(subdir: str, instance: Cause, filename: str) -> str:
     """
     The file will be uploaded to MEDIA_ROOT/<subdir>/<year>/c-<cause.pk>-<cause.hash>/<filename>
     """
@@ -286,11 +286,11 @@ class Ngo(CommonFilenameCacheModel):
     date_updated = models.DateTimeField(verbose_name=_("date updated"), db_index=True, auto_now=True)
 
     # Type hinting for related models
-    causes: "models.manager.RelatedManager[Cause]"
-    partners: "models.manager.RelatedManager[Partner]"
-    jobs: "models.manager.RelatedManager[Job]"
-    download_jobs: "models.manager.RelatedManager[RedirectionsDownloadJob]"
-    donor_set: "models.manager.RelatedManager[Donor]"
+    causes: models.manager.RelatedManager[Cause]
+    partners: models.manager.RelatedManager[Partner]
+    jobs: models.manager.RelatedManager[Job]
+    download_jobs: models.manager.RelatedManager[RedirectionsDownloadJob]
+    donor_set: models.manager.RelatedManager[Donor]
 
     # Model managers
     objects = models.Manager()
@@ -302,9 +302,7 @@ class Ngo(CommonFilenameCacheModel):
         verbose_name = _("NGO")
         verbose_name_plural = _("NGOs")
 
-        constraints = [
-            models.UniqueConstraint(Lower("registration_number"), name="registration_number__unique"),
-        ]
+        constraints = (models.UniqueConstraint(Lower("registration_number"), name="registration_number__unique"),)
 
     def __str__(self):
         return f"{self.name}"
@@ -353,7 +351,7 @@ class Ngo(CommonFilenameCacheModel):
             self.save()
 
     @property
-    def main_cause(self) -> "Cause | None":
+    def main_cause(self) -> Cause | None:
         if not self.pk:
             return None
 
@@ -435,10 +433,7 @@ class Ngo(CommonFilenameCacheModel):
         if not self.is_active:
             return False
 
-        if any(self.missing_mandatory_fields()):
-            return False
-
-        return True
+        return not any(self.missing_mandatory_fields())
 
     @property
     def can_receive_redirections(self):
@@ -452,10 +447,7 @@ class Ngo(CommonFilenameCacheModel):
         if not main_cause:
             return False
 
-        if not main_cause.can_receive_redirections:
-            return False
-
-        return True
+        return main_cause.can_receive_redirections
 
     @property
     def has_spv_option(self) -> str:
@@ -470,7 +462,7 @@ class Ngo(CommonFilenameCacheModel):
         try:
             ngo = Ngo.objects.get(pk=ngo_id)
         except Ngo.DoesNotExist:
-            logging.info("NGO id %d does not exist for prefilled form deletion", ngo_id)
+            logger.info("NGO id %d does not exist for prefilled form deletion", ngo_id)
             return
 
         for cause in ngo.causes.all():
@@ -585,7 +577,7 @@ class Cause(CommonFilenameCacheModel):
     date_updated = models.DateTimeField(verbose_name=_("date updated"), db_index=True, auto_now=True)
 
     # Type hinting for related models
-    donor_set: "models.manager.RelatedManager[Donor]"
+    donor_set: models.manager.RelatedManager[Donor]
 
     # Model managers
     objects = models.Manager()
@@ -598,10 +590,10 @@ class Cause(CommonFilenameCacheModel):
     class Meta:  # type: ignore
         verbose_name = _("Cause")
         verbose_name_plural = _("Causes")
-        constraints = [
+        constraints = (
             models.UniqueConstraint(fields=["ngo", "bank_account"], name="ngo_bank_account_unique"),
             models.UniqueConstraint(fields=["ngo"], condition=Q(is_main=True), name="ngo_main_cause_unique"),
-        ]
+        )
 
     def __str__(self):
         return f"{self.ngo.name} - {self.name}"
@@ -662,10 +654,7 @@ class Cause(CommonFilenameCacheModel):
         """
         A cause can receive donations if all the mandatory fields are filled
         """
-        if not all(self.mandatory_fields_values):
-            return False
-
-        return True
+        return all(self.mandatory_fields_values)
 
     def delete_prefilled_form(self):
         if self.prefilled_form:

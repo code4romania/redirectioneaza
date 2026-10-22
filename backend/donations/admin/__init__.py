@@ -6,10 +6,10 @@ from .jobs import JobAdmin
 from .ngos import NgoAdmin
 
 __all__ = [
-    CauseAdmin,
-    DonorAdmin,
-    DownloadJobAdmin,
-    JobAdmin,
-    NgoAdmin,
-    OwnFormsUploadAdmin,
+    "CauseAdmin",
+    "DonorAdmin",
+    "DownloadJobAdmin",
+    "JobAdmin",
+    "NgoAdmin",
+    "OwnFormsUploadAdmin",
 ]

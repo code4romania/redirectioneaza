@@ -21,7 +21,7 @@ class Command(BaseCommand):
     def check_endpoint_alive(self):
         try:
             requests.get(settings.ANAF_CULT_REGISTRY_ENDPOINT, timeout=5)
-        except (ConnectionError, Timeout):
+        except ConnectionError, Timeout:
             return False
         else:
             return True
