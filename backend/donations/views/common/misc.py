@@ -32,16 +32,13 @@ def get_was_last_job_recent(ngo: Ngo | None) -> bool:
     return False
 
 
-def archive_job_was_recent(job_status: str, job_created: datetime) -> bool:
+def archive_job_was_recent(job_status: str, job_created: datetime.datetime) -> bool:
     if job_status == JobStatusChoices.ERROR:
         return False
 
     td = datetime.timedelta(minutes=settings.TIMEDELTA_FORMS_DOWNLOAD_MINUTES)
 
-    if job_created > timezone.now() - td:
-        return True
-
-    return False
+    return job_created > timezone.now() - td
 
 
 def has_recent_archive_job(cause: Cause) -> bool:
@@ -91,12 +88,9 @@ def has_archive_generation_deadline_passed() -> bool:
     if settings.UNLIMITED_CURRENT_YEAR_REDIRECTIONS_DOWNLOAD:
         return False
 
-    if timezone.now().date() > edition_deadline() + datetime.timedelta(
+    return timezone.now().date() > edition_deadline() + datetime.timedelta(
         days=settings.TIMEDELTA_REDIRECTIONS_LIMIT_DOWNLOAD_DAYS
-    ):
-        return True
-
-    return False
+    )
 
 
 def get_cause_response_item(cause: Cause) -> dict:

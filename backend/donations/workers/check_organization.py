@@ -29,7 +29,7 @@ def _get_cult_registry_data(registration_numbers: list[str]):
 
     try:
         r = requests.post(settings.ANAF_CULT_REGISTRY_ENDPOINT, headers=headers, data=json.dumps(payload), timeout=20)
-    except (ConnectionError, Timeout):
+    except ConnectionError, Timeout:
         logger.warning("Failed to check ANAF Cult Registry for: %s", ", ".join(registration_numbers))
         return {"present": [], "absent": [], "error": True}
 
@@ -57,7 +57,7 @@ def _check_organizations_task(registration_numbers: list[str]) -> dict[str, int 
     try:
         anaf_data = _get_cult_registry_data(registration_numbers)
     except Exception as e:
-        logger.exception(f"Error while fetching ANAF data:\n{e}")
+        logger.exception("Error while fetching ANAF data")
         return {
             "errors": [f"Error while fetching ANAF data:\n{e}"],
         }

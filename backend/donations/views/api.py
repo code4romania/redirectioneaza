@@ -83,17 +83,17 @@ class GetCausePrefilledForm(TemplateView):
         try:
             cause.prefilled_form.save(filename, File(pdf))
             logger.info(f"Prefilled form saved successfully: {filename}")
-        except (IOError, OSError) as file_error:
+        except OSError as file_error:
             logger.error(f"File handling error while saving {filename}: {file_error}")
         except DatabaseError as db_error:
             logger.error(f"Database error while saving prefilled form {filename}: {db_error}")
         except SuspiciousOperation as sus_error:
             logger.warning(f"Suspicious operation detected when saving {filename}: {sus_error}")
-        except AttributeError as attr_error:
+        except AttributeError:
             # if the form file didn't reach the storage yet, redirect the user back to the download page
-            logger.exception(f"{filename}: {attr_error}")
-        except Exception as e:
-            logger.exception(f"Unexpected error while saving prefilled form {filename}: {e}")
+            logger.exception(f"{filename}")
+        except Exception:
+            logger.exception(f"Unexpected error while saving prefilled form {filename}")
         finally:
             # close the file after it has been uploaded
             pdf.close()
@@ -137,8 +137,8 @@ class GenerateCauseArchive(BaseTemplateView):
                 call_command("download_donations", new_job.pk)
             else:
                 call_command("download_donations", new_job.pk, "--run")
-        except Exception as e:
-            logging.error(e)
+        except Exception as e:  # noqa: BLE001  # we want to log all exception types
+            logger.error(e)
 
             new_job.status = JobStatusChoices.ERROR
             new_job.save()

@@ -11,8 +11,10 @@ from django.utils.translation import gettext_lazy as _
 from utils.common.crypto_helper import decrypt_data, encrypt_data
 from utils.models_hashing import hash_id_secret
 
+logger = logging.getLogger(__name__)
 
-def year_ngo_donor_directory_path(subdir: str, instance: "Donor", filename: str) -> str:
+
+def year_ngo_donor_directory_path(subdir: str, instance: Donor, filename: str) -> str:
     """
     The file will be uploaded to MEDIA_ROOT/<subdir>/<year>/c-<cause.pk>-<cause.hash>/<id>_<hash>_<filename>
     """
@@ -214,8 +216,8 @@ class Donor(models.Model):
         if self.pdf_file and self.pdf_file.name:
             try:
                 self.pdf_file.delete()
-            except Exception as e:
-                logging.exception("Error deleting donor pdf file for donor id %s: %s", self.pk, e)
+            except Exception:
+                logger.exception("Error deleting donor pdf file for donor id %s", self.pk)
 
         self.filename = ""
 

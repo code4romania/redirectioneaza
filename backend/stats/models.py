@@ -22,10 +22,10 @@ class Stat(models.Model):
 
         ordering = ("-date", "name")
 
-        constraints = [
+        constraints = (
             models.UniqueConstraint(
                 Lower("name"),
                 "date",
                 name="unique_stat_name_date",
             ),
-        ]
+        )

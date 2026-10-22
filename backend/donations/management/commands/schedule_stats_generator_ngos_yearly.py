@@ -17,21 +17,23 @@ class Command(SchedulerCommand):
     command_name: str = "generate_ngo_yearly_stats"
 
     schedule_prefix: str = "GENERATE_STATS_NGOS"
-    schedule_details = {
-        "schedule_type": Schedule.MINUTES,
-        "minutes": 15,
-        "repeats": -1,
-        "next_run": timezone.now() + timedelta(seconds=randint(0, 10 * 60)),
-    }
+    schedule_details = frozendict(
+        {
+            "schedule_type": Schedule.MINUTES,
+            "minutes": 15,
+            "repeats": -1,
+            "next_run": timezone.now() + timedelta(seconds=randint(0, 10 * 60)),
+        }
+    )
 
-    choices = [
+    choices = (
         StatsChoices.NGOS_REGISTERED_PER_YEAR,
         StatsChoices.NGOS_REGISTERED,
         StatsChoices.NGOS_ACTIVE_PER_YEAR,
         StatsChoices.NGOS_ACTIVE,
         StatsChoices.NGOS_WITH_NGOHUB_PER_YEAR,
         StatsChoices.NGOS_WITH_NGOHUB,
-    ]
+    )
 
     def add_arguments(self, parser):
         parser.add_argument(

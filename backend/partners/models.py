@@ -88,9 +88,7 @@ class Partner(models.Model):
     class Meta:
         verbose_name = _("Partner")
         verbose_name_plural = _("Partners")
-        constraints = [
-            models.UniqueConstraint(Lower("subdomain"), name="subdomain_unique"),
-        ]
+        constraints = (models.UniqueConstraint(Lower("subdomain"), name="subdomain_unique"),)
 
     def __str__(self):
         return f"{self.name}"
@@ -156,9 +154,7 @@ class PartnerNgo(models.Model):
     class Meta:
         verbose_name = _("Partner NGO")
         verbose_name_plural = _("Partner NGOs")
-        constraints = [
-            models.UniqueConstraint(fields=["partner", "ngo"], name="partner_ngo_unique"),
-        ]
+        constraints = (models.UniqueConstraint(fields=["partner", "ngo"], name="partner_ngo_unique"),)
 
     def __str__(self):
         return f"{self.partner} - {self.ngo}"
@@ -190,9 +186,7 @@ class PartnerCause(models.Model):
     class Meta:
         verbose_name = _("Partner Cause")
         verbose_name_plural = _("Partner Causes")
-        constraints = [
-            models.UniqueConstraint(fields=["partner", "cause"], name="partner_cause_unique"),
-        ]
+        constraints = (models.UniqueConstraint(fields=["partner", "cause"], name="partner_cause_unique"),)
 
     def __str__(self):
         return f"{self.partner} - {self.cause}"

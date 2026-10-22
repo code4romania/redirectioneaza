@@ -46,7 +46,7 @@ class QueryFilter:
         """
         try:
             return str(next(item for item in self.options_default() if item["value"] == option_value)["title"])
-        except (NotImplementedError, StopIteration, KeyError):
+        except NotImplementedError, StopIteration, KeyError:
             return str(option_value)
 
     def to_dict(

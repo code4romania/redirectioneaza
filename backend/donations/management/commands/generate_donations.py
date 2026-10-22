@@ -52,17 +52,15 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         def _generate_pdfs_for_donations(new_donors: QuerySet[Donor]):
-            generated_pdfs: int = 0
             self.stdout.write(f"Queuing PDF generation for {new_donors.count()} new donors...")
-            for new_donor in new_donors:
-                generated_pdfs += 1
+            for pdf_counter, new_donor in enumerate(new_donors):
                 async_task(
                     _generate_pdf_for_donor,
                     new_donor.pk,
                 )
 
-                if generated_pdfs % 50 == 0:
-                    self.stdout.write(f"Queued {generated_pdfs} / {new_donors.count()} PDFs...")
+                if pdf_counter % 50 == 0:
+                    self.stdout.write(f"Queued {pdf_counter} / {new_donors.count()} PDFs...")
 
         batch_size = 200
 

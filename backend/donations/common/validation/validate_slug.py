@@ -52,10 +52,7 @@ class NgoSlugValidator:
 
     @classmethod
     def is_blocked(cls, slug: str):
-        if slug.lower() in cls.ngo_url_block_list:
-            return True
-
-        return False
+        return slug.lower() in cls.ngo_url_block_list
 
     @classmethod
     def is_reused(cls, slug: str, cause_pk: int | None = None):
@@ -64,7 +61,4 @@ class NgoSlugValidator:
         if cause_pk:
             cause_queryset = cause_queryset.exclude(pk=cause_pk)
 
-        if cause_queryset.exists():
-            return True
-
-        return False
+        return cause_queryset.exists()

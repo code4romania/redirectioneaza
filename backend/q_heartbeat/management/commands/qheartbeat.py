@@ -61,4 +61,4 @@ class Command(BaseCommand):
             if proc.name() == needle_name and proc.cmdline() == needle_cmd:
                 worker_count += 1
                 proc.kill() if hard_attempt else proc.terminate()
-        logging.warning("%s %d qcluster workers", "Killed" if hard_attempt else "Terminated", worker_count)
+        logger.warning("%s %d qcluster workers", "Killed" if hard_attempt else "Terminated", worker_count)

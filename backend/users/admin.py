@@ -106,11 +106,11 @@ class UserAdmin(ModelAdmin):
         except ValidationError as e:
             return HttpResponse(e.message)
 
-        filename = "users_export_{}.csv".format(timezone.now())
+        filename = f"users_export_{timezone.now()}.csv"
 
         response = HttpResponse(
             content_type="text/csv; charset=utf-8-sig",
-            headers={"Content-Disposition": 'attachment; filename="{}"'.format(filename)},
+            headers={"Content-Disposition": f'attachment; filename="{filename}"'},
         )
         response.write(codecs.BOM_UTF8)
 

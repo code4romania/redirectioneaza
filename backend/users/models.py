@@ -99,18 +99,16 @@ class User(AbstractUser):
     date_updated = models.DateTimeField(verbose_name=_("date updated"), db_index=True, auto_now=True)
 
     # Type hinting for related models
-    socialaccount_set: "models.manager.RelatedManager[SocialAccount]"
+    socialaccount_set: models.manager.RelatedManager[SocialAccount]
 
     # Model managers
     objects = CustomUserManager()
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ()  # type: ignore
 
     class Meta:
-        constraints = [
-            models.UniqueConstraint(Lower("email"), name="email_unique"),
-        ]
+        constraints = (models.UniqueConstraint(Lower("email"), name="email_unique"),)
         permissions = (
             ("can_view_old_dashboard", "Can view the old dashboard"),
             ("can_reset_staging", "Can reset the staging environment"),
@@ -133,9 +131,7 @@ class User(AbstractUser):
         validation_token: uuid.UUID | None = self.validation_token
         if not validation_token or not token:
             return False
-        if hmac.compare_digest(validation_token.hex, token.hex):
-            return True
-        return False
+        return hmac.compare_digest(validation_token.hex, token.hex)
 
     def clear_token(self, commit=True):
         self.token_timestamp = None
@@ -187,7 +183,7 @@ class User(AbstractUser):
 
         if who_has_ngo is not None:
             try:
-                users_query = users_query.filter(ngo__isnull=False if who_has_ngo else True)
+                users_query = users_query.filter(ngo__isnull=not who_has_ngo)
             except ValidationError:
                 raise ValidationError(validation_error_text)
 

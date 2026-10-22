@@ -188,7 +188,7 @@ class RedirectionHandler(TemplateView):
                 ngo_website_description = url_dict.netloc
                 ngo_website = url_dict.geturl()
 
-            # of we don't have the netloc, when parsing the url
+            # if we don't have the netloc, when parsing the url
             # urlparse might send it to path
             # move that to netloc and remove the path
             elif url_dict.path:
@@ -199,10 +199,11 @@ class RedirectionHandler(TemplateView):
 
                 ngo_website = url_dict.geturl()
             else:
-                raise
+                # we can't figure out the website
+                pass
 
         except Exception:
-            ngo_website = None
+            logger.exception("Cannot figure out the cause URL")
 
         return ngo_website, ngo_website_description
 
@@ -212,7 +213,7 @@ class RedirectionHandler(TemplateView):
         cause_url = cause_slug.lower().strip()
         try:
             cause: Cause | None = Cause.nonprivate_active.select_related("ngo").get(slug=cause_url)
-            ngo: Ngo = cause.ngo
+            ngo: Ngo | None = cause.ngo if cause else None
         except Cause.DoesNotExist:
             raise Http404("Cause not found")
 

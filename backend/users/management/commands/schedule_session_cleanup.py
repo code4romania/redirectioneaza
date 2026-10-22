@@ -15,8 +15,10 @@ class Command(SchedulerCommand):
     command_name: str = "clearsessions"
 
     schedule_name = "CLEANUP_SESSIONS"
-    schedule_details = {
-        "schedule_type": Schedule.DAILY,
-        "repeats": -1,
-        "next_run": timezone.now() + timedelta(minutes=40),
-    }
+    schedule_details = frozendict(
+        {
+            "schedule_type": Schedule.DAILY,
+            "repeats": -1,
+            "next_run": timezone.now() + timedelta(minutes=40),
+        }
+    )

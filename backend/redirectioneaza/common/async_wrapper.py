@@ -8,7 +8,7 @@ from django_q.tasks import async_task
 def async_wrapper(
     func: Callable,
     *,
-    async_flag: str = None,
+    async_flag: str | None = None,
     **kwargs: Any,
 ) -> Callable:
     """
