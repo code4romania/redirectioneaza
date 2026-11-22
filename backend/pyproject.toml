@@ -32,6 +32,7 @@ dependencies = [
   "pycognito~=2024.5.0",
   "pydantic[email]~=2.14.0",
   "pypdf~=6.21.0",
+  "rapidfuzz~=3.14.0",
   "reportlab~=5.0.0",
   "requests~=2.34.0",
   "sentry-sdk[django]~=2.72.0",

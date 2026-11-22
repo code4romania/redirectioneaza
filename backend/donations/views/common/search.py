@@ -9,7 +9,7 @@ from django.contrib.postgres.search import (
     TrigramWordSimilarity,
 )
 from django.db.models import Q, QuerySet
-from django.db.models.functions import Greatest
+from django.db.models.functions import Greatest, Lower
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import ListView
 
@@ -79,6 +79,10 @@ class CommonSearchMixin(ListView):
 class NgoSearchMixin(CommonSearchMixin):
     @classmethod
     def get_search_results(cls, queryset: QuerySet, query: str, language_code: str) -> QuerySet:
+
+        ngo_id_names = Ngo.active.values_list("pk", "name", Lower("name"), "registration_number")
+        
+        
         search_fields = ("name", "registration_number")
         search_vector: SearchVector = ConfigureSearch.vector(search_fields, language_code)
         search_query: SearchQuery = ConfigureSearch.query(query, language_code)
