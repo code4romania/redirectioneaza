@@ -25,10 +25,10 @@ class Command(BaseCommand):
                 logger.info("Database unavailable, waiting 1 second...")
                 time.sleep(1)
                 current_wait_time += 1
-                if current_wait_time > 30:
-                    logger.warning(f"Have already been waiting for {current_wait_time} seconds.")
-                elif current_wait_time > 60:
+                if current_wait_time > 60:
                     logger.error(f"Have already been waiting for {current_wait_time} seconds. Exiting...")
                     raise
+                elif current_wait_time > 30:
+                    logger.warning(f"Have already been waiting for {current_wait_time} seconds.")
 
         logger.info(self.style.SUCCESS(f"Database available after {current_wait_time} seconds!"))
